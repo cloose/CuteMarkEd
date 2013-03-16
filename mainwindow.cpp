@@ -12,3 +12,8 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::fileNew()
+{
+    ui->plainTextEdit->clear();
+}
