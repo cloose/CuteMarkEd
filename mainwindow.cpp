@@ -29,3 +29,11 @@ void MainWindow::plainTextChanged()
     QString html = parser->renderAsHtml(code);
     ui->webView->setHtml(html);
 }
+
+void MainWindow::styleChanged(const QString &itemText)
+{
+    if (itemText == "Default")
+        ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl());
+    else
+        ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/" + itemText.toLower() + ".css"));
+}

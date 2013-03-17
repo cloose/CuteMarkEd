@@ -23,6 +23,8 @@ private slots:
 
     void plainTextChanged();
 
+    void styleChanged(const QString &itemText);
+
 private:
     Ui::MainWindow *ui;
     MarkdownParser *parser;

@@ -24,3 +24,9 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui
 
 include(sundown/sundown.pri)
+
+RESOURCES += \
+    styles.qrc
+
+OTHER_FILES += \
+    github.css
