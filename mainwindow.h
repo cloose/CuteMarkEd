@@ -7,6 +7,9 @@ namespace Ui {
 class MainWindow;
 }
 
+class MarkdownParser;
+
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -18,8 +21,11 @@ public:
 private slots:
     void fileNew();
 
+    void plainTextChanged();
+
 private:
     Ui::MainWindow *ui;
+    MarkdownParser *parser;
 };
 
 #endif // MAINWINDOW_H

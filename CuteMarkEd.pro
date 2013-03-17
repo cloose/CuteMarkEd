@@ -13,9 +13,13 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+        markdownparser.cpp \
+        textbuffer.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+            markdownparser.h \
+            textbuffer.h
 
 FORMS    += mainwindow.ui
 
