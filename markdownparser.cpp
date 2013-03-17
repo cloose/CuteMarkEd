@@ -21,12 +21,17 @@ MarkdownParser::~MarkdownParser()
 
 QString MarkdownParser::renderAsHtml(const QString &text)
 {
-    TextBuffer input(text.length());
-    input.puts(text);
+    if (text.length() > 0)
+    {
+        TextBuffer input(text.length());
+        input.puts(text);
 
-    TextBuffer output(64);
+        TextBuffer output(64);
 
-    sd_markdown_render(output.buffer(), input.buffer()->data, input.buffer()->size, m_markdown);
+        sd_markdown_render(output.buffer(), input.buffer()->data, input.buffer()->size, m_markdown);
 
-    return output.gets();
+        return output.gets();
+    }
+
+    return "";
 }
