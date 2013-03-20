@@ -20,14 +20,23 @@ public:
 
 private slots:
     void fileNew();
+    void fileOpen();
+    void fileSave();
+    void fileSaveAs();
 
     void plainTextChanged();
 
     void styleChanged(const QString &itemText);
 
 private:
+    void setFileName(const QString &fileName);
+
+    void load(const QString &fileName);
+
+private:
     Ui::MainWindow *ui;
     MarkdownParser *parser;
+    QString         fileName;
 };
 
 #endif // MAINWINDOW_H

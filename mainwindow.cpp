@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QFileDialog>
+#include <QTextDocumentWriter>
+
 #include "markdownparser.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -9,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     parser(new MarkdownParser())
 {
     ui->setupUi(this);
+
+    setFileName(QString());
 }
 
 MainWindow::~MainWindow()
@@ -20,6 +25,46 @@ MainWindow::~MainWindow()
 void MainWindow::fileNew()
 {
     ui->plainTextEdit->clear();
+    setFileName(QString());
+}
+
+void MainWindow::fileOpen()
+{
+    QString name = QFileDialog::getOpenFileName(this, tr("Open File..."),
+                                              QString(), tr("Markdown Files (*.markdown *.md);;All Files (*)"));
+    if (!name.isEmpty())
+    {
+        load(name);
+    }
+}
+
+void MainWindow::fileSave()
+{
+    if (fileName.isEmpty())
+    {
+        fileSaveAs();
+        return;
+    }
+
+    QTextDocumentWriter writer(fileName, "plaintext");
+    bool success = writer.write(ui->plainTextEdit->document());
+    if (success)
+    {
+        ui->plainTextEdit->document()->setModified(false);
+    }
+}
+
+void MainWindow::fileSaveAs()
+{
+    QString name = QFileDialog::getSaveFileName(this, tr("Save as..."), QString(),
+                                              tr("Markdown Files (*.markdown *.md);;All Files (*)"));
+    if (name.isEmpty())
+    {
+        return;
+    }
+
+    setFileName(name);
+    fileSave();
 }
 
 void MainWindow::plainTextChanged()
@@ -28,6 +73,7 @@ void MainWindow::plainTextChanged()
 
     QString html = parser->renderAsHtml(code);
     ui->webView->setHtml(html);
+    ui->htmlTextEdit->setPlainText(html);
 }
 
 void MainWindow::styleChanged(const QString &itemText)
@@ -36,4 +82,37 @@ void MainWindow::styleChanged(const QString &itemText)
         ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl());
     else
         ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/" + itemText.toLower() + ".css"));
+}
+
+void MainWindow::setFileName(const QString &fileName)
+{
+    this->fileName = fileName;
+
+    QString shownName;
+    if (fileName.isEmpty()) {
+        shownName = "untitled.md";
+    } else {
+        shownName = QFileInfo(fileName).fileName();
+    }
+
+    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("CuteMarkEd"));
+    setWindowModified(false);
+}
+
+void MainWindow::load(const QString &fileName)
+{
+    if (!QFile::exists(fileName))
+    {
+        return;
+    }
+
+    QFile file(fileName);
+    if (!file.open(QFile::ReadOnly))
+    {
+        return;
+    }
+
+    QByteArray content = file.readAll();
+    QString text = QString::fromUtf8(content);
+    ui->plainTextEdit->setPlainText(text);
 }

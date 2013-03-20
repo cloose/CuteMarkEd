@@ -6,23 +6,66 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>537</width>
+    <height>387</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>CuteMarkEd</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <property name="leftMargin">
+     <number>6</number>
+    </property>
+    <property name="topMargin">
+     <number>6</number>
+    </property>
+    <property name="rightMargin">
+     <number>6</number>
+    </property>
+    <property name="bottomMargin">
+     <number>6</number>
+    </property>
     <item>
-     <widget class="QPlainTextEdit" name="plainTextEdit">
-      <property name="minimumSize">
-       <size>
-        <width>400</width>
-        <height>300</height>
-       </size>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="tabPosition">
+       <enum>QTabWidget::West</enum>
       </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="markdownTab">
+       <attribute name="title">
+        <string>Markdown</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QPlainTextEdit" name="plainTextEdit">
+          <property name="minimumSize">
+           <size>
+            <width>400</width>
+            <height>300</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="htmlSourceTab">
+       <attribute name="title">
+        <string>HTML Source</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QPlainTextEdit" name="htmlTextEdit">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -32,7 +75,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>537</width>
      <height>21</height>
     </rect>
    </property>
@@ -168,14 +211,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>plainTextEdit</sender>
-   <signal>textChanged()</signal>
+   <sender>styleComboBox</sender>
+   <signal>currentTextChanged(QString)</signal>
    <receiver>MainWindow</receiver>
-   <slot>plainTextChanged()</slot>
+   <slot>styleChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>54</x>
-     <y>156</y>
+     <x>488</x>
+     <y>339</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>
@@ -184,14 +227,62 @@
    </hints>
   </connection>
   <connection>
-   <sender>styleComboBox</sender>
-   <signal>currentTextChanged(QString)</signal>
+   <sender>actionOpen</sender>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>styleChanged(QString)</slot>
+   <slot>fileOpen()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>318</x>
-     <y>260</y>
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>248</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSave</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileSave()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>248</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSaveAs</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileSaveAs()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>248</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plainTextEdit</sender>
+   <signal>textChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>plainTextChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>156</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>
