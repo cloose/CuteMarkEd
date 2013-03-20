@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     parser(new MarkdownParser())
 {
     ui->setupUi(this);
+    setupActions();
 
     setFileName(QString());
 }
@@ -82,6 +83,20 @@ void MainWindow::styleChanged(const QString &itemText)
         ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl());
     else
         ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/" + itemText.toLower() + ".css"));
+}
+
+void MainWindow::setupActions()
+{
+    // file menu
+    ui->actionNew->setShortcut(QKeySequence::New);
+    ui->actionOpen->setShortcut(QKeySequence::Open);
+    ui->actionSave->setShortcut(QKeySequence::Save);
+    ui->actionSaveAs->setShortcut(QKeySequence::SaveAs);
+    ui->actionExit->setShortcut(QKeySequence::Quit);
+
+    // edit menu
+    ui->actionUndo->setShortcut(QKeySequence::Undo);
+    ui->actionRedo->setShortcut(QKeySequence::Redo);
 }
 
 void MainWindow::setFileName(const QString &fileName)

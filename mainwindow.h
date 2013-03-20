@@ -29,6 +29,7 @@ private slots:
     void styleChanged(const QString &itemText);
 
 private:
+    void setupActions();
     void setFileName(const QString &fileName);
 
     void load(const QString &fileName);
