@@ -24,6 +24,9 @@ private slots:
     void fileSave();
     void fileSaveAs();
 
+    void editUndo();
+    void editRedo();
+
     void plainTextChanged();
 
     void styleChanged(const QString &itemText);

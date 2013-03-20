@@ -68,6 +68,20 @@ void MainWindow::fileSaveAs()
     fileSave();
 }
 
+void MainWindow::editUndo()
+{
+    if (ui->plainTextEdit->document()->isUndoAvailable()) {
+        ui->plainTextEdit->document()->undo();
+    }
+}
+
+void MainWindow::editRedo()
+{
+    if (ui->plainTextEdit->document()->isRedoAvailable()) {
+        ui->plainTextEdit->document()->redo();
+    }
+}
+
 void MainWindow::plainTextChanged()
 {
     QString code = ui->plainTextEdit->toPlainText();
