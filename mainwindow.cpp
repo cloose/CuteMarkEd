@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     parser(new MarkdownParser())
 {
     ui->setupUi(this);
+    tabifyDockWidget(ui->previewDockWidget, ui->sourceDockWidget);
+    ui->previewDockWidget->raise();
 
     setFileName(QString());
 }
