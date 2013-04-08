@@ -15,11 +15,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
         markdownparser.cpp \
-        textbuffer.cpp
+        textbuffer.cpp \
+    markdowneditor.cpp
 
 HEADERS  += mainwindow.h \
             markdownparser.h \
-            textbuffer.h
+            textbuffer.h \
+    markdowneditor.h
 
 FORMS    += mainwindow.ui
 
