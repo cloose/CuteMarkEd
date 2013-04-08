@@ -12,8 +12,11 @@ MainWindow::MainWindow(QWidget *parent) :
     parser(new MarkdownParser())
 {
     ui->setupUi(this);
+
     tabifyDockWidget(ui->previewDockWidget, ui->sourceDockWidget);
     ui->previewDockWidget->raise();
+
+    setupActions();
 
     setFileName(QString());
 }
@@ -69,6 +72,20 @@ void MainWindow::fileSaveAs()
     fileSave();
 }
 
+void MainWindow::editUndo()
+{
+    if (ui->plainTextEdit->document()->isUndoAvailable()) {
+        ui->plainTextEdit->document()->undo();
+    }
+}
+
+void MainWindow::editRedo()
+{
+    if (ui->plainTextEdit->document()->isRedoAvailable()) {
+        ui->plainTextEdit->document()->redo();
+    }
+}
+
 void MainWindow::plainTextChanged()
 {
     QString code = ui->plainTextEdit->toPlainText();
@@ -84,6 +101,20 @@ void MainWindow::styleChanged(const QString &itemText)
         ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl());
     else
         ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/" + itemText.toLower() + ".css"));
+}
+
+void MainWindow::setupActions()
+{
+    // file menu
+    ui->actionNew->setShortcut(QKeySequence::New);
+    ui->actionOpen->setShortcut(QKeySequence::Open);
+    ui->actionSave->setShortcut(QKeySequence::Save);
+    ui->actionSaveAs->setShortcut(QKeySequence::SaveAs);
+    ui->actionExit->setShortcut(QKeySequence::Quit);
+
+    // edit menu
+    ui->actionUndo->setShortcut(QKeySequence::Undo);
+    ui->actionRedo->setShortcut(QKeySequence::Redo);
 }
 
 void MainWindow::setFileName(const QString &fileName)
