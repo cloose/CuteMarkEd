@@ -28,44 +28,13 @@
      <number>6</number>
     </property>
     <item>
-     <widget class="QTabWidget" name="tabWidget">
-      <property name="tabPosition">
-       <enum>QTabWidget::West</enum>
+     <widget class="MarkdownEditor" name="plainTextEdit">
+      <property name="minimumSize">
+       <size>
+        <width>400</width>
+        <height>300</height>
+       </size>
       </property>
-      <property name="currentIndex">
-       <number>0</number>
-      </property>
-      <widget class="QWidget" name="markdownTab">
-       <attribute name="title">
-        <string>Markdown</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <widget class="QPlainTextEdit" name="plainTextEdit">
-          <property name="minimumSize">
-           <size>
-            <width>400</width>
-            <height>300</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="htmlSourceTab">
-       <attribute name="title">
-        <string>HTML Source</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
-        <item>
-         <widget class="QPlainTextEdit" name="htmlTextEdit">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
      </widget>
     </item>
    </layout>
@@ -139,6 +108,28 @@
     </layout>
    </widget>
   </widget>
+  <widget class="QDockWidget" name="sourceDockWidget">
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="windowTitle">
+    <string>HTML Source</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QPlainTextEdit" name="htmlTextEdit">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
   <action name="actionExit">
    <property name="text">
     <string>E&amp;xit</string>
@@ -174,6 +165,11 @@
    <class>QWebView</class>
    <extends>QWidget</extends>
    <header>QtWebKitWidgets/QWebView</header>
+  </customwidget>
+  <customwidget>
+   <class>MarkdownEditor</class>
+   <extends>QPlainTextEdit</extends>
+   <header>markdowneditor.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
