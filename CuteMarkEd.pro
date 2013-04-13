@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
         markdownparser.cpp \
         textbuffer.cpp \
-    markdowneditor.cpp
+    markdowneditor.cpp \
+    controls/linenumberarea.cpp
 
 HEADERS  += mainwindow.h \
             markdownparser.h \
             textbuffer.h \
-    markdowneditor.h
+    markdowneditor.h \
+    controls/linenumberarea.h
 
 FORMS    += mainwindow.ui
 

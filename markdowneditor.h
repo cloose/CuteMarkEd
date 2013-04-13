@@ -9,8 +9,19 @@ class MarkdownEditor : public QPlainTextEdit
 public:
     explicit MarkdownEditor(QWidget *parent = 0);
 
+    void lineNumberAreaPaintEvent(QPaintEvent *event);
+    int lineNumberAreaWidth();
+
 protected:
     virtual void keyPressEvent(QKeyEvent *e);
+    void resizeEvent(QResizeEvent *event);
+
+private slots:
+    void updateLineNumberAreaWidth(int newBlockCount);
+    void updateLineNumberArea(const QRect &rect, int dy);
+
+private:
+    QWidget *lineNumberArea;
 };
 
 #endif // MARKDOWNEDITOR_H
