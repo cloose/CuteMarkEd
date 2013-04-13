@@ -31,4 +31,8 @@ RESOURCES += \
     styles.qrc
 
 OTHER_FILES += \
-    github.css
+    github.css \
+    GitHub2.css \
+    Clearness.css \
+    Clearness Dark.css \
+    Clearness_Dark.css
