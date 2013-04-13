@@ -11,7 +11,8 @@ MarkdownParser::MarkdownParser()
     struct html_renderopt renderopts;
 
     sdhtml_renderer(&callbacks, &renderopts, 0);
-    m_markdown = sd_markdown_new(0, 16, &callbacks, &renderopts);
+    int extensions = MKDEXT_TABLES | MKDEXT_LAX_SPACING | MKDEXT_NO_INTRA_EMPHASIS;
+    m_markdown = sd_markdown_new(extensions, 16, &callbacks, &renderopts);
 }
 
 MarkdownParser::~MarkdownParser()
