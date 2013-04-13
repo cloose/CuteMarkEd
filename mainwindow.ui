@@ -6,35 +6,56 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>537</width>
-    <height>387</height>
+    <width>800</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>CuteMarkEd</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_3">
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <property name="leftMargin">
-     <number>6</number>
+     <number>3</number>
     </property>
     <property name="topMargin">
-     <number>6</number>
+     <number>3</number>
     </property>
     <property name="rightMargin">
-     <number>6</number>
+     <number>3</number>
     </property>
     <property name="bottomMargin">
-     <number>6</number>
+     <number>3</number>
     </property>
     <item>
-     <widget class="MarkdownEditor" name="plainTextEdit">
-      <property name="minimumSize">
-       <size>
-        <width>400</width>
-        <height>300</height>
-       </size>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
       </property>
+      <property name="handleWidth">
+       <number>3</number>
+      </property>
+      <widget class="MarkdownEditor" name="plainTextEdit">
+       <property name="minimumSize">
+        <size>
+         <width>400</width>
+         <height>300</height>
+        </size>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+      </widget>
+      <widget class="QWebView" name="webView">
+       <property name="url">
+        <url>
+         <string>about:blank</string>
+        </url>
+       </property>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -44,7 +65,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>537</width>
+     <width>800</width>
      <height>21</height>
     </rect>
    </property>
@@ -66,78 +87,20 @@
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
    </widget>
+   <widget class="QMenu" name="menuStyles">
+    <property name="title">
+     <string>Styles</string>
+    </property>
+    <addaction name="actionDefault"/>
+    <addaction name="actionGithub_like"/>
+    <addaction name="actionClearness"/>
+    <addaction name="actionClearnessDark"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
-  </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
+   <addaction name="menuStyles"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <widget class="QDockWidget" name="previewDockWidget">
-   <property name="features">
-    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
-   </property>
-   <property name="windowTitle">
-    <string>HTML Preview</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents">
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <widget class="QWebView" name="webView">
-       <property name="url">
-        <url>
-         <string>about:blank</string>
-        </url>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="styleComboBox">
-       <item>
-        <property name="text">
-         <string>Default</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Github</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-  </widget>
-  <widget class="QDockWidget" name="sourceDockWidget">
-   <property name="features">
-    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
-   </property>
-   <property name="windowTitle">
-    <string>HTML Source</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_2">
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QPlainTextEdit" name="htmlTextEdit">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-  </widget>
   <action name="actionExit">
    <property name="text">
     <string>E&amp;xit</string>
@@ -171,6 +134,41 @@
   <action name="actionRedo">
    <property name="text">
     <string>&amp;Redo</string>
+   </property>
+  </action>
+  <action name="actionDefault">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Default</string>
+   </property>
+  </action>
+  <action name="actionGithub_like">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Github-like</string>
+   </property>
+  </action>
+  <action name="actionClearness">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Clearness</string>
+   </property>
+  </action>
+  <action name="actionClearnessDark">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Clearness Dark</string>
    </property>
   </action>
  </widget>
@@ -214,22 +212,6 @@
     <hint type="sourcelabel">
      <x>-1</x>
      <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>styleComboBox</sender>
-   <signal>currentTextChanged(QString)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>styleChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>488</x>
-     <y>339</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>
@@ -330,6 +312,70 @@
     <hint type="destinationlabel">
      <x>268</x>
      <y>193</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDefault</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>styleDefault()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionGithub_like</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>styleGithub()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionClearness</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>styleClearness()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionClearnessDark</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>styleClearnessDark()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
     </hint>
    </hints>
   </connection>

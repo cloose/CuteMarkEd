@@ -13,10 +13,14 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    tabifyDockWidget(ui->previewDockWidget, ui->sourceDockWidget);
-    ui->previewDockWidget->raise();
-
     setupActions();
+
+    // put style actions in a group
+    QActionGroup* group = new QActionGroup( this );
+    ui->actionDefault->setActionGroup(group);
+    ui->actionGithub_like->setActionGroup(group);
+    ui->actionClearness->setActionGroup(group);
+    ui->actionClearnessDark->setActionGroup(group);
 
     setFileName(QString());
 }
@@ -86,13 +90,33 @@ void MainWindow::editRedo()
     }
 }
 
+void MainWindow::styleDefault()
+{
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl());
+}
+
+void MainWindow::styleGithub()
+{
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/GitHub2.css"));
+}
+
+void MainWindow::styleClearness()
+{
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/Clearness.css"));
+}
+
+void MainWindow::styleClearnessDark()
+{
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/Clearness_Dark.css"));
+}
+
 void MainWindow::plainTextChanged()
 {
     QString code = ui->plainTextEdit->toPlainText();
 
     QString html = parser->renderAsHtml(code);
     ui->webView->setHtml(html);
-    ui->htmlTextEdit->setPlainText(html);
+    //ui->htmlTextEdit->setPlainText(html);
 }
 
 void MainWindow::styleChanged(const QString &itemText)

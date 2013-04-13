@@ -27,6 +27,11 @@ private slots:
     void editUndo();
     void editRedo();
 
+    void styleDefault();
+    void styleGithub();
+    void styleClearness();
+    void styleClearnessDark();
+
     void plainTextChanged();
 
     void styleChanged(const QString &itemText);
