@@ -16,8 +16,8 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
 
     connect(this, SIGNAL(blockCountChanged(int)),
             this, SLOT(updateLineNumberAreaWidth(int)));
-    connect(this, SIGNAL(updateRequest(QRect,int)),
-            this, SLOT(updateLineNumberArea(QRect,int)));
+    connect(this, SIGNAL(updateRequest(QRect, int)),
+            this, SLOT(updateLineNumberArea(QRect, int)));
 
     updateLineNumberAreaWidth(0);
 }
@@ -49,9 +49,9 @@ void MarkdownEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
             painter.setPen(palette.color(QPalette::Dark));
 
             bool selected = (
-                        (selStart < block.position() + block.length() && selEnd > block.position())
-                     || (selStart == selEnd && selStart == block.position())
-                    );
+                                (selStart < block.position() + block.length() && selEnd > block.position())
+                                || (selStart == selEnd && selStart == block.position())
+                            );
 
             if (selected) {
                 painter.save();
@@ -59,7 +59,7 @@ void MarkdownEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
             }
 
             const QString number = QString::number(blockNumber + 1);
-            painter.drawText(0, top, lineNumberArea->width()-4, height, Qt::AlignRight, number);
+            painter.drawText(0, top, lineNumberArea->width() - 4, height, Qt::AlignRight, number);
 
             if (selected)
                 painter.restore();
@@ -152,7 +152,7 @@ void MarkdownEditor::resizeEvent(QResizeEvent *event)
 
     QRect cr = contentsRect();
     lineNumberArea->setGeometry(QStyle::visualRect(layoutDirection(), cr,
-                QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height())));
+                                QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height())));
 }
 
 void MarkdownEditor::updateLineNumberAreaWidth(int newBlockCount)
@@ -163,10 +163,10 @@ void MarkdownEditor::updateLineNumberAreaWidth(int newBlockCount)
 void MarkdownEditor::updateLineNumberArea(const QRect &rect, int dy)
 {
     if (dy)
-         lineNumberArea->scroll(0, dy);
-     else
-         lineNumberArea->update(0, rect.y(), lineNumberArea->width(), rect.height());
+        lineNumberArea->scroll(0, dy);
+    else
+        lineNumberArea->update(0, rect.y(), lineNumberArea->width(), rect.height());
 
-     if (rect.contains(viewport()->rect()))
-         updateLineNumberAreaWidth(0);
+    if (rect.contains(viewport()->rect()))
+        updateLineNumberAreaWidth(0);
 }
