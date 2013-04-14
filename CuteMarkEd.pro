@@ -4,37 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui webkitwidgets
+TEMPLATE = subdirs
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-TARGET = CuteMarkEd
-TEMPLATE = app
-
-
-SOURCES += main.cpp\
-        mainwindow.cpp \
-        markdownparser.cpp \
-        textbuffer.cpp \
-    markdowneditor.cpp \
-    controls/linenumberarea.cpp
-
-HEADERS  += mainwindow.h \
-            markdownparser.h \
-            textbuffer.h \
-    markdowneditor.h \
-    controls/linenumberarea.h
-
-FORMS    += mainwindow.ui
-
-include(sundown/sundown.pri)
-
-RESOURCES += \
-    styles.qrc
-
-OTHER_FILES += \
-    github.css \
-    GitHub2.css \
-    Clearness.css \
-    Clearness Dark.css \
-    Clearness_Dark.css
+SUBDIRS = discount app
+CONFIG += ordered
