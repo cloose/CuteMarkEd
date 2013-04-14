@@ -1,38 +1,36 @@
 #include "markdownparser.h"
 
-#include "sundown/html.h"
-
-#include "textbuffer.h"
+extern "C" {
+#include <markdown.h>
+}
 
 MarkdownParser::MarkdownParser()
-    : m_markdown(0)
 {
-    struct sd_callbacks callbacks;
-    struct html_renderopt renderopts;
-
-    sdhtml_renderer(&callbacks, &renderopts, 0);
-    int extensions = MKDEXT_TABLES | MKDEXT_LAX_SPACING | MKDEXT_NO_INTRA_EMPHASIS;
-    m_markdown = sd_markdown_new(extensions, 16, &callbacks, &renderopts);
 }
 
 MarkdownParser::~MarkdownParser()
 {
-    sd_markdown_free(m_markdown);
 }
 
 QString MarkdownParser::renderAsHtml(const QString &text)
 {
+    QString html;
+
     if (text.length() > 0)
     {
-        TextBuffer input(text.length());
-        input.puts(text);
+        char *in = qstrdup(text.toLatin1().data());
 
-        TextBuffer output(64);
+        Document *doc = mkd_string(in, text.length(), MKD_AUTOLINK);
 
-        sd_markdown_render(output.buffer(), input.buffer()->data, input.buffer()->size, m_markdown);
+        mkd_compile(doc, MKD_AUTOLINK);
 
-        return output.gets();
+        char *out;
+        mkd_document(doc, &out);
+
+        html = QString::fromLocal8Bit(out);
+
+        mkd_cleanup(doc);
     }
 
-    return "";
+    return html;
 }

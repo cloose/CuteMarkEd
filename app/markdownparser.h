@@ -10,9 +10,6 @@ public:
     ~MarkdownParser();
 
     QString renderAsHtml(const QString &text);
-
-private:
-    struct sd_markdown *m_markdown;
 };
 
 #endif // MARKDOWNPARSER_H
