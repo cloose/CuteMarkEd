@@ -4,12 +4,12 @@
 #include <QFileDialog>
 #include <QTextDocumentWriter>
 
-#include "markdownparser.h"
+#include "discount/document.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    parser(new MarkdownParser())
+    document(0)
 {
     ui->setupUi(this);
 
@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    delete parser;
+    delete document;
     delete ui;
 }
 
@@ -114,17 +114,15 @@ void MainWindow::plainTextChanged()
 {
     QString code = ui->plainTextEdit->toPlainText();
 
-    QString html = parser->renderAsHtml(code);
+    // remove previous markdown document
+    delete document; document = 0;
+
+    // generate HTML from markdown
+    document = new Discount::Document(code);
+    QString html = document->toHtml();
+
     ui->webView->setHtml(html);
     //ui->htmlTextEdit->setPlainText(html);
-}
-
-void MainWindow::styleChanged(const QString &itemText)
-{
-    if (itemText == "Default")
-        ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl());
-    else
-        ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/" + itemText.toLower() + ".css"));
 }
 
 void MainWindow::setupActions()

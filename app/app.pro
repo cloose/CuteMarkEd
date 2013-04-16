@@ -16,14 +16,16 @@ message($$INCLUDEPATH)
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-        markdownparser.cpp \
         markdowneditor.cpp \
-        controls/linenumberarea.cpp
+        controls/linenumberarea.cpp \
+        discount/parser.cpp \
+    discount/document.cpp
 
 HEADERS  += mainwindow.h \
-            markdownparser.h \
             markdowneditor.h \
-            controls/linenumberarea.h
+            controls/linenumberarea.h \
+            discount/parser.h \
+    discount/document.h
 
 FORMS    += mainwindow.ui
 

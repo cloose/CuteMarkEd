@@ -7,7 +7,9 @@ namespace Ui {
 class MainWindow;
 }
 
-class MarkdownParser;
+namespace Discount {
+class Document;
+}
 
 
 class MainWindow : public QMainWindow
@@ -34,8 +36,6 @@ private slots:
 
     void plainTextChanged();
 
-    void styleChanged(const QString &itemText);
-
 private:
     void setupActions();
     void setFileName(const QString &fileName);
@@ -44,7 +44,7 @@ private:
 
 private:
     Ui::MainWindow *ui;
-    MarkdownParser *parser;
+    Discount::Document *document;
     QString         fileName;
 };
 
