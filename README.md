@@ -5,6 +5,8 @@
 
 A Qt-based Markdown editor with live HTML preview..
 
+![screenshot](https://raw.github.com/cloose/CuteMarkEd/develop/images/screenshot_01.png)
+
 ### DEPENDENCIES
 
 * Qt 5.0.1 (LGPL v2.1)
