@@ -1,7 +1,10 @@
 #include "markdownparser.h"
 
 extern "C" {
-#include <markdown.h>
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
+#include <mkdio.h>
 }
 
 MarkdownParser::MarkdownParser()
@@ -18,16 +21,16 @@ QString MarkdownParser::renderAsHtml(const QString &text)
 
     if (text.length() > 0)
     {
-        char *in = qstrdup(text.toLatin1().data());
+        MMIOT *doc = mkd_string(text.toLocal8Bit().data(), text.length(), MKD_AUTOLINK | MKD_TOC);
+//        MMIOT *doc = mkd_string(text.toUtf8().data(), text.length(), MKD_AUTOLINK | MKD_TOC);
 
-        Document *doc = mkd_string(in, text.length(), MKD_AUTOLINK);
-
-        mkd_compile(doc, MKD_AUTOLINK);
+        mkd_compile(doc, MKD_AUTOLINK | MKD_TOC);
 
         char *out;
         mkd_document(doc, &out);
 
         html = QString::fromLocal8Bit(out);
+//        html = QString::fromUtf8(out);
 
         mkd_cleanup(doc);
     }
