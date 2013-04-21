@@ -7,9 +7,7 @@ namespace Ui {
 class MainWindow;
 }
 
-namespace Discount {
-class Document;
-}
+class HtmlPreviewGenerator;
 
 
 class MainWindow : public QMainWindow
@@ -35,6 +33,7 @@ private slots:
     void styleClearnessDark();
 
     void plainTextChanged();
+    void htmlResultReady(const QString &html);
 
 private:
     void setupActions();
@@ -44,7 +43,7 @@ private:
 
 private:
     Ui::MainWindow *ui;
-    Discount::Document *document;
+    HtmlPreviewGenerator* generator;
     QString         fileName;
 };
 
