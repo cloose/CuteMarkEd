@@ -4,12 +4,12 @@
 #include <QFileDialog>
 #include <QTextDocumentWriter>
 
-#include "discount/document.h"
+#include "htmlpreviewgenerator.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    document(0)
+    generator(new HtmlPreviewGenerator(this))
 {
     ui->setupUi(this);
 
@@ -23,11 +23,20 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionClearnessDark->setActionGroup(group);
 
     setFileName(QString());
+
+    // start background HTML preview generator
+    connect(generator, SIGNAL(resultReady(QString)),
+            this, SLOT(htmlResultReady(QString)));
+    generator->start();
 }
 
 MainWindow::~MainWindow()
 {
-    delete document;
+    // stop background HTML preview generator
+    generator->enqueue(QString());
+    generator->wait();
+    delete generator;
+
     delete ui;
 }
 
@@ -114,15 +123,13 @@ void MainWindow::plainTextChanged()
 {
     QString code = ui->plainTextEdit->toPlainText();
 
-    // remove previous markdown document
-    delete document; document = 0;
-
     // generate HTML from markdown
-    document = new Discount::Document(code);
-    QString html = document->toHtml();
+    generator->enqueue(code);
+}
 
+void MainWindow::htmlResultReady(const QString &html)
+{
     ui->webView->setHtml(html);
-    //ui->htmlTextEdit->setPlainText(html);
 }
 
 void MainWindow::setupActions()
