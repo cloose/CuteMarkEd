@@ -7,6 +7,7 @@ namespace Ui {
 class MainWindow;
 }
 
+class QLabel;
 class HtmlPreviewGenerator;
 
 
@@ -35,6 +36,8 @@ private slots:
     void styleClearness();
     void styleClearnessDark();
 
+    void styleContextMenu(const QPoint &pos);
+
     void plainTextChanged();
     void htmlResultReady(const QString &html);
 
@@ -47,6 +50,7 @@ private:
 
 private:
     Ui::MainWindow *ui;
+    QLabel *styleLabel;
     HtmlPreviewGenerator* generator;
     QString         fileName;
 };

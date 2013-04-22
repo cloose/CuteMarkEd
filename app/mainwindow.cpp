@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <QFileDialog>
+#include <QLabel>
 #include <QMessageBox>
 #include <QTextDocumentWriter>
 
@@ -13,6 +14,13 @@ MainWindow::MainWindow(QWidget *parent) :
     generator(new HtmlPreviewGenerator(this))
 {
     ui->setupUi(this);
+
+    styleLabel = new QLabel(ui->actionDefault->text(), this);
+    statusBar()->addPermanentWidget(styleLabel);
+
+    styleLabel->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(styleLabel, SIGNAL(customContextMenuRequested(QPoint)),
+            this, SLOT(styleContextMenu(QPoint)));
 
     setupActions();
 
@@ -111,21 +119,36 @@ void MainWindow::editRedo()
 void MainWindow::styleDefault()
 {
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl());
+    styleLabel->setText(ui->actionDefault->text());
 }
 
 void MainWindow::styleGithub()
 {
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/GitHub2.css"));
+    styleLabel->setText(ui->actionGithub_like->text());
 }
 
 void MainWindow::styleClearness()
 {
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/Clearness.css"));
+    styleLabel->setText(ui->actionClearness->text());
 }
 
 void MainWindow::styleClearnessDark()
 {
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/Clearness_Dark.css"));
+    styleLabel->setText(ui->actionClearnessDark->text());
+}
+
+void MainWindow::styleContextMenu(const QPoint &pos)
+{
+    QList<QAction*> actions;
+    actions << ui->actionDefault << ui->actionGithub_like << ui->actionClearness << ui->actionClearnessDark;
+
+    QMenu *menu = new QMenu();
+    menu->addActions(actions);
+
+    menu->exec(styleLabel->mapToGlobal(pos));
 }
 
 void MainWindow::plainTextChanged()
@@ -153,6 +176,12 @@ void MainWindow::setupActions()
     // edit menu
     ui->actionUndo->setShortcut(QKeySequence::Undo);
     ui->actionRedo->setShortcut(QKeySequence::Redo);
+
+    // style menu
+    ui->actionDefault->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
+    ui->actionGithub_like->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
+    ui->actionClearness->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
+    ui->actionClearnessDark->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
 }
 
 bool MainWindow::load(const QString &fileName)
