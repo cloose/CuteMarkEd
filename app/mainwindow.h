@@ -18,11 +18,14 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+protected:
+    void closeEvent(QCloseEvent *e) Q_DECL_OVERRIDE;
+
 private slots:
     void fileNew();
     void fileOpen();
-    void fileSave();
-    void fileSaveAs();
+    bool fileSave();
+    bool fileSaveAs();
 
     void editUndo();
     void editRedo();
@@ -37,9 +40,10 @@ private slots:
 
 private:
     void setupActions();
+    bool load(const QString &fileName);
+    bool maybeSave();
     void setFileName(const QString &fileName);
 
-    void load(const QString &fileName);
 
 private:
     Ui::MainWindow *ui;

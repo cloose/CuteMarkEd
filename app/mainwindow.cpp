@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QTextDocumentWriter>
 
 #include "htmlpreviewgenerator.h"
@@ -40,49 +41,57 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::closeEvent(QCloseEvent *e)
+{
+    if (maybeSave()) {
+        e->accept();
+    } else {
+        e->ignore();
+    }
+}
+
 void MainWindow::fileNew()
 {
-    ui->plainTextEdit->clear();
-    setFileName(QString());
+    if (maybeSave()) {
+        ui->plainTextEdit->clear();
+        setFileName(QString());
+    }
 }
 
 void MainWindow::fileOpen()
 {
     QString name = QFileDialog::getOpenFileName(this, tr("Open File..."),
                                               QString(), tr("Markdown Files (*.markdown *.md);;All Files (*)"));
-    if (!name.isEmpty())
-    {
+    if (!name.isEmpty()) {
         load(name);
     }
 }
 
-void MainWindow::fileSave()
+bool MainWindow::fileSave()
 {
-    if (fileName.isEmpty())
-    {
-        fileSaveAs();
-        return;
+    if (fileName.isEmpty()) {
+        return fileSaveAs();
     }
 
     QTextDocumentWriter writer(fileName, "plaintext");
     bool success = writer.write(ui->plainTextEdit->document());
-    if (success)
-    {
+    if (success) {
         ui->plainTextEdit->document()->setModified(false);
     }
+
+    return success;
 }
 
-void MainWindow::fileSaveAs()
+bool MainWindow::fileSaveAs()
 {
     QString name = QFileDialog::getSaveFileName(this, tr("Save as..."), QString(),
                                               tr("Markdown Files (*.markdown *.md);;All Files (*)"));
-    if (name.isEmpty())
-    {
-        return;
+    if (name.isEmpty()) {
+        return false;
     }
 
     setFileName(name);
-    fileSave();
+    return fileSave();
 }
 
 void MainWindow::editUndo()
@@ -146,9 +155,51 @@ void MainWindow::setupActions()
     ui->actionRedo->setShortcut(QKeySequence::Redo);
 }
 
+bool MainWindow::load(const QString &fileName)
+{
+    if (!QFile::exists(fileName)) {
+        return false;
+    }
+
+    QFile file(fileName);
+    if (!file.open(QFile::ReadOnly)) {
+        return false;
+    }
+
+    QByteArray content = file.readAll();
+    QString text = QString::fromUtf8(content);
+    ui->plainTextEdit->setPlainText(text);
+
+    setFileName(fileName);
+    return true;
+}
+
+bool MainWindow::maybeSave()
+{
+    if (!ui->plainTextEdit->document()->isModified())
+        return true;
+
+    if (fileName.startsWith(QLatin1String(":/")))
+        return true;
+
+    QMessageBox::StandardButton ret;
+    ret = QMessageBox::warning(this, tr("Application"),
+                               tr("The document has been modified.\n"
+                                  "Do you want to save your changes?"),
+                               QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+
+    if (ret == QMessageBox::Save)
+        return fileSave();
+    else if (ret == QMessageBox::Cancel)
+        return false;
+
+    return true;
+}
+
 void MainWindow::setFileName(const QString &fileName)
 {
     this->fileName = fileName;
+    ui->plainTextEdit->document()->setModified(false);
 
     QString shownName;
     if (fileName.isEmpty()) {
@@ -159,22 +210,4 @@ void MainWindow::setFileName(const QString &fileName)
 
     setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("CuteMarkEd"));
     setWindowModified(false);
-}
-
-void MainWindow::load(const QString &fileName)
-{
-    if (!QFile::exists(fileName))
-    {
-        return;
-    }
-
-    QFile file(fileName);
-    if (!file.open(QFile::ReadOnly))
-    {
-        return;
-    }
-
-    QByteArray content = file.readAll();
-    QString text = QString::fromUtf8(content);
-    ui->plainTextEdit->setPlainText(text);
 }
