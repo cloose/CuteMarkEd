@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QTextDocumentWriter>
+#include <QTimer>
 
 #include "htmlpreviewgenerator.h"
 
@@ -15,28 +16,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    styleLabel = new QLabel(ui->actionDefault->text(), this);
-    statusBar()->addPermanentWidget(styleLabel);
-
-    styleLabel->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(styleLabel, SIGNAL(customContextMenuRequested(QPoint)),
-            this, SLOT(styleContextMenu(QPoint)));
-
-    setupActions();
-
-    // put style actions in a group
-    QActionGroup* group = new QActionGroup( this );
-    ui->actionDefault->setActionGroup(group);
-    ui->actionGithub_like->setActionGroup(group);
-    ui->actionClearness->setActionGroup(group);
-    ui->actionClearnessDark->setActionGroup(group);
-
     setFileName(QString());
 
-    // start background HTML preview generator
-    connect(generator, SIGNAL(resultReady(QString)),
-            this, SLOT(htmlResultReady(QString)));
-    generator->start();
+    QTimer::singleShot(0, this, SLOT(initializeUI()));
 }
 
 MainWindow::~MainWindow()
@@ -56,6 +38,24 @@ void MainWindow::closeEvent(QCloseEvent *e)
     } else {
         e->ignore();
     }
+}
+
+void MainWindow::initializeUI()
+{
+    setupActions();
+
+    // add style label to statusbar
+    styleLabel = new QLabel(ui->actionDefault->text(), this);
+    statusBar()->addPermanentWidget(styleLabel);
+
+    styleLabel->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(styleLabel, SIGNAL(customContextMenuRequested(QPoint)),
+            this, SLOT(styleContextMenu(QPoint)));
+
+    // start background HTML preview generator
+    connect(generator, SIGNAL(resultReady(QString)),
+            this, SLOT(htmlResultReady(QString)));
+    generator->start();
 }
 
 void MainWindow::fileNew()
@@ -182,6 +182,13 @@ void MainWindow::setupActions()
     ui->actionGithub_like->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     ui->actionClearness->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
     ui->actionClearnessDark->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
+
+    // put style actions in a group
+    QActionGroup* group = new QActionGroup( this );
+    ui->actionDefault->setActionGroup(group);
+    ui->actionGithub_like->setActionGroup(group);
+    ui->actionClearness->setActionGroup(group);
+    ui->actionClearnessDark->setActionGroup(group);
 }
 
 bool MainWindow::load(const QString &fileName)
