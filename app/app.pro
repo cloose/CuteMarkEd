@@ -20,14 +20,16 @@ SOURCES += main.cpp\
         controls/linenumberarea.cpp \
         discount/parser.cpp \
     discount/document.cpp \
-    htmlpreviewgenerator.cpp
+    htmlpreviewgenerator.cpp \
+    controls/activelabel.cpp
 
 HEADERS  += mainwindow.h \
             markdowneditor.h \
             controls/linenumberarea.h \
             discount/parser.h \
     discount/document.h \
-    htmlpreviewgenerator.h
+    htmlpreviewgenerator.h \
+    controls/activelabel.h
 
 FORMS    += mainwindow.ui
 

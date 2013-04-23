@@ -7,6 +7,7 @@
 #include <QTextDocumentWriter>
 #include <QTimer>
 
+#include "controls/activelabel.h"
 #include "htmlpreviewgenerator.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -46,11 +47,21 @@ void MainWindow::initializeUI()
 
     // add style label to statusbar
     styleLabel = new QLabel(ui->actionDefault->text(), this);
-    statusBar()->addPermanentWidget(styleLabel);
+    styleLabel->setToolTip(tr("Change Preview Style"));
+    statusBar()->addWidget(styleLabel);
 
     styleLabel->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(styleLabel, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(styleContextMenu(QPoint)));
+
+    // add view label to statusbar
+    viewLabel = new ActiveLabel(this);
+    statusBar()->addPermanentWidget(viewLabel);
+
+    connect(viewLabel, SIGNAL(doubleClicked()),
+            this, SLOT(toggleHtmlView()));
+
+    toggleHtmlView();
 
     // start background HTML preview generator
     connect(generator, SIGNAL(resultReady(QString)),
@@ -151,6 +162,19 @@ void MainWindow::styleContextMenu(const QPoint &pos)
     menu->exec(styleLabel->mapToGlobal(pos));
 }
 
+void MainWindow::toggleHtmlView()
+{
+    if (viewLabel->text() == tr("HTML preview")) {
+        ui->webView->hide();
+        ui->htmlSourceTextEdit->show();
+        viewLabel->setText(tr("HTML source"));
+    } else {
+        ui->webView->show();
+        ui->htmlSourceTextEdit->hide();
+        viewLabel->setText(tr("HTML preview"));
+    }
+}
+
 void MainWindow::plainTextChanged()
 {
     QString code = ui->plainTextEdit->toPlainText();
@@ -162,6 +186,7 @@ void MainWindow::plainTextChanged()
 void MainWindow::htmlResultReady(const QString &html)
 {
     ui->webView->setHtml(html);
+    ui->htmlSourceTextEdit->setPlainText(html);
 }
 
 void MainWindow::setupActions()

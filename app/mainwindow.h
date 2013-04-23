@@ -8,6 +8,7 @@ class MainWindow;
 }
 
 class QLabel;
+class ActiveLabel;
 class HtmlPreviewGenerator;
 
 
@@ -39,6 +40,7 @@ private slots:
     void styleClearnessDark();
 
     void styleContextMenu(const QPoint &pos);
+    void toggleHtmlView();
 
     void plainTextChanged();
     void htmlResultReady(const QString &html);
@@ -53,8 +55,9 @@ private:
 private:
     Ui::MainWindow *ui;
     QLabel *styleLabel;
+    ActiveLabel *viewLabel;
     HtmlPreviewGenerator* generator;
-    QString         fileName;
+    QString fileName;
 };
 
 #endif // MAINWINDOW_H
