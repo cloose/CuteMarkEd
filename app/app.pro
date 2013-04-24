@@ -57,3 +57,14 @@ else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../disc
 else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../discount/release/libdiscount.lib
 else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../discount/debug/libdiscount.lib
 else:unix: PRE_TARGETDEPS += $$OUT_PWD/../discount/liblibdiscount.a
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/release/ -lpeg-markdown-highlight
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/debug/ -lpeg-markdown-highlight
+else:unix: LIBS += -L$$OUT_PWD/../peg-markdown-highlight/ -lpeg-markdown-highlight
+
+INCLUDEPATH += $$PWD/../peg-markdown-highlight
+DEPENDPATH += $$PWD/../peg-markdown-highlight
+
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/release/peg-markdown-highlight.lib
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/debug/peg-markdown-highlight.lib
+else:unix: PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/libpeg-markdown-highlight.a
