@@ -6,11 +6,13 @@
 #include <QTextBlock>
 
 #include <controls/linenumberarea.h>
+#include <markdownhighlighter.h>
 
 MarkdownEditor::MarkdownEditor(QWidget *parent) :
-    QPlainTextEdit(parent)
+    QPlainTextEdit(parent),
+    lineNumberArea(new LineNumberArea(this)),
+    highlighter(new MarkdownHighlighter(this->document()))
 {
-    lineNumberArea = new LineNumberArea(this);
     lineNumberArea->setFont(QFont("monospace", 10));
     setFont(QFont("monospace", 10));
 

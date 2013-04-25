@@ -21,7 +21,9 @@ SOURCES += main.cpp\
         discount/parser.cpp \
     discount/document.cpp \
     htmlpreviewgenerator.cpp \
-    controls/activelabel.cpp
+    controls/activelabel.cpp \
+    markdownhighlighter.cpp \
+    highlightworkerthread.cpp
 
 HEADERS  += mainwindow.h \
             markdowneditor.h \
@@ -29,7 +31,9 @@ HEADERS  += mainwindow.h \
             discount/parser.h \
     discount/document.h \
     htmlpreviewgenerator.h \
-    controls/activelabel.h
+    controls/activelabel.h \
+    markdownhighlighter.h \
+    highlightworkerthread.h
 
 FORMS    += mainwindow.ui
 
@@ -41,7 +45,8 @@ OTHER_FILES += \
     GitHub2.css \
     Clearness.css \
     Clearness Dark.css \
-    Clearness_Dark.css
+    Clearness_Dark.css \
+    solarized-dark.style
 
 # discount
 win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../discount/release/ -ldiscount

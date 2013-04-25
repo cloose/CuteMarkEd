@@ -2,6 +2,7 @@
 #define MARKDOWNEDITOR_H
 
 #include <qplaintextedit.h>
+#include <qsyntaxhighlighter.h>
 
 class MarkdownEditor : public QPlainTextEdit
 {
@@ -22,6 +23,7 @@ private slots:
 
 private:
     QWidget *lineNumberArea;
+    QSyntaxHighlighter *highlighter;
 };
 
 #endif // MARKDOWNEDITOR_H
