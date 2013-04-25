@@ -6,13 +6,14 @@
 
 #include "pmh_parser.h"
 
-MarkdownHighlighter::MarkdownHighlighter(QTextDocument *parent) :
-    QSyntaxHighlighter(parent),
+#include "peg-markdown-highlight/definitions.h"
+using PegMarkdownHighlight::HighlightingStyle;
+
+
+MarkdownHighlighter::MarkdownHighlighter(QTextDocument *document) :
+    QSyntaxHighlighter(document),
     workerThread(new HighlightWorkerThread(this))
 {
-    //loadStyleFromStylesheet(":/solarized-dark.style");
-    setupDefaultStyle();
-
     connect(workerThread, SIGNAL(resultReady(pmh_element**)),
             this, SLOT(resultReady(pmh_element**)));
     workerThread->start();
@@ -24,6 +25,11 @@ MarkdownHighlighter::~MarkdownHighlighter()
     workerThread->enqueue(QString());
     workerThread->wait();
     delete workerThread;
+}
+
+void MarkdownHighlighter::setStyles(const QVector<PegMarkdownHighlight::HighlightingStyle> &styles)
+{
+    highlightingStyles = styles;
 }
 
 void MarkdownHighlighter::highlightBlock(const QString &text)
@@ -125,93 +131,3 @@ void MarkdownHighlighter::resultReady(pmh_element **elements)
 
     pmh_free_elements(elements);
 }
-
-#define STY(type, format) highlightingStyles.append((HighlightingStyle){type, format})
-void MarkdownHighlighter::setupDefaultStyle()
-{
-    highlightingStyles.clear();
-
-    QTextCharFormat header1; header1.setForeground(QBrush(Qt::black));
-    header1.setBackground(QBrush(QColor(178,178,207)));
-    header1.setFontWeight(QFont::Bold);
-    STY(pmh_H1, header1);
-
-    QTextCharFormat header2; header2.setForeground(QBrush(Qt::darkBlue));
-    header2.setBackground(QBrush(QColor(204,204,227)));
-    header2.setFontWeight(QFont::Bold);
-    STY(pmh_H2, header2);
-
-    QTextCharFormat smallerHeaders; smallerHeaders.setForeground(QBrush(Qt::darkBlue));
-    smallerHeaders.setBackground(QBrush(QColor(230,230,240)));
-    STY(pmh_H3, smallerHeaders);
-    STY(pmh_H4, smallerHeaders);
-    STY(pmh_H5, smallerHeaders);
-    STY(pmh_H6, smallerHeaders);
-
-    QTextCharFormat hrule; hrule.setForeground(QBrush(Qt::darkGray));
-    hrule.setBackground(QBrush(Qt::lightGray));
-    STY(pmh_HRULE, hrule);
-
-    QTextCharFormat list; list.setForeground(QBrush(Qt::darkMagenta));
-    STY(pmh_LIST_BULLET, list);
-    STY(pmh_LIST_ENUMERATOR, list);
-
-    QTextCharFormat link; link.setForeground(QBrush(Qt::darkCyan));
-    link.setBackground(QBrush(QColor(237,241,242)));
-    STY(pmh_LINK, link);
-    STY(pmh_AUTO_LINK_URL, link);
-    STY(pmh_AUTO_LINK_EMAIL, link);
-
-    QTextCharFormat image; image.setForeground(QBrush(Qt::darkCyan));
-    image.setBackground(QBrush(Qt::cyan));
-    STY(pmh_IMAGE, image);
-
-    QTextCharFormat ref; ref.setForeground(QBrush(QColor(213,178,178)));
-    STY(pmh_REFERENCE, ref);
-
-    QTextCharFormat code; code.setForeground(QBrush(Qt::darkGreen));
-    code.setBackground(QBrush(QColor(235,242,235)));
-    STY(pmh_CODE, code);
-    STY(pmh_VERBATIM, code);
-
-    QTextCharFormat emph; emph.setForeground(QBrush(Qt::darkYellow));
-    emph.setFontItalic(true);
-    STY(pmh_EMPH, emph);
-
-    QTextCharFormat strong; strong.setForeground(QBrush(QColor(115,50,115)));
-    strong.setFontWeight(QFont::Bold);
-    STY(pmh_STRONG, strong);
-
-    QTextCharFormat comment; comment.setForeground(QBrush(Qt::gray));
-    STY(pmh_COMMENT, comment);
-
-    QTextCharFormat blockquote; blockquote.setForeground(QBrush(Qt::darkRed));
-    STY(pmh_BLOCKQUOTE, blockquote);
-}
-
-void MarkdownHighlighter::loadStyleFromStylesheet(const QString &fileName)
-{
-    QFile f(fileName);
-    if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return;
-    }
-
-    QByteArray input = f.readAll();
-    pmh_style_collection *styles = pmh_parse_styles(input.data(), 0, 0);
-
-    highlightingStyles.clear();
-    for (int i = 0; i < pmh_NUM_LANG_TYPES; i++) {
-        pmh_style_attribute *attr  = styles->element_styles[i];
-        if (!attr)
-            continue;
-
-        pmh_element_type type = attr->lang_element_type;
-        QTextCharFormat format = getCharFormatFromStyleAttributes(cur, editor->font());
-        STY(lang_element_type, format);
-    }
-
-    // TODO!
-
-    pmh_free_style_collection(styles);
-}
-

@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     htmlpreviewgenerator.cpp \
     controls/activelabel.cpp \
     markdownhighlighter.cpp \
-    highlightworkerthread.cpp
+    highlightworkerthread.cpp \
+    peg-markdown-highlight/styleparser.cpp
 
 HEADERS  += mainwindow.h \
             markdowneditor.h \
@@ -33,7 +34,9 @@ HEADERS  += mainwindow.h \
     htmlpreviewgenerator.h \
     controls/activelabel.h \
     markdownhighlighter.h \
-    highlightworkerthread.h
+    highlightworkerthread.h \
+    peg-markdown-highlight/styleparser.h \
+    peg-markdown-highlight/definitions.h
 
 FORMS    += mainwindow.ui
 

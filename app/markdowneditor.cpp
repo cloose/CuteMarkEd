@@ -6,13 +6,17 @@
 #include <QTextBlock>
 
 #include <controls/linenumberarea.h>
+#include <peg-markdown-highlight/styleparser.h>
 #include <markdownhighlighter.h>
+
 
 MarkdownEditor::MarkdownEditor(QWidget *parent) :
     QPlainTextEdit(parent),
     lineNumberArea(new LineNumberArea(this)),
     highlighter(new MarkdownHighlighter(this->document()))
 {
+    loadStyleFromStylesheet(":/solarized-dark.style");
+
     lineNumberArea->setFont(QFont("monospace", 10));
     setFont(QFont("monospace", 10));
 
@@ -171,4 +175,19 @@ void MarkdownEditor::updateLineNumberArea(const QRect &rect, int dy)
 
     if (rect.contains(viewport()->rect()))
         updateLineNumberAreaWidth(0);
+}
+
+void MarkdownEditor::loadStyleFromStylesheet(const QString &fileName)
+{
+    QFile f(fileName);
+    if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return;
+    }
+
+    QTextStream ts(&f);
+    QString input = ts.readAll();
+
+    PegMarkdownHighlight::StyleParser parser(input);
+    highlighter->setStyles(parser.highlightingStyles(this->font()));
+    this->setPalette(parser.editorPalette());
 }
