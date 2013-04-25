@@ -151,6 +151,12 @@ void MainWindow::styleClearnessDark()
     styleLabel->setText(ui->actionClearnessDark->text());
 }
 
+void MainWindow::helpAbout()
+{
+    QMessageBox::about(this, tr("About CuteMarkEd"),
+                       tr("<p><b>CuteMarkEd 0.1</b><br> Qt Markdown Editor<br>Copyright 2013 Christian Loose</p>"));
+}
+
 void MainWindow::styleContextMenu(const QPoint &pos)
 {
     QList<QAction*> actions;

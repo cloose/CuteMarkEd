@@ -39,6 +39,8 @@ private slots:
     void styleClearness();
     void styleClearnessDark();
 
+    void helpAbout();
+
     void styleContextMenu(const QPoint &pos);
     void toggleHtmlView();
 
