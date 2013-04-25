@@ -1,6 +1,5 @@
 #include "markdownhighlighter.h"
 
-#include <QDebug>
 #include <QFile>
 #include <QTextDocument>
 #include <QTextLayout>
@@ -19,18 +18,22 @@ MarkdownHighlighter::MarkdownHighlighter(QTextDocument *parent) :
     workerThread->start();
 }
 
+MarkdownHighlighter::~MarkdownHighlighter()
+{
+    // stop background worker thread
+    workerThread->enqueue(QString());
+    workerThread->wait();
+    delete workerThread;
+}
+
 void MarkdownHighlighter::highlightBlock(const QString &text)
 {
-    qDebug() << "highlightBlock";
-
     Q_UNUSED(text)
     workerThread->enqueue(document()->toPlainText());
 }
 
 void MarkdownHighlighter::resultReady(pmh_element **elements)
 {
-    qDebug() << "resultReady";
-
     QTextBlock block = document()->firstBlock();
     while (block.isValid()) {
         block.layout()->clearAdditionalFormats();
@@ -126,7 +129,6 @@ void MarkdownHighlighter::resultReady(pmh_element **elements)
 #define STY(type, format) highlightingStyles.append((HighlightingStyle){type, format})
 void MarkdownHighlighter::setupDefaultStyle()
 {
-    qDebug() << "setupDefaultStyle";
     highlightingStyles.clear();
 
     QTextCharFormat header1; header1.setForeground(QBrush(Qt::black));
@@ -204,7 +206,8 @@ void MarkdownHighlighter::loadStyleFromStylesheet(const QString &fileName)
             continue;
 
         pmh_element_type type = attr->lang_element_type;
-        // TODO!
+        QTextCharFormat format = getCharFormatFromStyleAttributes(cur, editor->font());
+        STY(lang_element_type, format);
     }
 
     // TODO!
