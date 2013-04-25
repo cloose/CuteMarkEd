@@ -6,7 +6,12 @@
 
 QT       -= core gui
 
-TARGET = peg-markdown-highlight
+win32-msvc* {
+TARGET = libpmh
+} else {
+TARGET = pmh
+}
+
 TEMPLATE = lib
 CONFIG += staticlib
 

@@ -210,11 +210,7 @@ pmh_element_type pmh_element_type_from_name(char *name)
         if (i_name == NULL)
             continue;
         if (strcmp(i_name, name) == 0)
-#if defined(_MSC_VER)
             return (pmh_element_type)i;
-#else
-            return i;
-#endif
     }
     
     return pmh_NO_TYPE;
