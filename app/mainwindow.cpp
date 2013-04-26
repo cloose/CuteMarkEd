@@ -135,20 +135,22 @@ void MainWindow::styleDefault()
 
 void MainWindow::styleGithub()
 {
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/GitHub2.css"));
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/github.css"));
     styleLabel->setText(ui->actionGithub_like->text());
 }
 
-void MainWindow::styleClearness()
+void MainWindow::styleSolarizedLight()
 {
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/Clearness.css"));
-    styleLabel->setText(ui->actionClearness->text());
+    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-light+.txt");
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-light.css"));
+    styleLabel->setText(ui->actionSolarizedLight->text());
 }
 
-void MainWindow::styleClearnessDark()
+void MainWindow::styleSolarizedDark()
 {
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/Clearness_Dark.css"));
-    styleLabel->setText(ui->actionClearnessDark->text());
+    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-dark+.txt");
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-dark.css"));
+    styleLabel->setText(ui->actionSolarizedDark->text());
 }
 
 void MainWindow::helpAbout()
@@ -160,7 +162,7 @@ void MainWindow::helpAbout()
 void MainWindow::styleContextMenu(const QPoint &pos)
 {
     QList<QAction*> actions;
-    actions << ui->actionDefault << ui->actionGithub_like << ui->actionClearness << ui->actionClearnessDark;
+    actions << ui->actionDefault << ui->actionGithub_like << ui->actionSolarizedLight << ui->actionSolarizedDark;
 
     QMenu *menu = new QMenu();
     menu->addActions(actions);
@@ -211,15 +213,15 @@ void MainWindow::setupActions()
     // style menu
     ui->actionDefault->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
     ui->actionGithub_like->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
-    ui->actionClearness->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
-    ui->actionClearnessDark->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
+    ui->actionSolarizedLight->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
+    ui->actionSolarizedDark->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
 
     // put style actions in a group
     QActionGroup* group = new QActionGroup( this );
     ui->actionDefault->setActionGroup(group);
     ui->actionGithub_like->setActionGroup(group);
-    ui->actionClearness->setActionGroup(group);
-    ui->actionClearnessDark->setActionGroup(group);
+    ui->actionSolarizedLight->setActionGroup(group);
+    ui->actionSolarizedDark->setActionGroup(group);
 }
 
 bool MainWindow::load(const QString &fileName)

@@ -1,8 +1,14 @@
 <RCC>
-    <qresource prefix="/">
-        <file>github.css</file>
-        <file>Clearness_Dark.css</file>
-        <file>Clearness.css</file>
-        <file>GitHub2.css</file>
+    <qresource prefix="/css">
+        <file alias="markdown.css">styles/markdown.css</file>
+        <file alias="solarized-dark.css">styles/solarized-dark.css</file>
+        <file alias="solarized-light.css">styles/solarized-light.css</file>
+        <file alias="github.css">styles/github.css</file>
+    </qresource>
+    <qresource prefix="/theme">
+        <file alias="solarized-dark.txt">themes/solarized-dark.txt</file>
+        <file alias="solarized-dark+.txt">themes/solarized-dark+.txt</file>
+        <file alias="solarized-light.txt">themes/solarized-light.txt</file>
+        <file alias="solarized-light+.txt">themes/solarized-light+.txt</file>
     </qresource>
 </RCC>

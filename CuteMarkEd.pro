@@ -6,5 +6,7 @@
 
 TEMPLATE = subdirs
 
-SUBDIRS = discount app
+SUBDIRS = discount \
+    peg-markdown-highlight \
+    app
 CONFIG += ordered

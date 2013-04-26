@@ -36,8 +36,8 @@ private slots:
 
     void styleDefault();
     void styleGithub();
-    void styleClearness();
-    void styleClearnessDark();
+    void styleSolarizedLight();
+    void styleSolarizedDark();
 
     void helpAbout();
 
