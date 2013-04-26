@@ -30,6 +30,8 @@ private slots:
     void fileOpen();
     bool fileSave();
     bool fileSaveAs();
+    void fileExportToHtml();
+    void fileExportToPdf();
 
     void editUndo();
     void editRedo();

@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QLabel>
 #include <QMessageBox>
+#include <QPrinter>
 #include <QTextDocumentWriter>
 #include <QTimer>
 
@@ -111,6 +112,32 @@ bool MainWindow::fileSaveAs()
 
     setFileName(name);
     return fileSave();
+}
+
+void MainWindow::fileExportToHtml()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Export to HTML..."), QString(),
+                                                    tr("HTML Files (*.html *.htm);;All Files (*)"));
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    QTextDocumentWriter writer(fileName, "plaintext");
+    writer.write(ui->htmlSourceTextEdit->document());
+}
+
+void MainWindow::fileExportToPdf()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Export to PDF..."), QString(),
+                                                    tr("PDF Files (*.pdf);;All Files (*)"));
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    QPrinter printer;
+    printer.setOutputFileName(fileName);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    ui->webView->print(&printer);
 }
 
 void MainWindow::editUndo()
