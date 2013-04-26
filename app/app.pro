@@ -43,14 +43,6 @@ FORMS    += mainwindow.ui
 RESOURCES += \
     styles.qrc
 
-OTHER_FILES += \
-    github.css \
-    GitHub2.css \
-    Clearness.css \
-    Clearness Dark.css \
-    Clearness_Dark.css \
-    solarized-dark.style
-
 # discount
 win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../discount/release/ -ldiscount
 else:win32-g++:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../discount/debug/ -ldiscount

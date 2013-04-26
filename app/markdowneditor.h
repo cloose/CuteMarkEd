@@ -15,6 +15,8 @@ public:
     void lineNumberAreaPaintEvent(QPaintEvent *event);
     int lineNumberAreaWidth();
 
+    void loadStyleFromStylesheet(const QString &fileName);
+
 protected:
     virtual void keyPressEvent(QKeyEvent *e);
     void resizeEvent(QResizeEvent *event);
@@ -22,9 +24,6 @@ protected:
 private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
     void updateLineNumberArea(const QRect &rect, int dy);
-
-private:
-    void loadStyleFromStylesheet(const QString &fileName);
 
 private:
     QWidget *lineNumberArea;

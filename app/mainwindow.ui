@@ -104,8 +104,8 @@
     </property>
     <addaction name="actionDefault"/>
     <addaction name="actionGithub_like"/>
-    <addaction name="actionClearness"/>
-    <addaction name="actionClearnessDark"/>
+    <addaction name="actionSolarizedLight"/>
+    <addaction name="actionSolarizedDark"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -166,20 +166,20 @@
     <string>Github-like</string>
    </property>
   </action>
-  <action name="actionClearness">
+  <action name="actionSolarizedLight">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Clearness</string>
+    <string>Solarized Light</string>
    </property>
   </action>
-  <action name="actionClearnessDark">
+  <action name="actionSolarizedDark">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Clearness Dark</string>
+    <string>Solarized Dark</string>
    </property>
   </action>
  </widget>
@@ -359,10 +359,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionClearness</sender>
+   <sender>actionSolarizedLight</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>styleClearness()</slot>
+   <slot>styleSolarizedLight()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -375,10 +375,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionClearnessDark</sender>
+   <sender>actionSolarizedDark</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>styleClearnessDark()</slot>
+   <slot>styleSolarizedDark()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

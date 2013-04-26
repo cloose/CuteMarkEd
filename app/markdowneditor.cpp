@@ -1,5 +1,6 @@
 #include "markdowneditor.h"
 
+#include <QApplication>
 #include <QDebug>
 #include <QPainter>
 #include <QStyle>
@@ -15,8 +16,6 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
     lineNumberArea(new LineNumberArea(this)),
     highlighter(new MarkdownHighlighter(this->document()))
 {
-    loadStyleFromStylesheet(":/solarized-dark.style");
-
     lineNumberArea->setFont(QFont("monospace", 10));
     setFont(QFont("monospace", 10));
 
@@ -189,5 +188,7 @@ void MarkdownEditor::loadStyleFromStylesheet(const QString &fileName)
 
     PegMarkdownHighlight::StyleParser parser(input);
     highlighter->setStyles(parser.highlightingStyles(this->font()));
+    highlighter->rehighlight();
     this->setPalette(parser.editorPalette());
+    this->viewport()->setPalette(this->palette());
 }
