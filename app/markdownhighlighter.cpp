@@ -1,5 +1,6 @@
 #include "markdownhighlighter.h"
 
+#include <QDebug>
 #include <QFile>
 #include <QTextDocument>
 #include <QTextLayout>
@@ -35,6 +36,11 @@ void MarkdownHighlighter::setStyles(const QVector<PegMarkdownHighlight::Highligh
 void MarkdownHighlighter::highlightBlock(const QString &text)
 {
     Q_UNUSED(text)
+
+    if (document()->isEmpty()) {
+        return;
+    }
+
     workerThread->enqueue(document()->toPlainText());
 }
 
@@ -44,6 +50,11 @@ void MarkdownHighlighter::resultReady(pmh_element **elements)
     while (block.isValid()) {
         block.layout()->clearAdditionalFormats();
         block = block.next();
+    }
+
+    if (!*elements) {
+        qDebug() << "elements is null";
+        return;
     }
 
     // QTextDocument::characterCount returns a value one higher than the

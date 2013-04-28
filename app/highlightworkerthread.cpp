@@ -38,7 +38,7 @@ void HighlightWorkerThread::run()
 
         //
         pmh_element **elements;
-        pmh_markdown_to_elements(text.toLocal8Bit().data(), pmh_EXT_NONE, &elements);
+        pmh_markdown_to_elements(text.toUtf8().data(), pmh_EXT_NONE, &elements);
 
         emit resultReady(elements);
     }
