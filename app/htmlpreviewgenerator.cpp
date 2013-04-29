@@ -14,6 +14,11 @@ void HtmlPreviewGenerator::enqueue(const QString &text)
     bufferNotEmpty.wakeOne();
 }
 
+void HtmlPreviewGenerator::setHtmlTemplate(const QString &t)
+{
+    htmlTemplate = t;
+}
+
 
 void HtmlPreviewGenerator::run()
 {
@@ -37,8 +42,19 @@ void HtmlPreviewGenerator::run()
 
         // generate HTML from markdown
         Discount::Document document(text);
-        QString html = document.toHtml();
+        QString htmlContent = document.toHtml();
+
+        QString html = renderTemplate(htmlContent);
 
         emit resultReady(html);
     }
+}
+
+QString HtmlPreviewGenerator::renderTemplate(const QString &content)
+{
+    if (htmlTemplate.isEmpty()) {
+        return content;
+    }
+
+    return QString(htmlTemplate).replace(QLatin1String("__HTML_CONTENT__"), content);
 }

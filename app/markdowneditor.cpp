@@ -1,16 +1,21 @@
 #include "markdowneditor.h"
 
+#include <QApplication>
 #include <QDebug>
 #include <QPainter>
 #include <QStyle>
 #include <QTextBlock>
 
 #include <controls/linenumberarea.h>
+#include <peg-markdown-highlight/styleparser.h>
+#include <markdownhighlighter.h>
+
 
 MarkdownEditor::MarkdownEditor(QWidget *parent) :
-    QPlainTextEdit(parent)
+    QPlainTextEdit(parent),
+    lineNumberArea(new LineNumberArea(this)),
+    highlighter(new MarkdownHighlighter(this->document()))
 {
-    lineNumberArea = new LineNumberArea(this);
     lineNumberArea->setFont(QFont("monospace", 10));
     setFont(QFont("monospace", 10));
 
@@ -169,4 +174,21 @@ void MarkdownEditor::updateLineNumberArea(const QRect &rect, int dy)
 
     if (rect.contains(viewport()->rect()))
         updateLineNumberAreaWidth(0);
+}
+
+void MarkdownEditor::loadStyleFromStylesheet(const QString &fileName)
+{
+    QFile f(fileName);
+    if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return;
+    }
+
+    QTextStream ts(&f);
+    QString input = ts.readAll();
+
+    PegMarkdownHighlight::StyleParser parser(input);
+    highlighter->setStyles(parser.highlightingStyles(this->font()));
+    highlighter->rehighlight();
+    this->setPalette(parser.editorPalette());
+    this->viewport()->setPalette(this->palette());
 }

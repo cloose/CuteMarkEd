@@ -2,9 +2,13 @@
 #include "ui_mainwindow.h"
 
 #include <QFileDialog>
+#include <QLabel>
 #include <QMessageBox>
+#include <QPrinter>
 #include <QTextDocumentWriter>
+#include <QTimer>
 
+#include "controls/activelabel.h"
 #include "htmlpreviewgenerator.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -14,21 +18,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setupActions();
-
-    // put style actions in a group
-    QActionGroup* group = new QActionGroup( this );
-    ui->actionDefault->setActionGroup(group);
-    ui->actionGithub_like->setActionGroup(group);
-    ui->actionClearness->setActionGroup(group);
-    ui->actionClearnessDark->setActionGroup(group);
-
     setFileName(QString());
 
-    // start background HTML preview generator
-    connect(generator, SIGNAL(resultReady(QString)),
-            this, SLOT(htmlResultReady(QString)));
-    generator->start();
+    QTimer::singleShot(0, this, SLOT(initializeUI()));
 }
 
 MainWindow::~MainWindow()
@@ -48,6 +40,40 @@ void MainWindow::closeEvent(QCloseEvent *e)
     } else {
         e->ignore();
     }
+}
+
+void MainWindow::initializeUI()
+{
+    setupActions();
+
+    // add style label to statusbar
+    styleLabel = new QLabel(ui->actionDefault->text(), this);
+    styleLabel->setToolTip(tr("Change Preview Style"));
+    statusBar()->addWidget(styleLabel);
+
+    styleLabel->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(styleLabel, SIGNAL(customContextMenuRequested(QPoint)),
+            this, SLOT(styleContextMenu(QPoint)));
+
+    // add view label to statusbar
+    viewLabel = new ActiveLabel(this);
+    statusBar()->addPermanentWidget(viewLabel);
+
+    connect(viewLabel, SIGNAL(doubleClicked()),
+            this, SLOT(toggleHtmlView()));
+
+    toggleHtmlView();
+
+    QFile f(":/template.html");
+    if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QString htmlTemplate = f.readAll();
+        generator->setHtmlTemplate(htmlTemplate);
+    }
+
+    // start background HTML preview generator
+    connect(generator, SIGNAL(resultReady(QString)),
+            this, SLOT(htmlResultReady(QString)));
+    generator->start();
 }
 
 void MainWindow::fileNew()
@@ -94,6 +120,32 @@ bool MainWindow::fileSaveAs()
     return fileSave();
 }
 
+void MainWindow::fileExportToHtml()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Export to HTML..."), QString(),
+                                                    tr("HTML Files (*.html *.htm);;All Files (*)"));
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    QTextDocumentWriter writer(fileName, "plaintext");
+    writer.write(ui->htmlSourceTextEdit->document());
+}
+
+void MainWindow::fileExportToPdf()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Export to PDF..."), QString(),
+                                                    tr("PDF Files (*.pdf);;All Files (*)"));
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    QPrinter printer;
+    printer.setOutputFileName(fileName);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    ui->webView->print(&printer);
+}
+
 void MainWindow::editUndo()
 {
     if (ui->plainTextEdit->document()->isUndoAvailable()) {
@@ -111,21 +163,57 @@ void MainWindow::editRedo()
 void MainWindow::styleDefault()
 {
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl());
+    styleLabel->setText(ui->actionDefault->text());
 }
 
 void MainWindow::styleGithub()
 {
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/GitHub2.css"));
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/github.css"));
+    styleLabel->setText(ui->actionGithub_like->text());
 }
 
-void MainWindow::styleClearness()
+void MainWindow::styleSolarizedLight()
 {
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/Clearness.css"));
+    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-light+.txt");
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-light.css"));
+    styleLabel->setText(ui->actionSolarizedLight->text());
 }
 
-void MainWindow::styleClearnessDark()
+void MainWindow::styleSolarizedDark()
 {
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/Clearness_Dark.css"));
+    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-dark+.txt");
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-dark.css"));
+    styleLabel->setText(ui->actionSolarizedDark->text());
+}
+
+void MainWindow::helpAbout()
+{
+    QMessageBox::about(this, tr("About CuteMarkEd"),
+                       tr("<p><b>CuteMarkEd 0.1</b><br> Qt Markdown Editor<br>Copyright 2013 Christian Loose</p>"));
+}
+
+void MainWindow::styleContextMenu(const QPoint &pos)
+{
+    QList<QAction*> actions;
+    actions << ui->actionDefault << ui->actionGithub_like << ui->actionSolarizedLight << ui->actionSolarizedDark;
+
+    QMenu *menu = new QMenu();
+    menu->addActions(actions);
+
+    menu->exec(styleLabel->mapToGlobal(pos));
+}
+
+void MainWindow::toggleHtmlView()
+{
+    if (viewLabel->text() == tr("HTML preview")) {
+        ui->webView->hide();
+        ui->htmlSourceTextEdit->show();
+        viewLabel->setText(tr("HTML source"));
+    } else {
+        ui->webView->show();
+        ui->htmlSourceTextEdit->hide();
+        viewLabel->setText(tr("HTML preview"));
+    }
 }
 
 void MainWindow::plainTextChanged()
@@ -139,6 +227,7 @@ void MainWindow::plainTextChanged()
 void MainWindow::htmlResultReady(const QString &html)
 {
     ui->webView->setHtml(html);
+    ui->htmlSourceTextEdit->setPlainText(html);
 }
 
 void MainWindow::setupActions()
@@ -153,6 +242,19 @@ void MainWindow::setupActions()
     // edit menu
     ui->actionUndo->setShortcut(QKeySequence::Undo);
     ui->actionRedo->setShortcut(QKeySequence::Redo);
+
+    // style menu
+    ui->actionDefault->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
+    ui->actionGithub_like->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
+    ui->actionSolarizedLight->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
+    ui->actionSolarizedDark->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
+
+    // put style actions in a group
+    QActionGroup* group = new QActionGroup( this );
+    ui->actionDefault->setActionGroup(group);
+    ui->actionGithub_like->setActionGroup(group);
+    ui->actionSolarizedLight->setActionGroup(group);
+    ui->actionSolarizedDark->setActionGroup(group);
 }
 
 bool MainWindow::load(const QString &fileName)

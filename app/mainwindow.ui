@@ -56,6 +56,17 @@
         </url>
        </property>
       </widget>
+      <widget class="QPlainTextEdit" name="htmlSourceTextEdit">
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -66,7 +77,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -77,6 +88,9 @@
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="actionSaveAs"/>
+    <addaction name="separator"/>
+    <addaction name="actionExportToHTML"/>
+    <addaction name="actionExportToPDF"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -93,12 +107,19 @@
     </property>
     <addaction name="actionDefault"/>
     <addaction name="actionGithub_like"/>
-    <addaction name="actionClearness"/>
-    <addaction name="actionClearnessDark"/>
+    <addaction name="actionSolarizedLight"/>
+    <addaction name="actionSolarizedDark"/>
+   </widget>
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuStyles"/>
+   <addaction name="menu_Help"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
@@ -155,20 +176,35 @@
     <string>Github-like</string>
    </property>
   </action>
-  <action name="actionClearness">
+  <action name="actionSolarizedLight">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Clearness</string>
+    <string>Solarized Light</string>
    </property>
   </action>
-  <action name="actionClearnessDark">
+  <action name="actionSolarizedDark">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Clearness Dark</string>
+    <string>Solarized Dark</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="actionExportToHTML">
+   <property name="text">
+    <string>Export to HTML...</string>
+   </property>
+  </action>
+  <action name="actionExportToPDF">
+   <property name="text">
+    <string>Export to PDF...</string>
    </property>
   </action>
  </widget>
@@ -348,10 +384,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionClearness</sender>
+   <sender>actionSolarizedLight</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>styleClearness()</slot>
+   <slot>styleSolarizedLight()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -364,10 +400,58 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionClearnessDark</sender>
+   <sender>actionSolarizedDark</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>styleClearnessDark()</slot>
+   <slot>styleSolarizedDark()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAbout</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>helpAbout()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExportToHTML</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileExportToHtml()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExportToPDF</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileExportToPdf()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

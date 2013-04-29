@@ -7,6 +7,8 @@ namespace Ui {
 class MainWindow;
 }
 
+class QLabel;
+class ActiveLabel;
 class HtmlPreviewGenerator;
 
 
@@ -22,18 +24,27 @@ protected:
     void closeEvent(QCloseEvent *e) Q_DECL_OVERRIDE;
 
 private slots:
+    void initializeUI();
+
     void fileNew();
     void fileOpen();
     bool fileSave();
     bool fileSaveAs();
+    void fileExportToHtml();
+    void fileExportToPdf();
 
     void editUndo();
     void editRedo();
 
     void styleDefault();
     void styleGithub();
-    void styleClearness();
-    void styleClearnessDark();
+    void styleSolarizedLight();
+    void styleSolarizedDark();
+
+    void helpAbout();
+
+    void styleContextMenu(const QPoint &pos);
+    void toggleHtmlView();
 
     void plainTextChanged();
     void htmlResultReady(const QString &html);
@@ -47,8 +58,10 @@ private:
 
 private:
     Ui::MainWindow *ui;
+    QLabel *styleLabel;
+    ActiveLabel *viewLabel;
     HtmlPreviewGenerator* generator;
-    QString         fileName;
+    QString fileName;
 };
 
 #endif // MAINWINDOW_H
