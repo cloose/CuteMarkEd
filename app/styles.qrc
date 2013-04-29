@@ -11,4 +11,7 @@
         <file alias="solarized-light.txt">themes/solarized-light.txt</file>
         <file alias="solarized-light+.txt">themes/solarized-light+.txt</file>
     </qresource>
+    <qresource prefix="/">
+        <file>template.html</file>
+    </qresource>
 </RCC>

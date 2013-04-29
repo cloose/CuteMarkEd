@@ -64,6 +64,12 @@ void MainWindow::initializeUI()
 
     toggleHtmlView();
 
+    QFile f(":/template.html");
+    if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QString htmlTemplate = f.readAll();
+        generator->setHtmlTemplate(htmlTemplate);
+    }
+
     // start background HTML preview generator
     connect(generator, SIGNAL(resultReady(QString)),
             this, SLOT(htmlResultReady(QString)));
