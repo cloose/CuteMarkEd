@@ -52,7 +52,7 @@ void MarkdownHighlighter::resultReady(pmh_element **elements)
         block = block.next();
     }
 
-    if (!*elements) {
+    if (!elements) {
         qDebug() << "elements is null";
         return;
     }
