@@ -7,6 +7,8 @@
 #include <QPrinter>
 #include <QTextDocumentWriter>
 #include <QTimer>
+#include <QWebFrame>
+#include <QWebPage>
 
 #include "controls/activelabel.h"
 #include "htmlpreviewgenerator.h"
@@ -67,6 +69,7 @@ void MainWindow::initializeUI()
     connect(viewLabel, SIGNAL(doubleClicked()),
             this, SLOT(toggleHtmlView()));
 
+    ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->dockWidget->close();
     toggleHtmlView();
 
@@ -259,6 +262,9 @@ void MainWindow::setupActions()
     ui->actionUndo->setShortcut(QKeySequence::Undo);
     ui->actionRedo->setShortcut(QKeySequence::Redo);
 
+    // view menu
+    ui->menuView->addAction(ui->dockWidget->toggleViewAction());
+
     // style menu
     ui->actionDefault->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
     ui->actionGithub_like->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
@@ -345,4 +351,10 @@ void MainWindow::updateSplitter()
     childSizes[2] = ui->htmlSourceTextEdit->isVisible() ? width : 0;
 
     ui->splitter->setSizes(childSizes);
+}
+
+void MainWindow::tocLinkClicked(const QUrl &url)
+{
+    QString anchor = url.toString().remove("#");
+    ui->webView->page()->mainFrame()->scrollToAnchor(anchor);
 }

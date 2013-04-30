@@ -51,6 +51,8 @@ private slots:
     void htmlResultReady(const QString &html);
     void tocResultReady(const QString &toc);
 
+    void tocLinkClicked(const QUrl &url);
+
 private:
     void setupActions();
     bool load(const QString &fileName);
