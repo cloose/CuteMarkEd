@@ -27,6 +27,14 @@ QString Parser::renderAsHtml(MMIOT *document)
     return QString::fromLocal8Bit(out);
 }
 
+QString Parser::generateToc(MMIOT *document)
+{
+    char *out;
+    mkd_toc(document, &out);
+
+    return QString::fromLocal8Bit(out);
+}
+
 void Parser::cleanup(MMIOT *document)
 {
     mkd_cleanup(document);

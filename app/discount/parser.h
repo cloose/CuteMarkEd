@@ -21,6 +21,7 @@ public:
 
     static MMIOT* parseString(const QString &text);
     static QString renderAsHtml(MMIOT *document);
+    static QString generateToc(MMIOT *document);
 
     static void cleanup(MMIOT *document);
 };
