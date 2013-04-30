@@ -38,8 +38,8 @@
       <widget class="MarkdownEditor" name="plainTextEdit">
        <property name="minimumSize">
         <size>
-         <width>400</width>
-         <height>300</height>
+         <width>200</width>
+         <height>0</height>
         </size>
        </property>
        <property name="frameShape">
@@ -50,6 +50,18 @@
        </property>
       </widget>
       <widget class="QWebView" name="webView">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="url">
         <url>
          <string>about:blank</string>
@@ -57,6 +69,12 @@
        </property>
       </widget>
       <widget class="QPlainTextEdit" name="htmlSourceTextEdit">
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
        </property>
@@ -77,7 +95,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

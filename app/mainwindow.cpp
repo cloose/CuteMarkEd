@@ -42,6 +42,11 @@ void MainWindow::closeEvent(QCloseEvent *e)
     }
 }
 
+void MainWindow::resizeEvent(QResizeEvent *e)
+{
+    updateSplitter();
+}
+
 void MainWindow::initializeUI()
 {
     setupActions();
@@ -217,6 +222,8 @@ void MainWindow::toggleHtmlView()
         ui->htmlSourceTextEdit->hide();
         viewLabel->setText(tr("HTML preview"));
     }
+
+    updateSplitter();
 }
 
 void MainWindow::plainTextChanged()
@@ -235,9 +242,7 @@ void MainWindow::htmlResultReady(const QString &html)
 
 void MainWindow::tocResultReady(const QString &toc)
 {
-
     QString styledToc = QString("<html><head>\n<style type=\"text/css\">ul { list-style-type: none; padding: 0; margin-left: 1em; } a { text-decoration: none; }</style>\n</head><body>%1</body></html>").arg(toc);
-    qDebug() << styledToc;
     ui->tocWebView->setHtml(styledToc);
 }
 
@@ -323,4 +328,21 @@ void MainWindow::setFileName(const QString &fileName)
 
     setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("CuteMarkEd"));
     setWindowModified(false);
+}
+
+void MainWindow::updateSplitter()
+{
+    // not fully initialized?
+    if (centralWidget()->size() != ui->splitter->size()) {
+        return;
+    }
+
+    QList<int> childSizes = ui->splitter->sizes();
+    int width = ui->splitter->width() / 2;
+
+    childSizes[0] = width;
+    childSizes[1] = ui->webView->isVisible() ? width : 0;
+    childSizes[2] = ui->htmlSourceTextEdit->isVisible() ? width : 0;
+
+    ui->splitter->setSizes(childSizes);
 }

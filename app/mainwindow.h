@@ -22,6 +22,7 @@ public:
 
 protected:
     void closeEvent(QCloseEvent *e) Q_DECL_OVERRIDE;
+    void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
 
 private slots:
     void initializeUI();
@@ -55,7 +56,7 @@ private:
     bool load(const QString &fileName);
     bool maybeSave();
     void setFileName(const QString &fileName);
-
+    void updateSplitter();
 
 private:
     Ui::MainWindow *ui;
