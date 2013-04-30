@@ -43,10 +43,12 @@ void HtmlPreviewGenerator::run()
         // generate HTML from markdown
         Discount::Document document(text);
         QString htmlContent = document.toHtml();
-
         QString html = renderTemplate(htmlContent);
+        emit htmlResultReady(html);
 
-        emit resultReady(html);
+        // generate table of contents
+        QString toc = document.generateToc();
+        emit tocResultReady(toc);
     }
 }
 

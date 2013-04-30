@@ -48,6 +48,7 @@ private slots:
 
     void plainTextChanged();
     void htmlResultReady(const QString &html);
+    void tocResultReady(const QString &toc);
 
 private:
     void setupActions();
