@@ -14,10 +14,12 @@ public:
     ~Document();
 
     QString toHtml();
+    QString generateToc();
 
 private:
     MMIOT *document;
     QString html;
+    QString toc;
 };
 
 }

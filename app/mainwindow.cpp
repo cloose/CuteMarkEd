@@ -62,6 +62,7 @@ void MainWindow::initializeUI()
     connect(viewLabel, SIGNAL(doubleClicked()),
             this, SLOT(toggleHtmlView()));
 
+    ui->dockWidget->close();
     toggleHtmlView();
 
     QFile f(":/template.html");
@@ -71,8 +72,10 @@ void MainWindow::initializeUI()
     }
 
     // start background HTML preview generator
-    connect(generator, SIGNAL(resultReady(QString)),
+    connect(generator, SIGNAL(htmlResultReady(QString)),
             this, SLOT(htmlResultReady(QString)));
+    connect(generator, SIGNAL(tocResultReady(QString)),
+            this, SLOT(tocResultReady(QString)));
     generator->start();
 }
 
@@ -228,6 +231,14 @@ void MainWindow::htmlResultReady(const QString &html)
 {
     ui->webView->setHtml(html);
     ui->htmlSourceTextEdit->setPlainText(html);
+}
+
+void MainWindow::tocResultReady(const QString &toc)
+{
+
+    QString styledToc = QString("<html><head>\n<style type=\"text/css\">ul { list-style-type: none; padding: 0; margin-left: 1em; } a { text-decoration: none; }</style>\n</head><body>%1</body></html>").arg(toc);
+    qDebug() << styledToc;
+    ui->tocWebView->setHtml(styledToc);
 }
 
 void MainWindow::setupActions()

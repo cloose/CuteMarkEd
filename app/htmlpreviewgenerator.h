@@ -17,8 +17,9 @@ public:
     void setHtmlTemplate(const QString &t);
 
 signals:
-    void resultReady(const QString &html);
-    
+    void htmlResultReady(const QString &html);
+    void tocResultReady(const QString &toc);
+
 protected:
     virtual void run();
 
