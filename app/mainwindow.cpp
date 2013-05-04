@@ -16,7 +16,8 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    generator(new HtmlPreviewGenerator(this))
+    generator(new HtmlPreviewGenerator(this)),
+    splitFactor(0.5)
 {
     ui->setupUi(this);
 
@@ -346,11 +347,12 @@ void MainWindow::updateSplitter()
     }
 
     QList<int> childSizes = ui->splitter->sizes();
-    int width = ui->splitter->width() / 2;
+    int leftWidth = ui->splitter->width() * splitFactor;
+    int rightWidth = ui->splitter->width() * (1 - splitFactor);
 
-    childSizes[0] = width;
-    childSizes[1] = ui->webView->isVisible() ? width : 0;
-    childSizes[2] = ui->htmlSourceTextEdit->isVisible() ? width : 0;
+    childSizes[0] = leftWidth;
+    childSizes[1] = ui->webView->isVisible() && childSizes[1] > 0 ? rightWidth : 0;
+    childSizes[2] = ui->htmlSourceTextEdit->isVisible() && childSizes[2] ? rightWidth : 0;
 
     ui->splitter->setSizes(childSizes);
 }
@@ -359,4 +361,27 @@ void MainWindow::tocLinkClicked(const QUrl &url)
 {
     QString anchor = url.toString().remove("#");
     ui->webView->page()->mainFrame()->scrollToAnchor(anchor);
+}
+
+void MainWindow::viewChangeSplit()
+{
+    QAction* action = qobject_cast<QAction*>(sender());
+    if (action->objectName() == ui->actionSplit_1_1->objectName()) {
+        splitFactor = 0.5;
+    } else if (action->objectName() == ui->actionSplit_2_1->objectName()) {
+        splitFactor = 0.666;
+    } else if (action->objectName() == ui->actionSplit_1_2->objectName()) {
+        splitFactor = 0.333;
+    } else if (action->objectName() == ui->actionSplit_3_1->objectName()) {
+        splitFactor = 0.75;
+    } else if (action->objectName() == ui->actionSplit_1_3->objectName()) {
+        splitFactor = 0.25;
+    }
+
+    updateSplitter();
+}
+
+void MainWindow::splitterMoved(int pos, int index)
+{
+    splitFactor = (float)pos / ui->splitter->size().width();
 }

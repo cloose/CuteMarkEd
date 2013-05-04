@@ -37,6 +37,7 @@ private slots:
     void editUndo();
     void editRedo();
 
+    void viewChangeSplit();
     void styleDefault();
     void styleGithub();
     void styleSolarizedLight();
@@ -53,6 +54,8 @@ private slots:
 
     void tocLinkClicked(const QUrl &url);
 
+    void splitterMoved(int pos, int index);
+
 private:
     void setupActions();
     bool load(const QString &fileName);
@@ -66,6 +69,7 @@ private:
     ActiveLabel *viewLabel;
     HtmlPreviewGenerator* generator;
     QString fileName;
+    float splitFactor;
 };
 
 #endif // MAINWINDOW_H

@@ -140,6 +140,12 @@
     </widget>
     <addaction name="separator"/>
     <addaction name="menuStyles"/>
+    <addaction name="separator"/>
+    <addaction name="actionSplit_1_1"/>
+    <addaction name="actionSplit_2_1"/>
+    <addaction name="actionSplit_1_2"/>
+    <addaction name="actionSplit_3_1"/>
+    <addaction name="actionSplit_1_3"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -266,6 +272,31 @@
   <action name="actionExportToPDF">
    <property name="text">
     <string>Export to PDF...</string>
+   </property>
+  </action>
+  <action name="actionSplit_1_1">
+   <property name="text">
+    <string>Split 1:1</string>
+   </property>
+  </action>
+  <action name="actionSplit_2_1">
+   <property name="text">
+    <string>Split 2:1</string>
+   </property>
+  </action>
+  <action name="actionSplit_1_2">
+   <property name="text">
+    <string>Split 1:2</string>
+   </property>
+  </action>
+  <action name="actionSplit_3_1">
+   <property name="text">
+    <string>Split 3:1</string>
+   </property>
+  </action>
+  <action name="actionSplit_1_3">
+   <property name="text">
+    <string>Split 1:3</string>
    </property>
   </action>
  </widget>
@@ -533,6 +564,102 @@
     <hint type="sourcelabel">
      <x>703</x>
      <y>261</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSplit_1_1</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>viewChangeSplit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSplit_2_1</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>viewChangeSplit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSplit_1_2</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>viewChangeSplit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSplit_3_1</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>viewChangeSplit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSplit_1_3</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>viewChangeSplit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>splitter</sender>
+   <signal>splitterMoved(int,int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>splitterMoved(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>302</x>
+     <y>250</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
