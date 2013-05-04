@@ -11,8 +11,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = CuteMarkEd
 TEMPLATE = app
 
+TRANSLATIONS += translations/cutemarked_de.ts
+
 INCLUDEPATH += $$PWD
-message($$INCLUDEPATH)
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -41,7 +42,15 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui
 
 RESOURCES += \
-    styles.qrc
+    styles.qrc \
+    translations.qrc
+
+# translations
+lrelease.input         = TRANSLATIONS
+lrelease.output        = ${QMAKE_FILE_PATH}/${QMAKE_FILE_BASE}.qm
+lrelease.commands      = $$[QT_INSTALL_BINS]/lrelease ${QMAKE_FILE_IN} -qm ${QMAKE_FILE_PATH}/${QMAKE_FILE_BASE}.qm
+lrelease.CONFIG       += no_link target_predeps
+QMAKE_EXTRA_COMPILERS += lrelease
 
 # discount
 win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../discount/release/ -ldiscount
