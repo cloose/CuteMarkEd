@@ -10,9 +10,9 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="67"/>
-        <location filename="../mainwindow.ui" line="177"/>
+        <location filename="../mainwindow.ui" line="178"/>
         <source>about:blank</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="103"/>
@@ -25,106 +25,110 @@
         <translation>&amp;Bearbeiten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="124"/>
-        <source>Styles</source>
-        <translation type="unfinished"></translation>
+        <location filename="../mainwindow.ui" line="130"/>
+        <source>&amp;View</source>
+        <translation>&amp;Ansicht</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="133"/>
+        <location filename="../mainwindow.ui" line="134"/>
+        <source>Styles</source>
+        <translation>Stile</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="124"/>
         <source>&amp;Help</source>
         <translation>&amp;Hilfe</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="139"/>
         <source>View</source>
-        <translation>&amp;Ansicht</translation>
+        <translation type="obsolete">&amp;Ansicht</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="151"/>
+        <location filename="../mainwindow.ui" line="152"/>
         <source>Table of contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Inhaltsverzeichnis</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="187"/>
+        <location filename="../mainwindow.ui" line="188"/>
         <source>E&amp;xit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="192"/>
+        <location filename="../mainwindow.ui" line="193"/>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Neu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="197"/>
+        <location filename="../mainwindow.ui" line="198"/>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Öffnen...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="202"/>
+        <location filename="../mainwindow.ui" line="203"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="207"/>
+        <location filename="../mainwindow.ui" line="208"/>
         <source>Save &amp;As...</source>
         <translation>Speichern &amp;unter...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="212"/>
+        <location filename="../mainwindow.ui" line="213"/>
         <source>&amp;Undo</source>
         <translation>&amp;Rückgängig</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="217"/>
+        <location filename="../mainwindow.ui" line="218"/>
         <source>&amp;Redo</source>
         <translation>&amp;Wiederherstellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="228"/>
+        <location filename="../mainwindow.ui" line="229"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="236"/>
-        <source>Github-like</source>
-        <translation type="unfinished"></translation>
+        <location filename="../mainwindow.ui" line="237"/>
+        <source>Github</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="244"/>
+        <location filename="../mainwindow.ui" line="258"/>
+        <source>&amp;About CuteMarkEd...</source>
+        <translation>Über &amp;CuteMarkEd...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="245"/>
         <source>Solarized Light</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="252"/>
+        <location filename="../mainwindow.ui" line="253"/>
         <source>Solarized Dark</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="257"/>
-        <source>&amp;About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="262"/>
+        <location filename="../mainwindow.ui" line="263"/>
         <location filename="../mainwindow.cpp" line="136"/>
         <source>Export to HTML...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportieren als HTML...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="267"/>
+        <location filename="../mainwindow.ui" line="268"/>
         <location filename="../mainwindow.cpp" line="148"/>
         <source>Export to PDF...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportieren als PDF...</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="58"/>
         <source>Change Preview Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändere Vorschaustil</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="100"/>
         <source>Open File...</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei öffnen...</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="101"/>
@@ -140,7 +144,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="137"/>
         <source>HTML Files (*.html *.htm);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML Dateien (*.html *.htm);;Alle Dateien (*.*)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="149"/>
@@ -148,39 +152,39 @@
         <translation>PDF Dateien (*.pdf);;Alle Dateien (*.*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="203"/>
+        <location filename="../mainwindow.cpp" line="204"/>
         <source>About CuteMarkEd</source>
         <translation>Über CuteMarkEd</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="204"/>
+        <location filename="../mainwindow.cpp" line="205"/>
         <source>&lt;p&gt;&lt;b&gt;CuteMarkEd 0.1&lt;/b&gt;&lt;br&gt; Qt Markdown Editor&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="220"/>
-        <location filename="../mainwindow.cpp" line="227"/>
+        <location filename="../mainwindow.cpp" line="221"/>
+        <location filename="../mainwindow.cpp" line="228"/>
         <source>HTML preview</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML Vorschau</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="223"/>
+        <location filename="../mainwindow.cpp" line="224"/>
         <source>HTML source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="311"/>
-        <source>Application</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML Quelle</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="312"/>
-        <source>The document has been modified.
-Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <source>Application</source>
+        <translation>Anwendung</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="336"/>
+        <location filename="../mainwindow.cpp" line="313"/>
+        <source>The document has been modified.
+Do you want to save your changes?</source>
+        <translation>Dieses Dokument wurde geändert.\nMöchten Sie die Änderungen speichern?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="337"/>
         <source>%1[*] - %2</source>
         <translation></translation>
     </message>

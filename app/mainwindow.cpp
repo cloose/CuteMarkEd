@@ -182,7 +182,7 @@ void MainWindow::styleGithub()
 {
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/github.css"));
-    styleLabel->setText(ui->actionGithub_like->text());
+    styleLabel->setText(ui->actionGithub->text());
 }
 
 void MainWindow::styleSolarizedLight()
@@ -208,7 +208,7 @@ void MainWindow::helpAbout()
 void MainWindow::styleContextMenu(const QPoint &pos)
 {
     QList<QAction*> actions;
-    actions << ui->actionDefault << ui->actionGithub_like << ui->actionSolarizedLight << ui->actionSolarizedDark;
+    actions << ui->actionDefault << ui->actionGithub << ui->actionSolarizedLight << ui->actionSolarizedDark;
 
     QMenu *menu = new QMenu();
     menu->addActions(actions);
@@ -265,18 +265,18 @@ void MainWindow::setupActions()
     ui->actionRedo->setShortcut(QKeySequence::Redo);
 
     // view menu
-    ui->menuView->addAction(ui->dockWidget->toggleViewAction());
+    ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());
 
     // style menu
     ui->actionDefault->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
-    ui->actionGithub_like->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
+    ui->actionGithub->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     ui->actionSolarizedLight->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
     ui->actionSolarizedDark->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
 
     // put style actions in a group
     QActionGroup* group = new QActionGroup( this );
     ui->actionDefault->setActionGroup(group);
-    ui->actionGithub_like->setActionGroup(group);
+    ui->actionGithub->setActionGroup(group);
     ui->actionSolarizedLight->setActionGroup(group);
     ui->actionSolarizedDark->setActionGroup(group);
 }
