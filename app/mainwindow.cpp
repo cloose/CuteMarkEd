@@ -47,7 +47,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
 void MainWindow::resizeEvent(QResizeEvent *e)
 {
-    updateSplitter();
+    updateSplitter(false);
 }
 
 void MainWindow::initializeUI()
@@ -229,7 +229,7 @@ void MainWindow::toggleHtmlView()
         viewLabel->setText(tr("HTML preview"));
     }
 
-    updateSplitter();
+    updateSplitter(true);
 }
 
 void MainWindow::plainTextChanged()
@@ -339,7 +339,7 @@ void MainWindow::setFileName(const QString &fileName)
     setWindowModified(false);
 }
 
-void MainWindow::updateSplitter()
+void MainWindow::updateSplitter(bool htmlViewToggled)
 {
     // not fully initialized?
     if (centralWidget()->size() != ui->splitter->size()) {
@@ -350,9 +350,16 @@ void MainWindow::updateSplitter()
     int leftWidth = ui->splitter->width() * splitFactor;
     int rightWidth = ui->splitter->width() * (1 - splitFactor);
 
+    bool webViewFolded = ui->webView->isVisible() && childSizes[1] == 0;
+    bool htmlSourceFolded = ui->htmlSourceTextEdit->isVisible() && childSizes[2] == 0;
+
     childSizes[0] = leftWidth;
-    childSizes[1] = ui->webView->isVisible() && childSizes[1] > 0 ? rightWidth : 0;
-    childSizes[2] = ui->htmlSourceTextEdit->isVisible() && childSizes[2] ? rightWidth : 0;
+    if (htmlViewToggled || !webViewFolded) {
+        childSizes[1] = rightWidth;
+    }
+    if (htmlViewToggled || !htmlSourceFolded) {
+        childSizes[2] = rightWidth;
+    }
 
     ui->splitter->setSizes(childSizes);
 }
@@ -378,7 +385,7 @@ void MainWindow::viewChangeSplit()
         splitFactor = 0.25;
     }
 
-    updateSplitter();
+    updateSplitter(true);
 }
 
 void MainWindow::splitterMoved(int pos, int index)

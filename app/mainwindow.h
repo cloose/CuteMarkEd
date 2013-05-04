@@ -61,7 +61,7 @@ private:
     bool load(const QString &fileName);
     bool maybeSave();
     void setFileName(const QString &fileName);
-    void updateSplitter();
+    void updateSplitter(bool htmlViewToggled);
 
 private:
     Ui::MainWindow *ui;
