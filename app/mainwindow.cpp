@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QClipboard>
 #include <QFileDialog>
 #include <QLabel>
 #include <QMessageBox>
@@ -170,6 +171,12 @@ void MainWindow::editRedo()
     if (ui->plainTextEdit->document()->isRedoAvailable()) {
         ui->plainTextEdit->document()->redo();
     }
+}
+
+void MainWindow::editCopyHtml()
+{
+    QClipboard* clipboard = QApplication::clipboard();
+    clipboard->setText(ui->htmlSourceTextEdit->toPlainText());
 }
 
 void MainWindow::styleDefault()
