@@ -173,12 +173,14 @@ void MainWindow::editRedo()
 
 void MainWindow::styleDefault()
 {
+    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl());
     styleLabel->setText(ui->actionDefault->text());
 }
 
 void MainWindow::styleGithub()
 {
+    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/github.css"));
     styleLabel->setText(ui->actionGithub_like->text());
 }
