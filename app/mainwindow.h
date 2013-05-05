@@ -22,6 +22,7 @@ public:
 
 protected:
     void closeEvent(QCloseEvent *e) Q_DECL_OVERRIDE;
+    void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
 
 private slots:
     void initializeUI();
@@ -35,7 +36,9 @@ private slots:
 
     void editUndo();
     void editRedo();
+    void editCopyHtml();
 
+    void viewChangeSplit();
     void styleDefault();
     void styleGithub();
     void styleSolarizedLight();
@@ -48,13 +51,18 @@ private slots:
 
     void plainTextChanged();
     void htmlResultReady(const QString &html);
+    void tocResultReady(const QString &toc);
+
+    void tocLinkClicked(const QUrl &url);
+
+    void splitterMoved(int pos, int index);
 
 private:
     void setupActions();
     bool load(const QString &fileName);
     bool maybeSave();
     void setFileName(const QString &fileName);
-
+    void updateSplitter(bool htmlViewToggled);
 
 private:
     Ui::MainWindow *ui;
@@ -62,6 +70,7 @@ private:
     ActiveLabel *viewLabel;
     HtmlPreviewGenerator* generator;
     QString fileName;
+    float splitFactor;
 };
 
 #endif // MAINWINDOW_H

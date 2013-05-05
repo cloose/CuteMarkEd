@@ -1,12 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QClipboard>
 #include <QFileDialog>
 #include <QLabel>
 #include <QMessageBox>
 #include <QPrinter>
 #include <QTextDocumentWriter>
 #include <QTimer>
+#include <QWebFrame>
+#include <QWebPage>
 
 #include "controls/activelabel.h"
 #include "htmlpreviewgenerator.h"
@@ -14,7 +17,8 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    generator(new HtmlPreviewGenerator(this))
+    generator(new HtmlPreviewGenerator(this)),
+    splitFactor(0.5)
 {
     ui->setupUi(this);
 
@@ -42,6 +46,11 @@ void MainWindow::closeEvent(QCloseEvent *e)
     }
 }
 
+void MainWindow::resizeEvent(QResizeEvent *e)
+{
+    updateSplitter(false);
+}
+
 void MainWindow::initializeUI()
 {
     setupActions();
@@ -62,6 +71,8 @@ void MainWindow::initializeUI()
     connect(viewLabel, SIGNAL(doubleClicked()),
             this, SLOT(toggleHtmlView()));
 
+    ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
+    ui->dockWidget->close();
     toggleHtmlView();
 
     QFile f(":/template.html");
@@ -71,8 +82,10 @@ void MainWindow::initializeUI()
     }
 
     // start background HTML preview generator
-    connect(generator, SIGNAL(resultReady(QString)),
+    connect(generator, SIGNAL(htmlResultReady(QString)),
             this, SLOT(htmlResultReady(QString)));
+    connect(generator, SIGNAL(tocResultReady(QString)),
+            this, SLOT(tocResultReady(QString)));
     generator->start();
 }
 
@@ -160,16 +173,24 @@ void MainWindow::editRedo()
     }
 }
 
+void MainWindow::editCopyHtml()
+{
+    QClipboard* clipboard = QApplication::clipboard();
+    clipboard->setText(ui->htmlSourceTextEdit->toPlainText());
+}
+
 void MainWindow::styleDefault()
 {
+    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl());
     styleLabel->setText(ui->actionDefault->text());
 }
 
 void MainWindow::styleGithub()
 {
+    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/github.css"));
-    styleLabel->setText(ui->actionGithub_like->text());
+    styleLabel->setText(ui->actionGithub->text());
 }
 
 void MainWindow::styleSolarizedLight()
@@ -189,13 +210,13 @@ void MainWindow::styleSolarizedDark()
 void MainWindow::helpAbout()
 {
     QMessageBox::about(this, tr("About CuteMarkEd"),
-                       tr("<p><b>CuteMarkEd 0.1</b><br> Qt Markdown Editor<br>Copyright 2013 Christian Loose</p>"));
+                       tr("<p><b>CuteMarkEd 0.2</b><br> Qt Markdown Editor<br>Copyright 2013 Christian Loose</p>"));
 }
 
 void MainWindow::styleContextMenu(const QPoint &pos)
 {
     QList<QAction*> actions;
-    actions << ui->actionDefault << ui->actionGithub_like << ui->actionSolarizedLight << ui->actionSolarizedDark;
+    actions << ui->actionDefault << ui->actionGithub << ui->actionSolarizedLight << ui->actionSolarizedDark;
 
     QMenu *menu = new QMenu();
     menu->addActions(actions);
@@ -214,6 +235,8 @@ void MainWindow::toggleHtmlView()
         ui->htmlSourceTextEdit->hide();
         viewLabel->setText(tr("HTML preview"));
     }
+
+    updateSplitter(true);
 }
 
 void MainWindow::plainTextChanged()
@@ -230,6 +253,12 @@ void MainWindow::htmlResultReady(const QString &html)
     ui->htmlSourceTextEdit->setPlainText(html);
 }
 
+void MainWindow::tocResultReady(const QString &toc)
+{
+    QString styledToc = QString("<html><head>\n<style type=\"text/css\">ul { list-style-type: none; padding: 0; margin-left: 1em; } a { text-decoration: none; }</style>\n</head><body>%1</body></html>").arg(toc);
+    ui->tocWebView->setHtml(styledToc);
+}
+
 void MainWindow::setupActions()
 {
     // file menu
@@ -243,16 +272,19 @@ void MainWindow::setupActions()
     ui->actionUndo->setShortcut(QKeySequence::Undo);
     ui->actionRedo->setShortcut(QKeySequence::Redo);
 
+    // view menu
+    ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());
+
     // style menu
     ui->actionDefault->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
-    ui->actionGithub_like->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
+    ui->actionGithub->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     ui->actionSolarizedLight->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
     ui->actionSolarizedDark->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
 
     // put style actions in a group
     QActionGroup* group = new QActionGroup( this );
     ui->actionDefault->setActionGroup(group);
-    ui->actionGithub_like->setActionGroup(group);
+    ui->actionGithub->setActionGroup(group);
     ui->actionSolarizedLight->setActionGroup(group);
     ui->actionSolarizedDark->setActionGroup(group);
 }
@@ -312,4 +344,58 @@ void MainWindow::setFileName(const QString &fileName)
 
     setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("CuteMarkEd"));
     setWindowModified(false);
+}
+
+void MainWindow::updateSplitter(bool htmlViewToggled)
+{
+    // not fully initialized?
+    if (centralWidget()->size() != ui->splitter->size()) {
+        return;
+    }
+
+    QList<int> childSizes = ui->splitter->sizes();
+    int leftWidth = ui->splitter->width() * splitFactor;
+    int rightWidth = ui->splitter->width() * (1 - splitFactor);
+
+    bool webViewFolded = ui->webView->isVisible() && childSizes[1] == 0;
+    bool htmlSourceFolded = ui->htmlSourceTextEdit->isVisible() && childSizes[2] == 0;
+
+    childSizes[0] = leftWidth;
+    if (htmlViewToggled || !webViewFolded) {
+        childSizes[1] = rightWidth;
+    }
+    if (htmlViewToggled || !htmlSourceFolded) {
+        childSizes[2] = rightWidth;
+    }
+
+    ui->splitter->setSizes(childSizes);
+}
+
+void MainWindow::tocLinkClicked(const QUrl &url)
+{
+    QString anchor = url.toString().remove("#");
+    ui->webView->page()->mainFrame()->scrollToAnchor(anchor);
+}
+
+void MainWindow::viewChangeSplit()
+{
+    QAction* action = qobject_cast<QAction*>(sender());
+    if (action->objectName() == ui->actionSplit_1_1->objectName()) {
+        splitFactor = 0.5;
+    } else if (action->objectName() == ui->actionSplit_2_1->objectName()) {
+        splitFactor = 0.666;
+    } else if (action->objectName() == ui->actionSplit_1_2->objectName()) {
+        splitFactor = 0.333;
+    } else if (action->objectName() == ui->actionSplit_3_1->objectName()) {
+        splitFactor = 0.75;
+    } else if (action->objectName() == ui->actionSplit_1_3->objectName()) {
+        splitFactor = 0.25;
+    }
+
+    updateSplitter(true);
+}
+
+void MainWindow::splitterMoved(int pos, int index)
+{
+    splitFactor = (float)pos / ui->splitter->size().width();
 }

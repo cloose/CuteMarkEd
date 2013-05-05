@@ -23,3 +23,12 @@ QString Document::toHtml()
 
     return html;
 }
+
+QString Document::generateToc()
+{
+    if (toc.isNull() && document) {
+        toc = Parser::generateToc(document);
+    }
+
+    return toc;
+}
