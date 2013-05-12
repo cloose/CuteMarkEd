@@ -10,6 +10,8 @@ public:
     explicit MarkdownManipulator(QPlainTextEdit *editor);
 
     void wrapSelectedText(const QString &tag);
+    void increaseHeadingLevel();
+    void decreaseHeadingLevel();
 
 private:
     QPlainTextEdit *editor;
