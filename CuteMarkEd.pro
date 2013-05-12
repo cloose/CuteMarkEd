@@ -8,5 +8,6 @@ TEMPLATE = subdirs
 
 SUBDIRS = discount \
     peg-markdown-highlight \
-    app
+    app \
+    fontawesomeicon
 CONFIG += ordered
