@@ -11,6 +11,8 @@
 #include <QWebFrame>
 #include <QWebPage>
 
+#include <QIcon>
+
 #include "controls/activelabel.h"
 #include "htmlpreviewgenerator.h"
 #include "markdownmanipulator.h"
@@ -278,12 +280,16 @@ void MainWindow::setupActions()
     ui->actionNew->setShortcut(QKeySequence::New);
     ui->actionOpen->setShortcut(QKeySequence::Open);
     ui->actionSave->setShortcut(QKeySequence::Save);
+    ui->actionSave->setIcon(QIcon("icon-save.fontawesome"));
     ui->actionSaveAs->setShortcut(QKeySequence::SaveAs);
     ui->actionExit->setShortcut(QKeySequence::Quit);
 
     // edit menu
     ui->actionUndo->setShortcut(QKeySequence::Undo);
+    ui->actionUndo->setIcon(QIcon("icon-undo.fontawesome"));
     ui->actionRedo->setShortcut(QKeySequence::Redo);
+    ui->actionRedo->setIcon(QIcon("icon-repeat.fontawesome"));
+
     ui->actionCut->setShortcut(QKeySequence::Cut);
     ui->actionCopy->setShortcut(QKeySequence::Copy);
     ui->actionPaste->setShortcut(QKeySequence::Paste);
