@@ -110,6 +110,8 @@
     <addaction name="actionExportToHTML"/>
     <addaction name="actionExportToPDF"/>
     <addaction name="separator"/>
+    <addaction name="action_Print"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -320,17 +322,17 @@
   </action>
   <action name="actionCut">
    <property name="text">
-    <string>Cut</string>
+    <string>Cu&amp;t</string>
    </property>
   </action>
   <action name="actionCopy">
    <property name="text">
-    <string>Copy</string>
+    <string>&amp;Copy</string>
    </property>
   </action>
   <action name="actionPaste">
    <property name="text">
-    <string>Paste</string>
+    <string>&amp;Paste</string>
    </property>
   </action>
   <action name="actionStrong">
@@ -341,6 +343,11 @@
   <action name="actionEmphasize">
    <property name="text">
     <string>Emphasize</string>
+   </property>
+  </action>
+  <action name="action_Print">
+   <property name="text">
+    <string>&amp;Print...</string>
    </property>
   </action>
  </widget>
@@ -796,6 +803,22 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>editEmphasize()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Print</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>filePrint()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

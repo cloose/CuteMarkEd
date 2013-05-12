@@ -3,15 +3,15 @@
 
 #include <QClipboard>
 #include <QFileDialog>
+#include <QIcon>
 #include <QLabel>
 #include <QMessageBox>
+#include <QPrintDialog>
 #include <QPrinter>
 #include <QTextDocumentWriter>
 #include <QTimer>
 #include <QWebFrame>
 #include <QWebPage>
-
-#include <QIcon>
 
 #include "controls/activelabel.h"
 #include "htmlpreviewgenerator.h"
@@ -160,6 +160,21 @@ void MainWindow::fileExportToPdf()
     printer.setOutputFileName(fileName);
     printer.setOutputFormat(QPrinter::PdfFormat);
     ui->webView->print(&printer);
+}
+
+void MainWindow::filePrint()
+{
+    QPrinter printer;
+    QPrintDialog *dlg = new QPrintDialog(&printer, this);
+    dlg->setWindowTitle(tr("Print Document"));
+
+    if (ui->webView->hasSelection())
+        dlg->addEnabledOption(QAbstractPrintDialog::PrintSelection);
+
+    if (dlg->exec() == QDialog::Accepted)
+        ui->webView->print(&printer);
+
+    delete dlg;
 }
 
 void MainWindow::editUndo()
