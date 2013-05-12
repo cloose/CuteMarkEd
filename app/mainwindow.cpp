@@ -291,10 +291,15 @@ void MainWindow::setupActions()
     ui->actionRedo->setIcon(QIcon("icon-repeat.fontawesome"));
 
     ui->actionCut->setShortcut(QKeySequence::Cut);
+    ui->actionCut->setIcon(QIcon("icon-cut.fontawesome"));
     ui->actionCopy->setShortcut(QKeySequence::Copy);
+    ui->actionCopy->setIcon(QIcon("icon-copy.fontawesome"));
     ui->actionPaste->setShortcut(QKeySequence::Paste);
+    ui->actionPaste->setIcon(QIcon("icon-paste.fontawesome"));
     ui->actionStrong->setShortcut(QKeySequence::Bold);
+    ui->actionStrong->setIcon(QIcon("icon-bold.fontawesome"));
     ui->actionEmphasize->setShortcut(QKeySequence::Italic);
+    ui->actionEmphasize->setIcon(QIcon("icon-italic.fontawesome"));
 
     // view menu
     ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());
