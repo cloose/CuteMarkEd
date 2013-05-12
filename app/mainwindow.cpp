@@ -13,6 +13,7 @@
 
 #include "controls/activelabel.h"
 #include "htmlpreviewgenerator.h"
+#include "markdownmanipulator.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -179,6 +180,18 @@ void MainWindow::editCopyHtml()
     clipboard->setText(ui->htmlSourceTextEdit->toPlainText());
 }
 
+void MainWindow::editStrong()
+{
+    MarkdownManipulator manipulator(ui->plainTextEdit);
+    manipulator.wrapSelectedText("**");
+}
+
+void MainWindow::editEmphasize()
+{
+    MarkdownManipulator manipulator(ui->plainTextEdit);
+    manipulator.wrapSelectedText("*");
+}
+
 void MainWindow::styleDefault()
 {
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
@@ -271,6 +284,11 @@ void MainWindow::setupActions()
     // edit menu
     ui->actionUndo->setShortcut(QKeySequence::Undo);
     ui->actionRedo->setShortcut(QKeySequence::Redo);
+    ui->actionCut->setShortcut(QKeySequence::Cut);
+    ui->actionCopy->setShortcut(QKeySequence::Copy);
+    ui->actionPaste->setShortcut(QKeySequence::Paste);
+    ui->actionStrong->setShortcut(QKeySequence::Bold);
+    ui->actionEmphasize->setShortcut(QKeySequence::Italic);
 
     // view menu
     ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());

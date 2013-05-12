@@ -37,6 +37,8 @@ private slots:
     void editUndo();
     void editRedo();
     void editCopyHtml();
+    void editStrong();
+    void editEmphasize();
 
     void viewChangeSplit();
     void styleDefault();
