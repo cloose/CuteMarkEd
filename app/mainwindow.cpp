@@ -300,6 +300,8 @@ void MainWindow::setupActions()
     ui->actionSave->setShortcut(QKeySequence::Save);
     ui->actionSave->setIcon(QIcon("icon-save.fontawesome"));
     ui->actionSaveAs->setShortcut(QKeySequence::SaveAs);
+    ui->action_Print->setShortcut(QKeySequence::Print);
+    ui->action_Print->setIcon(QIcon("icon-print.fontawesome"));
     ui->actionExit->setShortcut(QKeySequence::Quit);
 
     // edit menu
