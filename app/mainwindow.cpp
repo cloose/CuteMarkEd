@@ -90,6 +90,9 @@ void MainWindow::initializeUI()
     connect(generator, SIGNAL(tocResultReady(QString)),
             this, SLOT(tocResultReady(QString)));
     generator->start();
+
+    // set default style
+    styleDefault();
 }
 
 void MainWindow::fileNew()
