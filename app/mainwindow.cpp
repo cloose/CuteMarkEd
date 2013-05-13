@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QPrintDialog>
 #include <QPrinter>
+#include <QScrollBar>
 #include <QTextDocumentWriter>
 #include <QTimer>
 #include <QWebFrame>
@@ -38,6 +39,15 @@ MainWindow::~MainWindow()
     delete generator;
 
     delete ui;
+}
+
+void MainWindow::webViewScrolled()
+{
+    double factor = (double)ui->plainTextEdit->verticalScrollBar()->maximum() /
+                   ui->webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical);
+    int value = ui->webView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
+
+    ui->plainTextEdit->verticalScrollBar()->setValue(qRound(value * factor));
 }
 
 void MainWindow::closeEvent(QCloseEvent *e)
@@ -78,6 +88,11 @@ void MainWindow::initializeUI()
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->dockWidget->close();
     toggleHtmlView();
+
+    connect(ui->webView->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),
+            this, SLOT(addJavaScriptObject()));
+    connect(ui->plainTextEdit->verticalScrollBar(), SIGNAL(valueChanged(int)),
+            this, SLOT(scrollValueChanged(int)));
 
     QFile f(":/template.html");
     if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -462,4 +477,17 @@ void MainWindow::splitterMoved(int pos, int index)
 {
     Q_UNUSED(index)
     splitFactor = (float)pos / ui->splitter->size().width();
+}
+
+void MainWindow::scrollValueChanged(int value)
+{
+    double factor = (double)ui->webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical) /
+                   ui->plainTextEdit->verticalScrollBar()->maximum();
+
+    ui->webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, qRound(value * factor));
+}
+
+void MainWindow::addJavaScriptObject()
+{
+    ui->webView->page()->mainFrame()->addToJavaScriptWindowObject("mainwin", this);
 }

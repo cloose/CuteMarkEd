@@ -20,6 +20,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+public slots:
+    void webViewScrolled();
+
 protected:
     void closeEvent(QCloseEvent *e) Q_DECL_OVERRIDE;
     void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
@@ -61,6 +64,9 @@ private slots:
     void tocLinkClicked(const QUrl &url);
 
     void splitterMoved(int pos, int index);
+    void scrollValueChanged(int value);
+
+    void addJavaScriptObject();
 
 private:
     void setupActions();
