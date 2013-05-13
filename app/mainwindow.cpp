@@ -227,7 +227,7 @@ void MainWindow::editInlineCode()
 void MainWindow::styleDefault()
 {
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl());
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/markdown.css"));
     styleLabel->setText(ui->actionDefault->text());
 }
 
