@@ -51,6 +51,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
 void MainWindow::resizeEvent(QResizeEvent *e)
 {
+    Q_UNUSED(e)
     updateSplitter(false);
 }
 
@@ -459,5 +460,6 @@ void MainWindow::viewChangeSplit()
 
 void MainWindow::splitterMoved(int pos, int index)
 {
+    Q_UNUSED(index)
     splitFactor = (float)pos / ui->splitter->size().width();
 }
