@@ -65,14 +65,19 @@ void FontAwesomeIconEngine::loadFont()
         fontName = fontFamilies.at(0);
 
         namedCodepoints.insert("icon-repeat", QChar(0xf01e));
+        namedCodepoints.insert("icon-print", QChar(0xf02f));
         namedCodepoints.insert("icon-bold", QChar(0xf032));
         namedCodepoints.insert("icon-italic", QChar(0xf033));
         namedCodepoints.insert("icon-list", QChar(0xf03a));
+        namedCodepoints.insert("icon-picture", QChar(0xf03e));
         namedCodepoints.insert("icon-cut", QChar(0xf0c4));
         namedCodepoints.insert("icon-copy", QChar(0xf0c5));
         namedCodepoints.insert("icon-save", QChar(0xf0c7));
         namedCodepoints.insert("icon-list-ul", QChar(0xf0ca));
         namedCodepoints.insert("icon-list-ol", QChar(0xf0cb));
+        namedCodepoints.insert("icon-strikethrough", QChar(0xf0cc));
+        namedCodepoints.insert("icon-underline", QChar(0xf0cd));
+        namedCodepoints.insert("icon-table", QChar(0xf0ce));
         namedCodepoints.insert("icon-undo", QChar(0xf0e2));
         namedCodepoints.insert("icon-paste", QChar(0xf0ea));
     }
