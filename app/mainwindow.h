@@ -40,6 +40,8 @@ private slots:
     void editCopyHtml();
     void editStrong();
     void editEmphasize();
+    void editStrikethrough();
+    void editInlineCode();
 
     void viewChangeSplit();
     void styleDefault();

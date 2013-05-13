@@ -95,7 +95,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -124,6 +124,8 @@
      </property>
      <addaction name="actionStrong"/>
      <addaction name="actionEmphasize"/>
+     <addaction name="actionStrikethrough"/>
+     <addaction name="actionInline_Code"/>
     </widget>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
@@ -348,6 +350,16 @@
   <action name="action_Print">
    <property name="text">
     <string>&amp;Print...</string>
+   </property>
+  </action>
+  <action name="actionStrikethrough">
+   <property name="text">
+    <string>Strikethrough</string>
+   </property>
+  </action>
+  <action name="actionInline_Code">
+   <property name="text">
+    <string>Inline Code</string>
    </property>
   </action>
  </widget>
@@ -819,6 +831,38 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>filePrint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionStrikethrough</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editStrikethrough()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionInline_Code</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editInlineCode()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

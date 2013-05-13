@@ -212,6 +212,18 @@ void MainWindow::editEmphasize()
     manipulator.wrapSelectedText("*");
 }
 
+void MainWindow::editStrikethrough()
+{
+    MarkdownManipulator manipulator(ui->plainTextEdit);
+    manipulator.wrapSelectedText("~~");
+}
+
+void MainWindow::editInlineCode()
+{
+    MarkdownManipulator manipulator(ui->plainTextEdit);
+    manipulator.wrapSelectedText("`");
+}
+
 void MainWindow::styleDefault()
 {
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
@@ -320,6 +332,7 @@ void MainWindow::setupActions()
     ui->actionStrong->setIcon(QIcon("icon-bold.fontawesome"));
     ui->actionEmphasize->setShortcut(QKeySequence::Italic);
     ui->actionEmphasize->setIcon(QIcon("icon-italic.fontawesome"));
+    ui->actionStrikethrough->setIcon(QIcon("icon-strikethrough.fontawesome"));
 
     // view menu
     ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());
