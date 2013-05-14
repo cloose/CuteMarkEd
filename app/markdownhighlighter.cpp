@@ -36,6 +36,7 @@ void MarkdownHighlighter::reset()
 void MarkdownHighlighter::setStyles(const QVector<PegMarkdownHighlight::HighlightingStyle> &styles)
 {
     highlightingStyles = styles;
+    reset();
 }
 
 void MarkdownHighlighter::highlightBlock(const QString &)
