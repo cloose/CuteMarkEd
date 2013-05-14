@@ -6,6 +6,7 @@
 #include <QIcon>
 #include <QLabel>
 #include <QMessageBox>
+#include <QNetworkProxy>
 #include <QPrintDialog>
 #include <QPrinter>
 #include <QScrollBar>
@@ -13,6 +14,7 @@
 #include <QTimer>
 #include <QWebFrame>
 #include <QWebPage>
+#include <QWebInspector>
 
 #include "controls/activelabel.h"
 #include "htmlpreviewgenerator.h"
@@ -109,6 +111,14 @@ void MainWindow::initializeUI()
 
     // set default style
     styleDefault();
+
+    // load remote javascript and use system proxy configuration
+    QWebSettings::globalSettings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
+    QNetworkProxyFactory::setUseSystemConfiguration(true);
+
+//    ui->webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+//    QWebInspector *inspector = new QWebInspector();
+//    inspector->setPage(ui->webView->page());
 }
 
 void MainWindow::fileNew()
@@ -318,7 +328,9 @@ void MainWindow::plainTextChanged()
 
 void MainWindow::htmlResultReady(const QString &html)
 {
-    ui->webView->setHtml(html);
+    QUrl baseUrl = QUrl::fromLocalFile(qApp->applicationDirPath());
+    ui->webView->setHtml(html, baseUrl);
+
     ui->htmlSourceTextEdit->setPlainText(html);
 }
 
