@@ -15,6 +15,7 @@ public:
     void lineNumberAreaPaintEvent(QPaintEvent *event);
     int lineNumberAreaWidth();
 
+    void resetHighlighting();
     void loadStyleFromStylesheet(const QString &fileName);
 
 protected:

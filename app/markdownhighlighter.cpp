@@ -28,20 +28,32 @@ MarkdownHighlighter::~MarkdownHighlighter()
     delete workerThread;
 }
 
+void MarkdownHighlighter::reset()
+{
+    previousText.clear();
+}
+
 void MarkdownHighlighter::setStyles(const QVector<PegMarkdownHighlight::HighlightingStyle> &styles)
 {
     highlightingStyles = styles;
 }
 
-void MarkdownHighlighter::highlightBlock(const QString &text)
+void MarkdownHighlighter::highlightBlock(const QString &)
 {
-    Q_UNUSED(text)
-
     if (document()->isEmpty()) {
         return;
     }
 
-    workerThread->enqueue(document()->toPlainText());
+    QString text = document()->toPlainText();
+
+    // document changed since last call?
+    if (text == previousText) {
+        return;
+    }
+
+    workerThread->enqueue(text);
+
+    previousText = text;
 }
 
 void MarkdownHighlighter::resultReady(pmh_element **elements)

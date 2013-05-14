@@ -16,6 +16,7 @@ public:
     MarkdownHighlighter(QTextDocument *document);
     ~MarkdownHighlighter();
     
+    void reset();
     void setStyles(const QVector<PegMarkdownHighlight::HighlightingStyle> &styles);
 
 protected:
@@ -27,6 +28,7 @@ private slots:
 private:
     HighlightWorkerThread *workerThread;
     QVector<PegMarkdownHighlight::HighlightingStyle> highlightingStyles;
+    QString previousText;
 };
 
 #endif // MARKDOWNHIGHLIGHTER_H

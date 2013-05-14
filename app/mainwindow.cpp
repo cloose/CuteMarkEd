@@ -115,6 +115,9 @@ void MainWindow::fileNew()
 {
     if (maybeSave()) {
         ui->plainTextEdit->clear();
+        ui->plainTextEdit->resetHighlighting();
+        ui->webView->setHtml(QString());
+        ui->htmlSourceTextEdit->clear();
         setFileName(QString());
     }
 }
@@ -304,6 +307,11 @@ void MainWindow::plainTextChanged()
 {
     QString code = ui->plainTextEdit->toPlainText();
 
+    // do nothing when text is empty
+    if (code.isEmpty()) {
+        return;
+    }
+
     // generate HTML from markdown
     generator->enqueue(code);
 }
@@ -380,6 +388,8 @@ bool MainWindow::load(const QString &fileName)
 
     QByteArray content = file.readAll();
     QString text = QString::fromUtf8(content);
+
+    ui->plainTextEdit->resetHighlighting();
     ui->plainTextEdit->setPlainText(text);
 
     setFileName(fileName);

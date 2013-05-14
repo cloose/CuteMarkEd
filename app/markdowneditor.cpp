@@ -92,6 +92,11 @@ int MarkdownEditor::lineNumberAreaWidth()
     return space;
 }
 
+void MarkdownEditor::resetHighlighting()
+{
+    highlighter->reset();
+}
+
 void MarkdownEditor::keyPressEvent(QKeyEvent *e)
 {
     // Ctrl+Right Arrow
