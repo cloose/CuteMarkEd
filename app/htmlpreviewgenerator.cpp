@@ -4,7 +4,8 @@
 
 HtmlPreviewGenerator::HtmlPreviewGenerator(QObject *parent) :
     QThread(parent),
-    mathSupportEnabled(false)
+    mathSupportEnabled(false),
+    codeHighlightingEnabled(false)
 {
 }
 
@@ -23,6 +24,16 @@ void HtmlPreviewGenerator::setHtmlTemplate(const QString &t)
 void HtmlPreviewGenerator::setMathSupportEnabled(bool enabled)
 {
     mathSupportEnabled = enabled;
+}
+
+void HtmlPreviewGenerator::setCodeHighlightingEnabled(bool enabled)
+{
+    codeHighlightingEnabled = enabled;
+}
+
+void HtmlPreviewGenerator::setCodeHighlightingStyle(const QString &style)
+{
+    codeHighlightingStyle = style;
 }
 
 
@@ -75,6 +86,12 @@ QString HtmlPreviewGenerator::buildHtmlHeader() const
 
     if (mathSupportEnabled) {
         header += "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>";
+    }
+
+    if (codeHighlightingEnabled) {
+        header += QString("<link rel=\"stylesheet\" href=\"http://yandex.st/highlightjs/7.3/styles/%1.min.css\">").arg(codeHighlightingStyle);
+        header += "<script src=\"http://yandex.st/highlightjs/7.3/highlight.min.js\"></script>";
+        header += "<script>hljs.initHighlightingOnLoad();</script>";
     }
 
     return header;

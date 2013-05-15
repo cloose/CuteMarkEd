@@ -264,6 +264,10 @@ void MainWindow::styleDefault()
 {
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/markdown.css"));
+
+    generator->setCodeHighlightingStyle("default");
+    plainTextChanged();
+
     styleLabel->setText(ui->actionDefault->text());
 }
 
@@ -271,6 +275,10 @@ void MainWindow::styleGithub()
 {
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/github.css"));
+
+    generator->setCodeHighlightingStyle("github");
+    plainTextChanged();
+
     styleLabel->setText(ui->actionGithub->text());
 }
 
@@ -278,6 +286,10 @@ void MainWindow::styleSolarizedLight()
 {
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-light+.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-light.css"));
+
+    generator->setCodeHighlightingStyle("solarized_light");
+    plainTextChanged();
+
     styleLabel->setText(ui->actionSolarizedLight->text());
 }
 
@@ -285,12 +297,22 @@ void MainWindow::styleSolarizedDark()
 {
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-dark+.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-dark.css"));
+
+    generator->setCodeHighlightingStyle("solarized_dark");
+    plainTextChanged();
+
     styleLabel->setText(ui->actionSolarizedDark->text());
 }
 
 void MainWindow::extrasMathSupport(bool checked)
 {
     generator->setMathSupportEnabled(checked);
+    plainTextChanged();
+}
+
+void MainWindow::extrasCodeHighlighting(bool checked)
+{
+    generator->setCodeHighlightingEnabled(checked);
     plainTextChanged();
 }
 

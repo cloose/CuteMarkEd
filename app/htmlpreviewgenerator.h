@@ -16,6 +16,8 @@ public:
     void enqueue(const QString &text);
     void setHtmlTemplate(const QString &t);
     void setMathSupportEnabled(bool enabled);
+    void setCodeHighlightingEnabled(bool enabled);
+    void setCodeHighlightingStyle(const QString &style);
 
 signals:
     void htmlResultReady(const QString &html);
@@ -34,6 +36,8 @@ private:
     QWaitCondition bufferNotEmpty;
     QString htmlTemplate;
     bool mathSupportEnabled;
+    bool codeHighlightingEnabled;
+    QString codeHighlightingStyle;
 };
 
 #endif // HTMLPREVIEWGENERATOR_H
