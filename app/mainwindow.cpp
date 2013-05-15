@@ -6,10 +6,12 @@
 #include <QIcon>
 #include <QLabel>
 #include <QMessageBox>
+#include <QNetworkDiskCache>
 #include <QNetworkProxy>
 #include <QPrintDialog>
 #include <QPrinter>
 #include <QScrollBar>
+#include <QStandardPaths>
 #include <QTextDocumentWriter>
 #include <QTimer>
 #include <QWebFrame>
@@ -115,6 +117,11 @@ void MainWindow::initializeUI()
     // load remote javascript and use system proxy configuration
     QWebSettings::globalSettings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
     QNetworkProxyFactory::setUseSystemConfiguration(true);
+
+    // setup disk cache for network access
+    diskCache = new QNetworkDiskCache(this);
+    QString cacheDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+    diskCache->setCacheDirectory(cacheDir);
 
 //    ui->webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
 //    QWebInspector *inspector = new QWebInspector();
@@ -328,6 +335,8 @@ void MainWindow::plainTextChanged()
 
 void MainWindow::htmlResultReady(const QString &html)
 {
+    ui->webView->page()->networkAccessManager()->setCache(diskCache);
+
     QUrl baseUrl = QUrl::fromLocalFile(qApp->applicationDirPath());
     ui->webView->setHtml(html, baseUrl);
 

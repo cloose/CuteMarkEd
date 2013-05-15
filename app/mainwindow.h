@@ -8,6 +8,7 @@ class MainWindow;
 }
 
 class QLabel;
+class QNetworkDiskCache;
 class ActiveLabel;
 class HtmlPreviewGenerator;
 
@@ -77,6 +78,7 @@ private:
 
 private:
     Ui::MainWindow *ui;
+    QNetworkDiskCache *diskCache;
     QLabel *styleLabel;
     ActiveLabel *viewLabel;
     HtmlPreviewGenerator* generator;
