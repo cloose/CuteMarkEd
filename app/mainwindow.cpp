@@ -288,6 +288,12 @@ void MainWindow::styleSolarizedDark()
     styleLabel->setText(ui->actionSolarizedDark->text());
 }
 
+void MainWindow::extrasMathSupport(bool checked)
+{
+    generator->setMathSupportEnabled(checked);
+    plainTextChanged();
+}
+
 void MainWindow::helpAbout()
 {
     QMessageBox::about(this, tr("About CuteMarkEd"),

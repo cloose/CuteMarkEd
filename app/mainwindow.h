@@ -53,6 +53,8 @@ private slots:
     void styleSolarizedLight();
     void styleSolarizedDark();
 
+    void extrasMathSupport(bool checked);
+
     void helpAbout();
 
     void styleContextMenu(const QPoint &pos);

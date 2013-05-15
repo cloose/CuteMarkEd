@@ -3,7 +3,8 @@
 #include "discount/document.h"
 
 HtmlPreviewGenerator::HtmlPreviewGenerator(QObject *parent) :
-    QThread(parent)
+    QThread(parent),
+    mathSupportEnabled(false)
 {
 }
 
@@ -17,6 +18,11 @@ void HtmlPreviewGenerator::enqueue(const QString &text)
 void HtmlPreviewGenerator::setHtmlTemplate(const QString &t)
 {
     htmlTemplate = t;
+}
+
+void HtmlPreviewGenerator::setMathSupportEnabled(bool enabled)
+{
+    mathSupportEnabled = enabled;
 }
 
 
@@ -43,7 +49,7 @@ void HtmlPreviewGenerator::run()
         // generate HTML from markdown
         Discount::Document document(text);
         QString htmlContent = document.toHtml();
-        QString html = renderTemplate(htmlContent);
+        QString html = renderTemplate(buildHtmlHeader(), htmlContent);
         emit htmlResultReady(html);
 
         // generate table of contents
@@ -52,11 +58,24 @@ void HtmlPreviewGenerator::run()
     }
 }
 
-QString HtmlPreviewGenerator::renderTemplate(const QString &content)
+QString HtmlPreviewGenerator::renderTemplate(const QString &header, const QString &content)
 {
     if (htmlTemplate.isEmpty()) {
         return content;
     }
 
-    return QString(htmlTemplate).replace(QLatin1String("__HTML_CONTENT__"), content);
+    return QString(htmlTemplate)
+            .replace(QLatin1String("__HTML_HEADER__"), header)
+            .replace(QLatin1String("__HTML_CONTENT__"), content);
+}
+
+QString HtmlPreviewGenerator::buildHtmlHeader() const
+{
+    QString header;
+
+    if (mathSupportEnabled) {
+        header += "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>";
+    }
+
+    return header;
 }
