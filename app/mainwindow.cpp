@@ -116,7 +116,9 @@ void MainWindow::initializeUI()
 
     // load remote javascript and use system proxy configuration
     QWebSettings::globalSettings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
-    QNetworkProxyFactory::setUseSystemConfiguration(true);
+
+    // FIXME takes too long. provide proxy option per ui
+//    QNetworkProxyFactory::setUseSystemConfiguration(true);
 
     // setup disk cache for network access
     diskCache = new QNetworkDiskCache(this);
