@@ -95,7 +95,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -147,17 +147,6 @@
     <property name="title">
      <string>&amp;View</string>
     </property>
-    <widget class="QMenu" name="menuStyles">
-     <property name="title">
-      <string>Styles</string>
-     </property>
-     <addaction name="actionDefault"/>
-     <addaction name="actionGithub"/>
-     <addaction name="actionSolarizedLight"/>
-     <addaction name="actionSolarizedDark"/>
-    </widget>
-    <addaction name="separator"/>
-    <addaction name="menuStyles"/>
     <addaction name="separator"/>
     <addaction name="actionSplit_1_1"/>
     <addaction name="actionSplit_2_1"/>
@@ -169,8 +158,19 @@
     <property name="title">
      <string>E&amp;xtras</string>
     </property>
+    <widget class="QMenu" name="menuStyles">
+     <property name="title">
+      <string>Styles</string>
+     </property>
+     <addaction name="actionDefault"/>
+     <addaction name="actionGithub"/>
+     <addaction name="actionSolarizedLight"/>
+     <addaction name="actionSolarizedDark"/>
+    </widget>
     <addaction name="actionMathSupport"/>
     <addaction name="actionCodeHighlighting"/>
+    <addaction name="separator"/>
+    <addaction name="menuStyles"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
