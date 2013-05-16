@@ -15,6 +15,9 @@ public:
     
     void enqueue(const QString &text);
     void setHtmlTemplate(const QString &t);
+    void setMathSupportEnabled(bool enabled);
+    void setCodeHighlightingEnabled(bool enabled);
+    void setCodeHighlightingStyle(const QString &style);
 
 signals:
     void htmlResultReady(const QString &html);
@@ -24,13 +27,17 @@ protected:
     virtual void run();
 
 private:
-    QString renderTemplate(const QString &content);
+    QString renderTemplate(const QString &header, const QString &content);
+    QString buildHtmlHeader() const;
 
 private:
     QQueue<QString> tasks;
     QMutex tasksMutex;
     QWaitCondition bufferNotEmpty;
     QString htmlTemplate;
+    bool mathSupportEnabled;
+    bool codeHighlightingEnabled;
+    QString codeHighlightingStyle;
 };
 
 #endif // HTMLPREVIEWGENERATOR_H

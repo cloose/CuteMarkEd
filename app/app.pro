@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     controls/activelabel.cpp \
     markdownhighlighter.cpp \
     highlightworkerthread.cpp \
-    peg-markdown-highlight/styleparser.cpp
+    peg-markdown-highlight/styleparser.cpp \
+    markdownmanipulator.cpp
 
 HEADERS  += mainwindow.h \
             markdowneditor.h \
@@ -37,7 +38,8 @@ HEADERS  += mainwindow.h \
     markdownhighlighter.h \
     highlightworkerthread.h \
     peg-markdown-highlight/styleparser.h \
-    peg-markdown-highlight/definitions.h
+    peg-markdown-highlight/definitions.h \
+    markdownmanipulator.h
 
 FORMS    += mainwindow.ui
 
@@ -83,3 +85,6 @@ else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../peg-
 else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/release/libpmh.lib
 else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/debug/libpmh.lib
 else:unix: PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/libpmh.a
+
+OTHER_FILES += \
+    template.html

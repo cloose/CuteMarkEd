@@ -95,7 +95,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -110,16 +110,32 @@
     <addaction name="actionExportToHTML"/>
     <addaction name="actionExportToPDF"/>
     <addaction name="separator"/>
+    <addaction name="action_Print"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
      <string>&amp;Edit</string>
     </property>
+    <widget class="QMenu" name="menuFormat">
+     <property name="title">
+      <string>Format</string>
+     </property>
+     <addaction name="actionStrong"/>
+     <addaction name="actionEmphasize"/>
+     <addaction name="actionStrikethrough"/>
+     <addaction name="actionInline_Code"/>
+    </widget>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
+    <addaction name="actionCut"/>
+    <addaction name="actionCopy"/>
+    <addaction name="actionPaste"/>
     <addaction name="actionCopyHtmlToClipboard"/>
+    <addaction name="separator"/>
+    <addaction name="menuFormat"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -131,6 +147,17 @@
     <property name="title">
      <string>&amp;View</string>
     </property>
+    <addaction name="separator"/>
+    <addaction name="actionSplit_1_1"/>
+    <addaction name="actionSplit_2_1"/>
+    <addaction name="actionSplit_1_2"/>
+    <addaction name="actionSplit_3_1"/>
+    <addaction name="actionSplit_1_3"/>
+   </widget>
+   <widget class="QMenu" name="menuExtras">
+    <property name="title">
+     <string>E&amp;xtras</string>
+    </property>
     <widget class="QMenu" name="menuStyles">
      <property name="title">
       <string>Styles</string>
@@ -140,18 +167,15 @@
      <addaction name="actionSolarizedLight"/>
      <addaction name="actionSolarizedDark"/>
     </widget>
+    <addaction name="actionMathSupport"/>
+    <addaction name="actionCodeHighlighting"/>
     <addaction name="separator"/>
     <addaction name="menuStyles"/>
-    <addaction name="separator"/>
-    <addaction name="actionSplit_1_1"/>
-    <addaction name="actionSplit_2_1"/>
-    <addaction name="actionSplit_1_2"/>
-    <addaction name="actionSplit_3_1"/>
-    <addaction name="actionSplit_1_3"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuView"/>
+   <addaction name="menuExtras"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -304,6 +328,62 @@
   <action name="actionCopyHtmlToClipboard">
    <property name="text">
     <string>Copy HTML to Clipboard</string>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="text">
+    <string>Cu&amp;t</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="text">
+    <string>&amp;Copy</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="text">
+    <string>&amp;Paste</string>
+   </property>
+  </action>
+  <action name="actionStrong">
+   <property name="text">
+    <string>Strong</string>
+   </property>
+  </action>
+  <action name="actionEmphasize">
+   <property name="text">
+    <string>Emphasize</string>
+   </property>
+  </action>
+  <action name="action_Print">
+   <property name="text">
+    <string>&amp;Print...</string>
+   </property>
+  </action>
+  <action name="actionStrikethrough">
+   <property name="text">
+    <string>Strikethrough</string>
+   </property>
+  </action>
+  <action name="actionInline_Code">
+   <property name="text">
+    <string>Inline Code</string>
+   </property>
+  </action>
+  <action name="actionMathSupport">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Math Support</string>
+   </property>
+  </action>
+  <action name="actionCodeHighlighting">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Code Highlighting</string>
    </property>
   </action>
  </widget>
@@ -679,6 +759,166 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>editCopyHtml()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCut</sender>
+   <signal>triggered()</signal>
+   <receiver>plainTextEdit</receiver>
+   <slot>cut()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>99</x>
+     <y>250</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCopy</sender>
+   <signal>triggered()</signal>
+   <receiver>plainTextEdit</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>99</x>
+     <y>250</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionPaste</sender>
+   <signal>triggered()</signal>
+   <receiver>plainTextEdit</receiver>
+   <slot>paste()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>99</x>
+     <y>250</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionStrong</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editStrong()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionEmphasize</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editEmphasize()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Print</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>filePrint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionStrikethrough</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editStrikethrough()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionInline_Code</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editInlineCode()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionMathSupport</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extrasMathSupport(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCodeHighlighting</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extrasCodeHighlighting(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

@@ -8,6 +8,7 @@ class MainWindow;
 }
 
 class QLabel;
+class QNetworkDiskCache;
 class ActiveLabel;
 class HtmlPreviewGenerator;
 
@@ -19,6 +20,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+public slots:
+    void webViewScrolled();
 
 protected:
     void closeEvent(QCloseEvent *e) Q_DECL_OVERRIDE;
@@ -33,16 +37,24 @@ private slots:
     bool fileSaveAs();
     void fileExportToHtml();
     void fileExportToPdf();
+    void filePrint();
 
     void editUndo();
     void editRedo();
     void editCopyHtml();
+    void editStrong();
+    void editEmphasize();
+    void editStrikethrough();
+    void editInlineCode();
 
     void viewChangeSplit();
     void styleDefault();
     void styleGithub();
     void styleSolarizedLight();
     void styleSolarizedDark();
+
+    void extrasMathSupport(bool checked);
+    void extrasCodeHighlighting(bool checked);
 
     void helpAbout();
 
@@ -56,9 +68,13 @@ private slots:
     void tocLinkClicked(const QUrl &url);
 
     void splitterMoved(int pos, int index);
+    void scrollValueChanged(int value);
+
+    void addJavaScriptObject();
 
 private:
     void setupActions();
+    void setupStatusBar();
     bool load(const QString &fileName);
     bool maybeSave();
     void setFileName(const QString &fileName);
@@ -66,6 +82,7 @@ private:
 
 private:
     Ui::MainWindow *ui;
+    QNetworkDiskCache *diskCache;
     QLabel *styleLabel;
     ActiveLabel *viewLabel;
     HtmlPreviewGenerator* generator;
