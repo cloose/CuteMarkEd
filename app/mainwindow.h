@@ -54,6 +54,7 @@ private slots:
     void styleSolarizedDark();
 
     void extrasMathSupport(bool checked);
+    void extrasCodeHighlighting(bool checked);
 
     void helpAbout();
 

@@ -95,7 +95,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -170,6 +170,7 @@
      <string>E&amp;xtras</string>
     </property>
     <addaction name="actionMathSupport"/>
+    <addaction name="actionCodeHighlighting"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -375,6 +376,14 @@
    </property>
    <property name="text">
     <string>Math Support</string>
+   </property>
+  </action>
+  <action name="actionCodeHighlighting">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Code Highlighting</string>
    </property>
   </action>
  </widget>
@@ -894,6 +903,22 @@
    <signal>triggered(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>extrasMathSupport(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCodeHighlighting</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extrasCodeHighlighting(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
