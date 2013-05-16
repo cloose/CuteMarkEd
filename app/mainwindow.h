@@ -73,6 +73,7 @@ private slots:
 
 private:
     void setupActions();
+    void setupStatusBar();
     bool load(const QString &fileName);
     bool maybeSave();
     void setFileName(const QString &fileName);

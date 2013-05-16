@@ -72,22 +72,7 @@ void MainWindow::resizeEvent(QResizeEvent *e)
 void MainWindow::initializeUI()
 {
     setupActions();
-
-    // add style label to statusbar
-    styleLabel = new QLabel(ui->actionDefault->text(), this);
-    styleLabel->setToolTip(tr("Change Preview Style"));
-    statusBar()->addWidget(styleLabel);
-
-    styleLabel->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(styleLabel, SIGNAL(customContextMenuRequested(QPoint)),
-            this, SLOT(styleContextMenu(QPoint)));
-
-    // add view label to statusbar
-    viewLabel = new ActiveLabel(this);
-    statusBar()->addPermanentWidget(viewLabel);
-
-    connect(viewLabel, SIGNAL(doubleClicked()),
-            this, SLOT(toggleHtmlView()));
+    setupStatusBar();
 
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->dockWidget->close();
@@ -400,6 +385,25 @@ void MainWindow::setupActions()
     ui->actionGithub->setActionGroup(group);
     ui->actionSolarizedLight->setActionGroup(group);
     ui->actionSolarizedDark->setActionGroup(group);
+}
+
+void MainWindow::setupStatusBar()
+{
+    // add style label to statusbar
+    styleLabel = new QLabel(ui->actionDefault->text(), this);
+    styleLabel->setToolTip(tr("Change Preview Style"));
+    statusBar()->addWidget(styleLabel);
+
+    styleLabel->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(styleLabel, SIGNAL(customContextMenuRequested(QPoint)),
+            this, SLOT(styleContextMenu(QPoint)));
+
+    // add view label to statusbar
+    viewLabel = new ActiveLabel(this);
+    statusBar()->addPermanentWidget(viewLabel);
+
+    connect(viewLabel, SIGNAL(doubleClicked()),
+            this, SLOT(toggleHtmlView()));
 }
 
 bool MainWindow::load(const QString &fileName)
