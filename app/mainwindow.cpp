@@ -21,6 +21,7 @@
 #include "controls/activelabel.h"
 #include "htmlpreviewgenerator.h"
 #include "markdownmanipulator.h"
+#include "findreplacewidget.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -73,6 +74,11 @@ void MainWindow::initializeUI()
 {
     setupActions();
     setupStatusBar();
+
+    ui->findPlaceHolder->setVisible(false);
+    ui->findPlaceHolder->setLayout(new QVBoxLayout);
+    ui->findPlaceHolder->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
+    ui->findPlaceHolder->layout()->setMargin(0);
 
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->dockWidget->close();
@@ -221,6 +227,14 @@ void MainWindow::editCopyHtml()
 {
     QClipboard* clipboard = QApplication::clipboard();
     clipboard->setText(ui->htmlSourceTextEdit->toPlainText());
+}
+
+void MainWindow::editSearchReplace()
+{
+    FindReplaceWidget* w = new FindReplaceWidget(ui->findPlaceHolder);
+    ui->findPlaceHolder->layout()->addWidget(w);
+    ui->findPlaceHolder->setVisible(true);
+    w->setVisible(true);
 }
 
 void MainWindow::editStrong()

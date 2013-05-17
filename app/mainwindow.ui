@@ -15,6 +15,9 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -32,22 +35,43 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <property name="handleWidth">
-       <number>3</number>
-      </property>
-      <widget class="MarkdownEditor" name="plainTextEdit">
-       <property name="minimumSize">
-        <size>
-         <width>200</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::NoFrame</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
-       </property>
+      <widget class="QWidget" name="widget" native="true">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="MarkdownEditor" name="plainTextEdit">
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="findPlaceHolder" native="true"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWebView" name="webView">
        <property name="sizePolicy">
@@ -136,6 +160,8 @@
     <addaction name="actionCopyHtmlToClipboard"/>
     <addaction name="separator"/>
     <addaction name="menuFormat"/>
+    <addaction name="separator"/>
+    <addaction name="actionSearchReplace"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -384,6 +410,11 @@
    </property>
    <property name="text">
     <string>Code Highlighting</string>
+   </property>
+  </action>
+  <action name="actionSearchReplace">
+   <property name="text">
+    <string>Search / Replace</string>
    </property>
   </action>
  </widget>
@@ -919,6 +950,22 @@
    <signal>triggered(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>extrasCodeHighlighting(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSearchReplace</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editSearchReplace()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
