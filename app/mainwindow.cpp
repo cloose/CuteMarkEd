@@ -291,6 +291,28 @@ void MainWindow::styleSolarizedDark()
     styleLabel->setText(ui->actionSolarizedDark->text());
 }
 
+void MainWindow::styleClearness()
+{
+    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness.css"));
+
+    generator->setCodeHighlightingStyle("default");
+    plainTextChanged();
+
+    styleLabel->setText(ui->actionClearness->text());
+}
+
+void MainWindow::styleClearnessDark()
+{
+    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/clearness-dark+.txt");
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness-dark.css"));
+
+    generator->setCodeHighlightingStyle("default");
+    plainTextChanged();
+
+    styleLabel->setText(ui->actionClearnessDark->text());
+}
+
 void MainWindow::extrasMathSupport(bool checked)
 {
     generator->setMathSupportEnabled(checked);
@@ -312,7 +334,9 @@ void MainWindow::helpAbout()
 void MainWindow::styleContextMenu(const QPoint &pos)
 {
     QList<QAction*> actions;
-    actions << ui->actionDefault << ui->actionGithub << ui->actionSolarizedLight << ui->actionSolarizedDark;
+    actions << ui->actionDefault << ui->actionGithub
+            << ui->actionSolarizedLight << ui->actionSolarizedDark
+            << ui->actionClearness << ui->actionClearnessDark;
 
     QMenu *menu = new QMenu();
     menu->addActions(actions);
@@ -402,6 +426,8 @@ void MainWindow::setupActions()
     ui->actionGithub->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     ui->actionSolarizedLight->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
     ui->actionSolarizedDark->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
+    ui->actionClearness->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
+    ui->actionClearnessDark->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
 
     // put style actions in a group
     QActionGroup* group = new QActionGroup( this );
@@ -409,6 +435,8 @@ void MainWindow::setupActions()
     ui->actionGithub->setActionGroup(group);
     ui->actionSolarizedLight->setActionGroup(group);
     ui->actionSolarizedDark->setActionGroup(group);
+    ui->actionClearness->setActionGroup(group);
+    ui->actionClearnessDark->setActionGroup(group);
 }
 
 void MainWindow::setupStatusBar()

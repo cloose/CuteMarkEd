@@ -52,6 +52,8 @@ private slots:
     void styleGithub();
     void styleSolarizedLight();
     void styleSolarizedDark();
+    void styleClearness();
+    void styleClearnessDark();
 
     void extrasMathSupport(bool checked);
     void extrasCodeHighlighting(bool checked);

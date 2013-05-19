@@ -10,7 +10,7 @@
  * made by rhio.kim
  * powered by http://ethanschoonover.com/solarized
  */
-.clearness {
+body {
   padding: 20px;
   color: #737373;
   font-size: 1em;
@@ -18,59 +18,59 @@
   background: #ffffff;
   -webkit-font-smoothing: antialiased;
 }
-.clearness a {
+a {
   color: #1e6ea7;
 }
-.clearness a:hover {
+a:hover {
   color: #268bd2;
 }
-.clearness h1,
-.clearness h2,
-.clearness h3,
-.clearness h4,
-.clearness h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   color: #404040;
 }
-.clearness h2 {
+h2 {
   border-bottom: 1px solid #cccccc;
 }
-.clearness h6 {
+h6 {
   color: #666666;
 }
-.clearness hr {
+hr {
   border: 1px solid #e6e6e6;
 }
-.clearness pre > code {
+pre > code {
   font-size: .9em;
   font-family: Consolas, Inconsolata, Courier, monospace;
 }
-.clearness blockquote {
+blockquote {
   padding: 0 15px;
   font-style: italic;
 }
-.clearness blockquote:before {
+blockquote:before {
   content: "\201C";
   font-size: 40px;
   margin-left: -20px;
   color: #aaa;
 }
-.clearness table {
+table {
   background-color: #ffffff;
   border-collapse: separate;
   border-spacing: 2px;
 }
-.clearness table tr th,
-.clearness table tr td {
+table tr th,
+table tr td {
   border: 0px;
   padding: .2em 1em;
 }
-.clearness table tr th {
+table tr th {
   border-bottom: 1px solid #bfbfbf;
 }
-.clearness table tr td {
+table tr td {
   border-bottom: 1px solid #d9d9d9;
 }
-.clearness table tr:nth-child(2n) {
+table tr:nth-child(2n) {
   background-color: #ffffff;
 }
 /**

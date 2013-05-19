@@ -10,7 +10,7 @@
  * made by rhio.kim
  * powered by http://ethanschoonover.com/solarized
  */
-.clearness-dark {
+body {
   padding: 20px;
   color: #ffffff;
   font-size: 1em;
@@ -18,38 +18,38 @@
   background: #282a36;
   -webkit-font-smoothing: antialiased;
 }
-.clearness-dark a {
+a {
   color: #e03300;
 }
-.clearness-dark a:hover {
+a:hover {
   color: #ff4a14;
 }
-.clearness-dark h2 {
+h2 {
   border-bottom: 1px solid #21232d;
 }
-.clearness-dark h6 {
+h6 {
   color: #a4a296;
 }
-.clearness-dark hr {
+hr {
   border: 1px solid #21232d;
 }
-.clearness-dark pre > code {
+pre > code {
   font-size: .9em;
   font-family: Consolas, Inconsolata, Courier, monospace;
 }
-.clearness-dark blockquote {
+blockquote {
   border-left: 4px solid #121319;
   padding: 0 15px;
   font-style: italic;
 }
-.clearness-dark table {
+table {
   background-color: #303241;
 }
-.clearness-dark table tr th,
-.clearness-dark table tr td {
+table tr th,
+table tr td {
   border: 1px solid #4b4e65;
 }
-.clearness-dark table tr:nth-child(2n) {
+table tr:nth-child(2n) {
   background-color: #373a4b;
 }
 /**
