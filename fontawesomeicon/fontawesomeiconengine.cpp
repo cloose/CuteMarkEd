@@ -64,11 +64,24 @@ void FontAwesomeIconEngine::loadFont()
         QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
         fontName = fontFamilies.at(0);
 
+        namedCodepoints.insert("icon-search", QChar(0xf002));
+        namedCodepoints.insert("icon-envelope", QChar(0xf003));
+        namedCodepoints.insert("icon-ok", QChar(0xf00c));
+        namedCodepoints.insert("icon-remove", QChar(0xf00d));
+        namedCodepoints.insert("icon-zoom-in", QChar(0xf00e));
+        namedCodepoints.insert("icon-zoom-out", QChar(0xf010));
+        namedCodepoints.insert("icon-file", QChar(0xf016));
         namedCodepoints.insert("icon-repeat", QChar(0xf01e));
         namedCodepoints.insert("icon-print", QChar(0xf02f));
         namedCodepoints.insert("icon-bold", QChar(0xf032));
         namedCodepoints.insert("icon-italic", QChar(0xf033));
+        namedCodepoints.insert("icon-align-left", QChar(0xf036));
+        namedCodepoints.insert("icon-align-center", QChar(0xf037));
+        namedCodepoints.insert("icon-align-right", QChar(0xf038));
+        namedCodepoints.insert("icon-align-justify", QChar(0xf039));
         namedCodepoints.insert("icon-list", QChar(0xf03a));
+        namedCodepoints.insert("icon-indent-left", QChar(0xf03b));
+        namedCodepoints.insert("icon-indent-right", QChar(0xf03c));
         namedCodepoints.insert("icon-picture", QChar(0xf03e));
         namedCodepoints.insert("icon-cut", QChar(0xf0c4));
         namedCodepoints.insert("icon-copy", QChar(0xf0c5));
