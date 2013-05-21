@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     markdownhighlighter.cpp \
     highlightworkerthread.cpp \
     peg-markdown-highlight/styleparser.cpp \
-    markdownmanipulator.cpp
+    markdownmanipulator.cpp \
+    findreplacewidget.cpp
 
 HEADERS  += mainwindow.h \
             markdowneditor.h \
@@ -39,9 +40,11 @@ HEADERS  += mainwindow.h \
     highlightworkerthread.h \
     peg-markdown-highlight/styleparser.h \
     peg-markdown-highlight/definitions.h \
-    markdownmanipulator.h
+    markdownmanipulator.h \
+    findreplacewidget.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    findreplacewidget.ui
 
 RESOURCES += \
     styles.qrc \

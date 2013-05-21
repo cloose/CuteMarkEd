@@ -21,10 +21,12 @@
 #include "controls/activelabel.h"
 #include "htmlpreviewgenerator.h"
 #include "markdownmanipulator.h"
+#include "findreplacewidget.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
+    findReplaceWidget(0),
     generator(new HtmlPreviewGenerator(this)),
     splitFactor(0.5)
 {
@@ -73,6 +75,14 @@ void MainWindow::initializeUI()
 {
     setupActions();
     setupStatusBar();
+
+    ui->findPlaceHolder->hide();
+    ui->findPlaceHolder->setLayout(new QVBoxLayout);
+    ui->findPlaceHolder->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
+    ui->findPlaceHolder->layout()->setMargin(0);
+
+    findReplaceWidget = new FindReplaceWidget(ui->findPlaceHolder);
+    ui->findPlaceHolder->layout()->addWidget(findReplaceWidget);
 
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->dockWidget->close();
@@ -221,6 +231,13 @@ void MainWindow::editCopyHtml()
 {
     QClipboard* clipboard = QApplication::clipboard();
     clipboard->setText(ui->htmlSourceTextEdit->toPlainText());
+}
+
+void MainWindow::editSearchReplace()
+{
+    findReplaceWidget->setTextEdit(ui->plainTextEdit);
+    ui->findPlaceHolder->show();
+    findReplaceWidget->show();
 }
 
 void MainWindow::editStrong()
@@ -421,6 +438,8 @@ void MainWindow::setupActions()
     ui->actionEmphasize->setShortcut(QKeySequence::Italic);
     ui->actionEmphasize->setIcon(QIcon("icon-italic.fontawesome"));
     ui->actionStrikethrough->setIcon(QIcon("icon-strikethrough.fontawesome"));
+    ui->actionFindReplace->setShortcut(QKeySequence::Find);
+    ui->actionFindReplace->setIcon(QIcon("icon-search.fontawesome"));
 
     // view menu
     ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());
