@@ -35,3 +35,41 @@ void FindReplaceWidget::findNextClicked()
 {
     textEditor->find(ui->findLineEdit->text());
 }
+
+void FindReplaceWidget::replaceClicked()
+{
+    QString oldText = ui->findLineEdit->text();
+    QString newText = ui->replaceLineEdit->text();
+
+    QTextCursor cursor = textEditor->textCursor();
+    cursor.beginEditBlock();
+
+    if (cursor.hasSelection()) {
+        cursor.insertText(newText);
+    }
+
+    textEditor->find(oldText);
+
+    cursor.endEditBlock();
+}
+
+void FindReplaceWidget::replaceAllClicked()
+{
+    QString oldText = ui->findLineEdit->text();
+    QString newText = ui->replaceLineEdit->text();
+
+    textEditor->moveCursor(QTextCursor::Start);
+    QTextCursor cursor = textEditor->textCursor();
+    cursor.beginEditBlock();
+
+    bool found = textEditor->find(oldText);
+    while (found) {
+        QTextCursor tc = textEditor->textCursor();
+        if (tc.hasSelection()) {
+            tc.insertText(newText);
+        }
+        found = textEditor->find(oldText);
+    }
+
+    cursor.endEditBlock();
+}

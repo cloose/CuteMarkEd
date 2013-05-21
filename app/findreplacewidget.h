@@ -24,6 +24,8 @@ protected:
 private slots:
     void findPreviousClicked();
     void findNextClicked();
+    void replaceClicked();
+    void replaceAllClicked();
 
 private:
     Ui::FindReplaceWidget *ui;

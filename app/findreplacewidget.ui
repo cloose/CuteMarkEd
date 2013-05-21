@@ -236,5 +236,37 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>replaceButton</sender>
+   <signal>clicked()</signal>
+   <receiver>FindReplaceWidget</receiver>
+   <slot>replaceClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>659</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>339</x>
+     <y>39</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>replaceAllButton</sender>
+   <signal>clicked()</signal>
+   <receiver>FindReplaceWidget</receiver>
+   <slot>replaceAllClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>659</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>339</x>
+     <y>39</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>
