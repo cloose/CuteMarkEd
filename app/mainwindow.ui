@@ -161,7 +161,7 @@
     <addaction name="separator"/>
     <addaction name="menuFormat"/>
     <addaction name="separator"/>
-    <addaction name="actionSearchReplace"/>
+    <addaction name="actionFindReplace"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -412,9 +412,9 @@
     <string>Code Highlighting</string>
    </property>
   </action>
-  <action name="actionSearchReplace">
+  <action name="actionFindReplace">
    <property name="text">
-    <string>Search / Replace</string>
+    <string>Find/Replace</string>
    </property>
   </action>
  </widget>
@@ -962,7 +962,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionSearchReplace</sender>
+   <sender>actionFindReplace</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>editSearchReplace()</slot>
