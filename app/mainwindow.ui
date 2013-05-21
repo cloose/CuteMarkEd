@@ -430,14 +430,6 @@
     <string>Clearness Dark</string>
    </property>
   </action>
-  <action name="actionNodeDark">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Node Dark</string>
-   </property>
-  </action>
   <action name="actionFindReplace">
    <property name="text">
     <string>Find/Replace</string>
