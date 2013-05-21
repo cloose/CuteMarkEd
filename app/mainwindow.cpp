@@ -376,8 +376,12 @@ void MainWindow::htmlResultReady(const QString &html)
 {
     ui->webView->page()->networkAccessManager()->setCache(diskCache);
 
+    int scrollBarPos = ui->webView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
+
     QUrl baseUrl = QUrl::fromLocalFile(qApp->applicationDirPath());
     ui->webView->setHtml(html, baseUrl);
+
+    ui->webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, scrollBarPos);
 
     ui->htmlSourceTextEdit->setPlainText(html);
 }
