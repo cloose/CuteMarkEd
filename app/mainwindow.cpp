@@ -411,6 +411,7 @@ void MainWindow::setupActions()
     ui->actionEmphasize->setIcon(QIcon("icon-italic.fontawesome"));
     ui->actionStrikethrough->setIcon(QIcon("icon-strikethrough.fontawesome"));
     ui->actionFindReplace->setShortcut(QKeySequence::Find);
+    ui->actionFindReplace->setIcon(QIcon("icon-search.fontawesome"));
 
     // view menu
     ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());
