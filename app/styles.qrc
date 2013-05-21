@@ -15,4 +15,7 @@
     <qresource prefix="/">
         <file>template.html</file>
     </qresource>
+    <qresource prefix="/icons">
+        <file alias="icon-close.png">images/icon-close.png</file>
+    </qresource>
 </RCC>
