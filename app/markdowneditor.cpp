@@ -161,3 +161,29 @@ void MarkdownEditor::loadStyleFromStylesheet(const QString &fileName)
     this->setPalette(parser.editorPalette());
     this->viewport()->setPalette(this->palette());
 }
+
+int MarkdownEditor::countWords() const
+{
+    QString text = toPlainText();
+    int words = 0;
+    bool lastWasWhitespace = false;
+
+    for (int i = 0; i < text.count(); ++i) {
+        if (text.at(i).isSpace()) {
+            if (!lastWasWhitespace) {
+                words++;
+            }
+            lastWasWhitespace = true;
+        }
+        else
+        {
+            lastWasWhitespace = false;
+        }
+    }
+
+    if (!lastWasWhitespace && text.count() > 0) {
+        words++;
+    }
+
+    return words;
+}

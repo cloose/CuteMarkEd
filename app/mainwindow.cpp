@@ -27,6 +27,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     findReplaceWidget(0),
+    styleLabel(0),
+    wordCountLabel(0),
+    viewLabel(0),
     generator(new HtmlPreviewGenerator(this)),
     splitFactor(0.5)
 {
@@ -128,6 +131,7 @@ void MainWindow::initializeUI()
 void MainWindow::fileNew()
 {
     if (maybeSave()) {
+        wordCountLabel->setText("");
         ui->plainTextEdit->clear();
         ui->plainTextEdit->resetHighlighting();
         ui->webView->setHtml(QString());
@@ -380,9 +384,9 @@ void MainWindow::plainTextChanged()
 {
     QString code = ui->plainTextEdit->toPlainText();
 
-    // do nothing when text is empty
-    if (code.isEmpty()) {
-        return;
+    if (wordCountLabel) {
+        int words = ui->plainTextEdit->countWords();
+        wordCountLabel->setText(tr("%1 words").arg(words));
     }
 
     // generate HTML from markdown
@@ -467,15 +471,21 @@ void MainWindow::setupStatusBar()
     // add style label to statusbar
     styleLabel = new QLabel(ui->actionDefault->text(), this);
     styleLabel->setToolTip(tr("Change Preview Style"));
-    statusBar()->addWidget(styleLabel);
+    statusBar()->addPermanentWidget(styleLabel, 1);
 
     styleLabel->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(styleLabel, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(styleContextMenu(QPoint)));
 
+    // add word count label to statusbar
+    wordCountLabel = new QLabel(this);
+    wordCountLabel->setAlignment(Qt::AlignHCenter);
+    statusBar()->addPermanentWidget(wordCountLabel, 1);
+
     // add view label to statusbar
     viewLabel = new ActiveLabel(this);
-    statusBar()->addPermanentWidget(viewLabel);
+    viewLabel->setAlignment(Qt::AlignRight);
+    statusBar()->addPermanentWidget(viewLabel, 1);
 
     connect(viewLabel, SIGNAL(doubleClicked()),
             this, SLOT(toggleHtmlView()));

@@ -18,6 +18,8 @@ public:
     void resetHighlighting();
     void loadStyleFromStylesheet(const QString &fileName);
 
+    int countWords() const;
+
 protected:
     virtual void keyPressEvent(QKeyEvent *e);
     void resizeEvent(QResizeEvent *event);

@@ -89,6 +89,7 @@ private:
     QNetworkDiskCache *diskCache;
     FindReplaceWidget *findReplaceWidget;
     QLabel *styleLabel;
+    QLabel *wordCountLabel;
     ActiveLabel *viewLabel;
     HtmlPreviewGenerator* generator;
     QString fileName;
