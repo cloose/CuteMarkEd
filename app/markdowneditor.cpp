@@ -165,18 +165,26 @@ void MarkdownEditor::loadStyleFromStylesheet(const QString &fileName)
 int MarkdownEditor::countWords() const
 {
     QString text = toPlainText();
+
+    // empty or only whitespaces?
+    if (text.trimmed().isEmpty()) {
+        return 0;
+    }
+
     int words = 0;
     bool lastWasWhitespace = false;
+    bool firstCharacter = false;
 
     for (int i = 0; i < text.count(); ++i) {
         if (text.at(i).isSpace()) {
-            if (!lastWasWhitespace) {
+            if (firstCharacter && !lastWasWhitespace) {
                 words++;
             }
             lastWasWhitespace = true;
         }
         else
         {
+            firstCharacter = true;
             lastWasWhitespace = false;
         }
     }
