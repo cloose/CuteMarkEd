@@ -132,6 +132,7 @@ void MainWindow::fileNew()
 {
     if (maybeSave()) {
         wordCountLabel->setText("");
+        wordCountLabel->setToolTip("");
         ui->plainTextEdit->clear();
         ui->plainTextEdit->resetHighlighting();
         ui->webView->setHtml(QString());
@@ -386,7 +387,10 @@ void MainWindow::plainTextChanged()
 
     if (wordCountLabel) {
         int words = ui->plainTextEdit->countWords();
+        int lines = ui->plainTextEdit->document()->lineCount();
+        int chars = ui->plainTextEdit->document()->characterCount();
         wordCountLabel->setText(tr("%1 words").arg(words));
+        wordCountLabel->setToolTip(tr("Lines: %1  Words: %2  Characters: %3").arg(lines).arg(words).arg(chars));
     }
 
     // generate HTML from markdown
