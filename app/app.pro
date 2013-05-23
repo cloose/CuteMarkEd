@@ -65,7 +65,7 @@ win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../discount/releas
 else:win32-g++:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../discount/debug/ -ldiscount
 else:win32-msvc*:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../discount/release/ -llibdiscount
 else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../discount/debug/ -llibdiscount
-else:unix: LIBS += -lmarkdown2
+else:unix: LIBS += -L/usr/lib -lmarkdown2
 
 win32:INCLUDEPATH += $$PWD/../discount
 unix:INCLUDEPATH += /usr/include
@@ -82,7 +82,7 @@ win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-hi
 else:win32-g++:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/debug/ -lpmh
 else:win32-msvc*:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/release/ -llibpmh
 else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/debug/ -llibpmh
-else:unix: LIBS += -L$$OUT_PWD/../peg-markdown-highlight/ -llibpmh
+else:unix: LIBS += -L$$OUT_PWD/../peg-markdown-highlight/ -lpmh
 
 INCLUDEPATH += $$PWD/../peg-markdown-highlight
 DEPENDPATH += $$PWD/../peg-markdown-highlight
