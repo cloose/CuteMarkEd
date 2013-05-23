@@ -68,6 +68,7 @@ else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../discount/d
 else:unix: LIBS += -lmarkdown2
 
 win32:INCLUDEPATH += $$PWD/../discount
+unix:INCLUDEPATH += /usr/include
 win32:DEPENDPATH += $$PWD/../discount
 
 win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../discount/release/libdiscount.a
@@ -94,3 +95,6 @@ else:unix: PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/libpmh.a
 
 OTHER_FILES += \
     template.html
+
+message("Using INCLUDEPATH=$$INCLUDEPATH")
+message("Using LIBS=$$LIBS")
