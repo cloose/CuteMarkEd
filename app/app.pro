@@ -65,7 +65,7 @@ win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../discount/releas
 else:win32-g++:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../discount/debug/ -ldiscount
 else:win32-msvc*:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../discount/release/ -llibdiscount
 else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../discount/debug/ -llibdiscount
-else:unix: LIBS += -L/usr/lib -lmarkdown2
+else:unix: LIBS += -L/usr/lib -lmarkdown
 
 win32:INCLUDEPATH += $$PWD/../discount
 unix:INCLUDEPATH += /usr/include

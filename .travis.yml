@@ -8,7 +8,6 @@ before_install:
   - sudo apt-get install -qq ubuntu-sdk libc6:i386 discount libmarkdown2-dev libgstreamer-plugins-base0.10 libgstreamer-plugins-base0.10-dev 
 before_script:
   - lrelease app/translations/cutemarked_de.ts -qm app/translations/cutemarked_de.qm
-  - sudo ls -lisa /usr/lib/libm*  
 script:
   - qmake CuteMarkEd.pro
   - make         
