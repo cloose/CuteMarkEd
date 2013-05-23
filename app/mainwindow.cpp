@@ -398,7 +398,12 @@ void MainWindow::htmlResultReady(const QString &html)
 
     int scrollBarPos = ui->webView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
 
-    QUrl baseUrl = QUrl::fromLocalFile(qApp->applicationDirPath());
+    QUrl baseUrl;
+    if (fileName.isEmpty()) {
+        baseUrl = QUrl::fromLocalFile(qApp->applicationDirPath());
+    } else {
+        baseUrl = QUrl::fromLocalFile(QFileInfo(fileName).absolutePath() + "/");
+    }
     ui->webView->setHtml(html, baseUrl);
 
     ui->webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, scrollBarPos);
