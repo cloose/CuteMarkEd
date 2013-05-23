@@ -3,7 +3,7 @@
 
 ### DESCRIPTION
 
-A Qt-based Markdown editor with live HTML preview and syntax highlighting of markdown document.
+A Qt-based, free and open source markdown editor with live HTML preview, math expressions, code syntax highlighting and syntax highlighting of markdown document.
 
 ![screenshot](https://raw.github.com/cloose/CuteMarkEd/develop/images/screenshot_03.png)
 
@@ -48,3 +48,7 @@ First release with basic functionality working.
 * Qt 5.x (LGPL v2.1)
 * [Discount 2.1.6](http://www.pell.portland.or.us/~orc/Code/discount/) (3-clause BSD)
 * [PEG Markdown Highlight](http://hasseg.org/peg-markdown-highlight/) (MIT License)
+
+### BUILD STATUS
+
+[![Build Status](https://travis-ci.org/cloose/CuteMarkEd.png)](https://travis-ci.org/cloose/CuteMarkEd)
