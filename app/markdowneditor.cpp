@@ -17,8 +17,11 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
     lineNumberArea(new LineNumberArea(this)),
     highlighter(new MarkdownHighlighter(this->document()))
 {
-    lineNumberArea->setFont(QFont("monospace", 10));
-    setFont(QFont("monospace", 10));
+    QFont font("Monospace", 10);
+    font.setStyleHint(QFont::TypeWriter);
+
+    lineNumberArea->setFont(font);
+    setFont(font);
 
     connect(this, SIGNAL(blockCountChanged(int)),
             this, SLOT(updateLineNumberAreaWidth(int)));
