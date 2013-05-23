@@ -22,6 +22,7 @@
 #include "htmlpreviewgenerator.h"
 #include "markdownmanipulator.h"
 #include "findreplacewidget.h"
+#include "exportpdfdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -191,16 +192,10 @@ void MainWindow::fileExportToHtml()
 
 void MainWindow::fileExportToPdf()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Export to PDF..."), QString(),
-                                                    tr("PDF Files (*.pdf);;All Files (*)"));
-    if (fileName.isEmpty()) {
-        return;
+    ExportPdfDialog dialog(fileName);
+    if (dialog.exec() == QDialog::Accepted) {
+        ui->webView->print(dialog.printer());
     }
-
-    QPrinter printer;
-    printer.setOutputFileName(fileName);
-    printer.setOutputFormat(QPrinter::PdfFormat);
-    ui->webView->print(&printer);
 }
 
 void MainWindow::filePrint()

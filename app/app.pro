@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     highlightworkerthread.cpp \
     peg-markdown-highlight/styleparser.cpp \
     markdownmanipulator.cpp \
-    findreplacewidget.cpp
+    findreplacewidget.cpp \
+    exportpdfdialog.cpp
 
 HEADERS  += mainwindow.h \
             markdowneditor.h \
@@ -41,10 +42,12 @@ HEADERS  += mainwindow.h \
     peg-markdown-highlight/styleparser.h \
     peg-markdown-highlight/definitions.h \
     markdownmanipulator.h \
-    findreplacewidget.h
+    findreplacewidget.h \
+    exportpdfdialog.h
 
 FORMS    += mainwindow.ui \
-    findreplacewidget.ui
+    findreplacewidget.ui \
+    exportpdfdialog.ui
 
 RESOURCES += \
     styles.qrc \
