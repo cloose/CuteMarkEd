@@ -31,6 +31,9 @@ QIconEngine *FontAwesomeIconEngine::clone() const
 
 void FontAwesomeIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state)
 {
+    Q_UNUSED(mode)
+    Q_UNUSED(state)
+
     painter->save();
 
     int pixelSize = qRound(rect.height()*0.625f);

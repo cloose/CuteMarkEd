@@ -16,7 +16,6 @@ void MarkdownManipulator::wrapSelectedText(const QString &tag)
     int end = cursor.selectionEnd();
     if (cursor.hasSelection() &&
         doc->findBlock(start) == doc->findBlock(end)) {
-        int offs = 0;
         cursor.beginEditBlock();
         QString text = cursor.selectedText();
         text.prepend(tag);
