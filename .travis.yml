@@ -10,6 +10,6 @@ before_install:
 before_script:
   - lrelease app/translations/cutemarked_de.ts -qm app/translations/cutemarked_de.qm
 script:
-  - cd discount && ./configure && make && cd ..
+  - cd discount && ./configure.sh && make ; cd ..
   - qmake CuteMarkEd.pro
   - make         
