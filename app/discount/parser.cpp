@@ -19,9 +19,9 @@ MMIOT *Parser::parseString(const QString &text)
         markdownText.append('\n');
     }
 
-    MMIOT *doc = mkd_string(markdownText.toUtf8().data(), markdownText.length(), MKD_AUTOLINK | MKD_TOC);
+    MMIOT *doc = mkd_string(markdownText.toUtf8().data(), markdownText.length(), MKD_AUTOLINK | MKD_TOC | MKD_NOSTYLE);
 
-    mkd_compile(doc, MKD_AUTOLINK | MKD_TOC);
+    mkd_compile(doc, MKD_AUTOLINK | MKD_TOC | MKD_NOSTYLE);
 
     return doc;
 }
