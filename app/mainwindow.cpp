@@ -264,6 +264,12 @@ void MainWindow::editInlineCode()
     manipulator.wrapSelectedText("`");
 }
 
+void MainWindow::editCenterParagraph()
+{
+    MarkdownManipulator manipulator(ui->plainTextEdit);
+    manipulator.wrapCurrentParagraph("->", "<-");
+}
+
 void MainWindow::styleDefault()
 {
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
@@ -446,6 +452,7 @@ void MainWindow::setupActions()
     ui->actionEmphasize->setShortcut(QKeySequence::Italic);
     ui->actionEmphasize->setIcon(QIcon("icon-italic.fontawesome"));
     ui->actionStrikethrough->setIcon(QIcon("icon-strikethrough.fontawesome"));
+    ui->actionCenterParagraph->setIcon(QIcon("icon-align-center.fontawesome"));
     ui->actionFindReplace->setShortcut(QKeySequence::Find);
     ui->actionFindReplace->setIcon(QIcon("icon-search.fontawesome"));
 

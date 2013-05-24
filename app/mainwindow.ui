@@ -119,7 +119,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -150,6 +150,7 @@
      <addaction name="actionEmphasize"/>
      <addaction name="actionStrikethrough"/>
      <addaction name="actionInline_Code"/>
+     <addaction name="actionCenterParagraph"/>
     </widget>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
@@ -433,6 +434,11 @@
   <action name="actionFindReplace">
    <property name="text">
     <string>Find/Replace</string>
+   </property>
+  </action>
+  <action name="actionCenterParagraph">
+   <property name="text">
+    <string>Center Paragraph</string>
    </property>
   </action>
  </widget>
@@ -1016,6 +1022,22 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>editSearchReplace()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCenterParagraph</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editCenterParagraph()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

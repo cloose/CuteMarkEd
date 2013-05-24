@@ -48,6 +48,7 @@ private slots:
     void editEmphasize();
     void editStrikethrough();
     void editInlineCode();
+    void editCenterParagraph();
 
     void viewChangeSplit();
     void styleDefault();
