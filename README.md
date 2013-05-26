@@ -26,7 +26,7 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 * `FIX` Use fixed-pitch font for markdown editor on MS Windows
 * `FIX` Missing character in HTML preview when markdown document did not end with a line break
-* `FIX` <style\> elements are not parsed anymore but included in the generated HTML
+* `FIX` `<style>` elements are not parsed anymore but included in the generated HTML
 
 
 #### Version 0.3.0
