@@ -9,8 +9,8 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 ### DOWNLOAD
 
-[Sources](https://bitbucket.org/cloose/cutemarked/downloads/cutemarked-src-0.4.0.tar.gz)  
-[MS Windows (ZIP file)](https://bitbucket.org/cloose/cutemarked/downloads/cutemarked-0.4.0.zip)
+[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.4.0.tar.gz)  
+[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd#cutemarked-0.4.0.zip)
 
 ### NEWS
 
@@ -68,7 +68,7 @@ First release with basic functionality working.
 
 [![Build Status](https://travis-ci.org/cloose/CuteMarkEd.png)](https://travis-ci.org/cloose/CuteMarkEd)
 
-### Links
+### LINKS
 
-http://www.ohloh.net/p/CuteMarkEd
-http://freecode.com/projects/cutemarked
+[http://www.ohloh.net/p/CuteMarkEd](http://www.ohloh.net/p/CuteMarkEd)  
+[http://freecode.com/projects/cutemarked](http://freecode.com/projects/cutemarked)
