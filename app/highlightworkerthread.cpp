@@ -28,6 +28,7 @@ void HighlightWorkerThread::run()
                 bufferNotEmpty.wait(&tasksMutex);
             }
 
+            // get next task from queue
             text = tasks.dequeue();
         }
 
@@ -36,7 +37,7 @@ void HighlightWorkerThread::run()
             return;
         }
 
-        //
+        // parse markdown and generate syntax elements
         pmh_element **elements;
         pmh_markdown_to_elements(text.toUtf8().data(), pmh_EXT_NONE, &elements);
 

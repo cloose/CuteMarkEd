@@ -36,6 +36,7 @@ QString Parser::renderAsHtml(MMIOT *document)
 
 QString Parser::generateToc(MMIOT *document)
 {
+    // generate table of contents
     char *out;
     mkd_toc(document, &out);
 

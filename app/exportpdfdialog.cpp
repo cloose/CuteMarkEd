@@ -15,6 +15,7 @@ ExportPdfDialog::ExportPdfDialog(const QString &fileName, QWidget *parent) :
     QString exportFileName = info.absoluteFilePath().replace(info.suffix(), "pdf");
     ui->exportToLineEdit->setText(exportFileName);
 
+    // fill paper size combobox
     ui->paperSizeComboBox->addItem(tr("A4 (210 x 297 mm, 8.26 x 11.69 inches)"), QPrinter::A4);
     ui->paperSizeComboBox->addItem(tr("Letter (8.5 x 11 inches, 215.9 x 279.4 mm)"), QPrinter::Letter);
     ui->paperSizeComboBox->addItem(tr("Legal (8.5 x 14 inches, 215.9 x 355.6 mm)"), QPrinter::Legal);

@@ -62,6 +62,7 @@ void MainWindow::webViewScrolled()
 
 void MainWindow::closeEvent(QCloseEvent *e)
 {
+    // check if file needs saving
     if (maybeSave()) {
         e->accept();
     } else {
@@ -88,6 +89,7 @@ void MainWindow::initializeUI()
     findReplaceWidget = new FindReplaceWidget(ui->findPlaceHolder);
     ui->findPlaceHolder->layout()->addWidget(findReplaceWidget);
 
+    // inform us when a link in the table of contents view is clicked
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->dockWidget->close();
     toggleHtmlView();
@@ -97,6 +99,7 @@ void MainWindow::initializeUI()
     connect(ui->plainTextEdit->verticalScrollBar(), SIGNAL(valueChanged(int)),
             this, SLOT(scrollValueChanged(int)));
 
+    // load HTML template for live preview from resources
     QFile f(":/template.html");
     if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QString htmlTemplate = f.readAll();
@@ -402,6 +405,7 @@ void MainWindow::htmlResultReady(const QString &html)
 {
     ui->webView->page()->networkAccessManager()->setCache(diskCache);
 
+    // remember scrollbar position
     int scrollBarPos = ui->webView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
 
     QUrl baseUrl;
@@ -412,6 +416,7 @@ void MainWindow::htmlResultReady(const QString &html)
     }
     ui->webView->setHtml(html, baseUrl);
 
+    // restore previous scrollbar position
     ui->webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, scrollBarPos);
 
     ui->htmlSourceTextEdit->setPlainText(html);
@@ -563,7 +568,7 @@ void MainWindow::setFileName(const QString &fileName)
 
 void MainWindow::updateSplitter(bool htmlViewToggled)
 {
-    // not fully initialized?
+    // not fully initialized yet?
     if (centralWidget()->size() != ui->splitter->size()) {
         return;
     }
@@ -626,5 +631,7 @@ void MainWindow::scrollValueChanged(int value)
 
 void MainWindow::addJavaScriptObject()
 {
+    // add mainwindow object to javascript engine, so when
+    // the scrollbar of the webview changes the method webViewScrolled() can be called
     ui->webView->page()->mainFrame()->addToJavaScriptWindowObject("mainwin", this);
 }
