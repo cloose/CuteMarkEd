@@ -16,7 +16,6 @@ void MarkdownManipulator::wrapSelectedText(const QString &tag)
     int end = cursor.selectionEnd();
     if (cursor.hasSelection() &&
         doc->findBlock(start) == doc->findBlock(end)) {
-        int offs = 0;
         cursor.beginEditBlock();
         QString text = cursor.selectedText();
         text.prepend(tag);
@@ -29,6 +28,46 @@ void MarkdownManipulator::wrapSelectedText(const QString &tag)
         editor->setTextCursor(cursor);
     }
 
+}
+
+void MarkdownManipulator::wrapCurrentParagraph(const QString &startTag, const QString &endTag)
+{
+    QTextCursor cursor = editor->textCursor();
+    QTextDocument *doc = editor->document();
+
+    cursor.beginEditBlock();
+
+    // find start of markdown paragraph
+    if (cursor.blockNumber() > 0) {
+        while (!cursor.atStart()) {
+            cursor.movePosition(QTextCursor::PreviousBlock);
+
+            // empty line?
+            if (cursor.block().text().isEmpty()) {
+                cursor.movePosition(QTextCursor::NextBlock);
+                break;
+            }
+        }
+    }
+
+    cursor.movePosition(QTextCursor::StartOfBlock);
+    cursor.insertText(startTag);
+
+    // find end of markdown paragraph
+    while (cursor.block() != doc->lastBlock()) {
+        cursor.movePosition(QTextCursor::NextBlock);
+
+        // empty line?
+        if (cursor.block().text().isEmpty()) {
+            cursor.movePosition(QTextCursor::PreviousBlock);
+            break;
+        }
+    }
+
+    cursor.movePosition(QTextCursor::EndOfBlock);
+    cursor.insertText(endTag);
+
+    cursor.endEditBlock();
 }
 
 void MarkdownManipulator::increaseHeadingLevel()

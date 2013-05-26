@@ -17,8 +17,11 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
     lineNumberArea(new LineNumberArea(this)),
     highlighter(new MarkdownHighlighter(this->document()))
 {
-    lineNumberArea->setFont(QFont("monospace", 10));
-    setFont(QFont("monospace", 10));
+    QFont font("Monospace", 10);
+    font.setStyleHint(QFont::TypeWriter);
+
+    lineNumberArea->setFont(font);
+    setFont(font);
 
     connect(this, SIGNAL(blockCountChanged(int)),
             this, SLOT(updateLineNumberAreaWidth(int)));
@@ -131,6 +134,7 @@ void MarkdownEditor::resizeEvent(QResizeEvent *event)
 
 void MarkdownEditor::updateLineNumberAreaWidth(int newBlockCount)
 {
+    Q_UNUSED(newBlockCount)
     setViewportMargins(lineNumberAreaWidth(), 0, 0, 0);
 }
 
@@ -160,4 +164,38 @@ void MarkdownEditor::loadStyleFromStylesheet(const QString &fileName)
     highlighter->rehighlight();
     this->setPalette(parser.editorPalette());
     this->viewport()->setPalette(this->palette());
+}
+
+int MarkdownEditor::countWords() const
+{
+    QString text = toPlainText();
+
+    // empty or only whitespaces?
+    if (text.trimmed().isEmpty()) {
+        return 0;
+    }
+
+    int words = 0;
+    bool lastWasWhitespace = false;
+    bool firstCharacter = false;
+
+    for (int i = 0; i < text.count(); ++i) {
+        if (text.at(i).isSpace()) {
+            if (firstCharacter && !lastWasWhitespace) {
+                words++;
+            }
+            lastWasWhitespace = true;
+        }
+        else
+        {
+            firstCharacter = true;
+            lastWasWhitespace = false;
+        }
+    }
+
+    if (!lastWasWhitespace && text.count() > 0) {
+        words++;
+    }
+
+    return words;
 }

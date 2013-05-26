@@ -15,6 +15,9 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -32,22 +35,43 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <property name="handleWidth">
-       <number>3</number>
-      </property>
-      <widget class="MarkdownEditor" name="plainTextEdit">
-       <property name="minimumSize">
-        <size>
-         <width>200</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::NoFrame</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
-       </property>
+      <widget class="QWidget" name="widget" native="true">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="MarkdownEditor" name="plainTextEdit">
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="findPlaceHolder" native="true"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWebView" name="webView">
        <property name="sizePolicy">
@@ -126,6 +150,7 @@
      <addaction name="actionEmphasize"/>
      <addaction name="actionStrikethrough"/>
      <addaction name="actionInline_Code"/>
+     <addaction name="actionCenterParagraph"/>
     </widget>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
@@ -136,6 +161,8 @@
     <addaction name="actionCopyHtmlToClipboard"/>
     <addaction name="separator"/>
     <addaction name="menuFormat"/>
+    <addaction name="separator"/>
+    <addaction name="actionFindReplace"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -166,6 +193,8 @@
      <addaction name="actionGithub"/>
      <addaction name="actionSolarizedLight"/>
      <addaction name="actionSolarizedDark"/>
+     <addaction name="actionClearness"/>
+     <addaction name="actionClearnessDark"/>
     </widget>
     <addaction name="actionMathSupport"/>
     <addaction name="actionCodeHighlighting"/>
@@ -384,6 +413,32 @@
    </property>
    <property name="text">
     <string>Code Highlighting</string>
+   </property>
+  </action>
+  <action name="actionClearness">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Clearness</string>
+   </property>
+  </action>
+  <action name="actionClearnessDark">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Clearness Dark</string>
+   </property>
+  </action>
+  <action name="actionFindReplace">
+   <property name="text">
+    <string>Find/Replace</string>
+   </property>
+  </action>
+  <action name="actionCenterParagraph">
+   <property name="text">
+    <string>Center Paragraph</string>
    </property>
   </action>
  </widget>
@@ -919,6 +974,70 @@
    <signal>triggered(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>extrasCodeHighlighting(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionClearness</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>styleClearness()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionClearnessDark</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>styleClearnessDark()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFindReplace</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editSearchReplace()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCenterParagraph</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editCenterParagraph()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

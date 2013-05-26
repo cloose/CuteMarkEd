@@ -11,6 +11,7 @@ class QLabel;
 class QNetworkDiskCache;
 class ActiveLabel;
 class HtmlPreviewGenerator;
+class FindReplaceWidget;
 
 
 class MainWindow : public QMainWindow
@@ -42,16 +43,20 @@ private slots:
     void editUndo();
     void editRedo();
     void editCopyHtml();
+    void editSearchReplace();
     void editStrong();
     void editEmphasize();
     void editStrikethrough();
     void editInlineCode();
+    void editCenterParagraph();
 
     void viewChangeSplit();
     void styleDefault();
     void styleGithub();
     void styleSolarizedLight();
     void styleSolarizedDark();
+    void styleClearness();
+    void styleClearnessDark();
 
     void extrasMathSupport(bool checked);
     void extrasCodeHighlighting(bool checked);
@@ -83,7 +88,9 @@ private:
 private:
     Ui::MainWindow *ui;
     QNetworkDiskCache *diskCache;
+    FindReplaceWidget *findReplaceWidget;
     QLabel *styleLabel;
+    QLabel *wordCountLabel;
     ActiveLabel *viewLabel;
     HtmlPreviewGenerator* generator;
     QString fileName;

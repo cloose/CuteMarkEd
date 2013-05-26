@@ -21,10 +21,16 @@
 #include "controls/activelabel.h"
 #include "htmlpreviewgenerator.h"
 #include "markdownmanipulator.h"
+#include "findreplacewidget.h"
+#include "exportpdfdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
+    findReplaceWidget(0),
+    styleLabel(0),
+    wordCountLabel(0),
+    viewLabel(0),
     generator(new HtmlPreviewGenerator(this)),
     splitFactor(0.5)
 {
@@ -56,6 +62,7 @@ void MainWindow::webViewScrolled()
 
 void MainWindow::closeEvent(QCloseEvent *e)
 {
+    // check if file needs saving
     if (maybeSave()) {
         e->accept();
     } else {
@@ -74,6 +81,15 @@ void MainWindow::initializeUI()
     setupActions();
     setupStatusBar();
 
+    ui->findPlaceHolder->hide();
+    ui->findPlaceHolder->setLayout(new QVBoxLayout);
+    ui->findPlaceHolder->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
+    ui->findPlaceHolder->layout()->setMargin(0);
+
+    findReplaceWidget = new FindReplaceWidget(ui->findPlaceHolder);
+    ui->findPlaceHolder->layout()->addWidget(findReplaceWidget);
+
+    // inform us when a link in the table of contents view is clicked
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->dockWidget->close();
     toggleHtmlView();
@@ -83,6 +99,7 @@ void MainWindow::initializeUI()
     connect(ui->plainTextEdit->verticalScrollBar(), SIGNAL(valueChanged(int)),
             this, SLOT(scrollValueChanged(int)));
 
+    // load HTML template for live preview from resources
     QFile f(":/template.html");
     if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QString htmlTemplate = f.readAll();
@@ -118,6 +135,8 @@ void MainWindow::initializeUI()
 void MainWindow::fileNew()
 {
     if (maybeSave()) {
+        wordCountLabel->setText("");
+        wordCountLabel->setToolTip("");
         ui->plainTextEdit->clear();
         ui->plainTextEdit->resetHighlighting();
         ui->webView->setHtml(QString());
@@ -176,16 +195,10 @@ void MainWindow::fileExportToHtml()
 
 void MainWindow::fileExportToPdf()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Export to PDF..."), QString(),
-                                                    tr("PDF Files (*.pdf);;All Files (*)"));
-    if (fileName.isEmpty()) {
-        return;
+    ExportPdfDialog dialog(fileName);
+    if (dialog.exec() == QDialog::Accepted) {
+        ui->webView->print(dialog.printer());
     }
-
-    QPrinter printer;
-    printer.setOutputFileName(fileName);
-    printer.setOutputFormat(QPrinter::PdfFormat);
-    ui->webView->print(&printer);
 }
 
 void MainWindow::filePrint()
@@ -223,6 +236,13 @@ void MainWindow::editCopyHtml()
     clipboard->setText(ui->htmlSourceTextEdit->toPlainText());
 }
 
+void MainWindow::editSearchReplace()
+{
+    findReplaceWidget->setTextEdit(ui->plainTextEdit);
+    ui->findPlaceHolder->show();
+    findReplaceWidget->show();
+}
+
 void MainWindow::editStrong()
 {
     MarkdownManipulator manipulator(ui->plainTextEdit);
@@ -245,6 +265,12 @@ void MainWindow::editInlineCode()
 {
     MarkdownManipulator manipulator(ui->plainTextEdit);
     manipulator.wrapSelectedText("`");
+}
+
+void MainWindow::editCenterParagraph()
+{
+    MarkdownManipulator manipulator(ui->plainTextEdit);
+    manipulator.wrapCurrentParagraph("->", "<-");
 }
 
 void MainWindow::styleDefault()
@@ -291,6 +317,28 @@ void MainWindow::styleSolarizedDark()
     styleLabel->setText(ui->actionSolarizedDark->text());
 }
 
+void MainWindow::styleClearness()
+{
+    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness.css"));
+
+    generator->setCodeHighlightingStyle("default");
+    plainTextChanged();
+
+    styleLabel->setText(ui->actionClearness->text());
+}
+
+void MainWindow::styleClearnessDark()
+{
+    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/clearness-dark+.txt");
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness-dark.css"));
+
+    generator->setCodeHighlightingStyle("default");
+    plainTextChanged();
+
+    styleLabel->setText(ui->actionClearnessDark->text());
+}
+
 void MainWindow::extrasMathSupport(bool checked)
 {
     generator->setMathSupportEnabled(checked);
@@ -306,13 +354,15 @@ void MainWindow::extrasCodeHighlighting(bool checked)
 void MainWindow::helpAbout()
 {
     QMessageBox::about(this, tr("About CuteMarkEd"),
-                       tr("<p><b>CuteMarkEd 0.3.0</b><br> Qt Markdown Editor<br>Copyright 2013 Christian Loose</p>"));
+                       tr("<p><b>CuteMarkEd 0.4.0</b><br>Qt-based, free and open source markdown editor with live HTML preview<br>Copyright 2013 Christian Loose</p><p><a href=\"http://cloose.github.io/CuteMarkEd\">http://cloose.github.io/CuteMarkEd</a></p>"));
 }
 
 void MainWindow::styleContextMenu(const QPoint &pos)
 {
     QList<QAction*> actions;
-    actions << ui->actionDefault << ui->actionGithub << ui->actionSolarizedLight << ui->actionSolarizedDark;
+    actions << ui->actionDefault << ui->actionGithub
+            << ui->actionSolarizedLight << ui->actionSolarizedDark
+            << ui->actionClearness << ui->actionClearnessDark;
 
     QMenu *menu = new QMenu();
     menu->addActions(actions);
@@ -339,9 +389,12 @@ void MainWindow::plainTextChanged()
 {
     QString code = ui->plainTextEdit->toPlainText();
 
-    // do nothing when text is empty
-    if (code.isEmpty()) {
-        return;
+    if (wordCountLabel) {
+        int words = ui->plainTextEdit->countWords();
+        int lines = ui->plainTextEdit->document()->lineCount();
+        int chars = ui->plainTextEdit->document()->characterCount();
+        wordCountLabel->setText(tr("%1 words").arg(words));
+        wordCountLabel->setToolTip(tr("Lines: %1  Words: %2  Characters: %3").arg(lines).arg(words).arg(chars));
     }
 
     // generate HTML from markdown
@@ -352,8 +405,19 @@ void MainWindow::htmlResultReady(const QString &html)
 {
     ui->webView->page()->networkAccessManager()->setCache(diskCache);
 
-    QUrl baseUrl = QUrl::fromLocalFile(qApp->applicationDirPath());
+    // remember scrollbar position
+    int scrollBarPos = ui->webView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
+
+    QUrl baseUrl;
+    if (fileName.isEmpty()) {
+        baseUrl = QUrl::fromLocalFile(qApp->applicationDirPath());
+    } else {
+        baseUrl = QUrl::fromLocalFile(QFileInfo(fileName).absolutePath() + "/");
+    }
     ui->webView->setHtml(html, baseUrl);
+
+    // restore previous scrollbar position
+    ui->webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, scrollBarPos);
 
     ui->htmlSourceTextEdit->setPlainText(html);
 }
@@ -393,6 +457,9 @@ void MainWindow::setupActions()
     ui->actionEmphasize->setShortcut(QKeySequence::Italic);
     ui->actionEmphasize->setIcon(QIcon("icon-italic.fontawesome"));
     ui->actionStrikethrough->setIcon(QIcon("icon-strikethrough.fontawesome"));
+    ui->actionCenterParagraph->setIcon(QIcon("icon-align-center.fontawesome"));
+    ui->actionFindReplace->setShortcut(QKeySequence::Find);
+    ui->actionFindReplace->setIcon(QIcon("icon-search.fontawesome"));
 
     // view menu
     ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());
@@ -402,6 +469,8 @@ void MainWindow::setupActions()
     ui->actionGithub->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     ui->actionSolarizedLight->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
     ui->actionSolarizedDark->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
+    ui->actionClearness->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
+    ui->actionClearnessDark->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
 
     // put style actions in a group
     QActionGroup* group = new QActionGroup( this );
@@ -409,6 +478,8 @@ void MainWindow::setupActions()
     ui->actionGithub->setActionGroup(group);
     ui->actionSolarizedLight->setActionGroup(group);
     ui->actionSolarizedDark->setActionGroup(group);
+    ui->actionClearness->setActionGroup(group);
+    ui->actionClearnessDark->setActionGroup(group);
 }
 
 void MainWindow::setupStatusBar()
@@ -416,15 +487,21 @@ void MainWindow::setupStatusBar()
     // add style label to statusbar
     styleLabel = new QLabel(ui->actionDefault->text(), this);
     styleLabel->setToolTip(tr("Change Preview Style"));
-    statusBar()->addWidget(styleLabel);
+    statusBar()->addPermanentWidget(styleLabel, 1);
 
     styleLabel->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(styleLabel, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(styleContextMenu(QPoint)));
 
+    // add word count label to statusbar
+    wordCountLabel = new QLabel(this);
+    wordCountLabel->setAlignment(Qt::AlignHCenter);
+    statusBar()->addPermanentWidget(wordCountLabel, 1);
+
     // add view label to statusbar
     viewLabel = new ActiveLabel(this);
-    statusBar()->addPermanentWidget(viewLabel);
+    viewLabel->setAlignment(Qt::AlignRight);
+    statusBar()->addPermanentWidget(viewLabel, 1);
 
     connect(viewLabel, SIGNAL(doubleClicked()),
             this, SLOT(toggleHtmlView()));
@@ -491,7 +568,7 @@ void MainWindow::setFileName(const QString &fileName)
 
 void MainWindow::updateSplitter(bool htmlViewToggled)
 {
-    // not fully initialized?
+    // not fully initialized yet?
     if (centralWidget()->size() != ui->splitter->size()) {
         return;
     }
@@ -554,5 +631,7 @@ void MainWindow::scrollValueChanged(int value)
 
 void MainWindow::addJavaScriptObject()
 {
+    // add mainwindow object to javascript engine, so when
+    // the scrollbar of the webview changes the method webViewScrolled() can be called
     ui->webView->page()->mainFrame()->addToJavaScriptWindowObject("mainwin", this);
 }

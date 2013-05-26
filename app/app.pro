@@ -26,7 +26,9 @@ SOURCES += main.cpp\
     markdownhighlighter.cpp \
     highlightworkerthread.cpp \
     peg-markdown-highlight/styleparser.cpp \
-    markdownmanipulator.cpp
+    markdownmanipulator.cpp \
+    findreplacewidget.cpp \
+    exportpdfdialog.cpp
 
 HEADERS  += mainwindow.h \
             markdowneditor.h \
@@ -39,9 +41,13 @@ HEADERS  += mainwindow.h \
     highlightworkerthread.h \
     peg-markdown-highlight/styleparser.h \
     peg-markdown-highlight/definitions.h \
-    markdownmanipulator.h
+    markdownmanipulator.h \
+    findreplacewidget.h \
+    exportpdfdialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    findreplacewidget.ui \
+    exportpdfdialog.ui
 
 RESOURCES += \
     styles.qrc \
@@ -59,23 +65,24 @@ win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../discount/releas
 else:win32-g++:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../discount/debug/ -ldiscount
 else:win32-msvc*:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../discount/release/ -llibdiscount
 else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../discount/debug/ -llibdiscount
-else:unix: LIBS += -L$$OUT_PWD/../discount/ -llibdiscount
+else:unix: LIBS += -L/usr/lib -lmarkdown
 
-INCLUDEPATH += $$PWD/../discount
-DEPENDPATH += $$PWD/../discount
+win32:INCLUDEPATH += $$PWD/../discount
+unix:INCLUDEPATH += /usr/include
+win32:DEPENDPATH += $$PWD/../discount
 
 win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../discount/release/libdiscount.a
 else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../discount/debug/libdiscount.a
 else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../discount/release/libdiscount.lib
 else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../discount/debug/libdiscount.lib
-else:unix: PRE_TARGETDEPS += $$OUT_PWD/../discount/libdiscount.a
+#else:unix: PRE_TARGETDEPS += $$OUT_PWD/../discount/libdiscount.a
 
 # peg-markdown-highlight
 win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/release/ -lpmh
 else:win32-g++:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/debug/ -lpmh
 else:win32-msvc*:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/release/ -llibpmh
 else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/debug/ -llibpmh
-else:unix: LIBS += -L$$OUT_PWD/../peg-markdown-highlight/ -llibpmh
+else:unix: LIBS += -L$$OUT_PWD/../peg-markdown-highlight/ -lpmh
 
 INCLUDEPATH += $$PWD/../peg-markdown-highlight
 DEPENDPATH += $$PWD/../peg-markdown-highlight
@@ -88,3 +95,6 @@ else:unix: PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/libpmh.a
 
 OTHER_FILES += \
     template.html
+
+message("Using INCLUDEPATH=$$INCLUDEPATH")
+message("Using LIBS=$$LIBS")

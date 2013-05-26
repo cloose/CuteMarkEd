@@ -49,6 +49,7 @@ void HtmlPreviewGenerator::run()
                 bufferNotEmpty.wait(&tasksMutex);
             }
 
+            // get next task from queue
             text = tasks.dequeue();
         }
 

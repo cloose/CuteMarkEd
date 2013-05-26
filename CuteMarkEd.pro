@@ -6,8 +6,13 @@
 
 TEMPLATE = subdirs
 
-SUBDIRS = discount \
+win32:SUBDIRS = discount \
     peg-markdown-highlight \
     app \
     fontawesomeicon
+
+unix:SUBDIRS = peg-markdown-highlight \
+    app \
+    fontawesomeicon
+
 CONFIG += ordered
