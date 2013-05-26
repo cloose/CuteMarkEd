@@ -5,14 +5,29 @@
 
 A Qt-based, free and open source markdown editor with live HTML preview, math expressions, code syntax highlighting and syntax highlighting of markdown document.
 
-![screenshot](https://raw.github.com/cloose/CuteMarkEd/develop/images/screenshot_03.png)
+![screenshot](https://raw.github.com/cloose/CuteMarkEd/develop/images/screenshot_04.png)
 
 ### DOWNLOAD
 
-[Sources](https://bitbucket.org/cloose/cutemarked/downloads/cutemarked-src-0.3.0.tar.gz)  
-[MS Windows (ZIP file)](https://bitbucket.org/cloose/cutemarked/downloads/cutemarked-0.3.0.zip)
+[Sources](https://bitbucket.org/cloose/cutemarked/downloads/cutemarked-src-0.4.0.tar.gz)  
+[MS Windows (ZIP file)](https://bitbucket.org/cloose/cutemarked/downloads/cutemarked-0.4.0.zip)
 
 ### NEWS
+
+#### Version 0.4.0
+
+* `NEW` Added search & replace command to markdown editor
+* `NEW` New CSS styles 'Clearness' and 'Clearness Dark'
+* `NEW` Document statistics with line, word and character count
+* `NEW` 'Center Paragraph' formatting command
+
+* `IMPROVED` 'Export to PDF' function with selection of paper size and orientation
+* `IMPROVED` Handling of links to local resource in HTML preview
+
+* `FIX` Use fixed-pitch font for markdown editor on MS Windows
+* `FIX` Missing character in HTML preview when markdown document did not end with a line break
+* `FIX` <style\> elements are not parsed anymore but included in the generated HTML
+
 
 #### Version 0.3.0
 
@@ -52,3 +67,8 @@ First release with basic functionality working.
 ### BUILD STATUS
 
 [![Build Status](https://travis-ci.org/cloose/CuteMarkEd.png)](https://travis-ci.org/cloose/CuteMarkEd)
+
+### Links
+
+http://www.ohloh.net/p/CuteMarkEd
+http://freecode.com/projects/cutemarked
