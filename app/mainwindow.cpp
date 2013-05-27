@@ -19,9 +19,9 @@
 #include <QWebInspector>
 
 #include "controls/activelabel.h"
+#include "controls/findreplacewidget.h"
 #include "htmlpreviewgenerator.h"
 #include "markdownmanipulator.h"
-#include "findreplacewidget.h"
 #include "exportpdfdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
