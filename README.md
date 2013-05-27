@@ -71,4 +71,5 @@ First release with basic functionality working.
 ### LINKS
 
 [http://www.ohloh.net/p/CuteMarkEd](http://www.ohloh.net/p/CuteMarkEd)  
-[http://freecode.com/projects/cutemarked](http://freecode.com/projects/cutemarked)
+[http://freecode.com/projects/cutemarked](http://freecode.com/projects/cutemarked)  
+[http://qt-apps.org/content/show.php/CuteMarkEd?content=158801](http://qt-apps.org/content/show.php/CuteMarkEd?content=158801)
