@@ -27,7 +27,6 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    findReplaceWidget(0),
     styleLabel(0),
     wordCountLabel(0),
     viewLabel(0),
@@ -81,13 +80,8 @@ void MainWindow::initializeUI()
     setupActions();
     setupStatusBar();
 
-    ui->findPlaceHolder->hide();
-    ui->findPlaceHolder->setLayout(new QVBoxLayout);
-    ui->findPlaceHolder->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
-    ui->findPlaceHolder->layout()->setMargin(0);
-
-    findReplaceWidget = new FindReplaceWidget(ui->findPlaceHolder);
-    ui->findPlaceHolder->layout()->addWidget(findReplaceWidget);
+    // hide find/replace widget on startup
+    ui->findReplaceWidget->hide();
 
     // inform us when a link in the table of contents view is clicked
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
@@ -238,9 +232,8 @@ void MainWindow::editCopyHtml()
 
 void MainWindow::editSearchReplace()
 {
-    findReplaceWidget->setTextEdit(ui->plainTextEdit);
-    ui->findPlaceHolder->show();
-    findReplaceWidget->show();
+    ui->findReplaceWidget->setTextEdit(ui->plainTextEdit);
+    ui->findReplaceWidget->show();
 }
 
 void MainWindow::editStrong()

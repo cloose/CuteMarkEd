@@ -11,7 +11,6 @@ class QLabel;
 class QNetworkDiskCache;
 class ActiveLabel;
 class HtmlPreviewGenerator;
-class FindReplaceWidget;
 
 
 class MainWindow : public QMainWindow
@@ -88,7 +87,6 @@ private:
 private:
     Ui::MainWindow *ui;
     QNetworkDiskCache *diskCache;
-    FindReplaceWidget *findReplaceWidget;
     QLabel *styleLabel;
     QLabel *wordCountLabel;
     ActiveLabel *viewLabel;
