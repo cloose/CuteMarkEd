@@ -15,38 +15,41 @@ TRANSLATIONS += translations/cutemarked_de.ts
 
 INCLUDEPATH += $$PWD
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-        markdowneditor.cpp \
-        controls/linenumberarea.cpp \
-        discount/parser.cpp \
+SOURCES += \
+    main.cpp\
+    mainwindow.cpp \
+    markdowneditor.cpp \
+    controls/linenumberarea.cpp \
+    controls/activelabel.cpp \
+    controls/findreplacewidget.cpp \
+    discount/parser.cpp \
     discount/document.cpp \
     htmlpreviewgenerator.cpp \
-    controls/activelabel.cpp \
     markdownhighlighter.cpp \
     highlightworkerthread.cpp \
     peg-markdown-highlight/styleparser.cpp \
     markdownmanipulator.cpp \
-    findreplacewidget.cpp \
     exportpdfdialog.cpp
 
-HEADERS  += mainwindow.h \
-            markdowneditor.h \
-            controls/linenumberarea.h \
-            discount/parser.h \
+HEADERS  += \
+    mainwindow.h \
+    markdowneditor.h \
+    controls/linenumberarea.h \
+    controls/activelabel.h \
+    controls/findreplacewidget.h \
+    discount/parser.h \
     discount/document.h \
     htmlpreviewgenerator.h \
-    controls/activelabel.h \
     markdownhighlighter.h \
     highlightworkerthread.h \
     peg-markdown-highlight/styleparser.h \
     peg-markdown-highlight/definitions.h \
     markdownmanipulator.h \
-    findreplacewidget.h \
     exportpdfdialog.h
 
-FORMS    += mainwindow.ui \
-    findreplacewidget.ui \
+FORMS    += \
+    mainwindow.ui \
+    controls/findreplacewidget.ui \
     exportpdfdialog.ui
 
 RESOURCES += \
