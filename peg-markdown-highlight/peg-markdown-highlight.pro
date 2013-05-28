@@ -23,11 +23,12 @@ HEADERS += \
     pmh_styleparser.h \
     pmh_parser.h \
     pmh_definitions.h
-unix:!symbian {
-    maemo5 {
-        target.path = /opt/usr/lib
-    } else {
-        target.path = /usr/lib
-    }
-    INSTALLS += target
-}
+
+#unix:!symbian {
+#    maemo5 {
+#        target.path = /opt/usr/lib
+#    } else {
+#        target.path = /usr/lib
+#    }
+#    INSTALLS += target
+#}
