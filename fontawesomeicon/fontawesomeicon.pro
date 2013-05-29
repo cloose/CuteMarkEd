@@ -34,3 +34,12 @@ OTHER_FILES += fontawesomeicon.json \
 
 RESOURCES += \
     fontawesomeicon.qrc
+
+## INSTALLATION
+
+unix {
+   # install plugin
+   target.path = $$[QT_INSTALL_PLUGINS]/iconengines
+   INSTALLS += target
+   message("The project will be installed in $$[QT_INSTALL_PLUGINS]/iconengines")
+}
