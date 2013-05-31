@@ -500,6 +500,8 @@ void MainWindow::setupActions()
 
 void MainWindow::setupStatusBar()
 {
+    statusBar()->setStyleSheet("QStatusBar::item { border: 0px solid black }; ");
+
     // add style label to statusbar
     styleLabel = new QLabel(ui->actionDefault->text(), this);
     styleLabel->setToolTip(tr("Change Preview Style"));
