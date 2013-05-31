@@ -180,6 +180,7 @@ void MainWindow::fileExportToHtml()
 {
     ExportHtmlDialog dialog(fileName);
     if (dialog.exec() == QDialog::Accepted) {
+
         if (dialog.includeCSS()) {
             // read used css stylesheet from resources
             QUrl cssUrl = ui->webView->page()->settings()->userStyleSheetUrl();
@@ -198,6 +199,7 @@ void MainWindow::fileExportToHtml()
             }
         }
 
+        // write HTML source to disk
         QTextDocumentWriter writer(dialog.fileName(), "plaintext");
         writer.write(ui->htmlSourceTextEdit->document());
 

@@ -66,6 +66,9 @@
    </item>
    <item row="1" column="1">
     <widget class="QCheckBox" name="styleCheckBox">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;embed the current CSS style into the exported HTML&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <property name="text">
       <string>Include CSS style</string>
      </property>
@@ -74,16 +77,6 @@
      </property>
      <property name="tristate">
       <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="styleLabel">
-     <property name="text">
-      <string>Style:</string>
-     </property>
-     <property name="buddy">
-      <cstring>styleCheckBox</cstring>
      </property>
     </widget>
    </item>
