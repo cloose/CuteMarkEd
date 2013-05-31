@@ -22,6 +22,7 @@
 #include "controls/findreplacewidget.h"
 #include "htmlpreviewgenerator.h"
 #include "markdownmanipulator.h"
+#include "exporthtmldialog.h"
 #include "exportpdfdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -177,14 +178,36 @@ bool MainWindow::fileSaveAs()
 
 void MainWindow::fileExportToHtml()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Export to HTML..."), QString(),
-                                                    tr("HTML Files (*.html *.htm);;All Files (*)"));
-    if (fileName.isEmpty()) {
-        return;
-    }
+    ExportHtmlDialog dialog(fileName);
+    if (dialog.exec() == QDialog::Accepted) {
 
-    QTextDocumentWriter writer(fileName, "plaintext");
-    writer.write(ui->htmlSourceTextEdit->document());
+        if (dialog.includeCSS()) {
+            // read used css stylesheet from resources
+            QUrl cssUrl = ui->webView->page()->settings()->userStyleSheetUrl();
+            QFile f(cssUrl.toString().remove(0, 3));
+            if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                QString cssStyle = f.readAll();
+
+                // embed the css into the HTML source document after the <head> element.
+                if (ui->htmlSourceTextEdit->find("<head>")) {
+                    QTextCursor cursor = ui->htmlSourceTextEdit->textCursor();
+                    cursor.beginEditBlock();
+                    cursor.setPosition(cursor.selectionEnd());
+                    cursor.insertText(QString("\n<style>%1</style>").arg(cssStyle));
+                    cursor.endEditBlock();
+                }
+            }
+        }
+
+        // write HTML source to disk
+        QTextDocumentWriter writer(dialog.fileName(), "plaintext");
+        writer.write(ui->htmlSourceTextEdit->document());
+
+        // undo the changes to the HTML source
+        if (dialog.includeCSS()) {
+            ui->htmlSourceTextEdit->undo();
+        }
+    }
 }
 
 void MainWindow::fileExportToPdf()
