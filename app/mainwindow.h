@@ -11,6 +11,7 @@ class QLabel;
 class QNetworkDiskCache;
 class ActiveLabel;
 class HtmlPreviewGenerator;
+class HtmlHighlighter;
 class RecentFilesMenu;
 
 
@@ -95,6 +96,7 @@ private:
     QLabel *wordCountLabel;
     ActiveLabel *viewLabel;
     HtmlPreviewGenerator* generator;
+    HtmlHighlighter *htmlHighlighter;
     QString fileName;
     float splitFactor;
 };

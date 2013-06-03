@@ -21,6 +21,7 @@
 #include "controls/activelabel.h"
 #include "controls/findreplacewidget.h"
 #include "htmlpreviewgenerator.h"
+#include "htmlhighlighter.h"
 #include "markdownmanipulator.h"
 #include "exporthtmldialog.h"
 #include "exportpdfdialog.h"
@@ -129,6 +130,11 @@ void MainWindow::initializeUI()
 //    inspector->setPage(ui->webView->page());
 
     recentFilesMenu->readState();
+
+    QFont font("Monospace", 10);
+    font.setStyleHint(QFont::TypeWriter);
+    ui->htmlSourceTextEdit->setFont(font);
+    htmlHighlighter = new HtmlHighlighter(ui->htmlSourceTextEdit->document());
 }
 
 void MainWindow::openRecentFile(const QString &fileName)

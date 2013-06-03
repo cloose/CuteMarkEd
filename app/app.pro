@@ -22,6 +22,7 @@ SOURCES += \
     controls/linenumberarea.cpp \
     controls/activelabel.cpp \
     controls/findreplacewidget.cpp \
+    controls/recentfilesmenu.cpp \
     discount/parser.cpp \
     discount/document.cpp \
     htmlpreviewgenerator.cpp \
@@ -31,7 +32,7 @@ SOURCES += \
     markdownmanipulator.cpp \
     exportpdfdialog.cpp \
     exporthtmldialog.cpp \
-    controls/recentfilesmenu.cpp
+    htmlhighlighter.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -39,6 +40,7 @@ HEADERS  += \
     controls/linenumberarea.h \
     controls/activelabel.h \
     controls/findreplacewidget.h \
+    controls/recentfilesmenu.h \
     discount/parser.h \
     discount/document.h \
     htmlpreviewgenerator.h \
@@ -49,7 +51,7 @@ HEADERS  += \
     markdownmanipulator.h \
     exportpdfdialog.h \
     exporthtmldialog.h \
-    controls/recentfilesmenu.h
+    htmlhighlighter.h
 
 FORMS    += \
     mainwindow.ui \
