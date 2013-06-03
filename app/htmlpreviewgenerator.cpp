@@ -85,10 +85,12 @@ QString HtmlPreviewGenerator::buildHtmlHeader() const
 {
     QString header;
 
+    // add MathJax.js script to HTML header
     if (mathSupportEnabled) {
         header += "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>";
     }
 
+    // add Highlight.js script to HTML header
     if (codeHighlightingEnabled) {
         header += QString("<link rel=\"stylesheet\" href=\"http://yandex.st/highlightjs/7.3/styles/%1.min.css\">").arg(codeHighlightingStyle);
         header += "<script src=\"http://yandex.st/highlightjs/7.3/highlight.min.js\"></script>";

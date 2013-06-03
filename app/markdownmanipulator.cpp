@@ -76,6 +76,7 @@ void MarkdownManipulator::appendToLine(const QString &text)
 
     cursor.beginEditBlock();
 
+    // append passed text to end of current line
     cursor.movePosition(QTextCursor::EndOfLine);
     cursor.insertText(text);
 

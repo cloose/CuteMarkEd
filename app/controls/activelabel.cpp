@@ -14,6 +14,7 @@ ActiveLabel::ActiveLabel(const QString &text, QWidget *parent) :
 
 void ActiveLabel::mouseDoubleClickEvent(QMouseEvent *e)
 {
+    // double click with left mouse button?
     if (e->button() == Qt::LeftButton) {
         emit doubleClicked();
     }
