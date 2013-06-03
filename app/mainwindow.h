@@ -50,6 +50,7 @@ private slots:
     void editStrikethrough();
     void editInlineCode();
     void editCenterParagraph();
+    void editHardLinebreak();
 
     void viewChangeSplit();
     void styleDefault();

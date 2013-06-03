@@ -70,6 +70,18 @@ void MarkdownManipulator::wrapCurrentParagraph(const QString &startTag, const QS
     cursor.endEditBlock();
 }
 
+void MarkdownManipulator::appendToLine(const QString &text)
+{
+    QTextCursor cursor = editor->textCursor();
+
+    cursor.beginEditBlock();
+
+    cursor.movePosition(QTextCursor::EndOfLine);
+    cursor.insertText(text);
+
+    cursor.endEditBlock();
+}
+
 void MarkdownManipulator::increaseHeadingLevel()
 {
     // move cursor to start of line

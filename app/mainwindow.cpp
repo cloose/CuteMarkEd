@@ -298,6 +298,12 @@ void MainWindow::editCenterParagraph()
     manipulator.wrapCurrentParagraph("->", "<-");
 }
 
+void MainWindow::editHardLinebreak()
+{
+    MarkdownManipulator manipulator(ui->plainTextEdit);
+    manipulator.appendToLine("  \n");
+}
+
 void MainWindow::styleDefault()
 {
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
@@ -489,6 +495,7 @@ void MainWindow::setupActions()
     ui->actionEmphasize->setIcon(QIcon("icon-italic.fontawesome"));
     ui->actionStrikethrough->setIcon(QIcon("icon-strikethrough.fontawesome"));
     ui->actionCenterParagraph->setIcon(QIcon("icon-align-center.fontawesome"));
+    ui->actionHardLinebreak->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return));
     ui->actionFindReplace->setShortcut(QKeySequence::Find);
     ui->actionFindReplace->setIcon(QIcon("icon-search.fontawesome"));
 

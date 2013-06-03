@@ -11,6 +11,9 @@ public:
 
     void wrapSelectedText(const QString &tag);
     void wrapCurrentParagraph(const QString &startTag, const QString &endTag);
+
+    void appendToLine(const QString &text);
+
     void increaseHeadingLevel();
     void decreaseHeadingLevel();
 

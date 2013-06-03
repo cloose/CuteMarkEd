@@ -151,6 +151,7 @@
      <addaction name="actionStrikethrough"/>
      <addaction name="actionInline_Code"/>
      <addaction name="actionCenterParagraph"/>
+     <addaction name="actionHardLinebreak"/>
     </widget>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
@@ -439,6 +440,11 @@
   <action name="actionCenterParagraph">
    <property name="text">
     <string>Center Paragraph</string>
+   </property>
+  </action>
+  <action name="actionHardLinebreak">
+   <property name="text">
+    <string>Hard Linebreak</string>
    </property>
   </action>
  </widget>
@@ -1044,6 +1050,22 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>editCenterParagraph()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionHardLinebreak</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editHardLinebreak()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
