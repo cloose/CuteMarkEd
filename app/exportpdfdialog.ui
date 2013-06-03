@@ -144,5 +144,21 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>exportToLineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>ExportPdfDialog</receiver>
+   <slot>exportToTextChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>189</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>203</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>

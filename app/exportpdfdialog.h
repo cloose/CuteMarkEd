@@ -19,6 +19,7 @@ public:
     QPrinter *printer();
 
 private slots:
+    void exportToTextChanged(const QString &text);
     void chooseFileButtonClicked();
 
 private:

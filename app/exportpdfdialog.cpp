@@ -11,15 +11,24 @@ ExportPdfDialog::ExportPdfDialog(const QString &fileName, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QFileInfo info(fileName);
-    QString exportFileName = info.absoluteFilePath().replace(info.suffix(), "pdf");
-    ui->exportToLineEdit->setText(exportFileName);
+    // change button text of standard Ok button
+    QPushButton *okButton = ui->buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setText("Export PDF");
+
+    if (!fileName.isEmpty()) {
+        QFileInfo info(fileName);
+        QString exportFileName = info.absoluteFilePath().replace(info.suffix(), "pdf");
+        ui->exportToLineEdit->setText(exportFileName);
+    }
 
     // fill paper size combobox
     ui->paperSizeComboBox->addItem(tr("A4 (210 x 297 mm, 8.26 x 11.69 inches)"), QPrinter::A4);
     ui->paperSizeComboBox->addItem(tr("Letter (8.5 x 11 inches, 215.9 x 279.4 mm)"), QPrinter::Letter);
     ui->paperSizeComboBox->addItem(tr("Legal (8.5 x 14 inches, 215.9 x 355.6 mm)"), QPrinter::Legal);
     ui->paperSizeComboBox->addItem(tr("A5 (148 x 210 mm)"), QPrinter::A5);
+
+    // initialize Ok button state
+    exportToTextChanged(fileName);
 }
 
 ExportPdfDialog::~ExportPdfDialog()
@@ -48,6 +57,13 @@ QPrinter *ExportPdfDialog::printer()
     p->setPaperSize(size);
 
     return p;
+}
+
+void ExportPdfDialog::exportToTextChanged(const QString &text)
+{
+    // only enable ok button if a filename was provided
+    QPushButton *okButton = ui->buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setEnabled(!text.isEmpty());
 }
 
 void ExportPdfDialog::chooseFileButtonClicked()
