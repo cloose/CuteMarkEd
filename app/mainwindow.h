@@ -11,6 +11,7 @@ class QLabel;
 class QNetworkDiskCache;
 class ActiveLabel;
 class HtmlPreviewGenerator;
+class RecentFilesMenu;
 
 
 class MainWindow : public QMainWindow
@@ -30,6 +31,7 @@ protected:
 
 private slots:
     void initializeUI();
+    void openRecentFile(const QString &fileName);
 
     void fileNew();
     void fileOpen();
@@ -86,6 +88,7 @@ private:
 
 private:
     Ui::MainWindow *ui;
+    RecentFilesMenu *recentFilesMenu;
     QNetworkDiskCache *diskCache;
     QLabel *styleLabel;
     QLabel *wordCountLabel;

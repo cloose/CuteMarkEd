@@ -24,6 +24,7 @@
 #include "markdownmanipulator.h"
 #include "exporthtmldialog.h"
 #include "exportpdfdialog.h"
+#include <controls/recentfilesmenu.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -64,6 +65,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 {
     // check if file needs saving
     if (maybeSave()) {
+        recentFilesMenu->saveState();
         e->accept();
     } else {
         e->ignore();
@@ -125,6 +127,13 @@ void MainWindow::initializeUI()
 //    ui->webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
 //    QWebInspector *inspector = new QWebInspector();
 //    inspector->setPage(ui->webView->page());
+
+    recentFilesMenu->readState();
+}
+
+void MainWindow::openRecentFile(const QString &fileName)
+{
+    load(fileName);
 }
 
 void MainWindow::fileNew()
@@ -456,6 +465,12 @@ void MainWindow::setupActions()
     ui->action_Print->setIcon(QIcon("icon-print.fontawesome"));
     ui->actionExit->setShortcut(QKeySequence::Quit);
 
+    recentFilesMenu = new RecentFilesMenu(ui->menuFile);
+    ui->menuFile->insertMenu(ui->actionSave, recentFilesMenu);
+
+    connect(recentFilesMenu, SIGNAL(recentFileTriggered(QString)),
+            this, SLOT(openRecentFile(QString)));
+
     // edit menu
     ui->actionUndo->setShortcut(QKeySequence::Undo);
     ui->actionUndo->setIcon(QIcon("icon-undo.fontawesome"));
@@ -543,6 +558,7 @@ bool MainWindow::load(const QString &fileName)
     ui->plainTextEdit->setPlainText(text);
 
     setFileName(fileName);
+    recentFilesMenu->addFile(fileName);
     return true;
 }
 
