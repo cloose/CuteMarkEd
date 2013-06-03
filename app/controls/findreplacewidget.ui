@@ -91,7 +91,7 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset resource="styles.qrc">
+         <iconset resource="../styles.qrc">
           <normaloff>:/icons/icon-close.png</normaloff>:/icons/icon-close.png</iconset>
         </property>
        </widget>
@@ -185,7 +185,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="styles.qrc"/>
+  <include location="../styles.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -195,8 +195,8 @@
    <slot>findNextClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>396</x>
-     <y>19</y>
+     <x>427</x>
+     <y>32</y>
     </hint>
     <hint type="destinationlabel">
      <x>253</x>
@@ -243,8 +243,8 @@
    <slot>replaceClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>659</x>
-     <y>23</y>
+     <x>429</x>
+     <y>63</y>
     </hint>
     <hint type="destinationlabel">
      <x>339</x>
@@ -259,12 +259,28 @@
    <slot>replaceAllClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>659</x>
-     <y>23</y>
+     <x>497</x>
+     <y>63</y>
     </hint>
     <hint type="destinationlabel">
      <x>339</x>
      <y>39</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>findLineEdit</sender>
+   <signal>returnPressed()</signal>
+   <receiver>findNextButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>226</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>416</x>
+     <y>23</y>
     </hint>
    </hints>
   </connection>
