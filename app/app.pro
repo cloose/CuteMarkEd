@@ -30,7 +30,8 @@ SOURCES += \
     peg-markdown-highlight/styleparser.cpp \
     markdownmanipulator.cpp \
     exportpdfdialog.cpp \
-    exporthtmldialog.cpp
+    exporthtmldialog.cpp \
+    controls/recentfilesmenu.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -47,7 +48,8 @@ HEADERS  += \
     peg-markdown-highlight/definitions.h \
     markdownmanipulator.h \
     exportpdfdialog.h \
-    exporthtmldialog.h
+    exporthtmldialog.h \
+    controls/recentfilesmenu.h
 
 FORMS    += \
     mainwindow.ui \
