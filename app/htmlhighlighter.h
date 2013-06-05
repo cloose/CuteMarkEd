@@ -20,6 +20,8 @@ private:
     QList<HighlightingRule> highlightingRules;
 
     QTextCharFormat keywordFormat;
+    QTextCharFormat imageFormat;
+    QTextCharFormat linkFormat;
 };
 
 #endif // HTMLHIGHLIGHTER_H

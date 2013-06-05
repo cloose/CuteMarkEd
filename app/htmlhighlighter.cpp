@@ -3,35 +3,41 @@
 HtmlHighlighter::HtmlHighlighter(QTextDocument *document) :
     QSyntaxHighlighter(document)
 {
-    //keywordFormat.setForeground(Qt::darkBlue);
     keywordFormat.setForeground(QColor("#6c71c4"));
     keywordFormat.setFontWeight(QFont::Bold);
 
+    imageFormat.setForeground(QColor("#cf009a"));
+
+    linkFormat.setForeground(QColor("#4e279a"));
+
     HighlightingRule rule;
 
-    QString attrRegExp = "(\\s?(\\S+)=[\"']?((?:.(?![\"']?\\s+(?:\\S+)=|[>\"']))+.)[\"']?\\s?)*";
+    QString htmlTagRegExp = "<(/?)(%1)[^>]*(/?)>";
     QStringList keywords;
-    keywords << "<html>" << "</html>"
+    keywords << htmlTagRegExp.arg("html")
              << "<head>" << "</head>"
-             << "<link" + attrRegExp + ">" << "</link>"
-             << "<script" + attrRegExp + ">" << "</script>"
+             << htmlTagRegExp.arg("link")
+             << htmlTagRegExp.arg("script")
              << "<body>" << "</body>"
              << "<title>" << "</title>"
              << "<b>" << "</b>"
-             << "<p" + attrRegExp + ">" << "</p>"
-             << "<a" + attrRegExp + ">" << "</a>"
+             << htmlTagRegExp.arg("p")
              << "<i>" << "</i>"
              << "<u>" << "</u>"
              << "<sup>" << "</sup>"
              << "<sub>" << "</sub>"
-             << "<h1" + attrRegExp + ">" << "</h1>"
-             << "<h2" + attrRegExp + ">" << "</h2>"
-             << "<h3" + attrRegExp + ">" << "</h3>"
-             << "<h4" + attrRegExp + ">" << "</h4>"
-             << "<h5" + attrRegExp + ">" << "</h5>"
-             << "<h6" + attrRegExp + ">" << "</h6>"
+             << htmlTagRegExp.arg("h1")
+             << htmlTagRegExp.arg("h2")
+             << htmlTagRegExp.arg("h3")
+             << htmlTagRegExp.arg("h4")
+             << htmlTagRegExp.arg("h5")
+             << htmlTagRegExp.arg("h6")
+             << htmlTagRegExp.arg("br")
+             << htmlTagRegExp.arg("hr")
              << "<small>" << "</small>"
              << "<big>" << "</big>"
+             << "<strong>" << "</strong>"
+             << "<em>" << "</em>"
              << "<center>" << "</center>"
              << "<nobr>" << "</nobr>"
              << "<blockquote>" << "</blockquote>"
@@ -42,13 +48,27 @@ HtmlHighlighter::HtmlHighlighter(QTextDocument *document) :
              << "<ol>" << "</ol>"
              << "<dl>" << "</dl>"
              << "<table>" << "</table>"
-             << "<td>" << "</td>"
-             << "<strike>" << "</strike>";
+             << "<thead>" << "</thead>"
+             << "<tbody>" << "</tbody>"
+             << htmlTagRegExp.arg("th")
+             << htmlTagRegExp.arg("td")
+             << htmlTagRegExp.arg("tr")
+             << "<strike>" << "</strike>"
+             << "<del>" << "</del>";
+
     foreach(QString keyword, keywords) {
         rule.pattern = QRegExp(keyword);
         rule.format = &keywordFormat;
         highlightingRules.append(rule);
     }
+
+    rule.pattern = QRegExp(htmlTagRegExp.arg("img"));
+    rule.format = &imageFormat;
+    highlightingRules.append(rule);
+
+    rule.pattern = QRegExp(htmlTagRegExp.arg("a"));
+    rule.format = &linkFormat;
+    highlightingRules.append(rule);
 }
 
 void HtmlHighlighter::highlightBlock(const QString &text)
