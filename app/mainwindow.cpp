@@ -571,7 +571,7 @@ bool MainWindow::load(const QString &fileName)
     ui->plainTextEdit->setPlainText(text);
 
     setFileName(fileName);
-    recentFilesMenu->addFile(fileName);
+    recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
     return true;
 }
 
