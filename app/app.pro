@@ -11,7 +11,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = cutemarked
 TEMPLATE = app
 
-TRANSLATIONS += translations/cutemarked_de.ts
+TRANSLATIONS += \
+    translations/cutemarked_cs.ts \
+    translations/cutemarked_de.ts
 
 INCLUDEPATH += $$PWD
 
