@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>translations/cutemarked_de.qm</file>
+        <file>translations/cutemarked_cs.qm</file>
     </qresource>
 </RCC>
