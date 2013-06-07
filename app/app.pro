@@ -8,10 +8,12 @@ QT       += core gui webkitwidgets printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = CuteMarkEd
+TARGET = cutemarked
 TEMPLATE = app
 
-TRANSLATIONS += translations/cutemarked_de.ts
+TRANSLATIONS += \
+    translations/cutemarked_cs.ts \
+    translations/cutemarked_de.ts
 
 INCLUDEPATH += $$PWD
 
@@ -97,7 +99,21 @@ else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../pe
 else:unix: PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/libpmh.a
 
 OTHER_FILES += \
-    template.html
+    template.html \
+    cutemarked.desktop
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
 message("Using LIBS=$$LIBS")
+
+## INSTALLATION
+
+unix {
+   # install desktop file
+   desktop.path = /usr/share/applications
+   desktop.files += cutemarked.desktop
+
+   # install application
+   target.path = $$[QT_INSTALL_BINS]
+   INSTALLS += target desktop
+   message("The project will be installed in $$[QT_INSTALL_BINS]")
+}
