@@ -67,8 +67,15 @@ void FontAwesomeIconEngine::loadFont()
         QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
         fontName = fontFamilies.at(0);
 
+        namedCodepoints.insert("icon-glass", QChar(0xf000));
+        namedCodepoints.insert("icon-music", QChar(0xf001));
         namedCodepoints.insert("icon-search", QChar(0xf002));
         namedCodepoints.insert("icon-envelope", QChar(0xf003));
+        namedCodepoints.insert("icon-heart", QChar(0xf004));
+        namedCodepoints.insert("icon-star", QChar(0xf005));
+        namedCodepoints.insert("icon-star-empty", QChar(0xf006));
+        namedCodepoints.insert("icon-user", QChar(0xf007));
+        namedCodepoints.insert("icon-film", QChar(0xf008));
         namedCodepoints.insert("icon-th-large", QChar(0xf009));
         namedCodepoints.insert("icon-th", QChar(0xf00a));
         namedCodepoints.insert("icon-th-list", QChar(0xf00b));
@@ -76,10 +83,13 @@ void FontAwesomeIconEngine::loadFont()
         namedCodepoints.insert("icon-remove", QChar(0xf00d));
         namedCodepoints.insert("icon-zoom-in", QChar(0xf00e));
         namedCodepoints.insert("icon-zoom-out", QChar(0xf010));
+        namedCodepoints.insert("icon-off", QChar(0xf011));
+        namedCodepoints.insert("icon-signal", QChar(0xf012));
         namedCodepoints.insert("icon-cog", QChar(0xf013));
         namedCodepoints.insert("icon-trash", QChar(0xf014));
         namedCodepoints.insert("icon-home", QChar(0xf015));
         namedCodepoints.insert("icon-file", QChar(0xf016));
+        namedCodepoints.insert("icon-time", QChar(0xf017));
         namedCodepoints.insert("icon-download", QChar(0xf01a));
         namedCodepoints.insert("icon-upload", QChar(0xf01b));
         namedCodepoints.insert("icon-repeat", QChar(0xf01e));
