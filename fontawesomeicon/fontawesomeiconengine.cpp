@@ -2,6 +2,7 @@
 
 #include <QFontDatabase>
 #include <QPainter>
+#include <QPixmapCache>
 
 int FontAwesomeIconEngine::fontId = -1;
 QString FontAwesomeIconEngine::fontName;
@@ -48,12 +49,15 @@ void FontAwesomeIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::M
 
 QPixmap FontAwesomeIconEngine::pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state)
 {
+    QString key = QString("icons:%1:%2:%3").arg(iconName).arg(size.width()).arg(size.height());
+
     QPixmap pm(size);
     pm.fill(Qt::transparent);
 
-    {
+    if (!QPixmapCache::find(key, pm)) {
         QPainter p(&pm);
         paint(&p, QRect(QPoint(0,0),size), mode, state);
+        QPixmapCache::insert(key, pm);
     }
 
     return pm;
