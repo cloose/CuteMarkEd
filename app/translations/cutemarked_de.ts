@@ -72,32 +72,32 @@
 <context>
     <name>FindReplaceWidget</name>
     <message>
-        <location filename="../findreplacewidget.ui" line="14"/>
+        <location filename="../controls/findreplacewidget.ui" line="14"/>
         <source>Find</source>
         <translation>Suchen</translation>
     </message>
     <message>
-        <location filename="../findreplacewidget.ui" line="20"/>
+        <location filename="../controls/findreplacewidget.ui" line="20"/>
         <source>Find:</source>
         <translation>Suchen:</translation>
     </message>
     <message>
-        <location filename="../findreplacewidget.ui" line="91"/>
+        <location filename="../controls/findreplacewidget.ui" line="91"/>
         <source>...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../findreplacewidget.ui" line="105"/>
+        <location filename="../controls/findreplacewidget.ui" line="105"/>
         <source>Replace with:</source>
         <translation>Ersetzen durch:</translation>
     </message>
     <message>
-        <location filename="../findreplacewidget.ui" line="149"/>
+        <location filename="../controls/findreplacewidget.ui" line="149"/>
         <source>Replace</source>
         <translation>Ersetzen</translation>
     </message>
     <message>
-        <location filename="../findreplacewidget.ui" line="162"/>
+        <location filename="../controls/findreplacewidget.ui" line="162"/>
         <source>Replace All</source>
         <translation>Alles ersetzen</translation>
     </message>
@@ -321,7 +321,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="324"/>
-        <location filename="../mainwindow.cpp" line="186"/>
+        <location filename="../mainwindow.cpp" line="180"/>
         <source>Export to HTML...</source>
         <translation>Exportieren als HTML...</translation>
     </message>
@@ -331,28 +331,28 @@
         <translation>Exportieren als PDF...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="489"/>
+        <location filename="../mainwindow.cpp" line="482"/>
         <source>Change Preview Style</source>
         <translation>Ändere Vorschaustil</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="150"/>
+        <location filename="../mainwindow.cpp" line="144"/>
         <source>Open File...</source>
         <translation>Datei öffnen...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="151"/>
-        <location filename="../mainwindow.cpp" line="175"/>
+        <location filename="../mainwindow.cpp" line="145"/>
+        <location filename="../mainwindow.cpp" line="169"/>
         <source>Markdown Files (*.markdown *.md);;All Files (*)</source>
         <translation>Markdown Dateien (*.markdown *.md);;Alle Dateien (*.*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="174"/>
+        <location filename="../mainwindow.cpp" line="168"/>
         <source>Save as...</source>
         <translation>Speichern unter...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="187"/>
+        <location filename="../mainwindow.cpp" line="181"/>
         <source>HTML Files (*.html *.htm);;All Files (*)</source>
         <translation>HTML Dateien (*.html *.htm);;Alle Dateien (*.*)</translation>
     </message>
@@ -361,12 +361,12 @@
         <translation type="obsolete">PDF Dateien (*.pdf);;Alle Dateien (*.*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="208"/>
+        <location filename="../mainwindow.cpp" line="202"/>
         <source>Print Document</source>
         <translation>Dokument drucken</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="356"/>
+        <location filename="../mainwindow.cpp" line="349"/>
         <source>About CuteMarkEd</source>
         <translation>Über CuteMarkEd</translation>
     </message>
@@ -375,44 +375,48 @@
         <translation type="obsolete">&lt;p&gt;&lt;b&gt;CuteMarkEd 0.3.0&lt;/b&gt;&lt;br&gt; Qt Markdown Editor&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="357"/>
         <source>&lt;p&gt;&lt;b&gt;CuteMarkEd 0.4.0&lt;/b&gt;&lt;br&gt;Qt-based, free and open source markdown editor with live HTML preview&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;b&gt;CuteMarkEd 0.4.0&lt;/b&gt;&lt;br&gt;freier auf Qt basierender Markdown Editor mit live HTML Vorschau&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</translation>
+        <translation type="obsolete">&lt;p&gt;&lt;b&gt;CuteMarkEd 0.4.0&lt;/b&gt;&lt;br&gt;freier auf Qt basierender Markdown Editor mit live HTML Vorschau&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
+        <location filename="../mainwindow.cpp" line="350"/>
+        <source>&lt;p&gt;&lt;b&gt;CuteMarkEd 0.4.1&lt;/b&gt;&lt;br&gt;Qt-based, free and open source markdown editor with live HTML preview&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</source>
+        <translation>&lt;p&gt;&lt;b&gt;CuteMarkEd 0.4.1&lt;/b&gt;&lt;br&gt;freier auf Qt basierender Markdown Editor mit live HTML Vorschau&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="368"/>
         <location filename="../mainwindow.cpp" line="375"/>
-        <location filename="../mainwindow.cpp" line="382"/>
         <source>HTML preview</source>
         <translation>HTML Vorschau</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="378"/>
+        <location filename="../mainwindow.cpp" line="371"/>
         <source>HTML source</source>
         <translation>HTML Quelle</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="396"/>
+        <location filename="../mainwindow.cpp" line="389"/>
         <source>%1 words</source>
         <translation>%1 Wörter</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="397"/>
+        <location filename="../mainwindow.cpp" line="390"/>
         <source>Lines: %1  Words: %2  Characters: %3</source>
         <translation>Zeilen: %1  Wörter: %2  Zeichen: %3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="540"/>
+        <location filename="../mainwindow.cpp" line="533"/>
         <source>Application</source>
         <translation>Anwendung</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="541"/>
+        <location filename="../mainwindow.cpp" line="534"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translation>Dieses Dokument wurde geändert.\nMöchten Sie die Änderungen speichern?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="565"/>
+        <location filename="../mainwindow.cpp" line="558"/>
         <source>%1[*] - %2</source>
         <translation></translation>
     </message>
