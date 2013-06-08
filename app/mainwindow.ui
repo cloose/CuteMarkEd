@@ -119,7 +119,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -153,6 +153,14 @@
      <addaction name="actionCenterParagraph"/>
      <addaction name="actionHardLinebreak"/>
     </widget>
+    <widget class="QMenu" name="menuFindReplace">
+     <property name="title">
+      <string>Find/Replace</string>
+     </property>
+     <addaction name="actionFindReplace"/>
+     <addaction name="actionFindNext"/>
+     <addaction name="actionFindPrevious"/>
+    </widget>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
@@ -163,7 +171,7 @@
     <addaction name="separator"/>
     <addaction name="menuFormat"/>
     <addaction name="separator"/>
-    <addaction name="actionFindReplace"/>
+    <addaction name="menuFindReplace"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -445,6 +453,16 @@
   <action name="actionHardLinebreak">
    <property name="text">
     <string>Hard Linebreak</string>
+   </property>
+  </action>
+  <action name="actionFindNext">
+   <property name="text">
+    <string>Find Next</string>
+   </property>
+  </action>
+  <action name="actionFindPrevious">
+   <property name="text">
+    <string>Find Previous</string>
    </property>
   </action>
  </widget>
@@ -1033,7 +1051,7 @@
    <sender>actionFindReplace</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>editSearchReplace()</slot>
+   <slot>editFindReplace()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

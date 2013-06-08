@@ -45,7 +45,7 @@ private slots:
     void editUndo();
     void editRedo();
     void editCopyHtml();
-    void editSearchReplace();
+    void editFindReplace();
     void editStrong();
     void editEmphasize();
     void editStrikethrough();

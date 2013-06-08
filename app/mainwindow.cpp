@@ -254,10 +254,11 @@ void MainWindow::editCopyHtml()
     clipboard->setText(ui->htmlSourceTextEdit->toPlainText());
 }
 
-void MainWindow::editSearchReplace()
+void MainWindow::editFindReplace()
 {
     ui->findReplaceWidget->setTextEdit(ui->plainTextEdit);
     ui->findReplaceWidget->show();
+    ui->findReplaceWidget->setFocus();
 }
 
 void MainWindow::editStrong()
@@ -489,8 +490,17 @@ void MainWindow::setupActions()
     ui->actionStrikethrough->setIcon(QIcon("icon-strikethrough.fontawesome"));
     ui->actionCenterParagraph->setIcon(QIcon("icon-align-center.fontawesome"));
     ui->actionHardLinebreak->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return));
+
     ui->actionFindReplace->setShortcut(QKeySequence::Find);
     ui->actionFindReplace->setIcon(QIcon("icon-search.fontawesome"));
+    ui->actionFindNext->setShortcut(QKeySequence::FindNext);
+    ui->actionFindPrevious->setShortcut(QKeySequence::FindPrevious);
+
+    connect(ui->actionFindNext, SIGNAL(triggered()),
+            ui->findReplaceWidget, SLOT(findNextClicked()));
+
+    connect(ui->actionFindPrevious, SIGNAL(triggered()),
+            ui->findReplaceWidget, SLOT(findPreviousClicked()));
 
     // view menu
     ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());

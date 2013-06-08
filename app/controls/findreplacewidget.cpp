@@ -8,6 +8,7 @@ FindReplaceWidget::FindReplaceWidget(QWidget *parent) :
     ui(new Ui::FindReplaceWidget)
 {
     ui->setupUi(this);
+    setFocusProxy(ui->findLineEdit);
 }
 
 FindReplaceWidget::~FindReplaceWidget()
@@ -22,7 +23,6 @@ void FindReplaceWidget::setTextEdit(QPlainTextEdit *editor)
 
 void FindReplaceWidget::showEvent(QShowEvent *)
 {
-    ui->findLineEdit->setFocus();
     ui->findLineEdit->selectAll();
 }
 
