@@ -83,6 +83,8 @@ void MainWindow::initializeUI()
 {
     setupActions();
     setupStatusBar();
+    setupHtmlPreview();
+    setupHtmlSourceView();
 
     // hide find/replace widget on startup
     ui->findReplaceWidget->hide();
@@ -92,24 +94,8 @@ void MainWindow::initializeUI()
     ui->dockWidget->close();
     toggleHtmlView();
 
-    connect(ui->webView->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),
-            this, SLOT(addJavaScriptObject()));
     connect(ui->plainTextEdit->verticalScrollBar(), SIGNAL(valueChanged(int)),
             this, SLOT(scrollValueChanged(int)));
-
-    // load HTML template for live preview from resources
-    QFile f(":/template.html");
-    if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QString htmlTemplate = f.readAll();
-        generator->setHtmlTemplate(htmlTemplate);
-    }
-
-    // start background HTML preview generator
-    connect(generator, SIGNAL(htmlResultReady(QString)),
-            this, SLOT(htmlResultReady(QString)));
-    connect(generator, SIGNAL(tocResultReady(QString)),
-            this, SLOT(tocResultReady(QString)));
-    generator->start();
 
     // set default style
     styleDefault();
@@ -130,11 +116,6 @@ void MainWindow::initializeUI()
 //    inspector->setPage(ui->webView->page());
 
     recentFilesMenu->readState();
-
-    QFont font("Monospace", 10);
-    font.setStyleHint(QFont::TypeWriter);
-    ui->htmlSourceTextEdit->setFont(font);
-    htmlHighlighter = new HtmlHighlighter(ui->htmlSourceTextEdit->document());
 
     // load file passed to application on start
     if (!fileName.isEmpty()) {
@@ -556,6 +537,35 @@ void MainWindow::setupStatusBar()
 
     connect(viewLabel, SIGNAL(doubleClicked()),
             this, SLOT(toggleHtmlView()));
+}
+
+void MainWindow::setupHtmlPreview()
+{
+    // add our objects everytime JavaScript environment is cleared
+    connect(ui->webView->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),
+            this, SLOT(addJavaScriptObject()));
+
+    // load HTML template for live preview from resources
+    QFile f(":/template.html");
+    if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QString htmlTemplate = f.readAll();
+        generator->setHtmlTemplate(htmlTemplate);
+    }
+
+    // start background HTML preview generator
+    connect(generator, SIGNAL(htmlResultReady(QString)),
+            this, SLOT(htmlResultReady(QString)));
+    connect(generator, SIGNAL(tocResultReady(QString)),
+            this, SLOT(tocResultReady(QString)));
+    generator->start();
+}
+
+void MainWindow::setupHtmlSourceView()
+{
+    QFont font("Monospace", 10);
+    font.setStyleHint(QFont::TypeWriter);
+    ui->htmlSourceTextEdit->setFont(font);
+    htmlHighlighter = new HtmlHighlighter(ui->htmlSourceTextEdit->document());
 }
 
 bool MainWindow::load(const QString &fileName)
