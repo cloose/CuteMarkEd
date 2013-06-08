@@ -6,5 +6,5 @@ GenericName=Markdown Editor
 Comment=Editor for Markdown documents with live HTML preview
 Icon=accessories-text-editor
 Terminal=false
-Exec=cutemarked
+Exec=cutemarked %f
 Categories=Qt;Utility;TextEditor;

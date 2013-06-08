@@ -27,7 +27,7 @@
 #include "exportpdfdialog.h"
 #include <controls/recentfilesmenu.h>
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     styleLabel(0),
@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setFileName(QString());
+    setFileName(fileName);
 
     QTimer::singleShot(0, this, SLOT(initializeUI()));
 }
@@ -135,6 +135,11 @@ void MainWindow::initializeUI()
     font.setStyleHint(QFont::TypeWriter);
     ui->htmlSourceTextEdit->setFont(font);
     htmlHighlighter = new HtmlHighlighter(ui->htmlSourceTextEdit->document());
+
+    // load file passed to application on start
+    if (!fileName.isEmpty()) {
+        load(fileName);
+    }
 }
 
 void MainWindow::openRecentFile(const QString &fileName)
