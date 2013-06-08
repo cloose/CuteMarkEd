@@ -377,7 +377,8 @@ void MainWindow::extrasCodeHighlighting(bool checked)
 void MainWindow::helpAbout()
 {
     QMessageBox::about(this, tr("About CuteMarkEd"),
-                       tr("<p><b>CuteMarkEd 0.4.1</b><br>Qt-based, free and open source markdown editor with live HTML preview<br>Copyright 2013 Christian Loose</p><p><a href=\"http://cloose.github.io/CuteMarkEd\">http://cloose.github.io/CuteMarkEd</a></p>"));
+                       tr("<p><b>CuteMarkEd %1</b><br>Qt-based, free and open source markdown editor with live HTML preview<br>Copyright 2013 Christian Loose</p><p><a href=\"http://cloose.github.io/CuteMarkEd\">http://cloose.github.io/CuteMarkEd</a></p>")
+                       .arg(qApp->applicationVersion()));
 }
 
 void MainWindow::styleContextMenu(const QPoint &pos)
