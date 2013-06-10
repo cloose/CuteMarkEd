@@ -94,6 +94,8 @@ void MainWindow::initializeUI()
     ui->dockWidget->close();
     toggleHtmlView();
 
+    ui->dockWidget_2->close();
+
     connect(ui->plainTextEdit->verticalScrollBar(), SIGNAL(valueChanged(int)),
             this, SLOT(scrollValueChanged(int)));
 
@@ -385,6 +387,11 @@ void MainWindow::extrasCodeHighlighting(bool checked)
     plainTextChanged();
 }
 
+void MainWindow::helpMarkdownSyntax()
+{
+    ui->dockWidget_2->show();
+}
+
 void MainWindow::helpAbout()
 {
     QMessageBox::about(this, tr("About CuteMarkEd"),
@@ -533,6 +540,9 @@ void MainWindow::setupActions()
     ui->actionSolarizedDark->setActionGroup(group);
     ui->actionClearness->setActionGroup(group);
     ui->actionClearnessDark->setActionGroup(group);
+
+    // help menu
+    ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);
 }
 
 void MainWindow::setupStatusBar()
