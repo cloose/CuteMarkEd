@@ -2,6 +2,14 @@
 <head>
 <meta charset="utf-8">
 <style>
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 10pt;
+}
+pre {
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  font-size: 10pt;
+}
 table, td, th {
   border: 1px solid lightgray;
   border-collapse: collapse;
@@ -11,6 +19,8 @@ table {
 }
 th {
   text-align: left;
+  background: #eeeeee;
+  padding: 3px;
 }
 </style>
 <title>Markdown Syntax Reference</title>
@@ -28,7 +38,7 @@ th {
     </thead>
     <tbody>
     <tr>
-      <td width="380">
+      <td width="300">
 <pre>
  # Heading One
 
@@ -53,7 +63,7 @@ th {
       </td>
     </tr>
     <tr>
-      <td width="380">
+      <td width="300">
 <pre>
  Heading One
  ===========
@@ -81,11 +91,12 @@ th {
     </thead>
     <tbody>
     <tr>
-      <td width="380">
+      <td width="300">
 <pre>
  A paragraph is simply one
- or more consecutive lines of text,
- separated by one or more blank lines.
+ or more consecutive lines
+ of text, separated by one
+ or more blank lines.
 
  This is another paragraph.
 </pre>
@@ -96,16 +107,20 @@ th {
       </td>
     </tr>
     <tr>
-      <td width="380">
+      <td width="300">
 <pre>
- To create a line break, end a
- line in a paragraph with two or more spaces.
+ To create a line
+ break, end a line in a
+ paragraph with two or more
+ spaces.
 </pre>
       </td>
       <td style="padding-left: 5px;">
       <p>
-      To create a line break, end a <br/>
-      line in a paragraph with two or more spaces.
+      To create a line <br />
+      break, end a line in a <br />
+      paragraph with two or more <br />
+      spaces.
       </p>
       </td>
     </tr>
@@ -123,7 +138,7 @@ th {
     </thead>
     <tbody>
     <tr>
-      <td width="380">
+      <td width="300">
 <pre>
  * Item 1
  * Item 2
@@ -157,7 +172,7 @@ th {
       </td>
     </tr>
     <tr>
-      <td width="380">
+      <td width="300">
 <pre>
  1. Item 1
  2. Item 2
@@ -173,7 +188,7 @@ th {
       </td>
     </tr>
     <tr>
-      <td width="380">
+      <td width="300">
 <pre>
  * Item 1
    1. Item 2
@@ -201,7 +216,7 @@ th {
       </td>
     </tr>
     <tr>
-      <td width="380">
+      <td width="300">
 <pre>
  Term
  : Definition
@@ -216,6 +231,47 @@ th {
         Definition
         </dd>
       </dl>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h3>EMPHASIS</h3>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Markdown input</th>
+      <th>Output</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td width="300">
+<pre>
+ I am *emphasized*
+
+ I am _emphasized_
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>I am <em>emphasized</em></p>
+
+      <p>I am <em>emphasized</em></p>
+      </td>
+    </tr>
+    <tr>
+      <td width="300">
+<pre>
+ I am **bold**
+
+ I am __bold__
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>I am <strong>bold</strong></p>
+
+      <p>I am <strong>bold</strong></p>
       </td>
     </tr>
     </tbody>
