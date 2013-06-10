@@ -119,7 +119,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -189,6 +189,8 @@
     <addaction name="actionSplit_1_2"/>
     <addaction name="actionSplit_3_1"/>
     <addaction name="actionSplit_1_3"/>
+    <addaction name="separator"/>
+    <addaction name="actionFullScreenMode"/>
    </widget>
    <widget class="QMenu" name="menuExtras">
     <property name="title">
@@ -463,6 +465,14 @@
   <action name="actionFindPrevious">
    <property name="text">
     <string>Find Previous</string>
+   </property>
+  </action>
+  <action name="actionFullScreenMode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Full Screen Mode</string>
    </property>
   </action>
  </widget>
@@ -1084,6 +1094,22 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>editHardLinebreak()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFullScreenMode</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>viewFullScreenMode()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

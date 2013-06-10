@@ -60,6 +60,7 @@ private slots:
     void styleSolarizedDark();
     void styleClearness();
     void styleClearnessDark();
+    void viewFullScreenMode();
 
     void extrasMathSupport(bool checked);
     void extrasCodeHighlighting(bool checked);

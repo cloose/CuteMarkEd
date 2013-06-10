@@ -363,6 +363,16 @@ void MainWindow::styleClearnessDark()
     styleLabel->setText(ui->actionClearnessDark->text());
 }
 
+void MainWindow::viewFullScreenMode()
+{
+    if (ui->actionFullScreenMode->isChecked()) {
+        showFullScreen();
+    } else {
+        showNormal();
+    }
+
+}
+
 void MainWindow::extrasMathSupport(bool checked)
 {
     generator->setMathSupportEnabled(checked);
@@ -504,6 +514,8 @@ void MainWindow::setupActions()
 
     // view menu
     ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());
+    ui->actionFullScreenMode->setShortcut(QKeySequence::FullScreen);
+    ui->actionFullScreenMode->setIcon(QIcon("icon-fullscreen.fontawesome"));
 
     // style menu
     ui->actionDefault->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
