@@ -1,0 +1,225 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+table, td, th {
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+}
+table {
+  width: 100%;
+}
+th {
+  text-align: left;
+}
+</style>
+<title>Markdown Syntax Reference</title>
+</head>
+<body>
+
+  <h3>HEADERS</h3>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Markdown input</th>
+      <th>Output</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td width="380">
+<pre>
+ # Heading One
+
+ ## Heading Two
+
+ ### Heading Three
+
+ #### Heading Four
+
+ ##### Heading Five
+
+ ###### Heading Six
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Heading One</h1>
+      <h2>Heading Two</h2>
+      <h3>Heading Three</h3>
+      <h4>Heading Four</h4>
+      <h5>Heading Five</h5>
+      <h6>Heading Six</h6>
+      </td>
+    </tr>
+    <tr>
+      <td width="380">
+<pre>
+ Heading One
+ ===========
+
+ Heading Two
+ -----------
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Heading One</h1>
+      <h2>Heading Two</h2>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h3>PARAGRAPHS</h3>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Markdown input</th>
+      <th>Output</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td width="380">
+<pre>
+ A paragraph is simply one
+ or more consecutive lines of text,
+ separated by one or more blank lines.
+
+ This is another paragraph.
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>A paragraph is simply one or more consecutive lines of text, separated by one or more blank lines.</p>
+      <p>This is another paragraph.</p>
+      </td>
+    </tr>
+    <tr>
+      <td width="380">
+<pre>
+ To create a line break, end a
+ line in a paragraph with two or more spaces.
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>
+      To create a line break, end a <br/>
+      line in a paragraph with two or more spaces.
+      </p>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h3>LISTS</h3>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Markdown input</th>
+      <th>Output</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td width="380">
+<pre>
+ * Item 1
+ * Item 2
+ * Item 3
+
+ + Item 1
+ + Item 2
+ + Item 3
+
+ - Item 1
+ - Item 2
+ - Item 3
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+      </ul>
+      <ul>
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+      </ul>
+      <ul>
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td width="380">
+<pre>
+ 1. Item 1
+ 2. Item 2
+ 3. Item 3
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ol>
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+      </ol>
+      </td>
+    </tr>
+    <tr>
+      <td width="380">
+<pre>
+ * Item 1
+   1. Item 2
+      + Item 3
+   2. Item 4
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+        <li>
+        Item 1
+        <ol>
+          <li>
+          Item 2
+          <ul>
+            <li>Item 3</li>
+          </ul>
+          </li>
+          <li>
+          Item 4
+          </li>
+        </ol>
+        </li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td width="380">
+<pre>
+ Term
+ : Definition
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <dl>
+        <dt>
+        Term
+        <dt>
+        <dd>
+        Definition
+        </dd>
+      </dl>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+</body>
+</html>
