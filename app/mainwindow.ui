@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>500</height>
+    <width>850</width>
+    <height>534</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -118,8 +118,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>18</height>
+     <width>850</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -178,6 +178,8 @@
     <property name="title">
      <string>&amp;Help</string>
     </property>
+    <addaction name="actionMarkdownSyntax"/>
+    <addaction name="separator"/>
     <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -249,6 +251,45 @@
        <property name="url">
         <url>
          <string>about:blank</string>
+        </url>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget_2">
+   <property name="floating">
+    <bool>true</bool>
+   </property>
+   <property name="windowTitle">
+    <string>Markdown Syntax</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QWebView" name="webView_2">
+       <property name="url">
+        <url>
+         <string>qrc:/syntax.html</string>
         </url>
        </property>
       </widget>
@@ -479,6 +520,11 @@
   <action name="actionBlockquote">
    <property name="text">
     <string>Blockquote</string>
+    </property>
+   </action>
+  <action name="actionMarkdownSyntax">
+   <property name="text">
+    <string>Markdown Syntax</string>
    </property>
   </action>
  </widget>
@@ -1140,6 +1186,22 @@
     <hint type="destinationlabel">
      <x>399</x>
      <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionMarkdownSyntax</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>helpMarkdownSyntax()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
     </hint>
    </hints>
   </connection>
