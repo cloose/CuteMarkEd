@@ -91,7 +91,7 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset resource="../styles.qrc">
+         <iconset resource="../resources.qrc">
           <normaloff>:/icons/icon-close.png</normaloff>:/icons/icon-close.png</iconset>
         </property>
        </widget>
@@ -185,7 +185,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../styles.qrc"/>
+  <include location="../resources.qrc"/>
  </resources>
  <connections>
   <connection>

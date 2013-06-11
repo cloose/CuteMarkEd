@@ -62,7 +62,7 @@ FORMS    += \
     exporthtmldialog.ui
 
 RESOURCES += \
-    styles.qrc \
+    resources.qrc \
     translations.qrc
 
 # translations
