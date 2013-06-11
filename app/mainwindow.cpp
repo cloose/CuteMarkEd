@@ -297,6 +297,12 @@ void MainWindow::editHardLinebreak()
     manipulator.appendToLine("  \n");
 }
 
+void MainWindow::editBlockquote()
+{
+    MarkdownManipulator manipulator(ui->plainTextEdit);
+    manipulator.prependToLine('>');
+}
+
 void MainWindow::styleDefault()
 {
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");

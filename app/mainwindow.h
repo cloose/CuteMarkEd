@@ -52,6 +52,7 @@ private slots:
     void editInlineCode();
     void editCenterParagraph();
     void editHardLinebreak();
+    void editBlockquote();
 
     void viewChangeSplit();
     void styleDefault();

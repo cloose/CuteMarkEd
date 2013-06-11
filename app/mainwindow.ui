@@ -152,6 +152,7 @@
      <addaction name="actionInline_Code"/>
      <addaction name="actionCenterParagraph"/>
      <addaction name="actionHardLinebreak"/>
+     <addaction name="actionBlockquote"/>
     </widget>
     <widget class="QMenu" name="menuFindReplace">
      <property name="title">
@@ -473,6 +474,11 @@
    </property>
    <property name="text">
     <string>Full Screen Mode</string>
+   </property>
+  </action>
+  <action name="actionBlockquote">
+   <property name="text">
+    <string>Blockquote</string>
    </property>
   </action>
  </widget>
@@ -1110,6 +1116,22 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>viewFullScreenMode()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionBlockquote</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editBlockquote()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

@@ -3,6 +3,7 @@
 
 class QPlainTextEdit;
 class QString;
+class QChar;
 
 class MarkdownManipulator
 {
@@ -13,6 +14,7 @@ public:
     void wrapCurrentParagraph(const QString &startTag, const QString &endTag);
 
     void appendToLine(const QString &text);
+    void prependToLine(const QChar &mark);
 
     void increaseHeadingLevel();
     void decreaseHeadingLevel();

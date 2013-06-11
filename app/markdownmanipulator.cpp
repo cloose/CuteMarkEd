@@ -83,6 +83,32 @@ void MarkdownManipulator::appendToLine(const QString &text)
     cursor.endEditBlock();
 }
 
+void MarkdownManipulator::prependToLine(const QChar &mark)
+{
+    QTextCursor cursor = editor->textCursor();
+    QTextDocument *doc = editor->document();
+
+    cursor.beginEditBlock();
+
+    // move cursor to start of line
+    cursor.movePosition(QTextCursor::StartOfLine);
+
+    // search for last mark
+    int pos = cursor.position();
+    while (doc->characterAt(pos++) == mark)
+        ;
+
+    // insert new mark
+    cursor.insertText(mark);
+
+    // add space after mark, if missing
+    if (doc->characterAt(pos) != ' ') {
+        cursor.insertText(" ");
+    }
+
+    cursor.endEditBlock();
+}
+
 void MarkdownManipulator::increaseHeadingLevel()
 {
     // move cursor to start of line
