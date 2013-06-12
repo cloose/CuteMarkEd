@@ -553,6 +553,7 @@ void MainWindow::setupActions()
 
 void MainWindow::setupStatusBar()
 {
+    // remove border around statusbar widgets
     statusBar()->setStyleSheet("QStatusBar::item { border: 0px solid black }; ");
 
     // add style label to statusbar
@@ -658,7 +659,8 @@ void MainWindow::setFileName(const QString &fileName)
 
     QString shownName;
     if (fileName.isEmpty()) {
-        shownName = "untitled.md";
+        //: default file name for new markdown documents
+        shownName = tr("untitled.md");
     } else {
         shownName = QFileInfo(fileName).fileName();
     }
@@ -674,6 +676,7 @@ void MainWindow::updateSplitter(bool htmlViewToggled)
         return;
     }
 
+    // calculate new width of left and right pane
     QList<int> childSizes = ui->splitter->sizes();
     int leftWidth = ui->splitter->width() * splitFactor;
     int rightWidth = ui->splitter->width() * (1 - splitFactor);
