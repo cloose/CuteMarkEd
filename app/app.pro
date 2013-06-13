@@ -15,6 +15,8 @@ TRANSLATIONS += \
     translations/cutemarked_cs.ts \
     translations/cutemarked_de.ts
 
+RC_FILE = cutemarked.rc
+
 INCLUDEPATH += $$PWD
 
 SOURCES += \

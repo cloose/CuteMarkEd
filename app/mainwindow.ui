@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>CuteMarkEd</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/app-icon-16.ico</normaloff>:/icons/app-icon-16.ico</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <property name="spacing">
@@ -119,7 +123,7 @@
      <x>0</x>
      <y>0</y>
      <width>850</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -520,8 +524,8 @@
   <action name="actionBlockquote">
    <property name="text">
     <string>Blockquote</string>
-    </property>
-   </action>
+   </property>
+  </action>
   <action name="actionMarkdownSyntax">
    <property name="text">
     <string>Markdown Syntax</string>
@@ -547,7 +551,9 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionExit</sender>
