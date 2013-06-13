@@ -264,7 +264,7 @@
   </widget>
   <widget class="QDockWidget" name="dockWidget_2">
    <property name="floating">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="windowTitle">
     <string>Markdown Syntax</string>

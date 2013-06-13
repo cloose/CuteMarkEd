@@ -53,7 +53,6 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     splitFactor(0.5)
 {
     ui->setupUi(this);
-    ui->dockWidget_2->close();
 
     setFileName(fileName);
 
@@ -110,6 +109,10 @@ void MainWindow::initializeUI()
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->dockWidget->close();
     toggleHtmlView();
+
+    ui->dockWidget_2->hide();
+    ui->dockWidget_2->setFloating(true);
+    ui->dockWidget_2->resize(550, 400);
 
     connect(ui->plainTextEdit->verticalScrollBar(), SIGNAL(valueChanged(int)),
             this, SLOT(scrollValueChanged(int)));
