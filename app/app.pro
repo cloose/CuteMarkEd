@@ -110,7 +110,8 @@ else:unix: PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/libpmh.a
 OTHER_FILES += \
     template.html \
     cutemarked.desktop \
-    syntax.html
+    syntax.html \
+    cutemarked.rc
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
 message("Using LIBS=$$LIBS")

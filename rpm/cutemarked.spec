@@ -4,7 +4,7 @@
 Name:                   cutemarked
 Summary:                Qt-based Markdown editor
 Group:                  Productivity/Text/Editors
-Version:                0.4.1
+Version:                0.5.0
 Release:                1
 License:                GPL-2.0+
 Url:                    http://github.com/cloose/CuteMarkEd
@@ -57,8 +57,11 @@ make INSTALL_ROOT="%buildroot" install
 
 %changelog
 
+* Fri Jun 14 2013 Christian Looses <christian.loose@hamburg.de> 0.5.0-1
+- New minor version 0.5.0 released
+
 * Fri Jun 07 2013 Christian Looses <christian.loose@hamburg.de> 0.4.1-2
-- New minor version 0.4.1 released
+- New patch version 0.4.1 released
 
 * Mon May 30 2013 Christian Looses <christian.loose@hamburg.de> 0.4.1-1
 - First Linux packages

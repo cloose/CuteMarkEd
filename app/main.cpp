@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     app.setOrganizationName("CuteMarkEd Project");
     app.setApplicationName("CuteMarkEd");
-    app.setApplicationVersion("0.4.1");
+    app.setApplicationVersion("0.5.0");
 
     // try to load translation for current locale from resource file
     QTranslator translator;

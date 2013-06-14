@@ -4,21 +4,43 @@
 
 A Qt-based, free and open source markdown editor with live HTML preview, math expressions, code syntax highlighting and syntax highlighting of markdown document.
 
-![screenshot](images/screenshot_04.png)
+![screenshot](images/screenshot_05.png)
 
 ### DOWNLOAD
 
-[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.4.1.tar.gz)  
-[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.4.1.zip?direct)  
+[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.5.0.tar.gz)  
+[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.5.0.zip?direct)  
 [OpenSUSE 12.3 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)
 
 ### NEWS
+
+#### Version 0.5.0
+
+New Features:
+
+* `NEW` Added 'Recent File' submenu providing access to recently opened files
+* `NEW` Added syntax highlighting to the HTML source view
+* `NEW` Full Screen Mode
+* `NEW` Help for the Markdown syntax in a dock widget
+* `NEW` Created an application icon
+* `NEW` Formatting commands: Blockquote, Hard Linebreak
+
+Improvements:
+
+* `IMPROVED` 'Export to HTML' function with option to include the current CSS style
+* `IMPROVED` 'Find Next' and 'Find Previous' commands with keyboard shortcuts
+
+Fixes:
+
+* `CRASH FIX` Included missing platform plugin for Windows. This makes the application finally work for all, who didn't have Qt already installed on Windows.
+
 
 #### Version 0.4.1
 
 New Features:
 
 * `NEW` Added Czech translation created by Pavel Fric
+
 
 #### Version 0.4.0
 
