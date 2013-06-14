@@ -1,3 +1,19 @@
+/*
+ * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 #include "markdownmanipulator.h"
 
 #include <QPlainTextEdit>
@@ -66,6 +82,45 @@ void MarkdownManipulator::wrapCurrentParagraph(const QString &startTag, const QS
 
     cursor.movePosition(QTextCursor::EndOfBlock);
     cursor.insertText(endTag);
+
+    cursor.endEditBlock();
+}
+
+void MarkdownManipulator::appendToLine(const QString &text)
+{
+    QTextCursor cursor = editor->textCursor();
+
+    cursor.beginEditBlock();
+
+    // append passed text to end of current line
+    cursor.movePosition(QTextCursor::EndOfLine);
+    cursor.insertText(text);
+
+    cursor.endEditBlock();
+}
+
+void MarkdownManipulator::prependToLine(const QChar &mark)
+{
+    QTextCursor cursor = editor->textCursor();
+    QTextDocument *doc = editor->document();
+
+    cursor.beginEditBlock();
+
+    // move cursor to start of line
+    cursor.movePosition(QTextCursor::StartOfLine);
+
+    // search for last mark
+    int pos = cursor.position();
+    while (doc->characterAt(pos++) == mark)
+        ;
+
+    // insert new mark
+    cursor.insertText(mark);
+
+    // add space after mark, if missing
+    if (doc->characterAt(pos) != ' ') {
+        cursor.insertText(" ");
+    }
 
     cursor.endEditBlock();
 }

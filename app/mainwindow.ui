@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>500</height>
+    <width>850</width>
+    <height>534</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>CuteMarkEd</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/app-icon.ico</normaloff>:/icons/app-icon.ico</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -118,7 +122,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>850</width>
      <height>18</height>
     </rect>
    </property>
@@ -151,6 +155,16 @@
      <addaction name="actionStrikethrough"/>
      <addaction name="actionInline_Code"/>
      <addaction name="actionCenterParagraph"/>
+     <addaction name="actionHardLinebreak"/>
+     <addaction name="actionBlockquote"/>
+    </widget>
+    <widget class="QMenu" name="menuFindReplace">
+     <property name="title">
+      <string>Find/Replace</string>
+     </property>
+     <addaction name="actionFindReplace"/>
+     <addaction name="actionFindNext"/>
+     <addaction name="actionFindPrevious"/>
     </widget>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
@@ -162,12 +176,14 @@
     <addaction name="separator"/>
     <addaction name="menuFormat"/>
     <addaction name="separator"/>
-    <addaction name="actionFindReplace"/>
+    <addaction name="menuFindReplace"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>&amp;Help</string>
     </property>
+    <addaction name="actionMarkdownSyntax"/>
+    <addaction name="separator"/>
     <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -180,6 +196,8 @@
     <addaction name="actionSplit_1_2"/>
     <addaction name="actionSplit_3_1"/>
     <addaction name="actionSplit_1_3"/>
+    <addaction name="separator"/>
+    <addaction name="actionFullScreenMode"/>
    </widget>
    <widget class="QMenu" name="menuExtras">
     <property name="title">
@@ -237,6 +255,45 @@
        <property name="url">
         <url>
          <string>about:blank</string>
+        </url>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget_2">
+   <property name="floating">
+    <bool>false</bool>
+   </property>
+   <property name="windowTitle">
+    <string>Markdown Syntax</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QWebView" name="webView_2">
+       <property name="url">
+        <url>
+         <string>qrc:/syntax.html</string>
         </url>
        </property>
       </widget>
@@ -441,6 +498,39 @@
     <string>Center Paragraph</string>
    </property>
   </action>
+  <action name="actionHardLinebreak">
+   <property name="text">
+    <string>Hard Linebreak</string>
+   </property>
+  </action>
+  <action name="actionFindNext">
+   <property name="text">
+    <string>Find Next</string>
+   </property>
+  </action>
+  <action name="actionFindPrevious">
+   <property name="text">
+    <string>Find Previous</string>
+   </property>
+  </action>
+  <action name="actionFullScreenMode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Full Screen Mode</string>
+   </property>
+  </action>
+  <action name="actionBlockquote">
+   <property name="text">
+    <string>Blockquote</string>
+   </property>
+  </action>
+  <action name="actionMarkdownSyntax">
+   <property name="text">
+    <string>Markdown Syntax</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -461,7 +551,9 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionExit</sender>
@@ -1027,7 +1119,7 @@
    <sender>actionFindReplace</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>editSearchReplace()</slot>
+   <slot>editFindReplace()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -1052,6 +1144,70 @@
     <hint type="destinationlabel">
      <x>399</x>
      <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionHardLinebreak</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editHardLinebreak()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFullScreenMode</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>viewFullScreenMode()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionBlockquote</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editBlockquote()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionMarkdownSyntax</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>helpMarkdownSyntax()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
     </hint>
    </hints>
   </connection>

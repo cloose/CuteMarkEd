@@ -15,6 +15,8 @@ TRANSLATIONS += \
     translations/cutemarked_cs.ts \
     translations/cutemarked_de.ts
 
+RC_FILE = cutemarked.rc
+
 INCLUDEPATH += $$PWD
 
 SOURCES += \
@@ -24,6 +26,7 @@ SOURCES += \
     controls/linenumberarea.cpp \
     controls/activelabel.cpp \
     controls/findreplacewidget.cpp \
+    controls/recentfilesmenu.cpp \
     discount/parser.cpp \
     discount/document.cpp \
     htmlpreviewgenerator.cpp \
@@ -31,7 +34,9 @@ SOURCES += \
     highlightworkerthread.cpp \
     peg-markdown-highlight/styleparser.cpp \
     markdownmanipulator.cpp \
-    exportpdfdialog.cpp
+    exportpdfdialog.cpp \
+    exporthtmldialog.cpp \
+    htmlhighlighter.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -39,6 +44,7 @@ HEADERS  += \
     controls/linenumberarea.h \
     controls/activelabel.h \
     controls/findreplacewidget.h \
+    controls/recentfilesmenu.h \
     discount/parser.h \
     discount/document.h \
     htmlpreviewgenerator.h \
@@ -47,15 +53,18 @@ HEADERS  += \
     peg-markdown-highlight/styleparser.h \
     peg-markdown-highlight/definitions.h \
     markdownmanipulator.h \
-    exportpdfdialog.h
+    exportpdfdialog.h \
+    exporthtmldialog.h \
+    htmlhighlighter.h
 
 FORMS    += \
     mainwindow.ui \
     controls/findreplacewidget.ui \
-    exportpdfdialog.ui
+    exportpdfdialog.ui \
+    exporthtmldialog.ui
 
 RESOURCES += \
-    styles.qrc \
+    resources.qrc \
     translations.qrc
 
 # translations
@@ -100,7 +109,9 @@ else:unix: PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/libpmh.a
 
 OTHER_FILES += \
     template.html \
-    cutemarked.desktop
+    cutemarked.desktop \
+    syntax.html \
+    cutemarked.rc
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
 message("Using LIBS=$$LIBS")

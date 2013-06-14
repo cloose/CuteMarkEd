@@ -14,32 +14,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef EXPORTPDFDIALOG_H
-#define EXPORTPDFDIALOG_H
+#ifndef EXPORTHTMLDIALOG_H
+#define EXPORTHTMLDIALOG_H
 
 #include <QDialog>
 
 namespace Ui {
-class ExportPdfDialog;
+class ExportHtmlDialog;
 }
 class QPrinter;
 
-class ExportPdfDialog : public QDialog
+class ExportHtmlDialog : public QDialog
 {
     Q_OBJECT
     
 public:
-    explicit ExportPdfDialog(const QString &fileName, QWidget *parent = 0);
-    ~ExportPdfDialog();
+    explicit ExportHtmlDialog(const QString &fileName, QWidget *parent = 0);
+    ~ExportHtmlDialog();
     
-    QPrinter *printer();
+    QString fileName() const;
+    bool includeCSS() const;
 
 private slots:
     void exportToTextChanged(const QString &text);
     void chooseFileButtonClicked();
 
 private:
-    Ui::ExportPdfDialog *ui;
+    Ui::ExportHtmlDialog *ui;
 };
 
-#endif // EXPORTPDFDIALOG_H
+#endif // EXPORTHTMLDIALOG_H

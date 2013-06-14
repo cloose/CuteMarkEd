@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ExportPdfDialog</class>
- <widget class="QDialog" name="ExportPdfDialog">
+ <class>ExportHtmlDialog</class>
+ <widget class="QDialog" name="ExportHtmlDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>417</width>
-    <height>150</height>
+    <width>430</width>
+    <height>106</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Export to PDF</string>
+   <string>Export to HTML</string>
   </property>
   <layout class="QFormLayout" name="formLayout">
+   <property name="fieldGrowthPolicy">
+    <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+   </property>
    <item row="0" column="0">
     <widget class="QLabel" name="exportToLabel">
      <property name="text">
       <string>Export to:</string>
+     </property>
+     <property name="buddy">
+      <cstring>exportToLineEdit</cstring>
      </property>
     </widget>
    </item>
@@ -48,47 +54,29 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="paperSizeLabel">
-     <property name="text">
-      <string>Paper Size:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QComboBox" name="paperSizeComboBox"/>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="orientationLabel">
-     <property name="text">
-      <string>Orientation:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QRadioButton" name="portraitRadioButton">
-     <property name="text">
-      <string>Portrait</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QRadioButton" name="landscapeRadioButton">
-     <property name="text">
-      <string>Landscape</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="2">
+   <item row="3" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QCheckBox" name="styleCheckBox">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;embed the current CSS style into the exported HTML&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="text">
+      <string>Include CSS style</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+     <property name="tristate">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -99,7 +87,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>ExportPdfDialog</receiver>
+   <receiver>ExportHtmlDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -115,7 +103,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>ExportPdfDialog</receiver>
+   <receiver>ExportHtmlDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -131,7 +119,7 @@
   <connection>
    <sender>chooseFileButton</sender>
    <signal>clicked()</signal>
-   <receiver>ExportPdfDialog</receiver>
+   <receiver>ExportHtmlDialog</receiver>
    <slot>chooseFileButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -147,7 +135,7 @@
   <connection>
    <sender>exportToLineEdit</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>ExportPdfDialog</receiver>
+   <receiver>ExportHtmlDialog</receiver>
    <slot>exportToTextChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">

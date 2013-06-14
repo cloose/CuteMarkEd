@@ -1,3 +1,19 @@
+/*
+ * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 #include "htmlpreviewgenerator.h"
 
 #include "discount/document.h"
@@ -85,10 +101,12 @@ QString HtmlPreviewGenerator::buildHtmlHeader() const
 {
     QString header;
 
+    // add MathJax.js script to HTML header
     if (mathSupportEnabled) {
         header += "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>";
     }
 
+    // add Highlight.js script to HTML header
     if (codeHighlightingEnabled) {
         header += QString("<link rel=\"stylesheet\" href=\"http://yandex.st/highlightjs/7.3/styles/%1.min.css\">").arg(codeHighlightingStyle);
         header += "<script src=\"http://yandex.st/highlightjs/7.3/highlight.min.js\"></script>";

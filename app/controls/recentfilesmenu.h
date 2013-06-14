@@ -14,32 +14,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef EXPORTPDFDIALOG_H
-#define EXPORTPDFDIALOG_H
+#ifndef RECENTFILESMENU_H
+#define RECENTFILESMENU_H
 
-#include <QDialog>
+#include <QMenu>
 
-namespace Ui {
-class ExportPdfDialog;
-}
-class QPrinter;
-
-class ExportPdfDialog : public QDialog
+class RecentFilesMenu : public QMenu
 {
     Q_OBJECT
-    
 public:
-    explicit ExportPdfDialog(const QString &fileName, QWidget *parent = 0);
-    ~ExportPdfDialog();
+    explicit RecentFilesMenu(QWidget *parent = 0);
     
-    QPrinter *printer();
+    void readState();
+    void saveState() const;
+
+signals:
+    void recentFileTriggered(const QString &fileName);
+
+public slots:
+    void addFile(const QString &fileName);
+    void clearMenu();
 
 private slots:
-    void exportToTextChanged(const QString &text);
-    void chooseFileButtonClicked();
+    void recentFileTriggered();
 
 private:
-    Ui::ExportPdfDialog *ui;
+    void updateMenu();
+
+private:
+    QStringList recentFiles;
 };
 
-#endif // EXPORTPDFDIALOG_H
+#endif // RECENTFILESMENU_H

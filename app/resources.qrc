@@ -18,8 +18,10 @@
     </qresource>
     <qresource prefix="/">
         <file>template.html</file>
+        <file>syntax.html</file>
     </qresource>
     <qresource prefix="/icons">
         <file alias="icon-close.png">images/icon-close.png</file>
+        <file>app-icon.ico</file>
     </qresource>
 </RCC>

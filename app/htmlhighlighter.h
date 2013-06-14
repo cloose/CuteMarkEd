@@ -14,32 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef EXPORTPDFDIALOG_H
-#define EXPORTPDFDIALOG_H
+#ifndef HTMLHIGHLIGHTER_H
+#define HTMLHIGHLIGHTER_H
 
-#include <QDialog>
+#include <QSyntaxHighlighter>
 
-namespace Ui {
-class ExportPdfDialog;
-}
-class QPrinter;
-
-class ExportPdfDialog : public QDialog
+class HtmlHighlighter : public QSyntaxHighlighter
 {
-    Q_OBJECT
-    
 public:
-    explicit ExportPdfDialog(const QString &fileName, QWidget *parent = 0);
-    ~ExportPdfDialog();
-    
-    QPrinter *printer();
+    explicit HtmlHighlighter(QTextDocument *document);
 
-private slots:
-    void exportToTextChanged(const QString &text);
-    void chooseFileButtonClicked();
+protected:
+    void highlightBlock(const QString &text) Q_DECL_OVERRIDE;
 
 private:
-    Ui::ExportPdfDialog *ui;
+    struct HighlightingRule
+    {
+        QRegExp pattern;
+        QTextCharFormat *format;
+    };
+    QList<HighlightingRule> highlightingRules;
+
+    QTextCharFormat keywordFormat;
+    QTextCharFormat imageFormat;
+    QTextCharFormat linkFormat;
 };
 
-#endif // EXPORTPDFDIALOG_H
+#endif // HTMLHIGHLIGHTER_H

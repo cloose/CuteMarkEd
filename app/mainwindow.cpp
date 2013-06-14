@@ -1,3 +1,19 @@
+/*
+ * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -21,10 +37,13 @@
 #include "controls/activelabel.h"
 #include "controls/findreplacewidget.h"
 #include "htmlpreviewgenerator.h"
+#include "htmlhighlighter.h"
 #include "markdownmanipulator.h"
+#include "exporthtmldialog.h"
 #include "exportpdfdialog.h"
+#include <controls/recentfilesmenu.h>
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     styleLabel(0),
@@ -35,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setFileName(QString());
+    setFileName(fileName);
 
     QTimer::singleShot(0, this, SLOT(initializeUI()));
 }
@@ -63,6 +82,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 {
     // check if file needs saving
     if (maybeSave()) {
+        recentFilesMenu->saveState();
         e->accept();
     } else {
         e->ignore();
@@ -79,6 +99,8 @@ void MainWindow::initializeUI()
 {
     setupActions();
     setupStatusBar();
+    setupHtmlPreview();
+    setupHtmlSourceView();
 
     // hide find/replace widget on startup
     ui->findReplaceWidget->hide();
@@ -88,24 +110,12 @@ void MainWindow::initializeUI()
     ui->dockWidget->close();
     toggleHtmlView();
 
-    connect(ui->webView->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),
-            this, SLOT(addJavaScriptObject()));
+    ui->dockWidget_2->hide();
+    ui->dockWidget_2->setFloating(true);
+    ui->dockWidget_2->resize(550, 400);
+
     connect(ui->plainTextEdit->verticalScrollBar(), SIGNAL(valueChanged(int)),
             this, SLOT(scrollValueChanged(int)));
-
-    // load HTML template for live preview from resources
-    QFile f(":/template.html");
-    if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QString htmlTemplate = f.readAll();
-        generator->setHtmlTemplate(htmlTemplate);
-    }
-
-    // start background HTML preview generator
-    connect(generator, SIGNAL(htmlResultReady(QString)),
-            this, SLOT(htmlResultReady(QString)));
-    connect(generator, SIGNAL(tocResultReady(QString)),
-            this, SLOT(tocResultReady(QString)));
-    generator->start();
 
     // set default style
     styleDefault();
@@ -124,6 +134,18 @@ void MainWindow::initializeUI()
 //    ui->webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
 //    QWebInspector *inspector = new QWebInspector();
 //    inspector->setPage(ui->webView->page());
+
+    recentFilesMenu->readState();
+
+    // load file passed to application on start
+    if (!fileName.isEmpty()) {
+        load(fileName);
+    }
+}
+
+void MainWindow::openRecentFile(const QString &fileName)
+{
+    load(fileName);
 }
 
 void MainWindow::fileNew()
@@ -177,14 +199,36 @@ bool MainWindow::fileSaveAs()
 
 void MainWindow::fileExportToHtml()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Export to HTML..."), QString(),
-                                                    tr("HTML Files (*.html *.htm);;All Files (*)"));
-    if (fileName.isEmpty()) {
-        return;
-    }
+    ExportHtmlDialog dialog(fileName);
+    if (dialog.exec() == QDialog::Accepted) {
 
-    QTextDocumentWriter writer(fileName, "plaintext");
-    writer.write(ui->htmlSourceTextEdit->document());
+        if (dialog.includeCSS()) {
+            // read used css stylesheet from resources
+            QUrl cssUrl = ui->webView->page()->settings()->userStyleSheetUrl();
+            QFile f(cssUrl.toString().remove(0, 3));
+            if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                QString cssStyle = f.readAll();
+
+                // embed the css into the HTML source document after the <head> element.
+                if (ui->htmlSourceTextEdit->find("<head>")) {
+                    QTextCursor cursor = ui->htmlSourceTextEdit->textCursor();
+                    cursor.beginEditBlock();
+                    cursor.setPosition(cursor.selectionEnd());
+                    cursor.insertText(QString("\n<style>%1</style>").arg(cssStyle));
+                    cursor.endEditBlock();
+                }
+            }
+        }
+
+        // write HTML source to disk
+        QTextDocumentWriter writer(dialog.fileName(), "plaintext");
+        writer.write(ui->htmlSourceTextEdit->document());
+
+        // undo the changes to the HTML source
+        if (dialog.includeCSS()) {
+            ui->htmlSourceTextEdit->undo();
+        }
+    }
 }
 
 void MainWindow::fileExportToPdf()
@@ -230,10 +274,11 @@ void MainWindow::editCopyHtml()
     clipboard->setText(ui->htmlSourceTextEdit->toPlainText());
 }
 
-void MainWindow::editSearchReplace()
+void MainWindow::editFindReplace()
 {
     ui->findReplaceWidget->setTextEdit(ui->plainTextEdit);
     ui->findReplaceWidget->show();
+    ui->findReplaceWidget->setFocus();
 }
 
 void MainWindow::editStrong()
@@ -264,6 +309,18 @@ void MainWindow::editCenterParagraph()
 {
     MarkdownManipulator manipulator(ui->plainTextEdit);
     manipulator.wrapCurrentParagraph("->", "<-");
+}
+
+void MainWindow::editHardLinebreak()
+{
+    MarkdownManipulator manipulator(ui->plainTextEdit);
+    manipulator.appendToLine("  \n");
+}
+
+void MainWindow::editBlockquote()
+{
+    MarkdownManipulator manipulator(ui->plainTextEdit);
+    manipulator.prependToLine('>');
 }
 
 void MainWindow::styleDefault()
@@ -332,6 +389,16 @@ void MainWindow::styleClearnessDark()
     styleLabel->setText(ui->actionClearnessDark->text());
 }
 
+void MainWindow::viewFullScreenMode()
+{
+    if (ui->actionFullScreenMode->isChecked()) {
+        showFullScreen();
+    } else {
+        showNormal();
+    }
+
+}
+
 void MainWindow::extrasMathSupport(bool checked)
 {
     generator->setMathSupportEnabled(checked);
@@ -344,10 +411,16 @@ void MainWindow::extrasCodeHighlighting(bool checked)
     plainTextChanged();
 }
 
+void MainWindow::helpMarkdownSyntax()
+{
+    ui->dockWidget_2->show();
+}
+
 void MainWindow::helpAbout()
 {
     QMessageBox::about(this, tr("About CuteMarkEd"),
-                       tr("<p><b>CuteMarkEd 0.4.1</b><br>Qt-based, free and open source markdown editor with live HTML preview<br>Copyright 2013 Christian Loose</p><p><a href=\"http://cloose.github.io/CuteMarkEd\">http://cloose.github.io/CuteMarkEd</a></p>"));
+                       tr("<p><b>CuteMarkEd %1</b><br>Qt-based, free and open source markdown editor with live HTML preview<br>Copyright 2013 Christian Loose</p><p><a href=\"http://cloose.github.io/CuteMarkEd\">http://cloose.github.io/CuteMarkEd</a></p>")
+                       .arg(qApp->applicationVersion()));
 }
 
 void MainWindow::styleContextMenu(const QPoint &pos)
@@ -433,6 +506,12 @@ void MainWindow::setupActions()
     ui->action_Print->setIcon(QIcon("icon-print.fontawesome"));
     ui->actionExit->setShortcut(QKeySequence::Quit);
 
+    recentFilesMenu = new RecentFilesMenu(ui->menuFile);
+    ui->menuFile->insertMenu(ui->actionSave, recentFilesMenu);
+
+    connect(recentFilesMenu, SIGNAL(recentFileTriggered(QString)),
+            this, SLOT(openRecentFile(QString)));
+
     // edit menu
     ui->actionUndo->setShortcut(QKeySequence::Undo);
     ui->actionUndo->setIcon(QIcon("icon-undo.fontawesome"));
@@ -451,11 +530,23 @@ void MainWindow::setupActions()
     ui->actionEmphasize->setIcon(QIcon("icon-italic.fontawesome"));
     ui->actionStrikethrough->setIcon(QIcon("icon-strikethrough.fontawesome"));
     ui->actionCenterParagraph->setIcon(QIcon("icon-align-center.fontawesome"));
+    ui->actionHardLinebreak->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return));
+
     ui->actionFindReplace->setShortcut(QKeySequence::Find);
     ui->actionFindReplace->setIcon(QIcon("icon-search.fontawesome"));
+    ui->actionFindNext->setShortcut(QKeySequence::FindNext);
+    ui->actionFindPrevious->setShortcut(QKeySequence::FindPrevious);
+
+    connect(ui->actionFindNext, SIGNAL(triggered()),
+            ui->findReplaceWidget, SLOT(findNextClicked()));
+
+    connect(ui->actionFindPrevious, SIGNAL(triggered()),
+            ui->findReplaceWidget, SLOT(findPreviousClicked()));
 
     // view menu
     ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());
+    ui->actionFullScreenMode->setShortcut(QKeySequence::FullScreen);
+    ui->actionFullScreenMode->setIcon(QIcon("icon-fullscreen.fontawesome"));
 
     // style menu
     ui->actionDefault->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
@@ -473,10 +564,16 @@ void MainWindow::setupActions()
     ui->actionSolarizedDark->setActionGroup(group);
     ui->actionClearness->setActionGroup(group);
     ui->actionClearnessDark->setActionGroup(group);
+
+    // help menu
+    ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);
 }
 
 void MainWindow::setupStatusBar()
 {
+    // remove border around statusbar widgets
+    statusBar()->setStyleSheet("QStatusBar::item { border: 0px solid black }; ");
+
     // add style label to statusbar
     styleLabel = new QLabel(ui->actionDefault->text(), this);
     styleLabel->setToolTip(tr("Change Preview Style"));
@@ -500,6 +597,35 @@ void MainWindow::setupStatusBar()
             this, SLOT(toggleHtmlView()));
 }
 
+void MainWindow::setupHtmlPreview()
+{
+    // add our objects everytime JavaScript environment is cleared
+    connect(ui->webView->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),
+            this, SLOT(addJavaScriptObject()));
+
+    // load HTML template for live preview from resources
+    QFile f(":/template.html");
+    if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QString htmlTemplate = f.readAll();
+        generator->setHtmlTemplate(htmlTemplate);
+    }
+
+    // start background HTML preview generator
+    connect(generator, SIGNAL(htmlResultReady(QString)),
+            this, SLOT(htmlResultReady(QString)));
+    connect(generator, SIGNAL(tocResultReady(QString)),
+            this, SLOT(tocResultReady(QString)));
+    generator->start();
+}
+
+void MainWindow::setupHtmlSourceView()
+{
+    QFont font("Monospace", 10);
+    font.setStyleHint(QFont::TypeWriter);
+    ui->htmlSourceTextEdit->setFont(font);
+    htmlHighlighter = new HtmlHighlighter(ui->htmlSourceTextEdit->document());
+}
+
 bool MainWindow::load(const QString &fileName)
 {
     if (!QFile::exists(fileName)) {
@@ -518,6 +644,7 @@ bool MainWindow::load(const QString &fileName)
     ui->plainTextEdit->setPlainText(text);
 
     setFileName(fileName);
+    recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
     return true;
 }
 
@@ -531,7 +658,7 @@ bool MainWindow::maybeSave()
 
     QMessageBox::StandardButton ret;
     ret = QMessageBox::warning(this, tr("Application"),
-                               tr("The document has been modified.\n"
+                               tr("The document has been modified.<br>"
                                   "Do you want to save your changes?"),
                                QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
 
@@ -550,7 +677,8 @@ void MainWindow::setFileName(const QString &fileName)
 
     QString shownName;
     if (fileName.isEmpty()) {
-        shownName = "untitled.md";
+        //: default file name for new markdown documents
+        shownName = tr("untitled.md");
     } else {
         shownName = QFileInfo(fileName).fileName();
     }
@@ -566,6 +694,7 @@ void MainWindow::updateSplitter(bool htmlViewToggled)
         return;
     }
 
+    // calculate new width of left and right pane
     QList<int> childSizes = ui->splitter->sizes();
     int leftWidth = ui->splitter->width() * splitFactor;
     int rightWidth = ui->splitter->width() * (1 - splitFactor);
