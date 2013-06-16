@@ -35,7 +35,8 @@ MMIOT *Parser::parseString(const QString &text)
         markdownText.append('\n');
     }
 
-    MMIOT *doc = mkd_string(markdownText.toUtf8().data(), markdownText.length(), MKD_AUTOLINK | MKD_TOC | MKD_NOSTYLE);
+    const char *utf8Data = markdownText.toUtf8().data();
+    MMIOT *doc = mkd_string(utf8Data, qstrlen(utf8Data), MKD_AUTOLINK | MKD_TOC | MKD_NOSTYLE);
 
     mkd_compile(doc, MKD_AUTOLINK | MKD_TOC | MKD_NOSTYLE);
 
