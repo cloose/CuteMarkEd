@@ -36,12 +36,12 @@
 
 #include "controls/activelabel.h"
 #include "controls/findreplacewidget.h"
+#include "controls/recentfilesmenu.h"
 #include "htmlpreviewgenerator.h"
 #include "htmlhighlighter.h"
 #include "markdownmanipulator.h"
 #include "exporthtmldialog.h"
 #include "exportpdfdialog.h"
-#include <controls/recentfilesmenu.h>
 
 MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
@@ -50,7 +50,8 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     wordCountLabel(0),
     viewLabel(0),
     generator(new HtmlPreviewGenerator(this)),
-    splitFactor(0.5)
+    splitFactor(0.5),
+    scrollBarPos(0)
 {
     ui->setupUi(this);
 
@@ -101,6 +102,9 @@ void MainWindow::initializeUI()
     setupStatusBar();
     setupHtmlPreview();
     setupHtmlSourceView();
+
+    connect(ui->webView->page()->mainFrame(), SIGNAL(contentsSizeChanged(QSize)),
+            this, SLOT(htmlContentSizeChanged()));
 
     // hide find/replace widget on startup
     ui->findReplaceWidget->hide();
@@ -472,7 +476,7 @@ void MainWindow::htmlResultReady(const QString &html)
     ui->webView->page()->networkAccessManager()->setCache(diskCache);
 
     // remember scrollbar position
-    int scrollBarPos = ui->webView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
+    scrollBarPos = ui->plainTextEdit->verticalScrollBar()->value();
 
     QUrl baseUrl;
     if (fileName.isEmpty()) {
@@ -482,9 +486,6 @@ void MainWindow::htmlResultReady(const QString &html)
     }
     ui->webView->setHtml(html, baseUrl);
 
-    // restore previous scrollbar position
-    ui->webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, scrollBarPos);
-
     ui->htmlSourceTextEdit->setPlainText(html);
 }
 
@@ -492,6 +493,14 @@ void MainWindow::tocResultReady(const QString &toc)
 {
     QString styledToc = QString("<html><head>\n<style type=\"text/css\">ul { list-style-type: none; padding: 0; margin-left: 1em; } a { text-decoration: none; }</style>\n</head><body>%1</body></html>").arg(toc);
     ui->tocWebView->setHtml(styledToc);
+}
+
+void MainWindow::htmlContentSizeChanged()
+{
+    if (scrollBarPos > 0) {
+        // restore previous scrollbar position
+        scrollValueChanged(scrollBarPos);
+    }
 }
 
 void MainWindow::setupActions()

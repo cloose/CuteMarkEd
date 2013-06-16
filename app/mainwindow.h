@@ -91,6 +91,7 @@ private slots:
     void plainTextChanged();
     void htmlResultReady(const QString &html);
     void tocResultReady(const QString &toc);
+    void htmlContentSizeChanged();
 
     void tocLinkClicked(const QUrl &url);
 
@@ -120,6 +121,7 @@ private:
     HtmlHighlighter *htmlHighlighter;
     QString fileName;
     float splitFactor;
+    int scrollBarPos;
 };
 
 #endif // MAINWINDOW_H
