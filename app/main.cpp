@@ -17,6 +17,7 @@
 #include "mainwindow.h"
 
 #include <QApplication>
+#include <QLibraryInfo>
 #include <QTranslator>
 
 int main(int argc, char *argv[])
@@ -25,6 +26,14 @@ int main(int argc, char *argv[])
     app.setOrganizationName("CuteMarkEd Project");
     app.setApplicationName("CuteMarkEd");
     app.setApplicationVersion("0.5.0");
+
+    // load translation for Qt
+    QTranslator qtTranslator;
+    if (!qtTranslator.load("qt_" + QLocale::system().name(),
+                           QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+        qtTranslator.load("qt_" + QLocale::system().name(), "translations");
+    }
+    app.installTranslator(&qtTranslator);
 
     // try to load translation for current locale from resource file
     QTranslator translator;
