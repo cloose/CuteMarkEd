@@ -552,6 +552,7 @@ void MainWindow::setupActions()
     ui->actionStrikethrough->setIcon(QIcon("icon-strikethrough.fontawesome"));
     ui->actionCenterParagraph->setIcon(QIcon("icon-align-center.fontawesome"));
     ui->actionHardLinebreak->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return));
+    ui->actionBlockquote->setIcon(QIcon("icon-quote-left.fontawesome"));
 
     ui->actionFindReplace->setShortcut(QKeySequence::Find);
     ui->actionFindReplace->setIcon(QIcon("icon-search.fontawesome"));
