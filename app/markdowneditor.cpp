@@ -32,7 +32,8 @@
 MarkdownEditor::MarkdownEditor(QWidget *parent) :
     QPlainTextEdit(parent),
     lineNumberArea(new LineNumberArea(this)),
-    highlighter(new MarkdownHighlighter(this->document()))
+    highlighter(new MarkdownHighlighter(this->document())),
+    showHardLinebreaks(false)
 {
     QFont font("Monospace", 10);
     font.setStyleHint(QFont::TypeWriter);
@@ -144,7 +145,8 @@ void MarkdownEditor::paintEvent(QPaintEvent *e)
 {
     QPlainTextEdit::paintEvent(e);
 
-    if (false) {
+    // draw line end markers if enabled
+    if (showHardLinebreaks) {
         drawLineEndMarker(e);
     }
 }
@@ -153,6 +155,7 @@ void MarkdownEditor::resizeEvent(QResizeEvent *event)
 {
     QPlainTextEdit::resizeEvent(event);
 
+    // update line number area
     QRect cr = contentsRect();
     lineNumberArea->setGeometry(QStyle::visualRect(layoutDirection(), cr,
                                 QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height())));
@@ -242,6 +245,14 @@ int MarkdownEditor::countWords() const
     }
 
     return words;
+}
+
+void MarkdownEditor::setShowHardLinebreaks(bool enabled)
+{
+    showHardLinebreaks = enabled;
+
+    // repaint
+    viewport()->update();
 }
 
 void MarkdownEditor::drawLineEndMarker(QPaintEvent *e)

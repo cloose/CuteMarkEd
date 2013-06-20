@@ -217,6 +217,7 @@
     </widget>
     <addaction name="actionMathSupport"/>
     <addaction name="actionCodeHighlighting"/>
+    <addaction name="actionShowHardLinebreaks"/>
     <addaction name="separator"/>
     <addaction name="menuStyles"/>
    </widget>
@@ -535,6 +536,14 @@
   <action name="actionHtmlPreview">
    <property name="text">
     <string>HTML preview</string>
+   </property>
+  </action>
+  <action name="actionShowHardLinebreaks">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Hard Linebreaks</string>
    </property>
   </action>
  </widget>
@@ -1238,6 +1247,22 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>toggleHtmlView()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionShowHardLinebreaks</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extrasShowHardLinebreaks(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

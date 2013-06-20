@@ -420,6 +420,11 @@ void MainWindow::extrasCodeHighlighting(bool checked)
     plainTextChanged();
 }
 
+void MainWindow::extrasShowHardLinebreaks(bool checked)
+{
+    ui->plainTextEdit->setShowHardLinebreaks(checked);
+}
+
 void MainWindow::helpMarkdownSyntax()
 {
     ui->dockWidget_2->show();

@@ -36,6 +36,8 @@ public:
 
     int countWords() const;
 
+    void setShowHardLinebreaks(bool enabled);
+
 signals:
     void loadDroppedFile(const QString &fileName);
 
@@ -56,6 +58,7 @@ private:
 private:
     QWidget *lineNumberArea;
     MarkdownHighlighter *highlighter;
+    bool showHardLinebreaks;
 };
 
 #endif // MARKDOWNEDITOR_H
