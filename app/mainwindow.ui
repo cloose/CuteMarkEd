@@ -123,7 +123,7 @@
      <x>0</x>
      <y>0</y>
      <width>850</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -190,6 +190,7 @@
     <property name="title">
      <string>&amp;View</string>
     </property>
+    <addaction name="actionHtmlPreview"/>
     <addaction name="separator"/>
     <addaction name="actionSplit_1_1"/>
     <addaction name="actionSplit_2_1"/>
@@ -531,6 +532,11 @@
     <string>Markdown Syntax</string>
    </property>
   </action>
+  <action name="actionHtmlPreview">
+   <property name="text">
+    <string>HTML preview</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -818,8 +824,8 @@
    <slot>previewLinkClicked(QUrl)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>703</x>
-     <y>261</y>
+     <x>404</x>
+     <y>282</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1216,6 +1222,22 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>helpMarkdownSyntax()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionHtmlPreview</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>toggleHtmlView()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

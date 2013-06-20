@@ -450,10 +450,12 @@ void MainWindow::toggleHtmlView()
     if (viewLabel->text() == tr("HTML preview")) {
         ui->webView->hide();
         ui->htmlSourceTextEdit->show();
+        ui->actionHtmlPreview->setText(tr("HTML source"));
         viewLabel->setText(tr("HTML source"));
     } else {
         ui->webView->show();
         ui->htmlSourceTextEdit->hide();
+        ui->actionHtmlPreview->setText(tr("HTML preview"));
         viewLabel->setText(tr("HTML preview"));
     }
 
@@ -559,6 +561,7 @@ void MainWindow::setupActions()
 
     // view menu
     ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());
+    ui->actionHtmlPreview->setShortcut(QKeySequence(Qt::Key_F5));
     ui->actionFullScreenMode->setShortcut(QKeySequence::FullScreen);
     ui->actionFullScreenMode->setIcon(QIcon("icon-fullscreen.fontawesome"));
 
