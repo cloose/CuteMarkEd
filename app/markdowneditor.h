@@ -40,14 +40,18 @@ signals:
     void loadDroppedFile(const QString &fileName);
 
 protected:
-    virtual void keyPressEvent(QKeyEvent *e);
-    void resizeEvent(QResizeEvent *event);
-    bool canInsertFromMimeData(const QMimeData *source) const;
-    void insertFromMimeData(const QMimeData *source);
+    void keyPressEvent(QKeyEvent *e) Q_DECL_OVERRIDE;
+    void paintEvent(QPaintEvent *e) Q_DECL_OVERRIDE;
+    void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
+    bool canInsertFromMimeData(const QMimeData *source) const Q_DECL_OVERRIDE;
+    void insertFromMimeData(const QMimeData *source) Q_DECL_OVERRIDE;
 
 private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
     void updateLineNumberArea(const QRect &rect, int dy);
+
+private:
+    void drawLineEndMarker(QPaintEvent *e);
 
 private:
     QWidget *lineNumberArea;

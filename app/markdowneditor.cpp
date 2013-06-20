@@ -140,6 +140,15 @@ void MarkdownEditor::keyPressEvent(QKeyEvent *e)
     QPlainTextEdit::keyPressEvent(e);
 }
 
+void MarkdownEditor::paintEvent(QPaintEvent *e)
+{
+    QPlainTextEdit::paintEvent(e);
+
+    if (false) {
+        drawLineEndMarker(e);
+    }
+}
+
 void MarkdownEditor::resizeEvent(QResizeEvent *event)
 {
     QPlainTextEdit::resizeEvent(event);
@@ -233,4 +242,34 @@ int MarkdownEditor::countWords() const
     }
 
     return words;
+}
+
+void MarkdownEditor::drawLineEndMarker(QPaintEvent *e)
+{
+    QPainter painter(viewport());
+
+    int leftMargin = qRound(fontMetrics().width(" ") / 2.0);
+    int lineEndCharWidth = fontMetrics().width("\u00B6");
+    int fontHeight = fontMetrics().height();
+
+    QTextBlock block = firstVisibleBlock();
+    while (block.isValid()) {
+        QRectF blockGeometry = blockBoundingGeometry(block).translated(contentOffset());
+        if (blockGeometry.top() > e->rect().bottom())
+            break;
+
+        if (block.isVisible() && blockGeometry.toRect().intersects(e->rect())) {
+            QString text = block.text();
+            if (text.endsWith("  ")) {
+                painter.drawText(blockGeometry.left() + fontMetrics().width(text) + leftMargin,
+                                 blockGeometry.top(),
+                                 lineEndCharWidth,
+                                 fontHeight,
+                                 Qt::AlignLeft | Qt::AlignVCenter,
+                                 "\u00B6");
+            }
+        }
+
+        block = block.next();
+    }
 }
