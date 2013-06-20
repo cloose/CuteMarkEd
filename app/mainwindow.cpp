@@ -106,6 +106,9 @@ void MainWindow::initializeUI()
     connect(ui->webView->page()->mainFrame(), SIGNAL(contentsSizeChanged(QSize)),
             this, SLOT(htmlContentSizeChanged()));
 
+    connect(ui->plainTextEdit, SIGNAL(loadDroppedFile(QString)),
+            this, SLOT(load(QString)));
+
     // hide find/replace widget on startup
     ui->findReplaceWidget->hide();
 

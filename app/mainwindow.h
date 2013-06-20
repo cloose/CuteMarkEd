@@ -100,13 +100,13 @@ private slots:
     void scrollValueChanged(int value);
 
     void addJavaScriptObject();
+    bool load(const QString &fileName);
 
 private:
     void setupActions();
     void setupStatusBar();
     void setupHtmlPreview();
     void setupHtmlSourceView();
-    bool load(const QString &fileName);
     bool maybeSave();
     void setFileName(const QString &fileName);
     void updateSplitter(bool htmlViewToggled);

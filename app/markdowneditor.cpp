@@ -17,10 +17,11 @@
 #include "markdowneditor.h"
 
 #include <QApplication>
-#include <QDebug>
+#include <QMimeData>
 #include <QPainter>
 #include <QStyle>
 #include <QTextBlock>
+#include <QTextStream>
 
 #include <controls/linenumberarea.h>
 #include <peg-markdown-highlight/styleparser.h>
@@ -146,6 +147,24 @@ void MarkdownEditor::resizeEvent(QResizeEvent *event)
     QRect cr = contentsRect();
     lineNumberArea->setGeometry(QStyle::visualRect(layoutDirection(), cr,
                                 QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height())));
+}
+
+bool MarkdownEditor::canInsertFromMimeData(const QMimeData *source) const
+{
+    if (source->hasUrls() && (source->urls().count() == 1) && source->urls().first().isLocalFile()) {
+        return true;
+    }
+
+    return QPlainTextEdit::canInsertFromMimeData(source);
+}
+
+void MarkdownEditor::insertFromMimeData(const QMimeData *source)
+{
+    if (source->hasUrls()) {
+        emit loadDroppedFile(source->urls().first().toLocalFile());
+    } else {
+        QPlainTextEdit::insertFromMimeData(source);
+    }
 }
 
 void MarkdownEditor::updateLineNumberAreaWidth(int newBlockCount)

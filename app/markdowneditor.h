@@ -36,9 +36,14 @@ public:
 
     int countWords() const;
 
+signals:
+    void loadDroppedFile(const QString &fileName);
+
 protected:
     virtual void keyPressEvent(QKeyEvent *e);
     void resizeEvent(QResizeEvent *event);
+    bool canInsertFromMimeData(const QMimeData *source) const;
+    void insertFromMimeData(const QMimeData *source);
 
 private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
