@@ -93,6 +93,7 @@ private slots:
     void tocResultReady(const QString &toc);
     void htmlContentSizeChanged();
 
+    void previewLinkClicked(const QUrl &url);
     void tocLinkClicked(const QUrl &url);
 
     void splitterMoved(int pos, int index);

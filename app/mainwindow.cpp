@@ -109,8 +109,10 @@ void MainWindow::initializeUI()
     // hide find/replace widget on startup
     ui->findReplaceWidget->hide();
 
-    // inform us when a link in the table of contents view is clicked
+    // inform us when a link in the table of contents or preview view is clicked
+    ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
+
     ui->dockWidget->close();
     toggleHtmlView();
 
@@ -720,6 +722,15 @@ void MainWindow::updateSplitter(bool htmlViewToggled)
     }
 
     ui->splitter->setSizes(childSizes);
+}
+
+void MainWindow::previewLinkClicked(const QUrl &url)
+{
+    // only open link if its not a local directory.
+    // this can happen because when the href is empty, url is the base url (see htmlResultReady)
+    if (!url.isLocalFile() || !QFileInfo(url.toLocalFile()).isDir()) {
+        ui->webView->load(url);
+    }
 }
 
 void MainWindow::tocLinkClicked(const QUrl &url)
