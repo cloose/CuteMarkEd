@@ -140,6 +140,7 @@ void FontAwesomeIconEngine::loadFont()
         namedCodepoints.insert("icon-table", QChar(0xf0ce));
         namedCodepoints.insert("icon-undo", QChar(0xf0e2));
         namedCodepoints.insert("icon-paste", QChar(0xf0ea));
+        namedCodepoints.insert("icon-file-text-alt", QChar(0xf0f6));
         namedCodepoints.insert("icon-quote-left", QChar(0xf10d));
         namedCodepoints.insert("icon-quote-right", QChar(0xf10e));
         namedCodepoints.insert("icon-code", QChar(0xf121));
