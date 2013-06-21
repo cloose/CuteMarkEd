@@ -473,6 +473,9 @@ void MainWindow::plainTextChanged()
 
     // generate HTML from markdown
     generator->enqueue(code);
+
+    // show modification indicator in window title
+    setWindowModified(ui->plainTextEdit->document()->isModified());
 }
 
 void MainWindow::htmlResultReady(const QString &html)
