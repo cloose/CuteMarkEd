@@ -328,6 +328,24 @@ void MainWindow::editBlockquote()
     manipulator.prependToLine('>');
 }
 
+void MainWindow::viewChangeSplit()
+{
+    QAction* action = qobject_cast<QAction*>(sender());
+    if (action->objectName() == ui->actionSplit_1_1->objectName()) {
+        splitFactor = 0.5;
+    } else if (action->objectName() == ui->actionSplit_2_1->objectName()) {
+        splitFactor = 0.666;
+    } else if (action->objectName() == ui->actionSplit_1_2->objectName()) {
+        splitFactor = 0.333;
+    } else if (action->objectName() == ui->actionSplit_3_1->objectName()) {
+        splitFactor = 0.75;
+    } else if (action->objectName() == ui->actionSplit_1_3->objectName()) {
+        splitFactor = 0.25;
+    }
+
+    updateSplitter(true);
+}
+
 void MainWindow::styleDefault()
 {
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
@@ -514,6 +532,64 @@ void MainWindow::htmlContentSizeChanged()
     }
 }
 
+void MainWindow::previewLinkClicked(const QUrl &url)
+{
+    // only open link if its not a local directory.
+    // this can happen because when the href is empty, url is the base url (see htmlResultReady)
+    if (!url.isLocalFile() || !QFileInfo(url.toLocalFile()).isDir()) {
+        ui->webView->load(url);
+    }
+}
+
+void MainWindow::tocLinkClicked(const QUrl &url)
+{
+    QString anchor = url.toString().remove("#");
+    ui->webView->page()->mainFrame()->scrollToAnchor(anchor);
+}
+
+void MainWindow::splitterMoved(int pos, int index)
+{
+    Q_UNUSED(index)
+    splitFactor = (float)pos / ui->splitter->size().width();
+}
+
+void MainWindow::scrollValueChanged(int value)
+{
+    double factor = (double)ui->webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical) /
+                   ui->plainTextEdit->verticalScrollBar()->maximum();
+
+    ui->webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, qRound(value * factor));
+}
+
+void MainWindow::addJavaScriptObject()
+{
+    // add mainwindow object to javascript engine, so when
+    // the scrollbar of the webview changes the method webViewScrolled() can be called
+    ui->webView->page()->mainFrame()->addToJavaScriptWindowObject("mainwin", this);
+}
+
+bool MainWindow::load(const QString &fileName)
+{
+    if (!QFile::exists(fileName)) {
+        return false;
+    }
+
+    QFile file(fileName);
+    if (!file.open(QFile::ReadOnly)) {
+        return false;
+    }
+
+    QByteArray content = file.readAll();
+    QString text = QString::fromUtf8(content);
+
+    ui->plainTextEdit->resetHighlighting();
+    ui->plainTextEdit->setPlainText(text);
+
+    setFileName(fileName);
+    recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
+    return true;
+}
+
 void MainWindow::setupActions()
 {
     // file menu
@@ -663,28 +739,6 @@ void MainWindow::setupHtmlSourceView()
     htmlHighlighter = new HtmlHighlighter(ui->htmlSourceTextEdit->document());
 }
 
-bool MainWindow::load(const QString &fileName)
-{
-    if (!QFile::exists(fileName)) {
-        return false;
-    }
-
-    QFile file(fileName);
-    if (!file.open(QFile::ReadOnly)) {
-        return false;
-    }
-
-    QByteArray content = file.readAll();
-    QString text = QString::fromUtf8(content);
-
-    ui->plainTextEdit->resetHighlighting();
-    ui->plainTextEdit->setPlainText(text);
-
-    setFileName(fileName);
-    recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
-    return true;
-}
-
 bool MainWindow::maybeSave()
 {
     if (!ui->plainTextEdit->document()->isModified())
@@ -748,58 +802,4 @@ void MainWindow::updateSplitter(bool htmlViewToggled)
     }
 
     ui->splitter->setSizes(childSizes);
-}
-
-void MainWindow::previewLinkClicked(const QUrl &url)
-{
-    // only open link if its not a local directory.
-    // this can happen because when the href is empty, url is the base url (see htmlResultReady)
-    if (!url.isLocalFile() || !QFileInfo(url.toLocalFile()).isDir()) {
-        ui->webView->load(url);
-    }
-}
-
-void MainWindow::tocLinkClicked(const QUrl &url)
-{
-    QString anchor = url.toString().remove("#");
-    ui->webView->page()->mainFrame()->scrollToAnchor(anchor);
-}
-
-void MainWindow::viewChangeSplit()
-{
-    QAction* action = qobject_cast<QAction*>(sender());
-    if (action->objectName() == ui->actionSplit_1_1->objectName()) {
-        splitFactor = 0.5;
-    } else if (action->objectName() == ui->actionSplit_2_1->objectName()) {
-        splitFactor = 0.666;
-    } else if (action->objectName() == ui->actionSplit_1_2->objectName()) {
-        splitFactor = 0.333;
-    } else if (action->objectName() == ui->actionSplit_3_1->objectName()) {
-        splitFactor = 0.75;
-    } else if (action->objectName() == ui->actionSplit_1_3->objectName()) {
-        splitFactor = 0.25;
-    }
-
-    updateSplitter(true);
-}
-
-void MainWindow::splitterMoved(int pos, int index)
-{
-    Q_UNUSED(index)
-    splitFactor = (float)pos / ui->splitter->size().width();
-}
-
-void MainWindow::scrollValueChanged(int value)
-{
-    double factor = (double)ui->webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical) /
-                   ui->plainTextEdit->verticalScrollBar()->maximum();
-
-    ui->webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, qRound(value * factor));
-}
-
-void MainWindow::addJavaScriptObject()
-{
-    // add mainwindow object to javascript engine, so when
-    // the scrollbar of the webview changes the method webViewScrolled() can be called
-    ui->webView->page()->mainFrame()->addToJavaScriptWindowObject("mainwin", this);
 }
