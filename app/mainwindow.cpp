@@ -27,6 +27,7 @@
 #include <QPrintDialog>
 #include <QPrinter>
 #include <QScrollBar>
+#include <QSettings>
 #include <QStandardPaths>
 #include <QTextDocumentWriter>
 #include <QTimer>
@@ -84,7 +85,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 {
     // check if file needs saving
     if (maybeSave()) {
-        recentFilesMenu->saveState();
+        writeSettings();
         e->accept();
     } else {
         e->ignore();
@@ -120,8 +121,6 @@ void MainWindow::initializeApp()
 //    ui->webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
 //    QWebInspector *inspector = new QWebInspector();
 //    inspector->setPage(ui->webView->page());
-
-    recentFilesMenu->readState();
 
     // load file passed to application on start
     if (!fileName.isEmpty()) {
@@ -596,6 +595,8 @@ void MainWindow::setupUi()
 
     // show HTML preview on right panel
     toggleHtmlView();
+
+    readSettings();
 }
 
 void MainWindow::setupActions()
@@ -810,4 +811,24 @@ void MainWindow::updateSplitter(bool htmlViewToggled)
     }
 
     ui->splitter->setSizes(childSizes);
+}
+
+void MainWindow::readSettings()
+{
+    // restore window size, position and state
+    QSettings settings;
+    restoreGeometry(settings.value("mainWindow/geometry").toByteArray());
+    restoreState(settings.value("mainWindow/windowState").toByteArray());
+
+    recentFilesMenu->readState();
+}
+
+void MainWindow::writeSettings()
+{
+    recentFilesMenu->saveState();
+
+    // save window size, position and state
+    QSettings settings;
+    settings.setValue("mainWindow/geometry", saveGeometry());
+    settings.setValue("mainWindow/windowState", saveState());
 }

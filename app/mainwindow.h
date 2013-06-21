@@ -113,6 +113,8 @@ private:
     bool maybeSave();
     void setFileName(const QString &fileName);
     void updateSplitter(bool htmlViewToggled);
+    void readSettings();
+    void writeSettings();
 
 private:
     Ui::MainWindow *ui;
