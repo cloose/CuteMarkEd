@@ -146,7 +146,9 @@ void MainWindow::initializeUI()
 
 void MainWindow::openRecentFile(const QString &fileName)
 {
-    load(fileName);
+    if (maybeSave()) {
+        load(fileName);
+    }
 }
 
 void MainWindow::fileNew()
@@ -164,10 +166,12 @@ void MainWindow::fileNew()
 
 void MainWindow::fileOpen()
 {
-    QString name = QFileDialog::getOpenFileName(this, tr("Open File..."),
-                                              QString(), tr("Markdown Files (*.markdown *.md);;All Files (*)"));
-    if (!name.isEmpty()) {
-        load(name);
+    if (maybeSave()) {
+        QString name = QFileDialog::getOpenFileName(this, tr("Open File..."),
+                                                    QString(), tr("Markdown Files (*.markdown *.md);;All Files (*)"));
+        if (!name.isEmpty()) {
+            load(name);
+        }
     }
 }
 
