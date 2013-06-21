@@ -6,20 +6,22 @@
 namespace Ui {
 class OptionsDialog;
 }
+class Options;
 
 class OptionsDialog : public QDialog
 {
     Q_OBJECT
     
 public:
-    explicit OptionsDialog(QWidget *parent = 0);
+    explicit OptionsDialog(Options *opt, QWidget *parent = 0);
     ~OptionsDialog();
-    
-private slots:
-    void on_fontComboBox_currentFontChanged(const QFont &f);
+
+protected:
+    void done(int result);
 
 private:
     Ui::OptionsDialog *ui;
+    Options *options;
 };
 
 #endif // OPTIONSDIALOG_H

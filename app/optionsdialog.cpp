@@ -2,10 +2,14 @@
 #include "ui_optionsdialog.h"
 
 #include <QFontComboBox>
+#include <QSettings>
 
-OptionsDialog::OptionsDialog(QWidget *parent) :
+#include "options.h"
+
+OptionsDialog::OptionsDialog(Options *opt, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::OptionsDialog)
+    ui(new Ui::OptionsDialog),
+    options(opt)
 {
     ui->setupUi(this);
     ui->tabWidget->setTabIcon(0, QIcon("icon-file-text-alt.fontawesome"));
@@ -16,6 +20,10 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     foreach (int size, QFontDatabase::standardSizes()) {
         ui->sizeComboBox->addItem(QString().setNum(size));
     }
+
+    QFont font = options->editorFont();
+    ui->fontComboBox->setCurrentFont(font);
+    ui->sizeComboBox->setCurrentText(QString().setNum(font.pointSize()));
 }
 
 OptionsDialog::~OptionsDialog()
@@ -23,6 +31,13 @@ OptionsDialog::~OptionsDialog()
     delete ui;
 }
 
-void OptionsDialog::on_fontComboBox_currentFontChanged(const QFont &f)
+void OptionsDialog::done(int result)
 {
+    if (result == QDialog::Accepted) {
+        QFont font = ui->fontComboBox->currentFont();
+        font.setPointSize(ui->sizeComboBox->currentText().toInt());
+        options->setEditorFont(font);
+    }
+
+    QDialog::done(result);
 }

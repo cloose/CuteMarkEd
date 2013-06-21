@@ -29,6 +29,7 @@ class ActiveLabel;
 class HtmlPreviewGenerator;
 class HtmlHighlighter;
 class RecentFilesMenu;
+class Options;
 
 
 class MainWindow : public QMainWindow
@@ -82,6 +83,7 @@ private slots:
     void extrasMathSupport(bool checked);
     void extrasCodeHighlighting(bool checked);
     void extrasShowHardLinebreaks(bool checked);
+    void extrasOptions();
 
     void helpMarkdownSyntax();
     void helpAbout();
@@ -119,6 +121,7 @@ private:
 private:
     Ui::MainWindow *ui;
     RecentFilesMenu *recentFilesMenu;
+    Options *options;
     QNetworkDiskCache *diskCache;
     QLabel *styleLabel;
     QLabel *wordCountLabel;

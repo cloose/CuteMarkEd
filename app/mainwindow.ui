@@ -220,6 +220,8 @@
     <addaction name="actionShowHardLinebreaks"/>
     <addaction name="separator"/>
     <addaction name="menuStyles"/>
+    <addaction name="separator"/>
+    <addaction name="actionOptions"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -544,6 +546,11 @@
    </property>
    <property name="text">
     <string>Show Hard Linebreaks</string>
+   </property>
+  </action>
+  <action name="actionOptions">
+   <property name="text">
+    <string>Options...</string>
    </property>
   </action>
  </widget>
@@ -1263,6 +1270,22 @@
    <signal>triggered(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>extrasShowHardLinebreaks(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionOptions</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extrasOptions()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

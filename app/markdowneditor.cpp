@@ -196,6 +196,12 @@ void MarkdownEditor::updateLineNumberArea(const QRect &rect, int dy)
         updateLineNumberAreaWidth(0);
 }
 
+void MarkdownEditor::editorFontChanged(const QFont &font)
+{
+    lineNumberArea->setFont(font);
+    setFont(font);
+}
+
 void MarkdownEditor::loadStyleFromStylesheet(const QString &fileName)
 {
     QFile f(fileName);

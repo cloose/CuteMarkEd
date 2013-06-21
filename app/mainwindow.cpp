@@ -43,10 +43,13 @@
 #include "markdownmanipulator.h"
 #include "exporthtmldialog.h"
 #include "exportpdfdialog.h"
+#include "options.h"
+#include "optionsdialog.h"
 
 MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
+    options(new Options(this)),
     styleLabel(0),
     wordCountLabel(0),
     viewLabel(0),
@@ -423,6 +426,14 @@ void MainWindow::extrasShowHardLinebreaks(bool checked)
     ui->plainTextEdit->setShowHardLinebreaks(checked);
 }
 
+void MainWindow::extrasOptions()
+{
+    OptionsDialog dialog(options, this);
+    if (dialog.exec() == QDialog::Accepted) {
+        options->writeSettings();
+    }
+}
+
 void MainWindow::helpMarkdownSyntax()
 {
     ui->dockWidget_2->show();
@@ -713,6 +724,9 @@ void MainWindow::setupMarkdownEditor()
     // synchronize scrollbars
     connect(ui->plainTextEdit->verticalScrollBar(), SIGNAL(valueChanged(int)),
             this, SLOT(scrollValueChanged(int)));
+
+    connect(options, SIGNAL(editorFontChanged(QFont)),
+            ui->plainTextEdit, SLOT(editorFontChanged(QFont)));
 }
 
 void MainWindow::setupHtmlPreview()
@@ -821,6 +835,7 @@ void MainWindow::readSettings()
     restoreState(settings.value("mainWindow/windowState").toByteArray());
 
     recentFilesMenu->readState();
+    options->readSettings();
 }
 
 void MainWindow::writeSettings()

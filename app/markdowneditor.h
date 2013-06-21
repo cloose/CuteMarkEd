@@ -51,6 +51,7 @@ protected:
 private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
     void updateLineNumberArea(const QRect &rect, int dy);
+    void editorFontChanged(const QFont &font);
 
 private:
     void drawLineEndMarker(QPaintEvent *e);
