@@ -54,10 +54,11 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     scrollBarPos(0)
 {
     ui->setupUi(this);
+    setupUi();
 
     setFileName(fileName);
 
-    QTimer::singleShot(0, this, SLOT(initializeUI()));
+    QTimer::singleShot(0, this, SLOT(initializeApp()));
 }
 
 MainWindow::~MainWindow()
@@ -96,27 +97,11 @@ void MainWindow::resizeEvent(QResizeEvent *e)
     updateSplitter(false);
 }
 
-void MainWindow::initializeUI()
+void MainWindow::initializeApp()
 {
-    setupActions();
-    setupStatusBar();
-    setupMarkdownEditor();
-    setupHtmlPreview();
-    setupHtmlSourceView();
-
-    // hide find/replace widget on startup
-    ui->findReplaceWidget->hide();
-
     // inform us when a link in the table of contents or preview view is clicked
     ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-
-    ui->dockWidget->close();
-    toggleHtmlView();
-
-    ui->dockWidget_2->hide();
-    ui->dockWidget_2->setFloating(true);
-    ui->dockWidget_2->resize(550, 400);
 
     // set default style
     styleDefault();
@@ -588,6 +573,29 @@ bool MainWindow::load(const QString &fileName)
     setFileName(fileName);
     recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
     return true;
+}
+
+void MainWindow::setupUi()
+{
+    setupActions();
+    setupStatusBar();
+    setupMarkdownEditor();
+    setupHtmlPreview();
+    setupHtmlSourceView();
+
+    // hide find/replace widget on startup
+    ui->findReplaceWidget->hide();
+
+    // close table of contents dockwidget
+    ui->dockWidget->close();
+
+    // hide markdown syntax help dockwidget
+    ui->dockWidget_2->hide();
+    ui->dockWidget_2->setFloating(true);
+    ui->dockWidget_2->resize(550, 400);
+
+    // show HTML preview on right panel
+    toggleHtmlView();
 }
 
 void MainWindow::setupActions()

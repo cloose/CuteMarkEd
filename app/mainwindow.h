@@ -47,7 +47,7 @@ protected:
     void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
 
 private slots:
-    void initializeUI();
+    void initializeApp();
     void openRecentFile(const QString &fileName);
 
     void fileNew();
@@ -104,6 +104,7 @@ private slots:
     bool load(const QString &fileName);
 
 private:
+    void setupUi();
     void setupActions();
     void setupStatusBar();
     void setupMarkdownEditor();
