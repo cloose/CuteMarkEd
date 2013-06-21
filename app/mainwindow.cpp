@@ -100,14 +100,9 @@ void MainWindow::initializeUI()
 {
     setupActions();
     setupStatusBar();
+    setupMarkdownEditor();
     setupHtmlPreview();
     setupHtmlSourceView();
-
-    connect(ui->webView->page()->mainFrame(), SIGNAL(contentsSizeChanged(QSize)),
-            this, SLOT(htmlContentSizeChanged()));
-
-    connect(ui->plainTextEdit, SIGNAL(loadDroppedFile(QString)),
-            this, SLOT(load(QString)));
 
     // hide find/replace widget on startup
     ui->findReplaceWidget->hide();
@@ -122,9 +117,6 @@ void MainWindow::initializeUI()
     ui->dockWidget_2->hide();
     ui->dockWidget_2->setFloating(true);
     ui->dockWidget_2->resize(550, 400);
-
-    connect(ui->plainTextEdit->verticalScrollBar(), SIGNAL(valueChanged(int)),
-            this, SLOT(scrollValueChanged(int)));
 
     // set default style
     styleDefault();
@@ -620,11 +612,26 @@ void MainWindow::setupStatusBar()
             this, SLOT(toggleHtmlView()));
 }
 
+void MainWindow::setupMarkdownEditor()
+{
+    // load file that are dropped on the editor
+    connect(ui->plainTextEdit, SIGNAL(loadDroppedFile(QString)),
+            this, SLOT(load(QString)));
+
+    // synchronize scrollbars
+    connect(ui->plainTextEdit->verticalScrollBar(), SIGNAL(valueChanged(int)),
+            this, SLOT(scrollValueChanged(int)));
+}
+
 void MainWindow::setupHtmlPreview()
 {
     // add our objects everytime JavaScript environment is cleared
     connect(ui->webView->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),
             this, SLOT(addJavaScriptObject()));
+
+    // restore scrollbar position after content size changed
+    connect(ui->webView->page()->mainFrame(), SIGNAL(contentsSizeChanged(QSize)),
+            this, SLOT(htmlContentSizeChanged()));
 
     // load HTML template for live preview from resources
     QFile f(":/template.html");

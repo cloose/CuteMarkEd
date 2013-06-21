@@ -106,6 +106,7 @@ private slots:
 private:
     void setupActions();
     void setupStatusBar();
+    void setupMarkdownEditor();
     void setupHtmlPreview();
     void setupHtmlSourceView();
     bool maybeSave();
