@@ -23,6 +23,7 @@ namespace Ui {
 class MainWindow;
 }
 
+class QActionGroup;
 class QLabel;
 class QNetworkDiskCache;
 class ActiveLabel;
@@ -78,6 +79,7 @@ private slots:
     void styleSolarizedDark();
     void styleClearness();
     void styleClearnessDark();
+    void styleCustomStyle();
     void viewFullScreenMode();
 
     void extrasMathSupport(bool checked);
@@ -115,6 +117,7 @@ private:
     bool maybeSave();
     void setFileName(const QString &fileName);
     void updateSplitter(bool htmlViewToggled);
+    void loadCustomStyles();
     void readSettings();
     void writeSettings();
 
@@ -123,6 +126,7 @@ private:
     RecentFilesMenu *recentFilesMenu;
     Options *options;
     QNetworkDiskCache *diskCache;
+    QActionGroup *stylesGroup;
     QLabel *styleLabel;
     QLabel *wordCountLabel;
     ActiveLabel *viewLabel;

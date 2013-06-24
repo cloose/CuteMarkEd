@@ -18,6 +18,7 @@
 #include "ui_mainwindow.h"
 
 #include <QClipboard>
+#include <QDirIterator>
 #include <QFileDialog>
 #include <QIcon>
 #include <QLabel>
@@ -124,6 +125,8 @@ void MainWindow::initializeApp()
 //    ui->webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
 //    QWebInspector *inspector = new QWebInspector();
 //    inspector->setPage(ui->webView->page());
+
+    loadCustomStyles();
 
     // load file passed to application on start
     if (!fileName.isEmpty()) {
@@ -399,6 +402,19 @@ void MainWindow::styleClearnessDark()
     styleLabel->setText(ui->actionClearnessDark->text());
 }
 
+void MainWindow::styleCustomStyle()
+{
+    QAction *action = qobject_cast<QAction*>(sender());
+
+    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl::fromLocalFile(action->data().toString()));
+
+    generator->setCodeHighlightingStyle("default");
+    plainTextChanged();
+
+    styleLabel->setText(action->text());
+}
+
 void MainWindow::viewFullScreenMode()
 {
     if (ui->actionFullScreenMode->isChecked()) {
@@ -448,13 +464,8 @@ void MainWindow::helpAbout()
 
 void MainWindow::styleContextMenu(const QPoint &pos)
 {
-    QList<QAction*> actions;
-    actions << ui->actionDefault << ui->actionGithub
-            << ui->actionSolarizedLight << ui->actionSolarizedDark
-            << ui->actionClearness << ui->actionClearnessDark;
-
     QMenu *menu = new QMenu();
-    menu->addActions(actions);
+    menu->addActions(stylesGroup->actions());
 
     menu->exec(styleLabel->mapToGlobal(pos));
 }
@@ -675,13 +686,13 @@ void MainWindow::setupActions()
     ui->actionClearnessDark->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
 
     // put style actions in a group
-    QActionGroup* group = new QActionGroup( this );
-    ui->actionDefault->setActionGroup(group);
-    ui->actionGithub->setActionGroup(group);
-    ui->actionSolarizedLight->setActionGroup(group);
-    ui->actionSolarizedDark->setActionGroup(group);
-    ui->actionClearness->setActionGroup(group);
-    ui->actionClearnessDark->setActionGroup(group);
+    stylesGroup = new QActionGroup(this);
+    ui->actionDefault->setActionGroup(stylesGroup);
+    ui->actionGithub->setActionGroup(stylesGroup);
+    ui->actionSolarizedLight->setActionGroup(stylesGroup);
+    ui->actionSolarizedDark->setActionGroup(stylesGroup);
+    ui->actionClearness->setActionGroup(stylesGroup);
+    ui->actionClearnessDark->setActionGroup(stylesGroup);
 
     // help menu
     ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);
@@ -825,6 +836,31 @@ void MainWindow::updateSplitter(bool htmlViewToggled)
     }
 
     ui->splitter->setSizes(childSizes);
+}
+
+void MainWindow::loadCustomStyles()
+{
+    QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+    qDebug() << paths;
+    QDir dataPath(paths.first() + QDir::separator() + "styles");
+    dataPath.setFilter(QDir::Files);
+    if (dataPath.exists()) {
+        ui->menuStyles->addSeparator();
+
+        QDirIterator it(dataPath);
+        while (it.hasNext()) {
+            it.next();
+
+            QString fileName = it.fileName();
+            QAction *action = ui->menuStyles->addAction(QFileInfo(fileName).baseName());
+            action->setCheckable(true);
+            action->setActionGroup(stylesGroup);
+            action->setData(it.filePath());
+
+            connect(action, SIGNAL(triggered()),
+                    this, SLOT(styleCustomStyle()));
+        }
+    }
 }
 
 void MainWindow::readSettings()
