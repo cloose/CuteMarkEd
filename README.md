@@ -4,15 +4,43 @@
 
 A Qt-based, free and open source markdown editor with live HTML preview, math expressions, code syntax highlighting and syntax highlighting of markdown document.
 
-![screenshot](images/screenshot_05.png)
+![screenshot](images/screenshot_06.png)
 
 ### DOWNLOAD
 
-[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.5.0.tar.gz)  
-[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.5.0.zip?direct)  
-[OpenSUSE 12.3 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)
+[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.6.0.tar.gz)  
+[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.6.0.zip?direct)  
+[OpenSUSE 12.3 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 
 ### NEWS
+
+#### Version 0.6.0
+
+New Features:
+
+* `NEW` Show indicator in window title when the markdown document was modified
+* `NEW` Added menu entry and shortcut to toggle between HTML preview and HTML source view
+* `NEW` Added option to display markers in editor for hard linebreaks
+* `NEW` Save/restore main window size, position and state
+* `NEW` Added support for opening markdown files in the editor per
+Drag & Drop
+* `NEW` Added possibility to change the font used in the markdown editor
+* `NEW` Added support for custom CSS styles. The css files are loaded from a subdirectory `styles` under the application data location. On Windows this is: `C:\Users\{User}\AppData\Local\CuteMarkEd Project\CuteMarkEd\styles`
+
+Improvements:
+
+* `IMPROVED` Load translation for text provided by Qt
+* `IMPROVED` Support more image formats in the HTML preview on Windows
+* `IMPROVED` SSL support on Windows
+
+Fixes:
+
+* `FIX` Do not crash application when a link with an empty href is clicked
+* `FIX` Missing text in HTML preview
+* `FIX` Fix print menu entry for Windows users
+* `FIX` Show save changes dialog before opening another file
+
+
 
 #### Version 0.5.0
 
