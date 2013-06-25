@@ -174,7 +174,12 @@ bool MainWindow::fileSave()
     QTextDocumentWriter writer(fileName, "plaintext");
     bool success = writer.write(ui->plainTextEdit->document());
     if (success) {
+        // set status to unmodified
         ui->plainTextEdit->document()->setModified(false);
+        setWindowModified(false);
+
+        // add to recent file list
+        recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
     }
 
     return success;
