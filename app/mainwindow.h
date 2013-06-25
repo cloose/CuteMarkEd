@@ -23,12 +23,14 @@ namespace Ui {
 class MainWindow;
 }
 
+class QActionGroup;
 class QLabel;
 class QNetworkDiskCache;
 class ActiveLabel;
 class HtmlPreviewGenerator;
 class HtmlHighlighter;
 class RecentFilesMenu;
+class Options;
 
 
 class MainWindow : public QMainWindow
@@ -47,7 +49,7 @@ protected:
     void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
 
 private slots:
-    void initializeUI();
+    void initializeApp();
     void openRecentFile(const QString &fileName);
 
     void fileNew();
@@ -77,10 +79,13 @@ private slots:
     void styleSolarizedDark();
     void styleClearness();
     void styleClearnessDark();
+    void styleCustomStyle();
     void viewFullScreenMode();
 
     void extrasMathSupport(bool checked);
     void extrasCodeHighlighting(bool checked);
+    void extrasShowHardLinebreaks(bool checked);
+    void extrasOptions();
 
     void helpMarkdownSyntax();
     void helpAbout();
@@ -91,28 +96,37 @@ private slots:
     void plainTextChanged();
     void htmlResultReady(const QString &html);
     void tocResultReady(const QString &toc);
+    void htmlContentSizeChanged();
 
+    void previewLinkClicked(const QUrl &url);
     void tocLinkClicked(const QUrl &url);
 
     void splitterMoved(int pos, int index);
     void scrollValueChanged(int value);
 
     void addJavaScriptObject();
+    bool load(const QString &fileName);
 
 private:
+    void setupUi();
     void setupActions();
     void setupStatusBar();
+    void setupMarkdownEditor();
     void setupHtmlPreview();
     void setupHtmlSourceView();
-    bool load(const QString &fileName);
     bool maybeSave();
     void setFileName(const QString &fileName);
     void updateSplitter(bool htmlViewToggled);
+    void loadCustomStyles();
+    void readSettings();
+    void writeSettings();
 
 private:
     Ui::MainWindow *ui;
     RecentFilesMenu *recentFilesMenu;
+    Options *options;
     QNetworkDiskCache *diskCache;
+    QActionGroup *stylesGroup;
     QLabel *styleLabel;
     QLabel *wordCountLabel;
     ActiveLabel *viewLabel;
@@ -120,6 +134,7 @@ private:
     HtmlHighlighter *htmlHighlighter;
     QString fileName;
     float splitFactor;
+    int scrollBarPos;
 };
 
 #endif // MAINWINDOW_H

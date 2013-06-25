@@ -18,6 +18,7 @@
 #include "ui_mainwindow.h"
 
 #include <QClipboard>
+#include <QDirIterator>
 #include <QFileDialog>
 #include <QIcon>
 #include <QLabel>
@@ -27,6 +28,7 @@
 #include <QPrintDialog>
 #include <QPrinter>
 #include <QScrollBar>
+#include <QSettings>
 #include <QStandardPaths>
 #include <QTextDocumentWriter>
 #include <QTimer>
@@ -36,27 +38,32 @@
 
 #include "controls/activelabel.h"
 #include "controls/findreplacewidget.h"
+#include "controls/recentfilesmenu.h"
 #include "htmlpreviewgenerator.h"
 #include "htmlhighlighter.h"
 #include "markdownmanipulator.h"
 #include "exporthtmldialog.h"
 #include "exportpdfdialog.h"
-#include <controls/recentfilesmenu.h>
+#include "options.h"
+#include "optionsdialog.h"
 
 MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
+    options(new Options(this)),
     styleLabel(0),
     wordCountLabel(0),
     viewLabel(0),
     generator(new HtmlPreviewGenerator(this)),
-    splitFactor(0.5)
+    splitFactor(0.5),
+    scrollBarPos(0)
 {
     ui->setupUi(this);
+    setupUi();
 
     setFileName(fileName);
 
-    QTimer::singleShot(0, this, SLOT(initializeUI()));
+    QTimer::singleShot(0, this, SLOT(initializeApp()));
 }
 
 MainWindow::~MainWindow()
@@ -82,7 +89,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 {
     // check if file needs saving
     if (maybeSave()) {
-        recentFilesMenu->saveState();
+        writeSettings();
         e->accept();
     } else {
         e->ignore();
@@ -95,27 +102,11 @@ void MainWindow::resizeEvent(QResizeEvent *e)
     updateSplitter(false);
 }
 
-void MainWindow::initializeUI()
+void MainWindow::initializeApp()
 {
-    setupActions();
-    setupStatusBar();
-    setupHtmlPreview();
-    setupHtmlSourceView();
-
-    // hide find/replace widget on startup
-    ui->findReplaceWidget->hide();
-
-    // inform us when a link in the table of contents view is clicked
+    // inform us when a link in the table of contents or preview view is clicked
+    ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-    ui->dockWidget->close();
-    toggleHtmlView();
-
-    ui->dockWidget_2->hide();
-    ui->dockWidget_2->setFloating(true);
-    ui->dockWidget_2->resize(550, 400);
-
-    connect(ui->plainTextEdit->verticalScrollBar(), SIGNAL(valueChanged(int)),
-            this, SLOT(scrollValueChanged(int)));
 
     // set default style
     styleDefault();
@@ -135,7 +126,7 @@ void MainWindow::initializeUI()
 //    QWebInspector *inspector = new QWebInspector();
 //    inspector->setPage(ui->webView->page());
 
-    recentFilesMenu->readState();
+    loadCustomStyles();
 
     // load file passed to application on start
     if (!fileName.isEmpty()) {
@@ -145,7 +136,9 @@ void MainWindow::initializeUI()
 
 void MainWindow::openRecentFile(const QString &fileName)
 {
-    load(fileName);
+    if (maybeSave()) {
+        load(fileName);
+    }
 }
 
 void MainWindow::fileNew()
@@ -163,10 +156,12 @@ void MainWindow::fileNew()
 
 void MainWindow::fileOpen()
 {
-    QString name = QFileDialog::getOpenFileName(this, tr("Open File..."),
-                                              QString(), tr("Markdown Files (*.markdown *.md);;All Files (*)"));
-    if (!name.isEmpty()) {
-        load(name);
+    if (maybeSave()) {
+        QString name = QFileDialog::getOpenFileName(this, tr("Open File..."),
+                                                    QString(), tr("Markdown Files (*.markdown *.md);;All Files (*)"));
+        if (!name.isEmpty()) {
+            load(name);
+        }
     }
 }
 
@@ -179,7 +174,12 @@ bool MainWindow::fileSave()
     QTextDocumentWriter writer(fileName, "plaintext");
     bool success = writer.write(ui->plainTextEdit->document());
     if (success) {
+        // set status to unmodified
         ui->plainTextEdit->document()->setModified(false);
+        setWindowModified(false);
+
+        // add to recent file list
+        recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
     }
 
     return success;
@@ -323,6 +323,24 @@ void MainWindow::editBlockquote()
     manipulator.prependToLine('>');
 }
 
+void MainWindow::viewChangeSplit()
+{
+    QAction* action = qobject_cast<QAction*>(sender());
+    if (action->objectName() == ui->actionSplit_1_1->objectName()) {
+        splitFactor = 0.5;
+    } else if (action->objectName() == ui->actionSplit_2_1->objectName()) {
+        splitFactor = 0.666;
+    } else if (action->objectName() == ui->actionSplit_1_2->objectName()) {
+        splitFactor = 0.333;
+    } else if (action->objectName() == ui->actionSplit_3_1->objectName()) {
+        splitFactor = 0.75;
+    } else if (action->objectName() == ui->actionSplit_1_3->objectName()) {
+        splitFactor = 0.25;
+    }
+
+    updateSplitter(true);
+}
+
 void MainWindow::styleDefault()
 {
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
@@ -389,6 +407,19 @@ void MainWindow::styleClearnessDark()
     styleLabel->setText(ui->actionClearnessDark->text());
 }
 
+void MainWindow::styleCustomStyle()
+{
+    QAction *action = qobject_cast<QAction*>(sender());
+
+    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl::fromLocalFile(action->data().toString()));
+
+    generator->setCodeHighlightingStyle("default");
+    plainTextChanged();
+
+    styleLabel->setText(action->text());
+}
+
 void MainWindow::viewFullScreenMode()
 {
     if (ui->actionFullScreenMode->isChecked()) {
@@ -411,6 +442,19 @@ void MainWindow::extrasCodeHighlighting(bool checked)
     plainTextChanged();
 }
 
+void MainWindow::extrasShowHardLinebreaks(bool checked)
+{
+    ui->plainTextEdit->setShowHardLinebreaks(checked);
+}
+
+void MainWindow::extrasOptions()
+{
+    OptionsDialog dialog(options, this);
+    if (dialog.exec() == QDialog::Accepted) {
+        options->writeSettings();
+    }
+}
+
 void MainWindow::helpMarkdownSyntax()
 {
     ui->dockWidget_2->show();
@@ -425,13 +469,8 @@ void MainWindow::helpAbout()
 
 void MainWindow::styleContextMenu(const QPoint &pos)
 {
-    QList<QAction*> actions;
-    actions << ui->actionDefault << ui->actionGithub
-            << ui->actionSolarizedLight << ui->actionSolarizedDark
-            << ui->actionClearness << ui->actionClearnessDark;
-
     QMenu *menu = new QMenu();
-    menu->addActions(actions);
+    menu->addActions(stylesGroup->actions());
 
     menu->exec(styleLabel->mapToGlobal(pos));
 }
@@ -441,10 +480,12 @@ void MainWindow::toggleHtmlView()
     if (viewLabel->text() == tr("HTML preview")) {
         ui->webView->hide();
         ui->htmlSourceTextEdit->show();
+        ui->actionHtmlPreview->setText(tr("HTML source"));
         viewLabel->setText(tr("HTML source"));
     } else {
         ui->webView->show();
         ui->htmlSourceTextEdit->hide();
+        ui->actionHtmlPreview->setText(tr("HTML preview"));
         viewLabel->setText(tr("HTML preview"));
     }
 
@@ -465,6 +506,9 @@ void MainWindow::plainTextChanged()
 
     // generate HTML from markdown
     generator->enqueue(code);
+
+    // show modification indicator in window title
+    setWindowModified(ui->plainTextEdit->document()->isModified());
 }
 
 void MainWindow::htmlResultReady(const QString &html)
@@ -472,7 +516,7 @@ void MainWindow::htmlResultReady(const QString &html)
     ui->webView->page()->networkAccessManager()->setCache(diskCache);
 
     // remember scrollbar position
-    int scrollBarPos = ui->webView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
+    scrollBarPos = ui->plainTextEdit->verticalScrollBar()->value();
 
     QUrl baseUrl;
     if (fileName.isEmpty()) {
@@ -482,9 +526,6 @@ void MainWindow::htmlResultReady(const QString &html)
     }
     ui->webView->setHtml(html, baseUrl);
 
-    // restore previous scrollbar position
-    ui->webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, scrollBarPos);
-
     ui->htmlSourceTextEdit->setPlainText(html);
 }
 
@@ -492,6 +533,97 @@ void MainWindow::tocResultReady(const QString &toc)
 {
     QString styledToc = QString("<html><head>\n<style type=\"text/css\">ul { list-style-type: none; padding: 0; margin-left: 1em; } a { text-decoration: none; }</style>\n</head><body>%1</body></html>").arg(toc);
     ui->tocWebView->setHtml(styledToc);
+}
+
+void MainWindow::htmlContentSizeChanged()
+{
+    if (scrollBarPos > 0) {
+        // restore previous scrollbar position
+        scrollValueChanged(scrollBarPos);
+    }
+}
+
+void MainWindow::previewLinkClicked(const QUrl &url)
+{
+    // only open link if its not a local directory.
+    // this can happen because when the href is empty, url is the base url (see htmlResultReady)
+    if (!url.isLocalFile() || !QFileInfo(url.toLocalFile()).isDir()) {
+        ui->webView->load(url);
+    }
+}
+
+void MainWindow::tocLinkClicked(const QUrl &url)
+{
+    QString anchor = url.toString().remove("#");
+    ui->webView->page()->mainFrame()->scrollToAnchor(anchor);
+}
+
+void MainWindow::splitterMoved(int pos, int index)
+{
+    Q_UNUSED(index)
+    splitFactor = (float)pos / ui->splitter->size().width();
+}
+
+void MainWindow::scrollValueChanged(int value)
+{
+    double factor = (double)ui->webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical) /
+                   ui->plainTextEdit->verticalScrollBar()->maximum();
+
+    ui->webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, qRound(value * factor));
+}
+
+void MainWindow::addJavaScriptObject()
+{
+    // add mainwindow object to javascript engine, so when
+    // the scrollbar of the webview changes the method webViewScrolled() can be called
+    ui->webView->page()->mainFrame()->addToJavaScriptWindowObject("mainwin", this);
+}
+
+bool MainWindow::load(const QString &fileName)
+{
+    if (!QFile::exists(fileName)) {
+        return false;
+    }
+
+    QFile file(fileName);
+    if (!file.open(QFile::ReadOnly)) {
+        return false;
+    }
+
+    QByteArray content = file.readAll();
+    QString text = QString::fromUtf8(content);
+
+    ui->plainTextEdit->resetHighlighting();
+    ui->plainTextEdit->setPlainText(text);
+
+    setFileName(fileName);
+    recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
+    return true;
+}
+
+void MainWindow::setupUi()
+{
+    setupActions();
+    setupStatusBar();
+    setupMarkdownEditor();
+    setupHtmlPreview();
+    setupHtmlSourceView();
+
+    // hide find/replace widget on startup
+    ui->findReplaceWidget->hide();
+
+    // close table of contents dockwidget
+    ui->dockWidget->close();
+
+    // hide markdown syntax help dockwidget
+    ui->dockWidget_2->hide();
+    ui->dockWidget_2->setFloating(true);
+    ui->dockWidget_2->resize(550, 400);
+
+    // show HTML preview on right panel
+    toggleHtmlView();
+
+    readSettings();
 }
 
 void MainWindow::setupActions()
@@ -531,6 +663,7 @@ void MainWindow::setupActions()
     ui->actionStrikethrough->setIcon(QIcon("icon-strikethrough.fontawesome"));
     ui->actionCenterParagraph->setIcon(QIcon("icon-align-center.fontawesome"));
     ui->actionHardLinebreak->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return));
+    ui->actionBlockquote->setIcon(QIcon("icon-quote-left.fontawesome"));
 
     ui->actionFindReplace->setShortcut(QKeySequence::Find);
     ui->actionFindReplace->setIcon(QIcon("icon-search.fontawesome"));
@@ -545,6 +678,7 @@ void MainWindow::setupActions()
 
     // view menu
     ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());
+    ui->actionHtmlPreview->setShortcut(QKeySequence(Qt::Key_F5));
     ui->actionFullScreenMode->setShortcut(QKeySequence::FullScreen);
     ui->actionFullScreenMode->setIcon(QIcon("icon-fullscreen.fontawesome"));
 
@@ -557,13 +691,13 @@ void MainWindow::setupActions()
     ui->actionClearnessDark->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
 
     // put style actions in a group
-    QActionGroup* group = new QActionGroup( this );
-    ui->actionDefault->setActionGroup(group);
-    ui->actionGithub->setActionGroup(group);
-    ui->actionSolarizedLight->setActionGroup(group);
-    ui->actionSolarizedDark->setActionGroup(group);
-    ui->actionClearness->setActionGroup(group);
-    ui->actionClearnessDark->setActionGroup(group);
+    stylesGroup = new QActionGroup(this);
+    ui->actionDefault->setActionGroup(stylesGroup);
+    ui->actionGithub->setActionGroup(stylesGroup);
+    ui->actionSolarizedLight->setActionGroup(stylesGroup);
+    ui->actionSolarizedDark->setActionGroup(stylesGroup);
+    ui->actionClearness->setActionGroup(stylesGroup);
+    ui->actionClearnessDark->setActionGroup(stylesGroup);
 
     // help menu
     ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);
@@ -597,11 +731,29 @@ void MainWindow::setupStatusBar()
             this, SLOT(toggleHtmlView()));
 }
 
+void MainWindow::setupMarkdownEditor()
+{
+    // load file that are dropped on the editor
+    connect(ui->plainTextEdit, SIGNAL(loadDroppedFile(QString)),
+            this, SLOT(load(QString)));
+
+    // synchronize scrollbars
+    connect(ui->plainTextEdit->verticalScrollBar(), SIGNAL(valueChanged(int)),
+            this, SLOT(scrollValueChanged(int)));
+
+    connect(options, SIGNAL(editorFontChanged(QFont)),
+            ui->plainTextEdit, SLOT(editorFontChanged(QFont)));
+}
+
 void MainWindow::setupHtmlPreview()
 {
     // add our objects everytime JavaScript environment is cleared
     connect(ui->webView->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),
             this, SLOT(addJavaScriptObject()));
+
+    // restore scrollbar position after content size changed
+    connect(ui->webView->page()->mainFrame(), SIGNAL(contentsSizeChanged(QSize)),
+            this, SLOT(htmlContentSizeChanged()));
 
     // load HTML template for live preview from resources
     QFile f(":/template.html");
@@ -624,28 +776,6 @@ void MainWindow::setupHtmlSourceView()
     font.setStyleHint(QFont::TypeWriter);
     ui->htmlSourceTextEdit->setFont(font);
     htmlHighlighter = new HtmlHighlighter(ui->htmlSourceTextEdit->document());
-}
-
-bool MainWindow::load(const QString &fileName)
-{
-    if (!QFile::exists(fileName)) {
-        return false;
-    }
-
-    QFile file(fileName);
-    if (!file.open(QFile::ReadOnly)) {
-        return false;
-    }
-
-    QByteArray content = file.readAll();
-    QString text = QString::fromUtf8(content);
-
-    ui->plainTextEdit->resetHighlighting();
-    ui->plainTextEdit->setPlainText(text);
-
-    setFileName(fileName);
-    recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
-    return true;
 }
 
 bool MainWindow::maybeSave()
@@ -713,47 +843,48 @@ void MainWindow::updateSplitter(bool htmlViewToggled)
     ui->splitter->setSizes(childSizes);
 }
 
-void MainWindow::tocLinkClicked(const QUrl &url)
+void MainWindow::loadCustomStyles()
 {
-    QString anchor = url.toString().remove("#");
-    ui->webView->page()->mainFrame()->scrollToAnchor(anchor);
-}
+    QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+    qDebug() << paths;
+    QDir dataPath(paths.first() + QDir::separator() + "styles");
+    dataPath.setFilter(QDir::Files);
+    if (dataPath.exists()) {
+        ui->menuStyles->addSeparator();
 
-void MainWindow::viewChangeSplit()
-{
-    QAction* action = qobject_cast<QAction*>(sender());
-    if (action->objectName() == ui->actionSplit_1_1->objectName()) {
-        splitFactor = 0.5;
-    } else if (action->objectName() == ui->actionSplit_2_1->objectName()) {
-        splitFactor = 0.666;
-    } else if (action->objectName() == ui->actionSplit_1_2->objectName()) {
-        splitFactor = 0.333;
-    } else if (action->objectName() == ui->actionSplit_3_1->objectName()) {
-        splitFactor = 0.75;
-    } else if (action->objectName() == ui->actionSplit_1_3->objectName()) {
-        splitFactor = 0.25;
+        QDirIterator it(dataPath);
+        while (it.hasNext()) {
+            it.next();
+
+            QString fileName = it.fileName();
+            QAction *action = ui->menuStyles->addAction(QFileInfo(fileName).baseName());
+            action->setCheckable(true);
+            action->setActionGroup(stylesGroup);
+            action->setData(it.filePath());
+
+            connect(action, SIGNAL(triggered()),
+                    this, SLOT(styleCustomStyle()));
+        }
     }
-
-    updateSplitter(true);
 }
 
-void MainWindow::splitterMoved(int pos, int index)
+void MainWindow::readSettings()
 {
-    Q_UNUSED(index)
-    splitFactor = (float)pos / ui->splitter->size().width();
+    // restore window size, position and state
+    QSettings settings;
+    restoreGeometry(settings.value("mainWindow/geometry").toByteArray());
+    restoreState(settings.value("mainWindow/windowState").toByteArray());
+
+    recentFilesMenu->readState();
+    options->readSettings();
 }
 
-void MainWindow::scrollValueChanged(int value)
+void MainWindow::writeSettings()
 {
-    double factor = (double)ui->webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical) /
-                   ui->plainTextEdit->verticalScrollBar()->maximum();
+    recentFilesMenu->saveState();
 
-    ui->webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, qRound(value * factor));
-}
-
-void MainWindow::addJavaScriptObject()
-{
-    // add mainwindow object to javascript engine, so when
-    // the scrollbar of the webview changes the method webViewScrolled() can be called
-    ui->webView->page()->mainFrame()->addToJavaScriptWindowObject("mainwin", this);
+    // save window size, position and state
+    QSettings settings;
+    settings.setValue("mainWindow/geometry", saveGeometry());
+    settings.setValue("mainWindow/windowState", saveState());
 }

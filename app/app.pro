@@ -36,7 +36,9 @@ SOURCES += \
     markdownmanipulator.cpp \
     exportpdfdialog.cpp \
     exporthtmldialog.cpp \
-    htmlhighlighter.cpp
+    htmlhighlighter.cpp \
+    optionsdialog.cpp \
+    options.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -55,13 +57,16 @@ HEADERS  += \
     markdownmanipulator.h \
     exportpdfdialog.h \
     exporthtmldialog.h \
-    htmlhighlighter.h
+    htmlhighlighter.h \
+    optionsdialog.h \
+    options.h
 
 FORMS    += \
     mainwindow.ui \
     controls/findreplacewidget.ui \
     exportpdfdialog.ui \
-    exporthtmldialog.ui
+    exporthtmldialog.ui \
+    optionsdialog.ui
 
 RESOURCES += \
     resources.qrc \

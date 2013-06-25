@@ -17,10 +17,11 @@
 #include "markdowneditor.h"
 
 #include <QApplication>
-#include <QDebug>
+#include <QMimeData>
 #include <QPainter>
 #include <QStyle>
 #include <QTextBlock>
+#include <QTextStream>
 
 #include <controls/linenumberarea.h>
 #include <peg-markdown-highlight/styleparser.h>
@@ -31,7 +32,8 @@
 MarkdownEditor::MarkdownEditor(QWidget *parent) :
     QPlainTextEdit(parent),
     lineNumberArea(new LineNumberArea(this)),
-    highlighter(new MarkdownHighlighter(this->document()))
+    highlighter(new MarkdownHighlighter(this->document())),
+    showHardLinebreaks(false)
 {
     QFont font("Monospace", 10);
     font.setStyleHint(QFont::TypeWriter);
@@ -139,13 +141,42 @@ void MarkdownEditor::keyPressEvent(QKeyEvent *e)
     QPlainTextEdit::keyPressEvent(e);
 }
 
+void MarkdownEditor::paintEvent(QPaintEvent *e)
+{
+    QPlainTextEdit::paintEvent(e);
+
+    // draw line end markers if enabled
+    if (showHardLinebreaks) {
+        drawLineEndMarker(e);
+    }
+}
+
 void MarkdownEditor::resizeEvent(QResizeEvent *event)
 {
     QPlainTextEdit::resizeEvent(event);
 
+    // update line number area
     QRect cr = contentsRect();
     lineNumberArea->setGeometry(QStyle::visualRect(layoutDirection(), cr,
                                 QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height())));
+}
+
+bool MarkdownEditor::canInsertFromMimeData(const QMimeData *source) const
+{
+    if (source->hasUrls() && (source->urls().count() == 1) && source->urls().first().isLocalFile()) {
+        return true;
+    }
+
+    return QPlainTextEdit::canInsertFromMimeData(source);
+}
+
+void MarkdownEditor::insertFromMimeData(const QMimeData *source)
+{
+    if (source->hasUrls()) {
+        emit loadDroppedFile(source->urls().first().toLocalFile());
+    } else {
+        QPlainTextEdit::insertFromMimeData(source);
+    }
 }
 
 void MarkdownEditor::updateLineNumberAreaWidth(int newBlockCount)
@@ -163,6 +194,12 @@ void MarkdownEditor::updateLineNumberArea(const QRect &rect, int dy)
 
     if (rect.contains(viewport()->rect()))
         updateLineNumberAreaWidth(0);
+}
+
+void MarkdownEditor::editorFontChanged(const QFont &font)
+{
+    lineNumberArea->setFont(font);
+    setFont(font);
 }
 
 void MarkdownEditor::loadStyleFromStylesheet(const QString &fileName)
@@ -214,4 +251,42 @@ int MarkdownEditor::countWords() const
     }
 
     return words;
+}
+
+void MarkdownEditor::setShowHardLinebreaks(bool enabled)
+{
+    showHardLinebreaks = enabled;
+
+    // repaint
+    viewport()->update();
+}
+
+void MarkdownEditor::drawLineEndMarker(QPaintEvent *e)
+{
+    QPainter painter(viewport());
+
+    int leftMargin = qRound(fontMetrics().width(" ") / 2.0);
+    int lineEndCharWidth = fontMetrics().width("\u00B6");
+    int fontHeight = fontMetrics().height();
+
+    QTextBlock block = firstVisibleBlock();
+    while (block.isValid()) {
+        QRectF blockGeometry = blockBoundingGeometry(block).translated(contentOffset());
+        if (blockGeometry.top() > e->rect().bottom())
+            break;
+
+        if (block.isVisible() && blockGeometry.toRect().intersects(e->rect())) {
+            QString text = block.text();
+            if (text.endsWith("  ")) {
+                painter.drawText(blockGeometry.left() + fontMetrics().width(text) + leftMargin,
+                                 blockGeometry.top(),
+                                 lineEndCharWidth,
+                                 fontHeight,
+                                 Qt::AlignLeft | Qt::AlignVCenter,
+                                 "\u00B6");
+            }
+        }
+
+        block = block.next();
+    }
 }
