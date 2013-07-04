@@ -427,7 +427,6 @@ void MainWindow::viewFullScreenMode()
     } else {
         showNormal();
     }
-
 }
 
 void MainWindow::extrasMathSupport(bool checked)
@@ -496,6 +495,7 @@ void MainWindow::plainTextChanged()
 {
     QString code = ui->plainTextEdit->toPlainText();
 
+    // update statistics
     if (wordCountLabel) {
         int words = ui->plainTextEdit->countWords();
         int lines = ui->plainTextEdit->document()->lineCount();
@@ -850,6 +850,7 @@ void MainWindow::loadCustomStyles()
     if (dataPath.exists()) {
         ui->menuStyles->addSeparator();
 
+        // iterate over all files in the styles subdirectory
         QDirIterator it(dataPath);
         while (it.hasNext()) {
             it.next();
@@ -873,12 +874,15 @@ void MainWindow::readSettings()
     restoreGeometry(settings.value("mainWindow/geometry").toByteArray());
     restoreState(settings.value("mainWindow/windowState").toByteArray());
 
+    // restore recent files menu
     recentFilesMenu->readState();
+
     options->readSettings();
 }
 
 void MainWindow::writeSettings()
 {
+    // save recent files menu
     recentFilesMenu->saveState();
 
     // save window size, position and state

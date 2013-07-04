@@ -56,6 +56,7 @@ void RecentFilesMenu::addFile(const QString &fileName)
     recentFiles.removeAll(fileName);
     recentFiles.prepend(fileName);
 
+    // remove last entry if list contains more than 10 entries
     if (recentFiles.size() > 10) {
         recentFiles.removeLast();
     }
