@@ -203,9 +203,19 @@ void MainWindow::fileExportToHtml()
     if (dialog.exec() == QDialog::Accepted) {
 
         if (dialog.includeCSS()) {
-            // read used css stylesheet from resources
+            // get url of current css stylesheet
             QUrl cssUrl = ui->webView->page()->settings()->userStyleSheetUrl();
-            QFile f(cssUrl.toString().remove(0, 3));
+
+            // get resource or file name from url
+            QString cssFileName;
+            if (cssUrl.scheme() == "qrc") {
+                cssFileName = cssUrl.toString().remove(0, 3);
+            } else {
+                cssFileName = cssUrl.toLocalFile();
+            }
+
+            // read currently used css stylesheet file
+            QFile f(cssFileName);
             if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
                 QString cssStyle = f.readAll();
 
