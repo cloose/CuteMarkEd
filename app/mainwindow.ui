@@ -10,9 +10,6 @@
     <height>534</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>CuteMarkEd</string>
-  </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
     <normaloff>:/icons/app-icon.ico</normaloff>:/icons/app-icon.ico</iconset>
@@ -123,7 +120,7 @@
      <x>0</x>
      <y>0</y>
      <width>850</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

@@ -25,6 +25,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     app.setOrganizationName("CuteMarkEd Project");
     app.setApplicationName("CuteMarkEd");
+    app.setApplicationDisplayName("CuteMarkEd");
     app.setApplicationVersion("0.6.0");
 
     // load translation for Qt

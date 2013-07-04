@@ -805,15 +805,13 @@ void MainWindow::setFileName(const QString &fileName)
     this->fileName = fileName;
     ui->plainTextEdit->document()->setModified(false);
 
-    QString shownName;
-    if (fileName.isEmpty()) {
+    QString shownName = fileName;
+    if (shownName.isEmpty()) {
         //: default file name for new markdown documents
         shownName = tr("untitled.md");
-    } else {
-        shownName = QFileInfo(fileName).fileName();
     }
 
-    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("CuteMarkEd"));
+    setWindowFilePath(shownName);
     setWindowModified(false);
 }
 
