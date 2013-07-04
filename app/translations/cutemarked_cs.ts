@@ -21,12 +21,12 @@
     <message>
         <location filename="../exporthtmldialog.ui" line="70"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;embed the current CSS style into the exported HTML&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vložit současný styl CSS do vyvedeného HTML&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../exporthtmldialog.ui" line="73"/>
         <source>Include CSS style</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahrnout styl CSS</translation>
     </message>
     <message>
         <location filename="../exporthtmldialog.cpp" line="69"/>
@@ -201,7 +201,7 @@
         <location filename="../mainwindow.ui" line="274"/>
         <location filename="../mainwindow.ui" line="535"/>
         <source>Markdown Syntax</source>
-        <translation type="unfinished"></translation>
+        <translation>Skladba Markdown</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="300"/>
@@ -351,37 +351,37 @@
     <message>
         <location filename="../mainwindow.ui" line="507"/>
         <source>Hard Linebreak</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvrdé zalomení řádku</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="512"/>
         <source>Find Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Najít další</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="517"/>
         <source>Find Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>Najít předchozí</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="525"/>
         <source>Full Screen Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Celoobrazovkový režim</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="530"/>
         <source>Blockquote</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokové uvozovky</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="548"/>
         <source>Show Hard Linebreaks</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázat tvrdá zalomení řádku</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="553"/>
         <source>Options...</source>
-        <translation type="unfinished"></translation>
+        <translation>Volby...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="163"/>
@@ -502,13 +502,13 @@
     <message>
         <location filename="../mainwindow.cpp" line="786"/>
         <source>The document has been modified.&lt;br&gt;Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokument byl změněn.&lt;br&gt;Chcete uložit změny?</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="806"/>
         <source>untitled.md</source>
         <extracomment>default file name for new markdown documents</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Bez názvu.md</translation>
     </message>
     <message>
         <source>The document has been modified.
@@ -526,27 +526,27 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../optionsdialog.ui" line="14"/>
         <source>Options...</source>
-        <translation type="unfinished"></translation>
+        <translation>Volby...</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="21"/>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="27"/>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Písmo</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="33"/>
         <source>Family:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodina písma:</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="43"/>
         <source>Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Velikost:</translation>
     </message>
 </context>
 <context>
@@ -554,12 +554,12 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../controls/recentfilesmenu.cpp" line="23"/>
         <source>Recent &amp;Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Naposledy otevřené &amp;soubory</translation>
     </message>
     <message>
         <location filename="../controls/recentfilesmenu.cpp" line="91"/>
         <source>Clear Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyprázdnit nabídku</translation>
     </message>
 </context>
 </TS>
