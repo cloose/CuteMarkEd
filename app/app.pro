@@ -116,7 +116,8 @@ OTHER_FILES += \
     template.html \
     cutemarked.desktop \
     syntax.html \
-    cutemarked.rc
+    cutemarked.rc \
+    syntax_de.html
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
 message("Using LIBS=$$LIBS")

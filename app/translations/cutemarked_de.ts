@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="de_DE">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.0">
 <context>
     <name>ExportHtmlDialog</name>
     <message>
@@ -16,7 +14,7 @@
     <message>
         <location filename="../exporthtmldialog.ui" line="51"/>
         <source>...</source>
-        <translation></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../exporthtmldialog.ui" line="70"/>
@@ -54,7 +52,7 @@
     <message>
         <location filename="../exportpdfdialog.ui" line="45"/>
         <source>...</source>
-        <translation></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.ui" line="54"/>
@@ -79,22 +77,22 @@
     <message>
         <location filename="../exportpdfdialog.cpp" line="41"/>
         <source>A4 (210 x 297 mm, 8.26 x 11.69 inches)</source>
-        <translation></translation>
+        <translation>A4 (210 x 297 mm, 8.26 x 11.69 inches)</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.cpp" line="42"/>
         <source>Letter (8.5 x 11 inches, 215.9 x 279.4 mm)</source>
-        <translation></translation>
+        <translation>Letter (8.5 x 11 inches, 215.9 x 279.4 mm)</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.cpp" line="43"/>
         <source>Legal (8.5 x 14 inches, 215.9 x 355.6 mm)</source>
-        <translation></translation>
+        <translation>Legal (8.5 x 14 inches, 215.9 x 355.6 mm)</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.cpp" line="44"/>
         <source>A5 (148 x 210 mm)</source>
-        <translation></translation>
+        <translation>A5 (148 x 210 mm)</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.cpp" line="89"/>
@@ -122,7 +120,7 @@
     <message>
         <location filename="../controls/findreplacewidget.ui" line="91"/>
         <source>...</source>
-        <translation></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../controls/findreplacewidget.ui" line="105"/>
@@ -145,13 +143,13 @@
     <message>
         <location filename="../mainwindow.ui" line="14"/>
         <source>CuteMarkEd</source>
-        <translation></translation>
+        <translation>CuteMarkEd</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="95"/>
         <location filename="../mainwindow.ui" line="261"/>
         <source>about:blank</source>
-        <translation></translation>
+        <translation>about:blank</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="131"/>
@@ -169,6 +167,17 @@
         <translation>Formatierung</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="163"/>
+        <location filename="../mainwindow.ui" line="497"/>
+        <source>Find/Replace</source>
+        <translation>Suchen/Ersetzen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="183"/>
+        <source>&amp;Help</source>
+        <translation>&amp;Hilfe</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="191"/>
         <source>&amp;View</source>
         <translation>&amp;Ansicht</translation>
@@ -184,15 +193,6 @@
         <translation>Stile</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="183"/>
-        <source>&amp;Help</source>
-        <translation>&amp;Hilfe</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">&amp;Ansicht</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="235"/>
         <source>Table of contents</source>
         <translation>Inhaltsverzeichnis</translation>
@@ -201,12 +201,12 @@
         <location filename="../mainwindow.ui" line="274"/>
         <location filename="../mainwindow.ui" line="535"/>
         <source>Markdown Syntax</source>
-        <translation></translation>
+        <translation>Markdown Syntax</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="300"/>
         <source>qrc:/syntax.html</source>
-        <translation></translation>
+        <translation>qrc:/syntax_de.html</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="310"/>
@@ -246,17 +246,37 @@
     <message>
         <location filename="../mainwindow.ui" line="351"/>
         <source>Default</source>
-        <translation></translation>
+        <translation>Default</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="359"/>
         <source>Github</source>
-        <translation></translation>
+        <translation>Github</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="367"/>
+        <source>Solarized Light</source>
+        <translation>Solarized Light</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="375"/>
+        <source>Solarized Dark</source>
+        <translation>Solarized Dark</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="380"/>
         <source>&amp;About CuteMarkEd...</source>
         <translation>Über &amp;CuteMarkEd...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="385"/>
+        <source>Export to HTML...</source>
+        <translation>Exportieren als HTML...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="390"/>
+        <source>Export to PDF...</source>
+        <translation>Exportieren als PDF...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="395"/>
@@ -341,12 +361,17 @@
     <message>
         <location filename="../mainwindow.ui" line="484"/>
         <source>Clearness</source>
-        <translation></translation>
+        <translation>Clearness</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="492"/>
         <source>Clearness Dark</source>
-        <translation></translation>
+        <translation>Clearness Dark</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="502"/>
+        <source>Center Paragraph</source>
+        <translation>Absatz zentrieren</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="507"/>
@@ -374,6 +399,14 @@
         <translation>Zitat</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="540"/>
+        <location filename="../mainwindow.cpp" line="490"/>
+        <location filename="../mainwindow.cpp" line="498"/>
+        <location filename="../mainwindow.cpp" line="499"/>
+        <source>HTML preview</source>
+        <translation>HTML Vorschau</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="548"/>
         <source>Show Hard Linebreaks</source>
         <translation>Harte Zeilenumbrüche anzeigen</translation>
@@ -384,141 +417,77 @@
         <translation>Einstellungen...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="163"/>
-        <location filename="../mainwindow.ui" line="497"/>
-        <source>Find/Replace</source>
-        <translation>Suchen/Ersetzen</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="502"/>
-        <source>Center Paragraph</source>
-        <translation>Absatz zentrieren</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="367"/>
-        <source>Solarized Light</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="375"/>
-        <source>Solarized Dark</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="385"/>
-        <source>Export to HTML...</source>
-        <translation>Exportieren als HTML...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="390"/>
-        <source>Export to PDF...</source>
-        <translation>Exportieren als PDF...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="708"/>
-        <source>Change Preview Style</source>
-        <translation>Ändere Vorschaustil</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.cpp" line="160"/>
         <source>Open File...</source>
         <translation>Datei öffnen...</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="161"/>
-        <location filename="../mainwindow.cpp" line="186"/>
+        <location filename="../mainwindow.cpp" line="191"/>
         <source>Markdown Files (*.markdown *.md);;All Files (*)</source>
         <translation>Markdown Dateien (*.markdown *.md);;Alle Dateien (*.*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="185"/>
+        <location filename="../mainwindow.cpp" line="190"/>
         <source>Save as...</source>
         <translation>Speichern unter...</translation>
     </message>
     <message>
-        <source>HTML Files (*.html *.htm);;All Files (*)</source>
-        <translation type="obsolete">HTML Dateien (*.html *.htm);;Alle Dateien (*.*)</translation>
-    </message>
-    <message>
-        <source>PDF Files (*.pdf);;All Files (*)</source>
-        <translation type="obsolete">PDF Dateien (*.pdf);;Alle Dateien (*.*)</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="241"/>
+        <location filename="../mainwindow.cpp" line="256"/>
         <source>Print Document</source>
         <translation>Dokument drucken</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="460"/>
+        <location filename="../mainwindow.cpp" line="475"/>
         <source>About CuteMarkEd</source>
         <translation>Über CuteMarkEd</translation>
     </message>
     <message>
-        <source>&lt;p&gt;&lt;b&gt;CuteMarkEd 0.3.0&lt;/b&gt;&lt;br&gt; Qt Markdown Editor&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;p&gt;&lt;b&gt;CuteMarkEd 0.3.0&lt;/b&gt;&lt;br&gt; Qt Markdown Editor&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;&lt;b&gt;CuteMarkEd 0.4.0&lt;/b&gt;&lt;br&gt;Qt-based, free and open source markdown editor with live HTML preview&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;p&gt;&lt;b&gt;CuteMarkEd 0.4.0&lt;/b&gt;&lt;br&gt;freier auf Qt basierender Markdown Editor mit live HTML Vorschau&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;&lt;b&gt;CuteMarkEd 0.4.1&lt;/b&gt;&lt;br&gt;Qt-based, free and open source markdown editor with live HTML preview&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;p&gt;&lt;b&gt;CuteMarkEd 0.4.1&lt;/b&gt;&lt;br&gt;freier auf Qt basierender Markdown Editor mit live HTML Vorschau&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="461"/>
+        <location filename="../mainwindow.cpp" line="476"/>
         <source>&lt;p&gt;&lt;b&gt;CuteMarkEd %1&lt;/b&gt;&lt;br&gt;Qt-based, free and open source markdown editor with live HTML preview&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</source>
         <translation>&lt;p&gt;&lt;b&gt;CuteMarkEd %1&lt;/b&gt;&lt;br&gt;freier auf Qt basierender Markdown Editor mit live HTML Vorschau&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="540"/>
-        <location filename="../mainwindow.cpp" line="475"/>
-        <location filename="../mainwindow.cpp" line="483"/>
-        <location filename="../mainwindow.cpp" line="484"/>
-        <source>HTML preview</source>
-        <translation>HTML Vorschau</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="478"/>
-        <location filename="../mainwindow.cpp" line="479"/>
+        <location filename="../mainwindow.cpp" line="493"/>
+        <location filename="../mainwindow.cpp" line="494"/>
         <source>HTML source</source>
         <translation>HTML Quelle</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="498"/>
+        <location filename="../mainwindow.cpp" line="513"/>
         <source>%1 words</source>
         <translation>%1 Wörter</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="499"/>
+        <location filename="../mainwindow.cpp" line="514"/>
         <source>Lines: %1  Words: %2  Characters: %3</source>
         <translation>Zeilen: %1  Wörter: %2  Zeichen: %3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="785"/>
+        <location filename="../mainwindow.cpp" line="723"/>
+        <source>Change Preview Style</source>
+        <translation>Ändere Vorschaustil</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="800"/>
         <source>Application</source>
         <translation>Anwendung</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="786"/>
+        <location filename="../mainwindow.cpp" line="801"/>
         <source>The document has been modified.&lt;br&gt;Do you want to save your changes?</source>
         <translation>Dieses Dokument wurde geändert.&lt;br&gt;Möchten Sie die Änderungen speichern?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="806"/>
+        <location filename="../mainwindow.cpp" line="821"/>
         <source>untitled.md</source>
         <extracomment>default file name for new markdown documents</extracomment>
-        <translation></translation>
+        <translation>untitled.md</translation>
     </message>
     <message>
-        <source>The document has been modified.
-Do you want to save your changes?</source>
-        <translation type="obsolete">Dieses Dokument wurde geändert.\nMöchten Sie die Änderungen speichern?</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="811"/>
+        <location filename="../mainwindow.cpp" line="826"/>
         <source>%1[*] - %2</source>
-        <translation></translation>
+        <translation>%1[*] - %2</translation>
     </message>
 </context>
 <context>
