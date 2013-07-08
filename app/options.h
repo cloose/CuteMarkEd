@@ -24,19 +24,42 @@ class Options : public QObject
 {
     Q_OBJECT
 public:
+    enum ProxyMode { NoProxy, SystemProxy, ManualProxy };
+
     explicit Options(QObject *parent = 0);
 
     QFont editorFont() const;
     void setEditorFont(const QFont &font);
+
+    ProxyMode proxyMode() const;
+    void setProxyMode(ProxyMode mode);
+
+    QString proxyHost() const;
+    void setProxyHost(const QString &host);
+
+    quint16 proxyPort() const;
+    void setProxyPort(quint16 port);
+
+    QString proxyUser() const;
+    void setProxyUser(const QString &user);
+
+    QString proxyPassword() const;
+    void setProxyPassword(const QString &password);
 
     void readSettings();
     void writeSettings();
 
 signals:
     void editorFontChanged(const QFont &font);
+    void proxyConfigurationChanged();
 
 private:
     QFont font;
+    ProxyMode m_proxyMode;
+    QString m_proxyHost;
+    quint16 m_proxyPort;
+    QString m_proxyUser;
+    QString m_proxyPassword;
 };
 
 #endif // OPTIONS_H

@@ -35,6 +35,13 @@ public:
 protected:
     void done(int result);
 
+private slots:
+    void manualProxyRadioButtonToggled(bool checked);
+
+private:
+    void readState();
+    void saveState();
+
 private:
     Ui::OptionsDialog *ui;
     Options *options;

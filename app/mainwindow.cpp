@@ -117,9 +117,6 @@ void MainWindow::initializeApp()
     // load remote javascript and use system proxy configuration
     QWebSettings::globalSettings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
 
-    // FIXME takes too long. provide proxy option per ui
-//    QNetworkProxyFactory::setUseSystemConfiguration(true);
-
     // setup disk cache for network access
     diskCache = new QNetworkDiskCache(this);
     QString cacheDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
@@ -614,6 +611,29 @@ bool MainWindow::load(const QString &fileName)
     return true;
 }
 
+void MainWindow::proxyConfigurationChanged()
+{
+    if (options->proxyMode() == Options::SystemProxy) {
+        QNetworkProxyFactory::setUseSystemConfiguration(true);
+    } else if (options->proxyMode() == Options::ManualProxy) {
+        QNetworkProxyFactory::setUseSystemConfiguration(false);
+
+        QNetworkProxy proxy;
+        proxy.setType(QNetworkProxy::HttpProxy);
+        proxy.setHostName(options->proxyHost());
+        proxy.setPort(options->proxyPort());
+        proxy.setUser(options->proxyUser());
+        proxy.setPassword(options->proxyPassword());
+        QNetworkProxy::setApplicationProxy(proxy);
+    } else {
+        QNetworkProxyFactory::setUseSystemConfiguration(false);
+
+        QNetworkProxy proxy;
+        proxy.setType(QNetworkProxy::NoProxy);
+        QNetworkProxy::setApplicationProxy(proxy);
+    }
+}
+
 void MainWindow::setupUi()
 {
     setupActions();
@@ -635,6 +655,9 @@ void MainWindow::setupUi()
 
     // show HTML preview on right panel
     toggleHtmlView();
+
+    connect(options, SIGNAL(proxyConfigurationChanged()),
+            this, SLOT(proxyConfigurationChanged()));
 
     readSettings();
 }

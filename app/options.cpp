@@ -33,20 +33,89 @@ void Options::setEditorFont(const QFont &font)
     emit editorFontChanged(font);
 }
 
+Options::ProxyMode Options::proxyMode() const
+{
+    return m_proxyMode;
+}
+
+void Options::setProxyMode(Options::ProxyMode mode)
+{
+    m_proxyMode = mode;
+    emit proxyConfigurationChanged();
+}
+
+QString Options::proxyHost() const
+{
+    return m_proxyHost;
+}
+
+void Options::setProxyHost(const QString &host)
+{
+    m_proxyHost = host;
+}
+
+quint16 Options::proxyPort() const
+{
+    return m_proxyPort;
+}
+
+void Options::setProxyPort(quint16 port)
+{
+    m_proxyPort = port;
+}
+
+QString Options::proxyUser() const
+{
+    return m_proxyUser;
+}
+
+void Options::setProxyUser(const QString &user)
+{
+    m_proxyUser = user;
+}
+
+QString Options::proxyPassword() const
+{
+    return m_proxyPassword;
+}
+
+void Options::setProxyPassword(const QString &password)
+{
+    m_proxyPassword = password;
+}
+
 void Options::readSettings()
 {
     QSettings settings;
+
+    // editor settings
     QString fontFamily = settings.value("editor/font/family", "Monospace").toString();
     int fontSize = settings.value("editor/font/size", 10).toInt();
 
     QFont f(fontFamily, fontSize);
     f.setStyleHint(QFont::TypeWriter);
     setEditorFont(f);
+
+    // proxy settings
+    setProxyMode((Options::ProxyMode)settings.value("internet/proxy/mode", 0).toInt());
+    m_proxyHost = settings.value("internet/proxy/host", "").toString();
+    m_proxyPort = settings.value("internet/proxy/port", 0).toInt();
+    m_proxyUser = settings.value("internet/proxy/user", "").toString();
+    m_proxyPassword = settings.value("internet/proxy/password", "").toString();
 }
 
 void Options::writeSettings()
 {
     QSettings settings;
+
+    // editor settings
     settings.setValue("editor/font/family", font.family());
     settings.setValue("editor/font/size", font.pointSize());
+
+    // proxy settings
+    settings.setValue("internet/proxy/mode", m_proxyMode);
+    settings.setValue("internet/proxy/host", m_proxyHost);
+    settings.setValue("internet/proxy/port", m_proxyPort);
+    settings.setValue("internet/proxy/user", m_proxyUser);
+    settings.setValue("internet/proxy/password", m_proxyPassword);
 }
