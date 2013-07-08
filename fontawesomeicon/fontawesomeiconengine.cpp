@@ -147,12 +147,15 @@ void FontAwesomeIconEngine::loadFont()
         namedCodepoints.insert("icon-warning-sign", QChar(0xf071));
         namedCodepoints.insert("icon-cogs", QChar(0xf085));
         namedCodepoints.insert("icon-external-link", QChar(0xf08e));
+        namedCodepoints.insert("icon-globe", QChar(0xf0ac));
         namedCodepoints.insert("icon-wrench", QChar(0xf0ad));
+        namedCodepoints.insert("icon-tasks", QChar(0xf0ae));
         namedCodepoints.insert("icon-filter", QChar(0xf0b0));
         namedCodepoints.insert("icon-briefcase", QChar(0xf0b1));
         namedCodepoints.insert("icon-fullscreen", QChar(0xf0b2));
         namedCodepoints.insert("icon-group", QChar(0xf0c0));
         namedCodepoints.insert("icon-link", QChar(0xf0c1));
+        namedCodepoints.insert("icon-cloud", QChar(0xf0c2));
         namedCodepoints.insert("icon-cut", QChar(0xf0c4));
         namedCodepoints.insert("icon-copy", QChar(0xf0c5));
         namedCodepoints.insert("icon-paper-clip", QChar(0xf0c6));
