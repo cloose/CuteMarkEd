@@ -97,10 +97,11 @@ void FontAwesomeIconEngine::loadFont()
         QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
         fontName = fontFamilies.at(0);
 
+        // 0xf000
         namedCodepoints.insert("icon-glass", QChar(0xf000));
         namedCodepoints.insert("icon-music", QChar(0xf001));
         namedCodepoints.insert("icon-search", QChar(0xf002));
-        namedCodepoints.insert("icon-envelope", QChar(0xf003));
+        namedCodepoints.insert("icon-envelope-alt", QChar(0xf003));
         namedCodepoints.insert("icon-heart", QChar(0xf004));
         namedCodepoints.insert("icon-star", QChar(0xf005));
         namedCodepoints.insert("icon-star-empty", QChar(0xf006));
@@ -112,19 +113,29 @@ void FontAwesomeIconEngine::loadFont()
         namedCodepoints.insert("icon-ok", QChar(0xf00c));
         namedCodepoints.insert("icon-remove", QChar(0xf00d));
         namedCodepoints.insert("icon-zoom-in", QChar(0xf00e));
+
+        // 0xf010
         namedCodepoints.insert("icon-zoom-out", QChar(0xf010));
         namedCodepoints.insert("icon-off", QChar(0xf011));
         namedCodepoints.insert("icon-signal", QChar(0xf012));
         namedCodepoints.insert("icon-cog", QChar(0xf013));
         namedCodepoints.insert("icon-trash", QChar(0xf014));
         namedCodepoints.insert("icon-home", QChar(0xf015));
-        namedCodepoints.insert("icon-file", QChar(0xf016));
+        namedCodepoints.insert("icon-file-alt", QChar(0xf016));
         namedCodepoints.insert("icon-time", QChar(0xf017));
+        namedCodepoints.insert("icon-road", QChar(0xf018));
+        namedCodepoints.insert("icon-download-alt", QChar(0xf019));
         namedCodepoints.insert("icon-download", QChar(0xf01a));
         namedCodepoints.insert("icon-upload", QChar(0xf01b));
+        namedCodepoints.insert("icon-inbox", QChar(0xf01c));
+        namedCodepoints.insert("icon-play-circle", QChar(0xf01d));
         namedCodepoints.insert("icon-repeat", QChar(0xf01e));
+
+        // 0xf020
         namedCodepoints.insert("icon-refresh", QChar(0xf021));
         namedCodepoints.insert("icon-print", QChar(0xf02f));
+
+        // 0xf030
         namedCodepoints.insert("icon-font", QChar(0xf031));
         namedCodepoints.insert("icon-bold", QChar(0xf032));
         namedCodepoints.insert("icon-italic", QChar(0xf033));
@@ -138,21 +149,41 @@ void FontAwesomeIconEngine::loadFont()
         namedCodepoints.insert("icon-indent-left", QChar(0xf03b));
         namedCodepoints.insert("icon-indent-right", QChar(0xf03c));
         namedCodepoints.insert("icon-picture", QChar(0xf03e));
+
+        // 0xf040
         namedCodepoints.insert("icon-pencil", QChar(0xf040));
+        namedCodepoints.insert("icon-edit", QChar(0xf044));
+        namedCodepoints.insert("icon-share", QChar(0xf045));
+        namedCodepoints.insert("icon-check", QChar(0xf046));
+        namedCodepoints.insert("icon-move", QChar(0xf047));
+
+        // 0xf050
         namedCodepoints.insert("icon-remove-sign", QChar(0xf057));
         namedCodepoints.insert("icon-ok-sign", QChar(0xf058));
         namedCodepoints.insert("icon-question-sign", QChar(0xf059));
         namedCodepoints.insert("icon-info-sign", QChar(0xf05a));
+
+        // 0xf060
         namedCodepoints.insert("icon-exclamation-sign", QChar(0xf06a));
+
+        // 0xf070
         namedCodepoints.insert("icon-warning-sign", QChar(0xf071));
+
+        // 0xf080
         namedCodepoints.insert("icon-cogs", QChar(0xf085));
         namedCodepoints.insert("icon-external-link", QChar(0xf08e));
+
+        // 0xf0a0
         namedCodepoints.insert("icon-globe", QChar(0xf0ac));
         namedCodepoints.insert("icon-wrench", QChar(0xf0ad));
         namedCodepoints.insert("icon-tasks", QChar(0xf0ae));
+
+        // 0xf0b0
         namedCodepoints.insert("icon-filter", QChar(0xf0b0));
         namedCodepoints.insert("icon-briefcase", QChar(0xf0b1));
         namedCodepoints.insert("icon-fullscreen", QChar(0xf0b2));
+
+        // 0xf0c0
         namedCodepoints.insert("icon-group", QChar(0xf0c0));
         namedCodepoints.insert("icon-link", QChar(0xf0c1));
         namedCodepoints.insert("icon-cloud", QChar(0xf0c2));
@@ -167,11 +198,25 @@ void FontAwesomeIconEngine::loadFont()
         namedCodepoints.insert("icon-strikethrough", QChar(0xf0cc));
         namedCodepoints.insert("icon-underline", QChar(0xf0cd));
         namedCodepoints.insert("icon-table", QChar(0xf0ce));
+
+        // 0xf0e0
+        namedCodepoints.insert("icon-envelope", QChar(0xf0e0));
         namedCodepoints.insert("icon-undo", QChar(0xf0e2));
+        namedCodepoints.insert("icon-sitemap", QChar(0xf0e8));
         namedCodepoints.insert("icon-paste", QChar(0xf0ea));
+
+        // 0xf0f0
         namedCodepoints.insert("icon-file-text-alt", QChar(0xf0f6));
+
+        // 0xf100
         namedCodepoints.insert("icon-quote-left", QChar(0xf10d));
         namedCodepoints.insert("icon-quote-right", QChar(0xf10e));
+
+        // 0xf110
+        namedCodepoints.insert("icon-keyboard", QChar(0xf11c));
+
+        // 0xf120
+        namedCodepoints.insert("icon-terminal", QChar(0xf120));
         namedCodepoints.insert("icon-code", QChar(0xf121));
         namedCodepoints.insert("icon-unlink", QChar(0xf127));
         namedCodepoints.insert("icon-question", QChar(0xf128));
@@ -179,8 +224,17 @@ void FontAwesomeIconEngine::loadFont()
         namedCodepoints.insert("icon-exclamation", QChar(0xf12a));
         namedCodepoints.insert("icon-superscript", QChar(0xf12b));
         namedCodepoints.insert("icon-subscript", QChar(0xf12c));
+        namedCodepoints.insert("icon-eraser", QChar(0xf12d));
+
+        // 0xf130
         namedCodepoints.insert("icon-anchor", QChar(0xf13d));
+
+        // 0xf140
         namedCodepoints.insert("icon-level-up", QChar(0xf148));
         namedCodepoints.insert("icon-level-down", QChar(0xf149));
+
+        // 0xf150
+        namedCodepoints.insert("icon-file", QChar(0xf15b));
+        namedCodepoints.insert("icon-file-text", QChar(0xf15c));
     }
 }
