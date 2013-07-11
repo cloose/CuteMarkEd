@@ -39,8 +39,8 @@
 #include "controls/activelabel.h"
 #include "controls/findreplacewidget.h"
 #include "controls/recentfilesmenu.h"
-#include "htmlpreviewgenerator.h"
 #include "htmlhighlighter.h"
+#include "mainwindowpresenter.h"
 #include "markdownmanipulator.h"
 #include "exporthtmldialog.h"
 #include "exportpdfdialog.h"
@@ -50,30 +50,101 @@
 MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
+    presenter(new MainWindowPresenter(this, this)),
     options(new Options(this)),
     styleLabel(0),
     wordCountLabel(0),
     viewLabel(0),
-    generator(new HtmlPreviewGenerator(this)),
     splitFactor(0.5),
     scrollBarPos(0)
 {
     ui->setupUi(this);
     setupUi();
 
-    setFileName(fileName);
+    presenter->setFileName(fileName);
 
     QTimer::singleShot(0, this, SLOT(initializeApp()));
 }
 
 MainWindow::~MainWindow()
 {
-    // stop background HTML preview generator
-    generator->enqueue(QString());
-    generator->wait();
-    delete generator;
-
     delete ui;
+}
+
+QString MainWindow::markdownText() const
+{
+    return ui->plainTextEdit->toPlainText();
+}
+
+void MainWindow::setMarkdownText(const QString &text)
+{
+    ui->plainTextEdit->resetHighlighting();
+    ui->plainTextEdit->setPlainText(text);
+}
+
+void MainWindow::setMarkdownTextModified(bool modified)
+{
+    ui->plainTextEdit->document()->setModified(modified);
+    setWindowModified(modified);
+}
+
+QTextDocument *MainWindow::markdownDocument() const
+{
+    return ui->plainTextEdit->document();
+}
+
+void MainWindow::setHtml(const QString &html)
+{
+    ui->webView->page()->networkAccessManager()->setCache(diskCache);
+
+    // remember scrollbar position
+    scrollBarPos = ui->plainTextEdit->verticalScrollBar()->value();
+
+    QUrl baseUrl = presenter->previewBaseUrl();
+    ui->webView->setHtml(html, baseUrl);
+
+    ui->htmlSourceTextEdit->setPlainText(html);
+}
+
+void MainWindow::setTableOfContents(const QString &toc)
+{
+    ui->tocWebView->setHtml(toc);
+}
+
+void MainWindow::updateWindowTitle(const QString &fileName)
+{
+    // set to unmodified
+    setMarkdownTextModified(false);
+
+    // update window title
+    QString shownName = fileName;
+    if (shownName.isEmpty()) {
+        //: default file name for new markdown documents
+        shownName = tr("untitled.md");
+    }
+    setWindowFilePath(shownName);
+}
+
+bool MainWindow::maybeSave()
+{
+    if (!ui->plainTextEdit->document()->isModified())
+        return true;
+
+    if (presenter->fileName().startsWith(QLatin1String(":/")))
+        return true;
+
+    QMessageBox::StandardButton ret;
+    ret = QMessageBox::warning(this, tr("Application"),
+                               tr("The document has been modified.<br>"
+                                  "Do you want to save your changes?"),
+                               QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+
+    if (ret == QMessageBox::Save)
+        return fileSave();
+    else if (ret == QMessageBox::Cancel)
+        return false;
+
+    return true;
 }
 
 void MainWindow::webViewScrolled()
@@ -104,6 +175,12 @@ void MainWindow::resizeEvent(QResizeEvent *e)
 
 void MainWindow::initializeApp()
 {
+    connect(ui->plainTextEdit, SIGNAL(textChanged()),
+            presenter, SLOT(markdownTextChanged()));
+
+    presenter->onViewReady();
+    presenter->setMarkdownManipulator(new MarkdownManipulator(ui->plainTextEdit));
+
     // inform us when a link in the table of contents or preview view is clicked
     ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
@@ -129,15 +206,8 @@ void MainWindow::initializeApp()
     loadCustomStyles();
 
     // load file passed to application on start
-    if (!fileName.isEmpty()) {
-        load(fileName);
-    }
-}
-
-void MainWindow::openRecentFile(const QString &fileName)
-{
-    if (maybeSave()) {
-        load(fileName);
+    if (!presenter->fileName().isEmpty()) {
+        presenter->loadFile(presenter->fileName());
     }
 }
 
@@ -150,7 +220,7 @@ void MainWindow::fileNew()
         ui->plainTextEdit->resetHighlighting();
         ui->webView->setHtml(QString());
         ui->htmlSourceTextEdit->clear();
-        setFileName(QString());
+        presenter->setFileName(QString());
     }
 }
 
@@ -160,29 +230,18 @@ void MainWindow::fileOpen()
         QString name = QFileDialog::getOpenFileName(this, tr("Open File..."),
                                                     QString(), tr("Markdown Files (*.markdown *.md);;All Files (*)"));
         if (!name.isEmpty()) {
-            load(name);
+            presenter->loadFile(name);
         }
     }
 }
 
 bool MainWindow::fileSave()
 {
-    if (fileName.isEmpty()) {
+    if (presenter->fileName().isEmpty()) {
         return fileSaveAs();
     }
 
-    QTextDocumentWriter writer(fileName, "plaintext");
-    bool success = writer.write(ui->plainTextEdit->document());
-    if (success) {
-        // set status to unmodified
-        ui->plainTextEdit->document()->setModified(false);
-        setWindowModified(false);
-
-        // add to recent file list
-        recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
-    }
-
-    return success;
+    return presenter->saveFile(presenter->fileName());
 }
 
 bool MainWindow::fileSaveAs()
@@ -193,13 +252,13 @@ bool MainWindow::fileSaveAs()
         return false;
     }
 
-    setFileName(name);
+    presenter->setFileName(name);
     return fileSave();
 }
 
 void MainWindow::fileExportToHtml()
 {
-    ExportHtmlDialog dialog(fileName);
+    ExportHtmlDialog dialog(presenter->fileName());
     if (dialog.exec() == QDialog::Accepted) {
 
         if (dialog.includeCSS()) {
@@ -243,7 +302,7 @@ void MainWindow::fileExportToHtml()
 
 void MainWindow::fileExportToPdf()
 {
-    ExportPdfDialog dialog(fileName);
+    ExportPdfDialog dialog(presenter->fileName());
     if (dialog.exec() == QDialog::Accepted) {
         ui->webView->print(dialog.printer());
     }
@@ -293,44 +352,37 @@ void MainWindow::editFindReplace()
 
 void MainWindow::editStrong()
 {
-    MarkdownManipulator manipulator(ui->plainTextEdit);
-    manipulator.wrapSelectedText("**");
+    presenter->editStrong();
 }
 
 void MainWindow::editEmphasize()
 {
-    MarkdownManipulator manipulator(ui->plainTextEdit);
-    manipulator.wrapSelectedText("*");
+    presenter->editEmphasize();
 }
 
 void MainWindow::editStrikethrough()
 {
-    MarkdownManipulator manipulator(ui->plainTextEdit);
-    manipulator.wrapSelectedText("~~");
+    presenter->editStrikethrough();
 }
 
 void MainWindow::editInlineCode()
 {
-    MarkdownManipulator manipulator(ui->plainTextEdit);
-    manipulator.wrapSelectedText("`");
+    presenter->editInlineCode();
 }
 
 void MainWindow::editCenterParagraph()
 {
-    MarkdownManipulator manipulator(ui->plainTextEdit);
-    manipulator.wrapCurrentParagraph("->", "<-");
+    presenter->editCenterParagraph();
 }
 
 void MainWindow::editHardLinebreak()
 {
-    MarkdownManipulator manipulator(ui->plainTextEdit);
-    manipulator.appendToLine("  \n");
+    presenter->editHardLinebreak();
 }
 
 void MainWindow::editBlockquote()
 {
-    MarkdownManipulator manipulator(ui->plainTextEdit);
-    manipulator.prependToLine('>');
+    presenter->editBlockquote();
 }
 
 void MainWindow::viewChangeSplit()
@@ -356,8 +408,7 @@ void MainWindow::styleDefault()
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/markdown.css"));
 
-    generator->setCodeHighlightingStyle("default");
-    plainTextChanged();
+    presenter->setCodeHighlightingStyle("default");
 
     styleLabel->setText(ui->actionDefault->text());
 }
@@ -367,8 +418,7 @@ void MainWindow::styleGithub()
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/github.css"));
 
-    generator->setCodeHighlightingStyle("github");
-    plainTextChanged();
+    presenter->setCodeHighlightingStyle("github");
 
     styleLabel->setText(ui->actionGithub->text());
 }
@@ -378,8 +428,7 @@ void MainWindow::styleSolarizedLight()
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-light+.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-light.css"));
 
-    generator->setCodeHighlightingStyle("solarized_light");
-    plainTextChanged();
+    presenter->setCodeHighlightingStyle("solarized_light");
 
     styleLabel->setText(ui->actionSolarizedLight->text());
 }
@@ -389,8 +438,7 @@ void MainWindow::styleSolarizedDark()
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-dark+.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-dark.css"));
 
-    generator->setCodeHighlightingStyle("solarized_dark");
-    plainTextChanged();
+    presenter->setCodeHighlightingStyle("solarized_dark");
 
     styleLabel->setText(ui->actionSolarizedDark->text());
 }
@@ -400,8 +448,7 @@ void MainWindow::styleClearness()
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness.css"));
 
-    generator->setCodeHighlightingStyle("default");
-    plainTextChanged();
+    presenter->setCodeHighlightingStyle("default");
 
     styleLabel->setText(ui->actionClearness->text());
 }
@@ -411,8 +458,7 @@ void MainWindow::styleClearnessDark()
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/clearness-dark+.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness-dark.css"));
 
-    generator->setCodeHighlightingStyle("default");
-    plainTextChanged();
+    presenter->setCodeHighlightingStyle("default");
 
     styleLabel->setText(ui->actionClearnessDark->text());
 }
@@ -424,8 +470,7 @@ void MainWindow::styleCustomStyle()
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl::fromLocalFile(action->data().toString()));
 
-    generator->setCodeHighlightingStyle("default");
-    plainTextChanged();
+    presenter->setCodeHighlightingStyle("default");
 
     styleLabel->setText(action->text());
 }
@@ -441,14 +486,12 @@ void MainWindow::viewFullScreenMode()
 
 void MainWindow::extrasMathSupport(bool checked)
 {
-    generator->setMathSupportEnabled(checked);
-    plainTextChanged();
+    presenter->setMathSupportEnabled(checked);
 }
 
 void MainWindow::extrasCodeHighlighting(bool checked)
 {
-    generator->setCodeHighlightingEnabled(checked);
-    plainTextChanged();
+    presenter->setCodeHighlightingEnabled(checked);
 }
 
 void MainWindow::extrasShowHardLinebreaks(bool checked)
@@ -503,8 +546,6 @@ void MainWindow::toggleHtmlView()
 
 void MainWindow::plainTextChanged()
 {
-    QString code = ui->plainTextEdit->toPlainText();
-
     // update statistics
     if (wordCountLabel) {
         int words = ui->plainTextEdit->countWords();
@@ -514,35 +555,8 @@ void MainWindow::plainTextChanged()
         wordCountLabel->setToolTip(tr("Lines: %1  Words: %2  Characters: %3").arg(lines).arg(words).arg(chars));
     }
 
-    // generate HTML from markdown
-    generator->enqueue(code);
-
     // show modification indicator in window title
     setWindowModified(ui->plainTextEdit->document()->isModified());
-}
-
-void MainWindow::htmlResultReady(const QString &html)
-{
-    ui->webView->page()->networkAccessManager()->setCache(diskCache);
-
-    // remember scrollbar position
-    scrollBarPos = ui->plainTextEdit->verticalScrollBar()->value();
-
-    QUrl baseUrl;
-    if (fileName.isEmpty()) {
-        baseUrl = QUrl::fromLocalFile(qApp->applicationDirPath());
-    } else {
-        baseUrl = QUrl::fromLocalFile(QFileInfo(fileName).absolutePath() + "/");
-    }
-    ui->webView->setHtml(html, baseUrl);
-
-    ui->htmlSourceTextEdit->setPlainText(html);
-}
-
-void MainWindow::tocResultReady(const QString &toc)
-{
-    QString styledToc = QString("<html><head>\n<style type=\"text/css\">ul { list-style-type: none; padding: 0; margin-left: 1em; } a { text-decoration: none; }</style>\n</head><body>%1</body></html>").arg(toc);
-    ui->tocWebView->setHtml(styledToc);
 }
 
 void MainWindow::htmlContentSizeChanged()
@@ -587,28 +601,6 @@ void MainWindow::addJavaScriptObject()
     // add mainwindow object to javascript engine, so when
     // the scrollbar of the webview changes the method webViewScrolled() can be called
     ui->webView->page()->mainFrame()->addToJavaScriptWindowObject("mainwin", this);
-}
-
-bool MainWindow::load(const QString &fileName)
-{
-    if (!QFile::exists(fileName)) {
-        return false;
-    }
-
-    QFile file(fileName);
-    if (!file.open(QFile::ReadOnly)) {
-        return false;
-    }
-
-    QByteArray content = file.readAll();
-    QString text = QString::fromUtf8(content);
-
-    ui->plainTextEdit->resetHighlighting();
-    ui->plainTextEdit->setPlainText(text);
-
-    setFileName(fileName);
-    recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
-    return true;
 }
 
 void MainWindow::proxyConfigurationChanged()
@@ -674,11 +666,9 @@ void MainWindow::setupActions()
     ui->action_Print->setIcon(QIcon("icon-print.fontawesome"));
     ui->actionExit->setShortcut(QKeySequence::Quit);
 
-    recentFilesMenu = new RecentFilesMenu(ui->menuFile);
+    RecentFilesMenu *recentFilesMenu = new RecentFilesMenu(ui->menuFile);
     ui->menuFile->insertMenu(ui->actionSave, recentFilesMenu);
-
-    connect(recentFilesMenu, SIGNAL(recentFileTriggered(QString)),
-            this, SLOT(openRecentFile(QString)));
+    presenter->setRecentFilesMenu(recentFilesMenu);
 
     // edit menu
     ui->actionUndo->setShortcut(QKeySequence::Undo);
@@ -771,7 +761,7 @@ void MainWindow::setupMarkdownEditor()
 {
     // load file that are dropped on the editor
     connect(ui->plainTextEdit, SIGNAL(loadDroppedFile(QString)),
-            this, SLOT(load(QString)));
+            presenter, SLOT(loadFile(QString)));
 
     // synchronize scrollbars
     connect(ui->plainTextEdit->verticalScrollBar(), SIGNAL(valueChanged(int)),
@@ -790,20 +780,6 @@ void MainWindow::setupHtmlPreview()
     // restore scrollbar position after content size changed
     connect(ui->webView->page()->mainFrame(), SIGNAL(contentsSizeChanged(QSize)),
             this, SLOT(htmlContentSizeChanged()));
-
-    // load HTML template for live preview from resources
-    QFile f(":/template.html");
-    if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QString htmlTemplate = f.readAll();
-        generator->setHtmlTemplate(htmlTemplate);
-    }
-
-    // start background HTML preview generator
-    connect(generator, SIGNAL(htmlResultReady(QString)),
-            this, SLOT(htmlResultReady(QString)));
-    connect(generator, SIGNAL(tocResultReady(QString)),
-            this, SLOT(tocResultReady(QString)));
-    generator->start();
 }
 
 void MainWindow::setupHtmlSourceView()
@@ -812,43 +788,6 @@ void MainWindow::setupHtmlSourceView()
     font.setStyleHint(QFont::TypeWriter);
     ui->htmlSourceTextEdit->setFont(font);
     htmlHighlighter = new HtmlHighlighter(ui->htmlSourceTextEdit->document());
-}
-
-bool MainWindow::maybeSave()
-{
-    if (!ui->plainTextEdit->document()->isModified())
-        return true;
-
-    if (fileName.startsWith(QLatin1String(":/")))
-        return true;
-
-    QMessageBox::StandardButton ret;
-    ret = QMessageBox::warning(this, tr("Application"),
-                               tr("The document has been modified.<br>"
-                                  "Do you want to save your changes?"),
-                               QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
-
-    if (ret == QMessageBox::Save)
-        return fileSave();
-    else if (ret == QMessageBox::Cancel)
-        return false;
-
-    return true;
-}
-
-void MainWindow::setFileName(const QString &fileName)
-{
-    this->fileName = fileName;
-    ui->plainTextEdit->document()->setModified(false);
-
-    QString shownName = fileName;
-    if (shownName.isEmpty()) {
-        //: default file name for new markdown documents
-        shownName = tr("untitled.md");
-    }
-
-    setWindowFilePath(shownName);
-    setWindowModified(false);
 }
 
 void MainWindow::updateSplitter(bool htmlViewToggled)
@@ -910,16 +849,14 @@ void MainWindow::readSettings()
     restoreGeometry(settings.value("mainWindow/geometry").toByteArray());
     restoreState(settings.value("mainWindow/windowState").toByteArray());
 
-    // restore recent files menu
-    recentFilesMenu->readState();
+    presenter->readSettings();
 
     options->readSettings();
 }
 
 void MainWindow::writeSettings()
 {
-    // save recent files menu
-    recentFilesMenu->saveState();
+    presenter->writeSettings();
 
     // save window size, position and state
     QSettings settings;

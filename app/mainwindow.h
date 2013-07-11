@@ -18,6 +18,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "imainwindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -27,19 +28,28 @@ class QActionGroup;
 class QLabel;
 class QNetworkDiskCache;
 class ActiveLabel;
-class HtmlPreviewGenerator;
 class HtmlHighlighter;
-class RecentFilesMenu;
+class MainWindowPresenter;
 class Options;
 
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, IMainWindow
 {
     Q_OBJECT
     
 public:
     explicit MainWindow(const QString &fileName = QString(), QWidget *parent = 0);
     ~MainWindow();
+
+    // IMainWindow interface
+    QString markdownText() const Q_DECL_OVERRIDE;
+    void setMarkdownText(const QString &text) Q_DECL_OVERRIDE;
+    void setMarkdownTextModified(bool modified) Q_DECL_OVERRIDE;
+    QTextDocument *markdownDocument() const Q_DECL_OVERRIDE;
+    void setHtml(const QString &html) Q_DECL_OVERRIDE;
+    void setTableOfContents(const QString &toc) Q_DECL_OVERRIDE;
+    void updateWindowTitle(const QString &fileName) Q_DECL_OVERRIDE;
+    bool maybeSave() Q_DECL_OVERRIDE;
 
 public slots:
     void webViewScrolled();
@@ -50,7 +60,6 @@ protected:
 
 private slots:
     void initializeApp();
-    void openRecentFile(const QString &fileName);
 
     void fileNew();
     void fileOpen();
@@ -94,8 +103,6 @@ private slots:
     void toggleHtmlView();
 
     void plainTextChanged();
-    void htmlResultReady(const QString &html);
-    void tocResultReady(const QString &toc);
     void htmlContentSizeChanged();
 
     void previewLinkClicked(const QUrl &url);
@@ -105,7 +112,6 @@ private slots:
     void scrollValueChanged(int value);
 
     void addJavaScriptObject();
-    bool load(const QString &fileName);
     void proxyConfigurationChanged();
 
 private:
@@ -115,8 +121,6 @@ private:
     void setupMarkdownEditor();
     void setupHtmlPreview();
     void setupHtmlSourceView();
-    bool maybeSave();
-    void setFileName(const QString &fileName);
     void updateSplitter(bool htmlViewToggled);
     void loadCustomStyles();
     void readSettings();
@@ -124,16 +128,14 @@ private:
 
 private:
     Ui::MainWindow *ui;
-    RecentFilesMenu *recentFilesMenu;
+    MainWindowPresenter *presenter;
     Options *options;
     QNetworkDiskCache *diskCache;
     QActionGroup *stylesGroup;
     QLabel *styleLabel;
     QLabel *wordCountLabel;
     ActiveLabel *viewLabel;
-    HtmlPreviewGenerator* generator;
     HtmlHighlighter *htmlHighlighter;
-    QString fileName;
     float splitFactor;
     int scrollBarPos;
 };

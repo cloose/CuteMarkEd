@@ -38,7 +38,8 @@ SOURCES += \
     exporthtmldialog.cpp \
     htmlhighlighter.cpp \
     optionsdialog.cpp \
-    options.cpp
+    options.cpp \
+    mainwindowpresenter.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -59,7 +60,9 @@ HEADERS  += \
     exporthtmldialog.h \
     htmlhighlighter.h \
     optionsdialog.h \
-    options.h
+    options.h \
+    mainwindowpresenter.h \
+    imainwindow.h
 
 FORMS    += \
     mainwindow.ui \
