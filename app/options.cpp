@@ -94,6 +94,16 @@ void Options::setAutolinkEnabled(bool enabled)
     m_autolinkEnabled = enabled;
 }
 
+bool Options::isStrikethroughEnabled() const
+{
+    return m_strikethroughEnabled;
+}
+
+void Options::setStrikethroughEnabled(bool enabled)
+{
+    m_strikethroughEnabled = enabled;
+}
+
 void Options::readSettings()
 {
     QSettings settings;
@@ -115,6 +125,7 @@ void Options::readSettings()
 
     // extension settings
     m_autolinkEnabled = settings.value("extensions/autolink", true).toBool();
+    m_strikethroughEnabled = settings.value("extensions/strikethrough", true).toBool();
 }
 
 void Options::writeSettings()
@@ -134,4 +145,5 @@ void Options::writeSettings()
 
     // extensions settings
     settings.setValue("extensions/autolink", m_autolinkEnabled);
+    settings.setValue("extensions/strikethrough", m_strikethroughEnabled);
 }

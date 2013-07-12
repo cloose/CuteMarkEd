@@ -82,6 +82,9 @@ void HtmlPreviewGenerator::run()
         if (options->isAutolinkEnabled()) {
             parserOptions |= Discount::Parser::AutolinkOption;
         }
+        if (!options->isStrikethroughEnabled()) {
+            parserOptions |= Discount::Parser::NoStrikethroughOption;
+        }
 
         // generate HTML from markdown
         Discount::Document document(text, parserOptions);

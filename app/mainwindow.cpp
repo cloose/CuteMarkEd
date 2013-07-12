@@ -113,6 +113,7 @@ void MainWindow::initializeApp()
 
     // init extension flags
     ui->actionAutolink->setChecked(options->isAutolinkEnabled());
+    ui->actionStrikethroughOption->setChecked(options->isStrikethroughEnabled());
 
     // set url to markdown syntax help
     ui->webView_2->setUrl(tr("qrc:/syntax.html"));
@@ -462,6 +463,12 @@ void MainWindow::extrasShowHardLinebreaks(bool checked)
 void MainWindow::extensionsAutolink(bool checked)
 {
     options->setAutolinkEnabled(checked);
+    plainTextChanged();
+}
+
+void MainWindow::extensionsStrikethrough(bool checked)
+{
+    options->setStrikethroughEnabled(checked);
     plainTextChanged();
 }
 

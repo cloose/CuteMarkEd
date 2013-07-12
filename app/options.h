@@ -49,6 +49,9 @@ public:
     bool isAutolinkEnabled() const;
     void setAutolinkEnabled(bool enabled);
 
+    bool isStrikethroughEnabled() const;
+    void setStrikethroughEnabled(bool enabled);
+
     void readSettings();
     void writeSettings();
 
@@ -64,6 +67,7 @@ private:
     QString m_proxyUser;
     QString m_proxyPassword;
     bool m_autolinkEnabled;
+    bool m_strikethroughEnabled;
 };
 
 #endif // OPTIONS_H
