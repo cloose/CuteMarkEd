@@ -88,6 +88,7 @@ private slots:
     void extensionsAutolink(bool checked);
     void extensionsStrikethrough(bool checked);
     void extensionsAlphabeticLists(bool checked);
+    void extensionsDefinitionLists(bool checked);
     void extrasOptions();
 
     void helpMarkdownSyntax();

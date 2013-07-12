@@ -55,6 +55,9 @@ public:
     bool isAlphabeticListsEnabled() const;
     void setAlphabeticListsEnabled(bool enabled);
 
+    bool isDefinitionListsEnabled() const;
+    void setDefinitionListsEnabled(bool enabled);
+
     void readSettings();
     void writeSettings();
 
@@ -72,6 +75,7 @@ private:
     bool m_autolinkEnabled;
     bool m_strikethroughEnabled;
     bool m_alphabeticListsEnabled;
+    bool m_definitionListsEnabled;
 };
 
 #endif // OPTIONS_H

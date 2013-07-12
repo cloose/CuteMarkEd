@@ -114,6 +114,16 @@ void Options::setAlphabeticListsEnabled(bool enabled)
     m_alphabeticListsEnabled = enabled;
 }
 
+bool Options::isDefinitionListsEnabled() const
+{
+    return m_definitionListsEnabled;
+}
+
+void Options::setDefinitionListsEnabled(bool enabled)
+{
+    m_definitionListsEnabled = enabled;
+}
+
 void Options::readSettings()
 {
     QSettings settings;
@@ -137,6 +147,7 @@ void Options::readSettings()
     m_autolinkEnabled = settings.value("extensions/autolink", true).toBool();
     m_strikethroughEnabled = settings.value("extensions/strikethrough", true).toBool();
     m_alphabeticListsEnabled = settings.value("extensions/alphabeticLists", true).toBool();
+    m_definitionListsEnabled = settings.value("extensions/definitionLists", true).toBool();
 }
 
 void Options::writeSettings()
@@ -158,4 +169,5 @@ void Options::writeSettings()
     settings.setValue("extensions/autolink", m_autolinkEnabled);
     settings.setValue("extensions/strikethrough", m_strikethroughEnabled);
     settings.setValue("extensions/alphabeticLists", m_alphabeticListsEnabled);
+    settings.setValue("extensions/definitionLists", m_definitionListsEnabled);
 }

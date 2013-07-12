@@ -124,16 +124,24 @@ Discount::Parser::ParserOptions HtmlPreviewGenerator::parserOptions() const
 {
     Discount::Parser::ParserOptions parserOptionFlags(Discount::Parser::TableOfContentsOption | Discount::Parser::NoStyleOption);
 
+    // autolink
     if (options->isAutolinkEnabled()) {
         parserOptionFlags |= Discount::Parser::AutolinkOption;
     }
 
+    // strikethrough
     if (!options->isStrikethroughEnabled()) {
         parserOptionFlags |= Discount::Parser::NoStrikethroughOption;
     }
 
+    // alphabetic lists
     if (!options->isAlphabeticListsEnabled()) {
         parserOptionFlags |= Discount::Parser::NoAlphaListOption;
+    }
+
+    // definition lists
+    if (!options->isDefinitionListsEnabled()) {
+        parserOptionFlags |= Discount::Parser::NoDefinitionListOption;
     }
 
     return parserOptionFlags;
