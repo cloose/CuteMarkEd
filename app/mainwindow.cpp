@@ -114,6 +114,7 @@ void MainWindow::initializeApp()
     // init extension flags
     ui->actionAutolink->setChecked(options->isAutolinkEnabled());
     ui->actionStrikethroughOption->setChecked(options->isStrikethroughEnabled());
+    ui->actionAlphabeticLists->setChecked(options->isAlphabeticListsEnabled());
 
     // set url to markdown syntax help
     ui->webView_2->setUrl(tr("qrc:/syntax.html"));
@@ -469,6 +470,12 @@ void MainWindow::extensionsAutolink(bool checked)
 void MainWindow::extensionsStrikethrough(bool checked)
 {
     options->setStrikethroughEnabled(checked);
+    plainTextChanged();
+}
+
+void MainWindow::extensionsAlphabeticLists(bool checked)
+{
+    options->setAlphabeticListsEnabled(checked);
     plainTextChanged();
 }
 

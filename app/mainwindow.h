@@ -87,6 +87,7 @@ private slots:
     void extrasShowHardLinebreaks(bool checked);
     void extensionsAutolink(bool checked);
     void extensionsStrikethrough(bool checked);
+    void extensionsAlphabeticLists(bool checked);
     void extrasOptions();
 
     void helpMarkdownSyntax();

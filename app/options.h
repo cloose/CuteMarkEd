@@ -52,6 +52,9 @@ public:
     bool isStrikethroughEnabled() const;
     void setStrikethroughEnabled(bool enabled);
 
+    bool isAlphabeticListsEnabled() const;
+    void setAlphabeticListsEnabled(bool enabled);
+
     void readSettings();
     void writeSettings();
 
@@ -68,6 +71,7 @@ private:
     QString m_proxyPassword;
     bool m_autolinkEnabled;
     bool m_strikethroughEnabled;
+    bool m_alphabeticListsEnabled;
 };
 
 #endif // OPTIONS_H

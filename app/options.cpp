@@ -104,6 +104,16 @@ void Options::setStrikethroughEnabled(bool enabled)
     m_strikethroughEnabled = enabled;
 }
 
+bool Options::isAlphabeticListsEnabled() const
+{
+    return m_alphabeticListsEnabled;
+}
+
+void Options::setAlphabeticListsEnabled(bool enabled)
+{
+    m_alphabeticListsEnabled = enabled;
+}
+
 void Options::readSettings()
 {
     QSettings settings;
@@ -126,6 +136,7 @@ void Options::readSettings()
     // extension settings
     m_autolinkEnabled = settings.value("extensions/autolink", true).toBool();
     m_strikethroughEnabled = settings.value("extensions/strikethrough", true).toBool();
+    m_alphabeticListsEnabled = settings.value("extensions/alphabeticLists", true).toBool();
 }
 
 void Options::writeSettings()
@@ -146,4 +157,5 @@ void Options::writeSettings()
     // extensions settings
     settings.setValue("extensions/autolink", m_autolinkEnabled);
     settings.setValue("extensions/strikethrough", m_strikethroughEnabled);
+    settings.setValue("extensions/alphabeticLists", m_alphabeticListsEnabled);
 }

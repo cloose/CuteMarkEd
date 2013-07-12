@@ -218,6 +218,7 @@
      </property>
      <addaction name="actionAutolink"/>
      <addaction name="actionStrikethroughOption"/>
+     <addaction name="actionAlphabeticLists"/>
     </widget>
     <addaction name="actionMathSupport"/>
     <addaction name="actionCodeHighlighting"/>
@@ -572,6 +573,14 @@
    </property>
    <property name="text">
     <string>Strikethrough</string>
+   </property>
+  </action>
+  <action name="actionAlphabeticLists">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Alphabetic Lists</string>
    </property>
   </action>
  </widget>
@@ -1339,6 +1348,22 @@
    <signal>triggered(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>extensionsStrikethrough(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAlphabeticLists</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extensionsAlphabeticLists(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

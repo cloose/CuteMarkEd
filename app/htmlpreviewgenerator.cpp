@@ -132,5 +132,9 @@ Discount::Parser::ParserOptions HtmlPreviewGenerator::parserOptions() const
         parserOptionFlags |= Discount::Parser::NoStrikethroughOption;
     }
 
+    if (!options->isAlphabeticListsEnabled()) {
+        parserOptionFlags |= Discount::Parser::NoAlphaListOption;
+    }
+
     return parserOptionFlags;
 }
