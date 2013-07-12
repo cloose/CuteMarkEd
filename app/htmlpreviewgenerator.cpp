@@ -17,9 +17,13 @@
 #include "htmlpreviewgenerator.h"
 
 #include "discount/document.h"
+#include "discount/parser.h"
 
-HtmlPreviewGenerator::HtmlPreviewGenerator(QObject *parent) :
+#include "options.h"
+
+HtmlPreviewGenerator::HtmlPreviewGenerator(Options *opt, QObject *parent) :
     QThread(parent),
+    options(opt),
     mathSupportEnabled(false),
     codeHighlightingEnabled(false)
 {
@@ -75,7 +79,7 @@ void HtmlPreviewGenerator::run()
         }
 
         // generate HTML from markdown
-        Discount::Document document(text);
+        Discount::Document document(text, parserOptions());
         QString htmlContent = document.toHtml();
         QString html = renderTemplate(buildHtmlHeader(), htmlContent);
         emit htmlResultReady(html);
@@ -114,4 +118,36 @@ QString HtmlPreviewGenerator::buildHtmlHeader() const
     }
 
     return header;
+}
+
+Discount::Parser::ParserOptions HtmlPreviewGenerator::parserOptions() const
+{
+    Discount::Parser::ParserOptions parserOptionFlags(Discount::Parser::TableOfContentsOption | Discount::Parser::NoStyleOption);
+
+    // autolink
+    if (options->isAutolinkEnabled()) {
+        parserOptionFlags |= Discount::Parser::AutolinkOption;
+    }
+
+    // strikethrough
+    if (!options->isStrikethroughEnabled()) {
+        parserOptionFlags |= Discount::Parser::NoStrikethroughOption;
+    }
+
+    // alphabetic lists
+    if (!options->isAlphabeticListsEnabled()) {
+        parserOptionFlags |= Discount::Parser::NoAlphaListOption;
+    }
+
+    // definition lists
+    if (!options->isDefinitionListsEnabled()) {
+        parserOptionFlags |= Discount::Parser::NoDefinitionListOption;
+    }
+
+    // SmartyPants
+    if (!options->isSmartyPantsEnabled()) {
+        parserOptionFlags |= Discount::Parser::NoSmartypantsOption;
+    }
+
+    return parserOptionFlags;
 }

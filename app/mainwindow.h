@@ -85,6 +85,11 @@ private slots:
     void extrasMathSupport(bool checked);
     void extrasCodeHighlighting(bool checked);
     void extrasShowHardLinebreaks(bool checked);
+    void extensionsAutolink(bool checked);
+    void extensionsStrikethrough(bool checked);
+    void extensionsAlphabeticLists(bool checked);
+    void extensionsDefinitionLists(bool checked);
+    void extensionsSmartyPants(bool checked);
     void extrasOptions();
 
     void helpMarkdownSyntax();

@@ -25,7 +25,7 @@ Parser::~Parser()
 {
 }
 
-MMIOT *Parser::parseString(const QString &text)
+MMIOT *Parser::parseString(const QString &text, ParserOptions options)
 {
     QString markdownText(text);
 
@@ -36,9 +36,9 @@ MMIOT *Parser::parseString(const QString &text)
     }
 
     QByteArray utf8Data = markdownText.toUtf8();
-    MMIOT *doc = mkd_string(utf8Data, utf8Data.length(), MKD_AUTOLINK | MKD_TOC | MKD_NOSTYLE);
+    MMIOT *doc = mkd_string(utf8Data, utf8Data.length(), options);
 
-    mkd_compile(doc, MKD_AUTOLINK | MKD_TOC | MKD_NOSTYLE);
+    mkd_compile(doc, options);
 
     return doc;
 }
