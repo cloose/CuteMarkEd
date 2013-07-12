@@ -26,11 +26,23 @@
 #include "peg-markdown-highlight/definitions.h"
 using PegMarkdownHighlight::HighlightingStyle;
 
+#include "hunspell/hunspell.hxx"
+#include <QDebug>
+#include <QDir>
+
 
 MarkdownHighlighter::MarkdownHighlighter(QTextDocument *document) :
     QSyntaxHighlighter(document),
     workerThread(new HighlightWorkerThread(this))
 {
+    QByteArray affixFilePath = QString(QDir::currentPath() + "/dictionaries/en_US.aff").toLocal8Bit();
+    QByteArray dictFilePath = QString(QDir::currentPath() + "/dictionaries/en_US.dic").toLocal8Bit();
+    qDebug() << affixFilePath;
+    spellChecker = new Hunspell(affixFilePath, dictFilePath);
+
+    spellFormat.setUnderlineStyle(QTextCharFormat::SpellCheckUnderline);
+    spellFormat.setUnderlineColor(Qt::red);
+
     connect(workerThread, SIGNAL(resultReady(pmh_element**)),
             this, SLOT(resultReady(pmh_element**)));
     workerThread->start();
@@ -38,6 +50,8 @@ MarkdownHighlighter::MarkdownHighlighter(QTextDocument *document) :
 
 MarkdownHighlighter::~MarkdownHighlighter()
 {
+    delete spellChecker;
+
     // stop background worker thread
     workerThread->enqueue(QString());
     workerThread->wait();
@@ -55,11 +69,12 @@ void MarkdownHighlighter::setStyles(const QVector<PegMarkdownHighlight::Highligh
     reset();
 }
 
-void MarkdownHighlighter::highlightBlock(const QString &)
+void MarkdownHighlighter::highlightBlock(const QString &textBlock)
 {
     if (document()->isEmpty()) {
         return;
     }
+
 
     QString text = document()->toPlainText();
 
@@ -165,6 +180,32 @@ void MarkdownHighlighter::resultReady(pmh_element **elements)
 
             elem_cursor = elem_cursor->next;
         }
+    }
+
+    block = document()->firstBlock();
+    while (block.isValid()) {
+        QTextLayout *layout = block.layout();
+        QList<QTextLayout::FormatRange> list = layout->additionalFormats();
+
+        QStringList wordList = block.text().split(QRegExp("\\W+"), QString::SkipEmptyParts);
+        qDebug() << wordList;
+        int index = 0;
+        foreach (QString word, wordList) {
+           index = block.text().indexOf(word, index);
+           int spellResult = spellChecker->spell(word.toLocal8Bit());
+           if (spellResult == 0) {
+               qDebug() << "WRONG" << index << word.length();
+               QTextLayout::FormatRange r;
+               r.format = spellFormat;
+               r.start = index;
+               r.length = word.length();
+               list.append(r);
+           }
+           index += word.length();
+        }
+
+        layout->setAdditionalFormats(list);
+        block = block.next();
     }
 
     document()->markContentsDirty(0, document()->characterCount());

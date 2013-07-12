@@ -8,6 +8,7 @@ TEMPLATE = subdirs
 
 win32:SUBDIRS = discount \
     peg-markdown-highlight \
+    hunspell \
     app \
     fontawesomeicon
 

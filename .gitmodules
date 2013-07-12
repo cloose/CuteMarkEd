@@ -1,3 +1,6 @@
 [submodule "discount"]
 	path = discount
 url=https://github.com/cloose/discount.git
+[submodule "hunspell"]
+	path = hunspell
+	url = https://github.com/zdenop/hunspell-mingw.git
