@@ -212,9 +212,16 @@
      <addaction name="actionClearness"/>
      <addaction name="actionClearnessDark"/>
     </widget>
+    <widget class="QMenu" name="menuMarkdown_Extensions">
+     <property name="title">
+      <string>Markdown Extensions</string>
+     </property>
+     <addaction name="actionAutolink"/>
+    </widget>
     <addaction name="actionMathSupport"/>
     <addaction name="actionCodeHighlighting"/>
     <addaction name="actionShowHardLinebreaks"/>
+    <addaction name="menuMarkdown_Extensions"/>
     <addaction name="separator"/>
     <addaction name="menuStyles"/>
     <addaction name="separator"/>
@@ -548,6 +555,14 @@
   <action name="actionOptions">
    <property name="text">
     <string>Options...</string>
+   </property>
+  </action>
+  <action name="actionAutolink">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Autolink</string>
    </property>
   </action>
  </widget>
@@ -1283,6 +1298,22 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>extrasOptions()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAutolink</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extensionsAutolink(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

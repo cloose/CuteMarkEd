@@ -22,12 +22,14 @@
 #include <QtCore/qmutex.h>
 #include <QtCore/qwaitcondition.h>
 
+class Options;
+
 class HtmlPreviewGenerator : public QThread
 {
     Q_OBJECT
 
 public:
-    explicit HtmlPreviewGenerator(QObject *parent = 0);
+    explicit HtmlPreviewGenerator(Options *opt, QObject *parent = 0);
     
     void enqueue(const QString &text);
     void setHtmlTemplate(const QString &t);
@@ -47,6 +49,7 @@ private:
     QString buildHtmlHeader() const;
 
 private:
+    Options *options;
     QQueue<QString> tasks;
     QMutex tasksMutex;
     QWaitCondition bufferNotEmpty;

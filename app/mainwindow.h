@@ -85,6 +85,7 @@ private slots:
     void extrasMathSupport(bool checked);
     void extrasCodeHighlighting(bool checked);
     void extrasShowHardLinebreaks(bool checked);
+    void extensionsAutolink(bool checked);
     void extrasOptions();
 
     void helpMarkdownSyntax();

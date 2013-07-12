@@ -17,9 +17,13 @@
 #include "htmlpreviewgenerator.h"
 
 #include "discount/document.h"
+#include "discount/parser.h"
 
-HtmlPreviewGenerator::HtmlPreviewGenerator(QObject *parent) :
+#include "options.h"
+
+HtmlPreviewGenerator::HtmlPreviewGenerator(Options *opt, QObject *parent) :
     QThread(parent),
+    options(opt),
     mathSupportEnabled(false),
     codeHighlightingEnabled(false)
 {
@@ -74,8 +78,13 @@ void HtmlPreviewGenerator::run()
             return;
         }
 
+        Discount::Parser::ParserOptions parserOptions(Discount::Parser::TableOfContentsOption | Discount::Parser::NoStyleOption);
+        if (options->isAutolinkEnabled()) {
+            parserOptions |= Discount::Parser::AutolinkOption;
+        }
+
         // generate HTML from markdown
-        Discount::Document document(text, Discount::Parser::AutolinkOption | Discount::Parser::TableOfContentsOption | Discount::Parser::NoStyleOption);
+        Discount::Document document(text, parserOptions);
         QString htmlContent = document.toHtml();
         QString html = renderTemplate(buildHtmlHeader(), htmlContent);
         emit htmlResultReady(html);
