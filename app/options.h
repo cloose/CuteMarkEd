@@ -46,6 +46,9 @@ public:
     QString proxyPassword() const;
     void setProxyPassword(const QString &password);
 
+    bool isAutolinkEnabled() const;
+    void setAutolinkEnabled(bool enabled);
+
     void readSettings();
     void writeSettings();
 
@@ -60,6 +63,7 @@ private:
     quint16 m_proxyPort;
     QString m_proxyUser;
     QString m_proxyPassword;
+    bool m_autolinkEnabled;
 };
 
 #endif // OPTIONS_H

@@ -84,6 +84,16 @@ void Options::setProxyPassword(const QString &password)
     m_proxyPassword = password;
 }
 
+bool Options::isAutolinkEnabled() const
+{
+    return m_autolinkEnabled;
+}
+
+void Options::setAutolinkEnabled(bool enabled)
+{
+    m_autolinkEnabled = enabled;
+}
+
 void Options::readSettings()
 {
     QSettings settings;
@@ -102,6 +112,9 @@ void Options::readSettings()
     m_proxyPort = settings.value("internet/proxy/port", 0).toInt();
     m_proxyUser = settings.value("internet/proxy/user", "").toString();
     m_proxyPassword = settings.value("internet/proxy/password", "").toString();
+
+    // extension settings
+    m_autolinkEnabled = settings.value("extensions/autolink", true).toBool();
 }
 
 void Options::writeSettings()
@@ -118,4 +131,7 @@ void Options::writeSettings()
     settings.setValue("internet/proxy/port", m_proxyPort);
     settings.setValue("internet/proxy/user", m_proxyUser);
     settings.setValue("internet/proxy/password", m_proxyPassword);
+
+    // extensions settings
+    settings.setValue("extensions/autolink", m_autolinkEnabled);
 }
