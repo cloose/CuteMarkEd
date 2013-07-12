@@ -22,7 +22,7 @@ Document::Document(const QString &text) :
     document(0)
 {
     if (text.length() > 0) {
-        document = Parser::parseString(text);
+        document = Parser::parseString(text, Parser::AutolinkOption | Parser::TableOfContentsOption | Parser::NoStyleOption);
     }
 }
 
