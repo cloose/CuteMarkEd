@@ -22,6 +22,8 @@
 #include <QtCore/qmutex.h>
 #include <QtCore/qwaitcondition.h>
 
+#include "discount/parser.h"
+
 class Options;
 
 class HtmlPreviewGenerator : public QThread
@@ -47,6 +49,7 @@ protected:
 private:
     QString renderTemplate(const QString &header, const QString &content);
     QString buildHtmlHeader() const;
+    Discount::Parser::ParserOptions parserOptions() const;
 
 private:
     Options *options;

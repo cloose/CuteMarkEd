@@ -78,16 +78,8 @@ void HtmlPreviewGenerator::run()
             return;
         }
 
-        Discount::Parser::ParserOptions parserOptions(Discount::Parser::TableOfContentsOption | Discount::Parser::NoStyleOption);
-        if (options->isAutolinkEnabled()) {
-            parserOptions |= Discount::Parser::AutolinkOption;
-        }
-        if (!options->isStrikethroughEnabled()) {
-            parserOptions |= Discount::Parser::NoStrikethroughOption;
-        }
-
         // generate HTML from markdown
-        Discount::Document document(text, parserOptions);
+        Discount::Document document(text, parserOptions());
         QString htmlContent = document.toHtml();
         QString html = renderTemplate(buildHtmlHeader(), htmlContent);
         emit htmlResultReady(html);
@@ -126,4 +118,19 @@ QString HtmlPreviewGenerator::buildHtmlHeader() const
     }
 
     return header;
+}
+
+Discount::Parser::ParserOptions HtmlPreviewGenerator::parserOptions() const
+{
+    Discount::Parser::ParserOptions parserOptionFlags(Discount::Parser::TableOfContentsOption | Discount::Parser::NoStyleOption);
+
+    if (options->isAutolinkEnabled()) {
+        parserOptionFlags |= Discount::Parser::AutolinkOption;
+    }
+
+    if (!options->isStrikethroughEnabled()) {
+        parserOptionFlags |= Discount::Parser::NoStrikethroughOption;
+    }
+
+    return parserOptionFlags;
 }
