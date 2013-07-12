@@ -75,7 +75,7 @@ void HtmlPreviewGenerator::run()
         }
 
         // generate HTML from markdown
-        Discount::Document document(text);
+        Discount::Document document(text, Discount::Parser::AutolinkOption | Discount::Parser::TableOfContentsOption | Discount::Parser::NoStyleOption);
         QString htmlContent = document.toHtml();
         QString html = renderTemplate(buildHtmlHeader(), htmlContent);
         emit htmlResultReady(html);

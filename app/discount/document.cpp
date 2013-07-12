@@ -18,11 +18,11 @@
 using Discount::Document;
 using Discount::Parser;
 
-Document::Document(const QString &text) :
+Document::Document(const QString &text, Parser::ParserOptions options) :
     document(0)
 {
     if (text.length() > 0) {
-        document = Parser::parseString(text, Parser::AutolinkOption | Parser::TableOfContentsOption | Parser::NoStyleOption);
+        document = Parser::parseString(text, options);
     }
 }
 
