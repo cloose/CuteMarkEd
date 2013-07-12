@@ -84,6 +84,56 @@ void Options::setProxyPassword(const QString &password)
     m_proxyPassword = password;
 }
 
+bool Options::isAutolinkEnabled() const
+{
+    return m_autolinkEnabled;
+}
+
+void Options::setAutolinkEnabled(bool enabled)
+{
+    m_autolinkEnabled = enabled;
+}
+
+bool Options::isStrikethroughEnabled() const
+{
+    return m_strikethroughEnabled;
+}
+
+void Options::setStrikethroughEnabled(bool enabled)
+{
+    m_strikethroughEnabled = enabled;
+}
+
+bool Options::isAlphabeticListsEnabled() const
+{
+    return m_alphabeticListsEnabled;
+}
+
+void Options::setAlphabeticListsEnabled(bool enabled)
+{
+    m_alphabeticListsEnabled = enabled;
+}
+
+bool Options::isDefinitionListsEnabled() const
+{
+    return m_definitionListsEnabled;
+}
+
+void Options::setDefinitionListsEnabled(bool enabled)
+{
+    m_definitionListsEnabled = enabled;
+}
+
+bool Options::isSmartyPantsEnabled() const
+{
+    return m_smartyPantsEnabled;
+}
+
+void Options::setSmartyPantsEnabled(bool enabled)
+{
+    m_smartyPantsEnabled = enabled;
+}
+
 void Options::readSettings()
 {
     QSettings settings;
@@ -102,6 +152,13 @@ void Options::readSettings()
     m_proxyPort = settings.value("internet/proxy/port", 0).toInt();
     m_proxyUser = settings.value("internet/proxy/user", "").toString();
     m_proxyPassword = settings.value("internet/proxy/password", "").toString();
+
+    // extension settings
+    m_autolinkEnabled = settings.value("extensions/autolink", true).toBool();
+    m_strikethroughEnabled = settings.value("extensions/strikethrough", true).toBool();
+    m_alphabeticListsEnabled = settings.value("extensions/alphabeticLists", true).toBool();
+    m_definitionListsEnabled = settings.value("extensions/definitionLists", true).toBool();
+    m_smartyPantsEnabled = settings.value("extensions/smartyPants", true).toBool();
 }
 
 void Options::writeSettings()
@@ -118,4 +175,11 @@ void Options::writeSettings()
     settings.setValue("internet/proxy/port", m_proxyPort);
     settings.setValue("internet/proxy/user", m_proxyUser);
     settings.setValue("internet/proxy/password", m_proxyPassword);
+
+    // extensions settings
+    settings.setValue("extensions/autolink", m_autolinkEnabled);
+    settings.setValue("extensions/strikethrough", m_strikethroughEnabled);
+    settings.setValue("extensions/alphabeticLists", m_alphabeticListsEnabled);
+    settings.setValue("extensions/definitionLists", m_definitionListsEnabled);
+    settings.setValue("extensions/smartyPants", m_smartyPantsEnabled);
 }

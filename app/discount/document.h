@@ -26,7 +26,7 @@ namespace Discount
 class Document
 {
 public:
-    explicit Document(const QString &text);
+    Document(const QString &text, Parser::ParserOptions options);
     ~Document();
 
     QString toHtml();

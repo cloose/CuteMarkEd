@@ -46,6 +46,21 @@ public:
     QString proxyPassword() const;
     void setProxyPassword(const QString &password);
 
+    bool isAutolinkEnabled() const;
+    void setAutolinkEnabled(bool enabled);
+
+    bool isStrikethroughEnabled() const;
+    void setStrikethroughEnabled(bool enabled);
+
+    bool isAlphabeticListsEnabled() const;
+    void setAlphabeticListsEnabled(bool enabled);
+
+    bool isDefinitionListsEnabled() const;
+    void setDefinitionListsEnabled(bool enabled);
+
+    bool isSmartyPantsEnabled() const;
+    void setSmartyPantsEnabled(bool enabled);
+
     void readSettings();
     void writeSettings();
 
@@ -60,6 +75,11 @@ private:
     quint16 m_proxyPort;
     QString m_proxyUser;
     QString m_proxyPassword;
+    bool m_autolinkEnabled;
+    bool m_strikethroughEnabled;
+    bool m_alphabeticListsEnabled;
+    bool m_definitionListsEnabled;
+    bool m_smartyPantsEnabled;
 };
 
 #endif // OPTIONS_H

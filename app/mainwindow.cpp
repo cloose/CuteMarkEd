@@ -54,7 +54,7 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     styleLabel(0),
     wordCountLabel(0),
     viewLabel(0),
-    generator(new HtmlPreviewGenerator(this)),
+    generator(new HtmlPreviewGenerator(options, this)),
     splitFactor(0.5),
     scrollBarPos(0)
 {
@@ -110,6 +110,13 @@ void MainWindow::initializeApp()
 
     // set default style
     styleDefault();
+
+    // init extension flags
+    ui->actionAutolink->setChecked(options->isAutolinkEnabled());
+    ui->actionStrikethroughOption->setChecked(options->isStrikethroughEnabled());
+    ui->actionAlphabeticLists->setChecked(options->isAlphabeticListsEnabled());
+    ui->actionDefinitionLists->setChecked(options->isDefinitionListsEnabled());
+    ui->actionSmartyPants->setChecked(options->isSmartyPantsEnabled());
 
     // set url to markdown syntax help
     ui->webView_2->setUrl(tr("qrc:/syntax.html"));
@@ -454,6 +461,36 @@ void MainWindow::extrasCodeHighlighting(bool checked)
 void MainWindow::extrasShowHardLinebreaks(bool checked)
 {
     ui->plainTextEdit->setShowHardLinebreaks(checked);
+}
+
+void MainWindow::extensionsAutolink(bool checked)
+{
+    options->setAutolinkEnabled(checked);
+    plainTextChanged();
+}
+
+void MainWindow::extensionsStrikethrough(bool checked)
+{
+    options->setStrikethroughEnabled(checked);
+    plainTextChanged();
+}
+
+void MainWindow::extensionsAlphabeticLists(bool checked)
+{
+    options->setAlphabeticListsEnabled(checked);
+    plainTextChanged();
+}
+
+void MainWindow::extensionsDefinitionLists(bool checked)
+{
+    options->setDefinitionListsEnabled(checked);
+    plainTextChanged();
+}
+
+void MainWindow::extensionsSmartyPants(bool checked)
+{
+    options->setSmartyPantsEnabled(checked);
+    plainTextChanged();
 }
 
 void MainWindow::extrasOptions()
@@ -918,6 +955,8 @@ void MainWindow::readSettings()
 
 void MainWindow::writeSettings()
 {
+    options->writeSettings();
+
     // save recent files menu
     recentFilesMenu->saveState();
 
