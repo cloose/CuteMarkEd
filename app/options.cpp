@@ -124,6 +124,16 @@ void Options::setDefinitionListsEnabled(bool enabled)
     m_definitionListsEnabled = enabled;
 }
 
+bool Options::isSmartyPantsEnabled() const
+{
+    return m_smartyPantsEnabled;
+}
+
+void Options::setSmartyPantsEnabled(bool enabled)
+{
+    m_smartyPantsEnabled = enabled;
+}
+
 void Options::readSettings()
 {
     QSettings settings;
@@ -148,6 +158,7 @@ void Options::readSettings()
     m_strikethroughEnabled = settings.value("extensions/strikethrough", true).toBool();
     m_alphabeticListsEnabled = settings.value("extensions/alphabeticLists", true).toBool();
     m_definitionListsEnabled = settings.value("extensions/definitionLists", true).toBool();
+    m_smartyPantsEnabled = settings.value("extensions/smartyPants", true).toBool();
 }
 
 void Options::writeSettings()
@@ -170,4 +181,5 @@ void Options::writeSettings()
     settings.setValue("extensions/strikethrough", m_strikethroughEnabled);
     settings.setValue("extensions/alphabeticLists", m_alphabeticListsEnabled);
     settings.setValue("extensions/definitionLists", m_definitionListsEnabled);
+    settings.setValue("extensions/smartyPants", m_smartyPantsEnabled);
 }

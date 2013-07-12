@@ -58,6 +58,9 @@ public:
     bool isDefinitionListsEnabled() const;
     void setDefinitionListsEnabled(bool enabled);
 
+    bool isSmartyPantsEnabled() const;
+    void setSmartyPantsEnabled(bool enabled);
+
     void readSettings();
     void writeSettings();
 
@@ -76,6 +79,7 @@ private:
     bool m_strikethroughEnabled;
     bool m_alphabeticListsEnabled;
     bool m_definitionListsEnabled;
+    bool m_smartyPantsEnabled;
 };
 
 #endif // OPTIONS_H

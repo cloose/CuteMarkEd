@@ -220,6 +220,7 @@
      <addaction name="actionStrikethroughOption"/>
      <addaction name="actionAlphabeticLists"/>
      <addaction name="actionDefinitionLists"/>
+     <addaction name="actionSmartyPants"/>
     </widget>
     <addaction name="actionMathSupport"/>
     <addaction name="actionCodeHighlighting"/>
@@ -590,6 +591,14 @@
    </property>
    <property name="text">
     <string>Definition Lists</string>
+   </property>
+  </action>
+  <action name="actionSmartyPants">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>SmartyPants</string>
    </property>
   </action>
  </widget>
@@ -1389,6 +1398,22 @@
    <signal>triggered(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>extensionsDefinitionLists(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSmartyPants</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extensionsSmartyPants(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

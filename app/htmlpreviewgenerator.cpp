@@ -144,5 +144,10 @@ Discount::Parser::ParserOptions HtmlPreviewGenerator::parserOptions() const
         parserOptionFlags |= Discount::Parser::NoDefinitionListOption;
     }
 
+    // SmartyPants
+    if (!options->isSmartyPantsEnabled()) {
+        parserOptionFlags |= Discount::Parser::NoSmartypantsOption;
+    }
+
     return parserOptionFlags;
 }
