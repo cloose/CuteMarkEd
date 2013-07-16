@@ -38,7 +38,8 @@ SOURCES += \
     exporthtmldialog.cpp \
     htmlhighlighter.cpp \
     optionsdialog.cpp \
-    options.cpp
+    options.cpp \
+    hunspell/spellchecker.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -59,7 +60,8 @@ HEADERS  += \
     exporthtmldialog.h \
     htmlhighlighter.h \
     optionsdialog.h \
-    options.h
+    options.h \
+    hunspell/spellchecker.h
 
 FORMS    += \
     mainwindow.ui \

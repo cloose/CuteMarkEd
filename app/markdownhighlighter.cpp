@@ -26,19 +26,17 @@
 #include "peg-markdown-highlight/definitions.h"
 using PegMarkdownHighlight::HighlightingStyle;
 
-#include "hunspell/hunspell.hxx"
+#include "hunspell/spellchecker.h"
+using hunspell::SpellChecker;
+
 #include <QDebug>
-#include <QDir>
 
 
 MarkdownHighlighter::MarkdownHighlighter(QTextDocument *document) :
     QSyntaxHighlighter(document),
     workerThread(new HighlightWorkerThread(this))
 {
-    QByteArray affixFilePath = QString(QDir::currentPath() + "/dictionaries/en_US.aff").toLocal8Bit();
-    QByteArray dictFilePath = QString(QDir::currentPath() + "/dictionaries/en_US.dic").toLocal8Bit();
-    qDebug() << affixFilePath;
-    spellChecker = new Hunspell(affixFilePath, dictFilePath);
+    spellChecker = new SpellChecker();
 
     // QTextCharFormat::SpellCheckUnderline has issues with Qt 5.
     spellFormat.setUnderlineStyle(QTextCharFormat::WaveUnderline);
@@ -82,8 +80,7 @@ void MarkdownHighlighter::highlightBlock(const QString &textBlock)
     foreach (QString word, wordList) {
        index = textBlock.indexOf(word, index);
 
-       int spellResult = spellChecker->spell(word.toLocal8Bit());
-       if (spellResult == 0) {
+       if (!spellChecker->isCorrect(word)) {
            setFormat(index, word.length(), spellFormat);
        }
        index += word.length();

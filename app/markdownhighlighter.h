@@ -23,7 +23,9 @@
 #include "peg-markdown-highlight/definitions.h"
 #include "highlightworkerthread.h"
 
-class Hunspell;
+namespace hunspell {
+class SpellChecker;
+}
 
 class MarkdownHighlighter : public QSyntaxHighlighter
 {
@@ -47,7 +49,7 @@ private:
     QVector<PegMarkdownHighlight::HighlightingStyle> highlightingStyles;
     QString previousText;
     QTextCharFormat spellFormat;
-    Hunspell *spellChecker;
+    hunspell::SpellChecker *spellChecker;
 };
 
 #endif // MARKDOWNHIGHLIGHTER_H
