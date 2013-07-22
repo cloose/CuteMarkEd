@@ -32,7 +32,7 @@ class MarkdownHighlighter : public QSyntaxHighlighter
     Q_OBJECT
 
 public:
-    MarkdownHighlighter(QTextDocument *document);
+    MarkdownHighlighter(QTextDocument *document, hunspell::SpellChecker *spellChecker);
     ~MarkdownHighlighter();
     
     void reset();

@@ -32,11 +32,11 @@ using hunspell::SpellChecker;
 #include <QDebug>
 
 
-MarkdownHighlighter::MarkdownHighlighter(QTextDocument *document) :
+MarkdownHighlighter::MarkdownHighlighter(QTextDocument *document, hunspell::SpellChecker *spellChecker) :
     QSyntaxHighlighter(document),
     workerThread(new HighlightWorkerThread(this))
 {
-    spellChecker = new SpellChecker();
+    this->spellChecker = spellChecker;
 
     // QTextCharFormat::SpellCheckUnderline has issues with Qt 5.
     spellFormat.setUnderlineStyle(QTextCharFormat::WaveUnderline);
@@ -49,8 +49,6 @@ MarkdownHighlighter::MarkdownHighlighter(QTextDocument *document) :
 
 MarkdownHighlighter::~MarkdownHighlighter()
 {
-    delete spellChecker;
-
     // stop background worker thread
     workerThread->enqueue(QString());
     workerThread->wait();

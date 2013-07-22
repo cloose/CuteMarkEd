@@ -19,6 +19,9 @@
 
 #include <qplaintextedit.h>
 
+namespace hunspell {
+class SpellChecker;
+}
 class MarkdownHighlighter;
 
 
@@ -27,6 +30,7 @@ class MarkdownEditor : public QPlainTextEdit
     Q_OBJECT
 public:
     explicit MarkdownEditor(QWidget *parent = 0);
+    ~MarkdownEditor();
 
     void lineNumberAreaPaintEvent(QPaintEvent *event);
     int lineNumberAreaWidth();
@@ -38,6 +42,7 @@ public:
 
     void setShowHardLinebreaks(bool enabled);
 
+    void addSuggestionsToContextMenu(QTextCursor cursor, int cursorPosition, QMenu *contextMenu);
 signals:
     void loadDroppedFile(const QString &fileName);
 
@@ -52,6 +57,8 @@ private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
     void updateLineNumberArea(const QRect &rect, int dy);
     void editorFontChanged(const QFont &font);
+    void showContextMenu(const QPoint &pos);
+    void replaceWithSuggestion();
 
 private:
     void drawLineEndMarker(QPaintEvent *e);
@@ -59,6 +66,7 @@ private:
 private:
     QWidget *lineNumberArea;
     MarkdownHighlighter *highlighter;
+    hunspell::SpellChecker *spellChecker;
     bool showHardLinebreaks;
 };
 
