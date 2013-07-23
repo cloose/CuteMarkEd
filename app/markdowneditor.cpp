@@ -17,6 +17,7 @@
 #include "markdowneditor.h"
 
 #include <QApplication>
+#include <QMenu>
 #include <QMimeData>
 #include <QPainter>
 #include <QStyle>
@@ -28,13 +29,19 @@
 #include <markdownhighlighter.h>
 #include "markdownmanipulator.h"
 
+#include "hunspell/dictionary.h"
+#include "hunspell/spellchecker.h"
+using hunspell::SpellChecker;
+
 
 MarkdownEditor::MarkdownEditor(QWidget *parent) :
     QPlainTextEdit(parent),
     lineNumberArea(new LineNumberArea(this)),
-    highlighter(new MarkdownHighlighter(this->document())),
+    spellChecker(new SpellChecker()),
     showHardLinebreaks(false)
 {
+    highlighter = new MarkdownHighlighter(this->document(), spellChecker);
+
     QFont font("Monospace", 10);
     font.setStyleHint(QFont::TypeWriter);
 
@@ -46,7 +53,16 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
     connect(this, SIGNAL(updateRequest(QRect, int)),
             this, SLOT(updateLineNumberArea(QRect, int)));
 
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, SIGNAL(customContextMenuRequested(QPoint)),
+            this, SLOT(showContextMenu(QPoint)));
+
     updateLineNumberAreaWidth(0);
+}
+
+MarkdownEditor::~MarkdownEditor()
+{
+    delete spellChecker;
 }
 
 void MarkdownEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
@@ -202,6 +218,57 @@ void MarkdownEditor::editorFontChanged(const QFont &font)
     setFont(font);
 }
 
+void MarkdownEditor::showContextMenu(const QPoint &pos)
+{
+    QMenu *contextMenu = createStandardContextMenu();
+
+    QTextCursor cursor = cursorForPosition(pos);
+    int cursorPosition = cursor.position();
+    cursor.select(QTextCursor::WordUnderCursor);
+
+    // if word under cursor not spelled correctly, add suggestions to context menu
+    if (cursor.hasSelection() && !spellChecker->isCorrect(cursor.selectedText())) {
+        contextMenu->addSeparator();
+
+        // add new submenu for the suggestions
+        QMenu *subMenu = new QMenu(tr("Suggestions"), contextMenu);
+        contextMenu->addMenu(subMenu);
+
+        // add action for each suggested replacement
+        QStringList suggestions = spellChecker->suggestions(cursor.selectedText());
+        foreach (const QString &suggestion, suggestions) {
+            QAction *action = subMenu->addAction(suggestion);
+            action->setData(cursorPosition);
+            connect(action, SIGNAL(triggered()),
+                    this, SLOT(replaceWithSuggestion()));
+        }
+
+        // disable submenu when no suggestions available
+        if (suggestions.isEmpty()) {
+            subMenu->setEnabled(false);
+        }
+    }
+
+    // show context menu
+    contextMenu->exec(mapToGlobal(pos));
+    delete contextMenu;
+}
+
+void MarkdownEditor::replaceWithSuggestion()
+{
+    QAction *action = qobject_cast<QAction*>(sender());
+
+    QTextCursor cursor = textCursor();
+    cursor.beginEditBlock();
+
+    // replace wrong spelled word with suggestion
+    cursor.setPosition(action->data().toInt());
+    cursor.select(QTextCursor::WordUnderCursor);
+    cursor.insertText(action->text());
+
+    cursor.endEditBlock();
+}
+
 void MarkdownEditor::loadStyleFromStylesheet(const QString &fileName)
 {
     QFile f(fileName);
@@ -259,6 +326,22 @@ void MarkdownEditor::setShowHardLinebreaks(bool enabled)
 
     // repaint
     viewport()->update();
+}
+
+void MarkdownEditor::setSpellingCheckEnabled(bool enabled)
+{
+    highlighter->setSpellingCheckEnabled(enabled);
+
+    highlighter->reset();
+    highlighter->rehighlight();
+}
+
+void MarkdownEditor::setSpellingDictionary(const hunspell::Dictionary &dictionary)
+{
+    spellChecker->loadDictionary(dictionary.filePath());
+
+    highlighter->reset();
+    highlighter->rehighlight();
 }
 
 void MarkdownEditor::drawLineEndMarker(QPaintEvent *e)
