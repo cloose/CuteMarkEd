@@ -674,8 +674,10 @@ bool MainWindow::load(const QString &fileName)
 void MainWindow::proxyConfigurationChanged()
 {
     if (options->proxyMode() == Options::SystemProxy) {
+        qDebug() << "Use system proxy configuration";
         QNetworkProxyFactory::setUseSystemConfiguration(true);
     } else if (options->proxyMode() == Options::ManualProxy) {
+        qDebug() << "Use proxy" << options->proxyHost();
         QNetworkProxyFactory::setUseSystemConfiguration(false);
 
         QNetworkProxy proxy;
@@ -686,6 +688,7 @@ void MainWindow::proxyConfigurationChanged()
         proxy.setPassword(options->proxyPassword());
         QNetworkProxy::setApplicationProxy(proxy);
     } else {
+        qDebug() << "Don't use a proxy";
         QNetworkProxyFactory::setUseSystemConfiguration(false);
 
         QNetworkProxy proxy;
