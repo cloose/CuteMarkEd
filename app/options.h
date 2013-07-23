@@ -28,6 +28,8 @@ public:
 
     explicit Options(QObject *parent = 0);
 
+    void apply();
+
     QFont editorFont() const;
     void setEditorFont(const QFont &font);
 

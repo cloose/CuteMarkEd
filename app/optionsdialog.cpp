@@ -113,4 +113,5 @@ void OptionsDialog::saveState()
     options->setProxyPort(ui->portLineEdit->text().toInt());
     options->setProxyUser(ui->userNameLineEdit->text());
     options->setProxyPassword(ui->passwordLineEdit->text());
+    options->apply();
 }

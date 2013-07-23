@@ -22,6 +22,11 @@ Options::Options(QObject *parent) :
 {
 }
 
+void Options::apply()
+{
+    emit proxyConfigurationChanged();
+}
+
 QFont Options::editorFont() const
 {
     return font;
@@ -41,7 +46,6 @@ Options::ProxyMode Options::proxyMode() const
 void Options::setProxyMode(Options::ProxyMode mode)
 {
     m_proxyMode = mode;
-    emit proxyConfigurationChanged();
 }
 
 QString Options::proxyHost() const
@@ -147,7 +151,7 @@ void Options::readSettings()
     setEditorFont(f);
 
     // proxy settings
-    setProxyMode((Options::ProxyMode)settings.value("internet/proxy/mode", 0).toInt());
+    m_proxyMode = (Options::ProxyMode)settings.value("internet/proxy/mode", 0).toInt();
     m_proxyHost = settings.value("internet/proxy/host", "").toString();
     m_proxyPort = settings.value("internet/proxy/port", 0).toInt();
     m_proxyUser = settings.value("internet/proxy/user", "").toString();
@@ -159,6 +163,8 @@ void Options::readSettings()
     m_alphabeticListsEnabled = settings.value("extensions/alphabeticLists", true).toBool();
     m_definitionListsEnabled = settings.value("extensions/definitionLists", true).toBool();
     m_smartyPantsEnabled = settings.value("extensions/smartyPants", true).toBool();
+
+    apply();
 }
 
 void Options::writeSettings()
