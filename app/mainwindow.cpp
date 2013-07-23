@@ -39,6 +39,8 @@
 #include "controls/activelabel.h"
 #include "controls/findreplacewidget.h"
 #include "controls/recentfilesmenu.h"
+#include "hunspell/dictionary.h"
+#include "hunspell/spellchecker.h"
 #include "htmlpreviewgenerator.h"
 #include "htmlhighlighter.h"
 #include "markdownmanipulator.h"
@@ -118,6 +120,10 @@ void MainWindow::initializeApp()
     ui->actionDefinitionLists->setChecked(options->isDefinitionListsEnabled());
     ui->actionSmartyPants->setChecked(options->isSmartyPantsEnabled());
 
+    // init option flags
+    ui->actionCheckSpelling->setChecked(options->isSpellingCheckEnabled());
+    ui->plainTextEdit->setSpellingCheckEnabled(options->isSpellingCheckEnabled());
+
     // set url to markdown syntax help
     ui->webView_2->setUrl(tr("qrc:/syntax.html"));
 
@@ -134,6 +140,7 @@ void MainWindow::initializeApp()
 //    inspector->setPage(ui->webView->page());
 
     loadCustomStyles();
+    loadDictionaries();
 
     // load file passed to application on start
     if (!fileName.isEmpty()) {
@@ -491,6 +498,22 @@ void MainWindow::extensionsSmartyPants(bool checked)
 {
     options->setSmartyPantsEnabled(checked);
     plainTextChanged();
+}
+
+void MainWindow::extrasCheckSpelling(bool checked)
+{
+    ui->plainTextEdit->setSpellingCheckEnabled(checked);
+    options->setSpellingCheckEnabled(checked);
+}
+
+void MainWindow::extrasLanguage()
+{
+    QAction *action = qobject_cast<QAction*>(sender());
+
+    hunspell::Dictionary dictionary = action->data().value<hunspell::Dictionary>();
+    options->setDictionaryLanguage(dictionary.language());
+
+    ui->plainTextEdit->setSpellingDictionary(dictionary);
 }
 
 void MainWindow::extrasOptions()
@@ -939,6 +962,33 @@ void MainWindow::loadCustomStyles()
 
             connect(action, SIGNAL(triggered()),
                     this, SLOT(styleCustomStyle()));
+        }
+    }
+}
+
+void MainWindow::loadDictionaries()
+{
+    QMap<QString, hunspell::Dictionary> dictionaries = hunspell::SpellChecker::availableDictionaries();
+
+    QActionGroup *dictionariesGroup = new QActionGroup(this);
+
+    QMapIterator<QString, hunspell::Dictionary> it(dictionaries);
+    while (it.hasNext()) {
+        it.next();
+
+        hunspell::Dictionary dictionary = it.value();
+
+        QAction *action = ui->menuLanguages->addAction(QString("%1 / %2").arg(dictionary.languageName()).arg(dictionary.countryName()), this, SLOT(extrasLanguage()));
+        action->setCheckable(true);
+        action->setActionGroup(dictionariesGroup);
+
+        QVariant data;
+        data.setValue(dictionary);
+        action->setData(data);
+
+        if (dictionary.language() == options->dictionaryLanguage()) {
+            action->setChecked(true);
+            action->trigger();
         }
     }
 }

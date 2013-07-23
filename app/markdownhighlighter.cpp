@@ -26,11 +26,22 @@
 #include "peg-markdown-highlight/definitions.h"
 using PegMarkdownHighlight::HighlightingStyle;
 
+#include "hunspell/spellchecker.h"
+using hunspell::SpellChecker;
 
-MarkdownHighlighter::MarkdownHighlighter(QTextDocument *document) :
+#include <QDebug>
+
+
+MarkdownHighlighter::MarkdownHighlighter(QTextDocument *document, hunspell::SpellChecker *spellChecker) :
     QSyntaxHighlighter(document),
     workerThread(new HighlightWorkerThread(this))
 {
+    this->spellChecker = spellChecker;
+
+    // QTextCharFormat::SpellCheckUnderline has issues with Qt 5.
+    spellFormat.setUnderlineStyle(QTextCharFormat::WaveUnderline);
+    spellFormat.setUnderlineColor(Qt::red);
+
     connect(workerThread, SIGNAL(resultReady(pmh_element**)),
             this, SLOT(resultReady(pmh_element**)));
     workerThread->start();
@@ -55,10 +66,29 @@ void MarkdownHighlighter::setStyles(const QVector<PegMarkdownHighlight::Highligh
     reset();
 }
 
-void MarkdownHighlighter::highlightBlock(const QString &)
+void MarkdownHighlighter::setSpellingCheckEnabled(bool enabled)
+{
+    spellingCheckEnabled = enabled;
+}
+
+void MarkdownHighlighter::highlightBlock(const QString &textBlock)
 {
     if (document()->isEmpty()) {
         return;
+    }
+
+    // check spelling of passed text block
+    if (spellingCheckEnabled) {
+        QStringList wordList = textBlock.split(QRegExp("\\W+"), QString::SkipEmptyParts);
+        int index = 0;
+        foreach (QString word, wordList) {
+           index = textBlock.indexOf(word, index);
+
+           if (!spellChecker->isCorrect(word)) {
+               setFormat(index, word.length(), spellFormat);
+           }
+           index += word.length();
+        }
     }
 
     QString text = document()->toPlainText();
@@ -75,41 +105,30 @@ void MarkdownHighlighter::highlightBlock(const QString &)
 
 void MarkdownHighlighter::resultReady(pmh_element **elements)
 {
-    QTextBlock block = document()->firstBlock();
-    while (block.isValid()) {
-        block.layout()->clearAdditionalFormats();
-        block = block.next();
-    }
-
     if (!elements) {
         qDebug() << "elements is null";
         return;
     }
 
-    // QTextDocument::characterCount returns a value one higher than the
-    // actual character count.
-    // See: https://bugreports.qt.nokia.com//browse/QTBUG-4841
-    // document->toPlainText().length() would give us the correct value
-    // but it's probably too slow.
+    // The QTextDocument contains an additional single paragraph separator (unicode 0x2029).
+    // https://bugreports.qt-project.org/browse/QTBUG-4841
     unsigned long max_offset = document()->characterCount() - 1;
 
-    for (int i = 0; i < highlightingStyles.size(); i++)
-    {
+    for (int i = 0; i < highlightingStyles.size(); i++) {
         HighlightingStyle style = highlightingStyles.at(i);
         pmh_element *elem_cursor = elements[style.type];
-        while (elem_cursor != NULL)
-        {
+        while (elem_cursor != NULL) {
             unsigned long pos = elem_cursor->pos;
             unsigned long end = elem_cursor->end;
 
-            if (end <= pos || max_offset < pos)
-            {
+            if (end <= pos || max_offset < pos) {
                 elem_cursor = elem_cursor->next;
                 continue;
             }
 
-            if (max_offset < end)
+            if (max_offset < end) {
                 end = max_offset;
+            }
 
             // "The QTextLayout object can only be modified from the
             // documentChanged implementation of a QAbstractTextDocumentLayout
@@ -167,7 +186,9 @@ void MarkdownHighlighter::resultReady(pmh_element **elements)
         }
     }
 
+    // mark complete document as dirty
     document()->markContentsDirty(0, document()->characterCount());
 
+    // free highlighting elements
     pmh_free_elements(elements);
 }

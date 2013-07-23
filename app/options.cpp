@@ -138,6 +138,26 @@ void Options::setSmartyPantsEnabled(bool enabled)
     m_smartyPantsEnabled = enabled;
 }
 
+bool Options::isSpellingCheckEnabled() const
+{
+    return m_spellingCheckEnabled;
+}
+
+void Options::setSpellingCheckEnabled(bool enabled)
+{
+    m_spellingCheckEnabled = enabled;
+}
+
+QString Options::dictionaryLanguage() const
+{
+    return m_dictionaryLanguage;
+}
+
+void Options::setDictionaryLanguage(const QString &language)
+{
+    m_dictionaryLanguage = language;
+}
+
 void Options::readSettings()
 {
     QSettings settings;
@@ -164,6 +184,10 @@ void Options::readSettings()
     m_definitionListsEnabled = settings.value("extensions/definitionLists", true).toBool();
     m_smartyPantsEnabled = settings.value("extensions/smartyPants", true).toBool();
 
+    // spelling check settings
+    m_spellingCheckEnabled = settings.value("spelling/enabled", true).toBool();
+    m_dictionaryLanguage = settings.value("spelling/language", "en_US").toString();
+
     apply();
 }
 
@@ -188,4 +212,8 @@ void Options::writeSettings()
     settings.setValue("extensions/alphabeticLists", m_alphabeticListsEnabled);
     settings.setValue("extensions/definitionLists", m_definitionListsEnabled);
     settings.setValue("extensions/smartyPants", m_smartyPantsEnabled);
+
+    // spelling check settings
+    settings.setValue("spelling/enabled", m_spellingCheckEnabled);
+    settings.setValue("spelling/language", m_dictionaryLanguage);
 }

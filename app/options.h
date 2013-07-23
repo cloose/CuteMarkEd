@@ -63,6 +63,12 @@ public:
     bool isSmartyPantsEnabled() const;
     void setSmartyPantsEnabled(bool enabled);
 
+    bool isSpellingCheckEnabled() const;
+    void setSpellingCheckEnabled(bool enabled);
+
+    QString dictionaryLanguage() const;
+    void setDictionaryLanguage(const QString &language);
+
     void readSettings();
     void writeSettings();
 
@@ -82,6 +88,8 @@ private:
     bool m_alphabeticListsEnabled;
     bool m_definitionListsEnabled;
     bool m_smartyPantsEnabled;
+    bool m_spellingCheckEnabled;
+    QString m_dictionaryLanguage;
 };
 
 #endif // OPTIONS_H

@@ -222,10 +222,18 @@
      <addaction name="actionDefinitionLists"/>
      <addaction name="actionSmartyPants"/>
     </widget>
+    <widget class="QMenu" name="menuLanguages">
+     <property name="title">
+      <string>Languages</string>
+     </property>
+    </widget>
     <addaction name="actionMathSupport"/>
     <addaction name="actionCodeHighlighting"/>
     <addaction name="actionShowHardLinebreaks"/>
     <addaction name="menuMarkdown_Extensions"/>
+    <addaction name="separator"/>
+    <addaction name="actionCheckSpelling"/>
+    <addaction name="menuLanguages"/>
     <addaction name="separator"/>
     <addaction name="menuStyles"/>
     <addaction name="separator"/>
@@ -599,6 +607,24 @@
    </property>
    <property name="text">
     <string>SmartyPants</string>
+   </property>
+  </action>
+  <action name="actionLanguage">
+   <property name="text">
+    <string>Language</string>
+   </property>
+  </action>
+  <action name="actionSpell_Checker">
+   <property name="text">
+    <string>Spell Checker</string>
+   </property>
+  </action>
+  <action name="actionCheckSpelling">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Check Spelling</string>
    </property>
   </action>
  </widget>
@@ -1414,6 +1440,22 @@
    <signal>triggered(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>extensionsSmartyPants(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCheckSpelling</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extrasCheckSpelling(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
