@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<?define ManufacturerName="CuteMarkEd Project"?>
+	<Product Name="CuteMarkEd" 
+	     Id="CDB11734-84EA-45F1-829C-681CD0E7110F" 
+		   UpgradeCode="335156FC-CB7F-4357-98D4-B5519E66402B"
+			 Language="1033" 
+			 Version="0.7.0" 
+			 Manufacturer="$(var.ManufacturerName)">
+
+		<Package Id="*"
+			     InstallerVersion="200"
+			     Compressed="yes"
+			     Description="CuteMarkEd Installer"
+			     Manufacturer="$(var.ManufacturerName)"
+		/>
+
+  		<Media Id="1" 
+  			   Cabinet="cutemarked.cab" 
+  			   EmbedCab="yes"
+  		/>
+
+   		<Directory Id="TARGETDIR" Name="SourceDir">
+   			<Directory Id="ProgramFilesFolder">
+   				<Directory Id="INSTALLDIR" Name="CuteMarkEd">
+   					<Component Id="ProductComponent" Guid="21807A79-31EA-4378-A00B-597338E3C9BC" DiskId="1">
+   						<File Id="ApplicationFile" Source="cutemarked.exe"/>
+   					</Component>
+            <Component Id="Qt5Component" Guid="F972C7C4-BF4A-4F45-BD03-09EB4F6EF384" DiskId="1">
+              <File Id="Qt5CoreLibrary" Source="Qt5Core.dll"/>
+              <File Id="Qt5GuiLibrary" Source="Qt5Gui.dll"/>
+            </Component>
+   				</Directory>
+   			</Directory>
+   		</Directory>
+
+   		<Feature Id="ProductFeature" Title="CuteMarkEd" Level="1">
+   			<ComponentRef Id="ProductComponent"/>
+   		</Feature>
+      <Feature Id="Qt5Feature" Title="Qt 5" Level="1">
+        <ComponentRef Id="Qt5Component"/>
+      </Feature>
+
+      <UIRef Id="WixUI_Minimal" />
+  </Product>
+</Wix>
