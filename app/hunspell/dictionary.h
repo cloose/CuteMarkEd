@@ -14,37 +14,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef HUNSPELL_SPELLCHECKER_H
-#define HUNSPELL_SPELLCHECKER_H
+#ifndef HUNSPELL_DICTIONARY_H
+#define HUNSPELL_DICTIONARY_H
 
-#include <QtCore/qmap.h>
+#include <QtCore/qmetatype.h>
 #include <QtCore/qstring.h>
-
-class Hunspell;
-class QTextCodec;
 
 namespace hunspell {
 
-class Dictionary;
-
-class SpellChecker
+class Dictionary
 {
 public:
-    SpellChecker();
-    ~SpellChecker();
+    Dictionary();
+    Dictionary(const QString &language, const QString &filePath);
+    Dictionary(const Dictionary &other);
+    ~Dictionary();
 
-    bool isCorrect(const QString &word);
-    QStringList suggestions(const QString &word);
+    QString language() const;
+    QString languageName() const;
 
-    void loadDictionary(const QString &dictFilePath);
+    QString countryName() const;
 
-    static QMap<QString, Dictionary> availableDictionaries();
+    QString filePath() const;
 
 private:
-    Hunspell *hunspellChecker;
-    QTextCodec *textCodec;
+    QString m_language;
+    QString m_filePath;
 };
 
-} // namespace Hunspell
+} // namespace hunspell
 
-#endif // HUNSPELL_SPELLCHECKER_H
+Q_DECLARE_METATYPE(hunspell::Dictionary);
+
+#endif // HUNSPELL_DICTIONARY_H

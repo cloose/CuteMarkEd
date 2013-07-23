@@ -90,6 +90,8 @@ private slots:
     void extensionsAlphabeticLists(bool checked);
     void extensionsDefinitionLists(bool checked);
     void extensionsSmartyPants(bool checked);
+    void extrasCheckSpelling(bool checked);
+    void extrasLanguage();
     void extrasOptions();
 
     void helpMarkdownSyntax();
@@ -124,6 +126,7 @@ private:
     void setFileName(const QString &fileName);
     void updateSplitter(bool htmlViewToggled);
     void loadCustomStyles();
+    void loadDictionaries();
     void readSettings();
     void writeSettings();
 

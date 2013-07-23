@@ -29,6 +29,7 @@
 #include <markdownhighlighter.h>
 #include "markdownmanipulator.h"
 
+#include "hunspell/dictionary.h"
 #include "hunspell/spellchecker.h"
 using hunspell::SpellChecker;
 
@@ -325,6 +326,22 @@ void MarkdownEditor::setShowHardLinebreaks(bool enabled)
 
     // repaint
     viewport()->update();
+}
+
+void MarkdownEditor::setSpellingCheckEnabled(bool enabled)
+{
+    highlighter->setSpellingCheckEnabled(enabled);
+
+    highlighter->reset();
+    highlighter->rehighlight();
+}
+
+void MarkdownEditor::setSpellingDictionary(const hunspell::Dictionary &dictionary)
+{
+    spellChecker->loadDictionary(dictionary.filePath());
+
+    highlighter->reset();
+    highlighter->rehighlight();
 }
 
 void MarkdownEditor::drawLineEndMarker(QPaintEvent *e)

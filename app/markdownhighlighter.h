@@ -37,6 +37,7 @@ public:
     
     void reset();
     void setStyles(const QVector<PegMarkdownHighlight::HighlightingStyle> &styles);
+    void setSpellingCheckEnabled(bool enabled);
 
 protected:
     void highlightBlock(const QString &textBlock) Q_DECL_OVERRIDE;
@@ -50,6 +51,7 @@ private:
     QString previousText;
     QTextCharFormat spellFormat;
     hunspell::SpellChecker *spellChecker;
+    bool spellingCheckEnabled;
 };
 
 #endif // MARKDOWNHIGHLIGHTER_H

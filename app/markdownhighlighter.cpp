@@ -66,6 +66,11 @@ void MarkdownHighlighter::setStyles(const QVector<PegMarkdownHighlight::Highligh
     reset();
 }
 
+void MarkdownHighlighter::setSpellingCheckEnabled(bool enabled)
+{
+    spellingCheckEnabled = enabled;
+}
+
 void MarkdownHighlighter::highlightBlock(const QString &textBlock)
 {
     if (document()->isEmpty()) {
@@ -73,15 +78,17 @@ void MarkdownHighlighter::highlightBlock(const QString &textBlock)
     }
 
     // check spelling of passed text block
-    QStringList wordList = textBlock.split(QRegExp("\\W+"), QString::SkipEmptyParts);
-    int index = 0;
-    foreach (QString word, wordList) {
-       index = textBlock.indexOf(word, index);
+    if (spellingCheckEnabled) {
+        QStringList wordList = textBlock.split(QRegExp("\\W+"), QString::SkipEmptyParts);
+        int index = 0;
+        foreach (QString word, wordList) {
+           index = textBlock.indexOf(word, index);
 
-       if (!spellChecker->isCorrect(word)) {
-           setFormat(index, word.length(), spellFormat);
-       }
-       index += word.length();
+           if (!spellChecker->isCorrect(word)) {
+               setFormat(index, word.length(), spellFormat);
+           }
+           index += word.length();
+        }
     }
 
     QString text = document()->toPlainText();

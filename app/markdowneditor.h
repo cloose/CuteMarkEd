@@ -20,6 +20,7 @@
 #include <qplaintextedit.h>
 
 namespace hunspell {
+class Dictionary;
 class SpellChecker;
 }
 class MarkdownHighlighter;
@@ -41,8 +42,9 @@ public:
     int countWords() const;
 
     void setShowHardLinebreaks(bool enabled);
+    void setSpellingCheckEnabled(bool enabled);
+    void setSpellingDictionary(const hunspell::Dictionary &dictionary);
 
-    void addSuggestionsToContextMenu(QTextCursor cursor, int cursorPosition, QMenu *contextMenu);
 signals:
     void loadDroppedFile(const QString &fileName);
 
