@@ -1,46 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<?define ManufacturerName="CuteMarkEd Project"?>
-	<Product Name="CuteMarkEd" 
-	     Id="CDB11734-84EA-45F1-829C-681CD0E7110F" 
-		   UpgradeCode="335156FC-CB7F-4357-98D4-B5519E66402B"
-			 Language="1033" 
-			 Version="0.7.0" 
-			 Manufacturer="$(var.ManufacturerName)">
+  <?define ManufacturerName="CuteMarkEd Project"?>
+  <?define ProductName="CuteMarkEd"?>
+  <?define ProductVersion="0.7.0"?>
+  <Product Name="$(var.ProductName)" 
+      Id="CDB11734-84EA-45F1-829C-681CD0E7110F" 
+      UpgradeCode="335156FC-CB7F-4357-98D4-B5519E66402B"
+      Language="1033" 
+      Version="$(var.ProductVersion)" 
+      Manufacturer="$(var.ManufacturerName)">
 
-		<Package Id="*"
-			     InstallerVersion="200"
-			     Compressed="yes"
-			     Description="CuteMarkEd Installer"
-			     Manufacturer="$(var.ManufacturerName)"
-		/>
+    <Package Id="*"
+        InstallerVersion="200"                  
+        Compressed="yes"
+        Description="CuteMarkEd Installer"
+        Manufacturer="$(var.ManufacturerName)"
+    />
 
-  		<Media Id="1" 
-  			   Cabinet="cutemarked.cab" 
-  			   EmbedCab="yes"
-  		/>
+    <Media Id="1" 
+        Cabinet="cutemarked.cab" 
+        EmbedCab="yes"
+    />
 
-   		<Directory Id="TARGETDIR" Name="SourceDir">
-   			<Directory Id="ProgramFilesFolder">
-   				<Directory Id="INSTALLDIR" Name="CuteMarkEd">
-   					<Component Id="ProductComponent" Guid="21807A79-31EA-4378-A00B-597338E3C9BC" DiskId="1">
-   						<File Id="ApplicationFile" Source="cutemarked.exe"/>
-   					</Component>
-            <Component Id="Qt5Component" Guid="F972C7C4-BF4A-4F45-BD03-09EB4F6EF384" DiskId="1">
-              <File Id="Qt5CoreLibrary" Source="Qt5Core.dll"/>
-              <File Id="Qt5GuiLibrary" Source="Qt5Gui.dll"/>
-            </Component>
-   				</Directory>
-   			</Directory>
-   		</Directory>
+    <!-- Directory tree -->                  
+    <Directory Id="TARGETDIR" Name="SourceDir">                      
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLDIR" Name="$(var.ProductName)">
+          <Directory Id="iconengines" Name="iconengines"/>
+          <Directory Id="imageformats" Name="imageformats"/>
+          <Directory Id="platforms" Name="platforms"/>
+          <Directory Id="printsupport" Name="printsupport"/>
+          <Directory Id="translations" Name="translations"/>
+        </Directory>
+      </Directory>
+      
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ProgramMenuDir" Name="$(var.ProductName) $(var.ProductVersion)">
+          <Component Id="ApplicationShortcuts" Guid="EDF171FF-255B-4036-A363-C81D6E0F4F21">
+            <RemoveFolder Id="ProgramMenuDir" On="uninstall"/>
+            <RegistryValue Root="HKCU" Key="Software\$(var.ManufacturerName)\CuteMarkEd" Type="string" Value="" KeyPath="yes"/>
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
 
-   		<Feature Id="ProductFeature" Title="CuteMarkEd" Level="1">
-   			<ComponentRef Id="ProductComponent"/>
-   		</Feature>
-      <Feature Id="Qt5Feature" Title="Qt 5" Level="1">
-        <ComponentRef Id="Qt5Component"/>
-      </Feature>
+    <!-- Main Installation Directory -->
+    <DirectoryRef Id="INSTALLDIR">
+      <Component Id="ProductComponent" Guid="21807A79-31EA-4378-A00B-597338E3C9BC" DiskId="1">
+        <File Id="ApplicationFile" Source="cutemarked.exe" KeyPath="yes">
+          <Shortcut Id="StartMenuCuteMarkEd" Directory="ProgramMenuDir" Name="CuteMarkEd" WorkingDirectory="INSTALLDIR" Icon="CuteMarkEd.exe" Advertise="yes"/>
+          <!--<Shortcut Id="DesktopCuteMarkEd" Directory="DesktopFolder" Name="CuteMarkEd" WorkingDirectory="INSTALLDIR" Icon="CuteMarkEd.exe" Advertise="yes"/>-->
+        </File>
+      </Component>
+      <Component Id="Qt5Component" Guid="F972C7C4-BF4A-4F45-BD03-09EB4F6EF384" DiskId="1">
+        <File Id="Qt5CoreLibrary" Source="Qt5Core.dll"/>
+        <File Id="Qt5GuiLibrary" Source="Qt5Gui.dll"/>
+        <File Id="Qt5MultimediaLibrary" Source="Qt5Multimedia.dll"/>
+        <File Id="Qt5MultimediaWidgetsLibrary" Source="Qt5MultimediaWidgets.dll"/>
+        <File Id="Qt5NetworkLibrary" Source="Qt5Network.dll"/>
+        <File Id="Qt5OpenGLLibrary" Source="Qt5OpenGL.dll"/>
+        <File Id="Qt5PrintSupportLibrary" Source="Qt5PrintSupport.dll"/>
+        <File Id="Qt5WebKitLibrary" Source="Qt5WebKit.dll"/>
+        <File Id="Qt5WebKitWidgetsLibrary" Source="Qt5WebKitWidgets.dll"/>
+        <File Id="Qt5WidgetsLibrary" Source="Qt5Widgets.dll"/>
+      </Component>
+    </DirectoryRef>
+    
+    <!-- Fontawesome Icon Engine -->
+    <DirectoryRef Id="iconengines">
+      <Component Id="IconEngineComponent" Guid="E7E34602-4099-4A73-8533-7631EF7D598A" DiskId="1">
+        <File Id="IconEnginePlugin" Source="iconengines/fontawesomeicon.dll"/>
+      </Component>
+    </DirectoryRef>
+    
+    <Feature Id="Complete" Title="CuteMarkEd" Level="1">
+      <ComponentRef Id="ProductComponent"/>
+      <ComponentRef Id="Qt5Component"/>
+      <ComponentRef Id="IconEngineComponent"/>
+      <ComponentRef Id="ApplicationShortcuts"/>
+    </Feature>
 
-      <UIRef Id="WixUI_Minimal" />
+    <!-- Allow user to change the installation directory -->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+    <UIRef Id="WixUI_InstallDir" />
+    
+    <Icon Id="CuteMarkEd.exe" SourceFile="cutemarked.exe"/>
   </Product>
 </Wix>
