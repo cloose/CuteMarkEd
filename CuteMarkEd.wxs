@@ -26,6 +26,7 @@
     <Directory Id="TARGETDIR" Name="SourceDir">                      
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLDIR" Name="$(var.ProductName)">
+          <Directory Id="accessible" Name="accessible"/>
           <Directory Id="iconengines" Name="iconengines"/>
           <Directory Id="imageformats" Name="imageformats"/>
           <Directory Id="platforms" Name="platforms"/>
@@ -60,9 +61,32 @@
         <File Id="Qt5NetworkLibrary" Source="Qt5Network.dll"/>
         <File Id="Qt5OpenGLLibrary" Source="Qt5OpenGL.dll"/>
         <File Id="Qt5PrintSupportLibrary" Source="Qt5PrintSupport.dll"/>
+        <File Id="Qt5QmlLibrary" Source="Qt5Qml.dll"/>
+        <File Id="Qt5QuickLibrary" Source="Qt5Quick.dll"/>
+        <File Id="Qt5SqlLibrary" Source="Qt5Sql.dll"/>
+        <File Id="Qt5V8Library" Source="Qt5V8.dll"/>
         <File Id="Qt5WebKitLibrary" Source="Qt5WebKit.dll"/>
         <File Id="Qt5WebKitWidgetsLibrary" Source="Qt5WebKitWidgets.dll"/>
         <File Id="Qt5WidgetsLibrary" Source="Qt5Widgets.dll"/>
+        <File Id="D3DCompilerLibrary" Source="D3DCompiler_43.dll"/>
+        <File Id="icudt49Library" Source="icudt49.dll"/>
+        <File Id="icuin49Library" Source="icuin49.dll"/>
+        <File Id="icuuc49Library" Source="icuuc49.dll"/>
+        <File Id="libEGLLibrary" Source="libEGL.dll"/>
+        <File Id="libgcc_s_sjljLibrary" Source="libgcc_s_sjlj-1.dll"/>
+        <File Id="libGLESv2Library" Source="libGLESv2.dll"/>
+        <File Id="libstdcppLibrary" Source="libstdc++-6.dll"/>
+        <File Id="libwinpthreadLibrary" Source="libwinpthread-1.dll"/>
+      </Component>
+      <Component Id="OpenSSLComponent" Guid="E4DE4606-204F-46D8-9BE2-6CF62F3A7884" DiskId="1">
+        <File Id="libeay32Library" Source="libeay32.dll"/>
+        <File Id="ssleay32Library" Source="ssleay32.dll"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="accessible">
+      <Component Id="QtAccessiblityComponent" Guid="A4B2D7FA-3B7F-4F03-B3B1-AF5C212F4B44" DiskId="1">
+        <File Id="QtAccessibleWidgetsPlugin" Source="accessible/qtaccessiblewidgets.dll"/>
       </Component>
     </DirectoryRef>
     
@@ -72,10 +96,26 @@
         <File Id="IconEnginePlugin" Source="iconengines/fontawesomeicon.dll"/>
       </Component>
     </DirectoryRef>
+
+    <DirectoryRef Id="imageformats">
+      <Component Id="QtImageFormatsComponent" Guid="B688FB5F-318F-494D-BF56-C83F3BB3F946" DiskId="1">
+        <File Id="QtGifPlugin" Source="imageformats/qgif.dll"/>
+        <File Id="QtIcoPlugin" Source="imageformats/qico.dll"/>
+        <File Id="QtJpegPlugin" Source="imageformats/qjpeg.dll"/>
+        <File Id="QtMngPlugin" Source="imageformats/qmng.dll"/>
+        <File Id="QtSvgPlugin" Source="imageformats/qsvg.dll"/>
+        <File Id="QtTgaPlugin" Source="imageformats/qtga.dll"/>
+        <File Id="QtTiffPlugin" Source="imageformats/qtiff.dll"/>
+        <File Id="QtWbmpPlugin" Source="imageformats/qwbmp.dll"/>
+      </Component>
+    </DirectoryRef>
     
     <Feature Id="Complete" Title="CuteMarkEd" Level="1">
       <ComponentRef Id="ProductComponent"/>
       <ComponentRef Id="Qt5Component"/>
+      <ComponentRef Id="QtAccessiblityComponent"/>
+      <ComponentRef Id="QtImageFormatsComponent"/>
+      <ComponentRef Id="OpenSSLComponent"/>
       <ComponentRef Id="IconEngineComponent"/>
       <ComponentRef Id="ApplicationShortcuts"/>
     </Feature>
