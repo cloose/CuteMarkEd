@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?define ManufacturerName="CuteMarkEd Project"?>
+  <?define ProductName="CuteMarkEd"?>
+  <?define ProductVersion="0.7.0"?>
+  <Product Name="$(var.ProductName)" 
+      Id="CDB11734-84EA-45F1-829C-681CD0E7110F" 
+      UpgradeCode="335156FC-CB7F-4357-98D4-B5519E66402B"
+      Language="1033" 
+      Version="$(var.ProductVersion)" 
+      Manufacturer="$(var.ManufacturerName)">
+
+    <Package Id="*"
+        InstallerVersion="200"                  
+        Compressed="yes"
+        Description="CuteMarkEd Installer"
+        Manufacturer="$(var.ManufacturerName)"
+    />
+
+    <Media Id="1" 
+        Cabinet="cutemarked.cab" 
+        EmbedCab="yes"
+    />
+
+    <!-- Directory tree -->                  
+    <Directory Id="TARGETDIR" Name="SourceDir">                      
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLDIR" Name="$(var.ProductName)">
+          <Directory Id="accessible" Name="accessible"/>
+          <Directory Id="dictionaries" Name="dictionaries"/>
+          <Directory Id="iconengines" Name="iconengines"/>
+          <Directory Id="imageformats" Name="imageformats"/>
+          <Directory Id="platforms" Name="platforms"/>
+          <Directory Id="printsupport" Name="printsupport"/>
+          <Directory Id="translations" Name="translations"/>
+        </Directory>
+      </Directory>
+      
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ProgramMenuDir" Name="$(var.ProductName) $(var.ProductVersion)">
+          <Component Id="ApplicationShortcuts" Guid="EDF171FF-255B-4036-A363-C81D6E0F4F21">
+            <RemoveFolder Id="ProgramMenuDir" On="uninstall"/>
+            <RegistryValue Root="HKCU" Key="Software\$(var.ManufacturerName)\CuteMarkEd" Type="string" Value="" KeyPath="yes"/>
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <!-- Main Installation Directory -->
+    <DirectoryRef Id="INSTALLDIR">
+      <Component Id="ProductComponent" Guid="21807A79-31EA-4378-A00B-597338E3C9BC" DiskId="1">
+        <File Id="ApplicationFile" Source="cutemarked.exe" KeyPath="yes">
+          <Shortcut Id="StartMenuCuteMarkEd" Directory="ProgramMenuDir" Name="CuteMarkEd" WorkingDirectory="INSTALLDIR" Icon="CuteMarkEd.exe" Advertise="yes"/>
+          <!--<Shortcut Id="DesktopCuteMarkEd" Directory="DesktopFolder" Name="CuteMarkEd" WorkingDirectory="INSTALLDIR" Icon="CuteMarkEd.exe" Advertise="yes"/>-->
+        </File>
+      </Component>
+      <Component Id="Qt5Component" Guid="F972C7C4-BF4A-4F45-BD03-09EB4F6EF384" DiskId="1">
+        <File Id="Qt5CoreLibrary" Source="Qt5Core.dll"/>
+        <File Id="Qt5GuiLibrary" Source="Qt5Gui.dll"/>
+        <File Id="Qt5MultimediaLibrary" Source="Qt5Multimedia.dll"/>
+        <File Id="Qt5MultimediaWidgetsLibrary" Source="Qt5MultimediaWidgets.dll"/>
+        <File Id="Qt5NetworkLibrary" Source="Qt5Network.dll"/>
+        <File Id="Qt5OpenGLLibrary" Source="Qt5OpenGL.dll"/>
+        <File Id="Qt5PrintSupportLibrary" Source="Qt5PrintSupport.dll"/>
+        <File Id="Qt5QmlLibrary" Source="Qt5Qml.dll"/>
+        <File Id="Qt5QuickLibrary" Source="Qt5Quick.dll"/>
+        <File Id="Qt5SqlLibrary" Source="Qt5Sql.dll"/>
+        <File Id="Qt5V8Library" Source="Qt5V8.dll"/>
+        <File Id="Qt5WebKitLibrary" Source="Qt5WebKit.dll"/>
+        <File Id="Qt5WebKitWidgetsLibrary" Source="Qt5WebKitWidgets.dll"/>
+        <File Id="Qt5WidgetsLibrary" Source="Qt5Widgets.dll"/>
+        <File Id="D3DCompilerLibrary" Source="D3DCompiler_43.dll"/>
+        <File Id="icudt49Library" Source="icudt49.dll"/>
+        <File Id="icuin49Library" Source="icuin49.dll"/>
+        <File Id="icuuc49Library" Source="icuuc49.dll"/>
+        <File Id="libEGLLibrary" Source="libEGL.dll"/>
+        <File Id="libgcc_s_sjljLibrary" Source="libgcc_s_sjlj-1.dll"/>
+        <File Id="libGLESv2Library" Source="libGLESv2.dll"/>
+        <File Id="libstdcppLibrary" Source="libstdc++-6.dll"/>
+        <File Id="libwinpthreadLibrary" Source="libwinpthread-1.dll"/>
+      </Component>
+      <Component Id="OpenSSLComponent" Guid="E4DE4606-204F-46D8-9BE2-6CF62F3A7884" DiskId="1">
+        <File Id="libeay32Library" Source="libeay32.dll"/>
+        <File Id="ssleay32Library" Source="ssleay32.dll"/>
+      </Component>
+      <Component Id="HunspellComponent" Guid="B250CB0F-AB3A-4D76-A434-3C42BF2BC863" DiskId="1">
+        <File Id="HunspellLibrary" Source="hunspell.dll"/>
+      </Component>
+      <Component Id="TextComponent" Guid="8C44FFEF-D648-4D1A-8057-02EBF71DE414" DiskId="1">
+        <File Id="LICENSE.md" Source="LICENSE.md"/>
+        <File Id="README.md" Source="README.md"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="accessible">
+      <Component Id="QtAccessiblityComponent" Guid="A4B2D7FA-3B7F-4F03-B3B1-AF5C212F4B44" DiskId="1">
+        <File Id="QtAccessibleWidgetsPlugin" Source="accessible/qtaccessiblewidgets.dll"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="dictionaries">
+      <Component Id="DictionariesComponent" Guid="AAC09D8C-FFD2-46DF-BDA2-081D26AFF431" DiskId="1">
+        <File Id="cs_CZ.aff" Source="dictionaries/cs_CZ.aff"/>
+        <File Id="cs_CZ.dic" Source="dictionaries/cs_CZ.dic"/>
+        <File Id="de_DE_frami.aff" Source="dictionaries/de_DE_frami.aff"/>
+        <File Id="de_DE_frami.dic" Source="dictionaries/de_DE_frami.dic"/>
+        <File Id="en_GB.aff" Source="dictionaries/en_GB.aff"/>
+        <File Id="en_GB.dic" Source="dictionaries/en_GB.dic"/>
+        <File Id="en_US.aff" Source="dictionaries/en_US.aff"/>
+        <File Id="en_US.dic" Source="dictionaries/en_US.dic"/>
+        <File Id="README_cs_CZ.txt" Source="dictionaries/README_cs_CZ.txt"/>
+        <File Id="README_de_DE_frami.txt" Source="dictionaries/README_de_DE_frami.txt"/>
+        <File Id="README_en_GB.txt" Source="dictionaries/README_en_GB.txt"/>
+        <File Id="README_en_US.txt" Source="dictionaries/README_en_US.txt"/>
+      </Component>
+    </DirectoryRef>
+    
+    <!-- Fontawesome Icon Engine -->
+    <DirectoryRef Id="iconengines">
+      <Component Id="IconEngineComponent" Guid="E7E34602-4099-4A73-8533-7631EF7D598A" DiskId="1">
+        <File Id="IconEnginePlugin" Source="iconengines/fontawesomeicon.dll"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="imageformats">
+      <Component Id="QtImageFormatsComponent" Guid="B688FB5F-318F-494D-BF56-C83F3BB3F946" DiskId="1">
+        <File Id="QtGifPlugin" Source="imageformats/qgif.dll"/>
+        <File Id="QtIcoPlugin" Source="imageformats/qico.dll"/>
+        <File Id="QtJpegPlugin" Source="imageformats/qjpeg.dll"/>
+        <File Id="QtMngPlugin" Source="imageformats/qmng.dll"/>
+        <File Id="QtSvgPlugin" Source="imageformats/qsvg.dll"/>
+        <File Id="QtTgaPlugin" Source="imageformats/qtga.dll"/>
+        <File Id="QtTiffPlugin" Source="imageformats/qtiff.dll"/>
+        <File Id="QtWbmpPlugin" Source="imageformats/qwbmp.dll"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="platforms">
+      <Component Id="QtPlatformsComponent" Guid="0F98A860-E96D-4C58-80A8-BF442C782759" DiskId="1">
+        <File Id="QtMinimalPlugin" Source="platforms/qminimal.dll"/>
+        <File Id="QtWindowsPlugin" Source="platforms/qwindows.dll"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="printsupport">
+      <Component Id="QtPrintSupportComponent" Guid="5C8C51BC-13C8-4E4A-9EF1-DE3AC54886F1" DiskId="1">
+        <File Id="QtWindowsPrinterPlugin" Source="printsupport/windowsprintersupport.dll"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="translations">
+      <Component Id="QtTranslationsComponent" Guid="245EDE4C-00C9-4FA9-9E78-D4B1C526AAF0" DiskId="1">
+        <File Id="QtAssistantCSTranslation" Source="translations/assistant_cs.qm"/>
+        <File Id="QtAssistantDETranslation" Source="translations/assistant_de.qm"/>
+        <File Id="QtAssistantZHCNTranslation" Source="translations/assistant_zh_CN.qm"/>
+        <File Id="QtAssistantZHTWTranslation" Source="translations/assistant_zh_TW.qm"/>
+        <File Id="QtDesignerCSTranslation" Source="translations/designer_cs.qm"/>
+        <File Id="QtDesignerDETranslation" Source="translations/designer_de.qm"/>
+        <File Id="QtDesignerZHCNTranslation" Source="translations/designer_zh_CN.qm"/>
+        <File Id="QtDesignerZHTWTranslation" Source="translations/designer_zh_TW.qm"/>
+        <File Id="QtLinguistCSTranslation" Source="translations/linguist_cs.qm"/>
+        <File Id="QtLinguistDETranslation" Source="translations/linguist_de.qm"/>
+        <File Id="QtLinguistZHCNTranslation" Source="translations/linguist_zh_CN.qm"/>
+        <File Id="QtLinguistZHTWTranslation" Source="translations/linguist_zh_TW.qm"/>
+        <File Id="QtQmlViewerCSTranslation" Source="translations/qmlviewer_cs.qm"/>
+        <File Id="QtCSTranslation" Source="translations/qt_cs.qm"/>
+        <File Id="QtDETranslation" Source="translations/qt_de.qm"/>
+        <File Id="QtZHCNTranslation" Source="translations/qt_zh_CN.qm"/>
+        <File Id="QtZHTWTranslation" Source="translations/qt_zh_TW.qm"/>
+        <File Id="QtHelpCSTranslation" Source="translations/qt_help_cs.qm"/>
+        <File Id="QtHelpDETranslation" Source="translations/qt_help_de.qm"/>
+        <File Id="QtHelpZHCNTranslation" Source="translations/qt_help_zh_CN.qm"/>
+        <File Id="QtHelpZHTWTranslation" Source="translations/qt_help_zh_TW.qm"/>
+        <File Id="QtBaseCSTranslation" Source="translations/qtbase_cs.qm"/>
+        <File Id="QtBaseDETranslation" Source="translations/qtbase_de.qm"/>
+        <File Id="QtConfigZHCNTranslation" Source="translations/qtconfig_zh_CN.qm"/>
+        <File Id="QtConfigZHTWTranslation" Source="translations/qtconfig_zh_TW.qm"/>
+        <File Id="QtDeclarativeDETranslation" Source="translations/qtdeclarative_de.qm"/>
+        <File Id="QtMultimediaCSTranslation" Source="translations/qtmultimedia_cs.qm"/>
+        <File Id="QtMultimediaDETranslation" Source="translations/qtmultimedia_de.qm"/>
+        <File Id="QtQuick1CSTranslation" Source="translations/qtquick1_cs.qm"/>
+        <File Id="QtQuick1DETranslation" Source="translations/qtquick1_de.qm"/>
+        <File Id="QtScriptCSTranslation" Source="translations/qtscript_cs.qm"/>
+        <File Id="QtScriptDETranslation" Source="translations/qtscript_de.qm"/>
+        <File Id="QtXmlPatternsCSTranslation" Source="translations/qtxmlpatterns_cs.qm"/>
+        <File Id="QtXmlPatternsDETranslation" Source="translations/qtxmlpatterns_de.qm"/>
+      </Component>
+    </DirectoryRef>
+    
+    <Feature Id="Complete" Title="CuteMarkEd" Level="1">
+      <ComponentRef Id="ProductComponent"/>
+      <ComponentRef Id="Qt5Component"/>
+      <ComponentRef Id="QtAccessiblityComponent"/>
+      <ComponentRef Id="QtImageFormatsComponent"/>
+      <ComponentRef Id="QtPlatformsComponent"/>
+      <ComponentRef Id="QtPrintSupportComponent"/>
+      <ComponentRef Id="QtTranslationsComponent"/>
+      <ComponentRef Id="OpenSSLComponent"/>
+      <ComponentRef Id="IconEngineComponent"/>
+      <ComponentRef Id="HunspellComponent"/>
+      <ComponentRef Id="DictionariesComponent"/>
+      <ComponentRef Id="TextComponent"/>
+      <ComponentRef Id="ApplicationShortcuts"/>
+    </Feature>
+
+    <!-- Allow user to change the installation directory -->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+    <UIRef Id="WixUI_InstallDir" />
+    
+    <!-- Skip license dialog -->
+    <UI>
+      <Publish Dialog="WelcomeDlg"
+               Control="Next"
+               Event="NewDialog"
+               Value="InstallDirDlg"
+               Order="2">1</Publish>
+      <Publish Dialog="InstallDirDlg"
+               Control="Back"
+               Event="NewDialog"
+               Value="WelcomeDlg"
+               Order="2">1</Publish>
+    </UI>
+                 
+    <Icon Id="CuteMarkEd.exe" SourceFile="cutemarked.exe"/>
+  </Product>
+</Wix>
