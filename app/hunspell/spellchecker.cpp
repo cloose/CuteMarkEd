@@ -97,6 +97,7 @@ QMap<QString, hunspell::Dictionary> SpellChecker::availableDictionaries()
                 it.next();
 
                 QString language = it.fileName().remove(".dic");
+                language.truncate(5); // just language and country code
 
                 Dictionary dict(it.fileName(), it.filePath());
                 dictionaries.insert(language, dict);
