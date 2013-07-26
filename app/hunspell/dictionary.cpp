@@ -46,12 +46,12 @@ QString Dictionary::language() const
 
 QString Dictionary::languageName() const
 {
-    return QLocale::languageToString(QLocale(m_language).language());
+    return QLocale(m_language).nativeLanguageName();
 }
 
 QString Dictionary::countryName() const
 {
-    return QLocale::countryToString(QLocale(m_language).country());
+    return QLocale(m_language).nativeCountryName();
 }
 
 QString Dictionary::filePath() const
