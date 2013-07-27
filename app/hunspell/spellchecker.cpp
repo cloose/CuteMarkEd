@@ -42,6 +42,10 @@ SpellChecker::~SpellChecker()
 
 bool SpellChecker::isCorrect(const QString &word)
 {
+    if (!textCodec || !hunspellChecker) {
+        return true;
+    }
+
     QByteArray ba = textCodec->fromUnicode(word);
     return hunspellChecker->spell(ba) != 0;
 }
@@ -49,6 +53,10 @@ bool SpellChecker::isCorrect(const QString &word)
 QStringList SpellChecker::suggestions(const QString &word)
 {
     QStringList suggestions;
+
+    if (!textCodec || !hunspellChecker) {
+        return suggestions;
+    }
 
     char **suggestedWords;
     QByteArray ba = textCodec->fromUnicode(word);
