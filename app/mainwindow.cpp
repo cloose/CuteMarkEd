@@ -110,6 +110,10 @@ void MainWindow::initializeApp()
     ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 
+    // don't show context menu for HTML preview
+    // most actions don't work and can even lead to crashes (like reload)
+    ui->webView->setContextMenuPolicy(Qt::NoContextMenu);
+
     // set default style
     styleDefault();
 
