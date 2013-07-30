@@ -131,7 +131,7 @@ void MainWindow::initializeApp()
     // set url to markdown syntax help
     ui->webView_2->setUrl(tr("qrc:/syntax.html"));
 
-    // load remote javascript and use system proxy configuration
+    // allow loading of remote javascript
     QWebSettings::globalSettings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
 
     // setup disk cache for network access
