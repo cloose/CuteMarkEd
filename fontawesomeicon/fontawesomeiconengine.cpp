@@ -218,6 +218,7 @@ void FontAwesomeIconEngine::loadFont()
         // 0xf120
         namedCodepoints.insert("icon-terminal", QChar(0xf120));
         namedCodepoints.insert("icon-code", QChar(0xf121));
+        namedCodepoints.insert("icon-code-fork", QChar(0xf126));
         namedCodepoints.insert("icon-unlink", QChar(0xf127));
         namedCodepoints.insert("icon-question", QChar(0xf128));
         namedCodepoints.insert("icon-info", QChar(0xf129));
@@ -225,8 +226,10 @@ void FontAwesomeIconEngine::loadFont()
         namedCodepoints.insert("icon-superscript", QChar(0xf12b));
         namedCodepoints.insert("icon-subscript", QChar(0xf12c));
         namedCodepoints.insert("icon-eraser", QChar(0xf12d));
+        namedCodepoints.insert("icon-puzzle-piece", QChar(0xf12e));
 
         // 0xf130
+        namedCodepoints.insert("icon-html5", QChar(0xf13b));
         namedCodepoints.insert("icon-anchor", QChar(0xf13d));
 
         // 0xf140
@@ -236,5 +239,10 @@ void FontAwesomeIconEngine::loadFont()
         // 0xf150
         namedCodepoints.insert("icon-file", QChar(0xf15b));
         namedCodepoints.insert("icon-file-text", QChar(0xf15c));
+        namedCodepoints.insert("icon-sort-by-alphabet", QChar(0xf15d));
+        namedCodepoints.insert("icon-sort-by-alphabet-alt", QChar(0xf15e));
+
+        // 0xf188
+        namedCodepoints.insert("icon-bug", QChar(0xf188));
     }
 }
