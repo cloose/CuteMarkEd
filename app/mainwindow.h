@@ -71,6 +71,8 @@ private slots:
     void editCenterParagraph();
     void editHardLinebreak();
     void editBlockquote();
+    void editIncreaseHeaderLevel();
+    void editDecreaseHeaderLevel();
 
     void viewChangeSplit();
     void styleDefault();

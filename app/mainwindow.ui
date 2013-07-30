@@ -154,6 +154,8 @@
      <addaction name="actionCenterParagraph"/>
      <addaction name="actionHardLinebreak"/>
      <addaction name="actionBlockquote"/>
+     <addaction name="actionIncreaseHeaderLevel"/>
+     <addaction name="actionDecreaseHeaderLevel"/>
     </widget>
     <widget class="QMenu" name="menuFindReplace">
      <property name="title">
@@ -625,6 +627,16 @@
    </property>
    <property name="text">
     <string>Check Spelling</string>
+   </property>
+  </action>
+  <action name="actionIncreaseHeaderLevel">
+   <property name="text">
+    <string>Increase Header Level</string>
+   </property>
+  </action>
+  <action name="actionDecreaseHeaderLevel">
+   <property name="text">
+    <string>Decrease Header Level</string>
    </property>
   </action>
  </widget>
@@ -1456,6 +1468,38 @@
    <signal>triggered(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>extrasCheckSpelling(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionIncreaseHeaderLevel</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editIncreaseHeaderLevel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDecreaseHeaderLevel</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editDecreaseHeaderLevel()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

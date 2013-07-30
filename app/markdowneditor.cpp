@@ -134,29 +134,6 @@ void MarkdownEditor::resetHighlighting()
     highlighter->reset();
 }
 
-void MarkdownEditor::keyPressEvent(QKeyEvent *e)
-{
-    // Ctrl+Right Arrow
-    if ((e->key() == Qt::Key_Right) && (e->modifiers() & Qt::ControlModifier)) {
-        MarkdownManipulator manipulator(this);
-        manipulator.increaseHeadingLevel();
-
-        e->accept();
-        return;
-    }
-
-    // Ctrl+Left Arrow
-    if ((e->key() == Qt::Key_Left) && (e->modifiers() & Qt::ControlModifier)) {
-        MarkdownManipulator manipulator(this);
-        manipulator.decreaseHeadingLevel();
-
-        e->accept();
-        return;
-    }
-
-    QPlainTextEdit::keyPressEvent(e);
-}
-
 void MarkdownEditor::paintEvent(QPaintEvent *e)
 {
     QPlainTextEdit::paintEvent(e);
@@ -279,9 +256,15 @@ void MarkdownEditor::loadStyleFromStylesheet(const QString &fileName)
     QTextStream ts(&f);
     QString input = ts.readAll();
 
+    // parse the stylesheet
     PegMarkdownHighlight::StyleParser parser(input);
-    highlighter->setStyles(parser.highlightingStyles(this->font()));
+    QVector<PegMarkdownHighlight::HighlightingStyle> styles = parser.highlightingStyles(this->font());
+
+    // set new style & rehighlight markdown document
+    highlighter->setStyles(styles);
     highlighter->rehighlight();
+
+    // update color palette
     this->setPalette(parser.editorPalette());
     this->viewport()->setPalette(this->palette());
 }
@@ -332,6 +315,7 @@ void MarkdownEditor::setSpellingCheckEnabled(bool enabled)
 {
     highlighter->setSpellingCheckEnabled(enabled);
 
+    // rehighlight markdown document
     highlighter->reset();
     highlighter->rehighlight();
 }
@@ -340,6 +324,7 @@ void MarkdownEditor::setSpellingDictionary(const hunspell::Dictionary &dictionar
 {
     spellChecker->loadDictionary(dictionary.filePath());
 
+    // rehighlight markdown document
     highlighter->reset();
     highlighter->rehighlight();
 }

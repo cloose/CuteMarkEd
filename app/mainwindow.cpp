@@ -351,6 +351,18 @@ void MainWindow::editBlockquote()
     manipulator.prependToLine('>');
 }
 
+void MainWindow::editIncreaseHeaderLevel()
+{
+    MarkdownManipulator manipulator(ui->plainTextEdit);
+    manipulator.increaseHeadingLevel();
+}
+
+void MainWindow::editDecreaseHeaderLevel()
+{
+    MarkdownManipulator manipulator(ui->plainTextEdit);
+    manipulator.decreaseHeadingLevel();
+}
+
 void MainWindow::viewChangeSplit()
 {
     QAction* action = qobject_cast<QAction*>(sender());
@@ -767,6 +779,10 @@ void MainWindow::setupActions()
     ui->actionCenterParagraph->setIcon(QIcon("icon-align-center.fontawesome"));
     ui->actionHardLinebreak->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return));
     ui->actionBlockquote->setIcon(QIcon("icon-quote-left.fontawesome"));
+    ui->actionIncreaseHeaderLevel->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Right));
+    ui->actionIncreaseHeaderLevel->setIcon(QIcon("icon-level-up.fontawesome"));
+    ui->actionDecreaseHeaderLevel->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Left));
+    ui->actionDecreaseHeaderLevel->setIcon(QIcon("icon-level-down.fontawesome"));
 
     ui->actionFindReplace->setShortcut(QKeySequence::Find);
     ui->actionFindReplace->setIcon(QIcon("icon-search.fontawesome"));
