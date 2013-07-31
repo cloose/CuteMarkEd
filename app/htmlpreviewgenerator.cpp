@@ -24,16 +24,10 @@
 HtmlPreviewGenerator::HtmlPreviewGenerator(Options *opt, QObject *parent) :
     QThread(parent),
     options(opt),
+    document(0),
     mathSupportEnabled(false),
     codeHighlightingEnabled(false)
 {
-}
-
-void HtmlPreviewGenerator::enqueue(const QString &text)
-{
-    QMutexLocker locker(&tasksMutex);
-    tasks.enqueue(text);
-    bufferNotEmpty.wakeOne();
 }
 
 void HtmlPreviewGenerator::setHtmlTemplate(const QString &t)
@@ -41,21 +35,37 @@ void HtmlPreviewGenerator::setHtmlTemplate(const QString &t)
     htmlTemplate = t;
 }
 
+void HtmlPreviewGenerator::markdownTextChanged(const QString &text)
+{
+    // enqueue task to parse the markdown text and generate a new HTML document
+    QMutexLocker locker(&tasksMutex);
+    tasks.enqueue(text);
+    bufferNotEmpty.wakeOne();
+}
+
 void HtmlPreviewGenerator::setMathSupportEnabled(bool enabled)
 {
     mathSupportEnabled = enabled;
+
+    // regenerate a HTML document
+    generateHtmlFromMarkdown();
 }
 
 void HtmlPreviewGenerator::setCodeHighlightingEnabled(bool enabled)
 {
     codeHighlightingEnabled = enabled;
+
+    // regenerate a HTML document
+    generateHtmlFromMarkdown();
 }
 
 void HtmlPreviewGenerator::setCodeHighlightingStyle(const QString &style)
 {
     codeHighlightingStyle = style;
-}
 
+    // regenerate a HTML document
+    generateHtmlFromMarkdown();
+}
 
 void HtmlPreviewGenerator::run()
 {
@@ -78,27 +88,36 @@ void HtmlPreviewGenerator::run()
             return;
         }
 
+        // delete previous markdown document
+        delete document;
+
         // generate HTML from markdown
-        Discount::Document document(text, parserOptions());
-        QString htmlContent = document.toHtml();
-        QString html = renderTemplate(buildHtmlHeader(), htmlContent);
-        emit htmlResultReady(html);
+        document = new Discount::Document(text, parserOptions());
+        generateHtmlFromMarkdown();
 
         // generate table of contents
-        QString toc = document.generateToc();
+        QString toc = document->generateToc();
         emit tocResultReady(toc);
     }
 }
 
-QString HtmlPreviewGenerator::renderTemplate(const QString &header, const QString &content)
+void HtmlPreviewGenerator::generateHtmlFromMarkdown()
+{
+    if (!document) return;
+
+    QString html = renderTemplate(buildHtmlHeader(), document->toHtml());
+    emit htmlResultReady(html);
+}
+
+QString HtmlPreviewGenerator::renderTemplate(const QString &header, const QString &body)
 {
     if (htmlTemplate.isEmpty()) {
-        return content;
+        return body;
     }
 
     return QString(htmlTemplate)
             .replace(QLatin1String("__HTML_HEADER__"), header)
-            .replace(QLatin1String("__HTML_CONTENT__"), content);
+            .replace(QLatin1String("__HTML_CONTENT__"), body);
 }
 
 QString HtmlPreviewGenerator::buildHtmlHeader() const

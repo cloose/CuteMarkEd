@@ -1176,38 +1176,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionMathSupport</sender>
-   <signal>triggered(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>extrasMathSupport(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>249</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionCodeHighlighting</sender>
-   <signal>triggered(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>extrasCodeHighlighting(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>249</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>actionClearness</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>

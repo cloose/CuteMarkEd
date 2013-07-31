@@ -53,6 +53,7 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     options(new Options(this)),
+    diskCache(new QNetworkDiskCache(this)),
     styleLabel(0),
     wordCountLabel(0),
     viewLabel(0),
@@ -71,7 +72,7 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
 MainWindow::~MainWindow()
 {
     // stop background HTML preview generator
-    generator->enqueue(QString());
+    generator->markdownTextChanged(QString());
     generator->wait();
     delete generator;
 
@@ -135,7 +136,6 @@ void MainWindow::initializeApp()
     QWebSettings::globalSettings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
 
     // setup disk cache for network access
-    diskCache = new QNetworkDiskCache(this);
     QString cacheDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
     diskCache->setCacheDirectory(cacheDir);
 
@@ -383,66 +383,60 @@ void MainWindow::viewChangeSplit()
 
 void MainWindow::styleDefault()
 {
+    generator->setCodeHighlightingStyle("default");
+
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/markdown.css"));
-
-    generator->setCodeHighlightingStyle("default");
-    plainTextChanged();
 
     styleLabel->setText(ui->actionDefault->text());
 }
 
 void MainWindow::styleGithub()
 {
+    generator->setCodeHighlightingStyle("github");
+
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/github.css"));
-
-    generator->setCodeHighlightingStyle("github");
-    plainTextChanged();
 
     styleLabel->setText(ui->actionGithub->text());
 }
 
 void MainWindow::styleSolarizedLight()
 {
+    generator->setCodeHighlightingStyle("solarized_light");
+
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-light+.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-light.css"));
-
-    generator->setCodeHighlightingStyle("solarized_light");
-    plainTextChanged();
 
     styleLabel->setText(ui->actionSolarizedLight->text());
 }
 
 void MainWindow::styleSolarizedDark()
 {
+    generator->setCodeHighlightingStyle("solarized_dark");
+
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-dark+.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-dark.css"));
-
-    generator->setCodeHighlightingStyle("solarized_dark");
-    plainTextChanged();
 
     styleLabel->setText(ui->actionSolarizedDark->text());
 }
 
 void MainWindow::styleClearness()
 {
+    generator->setCodeHighlightingStyle("default");
+
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness.css"));
-
-    generator->setCodeHighlightingStyle("default");
-    plainTextChanged();
 
     styleLabel->setText(ui->actionClearness->text());
 }
 
 void MainWindow::styleClearnessDark()
 {
+    generator->setCodeHighlightingStyle("default");
+
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/clearness-dark+.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness-dark.css"));
-
-    generator->setCodeHighlightingStyle("default");
-    plainTextChanged();
 
     styleLabel->setText(ui->actionClearnessDark->text());
 }
@@ -451,11 +445,10 @@ void MainWindow::styleCustomStyle()
 {
     QAction *action = qobject_cast<QAction*>(sender());
 
+    generator->setCodeHighlightingStyle("default");
+
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl::fromLocalFile(action->data().toString()));
-
-    generator->setCodeHighlightingStyle("default");
-    plainTextChanged();
 
     styleLabel->setText(action->text());
 }
@@ -467,18 +460,6 @@ void MainWindow::viewFullScreenMode()
     } else {
         showNormal();
     }
-}
-
-void MainWindow::extrasMathSupport(bool checked)
-{
-    generator->setMathSupportEnabled(checked);
-    plainTextChanged();
-}
-
-void MainWindow::extrasCodeHighlighting(bool checked)
-{
-    generator->setCodeHighlightingEnabled(checked);
-    plainTextChanged();
 }
 
 void MainWindow::extrasShowHardLinebreaks(bool checked)
@@ -591,7 +572,7 @@ void MainWindow::plainTextChanged()
     }
 
     // generate HTML from markdown
-    generator->enqueue(code);
+    generator->markdownTextChanged(code);
 
     // show modification indicator in window title
     setWindowModified(ui->plainTextEdit->document()->isModified());
@@ -800,6 +781,12 @@ void MainWindow::setupActions()
     ui->actionHtmlPreview->setShortcut(QKeySequence(Qt::Key_F5));
     ui->actionFullScreenMode->setShortcut(QKeySequence::FullScreen);
     ui->actionFullScreenMode->setIcon(QIcon("icon-fullscreen.fontawesome"));
+
+    // extras menu
+    connect(ui->actionMathSupport, SIGNAL(triggered(bool)),
+            generator, SLOT(setMathSupportEnabled(bool)));
+    connect(ui->actionCodeHighlighting, SIGNAL(triggered(bool)),
+            generator, SLOT(setCodeHighlightingEnabled(bool)));
 
     // style menu
     ui->actionDefault->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));

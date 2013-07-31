@@ -24,6 +24,9 @@
 
 #include "discount/parser.h"
 
+namespace Discount {
+class Document;
+}
 class Options;
 
 class HtmlPreviewGenerator : public QThread
@@ -33,8 +36,10 @@ class HtmlPreviewGenerator : public QThread
 public:
     explicit HtmlPreviewGenerator(Options *opt, QObject *parent = 0);
     
-    void enqueue(const QString &text);
     void setHtmlTemplate(const QString &t);
+
+public slots:
+    void markdownTextChanged(const QString &text);
     void setMathSupportEnabled(bool enabled);
     void setCodeHighlightingEnabled(bool enabled);
     void setCodeHighlightingStyle(const QString &style);
@@ -47,12 +52,14 @@ protected:
     virtual void run();
 
 private:
-    QString renderTemplate(const QString &header, const QString &content);
+    void generateHtmlFromMarkdown();
+    QString renderTemplate(const QString &header, const QString &body);
     QString buildHtmlHeader() const;
     Discount::Parser::ParserOptions parserOptions() const;
 
 private:
     Options *options;
+    Discount::Document *document;
     QQueue<QString> tasks;
     QMutex tasksMutex;
     QWaitCondition bufferNotEmpty;
