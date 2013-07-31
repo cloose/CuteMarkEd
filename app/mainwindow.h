@@ -23,6 +23,10 @@ namespace Ui {
 class MainWindow;
 }
 
+namespace hunspell {
+class Dictionary;
+}
+
 class QActionGroup;
 class QLabel;
 class QNetworkDiskCache;
@@ -51,6 +55,7 @@ protected:
 private slots:
     void initializeApp();
     void openRecentFile(const QString &fileName);
+    void languageChanged(const hunspell::Dictionary &dictionary);
 
     void fileNew();
     void fileOpen();
@@ -91,7 +96,6 @@ private slots:
     void extensionsDefinitionLists(bool checked);
     void extensionsSmartyPants(bool checked);
     void extrasCheckSpelling(bool checked);
-    void extrasLanguage();
     void extrasOptions();
 
     void helpMarkdownSyntax();
@@ -126,7 +130,6 @@ private:
     void setFileName(const QString &fileName);
     void updateSplitter(bool htmlViewToggled);
     void loadCustomStyles();
-    void loadDictionaries();
     void readSettings();
     void writeSettings();
 

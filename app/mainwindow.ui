@@ -224,7 +224,7 @@
      <addaction name="actionDefinitionLists"/>
      <addaction name="actionSmartyPants"/>
     </widget>
-    <widget class="QMenu" name="menuLanguages">
+    <widget class="LanguageMenu" name="menuLanguages">
      <property name="title">
       <string>Languages</string>
      </property>
@@ -657,6 +657,11 @@
    <extends>QWidget</extends>
    <header>controls/findreplacewidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LanguageMenu</class>
+   <extends>QMenu</extends>
+   <header>controls/languagemenu.h</header>
   </customwidget>
  </customwidgets>
  <resources>

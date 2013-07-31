@@ -40,7 +40,8 @@ SOURCES += \
     optionsdialog.cpp \
     options.cpp \
     hunspell/spellchecker.cpp \
-    hunspell/dictionary.cpp
+    hunspell/dictionary.cpp \
+    controls/languagemenu.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -63,7 +64,8 @@ HEADERS  += \
     optionsdialog.h \
     options.h \
     hunspell/spellchecker.h \
-    hunspell/dictionary.h
+    hunspell/dictionary.h \
+    controls/languagemenu.h
 
 FORMS    += \
     mainwindow.ui \

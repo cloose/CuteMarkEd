@@ -38,9 +38,9 @@
 
 #include "controls/activelabel.h"
 #include "controls/findreplacewidget.h"
+#include "controls/languagemenu.h"
 #include "controls/recentfilesmenu.h"
 #include "hunspell/dictionary.h"
-#include "hunspell/spellchecker.h"
 #include "htmlpreviewgenerator.h"
 #include "htmlhighlighter.h"
 #include "markdownmanipulator.h"
@@ -144,7 +144,7 @@ void MainWindow::initializeApp()
 //    inspector->setPage(ui->webView->page());
 
     loadCustomStyles();
-    loadDictionaries();
+    ui->menuLanguages->loadDictionaries(options->dictionaryLanguage());
 
     // load file passed to application on start
     if (!fileName.isEmpty()) {
@@ -157,6 +157,12 @@ void MainWindow::openRecentFile(const QString &fileName)
     if (maybeSave()) {
         load(fileName);
     }
+}
+
+void MainWindow::languageChanged(const hunspell::Dictionary &dictionary)
+{
+    options->setDictionaryLanguage(dictionary.language());
+    ui->plainTextEdit->setSpellingDictionary(dictionary);
 }
 
 void MainWindow::fileNew()
@@ -503,16 +509,6 @@ void MainWindow::extrasCheckSpelling(bool checked)
     options->setSpellingCheckEnabled(checked);
 }
 
-void MainWindow::extrasLanguage()
-{
-    QAction *action = qobject_cast<QAction*>(sender());
-
-    hunspell::Dictionary dictionary = action->data().value<hunspell::Dictionary>();
-    options->setDictionaryLanguage(dictionary.language());
-
-    ui->plainTextEdit->setSpellingDictionary(dictionary);
-}
-
 void MainWindow::extrasOptions()
 {
     OptionsDialog dialog(options, this);
@@ -787,6 +783,8 @@ void MainWindow::setupActions()
             generator, SLOT(setMathSupportEnabled(bool)));
     connect(ui->actionCodeHighlighting, SIGNAL(triggered(bool)),
             generator, SLOT(setCodeHighlightingEnabled(bool)));
+    connect(ui->menuLanguages, SIGNAL(languageTriggered(hunspell::Dictionary)),
+            this, SLOT(languageChanged(hunspell::Dictionary)));
 
     // style menu
     ui->actionDefault->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
@@ -969,33 +967,6 @@ void MainWindow::loadCustomStyles()
 
             connect(action, SIGNAL(triggered()),
                     this, SLOT(styleCustomStyle()));
-        }
-    }
-}
-
-void MainWindow::loadDictionaries()
-{
-    QMap<QString, hunspell::Dictionary> dictionaries = hunspell::SpellChecker::availableDictionaries();
-
-    QActionGroup *dictionariesGroup = new QActionGroup(this);
-
-    QMapIterator<QString, hunspell::Dictionary> it(dictionaries);
-    while (it.hasNext()) {
-        it.next();
-
-        hunspell::Dictionary dictionary = it.value();
-
-        QAction *action = ui->menuLanguages->addAction(QString("%1 / %2").arg(dictionary.languageName()).arg(dictionary.countryName()), this, SLOT(extrasLanguage()));
-        action->setCheckable(true);
-        action->setActionGroup(dictionariesGroup);
-
-        QVariant data;
-        data.setValue(dictionary);
-        action->setData(data);
-
-        if (dictionary.language() == options->dictionaryLanguage()) {
-            action->setChecked(true);
-            action->trigger();
         }
     }
 }
