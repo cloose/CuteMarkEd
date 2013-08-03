@@ -120,7 +120,7 @@
      <x>0</x>
      <y>0</y>
      <width>850</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -614,11 +614,6 @@
   <action name="actionLanguage">
    <property name="text">
     <string>Language</string>
-   </property>
-  </action>
-  <action name="actionSpell_Checker">
-   <property name="text">
-    <string>Spell Checker</string>
    </property>
   </action>
   <action name="actionCheckSpelling">
