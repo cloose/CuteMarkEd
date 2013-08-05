@@ -87,16 +87,28 @@ HtmlHighlighter::HtmlHighlighter(QTextDocument *document) :
     highlightingRules.append(rule);
 }
 
+bool HtmlHighlighter::isEnabled() const
+{
+    return enabled;
+}
+
+void HtmlHighlighter::setEnabled(bool enabled)
+{
+    this->enabled = enabled;
+}
+
 void HtmlHighlighter::highlightBlock(const QString &text)
 {
-    foreach(HighlightingRule rule, highlightingRules) {
-        QRegExp expression(rule.pattern);
-        int index = text.indexOf(expression);
-        while (index >= 0) {
-            int length = expression.matchedLength();
-            setFormat(index, length, *(rule.format));
-            index = text.indexOf(expression, index + length);
+    if (enabled) {
+        foreach(HighlightingRule rule, highlightingRules) {
+            QRegExp expression(rule.pattern);
+            int index = text.indexOf(expression);
+            while (index >= 0) {
+                int length = expression.matchedLength();
+                setFormat(index, length, *(rule.format));
+                index = text.indexOf(expression, index + length);
+            }
         }
+        setCurrentBlockState(0);
     }
-    setCurrentBlockState(0);
 }
