@@ -79,8 +79,9 @@ void HtmlPreviewGenerator::run()
                 bufferNotEmpty.wait(&tasksMutex);
             }
 
-            // get next task from queue
-            text = tasks.dequeue();
+            // get last task from queue and skip all previous tasks
+            while (!tasks.isEmpty())
+                text = tasks.dequeue();
         }
 
         // end processing?
@@ -88,16 +89,23 @@ void HtmlPreviewGenerator::run()
             return;
         }
 
-        // delete previous markdown document
-        delete document;
+        // delay processing by 100 ms to see if more tasks are coming
+        // (e.g. because the user is typing fast)
+        this->msleep(100);
 
-        // generate HTML from markdown
-        document = new Discount::Document(text, parserOptions());
-        generateHtmlFromMarkdown();
+        // no more new tasks?
+        if (tasks.isEmpty()) {
+            // delete previous markdown document
+            delete document;
 
-        // generate table of contents
-        QString toc = document->generateToc();
-        emit tocResultReady(toc);
+            // generate HTML from markdown
+            document = new Discount::Document(text, parserOptions());
+            generateHtmlFromMarkdown();
+
+            // generate table of contents
+            QString toc = document->generateToc();
+            emit tocResultReady(toc);
+        }
     }
 }
 
