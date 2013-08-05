@@ -544,11 +544,18 @@ void MainWindow::toggleHtmlView()
         ui->htmlSourceTextEdit->show();
         ui->actionHtmlPreview->setText(tr("HTML source"));
         viewLabel->setText(tr("HTML source"));
+
+        // activate HTML highlighter
+        htmlHighlighter->setEnabled(true);
+        htmlHighlighter->rehighlight();
     } else {
         ui->webView->show();
         ui->htmlSourceTextEdit->hide();
         ui->actionHtmlPreview->setText(tr("HTML preview"));
         viewLabel->setText(tr("HTML preview"));
+
+        // deactivate HTML highlighter
+        htmlHighlighter->setEnabled(false);
     }
 
     updateSplitter(true);

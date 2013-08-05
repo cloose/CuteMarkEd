@@ -24,6 +24,9 @@ class HtmlHighlighter : public QSyntaxHighlighter
 public:
     explicit HtmlHighlighter(QTextDocument *document);
 
+    bool isEnabled() const;
+    void setEnabled(bool enabled);
+
 protected:
     void highlightBlock(const QString &text) Q_DECL_OVERRIDE;
 
@@ -38,6 +41,7 @@ private:
     QTextCharFormat keywordFormat;
     QTextCharFormat imageFormat;
     QTextCharFormat linkFormat;
+    bool enabled;
 };
 
 #endif // HTMLHIGHLIGHTER_H
