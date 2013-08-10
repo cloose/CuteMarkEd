@@ -10,7 +10,7 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 [Sources](https://github.com/cloose/CuteMarkEd/archive/v0.7.0.tar.gz)  
 [MS Windows (Installer)](https://github.com/cloose/CuteMarkEd/releases/download/v0.7.0/cutemarked-0.7.0.msi)  
-[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.7.0.zip?direct)  
+[MS Windows (ZIP file)](https://github.com/cloose/CuteMarkEd/releases/download/v0.7.0/cutemarked-0.7.0.zip)  
 [OpenSUSE 12.3 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 
 ### NEWS
