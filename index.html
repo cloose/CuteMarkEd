@@ -22,6 +22,7 @@
 
         <p class="view">
         <a href="#">Home</a><br/>
+        <a href="features.html">Features</a><br/>
         <a href="changelog.html">Changelog</a><br/>
         <a href="https://github.com/cloose/CuteMarkEd/issues/milestones">Roadmap</a><br/>
         </p>
@@ -35,77 +36,18 @@
       <section>
         <h2><a name="description" class="anchor" href="#description"><span class="octicon octicon-link"></span></a>DESCRIPTION</h2>
 
-        <p>A Qt-based, free and open source markdown editor with live HTML preview, math expressions, code and markdown syntax highlighting.</p>
+        <p>A Qt-based, free and open source markdown editor with live HTML preview, math expressions, code and markdown syntax highlighting. 
+           See the <a href="features.html">features</a> page for more information.</p>
 
         <p><img src="images/screenshot_06.png" alt="screenshot"></p>
-
-        <div style="clear: both;">
-          <h4 style="border-bottom: 1px solid">Multiple styles</h4>
-          <div>
-            <div style="width: 48%; float: left; margin-right: 1em;">
-              <img src="images/feature_styles.png" width="325" height="193" />
-            </div>
-            <div style="width: 48%; float: left;">
-              <p style="margin: 0px 0px 9px;">View and export the generated HTML in multiple included styles.</p>
-            </div>
-          </div>
-        </div>
-
-        <div style="clear: both;">
-          <h4 style="border-bottom: 1px solid">Live HTML Preview</h4>
-          <div>
-            <div style="width: 48%; float: left; margin-right: 1em;">
-              <img src="images/feature_preview.png" width="325" height="193" />
-            </div>
-            <div style="width: 48%; float: left;">
-              <p style="margin: 0px 0px 9px;">Instantly updated preview of how the Markdown document looks like in HTML.</p>
-            </div>
-          </div>
-        </div>
-
-        <div style="clear: both;">
-          <h4 style="border-bottom: 1px solid">HTML and PDF Export</h4>
-          <div>
-            <div style="width: 48%; float: left; margin-right: 1em;">
-              <img src="images/feature_export.png" width="325" height="193" />
-            </div>
-            <div style="width: 48%; float: left;">
-              <p style="margin: 0px 0px 9px;">Export the document as HTML or PDF file.</p>
-            </div>
-          </div>
-        </div>
-
-        <div style="clear: both;">
-          <h4 style="border-bottom: 1px solid">Document statistics</h4>
-          <div>
-            <div style="width: 48%; float: left; margin-right: 1em;">
-              <img src="images/feature_doc_stats.png" width="325" height="193" />
-            </div>
-            <div style="width: 48%; float: left;">
-              <p style="margin: 0px 0px 9px;">See your word count as you work.</p>
-            </div>
-          </div>
-        </div>
-
-        <div style="clear: both;">
-          <h4 style="border-bottom: 1px solid">Code Syntax Highlighting</h4>
-          <div>
-            <div style="width: 48%; float: left; margin-right: 1em;">
-              <img src="images/feature_code.png" width="200" height="150" />
-            </div>
-            <div style="width: 48%; float: left;">
-              <p style="margin: 0px 0px 9px;">Support for highlighting syntax in code blocks.</p>
-              <p style="margin: 0px 0px 9px;">Rendering in the HTML preview is provided by JavaScript library Highlight.js.</p>
-            </div>
-          </div>
-        </div>
 
         <div style="clear: both;"></div>
         
         <h2><a name="download" class="anchor" href="#download"><span class="octicon octicon-link"></span></a>DOWNLOAD</h2>
 
-        <p><a href="https://github.com/cloose/CuteMarkEd/archive/v0.6.1.tar.gz">Sources</a><br>
-           <a href="http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.6.1.zip?direct">MS Windows (ZIP file)</a><br>
+        <p><a href="https://github.com/cloose/CuteMarkEd/archive/v0.7.0.tar.gz">Sources</a><br>
+           <a href="https://github.com/cloose/CuteMarkEd/releases/download/v0.7.0/cutemarked-0.7.0.msi">MS Windows (Installer)</a><br>
+           <a href="http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.7.0.zip?direct">MS Windows (ZIP file)</a><br>
            <a href="https://build.opensuse.org/project/show?project=home%3Acloose1974">OpenSUSE 12.3 (RPM)</a>
         </p>
 
@@ -119,36 +61,17 @@
         
         <h2><a name="news" class="anchor" href="#news"><span class="octicon octicon-link"></span></a>NEWS</h2>
 
-        <h4><a name="version-061" class="anchor" href="#version-061"><span class="octicon octicon-link"></span></a>Minor Release 0.6.1 (July 4th, 2013)</h4>
+        <h4><a name="version-070" class="anchor" href="#version-070"><span class="octicon octicon-link"></span></a>Major Release 0.7.0 (August 10th, 2013)</h4>
 
         <ul>
-          <li><code>IMPROVED</code> Updated czech translation created by Pavel Fric</li>
+          <li><code>NEW</code> Spell checking as you type via use of red wavy lines under misspelled words. 
+                               Suggestions can be accessed through the context menu.</li>
+          <li><code>NEW</code> Added network proxy support to the configuration dialog.</li>
+          <li><code>NEW</code> Added options to control the extensions/features used by the markdown parser (discount).</li>
+          <li><code>NEW</code> The markdown syntax help is now shown in the user language if available (currently english, german and czech).</li>
         </ul>
         <ul>
-          <li><code>FIX</code> Fix Export to HTML with custom CSS stylesheet</li>
-        </ul>
-
-        <h4><a name="version-060" class="anchor" href="#version-060"><span class="octicon octicon-link"></span></a>Major Release 0.6.0 (June 25th, 2013)</h4>
-
-        <ul>
-          <li><code>NEW</code> Show indicator in window title when the markdown document was modified</li>
-          <li><code>NEW</code> Added menu entry and shortcut to toggle between HTML preview and HTML source view</li>
-          <li><code>NEW</code> Added option to display markers in editor for hard linebreaks</li>
-          <li><code>NEW</code> Save/restore main window size, position and state</li>
-          <li><code>NEW</code> Added support for opening markdown files in the editor per Drag &amp; Drop</li>
-          <li><code>NEW</code> Added possibility to change the font used in the markdown editor</li>
-          <li><code>NEW</code> Added support for custom CSS styles. The css files are loaded from a subdirectory <code>styles</code> under the application data location. On Windows this is: <code>C:\Users\{User}\AppData\Local\CuteMarkEd Project\CuteMarkEd\styles</code></li>
-        </ul>
-        <ul>
-          <li><code>IMPROVED</code> Load translation for text provided by Qt</li>
-          <li><code>IMPROVED</code> Support more image formats in the HTML preview on Windows</li>
-          <li><code>IMPROVED</code> SSL support on Windows</li>
-        </ul>
-        <ul>
-          <li><code>FIX</code> Do not crash application when a link with an empty href is clicked</li>
-          <li><code>FIX</code> Missing text in HTML preview</li>
-          <li><code>FIX</code> Fix print menu entry for Windows users</li>
-          <li><code>FIX</code> Show save changes dialog before opening another file</li>
+          <li><code>IMPROVED</code> Greatly improved performance while typing.</li>
         </ul>
                 
         <h2><a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>DEPENDENCIES</h2>
