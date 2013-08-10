@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     app.setOrganizationName("CuteMarkEd Project");
     app.setApplicationName("CuteMarkEd");
     app.setApplicationDisplayName("CuteMarkEd");
-    app.setApplicationVersion("0.6.1");
+    app.setApplicationVersion("0.7.0");
 
     // load translation for Qt
     QTranslator qtTranslator;
