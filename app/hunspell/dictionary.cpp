@@ -14,37 +14,48 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "document.h"
-using Discount::Document;
-using Discount::Parser;
+#include "dictionary.h"
+using hunspell::Dictionary;
 
-Document::Document(const QString &text, Parser::ParserOptions options) :
-    document(0)
+#include <QLocale>
+
+Dictionary::Dictionary()
 {
-    if (text.length() > 0) {
-        document = Parser::parseString(text, options);
-    }
 }
 
-Document::~Document()
+Dictionary::Dictionary(const QString &language, const QString &filePath) :
+    m_language(language),
+    m_filePath(filePath)
 {
-    Parser::cleanup(document);
 }
 
-QString Document::toHtml()
+Dictionary::Dictionary(const hunspell::Dictionary &other)
 {
-    if (html.isNull() && document) {
-        html = Parser::renderAsHtml(document);
-    }
-
-    return html;
+    m_language = other.m_language;
+    m_filePath = other.m_filePath;
 }
 
-QString Document::generateToc()
+Dictionary::~Dictionary()
 {
-    if (toc.isNull() && document) {
-        toc = Parser::generateToc(document);
-    }
-
-    return toc;
 }
+
+QString Dictionary::language() const
+{
+    return m_language;
+}
+
+QString Dictionary::languageName() const
+{
+    return QLocale(m_language).nativeLanguageName();
+}
+
+QString Dictionary::countryName() const
+{
+    return QLocale(m_language).nativeCountryName();
+}
+
+QString Dictionary::filePath() const
+{
+    return m_filePath;
+}
+

@@ -14,37 +14,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "document.h"
-using Discount::Document;
-using Discount::Parser;
+#ifndef LANGUAGEMENU_H
+#define LANGUAGEMENU_H
 
-Document::Document(const QString &text, Parser::ParserOptions options) :
-    document(0)
-{
-    if (text.length() > 0) {
-        document = Parser::parseString(text, options);
-    }
+#include <QMenu>
+
+namespace hunspell {
+class Dictionary;
 }
 
-Document::~Document()
+class LanguageMenu : public QMenu
 {
-    Parser::cleanup(document);
-}
+    Q_OBJECT
+public:
+    explicit LanguageMenu(QWidget *parent = 0);
+    
+    void loadDictionaries(const QString &currentLanguage);
 
-QString Document::toHtml()
-{
-    if (html.isNull() && document) {
-        html = Parser::renderAsHtml(document);
-    }
+signals:
+    void languageTriggered(const hunspell::Dictionary &dictionary);
 
-    return html;
-}
+private slots:
+    void languageTriggered();
 
-QString Document::generateToc()
-{
-    if (toc.isNull() && document) {
-        toc = Parser::generateToc(document);
-    }
+private:
+    QAction *createAction(const hunspell::Dictionary &dictionary);
 
-    return toc;
-}
+private:
+    QActionGroup *dictionariesGroup;
+};
+
+#endif // LANGUAGEMENU_H

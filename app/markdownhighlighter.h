@@ -23,20 +23,24 @@
 #include "peg-markdown-highlight/definitions.h"
 #include "highlightworkerthread.h"
 
+namespace hunspell {
+class SpellChecker;
+}
 
 class MarkdownHighlighter : public QSyntaxHighlighter
 {
     Q_OBJECT
 
 public:
-    MarkdownHighlighter(QTextDocument *document);
+    MarkdownHighlighter(QTextDocument *document, hunspell::SpellChecker *spellChecker);
     ~MarkdownHighlighter();
     
     void reset();
     void setStyles(const QVector<PegMarkdownHighlight::HighlightingStyle> &styles);
+    void setSpellingCheckEnabled(bool enabled);
 
 protected:
-    void highlightBlock(const QString &text) Q_DECL_OVERRIDE;
+    void highlightBlock(const QString &textBlock) Q_DECL_OVERRIDE;
 
 private slots:
     void resultReady(pmh_element **elements);
@@ -45,6 +49,9 @@ private:
     HighlightWorkerThread *workerThread;
     QVector<PegMarkdownHighlight::HighlightingStyle> highlightingStyles;
     QString previousText;
+    QTextCharFormat spellFormat;
+    hunspell::SpellChecker *spellChecker;
+    bool spellingCheckEnabled;
 };
 
 #endif // MARKDOWNHIGHLIGHTER_H

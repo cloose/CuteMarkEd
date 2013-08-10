@@ -1,0 +1,247 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 10pt;
+}
+pre {
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  font-size: 10pt;
+}
+table, td, th {
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+}
+table {
+  width: 100%;
+}
+th {
+  text-align: left;
+  background: #eeeeee;
+  padding: 3px;
+}
+</style>
+<title>Markdown Syntaxreferenz</title>
+</head>
+<body>
+
+  <h3>KOPFZEILEN</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown Eingabe</th>
+      <th>Ausgabe</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>
+ # Überschift Eins
+
+ ## Überschift Zwei
+
+ ### Überschrift Drei
+
+ #### Überschrift Vier
+
+ ##### Überschrift Fünf
+
+ ###### Überschrift Sechs</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Überschrift Eins</h1>
+      <h2>Überschrift Zwei</h2>
+      <h3>Überschrift Drei</h3>
+      <h4>Überschrift Vier</h4>
+      <h5>Überschrift Fünf</h5>
+      <h6>Überschrift Sechs</h6>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>
+ Überschrift Eins
+ ================
+
+ Überschrift Zwei
+ ----------------</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Überschrift Eins</h1>
+      <h2>Überschrift Zwei</h2>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>ABSÄTZE</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown Eingabe</th>
+      <th>Ausgabe</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>
+ Ein Absatz ist einfach eine Folge
+ einer oder mehrerer Textzeilen, 
+ separiert durch eine oder mehrere 
+ Leerzeilen.
+
+ Dieses ist ein weiterer Absatz.</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Ein Absatz ist einfach eine Folge einer oder mehrerer Textzeilen, separiert durch eine oder mehrere Leerzeilen.</p>
+      <p>Dieses ist ein weiterer Absatz.</p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>
+ Um einen Zeilen
+ umbruch zuerstellen, muss die
+ Zeile im Absatz mit zwei oder
+ mehr Leerzeichen enden.</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Um einen Zeilen<br>umbruch zuerstellen, muss die<br>Zeile im Absatz mit zwei oder<br>mehr Leerzeichen enden.</p>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>LISTEN</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown Eingabe</th>
+      <th>Ausgabe</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>
+ * Eintrag 1
+ * Eintrag 2
+ * Eintrag 3
+
+ + Eintrag 1
+ + Eintrag 2
+ + Eintrag 3
+
+ - Eintrag 1
+ - Eintrag 2
+ - Eintrag 3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>Eintrag 1</li>
+        <li>Eintrag 2</li>
+        <li>Eintrag 3</li>
+      </ul>
+<ul>
+<li>Eintrag 1</li>
+        <li>Eintrag 2</li>
+        <li>Eintrag 3</li>
+      </ul>
+<ul>
+<li>Eintrag 1</li>
+        <li>Eintrag 2</li>
+        <li>Eintrag 3</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>
+ 1. Eintrag 1
+ 2. Eintrag 2
+ 3. Eintrag 3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ol>
+<li>Eintrag 1</li>
+        <li>Eintrag 2</li>
+        <li>Eintrag 3</li>
+      </ol>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>
+ * Eintrag 1
+   1. Eintrag 2
+      + Eintrag 3
+   2. Eintrag 4</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>Eintrag 1<ol>
+<li>Eintrag 2<ul>
+<li>Eintrag 3</li>
+          </ul>
+</li>
+          <li>Eintrag 4</li>
+        </ol>
+</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>
+ Ausdruck
+ : Definition</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <dl>
+<dt>Ausdruck<dt>
+        </dt>
+</dt>
+<dd>Definition</dd>
+      </dl>
+</td>
+    </tr>
+</tbody>
+</table>
+<h3>BETONUNGEN</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown Eingabe</th>
+      <th>Ausgabe</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>
+ Ich bin *hervorgehoben*
+
+ Ich bin _hervorgehoben_
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Ich bin <em>hervorgehoben</em></p>
+
+      <p>Ich bin <em>hervorgehoben</em></p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>
+ Ich bin **fettgedruckt**
+
+ Ich bin __fettgedruckt__</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Ich bin <strong>fettgedruckt</strong></p>
+
+      <p>Ich bin <strong>fettgedruckt</strong></p>
+      </td>
+    </tr>
+</tbody>
+</table>
+</body>
+</html>

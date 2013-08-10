@@ -14,37 +14,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "document.h"
-using Discount::Document;
-using Discount::Parser;
+#ifndef HUNSPELL_SPELLCHECKER_H
+#define HUNSPELL_SPELLCHECKER_H
 
-Document::Document(const QString &text, Parser::ParserOptions options) :
-    document(0)
+#include <QtCore/qmap.h>
+#include <QtCore/qstring.h>
+
+class Hunspell;
+class QTextCodec;
+
+namespace hunspell {
+
+class Dictionary;
+
+class SpellChecker
 {
-    if (text.length() > 0) {
-        document = Parser::parseString(text, options);
-    }
-}
+public:
+    SpellChecker();
+    ~SpellChecker();
 
-Document::~Document()
-{
-    Parser::cleanup(document);
-}
+    bool isCorrect(const QString &word);
+    QStringList suggestions(const QString &word);
 
-QString Document::toHtml()
-{
-    if (html.isNull() && document) {
-        html = Parser::renderAsHtml(document);
-    }
+    void loadDictionary(const QString &dictFilePath);
 
-    return html;
-}
+    static QMap<QString, Dictionary> availableDictionaries();
 
-QString Document::generateToc()
-{
-    if (toc.isNull() && document) {
-        toc = Parser::generateToc(document);
-    }
+private:
+    Hunspell *hunspellChecker;
+    QTextCodec *textCodec;
+};
 
-    return toc;
-}
+} // namespace Hunspell
+
+#endif // HUNSPELL_SPELLCHECKER_H

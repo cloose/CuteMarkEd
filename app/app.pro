@@ -38,7 +38,10 @@ SOURCES += \
     exporthtmldialog.cpp \
     htmlhighlighter.cpp \
     optionsdialog.cpp \
-    options.cpp
+    options.cpp \
+    hunspell/spellchecker.cpp \
+    hunspell/dictionary.cpp \
+    controls/languagemenu.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -59,7 +62,10 @@ HEADERS  += \
     exporthtmldialog.h \
     htmlhighlighter.h \
     optionsdialog.h \
-    options.h
+    options.h \
+    hunspell/spellchecker.h \
+    hunspell/dictionary.h \
+    controls/languagemenu.h
 
 FORMS    += \
     mainwindow.ui \
@@ -112,11 +118,26 @@ else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../
 else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/debug/libpmh.lib
 else:unix: PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/libpmh.a
 
+# hunspell
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../hunspell/lib/ -lhunspell
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../hunspell/lib/ -lhunspell
+else:unix: LIBS += -lhunspell
+
+INCLUDEPATH += $$PWD/../hunspell/src
+DEPENDPATH += $$PWD/../hunspell/src
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../hunspell/lib/libhunspell.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../hunspell/lib/libhunspell.a
+else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../hunspell/lib/libhunspell.lib
+else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../hunspell/lib/libhunspell.lib
+#else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hunspell/libhunspell.a
+
 OTHER_FILES += \
     template.html \
     cutemarked.desktop \
     syntax.html \
-    cutemarked.rc
+    cutemarked.rc \
+    syntax_de.html
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
 message("Using LIBS=$$LIBS")

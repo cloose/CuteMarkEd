@@ -10,9 +10,6 @@
     <height>534</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>CuteMarkEd</string>
-  </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
     <normaloff>:/icons/app-icon.ico</normaloff>:/icons/app-icon.ico</iconset>
@@ -157,6 +154,8 @@
      <addaction name="actionCenterParagraph"/>
      <addaction name="actionHardLinebreak"/>
      <addaction name="actionBlockquote"/>
+     <addaction name="actionIncreaseHeaderLevel"/>
+     <addaction name="actionDecreaseHeaderLevel"/>
     </widget>
     <widget class="QMenu" name="menuFindReplace">
      <property name="title">
@@ -215,9 +214,28 @@
      <addaction name="actionClearness"/>
      <addaction name="actionClearnessDark"/>
     </widget>
+    <widget class="QMenu" name="menuMarkdown_Extensions">
+     <property name="title">
+      <string>Markdown Extensions</string>
+     </property>
+     <addaction name="actionAutolink"/>
+     <addaction name="actionStrikethroughOption"/>
+     <addaction name="actionAlphabeticLists"/>
+     <addaction name="actionDefinitionLists"/>
+     <addaction name="actionSmartyPants"/>
+    </widget>
+    <widget class="LanguageMenu" name="menuLanguages">
+     <property name="title">
+      <string>Languages</string>
+     </property>
+    </widget>
     <addaction name="actionMathSupport"/>
     <addaction name="actionCodeHighlighting"/>
     <addaction name="actionShowHardLinebreaks"/>
+    <addaction name="menuMarkdown_Extensions"/>
+    <addaction name="separator"/>
+    <addaction name="actionCheckSpelling"/>
+    <addaction name="menuLanguages"/>
     <addaction name="separator"/>
     <addaction name="menuStyles"/>
     <addaction name="separator"/>
@@ -553,6 +571,69 @@
     <string>Options...</string>
    </property>
   </action>
+  <action name="actionAutolink">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Autolink</string>
+   </property>
+  </action>
+  <action name="actionStrikethroughOption">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Strikethrough</string>
+   </property>
+  </action>
+  <action name="actionAlphabeticLists">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Alphabetic Lists</string>
+   </property>
+  </action>
+  <action name="actionDefinitionLists">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Definition Lists</string>
+   </property>
+  </action>
+  <action name="actionSmartyPants">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>SmartyPants</string>
+   </property>
+  </action>
+  <action name="actionLanguage">
+   <property name="text">
+    <string>Language</string>
+   </property>
+  </action>
+  <action name="actionCheckSpelling">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Check Spelling</string>
+   </property>
+  </action>
+  <action name="actionIncreaseHeaderLevel">
+   <property name="text">
+    <string>Increase Header Level</string>
+   </property>
+  </action>
+  <action name="actionDecreaseHeaderLevel">
+   <property name="text">
+    <string>Decrease Header Level</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -571,6 +652,11 @@
    <extends>QWidget</extends>
    <header>controls/findreplacewidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LanguageMenu</class>
+   <extends>QMenu</extends>
+   <header>controls/languagemenu.h</header>
   </customwidget>
  </customwidgets>
  <resources>
@@ -1090,38 +1176,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionMathSupport</sender>
-   <signal>triggered(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>extrasMathSupport(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>249</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionCodeHighlighting</sender>
-   <signal>triggered(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>extrasCodeHighlighting(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>249</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>actionClearness</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
@@ -1286,6 +1340,134 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>extrasOptions()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAutolink</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extensionsAutolink(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionStrikethroughOption</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extensionsStrikethrough(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAlphabeticLists</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extensionsAlphabeticLists(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDefinitionLists</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extensionsDefinitionLists(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSmartyPants</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extensionsSmartyPants(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCheckSpelling</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extrasCheckSpelling(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionIncreaseHeaderLevel</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editIncreaseHeaderLevel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDecreaseHeaderLevel</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editDecreaseHeaderLevel()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

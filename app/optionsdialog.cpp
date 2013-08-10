@@ -30,6 +30,8 @@ OptionsDialog::OptionsDialog(Options *opt, QWidget *parent) :
     ui->setupUi(this);
     ui->tabWidget->setTabIcon(0, QIcon("icon-file-text-alt.fontawesome"));
     ui->tabWidget->setIconSize(QSize(24, 24));
+    ui->tabWidget->setTabIcon(1, QIcon("icon-globe.fontawesome"));
+    ui->tabWidget->setIconSize(QSize(24, 24));
 
     ui->fontComboBox->setFontFilters(QFontComboBox::MonospacedFonts);
 
@@ -37,9 +39,11 @@ OptionsDialog::OptionsDialog(Options *opt, QWidget *parent) :
         ui->sizeComboBox->addItem(QString().setNum(size));
     }
 
-    QFont font = options->editorFont();
-    ui->fontComboBox->setCurrentFont(font);
-    ui->sizeComboBox->setCurrentText(QString().setNum(font.pointSize()));
+    ui->portLineEdit->setValidator(new QIntValidator(0, 65535));
+    ui->passwordLineEdit->setEchoMode(QLineEdit::Password);
+
+    // read configuration state
+    readState();
 }
 
 OptionsDialog::~OptionsDialog()
@@ -50,10 +54,64 @@ OptionsDialog::~OptionsDialog()
 void OptionsDialog::done(int result)
 {
     if (result == QDialog::Accepted) {
-        QFont font = ui->fontComboBox->currentFont();
-        font.setPointSize(ui->sizeComboBox->currentText().toInt());
-        options->setEditorFont(font);
+        // save configuration state
+        saveState();
     }
 
     QDialog::done(result);
+}
+
+void OptionsDialog::manualProxyRadioButtonToggled(bool checked)
+{
+    ui->hostLineEdit->setEnabled(checked);
+    ui->portLineEdit->setEnabled(checked);
+    ui->userNameLineEdit->setEnabled(checked);
+    ui->passwordLineEdit->setEnabled(checked);
+}
+
+void OptionsDialog::readState()
+{
+    // editor settings
+    QFont font = options->editorFont();
+    ui->fontComboBox->setCurrentFont(font);
+    ui->sizeComboBox->setCurrentText(QString().setNum(font.pointSize()));
+
+    // proxy settings
+    switch (options->proxyMode()) {
+    case Options::NoProxy:
+        ui->noProxyRadioButton->setChecked(true);
+        break;
+    case Options::SystemProxy:
+        ui->systemProxyRadioButton->setChecked(true);
+        break;
+    case Options::ManualProxy:
+        ui->manualProxyRadioButton->setChecked(true);
+        break;
+    }
+    ui->hostLineEdit->setText(options->proxyHost());
+    ui->portLineEdit->setText(QString::number(options->proxyPort()));
+    ui->userNameLineEdit->setText(options->proxyUser());
+    ui->passwordLineEdit->setText(options->proxyPassword());
+}
+
+void OptionsDialog::saveState()
+{
+    // editor settings
+    QFont font = ui->fontComboBox->currentFont();
+    font.setPointSize(ui->sizeComboBox->currentText().toInt());
+    options->setEditorFont(font);
+
+    // proxy settings
+    if (ui->noProxyRadioButton->isChecked()) {
+        options->setProxyMode(Options::NoProxy);
+    } else if (ui->systemProxyRadioButton->isChecked()) {
+        options->setProxyMode(Options::SystemProxy);
+    } else if (ui->manualProxyRadioButton->isChecked()) {
+        options->setProxyMode(Options::ManualProxy);
+    }
+    options->setProxyHost(ui->hostLineEdit->text());
+    options->setProxyPort(ui->portLineEdit->text().toInt());
+    options->setProxyUser(ui->userNameLineEdit->text());
+    options->setProxyPassword(ui->passwordLineEdit->text());
+    options->apply();
 }

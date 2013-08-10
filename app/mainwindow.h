@@ -23,6 +23,10 @@ namespace Ui {
 class MainWindow;
 }
 
+namespace hunspell {
+class Dictionary;
+}
+
 class QActionGroup;
 class QLabel;
 class QNetworkDiskCache;
@@ -51,6 +55,7 @@ protected:
 private slots:
     void initializeApp();
     void openRecentFile(const QString &fileName);
+    void languageChanged(const hunspell::Dictionary &dictionary);
 
     void fileNew();
     void fileOpen();
@@ -71,6 +76,8 @@ private slots:
     void editCenterParagraph();
     void editHardLinebreak();
     void editBlockquote();
+    void editIncreaseHeaderLevel();
+    void editDecreaseHeaderLevel();
 
     void viewChangeSplit();
     void styleDefault();
@@ -82,9 +89,13 @@ private slots:
     void styleCustomStyle();
     void viewFullScreenMode();
 
-    void extrasMathSupport(bool checked);
-    void extrasCodeHighlighting(bool checked);
     void extrasShowHardLinebreaks(bool checked);
+    void extensionsAutolink(bool checked);
+    void extensionsStrikethrough(bool checked);
+    void extensionsAlphabeticLists(bool checked);
+    void extensionsDefinitionLists(bool checked);
+    void extensionsSmartyPants(bool checked);
+    void extrasCheckSpelling(bool checked);
     void extrasOptions();
 
     void helpMarkdownSyntax();
@@ -106,6 +117,7 @@ private slots:
 
     void addJavaScriptObject();
     bool load(const QString &fileName);
+    void proxyConfigurationChanged();
 
 private:
     void setupUi();

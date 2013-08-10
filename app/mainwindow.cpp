@@ -38,7 +38,9 @@
 
 #include "controls/activelabel.h"
 #include "controls/findreplacewidget.h"
+#include "controls/languagemenu.h"
 #include "controls/recentfilesmenu.h"
+#include "hunspell/dictionary.h"
 #include "htmlpreviewgenerator.h"
 #include "htmlhighlighter.h"
 #include "markdownmanipulator.h"
@@ -51,10 +53,11 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     options(new Options(this)),
+    diskCache(new QNetworkDiskCache(this)),
     styleLabel(0),
     wordCountLabel(0),
     viewLabel(0),
-    generator(new HtmlPreviewGenerator(this)),
+    generator(new HtmlPreviewGenerator(options, this)),
     splitFactor(0.5),
     scrollBarPos(0)
 {
@@ -69,7 +72,7 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
 MainWindow::~MainWindow()
 {
     // stop background HTML preview generator
-    generator->enqueue(QString());
+    generator->markdownTextChanged(QString());
     generator->wait();
     delete generator;
 
@@ -108,17 +111,31 @@ void MainWindow::initializeApp()
     ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 
+    // don't show context menu for HTML preview
+    // most actions don't work and can even lead to crashes (like reload)
+    ui->webView->setContextMenuPolicy(Qt::NoContextMenu);
+
     // set default style
     styleDefault();
 
-    // load remote javascript and use system proxy configuration
+    // init extension flags
+    ui->actionAutolink->setChecked(options->isAutolinkEnabled());
+    ui->actionStrikethroughOption->setChecked(options->isStrikethroughEnabled());
+    ui->actionAlphabeticLists->setChecked(options->isAlphabeticListsEnabled());
+    ui->actionDefinitionLists->setChecked(options->isDefinitionListsEnabled());
+    ui->actionSmartyPants->setChecked(options->isSmartyPantsEnabled());
+
+    // init option flags
+    ui->actionCheckSpelling->setChecked(options->isSpellingCheckEnabled());
+    ui->plainTextEdit->setSpellingCheckEnabled(options->isSpellingCheckEnabled());
+
+    // set url to markdown syntax help
+    ui->webView_2->setUrl(tr("qrc:/syntax.html"));
+
+    // allow loading of remote javascript
     QWebSettings::globalSettings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
 
-    // FIXME takes too long. provide proxy option per ui
-//    QNetworkProxyFactory::setUseSystemConfiguration(true);
-
     // setup disk cache for network access
-    diskCache = new QNetworkDiskCache(this);
     QString cacheDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
     diskCache->setCacheDirectory(cacheDir);
 
@@ -127,6 +144,7 @@ void MainWindow::initializeApp()
 //    inspector->setPage(ui->webView->page());
 
     loadCustomStyles();
+    ui->menuLanguages->loadDictionaries(options->dictionaryLanguage());
 
     // load file passed to application on start
     if (!fileName.isEmpty()) {
@@ -139,6 +157,12 @@ void MainWindow::openRecentFile(const QString &fileName)
     if (maybeSave()) {
         load(fileName);
     }
+}
+
+void MainWindow::languageChanged(const hunspell::Dictionary &dictionary)
+{
+    options->setDictionaryLanguage(dictionary.language());
+    ui->plainTextEdit->setSpellingDictionary(dictionary);
 }
 
 void MainWindow::fileNew()
@@ -333,6 +357,18 @@ void MainWindow::editBlockquote()
     manipulator.prependToLine('>');
 }
 
+void MainWindow::editIncreaseHeaderLevel()
+{
+    MarkdownManipulator manipulator(ui->plainTextEdit);
+    manipulator.increaseHeadingLevel();
+}
+
+void MainWindow::editDecreaseHeaderLevel()
+{
+    MarkdownManipulator manipulator(ui->plainTextEdit);
+    manipulator.decreaseHeadingLevel();
+}
+
 void MainWindow::viewChangeSplit()
 {
     QAction* action = qobject_cast<QAction*>(sender());
@@ -353,66 +389,60 @@ void MainWindow::viewChangeSplit()
 
 void MainWindow::styleDefault()
 {
+    generator->setCodeHighlightingStyle("default");
+
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/markdown.css"));
-
-    generator->setCodeHighlightingStyle("default");
-    plainTextChanged();
 
     styleLabel->setText(ui->actionDefault->text());
 }
 
 void MainWindow::styleGithub()
 {
+    generator->setCodeHighlightingStyle("github");
+
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/github.css"));
-
-    generator->setCodeHighlightingStyle("github");
-    plainTextChanged();
 
     styleLabel->setText(ui->actionGithub->text());
 }
 
 void MainWindow::styleSolarizedLight()
 {
+    generator->setCodeHighlightingStyle("solarized_light");
+
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-light+.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-light.css"));
-
-    generator->setCodeHighlightingStyle("solarized_light");
-    plainTextChanged();
 
     styleLabel->setText(ui->actionSolarizedLight->text());
 }
 
 void MainWindow::styleSolarizedDark()
 {
+    generator->setCodeHighlightingStyle("solarized_dark");
+
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-dark+.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-dark.css"));
-
-    generator->setCodeHighlightingStyle("solarized_dark");
-    plainTextChanged();
 
     styleLabel->setText(ui->actionSolarizedDark->text());
 }
 
 void MainWindow::styleClearness()
 {
+    generator->setCodeHighlightingStyle("default");
+
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness.css"));
-
-    generator->setCodeHighlightingStyle("default");
-    plainTextChanged();
 
     styleLabel->setText(ui->actionClearness->text());
 }
 
 void MainWindow::styleClearnessDark()
 {
+    generator->setCodeHighlightingStyle("default");
+
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/clearness-dark+.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness-dark.css"));
-
-    generator->setCodeHighlightingStyle("default");
-    plainTextChanged();
 
     styleLabel->setText(ui->actionClearnessDark->text());
 }
@@ -421,11 +451,10 @@ void MainWindow::styleCustomStyle()
 {
     QAction *action = qobject_cast<QAction*>(sender());
 
+    generator->setCodeHighlightingStyle("default");
+
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl::fromLocalFile(action->data().toString()));
-
-    generator->setCodeHighlightingStyle("default");
-    plainTextChanged();
 
     styleLabel->setText(action->text());
 }
@@ -437,24 +466,47 @@ void MainWindow::viewFullScreenMode()
     } else {
         showNormal();
     }
-
-}
-
-void MainWindow::extrasMathSupport(bool checked)
-{
-    generator->setMathSupportEnabled(checked);
-    plainTextChanged();
-}
-
-void MainWindow::extrasCodeHighlighting(bool checked)
-{
-    generator->setCodeHighlightingEnabled(checked);
-    plainTextChanged();
 }
 
 void MainWindow::extrasShowHardLinebreaks(bool checked)
 {
     ui->plainTextEdit->setShowHardLinebreaks(checked);
+}
+
+void MainWindow::extensionsAutolink(bool checked)
+{
+    options->setAutolinkEnabled(checked);
+    plainTextChanged();
+}
+
+void MainWindow::extensionsStrikethrough(bool checked)
+{
+    options->setStrikethroughEnabled(checked);
+    plainTextChanged();
+}
+
+void MainWindow::extensionsAlphabeticLists(bool checked)
+{
+    options->setAlphabeticListsEnabled(checked);
+    plainTextChanged();
+}
+
+void MainWindow::extensionsDefinitionLists(bool checked)
+{
+    options->setDefinitionListsEnabled(checked);
+    plainTextChanged();
+}
+
+void MainWindow::extensionsSmartyPants(bool checked)
+{
+    options->setSmartyPantsEnabled(checked);
+    plainTextChanged();
+}
+
+void MainWindow::extrasCheckSpelling(bool checked)
+{
+    ui->plainTextEdit->setSpellingCheckEnabled(checked);
+    options->setSpellingCheckEnabled(checked);
 }
 
 void MainWindow::extrasOptions()
@@ -492,11 +544,18 @@ void MainWindow::toggleHtmlView()
         ui->htmlSourceTextEdit->show();
         ui->actionHtmlPreview->setText(tr("HTML source"));
         viewLabel->setText(tr("HTML source"));
+
+        // activate HTML highlighter
+        htmlHighlighter->setEnabled(true);
+        htmlHighlighter->rehighlight();
     } else {
         ui->webView->show();
         ui->htmlSourceTextEdit->hide();
         ui->actionHtmlPreview->setText(tr("HTML preview"));
         viewLabel->setText(tr("HTML preview"));
+
+        // deactivate HTML highlighter
+        htmlHighlighter->setEnabled(false);
     }
 
     updateSplitter(true);
@@ -506,6 +565,7 @@ void MainWindow::plainTextChanged()
 {
     QString code = ui->plainTextEdit->toPlainText();
 
+    // update statistics
     if (wordCountLabel) {
         int words = ui->plainTextEdit->countWords();
         int lines = ui->plainTextEdit->document()->lineCount();
@@ -515,7 +575,7 @@ void MainWindow::plainTextChanged()
     }
 
     // generate HTML from markdown
-    generator->enqueue(code);
+    generator->markdownTextChanged(code);
 
     // show modification indicator in window title
     setWindowModified(ui->plainTextEdit->document()->isModified());
@@ -611,6 +671,32 @@ bool MainWindow::load(const QString &fileName)
     return true;
 }
 
+void MainWindow::proxyConfigurationChanged()
+{
+    if (options->proxyMode() == Options::SystemProxy) {
+        qDebug() << "Use system proxy configuration";
+        QNetworkProxyFactory::setUseSystemConfiguration(true);
+    } else if (options->proxyMode() == Options::ManualProxy) {
+        qDebug() << "Use proxy" << options->proxyHost();
+        QNetworkProxyFactory::setUseSystemConfiguration(false);
+
+        QNetworkProxy proxy;
+        proxy.setType(QNetworkProxy::HttpProxy);
+        proxy.setHostName(options->proxyHost());
+        proxy.setPort(options->proxyPort());
+        proxy.setUser(options->proxyUser());
+        proxy.setPassword(options->proxyPassword());
+        QNetworkProxy::setApplicationProxy(proxy);
+    } else {
+        qDebug() << "Don't use a proxy";
+        QNetworkProxyFactory::setUseSystemConfiguration(false);
+
+        QNetworkProxy proxy;
+        proxy.setType(QNetworkProxy::NoProxy);
+        QNetworkProxy::setApplicationProxy(proxy);
+    }
+}
+
 void MainWindow::setupUi()
 {
     setupActions();
@@ -632,6 +718,9 @@ void MainWindow::setupUi()
 
     // show HTML preview on right panel
     toggleHtmlView();
+
+    connect(options, SIGNAL(proxyConfigurationChanged()),
+            this, SLOT(proxyConfigurationChanged()));
 
     readSettings();
 }
@@ -674,6 +763,10 @@ void MainWindow::setupActions()
     ui->actionCenterParagraph->setIcon(QIcon("icon-align-center.fontawesome"));
     ui->actionHardLinebreak->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return));
     ui->actionBlockquote->setIcon(QIcon("icon-quote-left.fontawesome"));
+    ui->actionIncreaseHeaderLevel->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Right));
+    ui->actionIncreaseHeaderLevel->setIcon(QIcon("icon-level-up.fontawesome"));
+    ui->actionDecreaseHeaderLevel->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Left));
+    ui->actionDecreaseHeaderLevel->setIcon(QIcon("icon-level-down.fontawesome"));
 
     ui->actionFindReplace->setShortcut(QKeySequence::Find);
     ui->actionFindReplace->setIcon(QIcon("icon-search.fontawesome"));
@@ -691,6 +784,14 @@ void MainWindow::setupActions()
     ui->actionHtmlPreview->setShortcut(QKeySequence(Qt::Key_F5));
     ui->actionFullScreenMode->setShortcut(QKeySequence::FullScreen);
     ui->actionFullScreenMode->setIcon(QIcon("icon-fullscreen.fontawesome"));
+
+    // extras menu
+    connect(ui->actionMathSupport, SIGNAL(triggered(bool)),
+            generator, SLOT(setMathSupportEnabled(bool)));
+    connect(ui->actionCodeHighlighting, SIGNAL(triggered(bool)),
+            generator, SLOT(setCodeHighlightingEnabled(bool)));
+    connect(ui->menuLanguages, SIGNAL(languageTriggered(hunspell::Dictionary)),
+            this, SLOT(languageChanged(hunspell::Dictionary)));
 
     // style menu
     ui->actionDefault->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
@@ -815,15 +916,13 @@ void MainWindow::setFileName(const QString &fileName)
     this->fileName = fileName;
     ui->plainTextEdit->document()->setModified(false);
 
-    QString shownName;
-    if (fileName.isEmpty()) {
+    QString shownName = fileName;
+    if (shownName.isEmpty()) {
         //: default file name for new markdown documents
         shownName = tr("untitled.md");
-    } else {
-        shownName = QFileInfo(fileName).fileName();
     }
 
-    setWindowTitle(tr("%1[*] - %2").arg(shownName).arg("CuteMarkEd"));
+    setWindowFilePath(shownName);
     setWindowModified(false);
 }
 
@@ -862,6 +961,7 @@ void MainWindow::loadCustomStyles()
     if (dataPath.exists()) {
         ui->menuStyles->addSeparator();
 
+        // iterate over all files in the styles subdirectory
         QDirIterator it(dataPath);
         while (it.hasNext()) {
             it.next();
@@ -885,12 +985,17 @@ void MainWindow::readSettings()
     restoreGeometry(settings.value("mainWindow/geometry").toByteArray());
     restoreState(settings.value("mainWindow/windowState").toByteArray());
 
+    // restore recent files menu
     recentFilesMenu->readState();
+
     options->readSettings();
 }
 
 void MainWindow::writeSettings()
 {
+    options->writeSettings();
+
+    // save recent files menu
     recentFilesMenu->saveState();
 
     // save window size, position and state

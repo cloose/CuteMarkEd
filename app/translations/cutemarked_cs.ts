@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="cs_CZ">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs" version="2.0">
 <context>
     <name>ExportHtmlDialog</name>
     <message>
@@ -141,384 +139,421 @@
     </message>
 </context>
 <context>
+    <name>LanguageMenu</name>
+    <message>
+        <location filename="../controls/languagemenu.cpp" line="23"/>
+        <source>Languages</source>
+        <translation>Jazyky</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.ui" line="14"/>
         <source>CuteMarkEd</source>
-        <translation>CuteMarkEd</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="95"/>
-        <location filename="../mainwindow.ui" line="261"/>
+        <location filename="../mainwindow.ui" line="92"/>
+        <location filename="../mainwindow.ui" line="279"/>
         <source>about:blank</source>
         <translation>o:prázdný</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="131"/>
+        <location filename="../mainwindow.ui" line="128"/>
         <source>&amp;File</source>
         <translation>&amp;Soubor</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="147"/>
+        <location filename="../mainwindow.ui" line="144"/>
         <source>&amp;Edit</source>
         <translation>Úp&amp;ravy</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="151"/>
+        <location filename="../mainwindow.ui" line="148"/>
         <source>Format</source>
         <translation>Formát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="191"/>
-        <source>&amp;View</source>
-        <translation>&amp;Pohled</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="205"/>
-        <source>E&amp;xtras</source>
-        <translation>&amp;Doplňky</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="209"/>
-        <source>Styles</source>
-        <translation>Styly</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="183"/>
-        <source>&amp;Help</source>
-        <translation>Nápo&amp;věda</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">&amp;Ansicht</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="235"/>
-        <source>Table of contents</source>
-        <translation>Obsah</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="274"/>
-        <location filename="../mainwindow.ui" line="535"/>
-        <source>Markdown Syntax</source>
-        <translation>Skladba Markdown</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="300"/>
-        <source>qrc:/syntax.html</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="310"/>
-        <source>E&amp;xit</source>
-        <translation>&amp;Ukončit</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="315"/>
-        <source>&amp;New</source>
-        <translation>&amp;Nový</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="320"/>
-        <source>&amp;Open...</source>
-        <translation>&amp;Otevřít...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="325"/>
-        <source>&amp;Save</source>
-        <translation>&amp;Uložit</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="330"/>
-        <source>Save &amp;As...</source>
-        <translation>Uložit &amp;jako...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="335"/>
-        <source>&amp;Undo</source>
-        <translation>&amp;Zpět</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="340"/>
-        <source>&amp;Redo</source>
-        <translation>&amp;Znovu</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="351"/>
-        <source>Default</source>
-        <translation>Výchozí</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="359"/>
-        <source>Github</source>
-        <translation>Github</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="380"/>
-        <source>&amp;About CuteMarkEd...</source>
-        <translation>O programu &amp;CuteMarkEd...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="395"/>
-        <source>Split 1:1</source>
-        <translation>Rozdělit 1:1</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="400"/>
-        <source>Split 2:1</source>
-        <translation>Rozdělit 2:1</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="405"/>
-        <source>Split 1:2</source>
-        <translation>Rozdělit 1:2</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="410"/>
-        <source>Split 3:1</source>
-        <translation>Rozdělit 3:1</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="415"/>
-        <source>Split 1:3</source>
-        <translation>Rozdělit 1:3</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="420"/>
-        <source>Copy HTML to Clipboard</source>
-        <translation>Kopírovat HTML do schránky</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="425"/>
-        <source>Cu&amp;t</source>
-        <translation>Vyj&amp;mout</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="430"/>
-        <source>&amp;Copy</source>
-        <translation>&amp;Kopírovat</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="435"/>
-        <source>&amp;Paste</source>
-        <translation>&amp;Vložit</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="440"/>
-        <source>Strong</source>
-        <translation>Tučné</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="445"/>
-        <source>Emphasize</source>
-        <translation>Kurzíva</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="450"/>
-        <source>&amp;Print...</source>
-        <translation>&amp;Tisk...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="455"/>
-        <source>Strikethrough</source>
-        <translation>Přeškrtnutí</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="460"/>
-        <source>Inline Code</source>
-        <translation>Vkládaný kód</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="468"/>
-        <source>Math Support</source>
-        <translation>Zobrazit matematický obsah</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="476"/>
-        <source>Code Highlighting</source>
-        <translation>Zvýrazňování kódu</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="484"/>
-        <source>Clearness</source>
-        <translation>Zřetelnost</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="492"/>
-        <source>Clearness Dark</source>
-        <translation>Zřetelnost tmavé</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="507"/>
-        <source>Hard Linebreak</source>
-        <translation>Tvrdé zalomení řádku</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="512"/>
-        <source>Find Next</source>
-        <translation>Najít další</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="517"/>
-        <source>Find Previous</source>
-        <translation>Najít předchozí</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="525"/>
-        <source>Full Screen Mode</source>
-        <translation>Celoobrazovkový režim</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="530"/>
-        <source>Blockquote</source>
-        <translation>Blokové uvozovky</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="548"/>
-        <source>Show Hard Linebreaks</source>
-        <translation>Ukázat tvrdá zalomení řádku</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="553"/>
-        <source>Options...</source>
-        <translation>Volby...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="163"/>
-        <location filename="../mainwindow.ui" line="497"/>
+        <location filename="../mainwindow.ui" line="162"/>
+        <location filename="../mainwindow.ui" line="515"/>
         <source>Find/Replace</source>
         <translation>Hledat/Nahradit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="502"/>
-        <source>Center Paragraph</source>
-        <translation>Zarovnat odstavec na střed</translation>
+        <location filename="../mainwindow.ui" line="182"/>
+        <source>&amp;Help</source>
+        <translation>Nápo&amp;věda</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="367"/>
+        <location filename="../mainwindow.ui" line="190"/>
+        <source>&amp;View</source>
+        <translation>&amp;Pohled</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="204"/>
+        <source>E&amp;xtras</source>
+        <translation>&amp;Doplňky</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="208"/>
+        <source>Styles</source>
+        <translation>Styly</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="219"/>
+        <source>Markdown Extensions</source>
+        <translation>Rozšíření Markdown</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="229"/>
+        <source>Languages</source>
+        <translation>Jazyky</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="253"/>
+        <source>Table of contents</source>
+        <translation>Obsah</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="292"/>
+        <location filename="../mainwindow.ui" line="553"/>
+        <source>Markdown Syntax</source>
+        <translation>Skladba Markdown</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="318"/>
+        <location filename="../mainwindow.cpp" line="133"/>
+        <source>qrc:/syntax.html</source>
+        <translation>qrc:/syntax.html</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="328"/>
+        <source>E&amp;xit</source>
+        <translation>&amp;Ukončit</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="333"/>
+        <source>&amp;New</source>
+        <translation>&amp;Nový</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="338"/>
+        <source>&amp;Open...</source>
+        <translation>&amp;Otevřít...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="343"/>
+        <source>&amp;Save</source>
+        <translation>&amp;Uložit</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="348"/>
+        <source>Save &amp;As...</source>
+        <translation>Uložit &amp;jako...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="353"/>
+        <source>&amp;Undo</source>
+        <translation>&amp;Zpět</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="358"/>
+        <source>&amp;Redo</source>
+        <translation>&amp;Znovu</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="369"/>
+        <source>Default</source>
+        <translation>Výchozí</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="377"/>
+        <source>Github</source>
+        <translation>Github</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="385"/>
         <source>Solarized Light</source>
         <translation>Osluněný světlý</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="375"/>
+        <location filename="../mainwindow.ui" line="393"/>
         <source>Solarized Dark</source>
         <translation>Osluněný tmavý</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="385"/>
+        <location filename="../mainwindow.ui" line="398"/>
+        <source>&amp;About CuteMarkEd...</source>
+        <translation>O programu &amp;CuteMarkEd...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="403"/>
         <source>Export to HTML...</source>
         <translation>Vyvést do HTML...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="390"/>
+        <location filename="../mainwindow.ui" line="408"/>
         <source>Export to PDF...</source>
         <translation>Vyvést do PDF...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="708"/>
-        <source>Change Preview Style</source>
-        <translation>Změnit styl náhledu</translation>
+        <location filename="../mainwindow.ui" line="413"/>
+        <source>Split 1:1</source>
+        <translation>Rozdělit 1:1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="160"/>
-        <source>Open File...</source>
-        <translation>Otevřít soubor...</translation>
+        <location filename="../mainwindow.ui" line="418"/>
+        <source>Split 2:1</source>
+        <translation>Rozdělit 2:1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="161"/>
-        <location filename="../mainwindow.cpp" line="186"/>
-        <source>Markdown Files (*.markdown *.md);;All Files (*)</source>
-        <translation>Soubory Markdown (*.markdown *.md);;Všechny soubory (*.*)</translation>
+        <location filename="../mainwindow.ui" line="423"/>
+        <source>Split 1:2</source>
+        <translation>Rozdělit 1:2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="185"/>
-        <source>Save as...</source>
-        <translation>Uložit jako...</translation>
+        <location filename="../mainwindow.ui" line="428"/>
+        <source>Split 3:1</source>
+        <translation>Rozdělit 3:1</translation>
     </message>
     <message>
-        <source>HTML Files (*.html *.htm);;All Files (*)</source>
-        <translation type="obsolete">Soubory HTML (*.html *.htm);;Všechny soubory (*.*)</translation>
+        <location filename="../mainwindow.ui" line="433"/>
+        <source>Split 1:3</source>
+        <translation>Rozdělit 1:3</translation>
     </message>
     <message>
-        <source>PDF Files (*.pdf);;All Files (*)</source>
-        <translation type="obsolete">PDF Dateien (*.pdf);;Alle Dateien (*.*)</translation>
+        <location filename="../mainwindow.ui" line="438"/>
+        <source>Copy HTML to Clipboard</source>
+        <translation>Kopírovat HTML do schránky</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="241"/>
-        <source>Print Document</source>
-        <translation>Tisknout dokument</translation>
+        <location filename="../mainwindow.ui" line="443"/>
+        <source>Cu&amp;t</source>
+        <translation>Vyj&amp;mout</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="460"/>
-        <source>About CuteMarkEd</source>
-        <translation>O programu CuteMarkEd</translation>
+        <location filename="../mainwindow.ui" line="448"/>
+        <source>&amp;Copy</source>
+        <translation>&amp;Kopírovat</translation>
     </message>
     <message>
-        <source>&lt;p&gt;&lt;b&gt;CuteMarkEd 0.3.0&lt;/b&gt;&lt;br&gt; Qt Markdown Editor&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;p&gt;&lt;b&gt;CuteMarkEd 0.3.0&lt;/b&gt;&lt;br&gt; Qt Markdown Editor&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;</translation>
+        <location filename="../mainwindow.ui" line="453"/>
+        <source>&amp;Paste</source>
+        <translation>&amp;Vložit</translation>
     </message>
     <message>
-        <source>&lt;p&gt;&lt;b&gt;CuteMarkEd 0.4.0&lt;/b&gt;&lt;br&gt;Qt-based, free and open source markdown editor with live HTML preview&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;p&gt;&lt;b&gt;CuteMarkEd 0.4.0&lt;/b&gt;&lt;br&gt;svobodný editor pro jazyk Markdown založený na Qt s živým náhledem na HTML&lt;br&gt;Autorské právo 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</translation>
+        <location filename="../mainwindow.ui" line="458"/>
+        <source>Strong</source>
+        <translation>Tučné</translation>
     </message>
     <message>
-        <source>&lt;p&gt;&lt;b&gt;CuteMarkEd 0.4.1&lt;/b&gt;&lt;br&gt;Qt-based, free and open source markdown editor with live HTML preview&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;p&gt;&lt;b&gt;CuteMarkEd 0.4.1&lt;/b&gt;&lt;br&gt;svobodný editor pro jazyk Markdown založený na Qt s živým náhledem na HTML&lt;br&gt;Autorské právo 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</translation>
+        <location filename="../mainwindow.ui" line="463"/>
+        <source>Emphasize</source>
+        <translation>Kurzíva</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="461"/>
-        <source>&lt;p&gt;&lt;b&gt;CuteMarkEd %1&lt;/b&gt;&lt;br&gt;Qt-based, free and open source markdown editor with live HTML preview&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;b&gt;CuteMarkEd %1&lt;/b&gt;&lt;br&gt;svobodný editor pro jazyk Markdown založený na Qt s živým náhledem na HTML&lt;br&gt;Autorské právo 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</translation>
+        <location filename="../mainwindow.ui" line="468"/>
+        <source>&amp;Print...</source>
+        <translation>&amp;Tisk...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="540"/>
-        <location filename="../mainwindow.cpp" line="475"/>
-        <location filename="../mainwindow.cpp" line="483"/>
-        <location filename="../mainwindow.cpp" line="484"/>
+        <location filename="../mainwindow.ui" line="473"/>
+        <location filename="../mainwindow.ui" line="587"/>
+        <source>Strikethrough</source>
+        <translation>Přeškrtnutí</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="478"/>
+        <source>Inline Code</source>
+        <translation>Vkládaný kód</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="486"/>
+        <source>Math Support</source>
+        <translation>Zobrazit matematický obsah</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="494"/>
+        <source>Code Highlighting</source>
+        <translation>Zvýrazňování kódu</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="502"/>
+        <source>Clearness</source>
+        <translation>Zřetelnost</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="510"/>
+        <source>Clearness Dark</source>
+        <translation>Zřetelnost tmavé</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="520"/>
+        <source>Center Paragraph</source>
+        <translation>Zarovnat odstavec na střed</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="525"/>
+        <source>Hard Linebreak</source>
+        <translation>Tvrdé zalomení řádku</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="530"/>
+        <source>Find Next</source>
+        <translation>Najít další</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="535"/>
+        <source>Find Previous</source>
+        <translation>Najít předchozí</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="543"/>
+        <source>Full Screen Mode</source>
+        <translation>Celoobrazovkový režim</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="548"/>
+        <source>Blockquote</source>
+        <translation>Blokové uvozovky</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="558"/>
+        <location filename="../mainwindow.cpp" line="542"/>
+        <location filename="../mainwindow.cpp" line="550"/>
+        <location filename="../mainwindow.cpp" line="551"/>
         <source>HTML preview</source>
         <translation>Náhled na HTML</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="478"/>
-        <location filename="../mainwindow.cpp" line="479"/>
+        <location filename="../mainwindow.ui" line="566"/>
+        <source>Show Hard Linebreaks</source>
+        <translation>Ukázat tvrdá zalomení řádku</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="571"/>
+        <source>Options...</source>
+        <translation>Volby...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="579"/>
+        <source>Autolink</source>
+        <translation>Automatický odkaz</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="595"/>
+        <source>Alphabetic Lists</source>
+        <translation>Abecední seznamy</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="603"/>
+        <source>Definition Lists</source>
+        <translation>Seznamy definic</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="611"/>
+        <source>SmartyPants</source>
+        <translation>SmartyPants</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="616"/>
+        <source>Language</source>
+        <translation>Jazyk</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="624"/>
+        <source>Check Spelling</source>
+        <translation>Ověřit pravopis</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="629"/>
+        <source>Increase Header Level</source>
+        <translation>Zvýšit úroveň nadpisu</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="634"/>
+        <source>Decrease Header Level</source>
+        <translation>Snížit úroveň nadpisu</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="184"/>
+        <source>Open File...</source>
+        <translation>Otevřít soubor...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="185"/>
+        <location filename="../mainwindow.cpp" line="215"/>
+        <source>Markdown Files (*.markdown *.md);;All Files (*)</source>
+        <translation>Soubory Markdown (*.markdown *.md);;Všechny soubory (*.*)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="214"/>
+        <source>Save as...</source>
+        <translation>Uložit jako...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="280"/>
+        <source>Print Document</source>
+        <translation>Tisknout dokument</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="527"/>
+        <source>About CuteMarkEd</source>
+        <translation>O programu CuteMarkEd</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="528"/>
+        <source>&lt;p&gt;&lt;b&gt;CuteMarkEd %1&lt;/b&gt;&lt;br&gt;Qt-based, free and open source markdown editor with live HTML preview&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</source>
+        <translation>&lt;p&gt;&lt;b&gt;CuteMarkEd %1&lt;/b&gt;&lt;br&gt;svobodný editor pro jazyk Markdown založený na Qt s živým náhledem na HTML&lt;br&gt;Autorské právo 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="545"/>
+        <location filename="../mainwindow.cpp" line="546"/>
         <source>HTML source</source>
         <translation>Zdroj HTML</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="498"/>
+        <location filename="../mainwindow.cpp" line="566"/>
         <source>%1 words</source>
         <translation>%1 slov</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="499"/>
+        <location filename="../mainwindow.cpp" line="567"/>
         <source>Lines: %1  Words: %2  Characters: %3</source>
         <translation>Řádky: %1  Slova: %2  Znaky: %3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="785"/>
+        <location filename="../mainwindow.cpp" line="817"/>
+        <source>Change Preview Style</source>
+        <translation>Změnit styl náhledu</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="894"/>
         <source>Application</source>
         <translation>Program</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="786"/>
+        <location filename="../mainwindow.cpp" line="895"/>
         <source>The document has been modified.&lt;br&gt;Do you want to save your changes?</source>
         <translation>Dokument byl změněn.&lt;br&gt;Chcete uložit změny?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="806"/>
+        <location filename="../mainwindow.cpp" line="915"/>
         <source>untitled.md</source>
         <extracomment>default file name for new markdown documents</extracomment>
         <translation>Bez názvu.md</translation>
     </message>
     <message>
-        <source>The document has been modified.
-Do you want to save your changes?</source>
-        <translation type="obsolete">Tento dokument byl změněn.\nChcete uložit změny?</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="811"/>
         <source>%1[*] - %2</source>
-        <translation>%1[*] - %2</translation>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>MarkdownEditor</name>
+    <message>
+        <location filename="../markdowneditor.cpp" line="211"/>
+        <source>Suggestions</source>
+        <translation>Návrhy</translation>
     </message>
 </context>
 <context>
@@ -529,24 +564,69 @@ Do you want to save your changes?</source>
         <translation>Volby...</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="21"/>
+        <location filename="../optionsdialog.ui" line="24"/>
         <source>Editor</source>
         <translation>Editor</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="27"/>
+        <location filename="../optionsdialog.ui" line="30"/>
         <source>Font</source>
         <translation>Písmo</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="33"/>
+        <location filename="../optionsdialog.ui" line="36"/>
         <source>Family:</source>
         <translation>Rodina písma:</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="43"/>
+        <location filename="../optionsdialog.ui" line="46"/>
         <source>Size:</source>
         <translation>Velikost:</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="73"/>
+        <source>Internet</source>
+        <translation>Internet</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="79"/>
+        <source>Configure Proxy to Access the Internet</source>
+        <translation>Nastavit proxy pro přístup k internetu</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="85"/>
+        <source>No proxy</source>
+        <translation>Žádná proxy</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="95"/>
+        <source>Use system proxy settings</source>
+        <translation>Použít systémová nastavení proxy</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="102"/>
+        <source>Manual proxy configuration:</source>
+        <translation>Ruční nastavení proxy</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="118"/>
+        <source>Host:</source>
+        <translation>Hostitel:</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="125"/>
+        <source>Port:</source>
+        <translation>Přípojka:</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="132"/>
+        <source>User Name:</source>
+        <translation>Uživatelské jméno</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="139"/>
+        <source>Password:</source>
+        <translation>Heslo:</translation>
     </message>
 </context>
 <context>
@@ -557,7 +637,7 @@ Do you want to save your changes?</source>
         <translation>Naposledy otevřené &amp;soubory</translation>
     </message>
     <message>
-        <location filename="../controls/recentfilesmenu.cpp" line="91"/>
+        <location filename="../controls/recentfilesmenu.cpp" line="92"/>
         <source>Clear Menu</source>
         <translation>Vyprázdnit nabídku</translation>
     </message>

@@ -24,19 +24,72 @@ class Options : public QObject
 {
     Q_OBJECT
 public:
+    enum ProxyMode { NoProxy, SystemProxy, ManualProxy };
+
     explicit Options(QObject *parent = 0);
+
+    void apply();
 
     QFont editorFont() const;
     void setEditorFont(const QFont &font);
+
+    ProxyMode proxyMode() const;
+    void setProxyMode(ProxyMode mode);
+
+    QString proxyHost() const;
+    void setProxyHost(const QString &host);
+
+    quint16 proxyPort() const;
+    void setProxyPort(quint16 port);
+
+    QString proxyUser() const;
+    void setProxyUser(const QString &user);
+
+    QString proxyPassword() const;
+    void setProxyPassword(const QString &password);
+
+    bool isAutolinkEnabled() const;
+    void setAutolinkEnabled(bool enabled);
+
+    bool isStrikethroughEnabled() const;
+    void setStrikethroughEnabled(bool enabled);
+
+    bool isAlphabeticListsEnabled() const;
+    void setAlphabeticListsEnabled(bool enabled);
+
+    bool isDefinitionListsEnabled() const;
+    void setDefinitionListsEnabled(bool enabled);
+
+    bool isSmartyPantsEnabled() const;
+    void setSmartyPantsEnabled(bool enabled);
+
+    bool isSpellingCheckEnabled() const;
+    void setSpellingCheckEnabled(bool enabled);
+
+    QString dictionaryLanguage() const;
+    void setDictionaryLanguage(const QString &language);
 
     void readSettings();
     void writeSettings();
 
 signals:
     void editorFontChanged(const QFont &font);
+    void proxyConfigurationChanged();
 
 private:
     QFont font;
+    ProxyMode m_proxyMode;
+    QString m_proxyHost;
+    quint16 m_proxyPort;
+    QString m_proxyUser;
+    QString m_proxyPassword;
+    bool m_autolinkEnabled;
+    bool m_strikethroughEnabled;
+    bool m_alphabeticListsEnabled;
+    bool m_definitionListsEnabled;
+    bool m_smartyPantsEnabled;
+    bool m_spellingCheckEnabled;
+    QString m_dictionaryLanguage;
 };
 
 #endif // OPTIONS_H

@@ -14,37 +14,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "document.h"
-using Discount::Document;
-using Discount::Parser;
+#ifndef HUNSPELL_DICTIONARY_H
+#define HUNSPELL_DICTIONARY_H
 
-Document::Document(const QString &text, Parser::ParserOptions options) :
-    document(0)
+#include <QtCore/qmetatype.h>
+#include <QtCore/qstring.h>
+
+namespace hunspell {
+
+class Dictionary
 {
-    if (text.length() > 0) {
-        document = Parser::parseString(text, options);
-    }
-}
+public:
+    Dictionary();
+    Dictionary(const QString &language, const QString &filePath);
+    Dictionary(const Dictionary &other);
+    ~Dictionary();
 
-Document::~Document()
-{
-    Parser::cleanup(document);
-}
+    QString language() const;
+    QString languageName() const;
 
-QString Document::toHtml()
-{
-    if (html.isNull() && document) {
-        html = Parser::renderAsHtml(document);
-    }
+    QString countryName() const;
 
-    return html;
-}
+    QString filePath() const;
 
-QString Document::generateToc()
-{
-    if (toc.isNull() && document) {
-        toc = Parser::generateToc(document);
-    }
+private:
+    QString m_language;
+    QString m_filePath;
+};
 
-    return toc;
-}
+} // namespace hunspell
+
+Q_DECLARE_METATYPE(hunspell::Dictionary);
+
+#endif // HUNSPELL_DICTIONARY_H
