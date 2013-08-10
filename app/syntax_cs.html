@@ -1,0 +1,245 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 10pt;
+}
+pre {
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  font-size: 10pt;
+}
+table, td, th {
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+}
+table {
+  width: 100%;
+}
+th {
+  text-align: left;
+  background: #eeeeee;
+  padding: 3px;
+}
+</style>
+<title>Návod pro skladbu Markdown</title>
+</head>
+<body>
+
+  <h3>ZÁHLAVÍ</h3>
+
+  <table>
+<thead><tr>
+<th>Vstup Markdown</th>
+      <th>Výstup</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>
+ # Nadpis jedna
+
+ ## Nadpis dvě
+
+ ### Nadpis tři
+
+ #### Nadpis čtyři
+
+ ##### Nadpis pět
+
+ ###### Nadpis šest</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Nadpis jedna</h1>
+      <h2>Nadpis dvě</h2>
+      <h3>Nadpis tři</h3>
+      <h4>Nadpis čtyři</h4>
+      <h5>Nadpis pět</h5>
+      <h6>Nadpis šest</h6>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>
+ Nadpis jedna
+ ============
+
+ Nadpis dvě
+ ----------</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Nadpis jedna</h1>
+      <h2>Nadpis dvě</h2>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>ODSTAVCE</h3>
+
+  <table>
+<thead><tr>
+<th>Vstup Markdown</th>
+      <th>Výstup</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>
+ Odstavec je jednoduše jeden
+ nebo více po sobě jdoucích řádků
+ textu, oddělených jedním nebo
+ více prázdnými řádky.
+
+ Toto je další odstavec.</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Odstavec je jednoduše jeden nebo více po sobě jdoucích řádků textu, oddělených jedním nebo více prázdnými řádky.</p>
+      <p>Toto je další odstavec.</p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>
+ Pro vytvoření zalomení řádku,
+ ukončete řádek odstavcem
+ dvěma nebo více mezerami.</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Pro vytvoření zalomení řádku<br>ukončete řádek odstavcem<br>dvěma nebo více<br>mezerami.</p>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>VÝČTY</h3>
+
+  <table>
+<thead><tr>
+<th>Vstup Markdown</th>
+      <th>Výstup</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>
+ * Položka 1
+ * Položka 2
+ * Položka 3
+
+ + Položka 1
+ + Položka 2
+ + Položka 3
+
+ - Položka 1
+ - Položka 2
+ - Položka 3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>Položka 1</li>
+        <li>Položka 2</li>
+        <li>Položka 3</li>
+      </ul>
+<ul>
+<li>Položka 1</li>
+        <li>Položka 2</li>
+        <li>Položka 3</li>
+      </ul>
+<ul>
+<li>Položka 1</li>
+        <li>Položka 2</li>
+        <li>Položka 3</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>
+ 1. Položka 1
+ 2. Položka 2
+ 3. Položka 3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ol>
+<li>Položka 1</li>
+        <li>Položka 2</li>
+        <li>Položka 3</li>
+      </ol>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>
+ * Položka 1
+   1. Položka 2
+      + Položka 3
+   2. Položka 4</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>Položka 1<ol>
+<li>Položka 2<ul>
+<li>Položka 3</li>
+          </ul>
+</li>
+          <li>Položka 4</li>
+        </ol>
+</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>
+ Pojem
+ : Vymezení</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <dl>
+<dt>Pojem<dt>
+        </dt>
+</dt>
+<dd>Vymezení</dd>
+      </dl>
+</td>
+    </tr>
+</tbody>
+</table>
+<h3>ZVÝRAZNĚNÍ</h3>
+
+  <table>
+<thead><tr>
+<th>Vstup Markdown</th>
+      <th>Výstup</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>
+ Jsem *zvýrazněn*
+
+ Jsem _zvýrazněn_</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Jsem <em>zvýrazněn</em></p>
+
+      <p>Jsem <em>zvýrazněn</em></p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>
+ Jsem **tučný**
+
+ Jsem __tučný__</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Jsem <strong>tučný</strong></p>
+
+      <p>Jsem <strong>tučný</strong></p>
+      </td>
+    </tr>
+</tbody>
+</table>
+</body>
+</html>
