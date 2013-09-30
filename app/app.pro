@@ -13,7 +13,8 @@ TEMPLATE = app
 
 TRANSLATIONS += \
     translations/cutemarked_cs.ts \
-    translations/cutemarked_de.ts
+    translations/cutemarked_de.ts \
+    translations/cutemarked_el.ts
 
 RC_FILE = cutemarked.rc
 
