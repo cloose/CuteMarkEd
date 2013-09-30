@@ -1,0 +1,236 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 10pt;
+}
+pre {
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  font-size: 10pt;
+}
+table, td, th {
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+}
+table {
+  width: 100%;
+}
+th {
+  text-align: left;
+  background: #eeeeee;
+  padding: 3px;
+}
+</style>
+<title>Πληροφορίες Σύνταξης Markdown </title>
+</head>
+<body>
+
+  <h3>ΚΕΦΑΛΙΔΕΣ</h3>
+
+  <table>
+<thead><tr>
+<th>Είσοδος Markdown</th>
+      <th>Έξοδος</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre># Κεφαλίδα Ένα
+
+## Κεφαλίδα Δύο
+
+### Κεφαλίδα Τρία
+
+#### Κεφαλίδα Τέσσερα
+
+##### Κεφαλίδα Πέντε
+
+###### Κεφαλίδα Έξι</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Κεφαλίδα Ένα</h1>
+      <h2>Κεφαλίδα Δύο</h2>
+      <h3>Κεφαλίδα Τρία</h3>
+      <h4>Κεφαλίδα Τέσσερα</h4>
+      <h5>Κεφαλίδα Πέντε</h5>
+      <h6>Κεφαλίδα Έξι</h6>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Κεφαλίδα Ένα
+============
+
+Κεφαλίδα Δύο
+-------------------</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Κεφαλίδα Ένα</h1>
+      <h2>Κεφαλίδα Δύο</h2>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>Παράγραφοι</h3>
+
+  <table>
+<thead><tr>
+<th>Είσοδος Markdown</th>
+      <th>Έξοδος</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>Μια παράγραφος αποτελείτε από μία
+ή περισσότερες γραμμές κειμένου,
+διαχωρισμένες από μία
+ή περισσότερες κενές γραμμές.
+
+Αυτή είναι άλλη παράγραφος.</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Μια παράγραφος αποτελείτε από μία ή περισσότερες γραμμές κειμένου, διαχωρισμένες από μία ή περισσότερες κενές γραμμές.</p>
+      <p>Αυτή είναι άλλη παράγραφος.</p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Για να δημιουργήσετε μια αλλαγή
+γραμμής, τερματίστε μια γραμμή με
+μια παράγραφο με δύο ή περισσότερα
+κενά.</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Για να δημιουργήσετε μια αλλαγή<br>γραμμής, τερματίστε μια γραμμή με<br>μια παράγραφο με δύο ή περισσότερα<br>κενά.</p>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>ΛΙΣΤΕΣ</h3>
+
+  <table>
+<thead><tr>
+<th>Είσοδος Markdown</th>
+      <th>Έξοδος</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>* Στοιχείο 1
+* Στοιχείο 2
+* Στοιχείο 3
+
++ Στοιχείο 1
++ Στοιχείο 2
++ Στοιχείο 3
+
+- Στοιχείο 1
+- Στοιχείο 2
+- Στοιχείο 3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>Στοιχείο 1</li>
+        <li>Στοιχείο 2</li>
+        <li>Στοιχείο 3</li>
+      </ul>
+<ul>
+<li>Στοιχείο 1</li>
+        <li>Στοιχείο 2</li>
+        <li>Στοιχείο 3</li>
+      </ul>
+<ul>
+<li>Στοιχείο 1</li>
+        <li>Στοιχείο 2</li>
+        <li>Στοιχείο 3</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>1. Στοιχείο 1
+2. Στοιχείο 2
+3. Στοιχείο 3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ol>
+<li>Στοιχείο 1</li>
+        <li>Στοιχείο 2</li>
+        <li>Στοιχείο 3</li>
+      </ol>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>* Στοιχείο 1
+1. Στοιχείο 2
++ Στοιχείο 3
+2. Στοιχείο 4</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>Στοιχείο 1<ol>
+<li>Στοιχείο 2<ul>
+<li>Στοιχείο 3</li>
+          </ul>
+</li>
+          <li>Στοιχείο 4</li>
+        </ol>
+</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Όρος
+: Ορισμός</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <dl>
+<dt>Όρος<dt>
+        </dt>
+</dt>
+<dd>Ορισμός</dd>
+      </dl>
+</td>
+    </tr>
+</tbody>
+</table>
+<h3>ΕΜΦΑΣΗ</h3>
+
+  <table>
+<thead><tr>
+<th>Είσοδος Markdown</th>
+      <th>Έξοδος</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>Έχω *έμφαση*
+
+Έχω _έμφαση_</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Έχω <em>έμφαση</em></p>
+
+      <p>Έχω <em>έμφαση</em></p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Είμαι **έντονη γραφή**
+
+Είμαι __έντονη γραφή__</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Είμαι <strong>έντονη γραφή</strong></p>
+
+      <p>Είμαι <strong>έντονη γραφή</strong></p>
+      </td>
+    </tr>
+</tbody>
+</table>
+</body>
+</html>
