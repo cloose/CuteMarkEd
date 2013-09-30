@@ -8,25 +8,18 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 ### DOWNLOAD
 
-[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.7.0.tar.gz)  
-[MS Windows (Installer)](https://github.com/cloose/CuteMarkEd/releases/download/v0.7.0/cutemarked-0.7.0.msi)  
-[MS Windows (ZIP file)](https://github.com/cloose/CuteMarkEd/releases/download/v0.7.0/cutemarked-0.7.0.zip)  
+[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.7.1.tar.gz)  
+[MS Windows (Installer)](https://github.com/cloose/CuteMarkEd/releases/download/v0.7.1/cutemarked-0.7.1.msi)  
+[MS Windows (ZIP file)](https://github.com/cloose/CuteMarkEd/releases/download/v0.7.1/cutemarked-0.7.1.zip)  
 [OpenSUSE 12.3 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 
 ### NEWS
 
-#### Version 0.7.0
+#### Version 0.7.1
 
 New Features:
 
-* `NEW` Spell checking as you type via use of red wavy lines under misspelled words. Suggestions can be accessed through the context menu.
-* `NEW` Added network proxy support to the configuration dialog.
-* `NEW` Added options to control the extensions/features used by the markdown parser (discount).
-* `NEW` The markdown syntax help is now shown in the user language if available (currently english, german and czech).
-
-Improvements:
-
-* `IMPROVED` Greatly improved performance while typing.
+* `NEW` Added greek translation made by Evropi.
 
 ### DEPENDENCIES
 
@@ -48,7 +41,7 @@ https://github.com/cloose/CuteMarkEd/wiki/Build-Instructions
 
 ##### Translations
 
-We use [Transifex](https://www.transifex.com/projects/p/cutemarked) for the translations. Currently we have translations for german and czech. We are always interested in more translations.
+We use [Transifex](https://www.transifex.com/projects/p/cutemarked) for the translations. Currently we have translations for czech, german and greek. We are always interested in more translations.
 
 
 ### LINKS
