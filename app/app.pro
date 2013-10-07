@@ -14,7 +14,8 @@ TEMPLATE = app
 TRANSLATIONS += \
     translations/cutemarked_cs.ts \
     translations/cutemarked_de.ts \
-    translations/cutemarked_el.ts
+    translations/cutemarked_el.ts \
+    translations/cutemarked_zh_CN.ts
 
 RC_FILE = cutemarked.rc
 
@@ -138,7 +139,9 @@ OTHER_FILES += \
     cutemarked.desktop \
     syntax.html \
     cutemarked.rc \
-    syntax_de.html
+    syntax_de.html \
+    syntax_el.html \
+    syntax_zh_CN.html \
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
 message("Using LIBS=$$LIBS")
