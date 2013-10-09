@@ -139,8 +139,8 @@ QString HtmlPreviewGenerator::buildHtmlHeader() const
 
     // add Highlight.js script to HTML header
     if (codeHighlightingEnabled) {
-        header += QString("<link rel=\"stylesheet\" href=\"http://yandex.st/highlightjs/7.3/styles/%1.min.css\">").arg(codeHighlightingStyle);
-        header += "<script src=\"http://yandex.st/highlightjs/7.3/highlight.min.js\"></script>";
+        header += QString("<link rel=\"stylesheet\" href=\"qrc:/scripts/highlight.js/styles/%1.css\">").arg(codeHighlightingStyle);
+        header += "<script src=\"qrc:/scripts/highlight.js/highlight.pack.js\"></script>";
         header += "<script>hljs.initHighlightingOnLoad();</script>";
     }
 
