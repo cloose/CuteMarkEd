@@ -18,6 +18,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "imainwindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -31,21 +32,30 @@ class QActionGroup;
 class QLabel;
 class QNetworkDiskCache;
 class ActiveLabel;
-class HtmlPreviewGenerator;
 class HtmlHighlighter;
+class MainWindowPresenter;
 class RecentFilesMenu;
 class Options;
 
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, IMainWindow
 {
     Q_OBJECT
+    Q_INTERFACES(IMainWindow)
     
 public:
     explicit MainWindow(const QString &fileName = QString(), QWidget *parent = 0);
     ~MainWindow();
 
+signals:
+    // IMainWindow interface
+    void markdownTextChanged(const QString &text);
+
 public slots:
+    // IMainWindow interface
+    void setHtml(const QString &html) Q_DECL_OVERRIDE;
+    void setTableOfContents(const QString &toc) Q_DECL_OVERRIDE;
+
     void webViewScrolled();
 
 protected:
@@ -105,8 +115,6 @@ private slots:
     void toggleHtmlView();
 
     void plainTextChanged();
-    void htmlResultReady(const QString &html);
-    void tocResultReady(const QString &toc);
     void htmlContentSizeChanged();
 
     void previewLinkClicked(const QUrl &url);
@@ -135,6 +143,7 @@ private:
 
 private:
     Ui::MainWindow *ui;
+    MainWindowPresenter *presenter;
     RecentFilesMenu *recentFilesMenu;
     Options *options;
     QNetworkDiskCache *diskCache;
@@ -142,7 +151,6 @@ private:
     QLabel *styleLabel;
     QLabel *wordCountLabel;
     ActiveLabel *viewLabel;
-    HtmlPreviewGenerator* generator;
     HtmlHighlighter *htmlHighlighter;
     QString fileName;
     float splitFactor;

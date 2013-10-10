@@ -41,8 +41,8 @@
 #include "controls/languagemenu.h"
 #include "controls/recentfilesmenu.h"
 #include "hunspell/dictionary.h"
-#include "htmlpreviewgenerator.h"
 #include "htmlhighlighter.h"
+#include "mainwindowpresenter.h"
 #include "markdownmanipulator.h"
 #include "exporthtmldialog.h"
 #include "exportpdfdialog.h"
@@ -52,12 +52,12 @@
 MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
+    presenter(new MainWindowPresenter(this)),
     options(new Options(this)),
     diskCache(new QNetworkDiskCache(this)),
     styleLabel(0),
     wordCountLabel(0),
     viewLabel(0),
-    generator(new HtmlPreviewGenerator(options, this)),
     splitFactor(0.5),
     scrollBarPos(0)
 {
@@ -71,12 +71,32 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    // stop background HTML preview generator
-    generator->markdownTextChanged(QString());
-    generator->wait();
-    delete generator;
-
     delete ui;
+}
+
+void MainWindow::setHtml(const QString &html)
+{
+    ui->webView->page()->networkAccessManager()->setCache(diskCache);
+
+    // remember scrollbar position
+    scrollBarPos = ui->plainTextEdit->verticalScrollBar()->value();
+
+    // show html preview
+    QUrl baseUrl;
+    if (fileName.isEmpty()) {
+        baseUrl = QUrl::fromLocalFile(qApp->applicationDirPath());
+    } else {
+        baseUrl = QUrl::fromLocalFile(QFileInfo(fileName).absolutePath() + "/");
+    }
+    ui->webView->setHtml(html, baseUrl);
+
+    // show html source
+    ui->htmlSourceTextEdit->setPlainText(html);
+}
+
+void MainWindow::setTableOfContents(const QString &toc)
+{
+    ui->tocWebView->setHtml(toc);
 }
 
 void MainWindow::webViewScrolled()
@@ -107,6 +127,9 @@ void MainWindow::resizeEvent(QResizeEvent *e)
 
 void MainWindow::initializeApp()
 {
+    // inform presenter that we are ready
+    presenter->onViewReady();
+
     // inform us when a link in the table of contents or preview view is clicked
     ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
@@ -389,7 +412,7 @@ void MainWindow::viewChangeSplit()
 
 void MainWindow::styleDefault()
 {
-    generator->setCodeHighlightingStyle("default");
+    presenter->setCodeHighlightingStyle("default");
 
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/markdown.css"));
@@ -399,7 +422,7 @@ void MainWindow::styleDefault()
 
 void MainWindow::styleGithub()
 {
-    generator->setCodeHighlightingStyle("github");
+    presenter->setCodeHighlightingStyle("github");
 
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/github.css"));
@@ -409,7 +432,7 @@ void MainWindow::styleGithub()
 
 void MainWindow::styleSolarizedLight()
 {
-    generator->setCodeHighlightingStyle("solarized_light");
+    presenter->setCodeHighlightingStyle("solarized_light");
 
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-light+.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-light.css"));
@@ -419,7 +442,7 @@ void MainWindow::styleSolarizedLight()
 
 void MainWindow::styleSolarizedDark()
 {
-    generator->setCodeHighlightingStyle("solarized_dark");
+    presenter->setCodeHighlightingStyle("solarized_dark");
 
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-dark+.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-dark.css"));
@@ -429,7 +452,7 @@ void MainWindow::styleSolarizedDark()
 
 void MainWindow::styleClearness()
 {
-    generator->setCodeHighlightingStyle("default");
+    presenter->setCodeHighlightingStyle("default");
 
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness.css"));
@@ -439,7 +462,7 @@ void MainWindow::styleClearness()
 
 void MainWindow::styleClearnessDark()
 {
-    generator->setCodeHighlightingStyle("default");
+    presenter->setCodeHighlightingStyle("default");
 
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/clearness-dark+.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness-dark.css"));
@@ -451,7 +474,7 @@ void MainWindow::styleCustomStyle()
 {
     QAction *action = qobject_cast<QAction*>(sender());
 
-    generator->setCodeHighlightingStyle("default");
+    presenter->setCodeHighlightingStyle("default");
 
     ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl::fromLocalFile(action->data().toString()));
@@ -575,33 +598,10 @@ void MainWindow::plainTextChanged()
     }
 
     // generate HTML from markdown
-    generator->markdownTextChanged(code);
+    emit markdownTextChanged(code);
 
     // show modification indicator in window title
     setWindowModified(ui->plainTextEdit->document()->isModified());
-}
-
-void MainWindow::htmlResultReady(const QString &html)
-{
-    ui->webView->page()->networkAccessManager()->setCache(diskCache);
-
-    // remember scrollbar position
-    scrollBarPos = ui->plainTextEdit->verticalScrollBar()->value();
-
-    QUrl baseUrl;
-    if (fileName.isEmpty()) {
-        baseUrl = QUrl::fromLocalFile(qApp->applicationDirPath());
-    } else {
-        baseUrl = QUrl::fromLocalFile(QFileInfo(fileName).absolutePath() + "/");
-    }
-    ui->webView->setHtml(html, baseUrl);
-
-    ui->htmlSourceTextEdit->setPlainText(html);
-}
-
-void MainWindow::tocResultReady(const QString &toc)
-{
-    ui->tocWebView->setHtml(toc);
 }
 
 void MainWindow::htmlContentSizeChanged()
@@ -786,9 +786,9 @@ void MainWindow::setupActions()
 
     // extras menu
     connect(ui->actionMathSupport, SIGNAL(triggered(bool)),
-            generator, SLOT(setMathSupportEnabled(bool)));
+            presenter, SLOT(setMathSupportEnabled(bool)));
     connect(ui->actionCodeHighlighting, SIGNAL(triggered(bool)),
-            generator, SLOT(setCodeHighlightingEnabled(bool)));
+            presenter, SLOT(setCodeHighlightingEnabled(bool)));
     connect(ui->menuLanguages, SIGNAL(languageTriggered(hunspell::Dictionary)),
             this, SLOT(languageChanged(hunspell::Dictionary)));
 
@@ -864,20 +864,6 @@ void MainWindow::setupHtmlPreview()
     // restore scrollbar position after content size changed
     connect(ui->webView->page()->mainFrame(), SIGNAL(contentsSizeChanged(QSize)),
             this, SLOT(htmlContentSizeChanged()));
-
-    // load HTML template for live preview from resources
-    QFile f(":/template.html");
-    if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QString htmlTemplate = f.readAll();
-        generator->setHtmlTemplate(htmlTemplate);
-    }
-
-    // start background HTML preview generator
-    connect(generator, SIGNAL(htmlResultReady(QString)),
-            this, SLOT(htmlResultReady(QString)));
-    connect(generator, SIGNAL(tocResultReady(QString)),
-            this, SLOT(tocResultReady(QString)));
-    generator->start();
 }
 
 void MainWindow::setupHtmlSourceView()
