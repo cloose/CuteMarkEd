@@ -25,6 +25,8 @@ class IMainWindow
 public:
     virtual ~IMainWindow() {}
 
+    virtual void setMarkdownText(const QString &text) = 0;
+
 public slots:
     virtual void setHtml(const QString &html) = 0;
     virtual void setTableOfContents(const QString &toc) = 0;

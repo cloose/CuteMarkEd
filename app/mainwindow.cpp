@@ -64,7 +64,10 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     ui->setupUi(this);
     setupUi();
 
-    setFileName(fileName);
+    connect(presenter, SIGNAL(fileNameChanged(QString)),
+            this, SLOT(fileNameChanged(QString)));
+
+    presenter->setFileName(fileName);
 
     QTimer::singleShot(0, this, SLOT(initializeApp()));
 }
@@ -72,6 +75,12 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::setMarkdownText(const QString &text)
+{
+    ui->plainTextEdit->resetHighlighting();
+    ui->plainTextEdit->setPlainText(text);
 }
 
 void MainWindow::setHtml(const QString &html)
@@ -82,12 +91,7 @@ void MainWindow::setHtml(const QString &html)
     scrollBarPos = ui->plainTextEdit->verticalScrollBar()->value();
 
     // show html preview
-    QUrl baseUrl;
-    if (fileName.isEmpty()) {
-        baseUrl = QUrl::fromLocalFile(qApp->applicationDirPath());
-    } else {
-        baseUrl = QUrl::fromLocalFile(QFileInfo(fileName).absolutePath() + "/");
-    }
+    QUrl baseUrl = presenter->previewBaseUrl();
     ui->webView->setHtml(html, baseUrl);
 
     // show html source
@@ -170,15 +174,13 @@ void MainWindow::initializeApp()
     ui->menuLanguages->loadDictionaries(options->dictionaryLanguage());
 
     // load file passed to application on start
-    if (!fileName.isEmpty()) {
-        load(fileName);
-    }
+    presenter->loadFile(presenter->fileName());
 }
 
 void MainWindow::openRecentFile(const QString &fileName)
 {
     if (maybeSave()) {
-        load(fileName);
+        presenter->loadFile(fileName);
     }
 }
 
@@ -186,6 +188,26 @@ void MainWindow::languageChanged(const hunspell::Dictionary &dictionary)
 {
     options->setDictionaryLanguage(dictionary.language());
     ui->plainTextEdit->setSpellingDictionary(dictionary);
+}
+
+void MainWindow::fileNameChanged(const QString &fileName)
+{
+    // set to unmodified
+    ui->plainTextEdit->document()->setModified(false);
+    setWindowModified(false);
+
+    // update window title
+    QString shownName = fileName;
+    if (shownName.isEmpty()) {
+        //: default file name for new markdown documents
+        shownName = tr("untitled.md");
+    }
+    setWindowFilePath(shownName);
+
+    // add to recent files
+    if (!fileName.isEmpty()) {
+        recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
+    }
 }
 
 void MainWindow::fileNew()
@@ -197,7 +219,7 @@ void MainWindow::fileNew()
         ui->plainTextEdit->resetHighlighting();
         ui->webView->setHtml(QString());
         ui->htmlSourceTextEdit->clear();
-        setFileName(QString());
+        presenter->setFileName(QString());
     }
 }
 
@@ -206,19 +228,17 @@ void MainWindow::fileOpen()
     if (maybeSave()) {
         QString name = QFileDialog::getOpenFileName(this, tr("Open File..."),
                                                     QString(), tr("Markdown Files (*.markdown *.md);;All Files (*)"));
-        if (!name.isEmpty()) {
-            load(name);
-        }
+        presenter->loadFile(name);
     }
 }
 
 bool MainWindow::fileSave()
 {
-    if (fileName.isEmpty()) {
+    if (presenter->fileName().isEmpty()) {
         return fileSaveAs();
     }
 
-    QTextDocumentWriter writer(fileName, "plaintext");
+    QTextDocumentWriter writer(presenter->fileName(), "plaintext");
     bool success = writer.write(ui->plainTextEdit->document());
     if (success) {
         // set status to unmodified
@@ -226,7 +246,7 @@ bool MainWindow::fileSave()
         setWindowModified(false);
 
         // add to recent file list
-        recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
+        recentFilesMenu->addFile(QDir::toNativeSeparators(presenter->fileName()));
     }
 
     return success;
@@ -240,13 +260,13 @@ bool MainWindow::fileSaveAs()
         return false;
     }
 
-    setFileName(name);
+    presenter->setFileName(name);
     return fileSave();
 }
 
 void MainWindow::fileExportToHtml()
 {
-    ExportHtmlDialog dialog(fileName);
+    ExportHtmlDialog dialog(presenter->fileName());
     if (dialog.exec() == QDialog::Accepted) {
 
         if (dialog.includeCSS()) {
@@ -290,7 +310,7 @@ void MainWindow::fileExportToHtml()
 
 void MainWindow::fileExportToPdf()
 {
-    ExportPdfDialog dialog(fileName);
+    ExportPdfDialog dialog(presenter->fileName());
     if (dialog.exec() == QDialog::Accepted) {
         ui->webView->print(dialog.printer());
     }
@@ -648,28 +668,6 @@ void MainWindow::addJavaScriptObject()
     ui->webView->page()->mainFrame()->addToJavaScriptWindowObject("mainwin", this);
 }
 
-bool MainWindow::load(const QString &fileName)
-{
-    if (!QFile::exists(fileName)) {
-        return false;
-    }
-
-    QFile file(fileName);
-    if (!file.open(QFile::ReadOnly)) {
-        return false;
-    }
-
-    QByteArray content = file.readAll();
-    QString text = QString::fromUtf8(content);
-
-    ui->plainTextEdit->resetHighlighting();
-    ui->plainTextEdit->setPlainText(text);
-
-    setFileName(fileName);
-    recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
-    return true;
-}
-
 void MainWindow::proxyConfigurationChanged()
 {
     if (options->proxyMode() == Options::SystemProxy) {
@@ -845,7 +843,7 @@ void MainWindow::setupMarkdownEditor()
 {
     // load file that are dropped on the editor
     connect(ui->plainTextEdit, SIGNAL(loadDroppedFile(QString)),
-            this, SLOT(load(QString)));
+            presenter, SLOT(loadFile(QString)));
 
     // synchronize scrollbars
     connect(ui->plainTextEdit->verticalScrollBar(), SIGNAL(valueChanged(int)),
@@ -879,7 +877,7 @@ bool MainWindow::maybeSave()
     if (!ui->plainTextEdit->document()->isModified())
         return true;
 
-    if (fileName.startsWith(QLatin1String(":/")))
+    if (presenter->fileName().startsWith(QLatin1String(":/")))
         return true;
 
     QMessageBox::StandardButton ret;
@@ -894,21 +892,6 @@ bool MainWindow::maybeSave()
         return false;
 
     return true;
-}
-
-void MainWindow::setFileName(const QString &fileName)
-{
-    this->fileName = fileName;
-    ui->plainTextEdit->document()->setModified(false);
-
-    QString shownName = fileName;
-    if (shownName.isEmpty()) {
-        //: default file name for new markdown documents
-        shownName = tr("untitled.md");
-    }
-
-    setWindowFilePath(shownName);
-    setWindowModified(false);
 }
 
 void MainWindow::updateSplitter(bool htmlViewToggled)

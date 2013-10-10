@@ -47,6 +47,9 @@ public:
     explicit MainWindow(const QString &fileName = QString(), QWidget *parent = 0);
     ~MainWindow();
 
+    // IMainWindow interface
+    void setMarkdownText(const QString &text) Q_DECL_OVERRIDE;
+
 signals:
     // IMainWindow interface
     void markdownTextChanged(const QString &text);
@@ -66,6 +69,7 @@ private slots:
     void initializeApp();
     void openRecentFile(const QString &fileName);
     void languageChanged(const hunspell::Dictionary &dictionary);
+    void fileNameChanged(const QString &fileName);
 
     void fileNew();
     void fileOpen();
@@ -124,7 +128,6 @@ private slots:
     void scrollValueChanged(int value);
 
     void addJavaScriptObject();
-    bool load(const QString &fileName);
     void proxyConfigurationChanged();
 
 private:
@@ -135,7 +138,6 @@ private:
     void setupHtmlPreview();
     void setupHtmlSourceView();
     bool maybeSave();
-    void setFileName(const QString &fileName);
     void updateSplitter(bool htmlViewToggled);
     void loadCustomStyles();
     void readSettings();
@@ -152,7 +154,6 @@ private:
     QLabel *wordCountLabel;
     ActiveLabel *viewLabel;
     HtmlHighlighter *htmlHighlighter;
-    QString fileName;
     float splitFactor;
     int scrollBarPos;
 };

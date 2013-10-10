@@ -16,7 +16,9 @@
  */
 #include "mainwindowpresenter.h"
 
+#include <QApplication>
 #include <QFile>
+#include <QUrl>
 
 #include "htmlpreviewgenerator.h"
 #include "imainwindow.h"
@@ -56,6 +58,54 @@ void MainWindowPresenter::onViewReady()
 
     // start background HTML preview generator
     generator->start();
+}
+
+QString MainWindowPresenter::fileName() const
+{
+    return m_fileName;
+}
+
+void MainWindowPresenter::setFileName(const QString &fileName)
+{
+    m_fileName = fileName;
+    emit fileNameChanged(fileName);
+}
+
+QUrl MainWindowPresenter::previewBaseUrl() const
+{
+    // determine base URL for HTML preview
+    if (m_fileName.isEmpty()) {
+        return QUrl::fromLocalFile(qApp->applicationDirPath());
+    } else {
+        return QUrl::fromLocalFile(QFileInfo(m_fileName).absolutePath() + "/");
+    }
+}
+
+bool MainWindowPresenter::loadFile(const QString &fileName)
+{
+    if (fileName.isEmpty()) {
+        return false;
+    }
+
+    if (!QFile::exists(fileName)) {
+        return false;
+    }
+
+    // open file
+    QFile file(fileName);
+    if (!file.open(QFile::ReadOnly)) {
+        return false;
+    }
+
+    // read content from file
+    QByteArray content = file.readAll();
+    QString text = QString::fromUtf8(content);
+    view->setMarkdownText(text);
+
+    // remember name of new file
+    setFileName(fileName);
+
+    return true;
 }
 
 void MainWindowPresenter::setMathSupportEnabled(bool enabled)

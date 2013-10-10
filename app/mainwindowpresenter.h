@@ -27,13 +27,25 @@ class Options;
 class MainWindowPresenter : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString fileName READ fileName WRITE setFileName NOTIFY fileNameChanged)
+
 public:
     MainWindowPresenter(QObject *view, Options *options);
     ~MainWindowPresenter();
     
     void onViewReady();
 
+    QString fileName() const;
+    void setFileName(const QString &fileName);
+
+    QUrl previewBaseUrl() const;
+
+signals:
+    void fileNameChanged(const QString &fileName);
+
 public slots:
+    bool loadFile(const QString &fileName);
+
     void setMathSupportEnabled(bool enabled);
     void setCodeHighlightingEnabled(bool enabled);
     void setCodeHighlightingStyle(const QString &style);
@@ -41,6 +53,7 @@ public slots:
 private:
     IMainWindow *view;
     HtmlPreviewGenerator *generator;
+    QString m_fileName;
 };
 
 #endif // MAINWINDOWPRESENTER_H
