@@ -191,6 +191,7 @@ void MainWindow::fileOpen()
 
 bool MainWindow::fileSave()
 {
+    // file has no name yet?
     if (fileName.isEmpty()) {
         return fileSaveAs();
     }
@@ -588,6 +589,7 @@ void MainWindow::htmlResultReady(const QString &html)
     // remember scrollbar position
     scrollBarPos = ui->plainTextEdit->verticalScrollBar()->value();
 
+    // show html preview
     QUrl baseUrl;
     if (fileName.isEmpty()) {
         baseUrl = QUrl::fromLocalFile(qApp->applicationDirPath());
@@ -596,6 +598,7 @@ void MainWindow::htmlResultReady(const QString &html)
     }
     ui->webView->setHtml(html, baseUrl);
 
+    // show html source
     ui->htmlSourceTextEdit->setPlainText(html);
 }
 
@@ -654,19 +657,25 @@ bool MainWindow::load(const QString &fileName)
         return false;
     }
 
+    // open file
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly)) {
         return false;
     }
 
+    // read content from file
     QByteArray content = file.readAll();
     QString text = QString::fromUtf8(content);
 
     ui->plainTextEdit->resetHighlighting();
     ui->plainTextEdit->setPlainText(text);
 
+    // remember name of new file
     setFileName(fileName);
+
+    // add to recent files
     recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
+
     return true;
 }
 
@@ -913,16 +922,18 @@ bool MainWindow::maybeSave()
 void MainWindow::setFileName(const QString &fileName)
 {
     this->fileName = fileName;
-    ui->plainTextEdit->document()->setModified(false);
 
+    // set to unmodified
+    ui->plainTextEdit->document()->setModified(false);
+    setWindowModified(false);
+
+    // update window title
     QString shownName = fileName;
     if (shownName.isEmpty()) {
         //: default file name for new markdown documents
         shownName = tr("untitled.md");
     }
-
     setWindowFilePath(shownName);
-    setWindowModified(false);
 }
 
 void MainWindow::updateSplitter(bool htmlViewToggled)

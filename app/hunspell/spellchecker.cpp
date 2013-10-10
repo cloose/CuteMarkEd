@@ -100,6 +100,7 @@ QMap<QString, hunspell::Dictionary> SpellChecker::availableDictionaries()
         dictPath.setFilter(QDir::Files);
         dictPath.setNameFilters(QStringList() << "*.dic");
         if (dictPath.exists()) {
+            // loop over all dictionaries in directory
             QDirIterator it(dictPath);
             while (it.hasNext()) {
                 it.next();

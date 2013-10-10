@@ -35,6 +35,7 @@ void LanguageMenu::loadDictionaries(const QString &currentLanguage)
 
         hunspell::Dictionary dictionary = it.value();
 
+        // create an action for the dictionary
         QAction *action = createAction(dictionary);
 
         if (dictionary.language() == currentLanguage) {
