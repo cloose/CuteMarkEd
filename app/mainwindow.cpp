@@ -52,8 +52,8 @@
 MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    presenter(new MainWindowPresenter(this)),
     options(new Options(this)),
+    presenter(new MainWindowPresenter(this, options)),
     diskCache(new QNetworkDiskCache(this)),
     styleLabel(0),
     wordCountLabel(0),

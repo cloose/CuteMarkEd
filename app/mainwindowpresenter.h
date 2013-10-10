@@ -28,7 +28,7 @@ class MainWindowPresenter : public QObject
 {
     Q_OBJECT
 public:
-    explicit MainWindowPresenter(QObject *view);
+    MainWindowPresenter(QObject *view, Options *options);
     ~MainWindowPresenter();
     
     void onViewReady();
@@ -40,7 +40,6 @@ public slots:
 
 private:
     IMainWindow *view;
-    Options *options;
     HtmlPreviewGenerator *generator;
 };
 

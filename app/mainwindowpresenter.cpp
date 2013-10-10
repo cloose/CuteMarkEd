@@ -20,11 +20,9 @@
 
 #include "htmlpreviewgenerator.h"
 #include "imainwindow.h"
-#include "options.h"
 
-MainWindowPresenter::MainWindowPresenter(QObject *view) :
+MainWindowPresenter::MainWindowPresenter(QObject *view, Options *options) :
     QObject(view),
-    options(new Options(this)),
     generator(new HtmlPreviewGenerator(options, this))
 {
     // generate a new HTML document from the markdown text if it changed

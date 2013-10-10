@@ -143,9 +143,9 @@ private:
 
 private:
     Ui::MainWindow *ui;
+    Options *options;
     MainWindowPresenter *presenter;
     RecentFilesMenu *recentFilesMenu;
-    Options *options;
     QNetworkDiskCache *diskCache;
     QActionGroup *stylesGroup;
     QLabel *styleLabel;
