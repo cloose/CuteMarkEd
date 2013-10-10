@@ -43,7 +43,8 @@ SOURCES += \
     options.cpp \
     hunspell/spellchecker.cpp \
     hunspell/dictionary.cpp \
-    controls/languagemenu.cpp
+    controls/languagemenu.cpp \
+    mainwindowpresenter.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -67,7 +68,9 @@ HEADERS  += \
     options.h \
     hunspell/spellchecker.h \
     hunspell/dictionary.h \
-    controls/languagemenu.h
+    controls/languagemenu.h \
+    imainwindow.h \
+    mainwindowpresenter.h
 
 FORMS    += \
     mainwindow.ui \
