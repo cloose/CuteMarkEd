@@ -601,8 +601,7 @@ void MainWindow::htmlResultReady(const QString &html)
 
 void MainWindow::tocResultReady(const QString &toc)
 {
-    QString styledToc = QString("<html><head>\n<style type=\"text/css\">ul { list-style-type: none; padding: 0; margin-left: 1em; } a { text-decoration: none; }</style>\n</head><body>%1</body></html>").arg(toc);
-    ui->tocWebView->setHtml(styledToc);
+    ui->tocWebView->setHtml(toc);
 }
 
 void MainWindow::htmlContentSizeChanged()

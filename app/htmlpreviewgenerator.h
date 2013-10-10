@@ -53,6 +53,7 @@ protected:
 
 private:
     void generateHtmlFromMarkdown();
+    void generateTableOfContents();
     QString renderTemplate(const QString &header, const QString &body);
     QString buildHtmlHeader() const;
     Discount::Parser::ParserOptions parserOptions() const;

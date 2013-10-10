@@ -103,8 +103,7 @@ void HtmlPreviewGenerator::run()
             generateHtmlFromMarkdown();
 
             // generate table of contents
-            QString toc = document->generateToc();
-            emit tocResultReady(toc);
+            generateTableOfContents();
         }
     }
 }
@@ -115,6 +114,15 @@ void HtmlPreviewGenerator::generateHtmlFromMarkdown()
 
     QString html = renderTemplate(buildHtmlHeader(), document->toHtml());
     emit htmlResultReady(html);
+}
+
+void HtmlPreviewGenerator::generateTableOfContents()
+{
+    if (!document) return;
+
+    QString toc = document->generateToc();
+    QString styledToc = QString("<html><head>\n<style type=\"text/css\">ul { list-style-type: none; padding: 0; margin-left: 1em; } a { text-decoration: none; }</style>\n</head><body>%1</body></html>").arg(toc);
+    emit tocResultReady(styledToc);
 }
 
 QString HtmlPreviewGenerator::renderTemplate(const QString &header, const QString &body)
