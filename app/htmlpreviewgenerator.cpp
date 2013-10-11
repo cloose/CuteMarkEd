@@ -24,9 +24,7 @@
 HtmlPreviewGenerator::HtmlPreviewGenerator(Options *opt, QObject *parent) :
     QThread(parent),
     options(opt),
-    document(0),
-    mathSupportEnabled(false),
-    codeHighlightingEnabled(false)
+    document(0)
 {
 }
 
@@ -45,7 +43,7 @@ void HtmlPreviewGenerator::markdownTextChanged(const QString &text)
 
 void HtmlPreviewGenerator::setMathSupportEnabled(bool enabled)
 {
-    mathSupportEnabled = enabled;
+    options->setMathSupportEnabled(enabled);
 
     // regenerate a HTML document
     generateHtmlFromMarkdown();
@@ -53,7 +51,7 @@ void HtmlPreviewGenerator::setMathSupportEnabled(bool enabled)
 
 void HtmlPreviewGenerator::setCodeHighlightingEnabled(bool enabled)
 {
-    codeHighlightingEnabled = enabled;
+    options->setCodeHighlightingEnabled(enabled);
 
     // regenerate a HTML document
     generateHtmlFromMarkdown();
@@ -141,12 +139,12 @@ QString HtmlPreviewGenerator::buildHtmlHeader() const
     QString header;
 
     // add MathJax.js script to HTML header
-    if (mathSupportEnabled) {
+    if (options->isMathSupportEnabled()) {
         header += "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>";
     }
 
     // add Highlight.js script to HTML header
-    if (codeHighlightingEnabled) {
+    if (options->isCodeHighlightingEnabled()) {
         header += QString("<link rel=\"stylesheet\" href=\"http://yandex.st/highlightjs/7.3/styles/%1.min.css\">").arg(codeHighlightingStyle);
         header += "<script src=\"http://yandex.st/highlightjs/7.3/highlight.min.js\"></script>";
         header += "<script>hljs.initHighlightingOnLoad();</script>";
