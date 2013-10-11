@@ -17,6 +17,7 @@
 #include "mainwindowpresenter.h"
 
 #include <QApplication>
+#include <QFileInfo>
 #include <QFile>
 #include <QUrl>
 
