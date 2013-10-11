@@ -65,8 +65,6 @@ private:
     QMutex tasksMutex;
     QWaitCondition bufferNotEmpty;
     QString htmlTemplate;
-    bool mathSupportEnabled;
-    bool codeHighlightingEnabled;
     QString codeHighlightingStyle;
 };
 

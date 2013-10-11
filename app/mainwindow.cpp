@@ -126,6 +126,8 @@ void MainWindow::initializeApp()
     ui->actionSmartyPants->setChecked(options->isSmartyPantsEnabled());
 
     // init option flags
+    ui->actionMathSupport->setChecked(options->isMathSupportEnabled());
+    ui->actionCodeHighlighting->setChecked(options->isCodeHighlightingEnabled());
     ui->actionCheckSpelling->setChecked(options->isSpellingCheckEnabled());
     ui->plainTextEdit->setSpellingCheckEnabled(options->isSpellingCheckEnabled());
 
