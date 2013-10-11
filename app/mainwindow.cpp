@@ -906,7 +906,7 @@ bool MainWindow::maybeSave()
         return true;
 
     QMessageBox::StandardButton ret;
-    ret = QMessageBox::warning(this, tr("Application"),
+    ret = QMessageBox::warning(this, tr("Save Changes"),
                                tr("The document has been modified.<br>"
                                   "Do you want to save your changes?"),
                                QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
