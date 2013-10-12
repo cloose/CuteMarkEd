@@ -1,0 +1,235 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 10pt;
+}
+pre {
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  font-size: 10pt;
+}
+table, td, th {
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+}
+table {
+  width: 100%;
+}
+th {
+  text-align: left;
+  background: #eeeeee;
+  padding: 3px;
+}
+</style>
+<title>Markdown语法参考</title>
+</head>
+<body>
+
+  <h3>标题</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown输入</th>
+      <th>输出</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre># 标题一
+
+## 标题二
+
+### 标题三
+
+#### 标题四
+
+##### 标题五
+
+###### 标题六</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>标题一</h1>
+      <h2>标题二</h2>
+      <h3>标题三</h3>
+      <h4>标题四</h4>
+      <h5>标题五</h5>
+      <h6>标题六</h6>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>标题一
+===========
+
+标题二
+-----------</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>标题一</h1>
+      <h2>标题二</h2>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>段落</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown输入</th>
+      <th>输出</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>段落是
+被空行分隔的
+一行或连续多行文本.
+
+这是另外一个段落.</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>段落是被空行分隔的一行或连续多行文本.</p>
+      <p>这是另外一个段落.</p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>要使用换行, 
+在行尾添加
+两个或更多
+空格.</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>要使用换行, <br>在行尾添加<br>两个或更多<br>空格.</p>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>列表</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown输入</th>
+      <th>输出</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>* 项目 1
+* 项目 2
+* 项目 3
+
++ 项目 1
++ 项目 2
++ 项目 3
+
+- 项目 1
+- 项目 2
+- 项目 3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>项目 1</li>
+        <li>项目 2</li>
+        <li>项目 3</li>
+      </ul>
+<ul>
+<li>项目 1</li>
+        <li>项目 2</li>
+        <li>项目 3</li>
+      </ul>
+<ul>
+<li>项目 1</li>
+        <li>项目 2</li>
+        <li>项目 3</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>1. 项目 1
+2. 项目 2
+3. 项目 3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ol>
+<li>项目 1</li>
+        <li>项目 2</li>
+        <li>项目 3</li>
+      </ol>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>* 项目 1
+1. 项目 2
++ 项目 3
+2. 项目 4</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>项目 1<ol>
+<li>项目 2<ul>
+<li>项目 3</li>
+          </ul>
+</li>
+          <li>项目 4</li>
+        </ol>
+</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>术语
+: 定义</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <dl>
+<dt>术语<dt>
+        </dt>
+</dt>
+<dd>定义</dd>
+      </dl>
+</td>
+    </tr>
+</tbody>
+</table>
+<h3>强调</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown输入</th>
+      <th>输出</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>这是 *强调*
+
+这是 _强调_</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>这是 <em>强调</em></p>
+
+      <p>这是 <em>强调</em></p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>这是 **粗体**
+
+这是 __粗体__</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>这是 <strong>粗体</strong></p>
+
+      <p>这是 <strong>粗体</strong></p>
+      </td>
+    </tr>
+</tbody>
+</table>
+</body>
+</html>
