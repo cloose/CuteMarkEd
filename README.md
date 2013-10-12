@@ -8,12 +8,18 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 ### DOWNLOAD
 
-[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.7.1.tar.gz)  
-[MS Windows (Installer)](https://github.com/cloose/CuteMarkEd/releases/download/v0.7.1/cutemarked-0.7.1.msi)  
-[MS Windows (ZIP file)](https://github.com/cloose/CuteMarkEd/releases/download/v0.7.1/cutemarked-0.7.1.zip)  
+[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.7.2.tar.gz)  
+[MS Windows (Installer)](https://github.com/cloose/CuteMarkEd/releases/download/v0.7.2/cutemarked-0.7.2.msi)  
+[MS Windows (ZIP file)](https://github.com/cloose/CuteMarkEd/releases/download/v0.7.2/cutemarked-0.7.2.zip)  
 [OpenSUSE 12.3 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 
 ### NEWS
+
+#### Version 0.7.2
+
+New Features:
+
+* `NEW` Added chinese translation made by LearnShare.
 
 #### Version 0.7.1
 
@@ -41,7 +47,7 @@ https://github.com/cloose/CuteMarkEd/wiki/Build-Instructions
 
 ##### Translations
 
-We use [Transifex](https://www.transifex.com/projects/p/cutemarked) for the translations. Currently we have translations for czech, german and greek. We are always interested in more translations.
+We use [Transifex](https://www.transifex.com/projects/p/cutemarked) for the translations. Currently we have translations for chinese, czech, german and greek. We are always interested in more translations.
 
 
 ### LINKS
