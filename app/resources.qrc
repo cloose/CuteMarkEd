@@ -28,4 +28,11 @@
         <file alias="icon-close.png">images/icon-close.png</file>
         <file>app-icon.ico</file>
     </qresource>
+    <qresource prefix="/scripts">
+        <file alias="highlight.js/highlight.pack.js">scripts/highlight.js/highlight.pack.js</file>
+        <file alias="highlight.js/styles/default.css">scripts/highlight.js/styles/default.css</file>
+        <file alias="highlight.js/styles/solarized_light.css">scripts/highlight.js/styles/solarized_light.css</file>
+        <file alias="highlight.js/styles/github.css">scripts/highlight.js/styles/github.css</file>
+        <file alias="highlight.js/styles/solarized_dark.css">scripts/highlight.js/styles/solarized_dark.css</file>
+    </qresource>
 </RCC>
