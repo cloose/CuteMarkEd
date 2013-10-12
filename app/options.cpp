@@ -138,6 +138,26 @@ void Options::setSmartyPantsEnabled(bool enabled)
     m_smartyPantsEnabled = enabled;
 }
 
+bool Options::isMathSupportEnabled() const
+{
+    return m_mathSupportEnabled;
+}
+
+void Options::setMathSupportEnabled(bool enabled)
+{
+    m_mathSupportEnabled = enabled;
+}
+
+bool Options::isCodeHighlightingEnabled() const
+{
+    return m_codeHighlightingEnabled;
+}
+
+void Options::setCodeHighlightingEnabled(bool enabled)
+{
+    m_codeHighlightingEnabled = enabled;
+}
+
 bool Options::isSpellingCheckEnabled() const
 {
     return m_spellingCheckEnabled;
@@ -184,6 +204,9 @@ void Options::readSettings()
     m_definitionListsEnabled = settings.value("extensions/definitionLists", true).toBool();
     m_smartyPantsEnabled = settings.value("extensions/smartyPants", true).toBool();
 
+    m_mathSupportEnabled = settings.value("mathsupport/enabled", false).toBool();
+    m_codeHighlightingEnabled = settings.value("codehighlighting/enabled", false).toBool();
+
     // spelling check settings
     m_spellingCheckEnabled = settings.value("spelling/enabled", true).toBool();
     m_dictionaryLanguage = settings.value("spelling/language", "en_US").toString();
@@ -212,6 +235,9 @@ void Options::writeSettings()
     settings.setValue("extensions/alphabeticLists", m_alphabeticListsEnabled);
     settings.setValue("extensions/definitionLists", m_definitionListsEnabled);
     settings.setValue("extensions/smartyPants", m_smartyPantsEnabled);
+
+    settings.setValue("mathsupport/enabled", m_mathSupportEnabled);
+    settings.setValue("codehighlighting/enabled", m_codeHighlightingEnabled);
 
     // spelling check settings
     settings.setValue("spelling/enabled", m_spellingCheckEnabled);
