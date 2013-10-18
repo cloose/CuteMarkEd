@@ -173,3 +173,63 @@ void MarkdownManipulator::decreaseHeadingLevel()
         cursor.endEditBlock();
     }
 }
+
+void MarkdownManipulator::insertTable(int rows, int columns, const QList<Qt::Alignment> &alignments, const QList<QStringList> &cells)
+{
+    QTextCursor cursor = editor->textCursor();
+    cursor.beginEditBlock();
+    int pos = cursor.position();
+
+    // table header
+    QStringList headers = cells.at(0);
+
+    QString header("| ");
+    header.append(headers.join(" | "));
+    header.append(" |");
+    cursor.insertText(header);
+    cursor.insertBlock();
+
+    // separator between table header and body including alignment
+    QString line("|");
+    for (int col = 0; col < columns; ++col) {
+        header = headers.at(col);
+        QString underline(header.length()+2, QChar('-'));
+
+        switch (alignments.at(col)) {
+        case Qt::AlignCenter:
+            underline.replace(0, 1, ':');
+            underline.replace(underline.length()-1, 1, ':');
+            break;
+        case Qt::AlignRight:
+            underline.replace(underline.length()-1, 1, ':');
+            break;
+        default:
+            break;
+        }
+
+        line.append(underline);
+        line.append("|");
+    }
+    cursor.insertText(line);
+    cursor.insertBlock();
+
+    // table body
+    for (int i = 0; i < rows-1; ++i) {
+        QStringList rowData = cells.at(i+1);
+
+        QString row("| ");
+        row.append(rowData.join(" | "));
+        row.append(" |");
+
+        cursor.insertText(row);
+        cursor.insertBlock();
+    }
+
+    // position to first header cell
+    cursor.setPosition(pos);
+    cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, 2);
+
+    cursor.endEditBlock();
+
+    editor->setTextCursor(cursor);
+}
