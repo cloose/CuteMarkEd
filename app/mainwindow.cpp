@@ -48,6 +48,7 @@
 #include "exportpdfdialog.h"
 #include "options.h"
 #include "optionsdialog.h"
+#include "tabletooldialog.h"
 
 MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
@@ -370,6 +371,16 @@ void MainWindow::editDecreaseHeaderLevel()
 {
     MarkdownManipulator manipulator(ui->plainTextEdit);
     manipulator.decreaseHeadingLevel();
+}
+
+void MainWindow::editInsertTable()
+{
+    TableToolDialog dialog;
+    if (dialog.exec() == QDialog::Accepted) {
+        MarkdownManipulator manipulator(ui->plainTextEdit);
+        manipulator.insertTable(dialog.rows(), dialog.columns(),
+                                dialog.alignments(), dialog.tableCells());
+    }
 }
 
 void MainWindow::viewChangeSplit()
@@ -1015,3 +1026,4 @@ void MainWindow::writeSettings()
     settings.setValue("mainWindow/geometry", saveGeometry());
     settings.setValue("mainWindow/windowState", saveState());
 }
+

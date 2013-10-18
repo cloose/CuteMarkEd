@@ -120,7 +120,7 @@
      <x>0</x>
      <y>0</y>
      <width>850</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -174,6 +174,7 @@
     <addaction name="actionCopyHtmlToClipboard"/>
     <addaction name="separator"/>
     <addaction name="menuFormat"/>
+    <addaction name="actionInsertTable"/>
     <addaction name="separator"/>
     <addaction name="menuFindReplace"/>
    </widget>
@@ -634,6 +635,11 @@
     <string>Decrease Header Level</string>
    </property>
   </action>
+  <action name="actionInsertTable">
+   <property name="text">
+    <string>Insert Table...</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -926,8 +932,8 @@
    <slot>previewLinkClicked(QUrl)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>404</x>
-     <y>282</y>
+     <x>403</x>
+     <y>300</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1479,5 +1485,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionInsertTable</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editInsertTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>editInsertTable()</slot>
+ </slots>
 </ui>

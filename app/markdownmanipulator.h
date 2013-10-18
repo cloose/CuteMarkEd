@@ -17,9 +17,13 @@
 #ifndef MARKDOWNMANIPULATOR_H
 #define MARKDOWNMANIPULATOR_H
 
+#include <Qt>
+#include <QList>
+
+class QChar;
 class QPlainTextEdit;
 class QString;
-class QChar;
+class QStringList;
 
 class MarkdownManipulator
 {
@@ -34,6 +38,8 @@ public:
 
     void increaseHeadingLevel();
     void decreaseHeadingLevel();
+
+    void insertTable(int rows, int columns, const QList<Qt::Alignment> &alignments, const QList<QStringList> &cells);
 
 private:
     QPlainTextEdit *editor;

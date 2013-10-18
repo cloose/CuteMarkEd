@@ -78,6 +78,7 @@ private slots:
     void editBlockquote();
     void editIncreaseHeaderLevel();
     void editDecreaseHeaderLevel();
+    void editInsertTable();
 
     void viewChangeSplit();
     void styleDefault();
