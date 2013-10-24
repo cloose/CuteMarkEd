@@ -57,7 +57,7 @@ QString Parser::generateToc(MMIOT *document)
     char *out;
     mkd_toc(document, &out);
 
-    return QString::fromLocal8Bit(out);
+    return QString::fromUtf8(out);
 }
 
 void Parser::cleanup(MMIOT *document)
