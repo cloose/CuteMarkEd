@@ -120,7 +120,7 @@
      <x>0</x>
      <y>0</y>
      <width>850</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -214,6 +214,7 @@
      <addaction name="actionSolarizedDark"/>
      <addaction name="actionClearness"/>
      <addaction name="actionClearnessDark"/>
+     <addaction name="actionBywordDark"/>
     </widget>
     <widget class="QMenu" name="menuMarkdown_Extensions">
      <property name="title">
@@ -638,6 +639,14 @@
   <action name="actionInsertTable">
    <property name="text">
     <string>Insert Table...</string>
+   </property>
+  </action>
+  <action name="actionBywordDark">
+   <property name="text">
+    <string>Byword Dark</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+7</string>
    </property>
   </action>
  </widget>
@@ -1501,8 +1510,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionBywordDark</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>styleBywordDark()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>editInsertTable()</slot>
+  <slot>styleBywordDark()</slot>
  </slots>
 </ui>

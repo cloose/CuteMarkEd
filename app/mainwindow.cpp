@@ -461,6 +461,16 @@ void MainWindow::styleClearnessDark()
     styleLabel->setText(ui->actionClearnessDark->text());
 }
 
+void MainWindow::styleBywordDark()
+{
+    generator->setCodeHighlightingStyle("default");
+
+    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/byword-dark.txt");
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/byword-dark.css"));
+
+    styleLabel->setText(ui->actionBywordDark->text());
+}
+
 void MainWindow::styleCustomStyle()
 {
     QAction *action = qobject_cast<QAction*>(sender());
@@ -830,6 +840,7 @@ void MainWindow::setupActions()
     ui->actionSolarizedDark->setActionGroup(stylesGroup);
     ui->actionClearness->setActionGroup(stylesGroup);
     ui->actionClearnessDark->setActionGroup(stylesGroup);
+    ui->actionBywordDark->setActionGroup(stylesGroup);
 
     // help menu
     ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);

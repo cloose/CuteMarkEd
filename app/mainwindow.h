@@ -87,6 +87,7 @@ private slots:
     void styleSolarizedDark();
     void styleClearness();
     void styleClearnessDark();
+    void styleBywordDark();
     void styleCustomStyle();
     void viewFullScreenMode();
 

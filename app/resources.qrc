@@ -6,6 +6,7 @@
         <file alias="github.css">styles/github.css</file>
         <file alias="clearness.css">styles/clearness.css</file>
         <file alias="clearness-dark.css">styles/clearness-dark.css</file>
+        <file alias="byword-dark.css">styles/byword-dark.css</file>
     </qresource>
     <qresource prefix="/theme">
         <file alias="solarized-dark.txt">themes/solarized-dark.txt</file>
@@ -15,6 +16,7 @@
         <file alias="default.txt">themes/default.txt</file>
         <file alias="clearness-dark+.txt">themes/clearness-dark+.txt</file>
         <file alias="clearness-dark.txt">themes/clearness-dark.txt</file>
+        <file alias="byword-dark.txt">themes/byword-dark.txt</file>
     </qresource>
     <qresource prefix="/">
         <file>template.html</file>
