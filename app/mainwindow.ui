@@ -370,6 +370,9 @@
    <property name="text">
     <string>Default</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+1</string>
+   </property>
   </action>
   <action name="actionGithub">
    <property name="checkable">
@@ -377,6 +380,9 @@
    </property>
    <property name="text">
     <string>Github</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+2</string>
    </property>
   </action>
   <action name="actionSolarizedLight">
@@ -386,6 +392,9 @@
    <property name="text">
     <string>Solarized Light</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+3</string>
+   </property>
   </action>
   <action name="actionSolarizedDark">
    <property name="checkable">
@@ -393,6 +402,9 @@
    </property>
    <property name="text">
     <string>Solarized Dark</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+4</string>
    </property>
   </action>
   <action name="actionAbout">
@@ -503,6 +515,9 @@
    <property name="text">
     <string>Clearness</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+5</string>
+   </property>
   </action>
   <action name="actionClearnessDark">
    <property name="checkable">
@@ -510,6 +525,9 @@
    </property>
    <property name="text">
     <string>Clearness Dark</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+6</string>
    </property>
   </action>
   <action name="actionFindReplace">
@@ -646,7 +664,7 @@
     <string>Byword Dark</string>
    </property>
    <property name="shortcut">
-    <string>Alt+7</string>
+    <string>Ctrl+7</string>
    </property>
   </action>
  </widget>

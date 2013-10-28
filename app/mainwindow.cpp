@@ -824,14 +824,6 @@ void MainWindow::setupActions()
     connect(ui->menuLanguages, SIGNAL(languageTriggered(hunspell::Dictionary)),
             this, SLOT(languageChanged(hunspell::Dictionary)));
 
-    // style menu
-    ui->actionDefault->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
-    ui->actionGithub->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
-    ui->actionSolarizedLight->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
-    ui->actionSolarizedDark->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
-    ui->actionClearness->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
-    ui->actionClearnessDark->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
-
     // put style actions in a group
     stylesGroup = new QActionGroup(this);
     ui->actionDefault->setActionGroup(stylesGroup);
