@@ -175,6 +175,7 @@
     <addaction name="separator"/>
     <addaction name="menuFormat"/>
     <addaction name="actionInsertTable"/>
+    <addaction name="actionInsertImage"/>
     <addaction name="separator"/>
     <addaction name="menuFindReplace"/>
    </widget>
@@ -665,6 +666,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+7</string>
+   </property>
+  </action>
+  <action name="actionInsertImage">
+   <property name="text">
+    <string>Insert Image...</string>
    </property>
   </action>
  </widget>
@@ -1544,9 +1550,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionInsertImage</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editInsertImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>editInsertTable()</slot>
+  <slot>editInsertImage()</slot>
   <slot>styleBywordDark()</slot>
  </slots>
 </ui>
