@@ -19,10 +19,10 @@
 
 #include <Qt>
 #include <QList>
+#include <QString>
 
 class QChar;
 class QPlainTextEdit;
-class QString;
 class QStringList;
 
 class MarkdownManipulator
@@ -40,6 +40,7 @@ public:
     void decreaseHeadingLevel();
 
     void insertTable(int rows, int columns, const QList<Qt::Alignment> &alignments, const QList<QStringList> &cells);
+    void insertImageLink(const QString &alternateText, const QString &imageSource, const QString &optionalTitle = QString());
 
 private:
     QPlainTextEdit *editor;
