@@ -388,6 +388,8 @@ void MainWindow::editInsertImage()
 {
     ImageToolDialog dialog(this);
     if (dialog.exec() == QDialog::Accepted) {
+        MarkdownManipulator manipulator(ui->plainTextEdit);
+        manipulator.insertImageLink(dialog.alternateText(), dialog.imageSourceLink(), dialog.optionalTitle());
     }
 }
 
