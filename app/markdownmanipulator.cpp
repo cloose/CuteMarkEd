@@ -233,3 +233,20 @@ void MarkdownManipulator::insertTable(int rows, int columns, const QList<Qt::Ali
 
     editor->setTextCursor(cursor);
 }
+
+void MarkdownManipulator::insertImageLink(const QString &alternateText, const QString &imageSource, const QString &optionalTitle)
+{
+    QTextCursor cursor = editor->textCursor();
+    cursor.beginEditBlock();
+
+    QString imageLink;
+    if (optionalTitle.isEmpty()) {
+        imageLink = QString("![%1](%2)").arg(alternateText).arg(imageSource);
+    } else {
+        imageLink = QString("![%1](%2 \"%3\")").arg(alternateText).arg(imageSource).arg(optionalTitle);
+    }
+
+    cursor.insertText(imageLink);
+
+    cursor.endEditBlock();
+}

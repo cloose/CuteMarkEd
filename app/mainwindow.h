@@ -79,6 +79,7 @@ private slots:
     void editIncreaseHeaderLevel();
     void editDecreaseHeaderLevel();
     void editInsertTable();
+    void editInsertImage();
 
     void viewChangeSplit();
     void styleDefault();

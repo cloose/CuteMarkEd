@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include "imagetooldialog.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -380,6 +381,15 @@ void MainWindow::editInsertTable()
         MarkdownManipulator manipulator(ui->plainTextEdit);
         manipulator.insertTable(dialog.rows(), dialog.columns(),
                                 dialog.alignments(), dialog.tableCells());
+    }
+}
+
+void MainWindow::editInsertImage()
+{
+    ImageToolDialog dialog(this);
+    if (dialog.exec() == QDialog::Accepted) {
+        MarkdownManipulator manipulator(ui->plainTextEdit);
+        manipulator.insertImageLink(dialog.alternateText(), dialog.imageSourceLink(), dialog.optionalTitle());
     }
 }
 
