@@ -6,14 +6,21 @@
 
 TEMPLATE = subdirs
 
-win32:SUBDIRS = discount \
-    peg-markdown-highlight \
-    hunspell \
-    app \
-    fontawesomeicon
+win32 {
+    SUBDIRS = discount \
+        peg-markdown-highlight \
+        hunspell \
+        app \
+        fontawesomeicon
 
-unix:SUBDIRS = peg-markdown-highlight \
-    app \
-    fontawesomeicon
+    app.depends = discount peg-markdown-highlight hunspell
+}
 
-CONFIG += ordered
+unix {
+    SUBDIRS = peg-markdown-highlight \
+        app \
+        fontawesomeicon
+
+    app.depends = peg-markdown-highlight
+}
+
