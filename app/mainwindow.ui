@@ -120,7 +120,7 @@
      <x>0</x>
      <y>0</y>
      <width>850</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -659,6 +659,9 @@
    <property name="text">
     <string>Insert Table...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
   </action>
   <action name="actionBywordDark">
    <property name="text">
@@ -671,6 +674,9 @@
   <action name="actionInsertImage">
    <property name="text">
     <string>Insert Image...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
    </property>
   </action>
  </widget>
