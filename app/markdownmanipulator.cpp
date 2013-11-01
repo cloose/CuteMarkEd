@@ -42,12 +42,11 @@ void MarkdownManipulator::wrapSelectedText(const QString &tag)
         cursor.movePosition(QTextCursor::Right,
                             QTextCursor::KeepAnchor, end - start);
         editor->setTextCursor(cursor);
-    } else if (!cursor.hasSelection()){
+    } else if (!cursor.hasSelection()) {
         cursor.insertText(tag+tag);
         cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, tag.length());
         editor->setTextCursor(cursor);
     }
-
 }
 
 void MarkdownManipulator::wrapCurrentParagraph(const QString &startTag, const QString &endTag)
@@ -178,6 +177,22 @@ void MarkdownManipulator::decreaseHeadingLevel()
     }
 }
 
+void MarkdownManipulator::formatTextAsQuote()
+{
+    QTextCursor cursor = editor->textCursor();
+    QTextDocument *doc = editor->document();
+
+    int start = cursor.selectionStart();
+    int end = cursor.selectionEnd();
+
+    if (cursor.hasSelection() &&
+        doc->findBlock(start) != doc->findBlock(end)) {
+        formatBlock('>');
+    } else {
+        prependToLine('>');
+    }
+}
+
 void MarkdownManipulator::insertTable(int rows, int columns, const QList<Qt::Alignment> &alignments, const QList<QStringList> &cells)
 {
     QTextCursor cursor = editor->textCursor();
@@ -251,6 +266,40 @@ void MarkdownManipulator::insertImageLink(const QString &alternateText, const QS
     }
 
     cursor.insertText(imageLink);
+
+    cursor.endEditBlock();
+}
+
+void MarkdownManipulator::formatBlock(const QChar &mark)
+{
+    QTextCursor cursor = editor->textCursor();
+    QTextDocument *doc = editor->document();
+
+    cursor.beginEditBlock();
+
+    int startLine = doc->findBlock(cursor.selectionStart()).blockNumber();
+    int endLine = doc->findBlock(cursor.selectionEnd()).blockNumber();
+
+    // move cursor to start of first line
+    cursor.setPosition(cursor.selectionStart());
+    cursor.movePosition(QTextCursor::StartOfLine);
+
+    for (int i = startLine; i <= endLine; ++i) {
+        // search for last mark
+        int pos = cursor.position();
+        while (doc->characterAt(pos++) == mark)
+            ;
+
+        // insert new mark
+        cursor.insertText(mark);
+
+        // add space after mark, if missing
+        if (doc->characterAt(pos) != ' ') {
+            cursor.insertText(" ");
+        }
+
+        cursor.movePosition(QTextCursor::NextBlock);
+    }
 
     cursor.endEditBlock();
 }

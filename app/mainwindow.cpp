@@ -359,7 +359,7 @@ void MainWindow::editHardLinebreak()
 void MainWindow::editBlockquote()
 {
     MarkdownManipulator manipulator(ui->plainTextEdit);
-    manipulator.prependToLine('>');
+    manipulator.formatTextAsQuote();
 }
 
 void MainWindow::editIncreaseHeaderLevel()

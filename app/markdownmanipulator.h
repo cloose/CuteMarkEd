@@ -39,10 +39,14 @@ public:
     void increaseHeadingLevel();
     void decreaseHeadingLevel();
 
+    void formatTextAsQuote();
+
     void insertTable(int rows, int columns, const QList<Qt::Alignment> &alignments, const QList<QStringList> &cells);
     void insertImageLink(const QString &alternateText, const QString &imageSource, const QString &optionalTitle = QString());
 
 private:
+    void formatBlock(const QChar &mark);
+
     QPlainTextEdit *editor;
 };
 
