@@ -222,6 +222,11 @@ bool MainWindow::fileSaveAs()
         return false;
     }
 
+    // Add default extension ".md" if the file name as no extension yet.
+    if (QFileInfo(name).suffix().isEmpty()) {
+        name.append(".md");
+    }
+
     setFileName(name);
     return fileSave();
 }
