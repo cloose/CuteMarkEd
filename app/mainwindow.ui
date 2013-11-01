@@ -200,6 +200,7 @@
     <addaction name="actionSplit_1_3"/>
     <addaction name="separator"/>
     <addaction name="actionFullScreenMode"/>
+    <addaction name="actionHorizontalLayout"/>
    </widget>
    <widget class="QMenu" name="menuExtras">
     <property name="title">
@@ -680,6 +681,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+G</string>
+   </property>
+  </action>
+  <action name="actionHorizontalLayout">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Horizontal Layout</string>
    </property>
   </action>
  </widget>
@@ -1575,10 +1584,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionHorizontalLayout</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>viewHorizontalLayout(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>editInsertTable()</slot>
   <slot>editInsertImage()</slot>
   <slot>styleBywordDark()</slot>
+  <slot>viewHorizontalLayout(bool)</slot>
  </slots>
 </ui>

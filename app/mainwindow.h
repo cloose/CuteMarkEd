@@ -91,6 +91,7 @@ private slots:
     void styleBywordDark();
     void styleCustomStyle();
     void viewFullScreenMode();
+    void viewHorizontalLayout(bool checked);
 
     void extrasShowHardLinebreaks(bool checked);
     void extensionsAutolink(bool checked);

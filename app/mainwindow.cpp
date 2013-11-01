@@ -507,6 +507,15 @@ void MainWindow::viewFullScreenMode()
     }
 }
 
+void MainWindow::viewHorizontalLayout(bool checked)
+{
+    if (checked) {
+        ui->splitter->setOrientation(Qt::Vertical);
+    } else {
+        ui->splitter->setOrientation(Qt::Horizontal);
+    }
+}
+
 void MainWindow::extrasShowHardLinebreaks(bool checked)
 {
     ui->plainTextEdit->setShowHardLinebreaks(checked);
