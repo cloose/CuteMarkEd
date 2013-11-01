@@ -42,6 +42,10 @@ void MarkdownManipulator::wrapSelectedText(const QString &tag)
         cursor.movePosition(QTextCursor::Right,
                             QTextCursor::KeepAnchor, end - start);
         editor->setTextCursor(cursor);
+    } else if (!cursor.hasSelection()){
+        cursor.insertText(tag+tag);
+        cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, tag.length());
+        editor->setTextCursor(cursor);
     }
 
 }
