@@ -55,6 +55,11 @@ bool ExportHtmlDialog::includeCSS() const
     return ui->styleCheckBox->isChecked();
 }
 
+bool ExportHtmlDialog::includeCodeHighlighting() const
+{
+    return ui->highlightCheckBox->isChecked();
+}
+
 void ExportHtmlDialog::exportToTextChanged(const QString &text)
 {
     // only enable ok button if a filename was provided

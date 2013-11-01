@@ -40,6 +40,8 @@ public:
 
 public slots:
     void markdownTextChanged(const QString &text);
+    QString exportHtml(const QString &styleSheet, const QString &highlightingScript);
+
     void setMathSupportEnabled(bool enabled);
     void setCodeHighlightingEnabled(bool enabled);
     void setCodeHighlightingStyle(const QString &style);

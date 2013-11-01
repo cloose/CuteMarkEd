@@ -16,6 +16,8 @@
  */
 #include "htmlpreviewgenerator.h"
 
+#include <QFile>
+
 #include "discount/document.h"
 #include "discount/parser.h"
 
@@ -39,6 +41,31 @@ void HtmlPreviewGenerator::markdownTextChanged(const QString &text)
     QMutexLocker locker(&tasksMutex);
     tasks.enqueue(text);
     bufferNotEmpty.wakeOne();
+}
+
+QString HtmlPreviewGenerator::exportHtml(const QString &styleSheet, const QString &highlightingScript)
+{
+    if (!document) return QString();
+
+    QString header;
+    if (!styleSheet.isEmpty()) {
+        header += QString("\n<style>%1</style>").arg(styleSheet);
+    }
+
+    if (!highlightingScript.isEmpty()) {
+        // FIXME: doesn't really belong here
+        QString highlightStyle;
+        QFile f(QString(":/scripts/highlight.js/styles/%1.css").arg(codeHighlightingStyle));
+        if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            highlightStyle = f.readAll();
+        }
+
+        header += QString("\n<style>%1</style>").arg(highlightStyle);
+        header += QString("\n<script>%1</script>").arg(highlightingScript);
+        header += "\n<script>hljs.initHighlightingOnLoad();</script>";
+    }
+
+    return renderTemplate(header, document->toHtml());
 }
 
 void HtmlPreviewGenerator::setMathSupportEnabled(bool enabled)

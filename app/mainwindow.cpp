@@ -237,6 +237,7 @@ void MainWindow::fileExportToHtml()
     ExportHtmlDialog dialog(fileName);
     if (dialog.exec() == QDialog::Accepted) {
 
+        QString cssStyle;
         if (dialog.includeCSS()) {
             // get url of current css stylesheet
             QUrl cssUrl = ui->webView->page()->settings()->userStyleSheetUrl();
@@ -252,26 +253,26 @@ void MainWindow::fileExportToHtml()
             // read currently used css stylesheet file
             QFile f(cssFileName);
             if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
-                QString cssStyle = f.readAll();
-
-                // embed the css into the HTML source document after the <head> element.
-                if (ui->htmlSourceTextEdit->find("<head>")) {
-                    QTextCursor cursor = ui->htmlSourceTextEdit->textCursor();
-                    cursor.beginEditBlock();
-                    cursor.setPosition(cursor.selectionEnd());
-                    cursor.insertText(QString("\n<style>%1</style>").arg(cssStyle));
-                    cursor.endEditBlock();
-                }
+                cssStyle = f.readAll();
             }
         }
 
-        // write HTML source to disk
-        QTextDocumentWriter writer(dialog.fileName(), "plaintext");
-        writer.write(ui->htmlSourceTextEdit->document());
+        QString highlightJs;
+        if (dialog.includeCodeHighlighting()) {
+            QFile f(":/scripts/highlight.js/highlight.pack.js");
+            if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                highlightJs = f.readAll();
+            }
+        }
 
-        // undo the changes to the HTML source
-        if (dialog.includeCSS()) {
-            ui->htmlSourceTextEdit->undo();
+        QString html = generator->exportHtml(cssStyle, highlightJs);
+
+        // write HTML source to disk
+        QFile f(dialog.fileName());
+        if (f.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QTextStream out(&f);
+            out.setCodec("UTF-8");
+            out << html;
         }
     }
 }
