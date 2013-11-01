@@ -182,5 +182,10 @@ Discount::Parser::ParserOptions HtmlPreviewGenerator::parserOptions() const
         parserOptionFlags |= Discount::Parser::NoSmartypantsOption;
     }
 
+    // Footnotes
+    if (options->isFootnotesEnabled()) {
+        parserOptionFlags |= Discount::Parser::ExtraFootnoteOption;
+    }
+
     return parserOptionFlags;
 }

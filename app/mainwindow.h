@@ -99,6 +99,7 @@ private slots:
     void extensionsAlphabeticLists(bool checked);
     void extensionsDefinitionLists(bool checked);
     void extensionsSmartyPants(bool checked);
+    void extensionsFootnotes(bool enabled);
     void extrasCheckSpelling(bool checked);
     void extrasOptions();
 

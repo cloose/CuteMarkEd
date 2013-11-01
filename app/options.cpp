@@ -138,6 +138,16 @@ void Options::setSmartyPantsEnabled(bool enabled)
     m_smartyPantsEnabled = enabled;
 }
 
+bool Options::isFootnotesEnabled() const
+{
+    return m_footnotesEnabled;
+}
+
+void Options::setFootnotesEnabled(bool enabled)
+{
+    m_footnotesEnabled = enabled;
+}
+
 bool Options::isMathSupportEnabled() const
 {
     return m_mathSupportEnabled;
@@ -203,6 +213,7 @@ void Options::readSettings()
     m_alphabeticListsEnabled = settings.value("extensions/alphabeticLists", true).toBool();
     m_definitionListsEnabled = settings.value("extensions/definitionLists", true).toBool();
     m_smartyPantsEnabled = settings.value("extensions/smartyPants", true).toBool();
+    m_footnotesEnabled = settings.value("extensions/footnotes", true).toBool();
 
     m_mathSupportEnabled = settings.value("mathsupport/enabled", false).toBool();
     m_codeHighlightingEnabled = settings.value("codehighlighting/enabled", false).toBool();
@@ -235,6 +246,7 @@ void Options::writeSettings()
     settings.setValue("extensions/alphabeticLists", m_alphabeticListsEnabled);
     settings.setValue("extensions/definitionLists", m_definitionListsEnabled);
     settings.setValue("extensions/smartyPants", m_smartyPantsEnabled);
+    settings.setValue("extensions/footnotes", m_footnotesEnabled);
 
     settings.setValue("mathsupport/enabled", m_mathSupportEnabled);
     settings.setValue("codehighlighting/enabled", m_codeHighlightingEnabled);

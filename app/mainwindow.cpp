@@ -126,6 +126,7 @@ void MainWindow::initializeApp()
     ui->actionAlphabeticLists->setChecked(options->isAlphabeticListsEnabled());
     ui->actionDefinitionLists->setChecked(options->isDefinitionListsEnabled());
     ui->actionSmartyPants->setChecked(options->isSmartyPantsEnabled());
+    ui->actionFootnotes->setChecked(options->isFootnotesEnabled());
 
     // init option flags
     ui->actionMathSupport->setChecked(options->isMathSupportEnabled());
@@ -548,6 +549,12 @@ void MainWindow::extensionsDefinitionLists(bool checked)
 void MainWindow::extensionsSmartyPants(bool checked)
 {
     options->setSmartyPantsEnabled(checked);
+    plainTextChanged();
+}
+
+void MainWindow::extensionsFootnotes(bool enabled)
+{
+    options->setFootnotesEnabled(enabled);
     plainTextChanged();
 }
 
