@@ -46,9 +46,9 @@
         
         <h2><a name="download" class="anchor" href="#download"><span class="octicon octicon-link"></span></a>DOWNLOAD</h2>
 
-        <p><a href="https://github.com/cloose/CuteMarkEd/archive/v0.7.2.tar.gz">Sources</a><br>
-           <a href="https://github.com/cloose/CuteMarkEd/releases/download/v0.7.2/cutemarked-0.7.2.msi">MS Windows (Installer)</a><br>
-           <a href="https://github.com/cloose/CuteMarkEd/releases/download/v0.7.2/cutemarked-0.7.2.zip">MS Windows (ZIP file)</a><br>
+        <p><a href="https://github.com/cloose/CuteMarkEd/archive/v0.8.0.tar.gz">Sources</a><br>
+           <a href="https://github.com/cloose/CuteMarkEd/releases/download/v0.8.0/cutemarked-0.8.0.msi">MS Windows (Installer)</a><br>
+           <a href="https://github.com/cloose/CuteMarkEd/releases/download/v0.8.0/cutemarked-0.8.0.zip">MS Windows (ZIP file)</a><br>
            <a href="https://build.opensuse.org/project/show?project=home%3Acloose1974">OpenSUSE 12.3 (RPM)</a>
         </p>
 
@@ -62,37 +62,38 @@
         
         <h2><a name="news" class="anchor" href="#news"><span class="octicon octicon-link"></span></a>NEWS</h2>
 
-        <h4><a name="version-072" class="anchor" href="#version-072"><span class="octicon octicon-link"></span></a>Minor Release 0.7.2 (October 12th, 2013)</h4>
+        <h4><a name="version-080" class="anchor" href="#version-080"><span class="octicon octicon-link"></span></a>Major Release 0.8.0 (November 3rd, 2013)</h4>
 
         <ul>
-          <li><code>NEW</code> Added chinese translation created by LearnShare</li>
-        </ul>
-
-        <h4><a name="version-071" class="anchor" href="#version-071"><span class="octicon octicon-link"></span></a>Minor Release 0.7.1 (September 30th, 2013)</h4>
-
-        <ul>
-          <li><code>NEW</code> Added greek translation created by Evropi</li>
-        </ul>
-
-        <h4><a name="version-070" class="anchor" href="#version-070"><span class="octicon octicon-link"></span></a>Major Release 0.7.0 (August 10th, 2013)</h4>
-
-        <ul>
-          <li><code>NEW</code> Spell checking as you type via use of red wavy lines under misspelled words. 
-                               Suggestions can be accessed through the context menu.</li>
-          <li><code>NEW</code> Added network proxy support to the configuration dialog.</li>
-          <li><code>NEW</code> Added options to control the extensions/features used by the markdown parser (discount).</li>
-          <li><code>NEW</code> The markdown syntax help is now shown in the user language if available (currently english, german and czech).</li>
+          <li><code>NEW</code> Tool to insert a table in the markdown document</li>
+          <li><code>NEW</code> Tool to insert an image link in the markdown document</li>
+          <li><code>NEW</code> Support for Markdown Extra-style footnotes</li>
+          <li><code>NEW</code> Menu item to switch between vertical and horizontal layout</li>
+          <li><code>NEW</code> Added style Byword Dark</li>
         </ul>
         <ul>
-          <li><code>IMPROVED</code> Greatly improved performance while typing.</li>
+          <li><code>IMPROVED</code> Added possibility to insert markdown markup (like bold, italic) without selection</li>
+          <li><code>IMPROVED</code> Added support for code highlighting without internet connection</li>
+          <li><code>IMPROVED</code> Added option to include javascript and CSS needed for code highlighting in the exported HTML</li>
         </ul>
-                
+        <ul>
+          <li><code>FIXED</code> Resolved problems with adding symbols using Alt with numpad key by changing shortcuts for styles from Alt+1-6 to Ctrl+1-6</li>
+          <li><code>FIXED</code> Several encoding problems were fixed.
+            <ul>
+              <li>German umlauts in table of contents</li>
+              <li>exported HTML was not marked as UTF-8</li>
+              <li>non-ascii characters with markdown markup like italic</li>
+            </ul>
+          </li>
+        </ul>
+               
         <h2><a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>DEPENDENCIES</h2>
 
         <ul>
           <li>Qt 5.x (LGPL v2.1)</li>
-          <li><a href="http://www.pell.portland.or.us/%7Eorc/Code/discount/">Discount 2.1.6</a> (3-clause BSD)</li>
+          <li><a href="http://www.pell.portland.or.us/%7Eorc/Code/discount/">Discount 2.1.7</a> (3-clause BSD)</li>
           <li><a href="http://hasseg.org/peg-markdown-highlight/">PEG Markdown Highlight</a> (MIT License)</li>
+          <li><a href="http://hunspell.sourceforge.net/">hunspell 1.3.2</a> (LGPL v2.1)</li>
         </ul>
       </section>
       <footer>
