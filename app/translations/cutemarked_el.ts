@@ -27,12 +27,17 @@
         <translation>Συμπεριλαμβάνόμενο CSS</translation>
     </message>
     <message>
-        <location filename="../exporthtmldialog.cpp" line="69"/>
+        <location filename="../exporthtmldialog.ui" line="86"/>
+        <source>Include Code Highlighting Javascript</source>
+        <translation>Να Συμπεριλαμβάνεται Επισήμανση Συντακτικού JavaScript</translation>
+    </message>
+    <message>
+        <location filename="../exporthtmldialog.cpp" line="74"/>
         <source>Export to HTML...</source>
         <translation>Εξαγωγή σε HTML...</translation>
     </message>
     <message>
-        <location filename="../exporthtmldialog.cpp" line="70"/>
+        <location filename="../exporthtmldialog.cpp" line="75"/>
         <source>HTML Files (*.html *.htm);;All Files (*)</source>
         <translation>Αρχεία HTML (*.html *.htm);;Όλα τα αρχεια (*)</translation>
     </message>
@@ -91,16 +96,36 @@
     </message>
     <message>
         <location filename="../exportpdfdialog.cpp" line="44"/>
+        <source>A3 (297 x 420 mm)</source>
+        <translation>A3 (297 × 420 mm)</translation>
+    </message>
+    <message>
+        <location filename="../exportpdfdialog.cpp" line="45"/>
         <source>A5 (148 x 210 mm)</source>
         <translation>Α5 (148 x 210 mm)</translation>
     </message>
     <message>
-        <location filename="../exportpdfdialog.cpp" line="89"/>
+        <location filename="../exportpdfdialog.cpp" line="46"/>
+        <source>A6 (105 x 148 mm)</source>
+        <translation>A6 (105 × 148 mm)</translation>
+    </message>
+    <message>
+        <location filename="../exportpdfdialog.cpp" line="47"/>
+        <source>B4 (250 x 353 mm)</source>
+        <translation>B4 (250 × 353 mm)</translation>
+    </message>
+    <message>
+        <location filename="../exportpdfdialog.cpp" line="48"/>
+        <source>B5 (176 x 250 mm, 6.93 x 9.84 inches)</source>
+        <translation>B5 (176 × 250 mm, 6.93 × 9.84 ίντσες)</translation>
+    </message>
+    <message>
+        <location filename="../exportpdfdialog.cpp" line="93"/>
         <source>Export to PDF...</source>
         <translation>Εξαγωγή σε PDF...</translation>
     </message>
     <message>
-        <location filename="../exportpdfdialog.cpp" line="90"/>
+        <location filename="../exportpdfdialog.cpp" line="94"/>
         <source>PDF Files (*.pdf);;All Files (*)</source>
         <translation>Αρχεία PDF (*.pdf);;Όλα τα αρχεία (*)</translation>
     </message>
@@ -139,6 +164,49 @@
     </message>
 </context>
 <context>
+    <name>ImageToolDialog</name>
+    <message>
+        <location filename="../imagetooldialog.ui" line="14"/>
+        <source>Insert Image</source>
+        <translation>Εισαγωγή Εικόνας</translation>
+    </message>
+    <message>
+        <location filename="../imagetooldialog.ui" line="20"/>
+        <source>Image Link:</source>
+        <translation>Σύνδεσμος Εικόνας:</translation>
+    </message>
+    <message>
+        <location filename="../imagetooldialog.ui" line="35"/>
+        <source>http://example.com/image.jpg</source>
+        <translation>http://example.com/εικόνα.jpg</translation>
+    </message>
+    <message>
+        <location filename="../imagetooldialog.ui" line="42"/>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
+        <location filename="../imagetooldialog.ui" line="51"/>
+        <source>Alternate Text:</source>
+        <translation>Εναλλακτικό Κείμενο:</translation>
+    </message>
+    <message>
+        <location filename="../imagetooldialog.ui" line="68"/>
+        <source>Optional Title:</source>
+        <translation>Τίτλος (προαιρετικός):</translation>
+    </message>
+    <message>
+        <location filename="../imagetooldialog.cpp" line="52"/>
+        <source>Open File</source>
+        <translation>Άνοιγμα Αρχείου</translation>
+    </message>
+    <message>
+        <location filename="../imagetooldialog.cpp" line="54"/>
+        <source>Images (*.bmp *.gif *.jpg *.jpe *.jpeg *.png *.tif *.tiff *.xpm);;All Files (*)</source>
+        <translation>Εικόνες (*.bmp *.gif *.jpg *.jpe *.jpeg *.png *.tif *.tiff *.xpm);;Όλα τα αρχεία (*)</translation>
+    </message>
+</context>
+<context>
     <name>LanguageMenu</name>
     <message>
         <location filename="../controls/languagemenu.cpp" line="23"/>
@@ -149,12 +217,8 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>CuteMarkEd</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="92"/>
-        <location filename="../mainwindow.ui" line="279"/>
+        <location filename="../mainwindow.ui" line="284"/>
         <source>about:blank</source>
         <translation>about:blank</translation>
     </message>
@@ -175,377 +239,448 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="162"/>
-        <location filename="../mainwindow.ui" line="515"/>
+        <location filename="../mainwindow.ui" line="538"/>
         <source>Find/Replace</source>
         <translation>Εύρεση/Αντικατάσταση</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="182"/>
+        <location filename="../mainwindow.ui" line="184"/>
         <source>&amp;Help</source>
         <translation>&amp;Βοήθεια</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="190"/>
+        <location filename="../mainwindow.ui" line="192"/>
         <source>&amp;View</source>
         <translation>Ε&amp;μφανιση</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="204"/>
+        <location filename="../mainwindow.ui" line="207"/>
         <source>E&amp;xtras</source>
         <translation>&amp;Πρόσθετα</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="208"/>
+        <location filename="../mainwindow.ui" line="211"/>
         <source>Styles</source>
         <translation>Θέματα</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="219"/>
+        <location filename="../mainwindow.ui" line="223"/>
         <source>Markdown Extensions</source>
         <translation>Επεκτάσεις Markdown</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="229"/>
+        <location filename="../mainwindow.ui" line="234"/>
         <source>Languages</source>
         <translation>Γλώσσες</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="253"/>
+        <location filename="../mainwindow.ui" line="258"/>
         <source>Table of contents</source>
         <translation>Πίνακας περιεχομένων</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="292"/>
-        <location filename="../mainwindow.ui" line="553"/>
+        <location filename="../mainwindow.ui" line="297"/>
+        <location filename="../mainwindow.ui" line="579"/>
         <source>Markdown Syntax</source>
         <translation>Σύνταξη Markdown</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="318"/>
-        <location filename="../mainwindow.cpp" line="133"/>
+        <location filename="../mainwindow.ui" line="323"/>
+        <location filename="../mainwindow.cpp" line="138"/>
         <source>qrc:/syntax.html</source>
         <translation>qrc:/syntax_el.html</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="328"/>
+        <location filename="../mainwindow.ui" line="333"/>
         <source>E&amp;xit</source>
         <translation>Έ&amp;ξοδος</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="333"/>
+        <location filename="../mainwindow.ui" line="338"/>
         <source>&amp;New</source>
         <translation>&amp;Νέο</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="338"/>
+        <location filename="../mainwindow.ui" line="343"/>
         <source>&amp;Open...</source>
         <translation>&amp;Άνοιγμα</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="343"/>
+        <location filename="../mainwindow.ui" line="348"/>
         <source>&amp;Save</source>
         <translation>&amp;Αποθήκευση</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="348"/>
+        <location filename="../mainwindow.ui" line="353"/>
         <source>Save &amp;As...</source>
         <translation>Αποθήκευση &amp;Ως...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="353"/>
+        <location filename="../mainwindow.ui" line="358"/>
         <source>&amp;Undo</source>
         <translation>&amp;Αναίρεση</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="358"/>
+        <location filename="../mainwindow.ui" line="363"/>
         <source>&amp;Redo</source>
         <translation>&amp;Επανάληψη</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="369"/>
+        <location filename="../mainwindow.ui" line="374"/>
         <source>Default</source>
         <translation>Προκαθορισμένο</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="377"/>
+        <source>Ctrl+1</source>
+        <translation>Ctrl+1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="385"/>
         <source>Github</source>
         <translation>GitHub</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="385"/>
+        <location filename="../mainwindow.ui" line="388"/>
+        <source>Ctrl+2</source>
+        <translation>Ctrl+2</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="396"/>
         <source>Solarized Light</source>
         <translation>Solarized Light</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="393"/>
+        <location filename="../mainwindow.ui" line="399"/>
+        <source>Ctrl+3</source>
+        <translation>Ctrl+3</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="407"/>
         <source>Solarized Dark</source>
         <translation>Solarized Dark</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="398"/>
+        <location filename="../mainwindow.ui" line="410"/>
+        <source>Ctrl+4</source>
+        <translation>Ctrl+4</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="415"/>
         <source>&amp;About CuteMarkEd...</source>
         <translation>&amp;Σχετικά με το CuteMarkEd...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="403"/>
+        <location filename="../mainwindow.ui" line="420"/>
         <source>Export to HTML...</source>
         <translation>Εξαγωγή σε HTML...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="408"/>
+        <location filename="../mainwindow.ui" line="425"/>
         <source>Export to PDF...</source>
         <translation>Εξαγωγή σε PDF...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="413"/>
+        <location filename="../mainwindow.ui" line="430"/>
         <source>Split 1:1</source>
         <translation>Διαίρεση 1:1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="418"/>
+        <location filename="../mainwindow.ui" line="435"/>
         <source>Split 2:1</source>
         <translation>Διαίρεση 2:1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="423"/>
+        <location filename="../mainwindow.ui" line="440"/>
         <source>Split 1:2</source>
         <translation>Διαίρεση 1:2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="428"/>
+        <location filename="../mainwindow.ui" line="445"/>
         <source>Split 3:1</source>
         <translation>Διαίρεση 3:1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="433"/>
+        <location filename="../mainwindow.ui" line="450"/>
         <source>Split 1:3</source>
         <translation>Διαίρεση 1:3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="438"/>
+        <location filename="../mainwindow.ui" line="455"/>
         <source>Copy HTML to Clipboard</source>
         <translation>Αντιγραφή HTML στο Πρόχειρο</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="443"/>
+        <location filename="../mainwindow.ui" line="460"/>
         <source>Cu&amp;t</source>
         <translation>Απο&amp;κοπή</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="448"/>
+        <location filename="../mainwindow.ui" line="465"/>
         <source>&amp;Copy</source>
         <translation>&amp;Αντιγραφή</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="453"/>
+        <location filename="../mainwindow.ui" line="470"/>
         <source>&amp;Paste</source>
         <translation>&amp;Επικόλληση</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="458"/>
+        <location filename="../mainwindow.ui" line="475"/>
         <source>Strong</source>
         <translation>Έντονη</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="463"/>
+        <location filename="../mainwindow.ui" line="480"/>
         <source>Emphasize</source>
         <translation>Έμφαση</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="468"/>
+        <location filename="../mainwindow.ui" line="485"/>
         <source>&amp;Print...</source>
         <translation>&amp;Εκτύπωση...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="473"/>
-        <location filename="../mainwindow.ui" line="587"/>
+        <location filename="../mainwindow.ui" line="490"/>
+        <location filename="../mainwindow.ui" line="613"/>
         <source>Strikethrough</source>
         <translation>Επιγράμμιση</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="478"/>
+        <location filename="../mainwindow.ui" line="495"/>
         <source>Inline Code</source>
         <translation>Ενσωματωμένος Κώδικας</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="486"/>
+        <location filename="../mainwindow.ui" line="503"/>
         <source>Math Support</source>
         <translation>Υποστήριξη Για Μαθηματικά</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="494"/>
+        <location filename="../mainwindow.ui" line="511"/>
         <source>Code Highlighting</source>
         <translation>Σήμανση Κώδικα</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="502"/>
+        <location filename="../mainwindow.ui" line="519"/>
         <source>Clearness</source>
         <translation>Clearness</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="510"/>
+        <location filename="../mainwindow.ui" line="522"/>
+        <source>Ctrl+5</source>
+        <translation>Ctrl+5</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="530"/>
         <source>Clearness Dark</source>
         <translation>Clearness - Σκούρο</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="520"/>
+        <location filename="../mainwindow.ui" line="533"/>
+        <source>Ctrl+6</source>
+        <translation>Ctrl+6</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="543"/>
         <source>Center Paragraph</source>
         <translation>Στοίχιση Παραγράφου Στο Κέντρο</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="525"/>
+        <location filename="../mainwindow.ui" line="548"/>
         <source>Hard Linebreak</source>
         <translation>Αναγκασμένη Αλλαγή Γραμμής</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="530"/>
+        <location filename="../mainwindow.ui" line="553"/>
         <source>Find Next</source>
         <translation>Εύρεση Επόμενου</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="535"/>
+        <location filename="../mainwindow.ui" line="558"/>
         <source>Find Previous</source>
         <translation>Εύρεση Προηγούμενου</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="543"/>
+        <location filename="../mainwindow.ui" line="566"/>
         <source>Full Screen Mode</source>
         <translation>Λειτουργία Πλήρης Οθόνης</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="548"/>
+        <location filename="../mainwindow.ui" line="571"/>
         <source>Blockquote</source>
         <translation>Περιοχή παράθεσης</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="558"/>
-        <location filename="../mainwindow.cpp" line="542"/>
-        <location filename="../mainwindow.cpp" line="550"/>
-        <location filename="../mainwindow.cpp" line="551"/>
+        <location filename="../mainwindow.ui" line="574"/>
+        <source>Ctrl+Q</source>
+        <translation>Ctrl+Q</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="584"/>
+        <location filename="../mainwindow.cpp" line="598"/>
+        <location filename="../mainwindow.cpp" line="610"/>
+        <location filename="../mainwindow.cpp" line="611"/>
         <source>HTML preview</source>
         <translation>Προεπισκόπηση HTML</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="566"/>
+        <location filename="../mainwindow.ui" line="592"/>
         <source>Show Hard Linebreaks</source>
         <translation>Εμφάνιση Αναγκασμένων Αλλαγών Γραμμής</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="571"/>
+        <location filename="../mainwindow.ui" line="597"/>
         <source>Options...</source>
         <translation>Επιλογές...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="579"/>
+        <location filename="../mainwindow.ui" line="605"/>
         <source>Autolink</source>
         <translation>Αυτόματοι σύνδεσμοι</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="595"/>
+        <location filename="../mainwindow.ui" line="621"/>
         <source>Alphabetic Lists</source>
         <translation>Αλφαβητικές Λίστες</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="603"/>
+        <location filename="../mainwindow.ui" line="629"/>
         <source>Definition Lists</source>
         <translation>Λίστες Ορισμών</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="611"/>
+        <location filename="../mainwindow.ui" line="637"/>
         <source>SmartyPants</source>
         <translation>SmartyPants</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="616"/>
+        <location filename="../mainwindow.ui" line="642"/>
         <source>Language</source>
         <translation>Γλώσσα</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="624"/>
+        <location filename="../mainwindow.ui" line="650"/>
         <source>Check Spelling</source>
         <translation>Έλεγχος Ορθογραφίας</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="629"/>
+        <location filename="../mainwindow.ui" line="655"/>
         <source>Increase Header Level</source>
         <translation>Αύξηση Επίπεδου Κεφαλίδας</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="634"/>
+        <location filename="../mainwindow.ui" line="660"/>
         <source>Decrease Header Level</source>
         <translation>Μείωση Επίπεδου Κεφαλίδας</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="184"/>
+        <location filename="../mainwindow.ui" line="665"/>
+        <source>Insert Table...</source>
+        <translation>Εισαγωγή Πίνακα...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="668"/>
+        <source>Ctrl+T</source>
+        <translation>Ctrl+T</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="673"/>
+        <source>Byword Dark</source>
+        <translation>Byword Dark</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="676"/>
+        <source>Ctrl+7</source>
+        <translation>Ctrl+7</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="681"/>
+        <source>Insert Image...</source>
+        <translation>Εισαγωγή Εικόνας...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="684"/>
+        <source>Ctrl+G</source>
+        <translation>Ctrl+G</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="692"/>
+        <source>Horizontal Layout</source>
+        <translation>Οριζόντια Διάταξη</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="700"/>
+        <source>Footnotes</source>
+        <translation>Υποσημειώσεις</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="189"/>
         <source>Open File...</source>
         <translation>Άνοιγμα Αρχείου...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="185"/>
-        <location filename="../mainwindow.cpp" line="215"/>
+        <location filename="../mainwindow.cpp" line="190"/>
+        <location filename="../mainwindow.cpp" line="221"/>
         <source>Markdown Files (*.markdown *.md);;All Files (*)</source>
         <translation>Αρχεία Markdown (*.markdown *.md);;Όλα τα αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="214"/>
+        <location filename="../mainwindow.cpp" line="220"/>
         <source>Save as...</source>
         <translation>Αποθήκευση Ως...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="280"/>
+        <location filename="../mainwindow.cpp" line="292"/>
         <source>Print Document</source>
         <translation>Εκτύπωση Εγγράφου</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="527"/>
+        <location filename="../mainwindow.cpp" line="583"/>
         <source>About CuteMarkEd</source>
         <translation>Σχετικά με το CuteMarkEd</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="528"/>
+        <location filename="../mainwindow.cpp" line="584"/>
         <source>&lt;p&gt;&lt;b&gt;CuteMarkEd %1&lt;/b&gt;&lt;br&gt;Qt-based, free and open source markdown editor with live HTML preview&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</source>
         <translation>&lt;p&gt;&lt;b&gt;CuteMarkEd %1&lt;/b&gt;&lt;br&gt;δωρεάν, ανοικτού κώδικα επεξεργαστής Markdown βασισμένο στο Qt με ζωντανή προεπισκόπιση HTML&lt;br&gt;Πνευματική ιδιωκτησία του Christian Loose, 2013&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="545"/>
-        <location filename="../mainwindow.cpp" line="546"/>
+        <location filename="../mainwindow.cpp" line="601"/>
+        <location filename="../mainwindow.cpp" line="602"/>
         <source>HTML source</source>
         <translation>Κώδικας HTML</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="566"/>
+        <location filename="../mainwindow.cpp" line="629"/>
         <source>%1 words</source>
         <translation>%1 λέξεις</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="567"/>
+        <location filename="../mainwindow.cpp" line="630"/>
         <source>Lines: %1  Words: %2  Characters: %3</source>
         <translation>Γραμμές: %1  Λέξεις: %2  Χαρακτήρες: %3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="817"/>
+        <location filename="../mainwindow.cpp" line="880"/>
         <source>Change Preview Style</source>
         <translation>Αλλαγή Θέματος Προεπισκόπισης</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="894"/>
-        <source>Application</source>
-        <translation>Πρόγραμμα</translation>
+        <location filename="../mainwindow.cpp" line="957"/>
+        <source>Save Changes</source>
+        <translation>Αποθήκευση Αλλαγών</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="895"/>
+        <location filename="../mainwindow.cpp" line="958"/>
         <source>The document has been modified.&lt;br&gt;Do you want to save your changes?</source>
         <translation>Το έγγραφο έχει τροποποιηθεί.&lt;br&gt;Θα θέλατε να αποθηκεύσετε τις αλλαγές σας;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="915"/>
+        <location filename="../mainwindow.cpp" line="982"/>
         <source>untitled.md</source>
         <extracomment>default file name for new markdown documents</extracomment>
         <translation>χωρίς τίτλο.md</translation>
-    </message>
-    <message>
-        <source>%1[*] - %2</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -640,6 +775,54 @@
         <location filename="../controls/recentfilesmenu.cpp" line="92"/>
         <source>Clear Menu</source>
         <translation>Εκκαθάριση Μενού</translation>
+    </message>
+</context>
+<context>
+    <name>TableToolDialog</name>
+    <message>
+        <location filename="../tabletooldialog.ui" line="14"/>
+        <source>Insert Table</source>
+        <translation>Εισαγωγή Πίνακα</translation>
+    </message>
+    <message>
+        <location filename="../tabletooldialog.ui" line="20"/>
+        <source>Rows:</source>
+        <translation>Γραμμές</translation>
+    </message>
+    <message>
+        <location filename="../tabletooldialog.ui" line="37"/>
+        <source>Columns:</source>
+        <translation>Στήλες:</translation>
+    </message>
+    <message>
+        <location filename="../tabletooldialog.ui" line="54"/>
+        <source>Table:</source>
+        <translation>Πίνακας:</translation>
+    </message>
+    <message>
+        <location filename="../tabletooldialog.ui" line="70"/>
+        <source>Headers</source>
+        <translation>Κεφαλίδες</translation>
+    </message>
+    <message>
+        <location filename="../tabletooldialog.ui" line="77"/>
+        <source>Alignment</source>
+        <translation>Ευθυγράμμιση</translation>
+    </message>
+    <message>
+        <location filename="../tabletooldialog.cpp" line="114"/>
+        <source>Left</source>
+        <translation>Αριστερά</translation>
+    </message>
+    <message>
+        <location filename="../tabletooldialog.cpp" line="115"/>
+        <source>Center</source>
+        <translation>Κεντραρισμένη</translation>
+    </message>
+    <message>
+        <location filename="../tabletooldialog.cpp" line="116"/>
+        <source>Right</source>
+        <translation>Δεξιά</translation>
     </message>
 </context>
 </TS>
