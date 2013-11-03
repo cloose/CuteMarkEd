@@ -43,7 +43,9 @@ SOURCES += \
     options.cpp \
     hunspell/spellchecker.cpp \
     hunspell/dictionary.cpp \
-    controls/languagemenu.cpp
+    controls/languagemenu.cpp \
+    tabletooldialog.cpp \
+    imagetooldialog.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -67,14 +69,18 @@ HEADERS  += \
     options.h \
     hunspell/spellchecker.h \
     hunspell/dictionary.h \
-    controls/languagemenu.h
+    controls/languagemenu.h \
+    tabletooldialog.h \
+    imagetooldialog.h
 
 FORMS    += \
     mainwindow.ui \
     controls/findreplacewidget.ui \
     exportpdfdialog.ui \
     exporthtmldialog.ui \
-    optionsdialog.ui
+    optionsdialog.ui \
+    tabletooldialog.ui \
+    imagetooldialog.ui
 
 RESOURCES += \
     resources.qrc \

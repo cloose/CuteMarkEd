@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include "imagetooldialog.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -48,6 +49,7 @@
 #include "exportpdfdialog.h"
 #include "options.h"
 #include "optionsdialog.h"
+#include "tabletooldialog.h"
 
 MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
@@ -124,8 +126,11 @@ void MainWindow::initializeApp()
     ui->actionAlphabeticLists->setChecked(options->isAlphabeticListsEnabled());
     ui->actionDefinitionLists->setChecked(options->isDefinitionListsEnabled());
     ui->actionSmartyPants->setChecked(options->isSmartyPantsEnabled());
+    ui->actionFootnotes->setChecked(options->isFootnotesEnabled());
 
     // init option flags
+    ui->actionMathSupport->setChecked(options->isMathSupportEnabled());
+    ui->actionCodeHighlighting->setChecked(options->isCodeHighlightingEnabled());
     ui->actionCheckSpelling->setChecked(options->isSpellingCheckEnabled());
     ui->plainTextEdit->setSpellingCheckEnabled(options->isSpellingCheckEnabled());
 
@@ -191,6 +196,7 @@ void MainWindow::fileOpen()
 
 bool MainWindow::fileSave()
 {
+    // file has no name yet?
     if (fileName.isEmpty()) {
         return fileSaveAs();
     }
@@ -217,6 +223,11 @@ bool MainWindow::fileSaveAs()
         return false;
     }
 
+    // Add default extension ".md" if the file name as no extension yet.
+    if (QFileInfo(name).suffix().isEmpty()) {
+        name.append(".md");
+    }
+
     setFileName(name);
     return fileSave();
 }
@@ -226,6 +237,7 @@ void MainWindow::fileExportToHtml()
     ExportHtmlDialog dialog(fileName);
     if (dialog.exec() == QDialog::Accepted) {
 
+        QString cssStyle;
         if (dialog.includeCSS()) {
             // get url of current css stylesheet
             QUrl cssUrl = ui->webView->page()->settings()->userStyleSheetUrl();
@@ -241,26 +253,26 @@ void MainWindow::fileExportToHtml()
             // read currently used css stylesheet file
             QFile f(cssFileName);
             if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
-                QString cssStyle = f.readAll();
-
-                // embed the css into the HTML source document after the <head> element.
-                if (ui->htmlSourceTextEdit->find("<head>")) {
-                    QTextCursor cursor = ui->htmlSourceTextEdit->textCursor();
-                    cursor.beginEditBlock();
-                    cursor.setPosition(cursor.selectionEnd());
-                    cursor.insertText(QString("\n<style>%1</style>").arg(cssStyle));
-                    cursor.endEditBlock();
-                }
+                cssStyle = f.readAll();
             }
         }
 
-        // write HTML source to disk
-        QTextDocumentWriter writer(dialog.fileName(), "plaintext");
-        writer.write(ui->htmlSourceTextEdit->document());
+        QString highlightJs;
+        if (dialog.includeCodeHighlighting()) {
+            QFile f(":/scripts/highlight.js/highlight.pack.js");
+            if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                highlightJs = f.readAll();
+            }
+        }
 
-        // undo the changes to the HTML source
-        if (dialog.includeCSS()) {
-            ui->htmlSourceTextEdit->undo();
+        QString html = generator->exportHtml(cssStyle, highlightJs);
+
+        // write HTML source to disk
+        QFile f(dialog.fileName());
+        if (f.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QTextStream out(&f);
+            out.setCodec("UTF-8");
+            out << html;
         }
     }
 }
@@ -354,7 +366,7 @@ void MainWindow::editHardLinebreak()
 void MainWindow::editBlockquote()
 {
     MarkdownManipulator manipulator(ui->plainTextEdit);
-    manipulator.prependToLine('>');
+    manipulator.formatTextAsQuote();
 }
 
 void MainWindow::editIncreaseHeaderLevel()
@@ -367,6 +379,25 @@ void MainWindow::editDecreaseHeaderLevel()
 {
     MarkdownManipulator manipulator(ui->plainTextEdit);
     manipulator.decreaseHeadingLevel();
+}
+
+void MainWindow::editInsertTable()
+{
+    TableToolDialog dialog;
+    if (dialog.exec() == QDialog::Accepted) {
+        MarkdownManipulator manipulator(ui->plainTextEdit);
+        manipulator.insertTable(dialog.rows(), dialog.columns(),
+                                dialog.alignments(), dialog.tableCells());
+    }
+}
+
+void MainWindow::editInsertImage()
+{
+    ImageToolDialog dialog(this);
+    if (dialog.exec() == QDialog::Accepted) {
+        MarkdownManipulator manipulator(ui->plainTextEdit);
+        manipulator.insertImageLink(dialog.alternateText(), dialog.imageSourceLink(), dialog.optionalTitle());
+    }
 }
 
 void MainWindow::viewChangeSplit()
@@ -447,6 +478,16 @@ void MainWindow::styleClearnessDark()
     styleLabel->setText(ui->actionClearnessDark->text());
 }
 
+void MainWindow::styleBywordDark()
+{
+    generator->setCodeHighlightingStyle("default");
+
+    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/byword-dark.txt");
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/byword-dark.css"));
+
+    styleLabel->setText(ui->actionBywordDark->text());
+}
+
 void MainWindow::styleCustomStyle()
 {
     QAction *action = qobject_cast<QAction*>(sender());
@@ -465,6 +506,15 @@ void MainWindow::viewFullScreenMode()
         showFullScreen();
     } else {
         showNormal();
+    }
+}
+
+void MainWindow::viewHorizontalLayout(bool checked)
+{
+    if (checked) {
+        ui->splitter->setOrientation(Qt::Vertical);
+    } else {
+        ui->splitter->setOrientation(Qt::Horizontal);
     }
 }
 
@@ -500,6 +550,12 @@ void MainWindow::extensionsDefinitionLists(bool checked)
 void MainWindow::extensionsSmartyPants(bool checked)
 {
     options->setSmartyPantsEnabled(checked);
+    plainTextChanged();
+}
+
+void MainWindow::extensionsFootnotes(bool enabled)
+{
+    options->setFootnotesEnabled(enabled);
     plainTextChanged();
 }
 
@@ -588,6 +644,7 @@ void MainWindow::htmlResultReady(const QString &html)
     // remember scrollbar position
     scrollBarPos = ui->plainTextEdit->verticalScrollBar()->value();
 
+    // show html preview
     QUrl baseUrl;
     if (fileName.isEmpty()) {
         baseUrl = QUrl::fromLocalFile(qApp->applicationDirPath());
@@ -596,13 +653,13 @@ void MainWindow::htmlResultReady(const QString &html)
     }
     ui->webView->setHtml(html, baseUrl);
 
+    // show html source
     ui->htmlSourceTextEdit->setPlainText(html);
 }
 
 void MainWindow::tocResultReady(const QString &toc)
 {
-    QString styledToc = QString("<html><head>\n<style type=\"text/css\">ul { list-style-type: none; padding: 0; margin-left: 1em; } a { text-decoration: none; }</style>\n</head><body>%1</body></html>").arg(toc);
-    ui->tocWebView->setHtml(styledToc);
+    ui->tocWebView->setHtml(toc);
 }
 
 void MainWindow::htmlContentSizeChanged()
@@ -655,19 +712,25 @@ bool MainWindow::load(const QString &fileName)
         return false;
     }
 
+    // open file
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly)) {
         return false;
     }
 
+    // read content from file
     QByteArray content = file.readAll();
     QString text = QString::fromUtf8(content);
 
     ui->plainTextEdit->resetHighlighting();
     ui->plainTextEdit->setPlainText(text);
 
+    // remember name of new file
     setFileName(fileName);
+
+    // add to recent files
     recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
+
     return true;
 }
 
@@ -793,14 +856,6 @@ void MainWindow::setupActions()
     connect(ui->menuLanguages, SIGNAL(languageTriggered(hunspell::Dictionary)),
             this, SLOT(languageChanged(hunspell::Dictionary)));
 
-    // style menu
-    ui->actionDefault->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
-    ui->actionGithub->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
-    ui->actionSolarizedLight->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
-    ui->actionSolarizedDark->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
-    ui->actionClearness->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
-    ui->actionClearnessDark->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
-
     // put style actions in a group
     stylesGroup = new QActionGroup(this);
     ui->actionDefault->setActionGroup(stylesGroup);
@@ -809,6 +864,7 @@ void MainWindow::setupActions()
     ui->actionSolarizedDark->setActionGroup(stylesGroup);
     ui->actionClearness->setActionGroup(stylesGroup);
     ui->actionClearnessDark->setActionGroup(stylesGroup);
+    ui->actionBywordDark->setActionGroup(stylesGroup);
 
     // help menu
     ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);
@@ -898,7 +954,7 @@ bool MainWindow::maybeSave()
         return true;
 
     QMessageBox::StandardButton ret;
-    ret = QMessageBox::warning(this, tr("Application"),
+    ret = QMessageBox::warning(this, tr("Save Changes"),
                                tr("The document has been modified.<br>"
                                   "Do you want to save your changes?"),
                                QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
@@ -914,16 +970,18 @@ bool MainWindow::maybeSave()
 void MainWindow::setFileName(const QString &fileName)
 {
     this->fileName = fileName;
-    ui->plainTextEdit->document()->setModified(false);
 
+    // set to unmodified
+    ui->plainTextEdit->document()->setModified(false);
+    setWindowModified(false);
+
+    // update window title
     QString shownName = fileName;
     if (shownName.isEmpty()) {
         //: default file name for new markdown documents
         shownName = tr("untitled.md");
     }
-
     setWindowFilePath(shownName);
-    setWindowModified(false);
 }
 
 void MainWindow::updateSplitter(bool htmlViewToggled)
@@ -1003,3 +1061,4 @@ void MainWindow::writeSettings()
     settings.setValue("mainWindow/geometry", saveGeometry());
     settings.setValue("mainWindow/windowState", saveState());
 }
+

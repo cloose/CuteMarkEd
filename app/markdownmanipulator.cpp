@@ -42,8 +42,11 @@ void MarkdownManipulator::wrapSelectedText(const QString &tag)
         cursor.movePosition(QTextCursor::Right,
                             QTextCursor::KeepAnchor, end - start);
         editor->setTextCursor(cursor);
+    } else if (!cursor.hasSelection()) {
+        cursor.insertText(tag+tag);
+        cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, tag.length());
+        editor->setTextCursor(cursor);
     }
-
 }
 
 void MarkdownManipulator::wrapCurrentParagraph(const QString &startTag, const QString &endTag)
@@ -172,4 +175,131 @@ void MarkdownManipulator::decreaseHeadingLevel()
         }
         cursor.endEditBlock();
     }
+}
+
+void MarkdownManipulator::formatTextAsQuote()
+{
+    QTextCursor cursor = editor->textCursor();
+    QTextDocument *doc = editor->document();
+
+    int start = cursor.selectionStart();
+    int end = cursor.selectionEnd();
+
+    if (cursor.hasSelection() &&
+        doc->findBlock(start) != doc->findBlock(end)) {
+        formatBlock('>');
+    } else {
+        prependToLine('>');
+    }
+}
+
+void MarkdownManipulator::insertTable(int rows, int columns, const QList<Qt::Alignment> &alignments, const QList<QStringList> &cells)
+{
+    QTextCursor cursor = editor->textCursor();
+    cursor.beginEditBlock();
+    int pos = cursor.position();
+
+    // table header
+    QStringList headers = cells.at(0);
+
+    QString header("| ");
+    header.append(headers.join(" | "));
+    header.append(" |");
+    cursor.insertText(header);
+    cursor.insertBlock();
+
+    // separator between table header and body including alignment
+    QString line("|");
+    for (int col = 0; col < columns; ++col) {
+        header = headers.at(col);
+        QString underline(header.length()+2, QChar('-'));
+
+        switch (alignments.at(col)) {
+        case Qt::AlignCenter:
+            underline.replace(0, 1, ':');
+            underline.replace(underline.length()-1, 1, ':');
+            break;
+        case Qt::AlignRight:
+            underline.replace(underline.length()-1, 1, ':');
+            break;
+        default:
+            break;
+        }
+
+        line.append(underline);
+        line.append("|");
+    }
+    cursor.insertText(line);
+    cursor.insertBlock();
+
+    // table body
+    for (int i = 0; i < rows-1; ++i) {
+        QStringList rowData = cells.at(i+1);
+
+        QString row("| ");
+        row.append(rowData.join(" | "));
+        row.append(" |");
+
+        cursor.insertText(row);
+        cursor.insertBlock();
+    }
+
+    // position to first header cell
+    cursor.setPosition(pos);
+    cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, 2);
+
+    cursor.endEditBlock();
+
+    editor->setTextCursor(cursor);
+}
+
+void MarkdownManipulator::insertImageLink(const QString &alternateText, const QString &imageSource, const QString &optionalTitle)
+{
+    QTextCursor cursor = editor->textCursor();
+    cursor.beginEditBlock();
+
+    QString imageLink;
+    if (optionalTitle.isEmpty()) {
+        imageLink = QString("![%1](%2)").arg(alternateText).arg(imageSource);
+    } else {
+        imageLink = QString("![%1](%2 \"%3\")").arg(alternateText).arg(imageSource).arg(optionalTitle);
+    }
+
+    cursor.insertText(imageLink);
+
+    cursor.endEditBlock();
+}
+
+void MarkdownManipulator::formatBlock(const QChar &mark)
+{
+    QTextCursor cursor = editor->textCursor();
+    QTextDocument *doc = editor->document();
+
+    cursor.beginEditBlock();
+
+    int startLine = doc->findBlock(cursor.selectionStart()).blockNumber();
+    int endLine = doc->findBlock(cursor.selectionEnd()).blockNumber();
+
+    // move cursor to start of first line
+    cursor.setPosition(cursor.selectionStart());
+    cursor.movePosition(QTextCursor::StartOfLine);
+
+    for (int i = startLine; i <= endLine; ++i) {
+        // search for last mark
+        int pos = cursor.position();
+        while (doc->characterAt(pos++) == mark)
+            ;
+
+        // insert new mark
+        cursor.insertText(mark);
+
+        // add space after mark, if missing
+        if (doc->characterAt(pos) != ' ') {
+            cursor.insertText(" ");
+        }
+
+        cursor.movePosition(QTextCursor::NextBlock);
+    }
+
+    cursor.endEditBlock();
 }

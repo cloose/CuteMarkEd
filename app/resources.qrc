@@ -6,6 +6,7 @@
         <file alias="github.css">styles/github.css</file>
         <file alias="clearness.css">styles/clearness.css</file>
         <file alias="clearness-dark.css">styles/clearness-dark.css</file>
+        <file alias="byword-dark.css">styles/byword-dark.css</file>
     </qresource>
     <qresource prefix="/theme">
         <file alias="solarized-dark.txt">themes/solarized-dark.txt</file>
@@ -15,6 +16,7 @@
         <file alias="default.txt">themes/default.txt</file>
         <file alias="clearness-dark+.txt">themes/clearness-dark+.txt</file>
         <file alias="clearness-dark.txt">themes/clearness-dark.txt</file>
+        <file alias="byword-dark.txt">themes/byword-dark.txt</file>
     </qresource>
     <qresource prefix="/">
         <file>template.html</file>
@@ -27,5 +29,12 @@
     <qresource prefix="/icons">
         <file alias="icon-close.png">images/icon-close.png</file>
         <file>app-icon.ico</file>
+    </qresource>
+    <qresource prefix="/scripts">
+        <file alias="highlight.js/highlight.pack.js">scripts/highlight.js/highlight.pack.js</file>
+        <file alias="highlight.js/styles/default.css">scripts/highlight.js/styles/default.css</file>
+        <file alias="highlight.js/styles/solarized_light.css">scripts/highlight.js/styles/solarized_light.css</file>
+        <file alias="highlight.js/styles/github.css">scripts/highlight.js/styles/github.css</file>
+        <file alias="highlight.js/styles/solarized_dark.css">scripts/highlight.js/styles/solarized_dark.css</file>
     </qresource>
 </RCC>

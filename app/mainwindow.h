@@ -78,6 +78,8 @@ private slots:
     void editBlockquote();
     void editIncreaseHeaderLevel();
     void editDecreaseHeaderLevel();
+    void editInsertTable();
+    void editInsertImage();
 
     void viewChangeSplit();
     void styleDefault();
@@ -86,8 +88,10 @@ private slots:
     void styleSolarizedDark();
     void styleClearness();
     void styleClearnessDark();
+    void styleBywordDark();
     void styleCustomStyle();
     void viewFullScreenMode();
+    void viewHorizontalLayout(bool checked);
 
     void extrasShowHardLinebreaks(bool checked);
     void extensionsAutolink(bool checked);
@@ -95,6 +99,7 @@ private slots:
     void extensionsAlphabeticLists(bool checked);
     void extensionsDefinitionLists(bool checked);
     void extensionsSmartyPants(bool checked);
+    void extensionsFootnotes(bool enabled);
     void extrasCheckSpelling(bool checked);
     void extrasOptions();
 

@@ -40,6 +40,8 @@ public:
 
 public slots:
     void markdownTextChanged(const QString &text);
+    QString exportHtml(const QString &styleSheet, const QString &highlightingScript);
+
     void setMathSupportEnabled(bool enabled);
     void setCodeHighlightingEnabled(bool enabled);
     void setCodeHighlightingStyle(const QString &style);
@@ -53,6 +55,7 @@ protected:
 
 private:
     void generateHtmlFromMarkdown();
+    void generateTableOfContents();
     QString renderTemplate(const QString &header, const QString &body);
     QString buildHtmlHeader() const;
     Discount::Parser::ParserOptions parserOptions() const;
@@ -64,8 +67,6 @@ private:
     QMutex tasksMutex;
     QWaitCondition bufferNotEmpty;
     QString htmlTemplate;
-    bool mathSupportEnabled;
-    bool codeHighlightingEnabled;
     QString codeHighlightingStyle;
 };
 

@@ -63,6 +63,15 @@ public:
     bool isSmartyPantsEnabled() const;
     void setSmartyPantsEnabled(bool enabled);
 
+    bool isFootnotesEnabled() const;
+    void setFootnotesEnabled(bool enabled);
+
+    bool isMathSupportEnabled() const;
+    void setMathSupportEnabled(bool enabled);
+
+    bool isCodeHighlightingEnabled() const;
+    void setCodeHighlightingEnabled(bool enabled);
+
     bool isSpellingCheckEnabled() const;
     void setSpellingCheckEnabled(bool enabled);
 
@@ -88,6 +97,9 @@ private:
     bool m_alphabeticListsEnabled;
     bool m_definitionListsEnabled;
     bool m_smartyPantsEnabled;
+    bool m_footnotesEnabled;
+    bool m_mathSupportEnabled;
+    bool m_codeHighlightingEnabled;
     bool m_spellingCheckEnabled;
     QString m_dictionaryLanguage;
 };

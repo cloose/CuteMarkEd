@@ -34,6 +34,7 @@ public:
     
     QString fileName() const;
     bool includeCSS() const;
+    bool includeCodeHighlighting() const;
 
 private slots:
     void exportToTextChanged(const QString &text);

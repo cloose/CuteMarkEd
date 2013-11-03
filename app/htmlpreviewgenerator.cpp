@@ -16,6 +16,8 @@
  */
 #include "htmlpreviewgenerator.h"
 
+#include <QFile>
+
 #include "discount/document.h"
 #include "discount/parser.h"
 
@@ -24,9 +26,7 @@
 HtmlPreviewGenerator::HtmlPreviewGenerator(Options *opt, QObject *parent) :
     QThread(parent),
     options(opt),
-    document(0),
-    mathSupportEnabled(false),
-    codeHighlightingEnabled(false)
+    document(0)
 {
 }
 
@@ -43,9 +43,34 @@ void HtmlPreviewGenerator::markdownTextChanged(const QString &text)
     bufferNotEmpty.wakeOne();
 }
 
+QString HtmlPreviewGenerator::exportHtml(const QString &styleSheet, const QString &highlightingScript)
+{
+    if (!document) return QString();
+
+    QString header;
+    if (!styleSheet.isEmpty()) {
+        header += QString("\n<style>%1</style>").arg(styleSheet);
+    }
+
+    if (!highlightingScript.isEmpty()) {
+        // FIXME: doesn't really belong here
+        QString highlightStyle;
+        QFile f(QString(":/scripts/highlight.js/styles/%1.css").arg(codeHighlightingStyle));
+        if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            highlightStyle = f.readAll();
+        }
+
+        header += QString("\n<style>%1</style>").arg(highlightStyle);
+        header += QString("\n<script>%1</script>").arg(highlightingScript);
+        header += "\n<script>hljs.initHighlightingOnLoad();</script>";
+    }
+
+    return renderTemplate(header, document->toHtml());
+}
+
 void HtmlPreviewGenerator::setMathSupportEnabled(bool enabled)
 {
-    mathSupportEnabled = enabled;
+    options->setMathSupportEnabled(enabled);
 
     // regenerate a HTML document
     generateHtmlFromMarkdown();
@@ -53,7 +78,7 @@ void HtmlPreviewGenerator::setMathSupportEnabled(bool enabled)
 
 void HtmlPreviewGenerator::setCodeHighlightingEnabled(bool enabled)
 {
-    codeHighlightingEnabled = enabled;
+    options->setCodeHighlightingEnabled(enabled);
 
     // regenerate a HTML document
     generateHtmlFromMarkdown();
@@ -103,8 +128,7 @@ void HtmlPreviewGenerator::run()
             generateHtmlFromMarkdown();
 
             // generate table of contents
-            QString toc = document->generateToc();
-            emit tocResultReady(toc);
+            generateTableOfContents();
         }
     }
 }
@@ -115,6 +139,15 @@ void HtmlPreviewGenerator::generateHtmlFromMarkdown()
 
     QString html = renderTemplate(buildHtmlHeader(), document->toHtml());
     emit htmlResultReady(html);
+}
+
+void HtmlPreviewGenerator::generateTableOfContents()
+{
+    if (!document) return;
+
+    QString toc = document->generateToc();
+    QString styledToc = QString("<html><head>\n<style type=\"text/css\">ul { list-style-type: none; padding: 0; margin-left: 1em; } a { text-decoration: none; }</style>\n</head><body>%1</body></html>").arg(toc);
+    emit tocResultReady(styledToc);
 }
 
 QString HtmlPreviewGenerator::renderTemplate(const QString &header, const QString &body)
@@ -133,14 +166,14 @@ QString HtmlPreviewGenerator::buildHtmlHeader() const
     QString header;
 
     // add MathJax.js script to HTML header
-    if (mathSupportEnabled) {
+    if (options->isMathSupportEnabled()) {
         header += "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>";
     }
 
     // add Highlight.js script to HTML header
-    if (codeHighlightingEnabled) {
-        header += QString("<link rel=\"stylesheet\" href=\"http://yandex.st/highlightjs/7.3/styles/%1.min.css\">").arg(codeHighlightingStyle);
-        header += "<script src=\"http://yandex.st/highlightjs/7.3/highlight.min.js\"></script>";
+    if (options->isCodeHighlightingEnabled()) {
+        header += QString("<link rel=\"stylesheet\" href=\"qrc:/scripts/highlight.js/styles/%1.css\">").arg(codeHighlightingStyle);
+        header += "<script src=\"qrc:/scripts/highlight.js/highlight.pack.js\"></script>";
         header += "<script>hljs.initHighlightingOnLoad();</script>";
     }
 
@@ -174,6 +207,11 @@ Discount::Parser::ParserOptions HtmlPreviewGenerator::parserOptions() const
     // SmartyPants
     if (!options->isSmartyPantsEnabled()) {
         parserOptionFlags |= Discount::Parser::NoSmartypantsOption;
+    }
+
+    // Footnotes
+    if (options->isFootnotesEnabled()) {
+        parserOptionFlags |= Discount::Parser::ExtraFootnoteOption;
     }
 
     return parserOptionFlags;

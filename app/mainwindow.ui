@@ -120,7 +120,7 @@
      <x>0</x>
      <y>0</y>
      <width>850</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -174,6 +174,8 @@
     <addaction name="actionCopyHtmlToClipboard"/>
     <addaction name="separator"/>
     <addaction name="menuFormat"/>
+    <addaction name="actionInsertTable"/>
+    <addaction name="actionInsertImage"/>
     <addaction name="separator"/>
     <addaction name="menuFindReplace"/>
    </widget>
@@ -198,6 +200,7 @@
     <addaction name="actionSplit_1_3"/>
     <addaction name="separator"/>
     <addaction name="actionFullScreenMode"/>
+    <addaction name="actionHorizontalLayout"/>
    </widget>
    <widget class="QMenu" name="menuExtras">
     <property name="title">
@@ -213,6 +216,7 @@
      <addaction name="actionSolarizedDark"/>
      <addaction name="actionClearness"/>
      <addaction name="actionClearnessDark"/>
+     <addaction name="actionBywordDark"/>
     </widget>
     <widget class="QMenu" name="menuMarkdown_Extensions">
      <property name="title">
@@ -223,6 +227,7 @@
      <addaction name="actionAlphabeticLists"/>
      <addaction name="actionDefinitionLists"/>
      <addaction name="actionSmartyPants"/>
+     <addaction name="actionFootnotes"/>
     </widget>
     <widget class="LanguageMenu" name="menuLanguages">
      <property name="title">
@@ -368,6 +373,9 @@
    <property name="text">
     <string>Default</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+1</string>
+   </property>
   </action>
   <action name="actionGithub">
    <property name="checkable">
@@ -375,6 +383,9 @@
    </property>
    <property name="text">
     <string>Github</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+2</string>
    </property>
   </action>
   <action name="actionSolarizedLight">
@@ -384,6 +395,9 @@
    <property name="text">
     <string>Solarized Light</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+3</string>
+   </property>
   </action>
   <action name="actionSolarizedDark">
    <property name="checkable">
@@ -391,6 +405,9 @@
    </property>
    <property name="text">
     <string>Solarized Dark</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+4</string>
    </property>
   </action>
   <action name="actionAbout">
@@ -501,6 +518,9 @@
    <property name="text">
     <string>Clearness</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+5</string>
+   </property>
   </action>
   <action name="actionClearnessDark">
    <property name="checkable">
@@ -508,6 +528,9 @@
    </property>
    <property name="text">
     <string>Clearness Dark</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+6</string>
    </property>
   </action>
   <action name="actionFindReplace">
@@ -546,6 +569,9 @@
   <action name="actionBlockquote">
    <property name="text">
     <string>Blockquote</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
   <action name="actionMarkdownSyntax">
@@ -632,6 +658,46 @@
   <action name="actionDecreaseHeaderLevel">
    <property name="text">
     <string>Decrease Header Level</string>
+   </property>
+  </action>
+  <action name="actionInsertTable">
+   <property name="text">
+    <string>Insert Table...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionBywordDark">
+   <property name="text">
+    <string>Byword Dark</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+7</string>
+   </property>
+  </action>
+  <action name="actionInsertImage">
+   <property name="text">
+    <string>Insert Image...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
+   </property>
+  </action>
+  <action name="actionHorizontalLayout">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Horizontal Layout</string>
+   </property>
+  </action>
+  <action name="actionFootnotes">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Footnotes</string>
    </property>
   </action>
  </widget>
@@ -926,8 +992,8 @@
    <slot>previewLinkClicked(QUrl)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>404</x>
-     <y>282</y>
+     <x>403</x>
+     <y>300</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1479,5 +1545,92 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionInsertTable</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editInsertTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionBywordDark</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>styleBywordDark()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionInsertImage</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editInsertImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionHorizontalLayout</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>viewHorizontalLayout(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFootnotes</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extensionsFootnotes(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>editInsertTable()</slot>
+  <slot>editInsertImage()</slot>
+  <slot>styleBywordDark()</slot>
+  <slot>viewHorizontalLayout(bool)</slot>
+  <slot>extensionsFootnotes(bool)</slot>
+ </slots>
 </ui>

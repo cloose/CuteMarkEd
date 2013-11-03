@@ -8,30 +8,44 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 ### DOWNLOAD
 
-[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.7.2.tar.gz)  
-[MS Windows (Installer)](https://github.com/cloose/CuteMarkEd/releases/download/v0.7.2/cutemarked-0.7.2.msi)  
-[MS Windows (ZIP file)](https://github.com/cloose/CuteMarkEd/releases/download/v0.7.2/cutemarked-0.7.2.zip)  
+[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.8.0.tar.gz)  
+[MS Windows (Installer)](https://github.com/cloose/CuteMarkEd/releases/download/v0.8.0/cutemarked-0.8.0.msi)  
+[MS Windows (ZIP file)](https://github.com/cloose/CuteMarkEd/releases/download/v0.8.0/cutemarked-0.8.0.zip)  
 [OpenSUSE 12.3 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 
 ### NEWS
 
-#### Version 0.7.2
+#### Version 0.8.0
 
 New Features:
 
-* `NEW` Added chinese translation made by LearnShare.
+* `NEW` [Tool to insert a table in the markdown document](http://www.christian-loose.de/wordpress/2013/10/cutemarked-v0-8-0-preview-table-tool/)
+* `NEW` [Tool to insert an image link in the markdown document](http://www.christian-loose.de/wordpress/2013/11/cutemarked-v0-8-0-preview-image-tool/)
+* `NEW` Support for Markdown Extra-style footnotes
+* `NEW` Menu item to switch between vertical and horizontal layout
+* `NEW` Added style Byword Dark
 
-#### Version 0.7.1
+Improvements:
 
-New Features:
+* `IMPROVED` Added possibility to insert markdown markup (like bold, italic) without selection
+* `IMPROVED` Added support for code highlighting without internet connection
+* `IMPROVED` Added option to include javascript and CSS needed for code highlighting in the exported HTML
 
-* `NEW` Added greek translation made by Evropi.
+Fixes:
+
+* `FIXED` Resolved problems with adding symbols using <kbd>Alt</kbd> with numpad key by changing shortcuts for styles from <kbd>Alt</kbd>+<kbd>1-6</kbd> to  <kbd>Ctrl</kbd>+<kbd>1-6</kbd>
+* `FIXED` Several encoding problems were fixed.
+  * German umlauts in table of contents
+  * exported HTML was not marked as UTF-8
+  * non-ascii characters with markdown markup like italic
+
 
 ### DEPENDENCIES
 
 * Qt 5.x (LGPL v2.1)
-* [Discount 2.1.6](http://www.pell.portland.or.us/~orc/Code/discount/) (3-clause BSD)
+* [Discount 2.1.7](http://www.pell.portland.or.us/~orc/Code/discount/) (3-clause BSD)
 * [PEG Markdown Highlight](http://hasseg.org/peg-markdown-highlight/) (MIT License)
+* [hunspell 1.3.2](http://hunspell.sourceforge.net/) (LGPL v2.1)
 
 ### BUILD
 
@@ -45,9 +59,13 @@ https://github.com/cloose/CuteMarkEd/wiki/Build-Instructions
 
 ### HELP NEEDED
 
+##### Packages
+
+We really need help packaging CuteMarkEd. Especially for Linux and Mac OS X. For Linux there is already an [openSUSE Build Service project](https://build.opensuse.org/package/show/home:cloose1974/CuteMarkEd), but it's outdated. Please contact me if you like to help.
+
 ##### Translations
 
-We use [Transifex](https://www.transifex.com/projects/p/cutemarked) for the translations. Currently we have translations for chinese, czech, german and greek. We are always interested in more translations.
+We use [Transifex](https://www.transifex.com/projects/p/cutemarked) for the translations. Currently we have translations for Chinese, Czech, German and Greek. We are always interested in more translations.
 
 
 ### LINKS
