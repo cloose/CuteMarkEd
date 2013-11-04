@@ -157,24 +157,27 @@ QString HtmlPreviewGenerator::renderTemplate(const QString &header, const QStrin
     }
 
     return QString(htmlTemplate)
-            .replace(QLatin1String("__HTML_HEADER__"), header)
-            .replace(QLatin1String("__HTML_CONTENT__"), body);
+            .replace(QLatin1String("<!--__HTML_HEADER__-->"), header)
+            .replace(QLatin1String("<!--__HTML_CONTENT__-->"), body);
 }
 
 QString HtmlPreviewGenerator::buildHtmlHeader() const
 {
     QString header;
 
+    // add javascript for scrollbar synchronization
+    header += "<script type=\"text/javascript\">window.onscroll = function() { mainwin.webViewScrolled(); }; </script>\n";
+
     // add MathJax.js script to HTML header
     if (options->isMathSupportEnabled()) {
-        header += "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>";
+        header += "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>\n";
     }
 
     // add Highlight.js script to HTML header
     if (options->isCodeHighlightingEnabled()) {
-        header += QString("<link rel=\"stylesheet\" href=\"qrc:/scripts/highlight.js/styles/%1.css\">").arg(codeHighlightingStyle);
-        header += "<script src=\"qrc:/scripts/highlight.js/highlight.pack.js\"></script>";
-        header += "<script>hljs.initHighlightingOnLoad();</script>";
+        header += QString("<link rel=\"stylesheet\" href=\"qrc:/scripts/highlight.js/styles/%1.css\">\n").arg(codeHighlightingStyle);
+        header += "<script src=\"qrc:/scripts/highlight.js/highlight.pack.js\"></script>\n";
+        header += "<script>hljs.initHighlightingOnLoad();</script>\n";
     }
 
     return header;
