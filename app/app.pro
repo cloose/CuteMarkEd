@@ -148,6 +148,13 @@ OTHER_FILES += \
     syntax_de.html \
     syntax_el.html \
     syntax_zh_CN.html \
+    styles/solarized-dark.css \
+    styles/markdown.css \
+    styles/github.css \
+    styles/clearness-dark.css \
+    styles/clearness.css \
+    styles/byword-dark.css \
+    styles/solarized-light.css
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
 message("Using LIBS=$$LIBS")
