@@ -824,12 +824,12 @@ void MainWindow::setupActions()
     ui->actionEmphasize->setIcon(QIcon("icon-italic.fontawesome"));
     ui->actionStrikethrough->setIcon(QIcon("icon-strikethrough.fontawesome"));
     ui->actionCenterParagraph->setIcon(QIcon("icon-align-center.fontawesome"));
-    ui->actionHardLinebreak->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return));
     ui->actionBlockquote->setIcon(QIcon("icon-quote-left.fontawesome"));
-    ui->actionIncreaseHeaderLevel->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Right));
     ui->actionIncreaseHeaderLevel->setIcon(QIcon("icon-level-up.fontawesome"));
-    ui->actionDecreaseHeaderLevel->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Left));
     ui->actionDecreaseHeaderLevel->setIcon(QIcon("icon-level-down.fontawesome"));
+
+    ui->actionInsertTable->setIcon(QIcon("icon-table.fontawesome"));
+    ui->actionInsertImage->setIcon(QIcon("icon-picture.fontawesome"));
 
     ui->actionFindReplace->setShortcut(QKeySequence::Find);
     ui->actionFindReplace->setIcon(QIcon("icon-search.fontawesome"));
@@ -844,7 +844,6 @@ void MainWindow::setupActions()
 
     // view menu
     ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());
-    ui->actionHtmlPreview->setShortcut(QKeySequence(Qt::Key_F5));
     ui->actionFullScreenMode->setShortcut(QKeySequence::FullScreen);
     ui->actionFullScreenMode->setIcon(QIcon("icon-fullscreen.fontawesome"));
 

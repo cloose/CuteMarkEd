@@ -547,6 +547,9 @@
    <property name="text">
     <string>Hard Linebreak</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Return</string>
+   </property>
   </action>
   <action name="actionFindNext">
    <property name="text">
@@ -582,6 +585,9 @@
   <action name="actionHtmlPreview">
    <property name="text">
     <string>HTML preview</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
    </property>
   </action>
   <action name="actionShowHardLinebreaks">
@@ -654,10 +660,16 @@
    <property name="text">
     <string>Increase Header Level</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+Right</string>
+   </property>
   </action>
   <action name="actionDecreaseHeaderLevel">
    <property name="text">
     <string>Decrease Header Level</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Left</string>
    </property>
   </action>
   <action name="actionInsertTable">
