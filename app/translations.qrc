@@ -4,5 +4,6 @@
         <file>translations/cutemarked_cs.qm</file>
         <file>translations/cutemarked_el.qm</file>
         <file>translations/cutemarked_zh_CN.qm</file>
+        <file>translations/cutemarked_fr.qm</file>
     </qresource>
 </RCC>
