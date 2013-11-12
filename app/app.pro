@@ -46,7 +46,8 @@ SOURCES += \
     controls/languagemenu.cpp \
     tabletooldialog.cpp \
     imagetooldialog.cpp \
-    snippetrepository.cpp
+    snippetrepository.cpp \
+    snippetcompleter.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -74,7 +75,8 @@ HEADERS  += \
     tabletooldialog.h \
     imagetooldialog.h \
     snippet.h \
-    snippetrepository.h
+    snippetrepository.h \
+    snippetcompleter.h
 
 FORMS    += \
     mainwindow.ui \
