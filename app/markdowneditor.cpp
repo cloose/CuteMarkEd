@@ -20,6 +20,7 @@
 #include <QMenu>
 #include <QMimeData>
 #include <QPainter>
+#include <QShortcut>
 #include <QStyle>
 #include <QTextBlock>
 #include <QTextStream>
@@ -28,6 +29,8 @@
 #include <peg-markdown-highlight/styleparser.h>
 #include <markdownhighlighter.h>
 #include "markdownmanipulator.h"
+#include "snippetcompleter.h"
+#include "snippetrepository.h"
 
 #include "hunspell/dictionary.h"
 #include "hunspell/spellchecker.h"
@@ -38,6 +41,8 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
     QPlainTextEdit(parent),
     lineNumberArea(new LineNumberArea(this)),
     spellChecker(new SpellChecker()),
+    snippetRepository(new SnippetRepository(this)),
+    completer(new SnippetCompleter(snippetRepository, this)),
     showHardLinebreaks(false)
 {
     highlighter = new MarkdownHighlighter(this->document(), spellChecker);
@@ -58,6 +63,12 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
             this, SLOT(showContextMenu(QPoint)));
 
     updateLineNumberAreaWidth(0);
+
+    new QShortcut(QKeySequence(tr("Ctrl+Space", "Complete")),
+                  this, SLOT(performCompletion()));
+
+    snippetRepository->loadFromFile(":/markdown-snippets.json");
+    completer->setPopupOffset(lineNumberAreaWidth());
 }
 
 MarkdownEditor::~MarkdownEditor()
@@ -154,6 +165,27 @@ void MarkdownEditor::resizeEvent(QResizeEvent *event)
                                 QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height())));
 }
 
+void MarkdownEditor::keyPressEvent(QKeyEvent *e)
+{
+    if (completer && completer->isPopupVisible()) {
+        // The following keys are forwarded by the completer to the widget
+       switch (e->key()) {
+       case Qt::Key_Enter:
+       case Qt::Key_Return:
+       case Qt::Key_Escape:
+       case Qt::Key_Tab:
+       case Qt::Key_Backtab:
+            e->ignore();
+            return; // let the completer do default behavior
+       default:
+           break;
+       }
+    }
+
+    completer->hidePopup();
+    QPlainTextEdit::keyPressEvent(e);
+}
+
 bool MarkdownEditor::canInsertFromMimeData(const QMimeData *source) const
 {
     if (source->hasUrls() && (source->urls().count() == 1) && source->urls().first().isLocalFile()) {
@@ -244,6 +276,11 @@ void MarkdownEditor::replaceWithSuggestion()
     cursor.insertText(action->text());
 
     cursor.endEditBlock();
+}
+
+void MarkdownEditor::performCompletion()
+{
+    completer->performCompletion();
 }
 
 void MarkdownEditor::loadStyleFromStylesheet(const QString &fileName)

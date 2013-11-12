@@ -24,6 +24,8 @@ class Dictionary;
 class SpellChecker;
 }
 class MarkdownHighlighter;
+class SnippetRepository;
+class SnippetCompleter;
 
 
 class MarkdownEditor : public QPlainTextEdit
@@ -51,6 +53,7 @@ signals:
 protected:
     void paintEvent(QPaintEvent *e) Q_DECL_OVERRIDE;
     void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
+    void keyPressEvent(QKeyEvent *e) Q_DECL_OVERRIDE;
     bool canInsertFromMimeData(const QMimeData *source) const Q_DECL_OVERRIDE;
     void insertFromMimeData(const QMimeData *source) Q_DECL_OVERRIDE;
 
@@ -60,6 +63,7 @@ private slots:
     void editorFontChanged(const QFont &font);
     void showContextMenu(const QPoint &pos);
     void replaceWithSuggestion();
+    void performCompletion();
 
 private:
     void drawLineEndMarker(QPaintEvent *e);
@@ -68,6 +72,8 @@ private:
     QWidget *lineNumberArea;
     MarkdownHighlighter *highlighter;
     hunspell::SpellChecker *spellChecker;
+    SnippetRepository *snippetRepository;
+    SnippetCompleter *completer;
     bool showHardLinebreaks;
 };
 
