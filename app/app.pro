@@ -71,7 +71,8 @@ HEADERS  += \
     hunspell/dictionary.h \
     controls/languagemenu.h \
     tabletooldialog.h \
-    imagetooldialog.h
+    imagetooldialog.h \
+    snippet.h
 
 FORMS    += \
     mainwindow.ui \
