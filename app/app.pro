@@ -45,7 +45,8 @@ SOURCES += \
     hunspell/dictionary.cpp \
     controls/languagemenu.cpp \
     tabletooldialog.cpp \
-    imagetooldialog.cpp
+    imagetooldialog.cpp \
+    snippetrepository.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -72,7 +73,8 @@ HEADERS  += \
     controls/languagemenu.h \
     tabletooldialog.h \
     imagetooldialog.h \
-    snippet.h
+    snippet.h \
+    snippetrepository.h
 
 FORMS    += \
     mainwindow.ui \
