@@ -159,7 +159,8 @@ OTHER_FILES += \
     styles/clearness-dark.css \
     styles/clearness.css \
     styles/byword-dark.css \
-    styles/solarized-light.css
+    styles/solarized-light.css \
+    markdown-snippets.json
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
 message("Using LIBS=$$LIBS")
