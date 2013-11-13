@@ -55,6 +55,19 @@ struct Snippet
 
         return snippet;
     }
+
+    static QJsonObject toJsonObject(const Snippet &snippet)
+    {
+        QJsonObject object;
+
+        object.insert("trigger", snippet.trigger);
+        object.insert("description", snippet.description);
+        object.insert("snippet", snippet.snippet);
+        object.insert("cursor", snippet.cursorPosition);
+        object.insert("builtIn", snippet.builtIn);
+
+        return object;
+    }
 };
 
 #endif // SNIPPET_H
