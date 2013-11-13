@@ -153,7 +153,10 @@ void MainWindow::initializeApp()
     loadCustomStyles();
     ui->menuLanguages->loadDictionaries(options->dictionaryLanguage());
 
+    snippetRepository->clear();
     snippetRepository->loadFromFile(":/markdown-snippets.json");
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    snippetRepository->loadFromFile(path + "/user-snippets.json");
 
     // load file passed to application on start
     if (!fileName.isEmpty()) {
@@ -574,6 +577,9 @@ void MainWindow::extrasOptions()
     OptionsDialog dialog(options, snippetRepository, this);
     if (dialog.exec() == QDialog::Accepted) {
         options->writeSettings();
+
+        QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+        snippetRepository->saveToFile(path + "/user-snippets.json");
     }
 }
 

@@ -30,7 +30,9 @@ public:
     explicit SnippetRepository(QObject *parent = 0);
     
     void loadFromFile(const QString &fileName);
+    void saveToFile(const QString &fileName);
 
+    void clear();
     int addSnippet(Snippet snippet);
     void removeSnippet(Snippet snippet);
     void setSnippetContent(const Snippet &snippet, const QString &content);

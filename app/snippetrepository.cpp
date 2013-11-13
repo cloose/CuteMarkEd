@@ -24,6 +24,7 @@
 #include <QMap>
 
 #include "snippet.h"
+#include <QTextStream>
 
 
 SnippetRepository::SnippetRepository(QObject *parent) :
@@ -41,8 +42,6 @@ void SnippetRepository::loadFromFile(const QString &fileName)
 
     QJsonDocument doc = QJsonDocument::fromJson(jsonFile.readAll());
 
-    snippets.clear();
-
     QJsonArray snippetArray = doc.object().value("snippets").toArray();
     foreach (QJsonValue entry, snippetArray) {
         Snippet snippet = Snippet::fromJsonObject(entry.toObject());
@@ -52,6 +51,35 @@ void SnippetRepository::loadFromFile(const QString &fileName)
     }
 
     emit dataChanged();
+}
+
+void SnippetRepository::saveToFile(const QString &fileName)
+{
+    QFile jsonFile(fileName);
+    if (!jsonFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        return;
+    }
+
+    QJsonArray snippetArray;
+    foreach (Snippet snippet, snippets.values()) {
+        if (!snippet.builtIn) {
+            QJsonObject entry = Snippet::toJsonObject(snippet);
+            snippetArray.append(entry);
+        }
+    }
+
+    QJsonObject object;
+    object.insert("snippets", snippetArray);
+
+    QJsonDocument doc(object);
+
+    QTextStream out(&jsonFile);
+    out << doc.toJson();
+}
+
+void SnippetRepository::clear()
+{
+    snippets.clear();
 }
 
 int SnippetRepository::addSnippet(Snippet snippet)
