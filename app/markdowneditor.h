@@ -47,6 +47,8 @@ public:
     void setSpellingCheckEnabled(bool enabled);
     void setSpellingDictionary(const hunspell::Dictionary &dictionary);
 
+    void setSnippetRepository(SnippetRepository *repository);
+
 signals:
     void loadDroppedFile(const QString &fileName);
 

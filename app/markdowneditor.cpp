@@ -41,8 +41,8 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
     QPlainTextEdit(parent),
     lineNumberArea(new LineNumberArea(this)),
     spellChecker(new SpellChecker()),
-    snippetRepository(new SnippetRepository(this)),
-    completer(new SnippetCompleter(snippetRepository, this)),
+    snippetRepository(0),
+    completer(new SnippetCompleter(this)),
     showHardLinebreaks(false)
 {
     highlighter = new MarkdownHighlighter(this->document(), spellChecker);
@@ -67,7 +67,6 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
     new QShortcut(QKeySequence(tr("Ctrl+Space", "Complete")),
                   this, SLOT(performCompletion()));
 
-    snippetRepository->loadFromFile(":/markdown-snippets.json");
     completer->setPopupOffset(lineNumberAreaWidth());
 }
 
@@ -364,6 +363,12 @@ void MarkdownEditor::setSpellingDictionary(const hunspell::Dictionary &dictionar
     // rehighlight markdown document
     highlighter->reset();
     highlighter->rehighlight();
+}
+
+void MarkdownEditor::setSnippetRepository(SnippetRepository *repository)
+{
+    snippetRepository = repository;
+    completer->setSnippetRepository(snippetRepository);
 }
 
 void MarkdownEditor::drawLineEndMarker(QPaintEvent *e)

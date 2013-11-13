@@ -55,10 +55,10 @@ private:
 };
 
 
-SnippetCompleter::SnippetCompleter(SnippetRepository *repository, QPlainTextEdit *textEdit) :
+SnippetCompleter::SnippetCompleter(QPlainTextEdit *textEdit) :
     QObject(textEdit),
-    snippetRepository(repository),
     editor(textEdit),
+    snippetRepository(0),
     completer(new QCompleter(this)),
     popupOffset(0)
 {
@@ -68,8 +68,6 @@ SnippetCompleter::SnippetCompleter(SnippetRepository *repository, QPlainTextEdit
 
     connect(completer, SIGNAL(activated(QString)),
             this, SLOT(insertSnippet(QString)));
-    connect(snippetRepository, SIGNAL(dataChanged()),
-            this, SLOT(updateModel()));
 }
 
 void SnippetCompleter::performCompletion()
@@ -107,6 +105,13 @@ void SnippetCompleter::setPopupOffset(int leftOffset)
     popupOffset = leftOffset;
 }
 
+void SnippetCompleter::setSnippetRepository(SnippetRepository *repository)
+{
+    snippetRepository = repository;
+    connect(snippetRepository, SIGNAL(dataChanged()),
+            this, SLOT(updateModel()));
+}
+
 void SnippetCompleter::updateModel()
 {
     QStandardItemModel *model = new QStandardItemModel(completer);
@@ -130,7 +135,7 @@ void SnippetCompleter::updateModel()
 
 void SnippetCompleter::insertSnippet(const QString &trigger)
 {
-    if (!snippetRepository->contains(trigger)) {
+    if (!snippetRepository || !snippetRepository->contains(trigger)) {
         return;
     }
 

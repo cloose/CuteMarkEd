@@ -29,14 +29,15 @@ class SnippetCompleter : public QObject
 {
     Q_OBJECT
 public:
-    SnippetCompleter(SnippetRepository *repository, QPlainTextEdit *textEdit);
+    explicit SnippetCompleter(QPlainTextEdit *textEdit);
 
     void performCompletion();
 
     bool isPopupVisible() const;
     void hidePopup();
-
     void setPopupOffset(int leftOffset);
+
+    void setSnippetRepository(SnippetRepository *repository);
 
 public slots:
     void updateModel();
@@ -48,8 +49,8 @@ private:
     QString textUnderCursor() const;
 
 private:
-    SnippetRepository *snippetRepository;
     QPlainTextEdit *editor;
+    SnippetRepository *snippetRepository;
     QCompleter *completer;
     int popupOffset;
 };
