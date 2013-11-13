@@ -27,6 +27,7 @@ struct Snippet
     QString description;
     QString snippet;
     int cursorPosition;
+    bool builtIn;
 
     static Snippet fromJsonObject(const QJsonObject &object)
     {
@@ -36,6 +37,7 @@ struct Snippet
         snippet.description = object.value("description").toString();
         snippet.snippet = object.value("snippet").toString();
         snippet.cursorPosition = object.value("cursor").toDouble();
+        snippet.builtIn = object.value("builtIn").toBool();
 
         return snippet;
     }
