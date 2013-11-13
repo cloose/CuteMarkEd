@@ -31,12 +31,14 @@ public:
     
     void loadFromFile(const QString &fileName);
 
-    void addSnippet(Snippet snippet);
+    int addSnippet(Snippet snippet);
     void removeSnippet(Snippet snippet);
+    void setSnippetContent(const Snippet &snippet, const QString &content);
 
     bool contains(const QString &trigger) const;
     Snippet snippet(const QString &trigger) const;
 
+    int count() const;
     QList<Snippet> values() const;
 
     int maxTriggerLength() const;

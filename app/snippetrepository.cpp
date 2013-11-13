@@ -54,14 +54,24 @@ void SnippetRepository::loadFromFile(const QString &fileName)
     emit dataChanged();
 }
 
-void SnippetRepository::addSnippet(Snippet snippet)
+int SnippetRepository::addSnippet(Snippet snippet)
 {
-    snippets.insert(snippet.trigger, snippet);
+    QMap<QString, Snippet>::iterator it = snippets.insert(snippet.trigger, snippet);
+    longestTrigger = qMax(longestTrigger, snippet.trigger.length());
+    emit dataChanged();
+    return std::distance(snippets.begin(), it);
 }
 
 void SnippetRepository::removeSnippet(Snippet snippet)
 {
     snippets.remove(snippet.trigger);
+    emit dataChanged();
+}
+
+void SnippetRepository::setSnippetContent(const Snippet &snippet, const QString &content)
+{
+    Snippet &s = snippets[snippet.trigger];
+    s.setContent(content);
 }
 
 bool SnippetRepository::contains(const QString &trigger) const
@@ -72,6 +82,11 @@ bool SnippetRepository::contains(const QString &trigger) const
 Snippet SnippetRepository::snippet(const QString &trigger) const
 {
     return snippets[trigger];
+}
+
+int SnippetRepository::count() const
+{
+    return snippets.count();
 }
 
 QList<Snippet> SnippetRepository::values() const
