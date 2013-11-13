@@ -571,7 +571,7 @@ void MainWindow::extrasCheckSpelling(bool checked)
 
 void MainWindow::extrasOptions()
 {
-    OptionsDialog dialog(options, this);
+    OptionsDialog dialog(options, snippetRepository, this);
     if (dialog.exec() == QDialog::Accepted) {
         options->writeSettings();
     }
