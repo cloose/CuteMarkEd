@@ -49,6 +49,7 @@
 #include "exportpdfdialog.h"
 #include "options.h"
 #include "optionsdialog.h"
+#include "snippetrepository.h"
 #include "tabletooldialog.h"
 
 MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
@@ -60,6 +61,7 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     wordCountLabel(0),
     viewLabel(0),
     generator(new HtmlPreviewGenerator(options, this)),
+    snippetRepository(new SnippetRepository(this)),
     splitFactor(0.5),
     scrollBarPos(0)
 {
@@ -150,6 +152,11 @@ void MainWindow::initializeApp()
 
     loadCustomStyles();
     ui->menuLanguages->loadDictionaries(options->dictionaryLanguage());
+
+    snippetRepository->clear();
+    snippetRepository->loadFromFile(":/markdown-snippets.json");
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    snippetRepository->loadFromFile(path + "/user-snippets.json");
 
     // load file passed to application on start
     if (!fileName.isEmpty()) {
@@ -567,9 +574,12 @@ void MainWindow::extrasCheckSpelling(bool checked)
 
 void MainWindow::extrasOptions()
 {
-    OptionsDialog dialog(options, this);
+    OptionsDialog dialog(options, snippetRepository, this);
     if (dialog.exec() == QDialog::Accepted) {
         options->writeSettings();
+
+        QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+        snippetRepository->saveToFile(path + "/user-snippets.json");
     }
 }
 
@@ -899,6 +909,8 @@ void MainWindow::setupStatusBar()
 
 void MainWindow::setupMarkdownEditor()
 {
+    ui->plainTextEdit->setSnippetRepository(snippetRepository);
+
     // load file that are dropped on the editor
     connect(ui->plainTextEdit, SIGNAL(loadDroppedFile(QString)),
             this, SLOT(load(QString)));
