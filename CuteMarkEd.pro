@@ -9,11 +9,10 @@ TEMPLATE = subdirs
 win32 {
     SUBDIRS = 3rdparty \
         peg-markdown-highlight \
-        hunspell \
         app \
         fontawesomeicon
 
-    app.depends = 3rdparty peg-markdown-highlight hunspell
+    app.depends = 3rdparty peg-markdown-highlight
 }
 
 unix {
