@@ -4,7 +4,7 @@
 
 A Qt-based, free and open source markdown editor with live HTML preview, math expressions, code syntax highlighting and syntax highlighting of markdown document.
 
-![screenshot](images/screenshot_06.png)
+![screenshot](http://cloose.github.io/CuteMarkEd/images/screenshot_06.png)
 
 ### DOWNLOAD
 

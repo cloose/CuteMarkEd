@@ -91,6 +91,23 @@ RESOURCES += \
     resources.qrc \
     translations.qrc
 
+OTHER_FILES += \
+    template.html \
+    cutemarked.desktop \
+    syntax.html \
+    cutemarked.rc \
+    syntax_de.html \
+    syntax_el.html \
+    syntax_zh_CN.html \
+    styles/solarized-dark.css \
+    styles/markdown.css \
+    styles/github.css \
+    styles/clearness-dark.css \
+    styles/clearness.css \
+    styles/byword-dark.css \
+    styles/solarized-light.css \
+    markdown-snippets.json
+
 # translations
 lrelease.input         = TRANSLATIONS
 lrelease.output        = ${QMAKE_FILE_PATH}/${QMAKE_FILE_BASE}.qm
@@ -98,21 +115,25 @@ lrelease.commands      = $$[QT_INSTALL_BINS]/lrelease ${QMAKE_FILE_IN} -qm ${QMA
 lrelease.CONFIG       += no_link target_predeps
 QMAKE_EXTRA_COMPILERS += lrelease
 
+###################################################################################################
+## DEPENDENCIES
+###################################################################################################
+
 # discount
-win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../discount/release/ -ldiscount
-else:win32-g++:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../discount/debug/ -ldiscount
-else:win32-msvc*:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../discount/release/ -llibdiscount
-else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../discount/debug/ -llibdiscount
+win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/release/ -ldiscount
+else:win32-g++:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/debug/ -ldiscount
+else:win32-msvc*:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/release/ -llibdiscount
+else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/debug/ -llibdiscount
 else:unix: LIBS += -L/usr/lib -lmarkdown
 
-win32:INCLUDEPATH += $$PWD/../discount
+win32:INCLUDEPATH += $$PWD/../3rdparty/discount
 unix:INCLUDEPATH += /usr/include
-win32:DEPENDPATH += $$PWD/../discount
+win32:DEPENDPATH += $$PWD/../3rdparty/discount
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../discount/release/libdiscount.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../discount/debug/libdiscount.a
-else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../discount/release/libdiscount.lib
-else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../discount/debug/libdiscount.lib
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/release/libdiscount.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/debug/libdiscount.a
+else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/release/libdiscount.lib
+else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/debug/libdiscount.lib
 #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../discount/libdiscount.a
 
 # peg-markdown-highlight
@@ -132,35 +153,18 @@ else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../pe
 else:unix: PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/libpmh.a
 
 # hunspell
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../hunspell/lib/ -lhunspell
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../hunspell/lib/ -lhunspell
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hunspell/lib/ -lhunspell
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hunspell/lib/ -lhunspell
 else:unix: LIBS += -lhunspell
 
-INCLUDEPATH += $$PWD/../hunspell/src
-DEPENDPATH += $$PWD/../hunspell/src
+INCLUDEPATH += $$PWD/../3rdparty/hunspell/src
+DEPENDPATH += $$PWD/../3rdparty/hunspell/src
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../hunspell/lib/libhunspell.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../hunspell/lib/libhunspell.a
-else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../hunspell/lib/libhunspell.lib
-else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../hunspell/lib/libhunspell.lib
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.a
+else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.lib
+else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.lib
 #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hunspell/libhunspell.a
-
-OTHER_FILES += \
-    template.html \
-    cutemarked.desktop \
-    syntax.html \
-    cutemarked.rc \
-    syntax_de.html \
-    syntax_el.html \
-    syntax_zh_CN.html \
-    styles/solarized-dark.css \
-    styles/markdown.css \
-    styles/github.css \
-    styles/clearness-dark.css \
-    styles/clearness.css \
-    styles/byword-dark.css \
-    styles/solarized-light.css \
-    markdown-snippets.json
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
 message("Using LIBS=$$LIBS")
