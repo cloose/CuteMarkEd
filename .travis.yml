@@ -13,6 +13,6 @@ before_script:
   - lrelease app/translations/cutemarked_el.ts -qm app/translations/cutemarked_el.qm
   - lrelease app/translations/cutemarked_zh_CN.ts -qm app/translations/cutemarked_zh_CN.qm
 script:
-  - cd discount && ./configure.sh && make && sudo make install ; cd ..
+  - cd 3rdparty/discount && ./configure.sh && make && sudo make install ; cd ../..
   - qmake QMAKE_CXX=$CXX CuteMarkEd.pro
   - make         
