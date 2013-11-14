@@ -7,13 +7,13 @@
 TEMPLATE = subdirs
 
 win32 {
-    SUBDIRS = discount \
+    SUBDIRS = 3rdparty \
         peg-markdown-highlight \
         hunspell \
         app \
         fontawesomeicon
 
-    app.depends = discount peg-markdown-highlight hunspell
+    app.depends = 3rdparty peg-markdown-highlight hunspell
 }
 
 unix {
