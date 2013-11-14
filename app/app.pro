@@ -45,7 +45,9 @@ SOURCES += \
     hunspell/dictionary.cpp \
     controls/languagemenu.cpp \
     tabletooldialog.cpp \
-    imagetooldialog.cpp
+    imagetooldialog.cpp \
+    snippetrepository.cpp \
+    snippetcompleter.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -71,7 +73,10 @@ HEADERS  += \
     hunspell/dictionary.h \
     controls/languagemenu.h \
     tabletooldialog.h \
-    imagetooldialog.h
+    imagetooldialog.h \
+    snippet.h \
+    snippetrepository.h \
+    snippetcompleter.h
 
 FORMS    += \
     mainwindow.ui \
@@ -100,7 +105,8 @@ OTHER_FILES += \
     styles/clearness-dark.css \
     styles/clearness.css \
     styles/byword-dark.css \
-    styles/solarized-light.css
+    styles/solarized-light.css \
+    markdown-snippets.json
 
 # translations
 lrelease.input         = TRANSLATIONS

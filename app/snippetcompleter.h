@@ -14,44 +14,45 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef OPTIONSDIALOG_H
-#define OPTIONSDIALOG_H
+#ifndef SNIPPETCOMPLETER_H
+#define SNIPPETCOMPLETER_H
 
-#include <QDialog>
+#include <QObject>
 
-namespace Ui {
-class OptionsDialog;
-}
-class Options;
+class QCompleter;
+class QPlainTextEdit;
 class SnippetRepository;
+struct Snippet;
 
 
-class OptionsDialog : public QDialog
+class SnippetCompleter : public QObject
 {
     Q_OBJECT
-    
 public:
-    OptionsDialog(Options *opt, SnippetRepository *repository, QWidget *parent = 0);
-    ~OptionsDialog();
+    explicit SnippetCompleter(QPlainTextEdit *textEdit);
 
-protected:
-    void done(int result);
+    void performCompletion();
+
+    bool isPopupVisible() const;
+    void hidePopup();
+    void setPopupOffset(int leftOffset);
+
+    void setSnippetRepository(SnippetRepository *repository);
+
+public slots:
+    void updateModel();
 
 private slots:
-    void manualProxyRadioButtonToggled(bool checked);
-    void currentSnippetChanged(const QModelIndex &current, const QModelIndex &previous);
-    void snippetTextChanged();
-    void addSnippetButtonClicked();
-    void removeSnippetButtonClicked();
+    void insertSnippet(const QString &trigger);
 
 private:
-    void readState();
-    void saveState();
+    QString textUnderCursor() const;
 
 private:
-    Ui::OptionsDialog *ui;
-    Options *options;
+    QPlainTextEdit *editor;
     SnippetRepository *snippetRepository;
+    QCompleter *completer;
+    int popupOffset;
 };
 
-#endif // OPTIONSDIALOG_H
+#endif // SNIPPETCOMPLETER_H

@@ -1,0 +1,67 @@
+{
+  "snippets": [
+        {
+            "trigger": "kbd",
+            "description": "HTML Keyboard Input Element (kbd)",
+            "snippet": "<kbd></kbd>",
+            "cursor": 5,
+            "builtIn": true
+        },
+        {
+            "trigger": "gq",
+            "description": "German Quotes",
+            "snippet": "&bdquo;&rdquo;",
+            "cursor": 7,
+            "builtIn": true
+        },
+        {
+            "trigger": "~~~clojure",
+            "description": "Clojure Code Block",
+            "snippet": "~~~clojure\n\n~~~",
+            "cursor": 11,
+            "builtIn": true
+        },
+        {
+            "trigger": "~~~cpp",
+            "description": "C++ Code Block",
+            "snippet": "~~~cpp\n\n~~~",
+            "cursor": 7,
+            "builtIn": true
+        },
+        {
+            "trigger": "~~~java",
+            "description": "Java Code Block",
+            "snippet": "~~~java\n\n~~~",
+            "cursor": 8,
+            "builtIn": true
+        },
+        {
+            "trigger": "~~~objectivec",
+            "description": "Objective C Code Block",
+            "snippet": "~~~objectivec\n\n~~~",
+            "cursor": 14,
+            "builtIn": true
+        },
+        {
+            "trigger": "~~~phyton",
+            "description": "Python Code Block",
+            "snippet": "~~~phyton\n\n~~~",
+            "cursor": 10,
+            "builtIn": true
+        },
+        {
+            "trigger": "~~~ruby",
+            "description": "Ruby Code Block",
+            "snippet": "~~~ruby\n\n~~~",
+            "cursor": 8,
+            "builtIn": true
+        },
+        {
+            "trigger": "~~~sql",
+            "description": "SQL Code Block",
+            "snippet": "~~~sql\n\n~~~",
+            "cursor": 7,
+            "builtIn": true
+        }
+  ]
+}

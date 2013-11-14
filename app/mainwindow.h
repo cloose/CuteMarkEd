@@ -35,6 +35,7 @@ class HtmlPreviewGenerator;
 class HtmlHighlighter;
 class RecentFilesMenu;
 class Options;
+class SnippetRepository;
 
 
 class MainWindow : public QMainWindow
@@ -149,6 +150,7 @@ private:
     ActiveLabel *viewLabel;
     HtmlPreviewGenerator* generator;
     HtmlHighlighter *htmlHighlighter;
+    SnippetRepository *snippetRepository;
     QString fileName;
     float splitFactor;
     int scrollBarPos;
