@@ -47,6 +47,7 @@ private slots:
 
 private:
     QString textUnderCursor() const;
+    void replaceClipboardVariable(QString &snippetContent);
 
 private:
     QPlainTextEdit *editor;

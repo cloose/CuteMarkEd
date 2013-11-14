@@ -16,8 +16,10 @@
  */
 #include "snippetcompleter.h"
 
+#include <QApplication>
 #include <QAbstractItemView>
 #include <QCompleter>
+#include <QClipboard>
 #include <QPlainTextEdit>
 #include <QScrollBar>
 #include <QStandardItemModel>
@@ -132,7 +134,6 @@ void SnippetCompleter::updateModel()
     completer->setModel(model);
 }
 
-
 void SnippetCompleter::insertSnippet(const QString &trigger)
 {
     if (!snippetRepository || !snippetRepository->contains(trigger)) {
@@ -147,7 +148,11 @@ void SnippetCompleter::insertSnippet(const QString &trigger)
 
     int pos = cursor.position();
 
-    cursor.insertText(snippet.snippet);
+    QString snippetContent(snippet.snippet);
+
+    replaceClipboardVariable(snippetContent);
+
+    cursor.insertText(snippetContent);
 
     // move cursor to requested position
     cursor.setPosition(pos);
@@ -174,4 +179,12 @@ QString SnippetCompleter::textUnderCursor() const
     } while(!document->characterAt(cursor.position()-1).isSpace() && !cursor.atBlockStart());
 
     return cursor.selectedText();
+}
+
+void SnippetCompleter::replaceClipboardVariable(QString &snippetContent)
+{
+    if (snippetContent.contains("%clipboard")) {
+        QClipboard *clipboard = QApplication::clipboard();
+        snippetContent.replace("%clipboard", clipboard->text());
+    }
 }
