@@ -129,6 +129,7 @@ void MainWindow::initializeApp()
     ui->actionDefinitionLists->setChecked(options->isDefinitionListsEnabled());
     ui->actionSmartyPants->setChecked(options->isSmartyPantsEnabled());
     ui->actionFootnotes->setChecked(options->isFootnotesEnabled());
+    ui->actionSuperscript->setChecked(options->isSuperscriptEnabled());
 
     // init option flags
     ui->actionMathSupport->setChecked(options->isMathSupportEnabled());
@@ -563,6 +564,12 @@ void MainWindow::extensionsSmartyPants(bool checked)
 void MainWindow::extensionsFootnotes(bool enabled)
 {
     options->setFootnotesEnabled(enabled);
+    plainTextChanged();
+}
+
+void MainWindow::extensionsSuperscript(bool enabled)
+{
+    options->setSuperscriptEnabled(enabled);
     plainTextChanged();
 }
 

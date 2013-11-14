@@ -66,6 +66,9 @@ public:
     bool isFootnotesEnabled() const;
     void setFootnotesEnabled(bool enabled);
 
+    bool isSuperscriptEnabled() const;
+    void setSuperscriptEnabled(bool enabled);
+
     bool isMathSupportEnabled() const;
     void setMathSupportEnabled(bool enabled);
 
@@ -98,6 +101,7 @@ private:
     bool m_definitionListsEnabled;
     bool m_smartyPantsEnabled;
     bool m_footnotesEnabled;
+    bool m_superscriptEnabled;
     bool m_mathSupportEnabled;
     bool m_codeHighlightingEnabled;
     bool m_spellingCheckEnabled;

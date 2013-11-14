@@ -37,6 +37,7 @@ public:
         NoImagesOption         = 0x00000002, /* don't do image processing, block <img> */
         NoSmartypantsOption    = 0x00000004, /* don't run smartypants() */
         NoHtmlOption           = 0x00000008, /* don't allow raw html through AT ALL */
+        NoSuperscriptOption    = 0x00000100, /* don't process a^2 as superscript(<sup>) */
         NoTablesOption         = 0x00000400, /* disallow tables */
         NoStrikethroughOption  = 0x00000800, /* forbid ~~strikethrough~~ */
         TableOfContentsOption  = 0x00001000, /* do table-of-contents processing */

@@ -228,6 +228,7 @@
      <addaction name="actionDefinitionLists"/>
      <addaction name="actionSmartyPants"/>
      <addaction name="actionFootnotes"/>
+     <addaction name="actionSuperscript"/>
     </widget>
     <widget class="LanguageMenu" name="menuLanguages">
      <property name="title">
@@ -710,6 +711,14 @@
    </property>
    <property name="text">
     <string>Footnotes</string>
+   </property>
+  </action>
+  <action name="actionSuperscript">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Superscript</string>
    </property>
   </action>
  </widget>
@@ -1637,6 +1646,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionSuperscript</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extensionsSuperscript(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>editInsertTable()</slot>
@@ -1644,5 +1669,6 @@
   <slot>styleBywordDark()</slot>
   <slot>viewHorizontalLayout(bool)</slot>
   <slot>extensionsFootnotes(bool)</slot>
+  <slot>extensionsSuperscript(bool)</slot>
  </slots>
 </ui>

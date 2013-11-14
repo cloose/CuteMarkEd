@@ -217,5 +217,10 @@ Discount::Parser::ParserOptions HtmlPreviewGenerator::parserOptions() const
         parserOptionFlags |= Discount::Parser::ExtraFootnoteOption;
     }
 
+    // Superscript
+    if (!options->isSuperscriptEnabled()) {
+        parserOptionFlags |= Discount::Parser::NoSuperscriptOption;
+    }
+
     return parserOptionFlags;
 }
