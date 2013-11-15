@@ -23,3 +23,6 @@ unix {
     app.depends = peg-markdown-highlight
 }
 
+SUBDIRS += \
+    app-static
+

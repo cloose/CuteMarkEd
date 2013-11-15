@@ -24,7 +24,7 @@
 #include <QScrollBar>
 #include <QStandardItemModel>
 
-#include "snippet.h"
+#include <snippets/snippet.h>
 #include "snippetrepository.h"
 
 

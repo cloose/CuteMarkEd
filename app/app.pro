@@ -74,7 +74,6 @@ HEADERS  += \
     controls/languagemenu.h \
     tabletooldialog.h \
     imagetooldialog.h \
-    snippet.h \
     snippetrepository.h \
     snippetcompleter.h
 
@@ -165,6 +164,18 @@ else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdp
 else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.lib
 else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.lib
 #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hunspell/libhunspell.a
+
+# Use internal static library: app-static
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../app-static/release/ -lapp-static
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../app-static/debug/ -lapp-static
+else:unix: LIBS += -L$$OUT_PWD/../app-static/ -lapp-static
+
+INCLUDEPATH += $$PWD/../app-static
+DEPENDPATH += $$PWD/../app-static
+
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../app-static/release/libapp-static.a
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../app-static/debug/libapp-static.a
+else:unix: PRE_TARGETDEPS += $$OUT_PWD/../app-static/libapp-static.a
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
 message("Using LIBS=$$LIBS")

@@ -20,7 +20,7 @@
 #include <QObject>
 #include <QMap>
 
-#include "snippet.h"
+#include <snippets/snippet.h>
 
 
 class SnippetRepository : public QObject

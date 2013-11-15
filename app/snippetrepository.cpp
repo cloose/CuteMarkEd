@@ -23,7 +23,7 @@
 #include <QJsonValue>
 #include <QMap>
 
-#include "snippet.h"
+#include <snippets/snippet.h>
 #include <QTextStream>
 
 
