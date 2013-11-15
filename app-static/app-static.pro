@@ -11,11 +11,13 @@ TEMPLATE = lib
 CONFIG += staticlib
 
 SOURCES += \
-    snippets/jsonsnippettranslator.cpp
+    snippets/jsonsnippettranslator.cpp \
+    snippets/snippetcollection.cpp
 
 HEADERS += \
     snippets/snippet.h \
-    snippets/jsonsnippettranslator.h
+    snippets/jsonsnippettranslator.h \
+    snippets/snippetcollection.h
 
 unix:!symbian {
     maemo5 {

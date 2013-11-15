@@ -18,16 +18,25 @@
 
 #include "snippet.h"
 
+namespace {
+
+static const QLatin1String TRIGGER("trigger");
+static const QLatin1String DESCRIPTION("description");
+static const QLatin1String SNIPPET("snippet");
+static const QLatin1String CURSOR("cursor");
+static const QLatin1String BUILTIN("builtIn");
+
+}
 
 Snippet JsonSnippetTranslator::fromJsonObject(const QJsonObject &object)
 {
     Snippet snippet;
 
-    snippet.trigger = object.value("trigger").toString();
-    snippet.description = object.value("description").toString();
-    snippet.snippet = object.value("snippet").toString();
-    snippet.cursorPosition = object.value("cursor").toDouble();
-    snippet.builtIn = object.value("builtIn").toBool();
+    snippet.trigger = object.value(TRIGGER).toString();
+    snippet.description = object.value(DESCRIPTION).toString();
+    snippet.snippet = object.value(SNIPPET).toString();
+    snippet.cursorPosition = object.value(CURSOR).toDouble();
+    snippet.builtIn = object.value(BUILTIN).toBool();
 
     return snippet;
 }
@@ -36,11 +45,11 @@ QJsonObject JsonSnippetTranslator::toJsonObject(const Snippet &snippet)
 {
     QJsonObject object;
 
-    object.insert("trigger", snippet.trigger);
-    object.insert("description", snippet.description);
-    object.insert("snippet", snippet.snippet);
-    object.insert("cursor", snippet.cursorPosition);
-    object.insert("builtIn", snippet.builtIn);
+    object.insert(TRIGGER, snippet.trigger);
+    object.insert(DESCRIPTION, snippet.description);
+    object.insert(SNIPPET, snippet.snippet);
+    object.insert(CURSOR, snippet.cursorPosition);
+    object.insert(BUILTIN, snippet.builtIn);
 
     return object;
 }

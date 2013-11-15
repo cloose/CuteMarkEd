@@ -14,24 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <QTest>
+#include "snippetcollection.h"
 
-#include "jsonsnippettranslatortest.h"
-#include "snippetcollectiontest.h"
-#include "snippettest.h"
-
-int main(int argc, char *argv[])
+SnippetCollection::SnippetCollection(QObject *parent) :
+    QObject(parent)
 {
-    int ret = 0;
+}
 
-    SnippetTest test;
-    ret += QTest::qExec(&test, argc, argv);
-
-    JsonSnippetTranslatorTest test2;
-    ret += QTest::qExec(&test2, argc, argv);
-
-    SnippetCollectionTest test3;
-    ret += QTest::qExec(&test3, argc, argv);
-
-    return ret;
+void SnippetCollection::insert(const Snippet &snippet)
+{
+    snippets.insert(snippet.trigger, snippet);
+    emit collectionChanged(SnippetCollection::ItemAdded);
 }

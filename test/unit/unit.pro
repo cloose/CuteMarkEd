@@ -9,11 +9,13 @@ QT += testlib
 SOURCES += \
     main.cpp \
     snippettest.cpp \
-    jsonsnippettranslatortest.cpp
+    jsonsnippettranslatortest.cpp \
+    snippetcollectiontest.cpp
 
 HEADERS += \
     snippettest.h \
-    jsonsnippettranslatortest.h
+    jsonsnippettranslatortest.h \
+    snippetcollectiontest.h
 
 ##################################################
 # Use internal static library: app-static

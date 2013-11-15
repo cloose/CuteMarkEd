@@ -14,24 +14,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <QTest>
+#ifndef SNIPPETCOLLECTION_H
+#define SNIPPETCOLLECTION_H
 
-#include "jsonsnippettranslatortest.h"
-#include "snippetcollectiontest.h"
-#include "snippettest.h"
+#include <QObject>
+#include <QMap>
+#include "snippet.h"
 
-int main(int argc, char *argv[])
+
+class SnippetCollection : public QObject
 {
-    int ret = 0;
+    Q_OBJECT
+    Q_ENUMS(CollectionChangedType)
 
-    SnippetTest test;
-    ret += QTest::qExec(&test, argc, argv);
+public:
+    enum CollectionChangedType
+    {
+        ItemAdded
+    };
 
-    JsonSnippetTranslatorTest test2;
-    ret += QTest::qExec(&test2, argc, argv);
+    explicit SnippetCollection(QObject *parent = 0);
 
-    SnippetCollectionTest test3;
-    ret += QTest::qExec(&test3, argc, argv);
+    void insert(const Snippet& snippet);
 
-    return ret;
-}
+signals:
+    void collectionChanged(CollectionChangedType changedType);
+
+private:
+    QMap<QString, Snippet> snippets;
+};
+
+Q_DECLARE_METATYPE(SnippetCollection::CollectionChangedType)
+
+#endif // SNIPPETCOLLECTION_H
