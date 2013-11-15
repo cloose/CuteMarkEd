@@ -23,17 +23,17 @@
 
 void SnippetCollectionTest::initTestCase()
 {
-    collection = new SnippetCollection(this);
+    qRegisterMetaType<SnippetCollection::CollectionChangedType>();  // for QSignalSpy
 }
 
 void SnippetCollectionTest::notifiesListenersOfNewSnippets()
 {
-    qRegisterMetaType<SnippetCollection::CollectionChangedType>();  // for QSignalSpy
-
     const Snippet snippet;
-    QSignalSpy spy(collection, SIGNAL(collectionChanged(SnippetCollection::CollectionChangedType)));
+    SnippetCollection collection;
 
-    collection->insert(snippet);
+    QSignalSpy spy(&collection, SIGNAL(collectionChanged(SnippetCollection::CollectionChangedType)));
+
+    collection.insert(snippet);
 
     QCOMPARE(spy.count(), 1);
 
@@ -42,7 +42,18 @@ void SnippetCollectionTest::notifiesListenersOfNewSnippets()
     QCOMPARE(arguments.at(0).value<SnippetCollection::CollectionChangedType>(), SnippetCollection::ItemAdded);
 }
 
-void SnippetCollectionTest::cleanupTestCase()
+void SnippetCollectionTest::notifiesListenersOfRemovedSnippets()
 {
-    delete collection;
+    const Snippet snippet;
+    SnippetCollection collection;
+    QSignalSpy spy(&collection, SIGNAL(collectionChanged(SnippetCollection::CollectionChangedType)));
+
+    collection.insert(snippet);
+    collection.remove(snippet);
+
+    QCOMPARE(spy.count(), 2);
+
+    QList<QVariant> arguments = spy.takeAt(1);
+
+    QCOMPARE(arguments.at(0).value<SnippetCollection::CollectionChangedType>(), SnippetCollection::ItemDeleted);
 }

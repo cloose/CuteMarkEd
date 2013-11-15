@@ -29,11 +29,7 @@ private slots:
     void initTestCase();
 
     void notifiesListenersOfNewSnippets();
-
-    void cleanupTestCase();
-
-private:
-    SnippetCollection *collection;
+    void notifiesListenersOfRemovedSnippets();
 };
 
 Q_DECLARE_METATYPE(SnippetCollection::CollectionChangedType) // for QSignalSpy

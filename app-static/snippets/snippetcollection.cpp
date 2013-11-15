@@ -26,3 +26,9 @@ void SnippetCollection::insert(const Snippet &snippet)
     snippets.insert(snippet.trigger, snippet);
     emit collectionChanged(SnippetCollection::ItemAdded);
 }
+
+void SnippetCollection::remove(const Snippet &snippet)
+{
+    snippets.remove(snippet.trigger);
+    emit collectionChanged(SnippetCollection::ItemDeleted);
+}

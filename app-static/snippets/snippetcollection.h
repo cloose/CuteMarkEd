@@ -30,12 +30,14 @@ class SnippetCollection : public QObject
 public:
     enum CollectionChangedType
     {
-        ItemAdded
+        ItemAdded,
+        ItemDeleted
     };
 
     explicit SnippetCollection(QObject *parent = 0);
 
     void insert(const Snippet& snippet);
+    void remove(const Snippet& snippet);
 
 signals:
     void collectionChanged(SnippetCollection::CollectionChangedType changedType);
