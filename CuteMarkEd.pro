@@ -24,5 +24,6 @@ unix {
 }
 
 SUBDIRS += \
+    test \
     app-static
 
