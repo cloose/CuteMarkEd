@@ -14,20 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <QTest>
+#ifndef JSONSNIPPETTRANSLATORTEST_H
+#define JSONSNIPPETTRANSLATORTEST_H
 
-#include "jsonsnippettranslatortest.h"
-#include "snippettest.h"
+#include <QObject>
+class JsonSnippetTranslator;
 
-int main(int argc, char *argv[])
+
+class JsonSnippetTranslatorTest : public QObject
 {
-    int ret = 0;
+    Q_OBJECT
 
-    SnippetTest test;
-    ret += QTest::qExec(&test, argc, argv);
+private slots:
+    void initTestCase();
 
-    JsonSnippetTranslatorTest test2;
-    ret += QTest::qExec(&test2, argc, argv);
+    void translatesJsonObjectToSnippet();
+    void translatesEmptyJsonObjectToEmptySnippet();
 
-    return ret;
-}
+    void translatesSnippetToJsonObject();
+
+    void cleanupTestCase();
+
+private:
+    JsonSnippetTranslator *translator;
+};
+
+#endif // JSONSNIPPETTRANSLATORTEST_H

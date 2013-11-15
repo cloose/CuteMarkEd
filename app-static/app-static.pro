@@ -10,10 +10,12 @@ TARGET = app-static
 TEMPLATE = lib
 CONFIG += staticlib
 
-SOURCES +=
+SOURCES += \
+    snippets/jsonsnippettranslator.cpp
 
 HEADERS += \
-    snippets/snippet.h
+    snippets/snippet.h \
+    snippets/jsonsnippettranslator.h
 
 unix:!symbian {
     maemo5 {

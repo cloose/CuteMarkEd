@@ -17,7 +17,6 @@
 #ifndef SNIPPET_H
 #define SNIPPET_H
 
-#include <QJsonObject>
 #include <QString>
 
 
@@ -46,32 +45,6 @@ struct Snippet
     bool operator<(const Snippet &rhs) const
     {
         return trigger < rhs.trigger;
-    }
-
-    static Snippet fromJsonObject(const QJsonObject &object)
-    {
-        Snippet snippet;
-
-        snippet.trigger = object.value("trigger").toString();
-        snippet.description = object.value("description").toString();
-        snippet.snippet = object.value("snippet").toString();
-        snippet.cursorPosition = object.value("cursor").toDouble();
-        snippet.builtIn = object.value("builtIn").toBool();
-
-        return snippet;
-    }
-
-    static QJsonObject toJsonObject(const Snippet &snippet)
-    {
-        QJsonObject object;
-
-        object.insert("trigger", snippet.trigger);
-        object.insert("description", snippet.description);
-        object.insert("snippet", snippet.snippet);
-        object.insert("cursor", snippet.cursorPosition);
-        object.insert("builtIn", snippet.builtIn);
-
-        return object;
     }
 };
 

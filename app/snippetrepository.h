@@ -21,6 +21,7 @@
 #include <QMap>
 
 #include <snippets/snippet.h>
+class JsonSnippetTranslator;
 
 
 class SnippetRepository : public QObject
@@ -51,6 +52,7 @@ signals:
 private:
     QMap<QString, Snippet> snippets;
     int longestTrigger;
+    JsonSnippetTranslator *translator;
 };
 
 #endif // SNIPPETREPOSITORY_H

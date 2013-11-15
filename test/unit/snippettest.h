@@ -26,11 +26,6 @@ class SnippetTest : public QObject
 private slots:
     void isLessThanComparable();
     void isInitializedAfterCreation();
-
-    void translatesJsonObjectToSnippet();
-    void translatesEmptyJsonObjectToEmptySnippet();
-
-    void translatesSnippetToJsonObject();
 };
 
 #endif // SNIPPETTEST_H

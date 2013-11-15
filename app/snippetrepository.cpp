@@ -22,14 +22,15 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QMap>
-
-#include <snippets/snippet.h>
 #include <QTextStream>
+
+#include <snippets/jsonsnippettranslator.h>
 
 
 SnippetRepository::SnippetRepository(QObject *parent) :
     QObject(parent),
-    longestTrigger(0)
+    longestTrigger(0),
+    translator(new JsonSnippetTranslator())
 {
 }
 
@@ -44,7 +45,7 @@ void SnippetRepository::loadFromFile(const QString &fileName)
 
     QJsonArray snippetArray = doc.object().value("snippets").toArray();
     foreach (QJsonValue entry, snippetArray) {
-        Snippet snippet = Snippet::fromJsonObject(entry.toObject());
+        Snippet snippet = translator->fromJsonObject(entry.toObject());
         addSnippet(snippet);
 
         longestTrigger = qMax(longestTrigger, snippet.trigger.length());
@@ -63,7 +64,7 @@ void SnippetRepository::saveToFile(const QString &fileName)
     QJsonArray snippetArray;
     foreach (Snippet snippet, snippets.values()) {
         if (!snippet.builtIn) {
-            QJsonObject entry = Snippet::toJsonObject(snippet);
+            QJsonObject entry = translator->toJsonObject(snippet);
             snippetArray.append(entry);
         }
     }
