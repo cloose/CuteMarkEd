@@ -43,6 +43,11 @@ struct Snippet
         }
     }
 
+    bool operator<(const Snippet &rhs) const
+    {
+        return trigger < rhs.trigger;
+    }
+
     static Snippet fromJsonObject(const QJsonObject &object)
     {
         Snippet snippet;
