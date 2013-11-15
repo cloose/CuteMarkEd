@@ -18,7 +18,7 @@
 #define SNIPPETCOLLECTIONTEST_H
 
 #include <QObject>
-class SnippetCollection;
+#include <snippets/snippetcollection.h>
 
 
 class SnippetCollectionTest : public QObject
@@ -35,5 +35,7 @@ private slots:
 private:
     SnippetCollection *collection;
 };
+
+Q_DECLARE_METATYPE(SnippetCollection::CollectionChangedType) // for QSignalSpy
 
 #endif // SNIPPETCOLLECTIONTEST_H

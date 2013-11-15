@@ -28,10 +28,10 @@ void SnippetCollectionTest::initTestCase()
 
 void SnippetCollectionTest::notifiesListenersOfNewSnippets()
 {
-    qRegisterMetaType<CollectionChangedType>();  // for QSignalSpy
+    qRegisterMetaType<SnippetCollection::CollectionChangedType>();  // for QSignalSpy
 
     const Snippet snippet;
-    QSignalSpy spy(collection, SIGNAL(collectionChanged(CollectionChangedType)));
+    QSignalSpy spy(collection, SIGNAL(collectionChanged(SnippetCollection::CollectionChangedType)));
 
     collection->insert(snippet);
 
@@ -39,7 +39,6 @@ void SnippetCollectionTest::notifiesListenersOfNewSnippets()
 
     QList<QVariant> arguments = spy.takeFirst();
 
-//    QCOMPARE((SnippetCollection::CollectionChangedType)arguments.at(0).toInt(), SnippetCollection::ItemAdded);
     QCOMPARE(arguments.at(0).value<SnippetCollection::CollectionChangedType>(), SnippetCollection::ItemAdded);
 }
 

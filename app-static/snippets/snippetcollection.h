@@ -38,12 +38,10 @@ public:
     void insert(const Snippet& snippet);
 
 signals:
-    void collectionChanged(CollectionChangedType changedType);
+    void collectionChanged(SnippetCollection::CollectionChangedType changedType);
 
 private:
     QMap<QString, Snippet> snippets;
 };
-
-Q_DECLARE_METATYPE(SnippetCollection::CollectionChangedType)
 
 #endif // SNIPPETCOLLECTION_H
