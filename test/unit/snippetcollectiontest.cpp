@@ -38,8 +38,22 @@ void SnippetCollectionTest::notifiesListenersOfNewSnippets()
     QCOMPARE(spy.count(), 1);
 
     QList<QVariant> arguments = spy.takeFirst();
-
     QCOMPARE(arguments.at(0).value<SnippetCollection::CollectionChangedType>(), SnippetCollection::ItemAdded);
+}
+
+void SnippetCollectionTest::notifiesListenersOfChangedSnippets()
+{
+    const Snippet snippet;
+    SnippetCollection collection;
+    QSignalSpy spy(&collection, SIGNAL(collectionChanged(SnippetCollection::CollectionChangedType)));
+
+    collection.insert(snippet);
+    collection.update(snippet);
+
+    QCOMPARE(spy.count(), 2);
+
+    QList<QVariant> arguments = spy.takeAt(1);
+    QCOMPARE(arguments.at(0).value<SnippetCollection::CollectionChangedType>(), SnippetCollection::ItemChanged);
 }
 
 void SnippetCollectionTest::notifiesListenersOfRemovedSnippets()
@@ -54,7 +68,6 @@ void SnippetCollectionTest::notifiesListenersOfRemovedSnippets()
     QCOMPARE(spy.count(), 2);
 
     QList<QVariant> arguments = spy.takeAt(1);
-
     QCOMPARE(arguments.at(0).value<SnippetCollection::CollectionChangedType>(), SnippetCollection::ItemDeleted);
 }
 
@@ -73,4 +86,25 @@ void SnippetCollectionTest::holdsSnippetsInTriggerOrder()
     QCOMPARE(collection.snippetAt(0).trigger, snippet1.trigger);    // a
     QCOMPARE(collection.snippetAt(1).trigger, snippet2.trigger);    // b
     QCOMPARE(collection.snippetAt(2).trigger, snippet3.trigger);    // c
+}
+
+void SnippetCollectionTest::returnsNewCollectionOfUserDefinedSnippets()
+{
+    Snippet snippet1; snippet1.trigger = "a"; snippet1.builtIn = true;
+    Snippet snippet2; snippet2.trigger = "b"; snippet2.builtIn = false;
+    Snippet snippet3; snippet3.trigger = "c"; snippet3.builtIn = false;
+
+    SnippetCollection collection;
+    collection.insert(snippet2);
+    collection.insert(snippet1);
+    collection.insert(snippet3);
+
+    QSharedPointer<SnippetCollection> userDefinedSnippets = collection.userDefinedSnippets();
+
+    QVERIFY(!userDefinedSnippets.isNull());
+    QVERIFY(userDefinedSnippets.data() != &collection);
+    QCOMPARE(userDefinedSnippets->count(), 2);
+    QVERIFY(!userDefinedSnippets->contains(snippet1.trigger));
+    QVERIFY(userDefinedSnippets->contains(snippet2.trigger));
+    QVERIFY(userDefinedSnippets->contains(snippet3.trigger));
 }
