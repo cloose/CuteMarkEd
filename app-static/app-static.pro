@@ -12,12 +12,14 @@ CONFIG += staticlib
 
 SOURCES += \
     snippets/jsonsnippettranslator.cpp \
-    snippets/snippetcollection.cpp
+    snippets/snippetcollection.cpp \
+    snippets/jsonsnippetfile.cpp
 
 HEADERS += \
     snippets/snippet.h \
     snippets/jsonsnippettranslator.h \
-    snippets/snippetcollection.h
+    snippets/snippetcollection.h \
+    snippets/jsonsnippetfile.h
 
 unix:!symbian {
     maemo5 {
