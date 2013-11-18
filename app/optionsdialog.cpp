@@ -22,14 +22,14 @@
 #include <QMessageBox>
 #include <QSettings>
 
+#include <snippets/snippetcollection.h>
 #include "options.h"
-#include "snippetrepository.h"
 
 class SnippetsTableModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    SnippetsTableModel(SnippetRepository *repository, QObject *parent);
+    SnippetsTableModel(SnippetCollection *collection, QObject *parent);
     ~SnippetsTableModel() {}
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -47,19 +47,19 @@ private:
     bool isValidTrigger(const QString &trigger);
 
 private:
-    SnippetRepository *snippetRepository;
+    SnippetCollection *snippetCollection;
 };
 
 
-SnippetsTableModel::SnippetsTableModel(SnippetRepository *repository, QObject *parent) :
+SnippetsTableModel::SnippetsTableModel(SnippetCollection *collection, QObject *parent) :
     QAbstractTableModel(parent),
-    snippetRepository(repository)
+    snippetCollection(collection)
 {
 }
 
 int SnippetsTableModel::rowCount(const QModelIndex &) const
 {
-    return snippetRepository->count();
+    return snippetCollection->count();
 }
 
 int SnippetsTableModel::columnCount(const QModelIndex &) const
@@ -71,7 +71,7 @@ Qt::ItemFlags SnippetsTableModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags itemFlags = QAbstractTableModel::flags(index);
     if (index.isValid()) {
-        const Snippet snippet = snippetRepository->values().at(index.row());
+        const Snippet snippet = snippetCollection->snippetAt(index.row());
         if (!snippet.builtIn) {
             itemFlags |= Qt::ItemIsEditable;
         }
@@ -85,7 +85,7 @@ QVariant SnippetsTableModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
-    const Snippet snippet = snippetRepository->values().at(index.row());
+    const Snippet snippet = snippetCollection->snippetAt(index.row());
 
     if (role == Qt::DisplayRole) {
         if (index.column() == 0) {
@@ -111,7 +111,7 @@ bool SnippetsTableModel::setData(const QModelIndex &index, const QVariant &value
     if (!index.isValid() || role != Qt::EditRole)
         return false;
 
-    Snippet snippet = snippetRepository->values().at(index.row());
+    Snippet snippet = snippetCollection->snippetAt(index.row());
 
     if (index.column() == 0) {
         const QString &s = value.toString();
@@ -145,7 +145,7 @@ QModelIndex SnippetsTableModel::createSnippet()
 {
     Snippet snippet;
     beginInsertRows(QModelIndex(), 0, 0);
-    int row = snippetRepository->addSnippet(snippet);
+    int row = snippetCollection->insert(snippet);
     endInsertRows();
 
     return index(row, 0);
@@ -154,8 +154,8 @@ QModelIndex SnippetsTableModel::createSnippet()
 void SnippetsTableModel::removeSnippet(const QModelIndex &index)
 {
     beginRemoveRows(QModelIndex(), index.row(), index.row());
-    Snippet snippet = snippetRepository->values().at(index.row());
-    snippetRepository->removeSnippet(snippet);
+    Snippet snippet = snippetCollection->snippetAt(index.row());
+    snippetCollection->remove(snippet);
     endRemoveRows();
 }
 
@@ -163,10 +163,10 @@ void SnippetsTableModel::replaceSnippet(const Snippet &snippet, const QModelInde
 {
     const int row = index.row();
 
-    Snippet previousSnippet = snippetRepository->values().at(row);
-    snippetRepository->removeSnippet(previousSnippet);
+    Snippet previousSnippet = snippetCollection->snippetAt(index.row());
+    snippetCollection->remove(previousSnippet);
 
-    int insertedRow = snippetRepository->addSnippet(snippet);
+    int insertedRow = snippetCollection->insert(snippet);
 
     if (index.row() == insertedRow) {
         if (index.column() == 0)
@@ -187,7 +187,7 @@ bool SnippetsTableModel::isValidTrigger(const QString &trigger)
     if (trigger.isEmpty())
         return false;
 
-    if (snippetRepository->contains(trigger))
+    if (snippetCollection->contains(trigger))
         return false;
 
     for (int i = 0; i < trigger.length(); ++i) {
@@ -201,11 +201,11 @@ bool SnippetsTableModel::isValidTrigger(const QString &trigger)
 
 
 
-OptionsDialog::OptionsDialog(Options *opt, SnippetRepository *repository, QWidget *parent) :
+OptionsDialog::OptionsDialog(Options *opt, SnippetCollection *collection, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::OptionsDialog),
     options(opt),
-    snippetRepository(repository)
+    snippetCollection(collection)
 {
     ui->setupUi(this);
 
@@ -225,7 +225,7 @@ OptionsDialog::OptionsDialog(Options *opt, SnippetRepository *repository, QWidge
     ui->portLineEdit->setValidator(new QIntValidator(0, 65535));
     ui->passwordLineEdit->setEchoMode(QLineEdit::Password);
 
-    ui->snippetTableView->setModel(new SnippetsTableModel(snippetRepository, ui->snippetTableView));
+    ui->snippetTableView->setModel(new SnippetsTableModel(snippetCollection, ui->snippetTableView));
     connect(ui->snippetTableView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             this, SLOT(currentSnippetChanged(QModelIndex,QModelIndex)));
 
@@ -261,10 +261,11 @@ void OptionsDialog::manualProxyRadioButtonToggled(bool checked)
 
 void OptionsDialog::currentSnippetChanged(const QModelIndex &current, const QModelIndex &)
 {
-    Snippet snippet = snippetRepository->values().at(current.row());
+    const Snippet snippet = snippetCollection->snippetAt(current.row());
 
     // update text edit for snippet content
-    QString formattedSnippet = snippet.snippet.insert(snippet.cursorPosition, "$|");
+    QString formattedSnippet(snippet.snippet);
+    formattedSnippet.insert(snippet.cursorPosition, "$|");
     ui->snippetTextEdit->setPlainText(formattedSnippet);
     ui->snippetTextEdit->setReadOnly(snippet.builtIn);
 
@@ -276,9 +277,18 @@ void OptionsDialog::snippetTextChanged()
 {
     const QModelIndex &modelIndex = ui->snippetTableView->selectionModel()->currentIndex();
     if (modelIndex.isValid()) {
-        Snippet snippet = snippetRepository->values().at(modelIndex.row());
+        Snippet snippet = snippetCollection->snippetAt(modelIndex.row());
         if (!snippet.builtIn) {
-            snippetRepository->setSnippetContent(snippet, ui->snippetTextEdit->toPlainText());
+            snippet.snippet = ui->snippetTextEdit->toPlainText();
+
+            // find cursor marker
+            int pos = snippet.snippet.indexOf("$|");
+            if (pos >= 0) {
+                snippet.cursorPosition = pos;
+                snippet.snippet.remove(pos, 2);
+            }
+
+            snippetCollection->update(snippet);
         }
     }
 }

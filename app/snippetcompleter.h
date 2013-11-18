@@ -21,7 +21,7 @@
 
 class QCompleter;
 class QPlainTextEdit;
-class SnippetRepository;
+class SnippetCollection;
 struct Snippet;
 
 
@@ -37,7 +37,7 @@ public:
     void hidePopup();
     void setPopupOffset(int leftOffset);
 
-    void setSnippetRepository(SnippetRepository *repository);
+    void setSnippetCollection(SnippetCollection *collection);
 
 public slots:
     void updateModel();
@@ -48,10 +48,11 @@ private slots:
 private:
     QString textUnderCursor() const;
     void replaceClipboardVariable(QString &snippetContent);
+    int longestTriggerLength() const;
 
 private:
     QPlainTextEdit *editor;
-    SnippetRepository *snippetRepository;
+    SnippetCollection *snippetCollection;
     QCompleter *completer;
     int popupOffset;
 };

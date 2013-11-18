@@ -25,7 +25,7 @@
 #include <QStandardItemModel>
 
 #include <snippets/snippet.h>
-#include "snippetrepository.h"
+#include <snippets/snippetcollection.h>
 
 
 class SnippetItem : public QStandardItem
@@ -60,7 +60,7 @@ private:
 SnippetCompleter::SnippetCompleter(QPlainTextEdit *textEdit) :
     QObject(textEdit),
     editor(textEdit),
-    snippetRepository(0),
+    snippetCollection(0),
     completer(new QCompleter(this)),
     popupOffset(0)
 {
@@ -107,10 +107,10 @@ void SnippetCompleter::setPopupOffset(int leftOffset)
     popupOffset = leftOffset;
 }
 
-void SnippetCompleter::setSnippetRepository(SnippetRepository *repository)
+void SnippetCompleter::setSnippetCollection(SnippetCollection *collection)
 {
-    snippetRepository = repository;
-    connect(snippetRepository, SIGNAL(dataChanged()),
+    snippetCollection = collection;
+    connect(snippetCollection, SIGNAL(collectionChanged(SnippetCollection::CollectionChangedType)),
             this, SLOT(updateModel()));
 }
 
@@ -118,8 +118,11 @@ void SnippetCompleter::updateModel()
 {
     QStandardItemModel *model = new QStandardItemModel(completer);
 
-    foreach (Snippet snippet, snippetRepository->values()) {
-        int triggerTextWidth = snippetRepository->maxTriggerLength() * -1;
+    int triggerTextWidth = longestTriggerLength() * -1;
+
+    for (int i = 0; i < snippetCollection->count(); ++i) {
+        Snippet snippet = snippetCollection->snippetAt(i);
+
         QString displayText = QString("%1 %2").arg(snippet.trigger, triggerTextWidth).arg(snippet.description);
 
         SnippetItem *item = new SnippetItem(displayText);
@@ -129,18 +132,16 @@ void SnippetCompleter::updateModel()
         model->appendRow(item);
     }
 
-    model->sort(0);
-
     completer->setModel(model);
 }
 
 void SnippetCompleter::insertSnippet(const QString &trigger)
 {
-    if (!snippetRepository || !snippetRepository->contains(trigger)) {
+    if (!snippetCollection || !snippetCollection->contains(trigger)) {
         return;
     }
 
-    Snippet snippet = snippetRepository->snippet(trigger);
+    Snippet snippet = snippetCollection->snippet(trigger);
 
     QTextCursor cursor = editor->textCursor();
     cursor.clearSelection();
@@ -187,4 +188,16 @@ void SnippetCompleter::replaceClipboardVariable(QString &snippetContent)
         QClipboard *clipboard = QApplication::clipboard();
         snippetContent.replace("%clipboard", clipboard->text());
     }
+}
+
+int SnippetCompleter::longestTriggerLength() const
+{
+    int longestTriggerLength = 0;
+
+    for (int i = 0; i < snippetCollection->count(); ++i) {
+        Snippet snippet = snippetCollection->snippetAt(i);
+        longestTriggerLength = qMax(longestTriggerLength, snippet.trigger.length());
+    }
+
+    return longestTriggerLength;
 }

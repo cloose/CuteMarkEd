@@ -46,7 +46,6 @@ SOURCES += \
     controls/languagemenu.cpp \
     tabletooldialog.cpp \
     imagetooldialog.cpp \
-    snippetrepository.cpp \
     snippetcompleter.cpp
 
 HEADERS  += \
@@ -74,7 +73,6 @@ HEADERS  += \
     controls/languagemenu.h \
     tabletooldialog.h \
     imagetooldialog.h \
-    snippetrepository.h \
     snippetcompleter.h
 
 FORMS    += \

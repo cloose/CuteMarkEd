@@ -23,7 +23,7 @@ namespace Ui {
 class OptionsDialog;
 }
 class Options;
-class SnippetRepository;
+class SnippetCollection;
 
 
 class OptionsDialog : public QDialog
@@ -31,7 +31,7 @@ class OptionsDialog : public QDialog
     Q_OBJECT
     
 public:
-    OptionsDialog(Options *opt, SnippetRepository *repository, QWidget *parent = 0);
+    OptionsDialog(Options *opt, SnippetCollection *collection, QWidget *parent = 0);
     ~OptionsDialog();
 
 protected:
@@ -51,7 +51,7 @@ private:
 private:
     Ui::OptionsDialog *ui;
     Options *options;
-    SnippetRepository *snippetRepository;
+    SnippetCollection *snippetCollection;
 };
 
 #endif // OPTIONSDIALOG_H

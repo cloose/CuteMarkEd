@@ -25,12 +25,12 @@
 #include <QTextBlock>
 #include <QTextStream>
 
+#include <snippets/snippetcollection.h>
 #include <controls/linenumberarea.h>
 #include <peg-markdown-highlight/styleparser.h>
 #include <markdownhighlighter.h>
 #include "markdownmanipulator.h"
 #include "snippetcompleter.h"
-#include "snippetrepository.h"
 
 #include "hunspell/dictionary.h"
 #include "hunspell/spellchecker.h"
@@ -41,7 +41,6 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
     QPlainTextEdit(parent),
     lineNumberArea(new LineNumberArea(this)),
     spellChecker(new SpellChecker()),
-    snippetRepository(0),
     completer(new SnippetCompleter(this)),
     showHardLinebreaks(false)
 {
@@ -365,10 +364,9 @@ void MarkdownEditor::setSpellingDictionary(const hunspell::Dictionary &dictionar
     highlighter->rehighlight();
 }
 
-void MarkdownEditor::setSnippetRepository(SnippetRepository *repository)
+void MarkdownEditor::setSnippetCollection(SnippetCollection *collection)
 {
-    snippetRepository = repository;
-    completer->setSnippetRepository(snippetRepository);
+    completer->setSnippetCollection(collection);
 }
 
 void MarkdownEditor::drawLineEndMarker(QPaintEvent *e)

@@ -26,6 +26,7 @@ class SpellChecker;
 class MarkdownHighlighter;
 class SnippetRepository;
 class SnippetCompleter;
+class SnippetCollection;
 
 
 class MarkdownEditor : public QPlainTextEdit
@@ -47,7 +48,7 @@ public:
     void setSpellingCheckEnabled(bool enabled);
     void setSpellingDictionary(const hunspell::Dictionary &dictionary);
 
-    void setSnippetRepository(SnippetRepository *repository);
+    void setSnippetCollection(SnippetCollection *collection);
 
 signals:
     void loadDroppedFile(const QString &fileName);
@@ -74,7 +75,6 @@ private:
     QWidget *lineNumberArea;
     MarkdownHighlighter *highlighter;
     hunspell::SpellChecker *spellChecker;
-    SnippetRepository *snippetRepository;
     SnippetCompleter *completer;
     bool showHardLinebreaks;
 };
