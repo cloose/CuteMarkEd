@@ -28,10 +28,10 @@ class JsonSnippetTranslatorTest : public QObject
 private slots:
     void initTestCase();
 
-    void translatesJsonObjectToSnippet();
-    void translatesEmptyJsonObjectToEmptySnippet();
+    void translatesJsonDocumentToSnippets();
+    void translatesEmptyJsonDocumentToEmptySnippets();
 
-    void translatesSnippetToJsonObject();
+    void translatesSnippetCollectionToJsonDocument();
 
     void cleanupTestCase();
 

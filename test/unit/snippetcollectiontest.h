@@ -30,6 +30,8 @@ private slots:
 
     void notifiesListenersOfNewSnippets();
     void notifiesListenersOfRemovedSnippets();
+
+    void holdsSnippetsInTriggerOrder();
 };
 
 Q_DECLARE_METATYPE(SnippetCollection::CollectionChangedType) // for QSignalSpy

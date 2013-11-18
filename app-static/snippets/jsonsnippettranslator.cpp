@@ -16,7 +16,11 @@
  */
 #include "jsonsnippettranslator.h"
 
+#include <QJsonArray>
+#include <QJsonDocument>
+
 #include "snippet.h"
+#include "snippetcollection.h"
 
 namespace {
 
@@ -26,6 +30,32 @@ static const QLatin1String SNIPPET("snippet");
 static const QLatin1String CURSOR("cursor");
 static const QLatin1String BUILTIN("builtIn");
 
+}
+
+void JsonSnippetTranslator::processDocument(const QJsonDocument &jsonDocument, SnippetCollection *collection)
+{
+    QJsonArray snippetArray = jsonDocument.object().value("snippets").toArray();
+    foreach (QJsonValue entry, snippetArray) {
+        Snippet snippet = fromJsonObject(entry.toObject());
+        collection->insert(snippet);
+    }
+}
+
+QJsonDocument JsonSnippetTranslator::createDocument(SnippetCollection *collection)
+{
+    QJsonArray snippetArray;
+    for (int i = 0; i < collection->count(); ++i) {
+        Snippet snippet = collection->snippetAt(i);
+
+        QJsonObject entry = toJsonObject(snippet);
+        snippetArray.append(entry);
+    }
+
+    QJsonObject object;
+    object.insert("snippets", snippetArray);
+
+    QJsonDocument doc(object);
+    return doc;
 }
 
 Snippet JsonSnippetTranslator::fromJsonObject(const QJsonObject &object)

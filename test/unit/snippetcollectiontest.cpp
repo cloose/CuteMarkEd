@@ -57,3 +57,20 @@ void SnippetCollectionTest::notifiesListenersOfRemovedSnippets()
 
     QCOMPARE(arguments.at(0).value<SnippetCollection::CollectionChangedType>(), SnippetCollection::ItemDeleted);
 }
+
+void SnippetCollectionTest::holdsSnippetsInTriggerOrder()
+{
+    Snippet snippet1; snippet1.trigger = "a";
+    Snippet snippet2; snippet2.trigger = "b";
+    Snippet snippet3; snippet3.trigger = "c";
+
+    SnippetCollection collection;
+
+    collection.insert(snippet2);    // b
+    collection.insert(snippet3);    // c
+    collection.insert(snippet1);    // a
+
+    QCOMPARE(collection.snippetAt(0).trigger, snippet1.trigger);    // a
+    QCOMPARE(collection.snippetAt(1).trigger, snippet2.trigger);    // b
+    QCOMPARE(collection.snippetAt(2).trigger, snippet3.trigger);    // c
+}

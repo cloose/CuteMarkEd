@@ -18,12 +18,18 @@
 #define JSONSNIPPETTRANSLATOR_H
 
 #include <QJsonObject>
+class QJsonDocument;
+class SnippetCollection;
 struct Snippet;
 
 
 class JsonSnippetTranslator
 {
 public:
+    void processDocument(const QJsonDocument& jsonDocument, SnippetCollection *collection);
+    QJsonDocument createDocument(SnippetCollection *collection);
+
+private:
     Snippet fromJsonObject(const QJsonObject &object);
     QJsonObject toJsonObject(const Snippet &snippet);
 };

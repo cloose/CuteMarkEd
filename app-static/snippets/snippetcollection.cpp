@@ -16,19 +16,62 @@
  */
 #include "snippetcollection.h"
 
+#include <QSharedPointer>
+
+
 SnippetCollection::SnippetCollection(QObject *parent) :
     QObject(parent)
 {
 }
 
-void SnippetCollection::insert(const Snippet &snippet)
+int SnippetCollection::count() const
+{
+    return snippets.count();
+}
+
+int SnippetCollection::insert(const Snippet &snippet)
+{
+    QMap<QString, Snippet>::iterator it = snippets.insert(snippet.trigger, snippet);
+    emit collectionChanged(SnippetCollection::ItemAdded);
+    return std::distance(snippets.begin(), it);
+}
+
+void SnippetCollection::update(const Snippet &snippet)
 {
     snippets.insert(snippet.trigger, snippet);
-    emit collectionChanged(SnippetCollection::ItemAdded);
+    emit collectionChanged(SnippetCollection::ItemChanged);
 }
 
 void SnippetCollection::remove(const Snippet &snippet)
 {
     snippets.remove(snippet.trigger);
     emit collectionChanged(SnippetCollection::ItemDeleted);
+}
+
+bool SnippetCollection::contains(const QString &trigger) const
+{
+    return snippets.contains(trigger);
+}
+
+const Snippet SnippetCollection::snippet(const QString &trigger) const
+{
+    return snippets.value(trigger);
+}
+
+const Snippet &SnippetCollection::snippetAt(int offset) const
+{
+    return (snippets.begin() + offset).value();
+}
+
+QSharedPointer<SnippetCollection> SnippetCollection::userDefinedSnippets() const
+{
+    QSharedPointer<SnippetCollection> userDefinedSnippets = QSharedPointer<SnippetCollection>::create();
+
+    foreach (Snippet snippet, snippets.values()) {
+        if (!snippet.builtIn) {
+            userDefinedSnippets->insert(snippet);
+        }
+    }
+
+    return userDefinedSnippets;
 }

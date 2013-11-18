@@ -31,13 +31,23 @@ public:
     enum CollectionChangedType
     {
         ItemAdded,
+        ItemChanged,
         ItemDeleted
     };
 
     explicit SnippetCollection(QObject *parent = 0);
 
-    void insert(const Snippet& snippet);
+    int count() const;
+
+    int insert(const Snippet& snippet);
+    void update(const Snippet& snippet);
     void remove(const Snippet& snippet);
+
+    bool contains(const QString &trigger) const;
+    const Snippet snippet(const QString &trigger) const;
+    const Snippet &snippetAt(int offset) const;
+
+    QSharedPointer<SnippetCollection> userDefinedSnippets() const;
 
 signals:
     void collectionChanged(SnippetCollection::CollectionChangedType changedType);
