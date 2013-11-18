@@ -30,6 +30,7 @@ private slots:
 
     void translatesJsonDocumentToSnippets();
     void translatesEmptyJsonDocumentToEmptySnippets();
+    void defectIfJsonDocumentIsInvalid();
 
     void translatesSnippetCollectionToJsonDocument();
 

@@ -32,13 +32,18 @@ static const QLatin1String BUILTIN("builtIn");
 
 }
 
-void JsonSnippetTranslator::processDocument(const QJsonDocument &jsonDocument, SnippetCollection *collection)
+bool JsonSnippetTranslator::processDocument(const QJsonDocument &jsonDocument, SnippetCollection *collection)
 {
+    if (!isValid(jsonDocument))
+        return false;
+
     QJsonArray snippetArray = jsonDocument.object().value("snippets").toArray();
     foreach (QJsonValue entry, snippetArray) {
         Snippet snippet = fromJsonObject(entry.toObject());
         collection->insert(snippet);
     }
+
+    return true;
 }
 
 QJsonDocument JsonSnippetTranslator::createDocument(SnippetCollection *collection)
@@ -82,4 +87,12 @@ QJsonObject JsonSnippetTranslator::toJsonObject(const Snippet &snippet)
     object.insert(BUILTIN, snippet.builtIn);
 
     return object;
+}
+
+bool JsonSnippetTranslator::isValid(const QJsonDocument &jsonDocument) const
+{
+    return !jsonDocument.isEmpty() &&
+           jsonDocument.isObject() &&
+           jsonDocument.object().contains("snippets") &&
+           jsonDocument.object().value("snippets").isArray();
 }

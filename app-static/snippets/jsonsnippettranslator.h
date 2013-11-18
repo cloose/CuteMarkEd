@@ -26,12 +26,14 @@ struct Snippet;
 class JsonSnippetTranslator
 {
 public:
-    void processDocument(const QJsonDocument& jsonDocument, SnippetCollection *collection);
+    bool processDocument(const QJsonDocument &jsonDocument, SnippetCollection *collection);
     QJsonDocument createDocument(SnippetCollection *collection);
 
 private:
     Snippet fromJsonObject(const QJsonObject &object);
     QJsonObject toJsonObject(const Snippet &snippet);
+
+    bool isValid(const QJsonDocument &jsonDocument) const;
 };
 
 #endif // JSONSNIPPETTRANSLATOR_H
