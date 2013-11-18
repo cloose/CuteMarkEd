@@ -30,18 +30,6 @@ struct Snippet
 
     Snippet() : cursorPosition(0), builtIn(false) {}
 
-    void setContent(const QString &content) {
-        cursorPosition = 0;
-        snippet = content;
-
-        // find cursor marker
-        int pos = content.indexOf("$|");
-        if (pos >= 0) {
-            cursorPosition = pos;
-            snippet.remove(pos, 2);
-        }
-    }
-
     bool operator<(const Snippet &rhs) const
     {
         return trigger < rhs.trigger;
