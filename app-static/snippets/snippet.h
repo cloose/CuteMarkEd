@@ -34,6 +34,11 @@ struct Snippet
     {
         return trigger < rhs.trigger;
     }
+
+    bool operator ==(const Snippet &rhs) const
+    {
+        return trigger == rhs.trigger;
+    }
 };
 
 #endif // SNIPPET_H

@@ -25,6 +25,7 @@ class SnippetTest : public QObject
 
 private slots:
     void isLessThanComparable();
+    void isEqualComparable();
     void isInitializedAfterCreation();
 };
 

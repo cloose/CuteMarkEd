@@ -33,6 +33,25 @@ void SnippetTest::isLessThanComparable()
     QCOMPARE(snippet1 < snippet1, false);
 }
 
+void SnippetTest::isEqualComparable()
+{
+    Snippet snippet1;
+    snippet1.trigger = "abc";
+    snippet1.description = "description 1";
+
+    Snippet snippet2;
+    snippet2.trigger = "abc";
+    snippet2.description = "description 2";
+
+    Snippet snippet3;
+    snippet3.trigger = "xyz";
+    snippet3.description = "description 1";
+
+    QCOMPARE(snippet1 == snippet1, true);
+    QCOMPARE(snippet1 == snippet2, true);
+    QCOMPARE(snippet1 == snippet3, false);
+}
+
 void SnippetTest::isInitializedAfterCreation()
 {
     Snippet snippet;
