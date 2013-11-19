@@ -11,10 +11,15 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = cutemarked
 TEMPLATE = app
 
+unix {
+  CONFIG += link_pkgconfig
+}
+
 TRANSLATIONS += \
     translations/cutemarked_cs.ts \
     translations/cutemarked_de.ts \
     translations/cutemarked_el.ts \
+    translations/cutemarked_fr.ts \
     translations/cutemarked_zh_CN.ts
 
 RC_FILE = cutemarked.rc
@@ -129,10 +134,13 @@ else:unix: PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/libpmh.a
 # hunspell
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../hunspell/lib/ -lhunspell
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../hunspell/lib/ -lhunspell
-else:unix: LIBS += -lhunspell
 
-INCLUDEPATH += $$PWD/../hunspell/src
-DEPENDPATH += $$PWD/../hunspell/src
+unix {
+  PKGCONFIG += hunspell
+}
+
+win32:INCLUDEPATH += $$PWD/../hunspell/src
+win32:DEPENDPATH += $$PWD/../hunspell/src
 
 win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../hunspell/lib/libhunspell.a
 else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../hunspell/lib/libhunspell.a
