@@ -20,7 +20,6 @@
 #include <QObject>
 
 class QCompleter;
-class QPlainTextEdit;
 class SnippetCollection;
 struct Snippet;
 
@@ -35,7 +34,6 @@ public:
 
     bool isPopupVisible() const;
     void hidePopup();
-    void setPopupOffset(int leftOffset);
 
     void setSnippetCollection(SnippetCollection *collection);
 
@@ -55,7 +53,6 @@ private:
 private:
     SnippetCollection *snippetCollection;
     QCompleter *completer;
-    int popupOffset;
 };
 
 #endif // SNIPPETCOMPLETER_H

@@ -20,7 +20,6 @@
 #include <QAbstractItemView>
 #include <QCompleter>
 #include <QClipboard>
-#include <QPlainTextEdit>
 #include <QScrollBar>
 #include <QStandardItemModel>
 
@@ -60,8 +59,7 @@ private:
 SnippetCompleter::SnippetCompleter(QWidget *parentWidget) :
     QObject(parentWidget),
     snippetCollection(0),
-    completer(new QCompleter(this)),
-    popupOffset(0)
+    completer(new QCompleter(this))
 {
     completer->setWidget(parentWidget);
     completer->setCompletionMode(QCompleter::PopupCompletion);
@@ -86,7 +84,6 @@ void SnippetCompleter::performCompletion(const QString &textUnderCursor, const Q
         QRect rect = popupRect;
         rect.setWidth(completer->popup()->sizeHintForColumn(0) +
                 completer->popup()->verticalScrollBar()->sizeHint().width());
-        rect.setLeft(popupRect.left() + popupOffset);
         completer->complete(rect);
     }
 }
@@ -99,11 +96,6 @@ bool SnippetCompleter::isPopupVisible() const
 void SnippetCompleter::hidePopup()
 {
     completer->popup()->hide();
-}
-
-void SnippetCompleter::setPopupOffset(int leftOffset)
-{
-    popupOffset = leftOffset;
 }
 
 void SnippetCompleter::setSnippetCollection(SnippetCollection *collection)
