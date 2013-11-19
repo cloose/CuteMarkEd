@@ -278,7 +278,7 @@ void MarkdownEditor::replaceWithSuggestion()
 
 void MarkdownEditor::performCompletion()
 {
-    completer->performCompletion();
+    completer->performCompletion(textUnderCursor());
 }
 
 void MarkdownEditor::loadStyleFromStylesheet(const QString &fileName)
@@ -397,4 +397,24 @@ void MarkdownEditor::drawLineEndMarker(QPaintEvent *e)
 
         block = block.next();
     }
+}
+
+QString MarkdownEditor::textUnderCursor() const
+{
+    QTextCursor cursor = this->textCursor();
+    QTextDocument *document = this->document();
+
+    // empty text if cursor at start of line
+    if (cursor.atBlockStart()) {
+        return QString();
+    }
+
+    cursor.clearSelection();
+
+    // move left until we find a space or reach the start of line
+    do {
+        cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor);
+    } while(!document->characterAt(cursor.position()-1).isSpace() && !cursor.atBlockStart());
+
+    return cursor.selectedText();
 }

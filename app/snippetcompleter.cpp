@@ -72,9 +72,9 @@ SnippetCompleter::SnippetCompleter(QPlainTextEdit *textEdit) :
             this, SLOT(insertSnippet(QString)));
 }
 
-void SnippetCompleter::performCompletion()
+void SnippetCompleter::performCompletion(const QString &textUnderCursor)
 {
-    const QString completionPrefix = textUnderCursor();
+    const QString completionPrefix = textUnderCursor;
 
     if (completionPrefix != completer->completionPrefix()) {
         completer->setCompletionPrefix(completionPrefix);
@@ -160,26 +160,6 @@ void SnippetCompleter::insertSnippet(const QString &trigger)
     cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, snippet.cursorPosition);
 
     editor->setTextCursor(cursor);
-}
-
-QString SnippetCompleter::textUnderCursor() const
-{
-    QTextCursor cursor = editor->textCursor();
-    QTextDocument *document = editor->document();
-
-    // empty text if cursor at start of line
-    if (cursor.atBlockStart()) {
-        return QString();
-    }
-
-    cursor.clearSelection();
-
-    // move left until we find a space or reach the start of line
-    do {
-        cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor);
-    } while(!document->characterAt(cursor.position()-1).isSpace() && !cursor.atBlockStart());
-
-    return cursor.selectedText();
 }
 
 void SnippetCompleter::replaceClipboardVariable(QString &snippetContent)

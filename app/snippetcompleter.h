@@ -31,7 +31,7 @@ class SnippetCompleter : public QObject
 public:
     explicit SnippetCompleter(QPlainTextEdit *textEdit);
 
-    void performCompletion();
+    void performCompletion(const QString &textUnderCursor);
 
     bool isPopupVisible() const;
     void hidePopup();
@@ -46,7 +46,6 @@ private slots:
     void insertSnippet(const QString &trigger);
 
 private:
-    QString textUnderCursor() const;
     void replaceClipboardVariable(QString &snippetContent);
     int longestTriggerLength() const;
 

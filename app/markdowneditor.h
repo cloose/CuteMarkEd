@@ -70,6 +70,7 @@ private slots:
 
 private:
     void drawLineEndMarker(QPaintEvent *e);
+    QString textUnderCursor() const;
 
 private:
     QWidget *lineNumberArea;
