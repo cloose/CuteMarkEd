@@ -67,6 +67,7 @@ private slots:
     void showContextMenu(const QPoint &pos);
     void replaceWithSuggestion();
     void performCompletion();
+    void insertSnippet(const QString &completionPrefix, const QString &completion, int newCursorPos);
 
 private:
     void drawLineEndMarker(QPaintEvent *e);

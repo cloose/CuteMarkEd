@@ -57,14 +57,13 @@ private:
 };
 
 
-SnippetCompleter::SnippetCompleter(QPlainTextEdit *textEdit) :
-    QObject(textEdit),
-    editor(textEdit),
+SnippetCompleter::SnippetCompleter(QWidget *parentWidget) :
+    QObject(parentWidget),
     snippetCollection(0),
     completer(new QCompleter(this)),
     popupOffset(0)
 {
-    completer->setWidget(textEdit);
+    completer->setWidget(parentWidget);
     completer->setCompletionMode(QCompleter::PopupCompletion);
     completer->setCaseSensitivity(Qt::CaseSensitive);
 
@@ -72,7 +71,7 @@ SnippetCompleter::SnippetCompleter(QPlainTextEdit *textEdit) :
             this, SLOT(insertSnippet(QString)));
 }
 
-void SnippetCompleter::performCompletion(const QString &textUnderCursor)
+void SnippetCompleter::performCompletion(const QString &textUnderCursor, const QRect &popupRect)
 {
     const QString completionPrefix = textUnderCursor;
 
@@ -84,10 +83,10 @@ void SnippetCompleter::performCompletion(const QString &textUnderCursor)
     if (completer->completionCount() == 1)
         insertSnippet(completer->currentCompletion());
     else {
-        QRect rect = editor->cursorRect();
+        QRect rect = popupRect;
         rect.setWidth(completer->popup()->sizeHintForColumn(0) +
                 completer->popup()->verticalScrollBar()->sizeHint().width());
-        rect.setLeft(editor->rect().left() + popupOffset);
+        rect.setLeft(popupRect.left() + popupOffset);
         completer->complete(rect);
     }
 }
@@ -143,23 +142,10 @@ void SnippetCompleter::insertSnippet(const QString &trigger)
 
     Snippet snippet = snippetCollection->snippet(trigger);
 
-    QTextCursor cursor = editor->textCursor();
-    cursor.clearSelection();
-    cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, completer->completionPrefix().length());
-
-    int pos = cursor.position();
-
     QString snippetContent(snippet.snippet);
-
     replaceClipboardVariable(snippetContent);
 
-    cursor.insertText(snippetContent);
-
-    // move cursor to requested position
-    cursor.setPosition(pos);
-    cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, snippet.cursorPosition);
-
-    editor->setTextCursor(cursor);
+    emit snippetSelected(completer->completionPrefix(), snippetContent, snippet.cursorPosition);
 }
 
 void SnippetCompleter::replaceClipboardVariable(QString &snippetContent)

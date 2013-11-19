@@ -67,6 +67,8 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
                   this, SLOT(performCompletion()));
 
     completer->setPopupOffset(lineNumberAreaWidth());
+    connect(completer, SIGNAL(snippetSelected(QString,QString,int)),
+            this, SLOT(insertSnippet(QString,QString,int)));
 }
 
 MarkdownEditor::~MarkdownEditor()
@@ -278,7 +280,24 @@ void MarkdownEditor::replaceWithSuggestion()
 
 void MarkdownEditor::performCompletion()
 {
-    completer->performCompletion(textUnderCursor());
+    completer->performCompletion(textUnderCursor(), cursorRect());
+}
+
+void MarkdownEditor::insertSnippet(const QString &completionPrefix, const QString &completion, int newCursorPos)
+{
+    QTextCursor cursor = this->textCursor();
+    cursor.clearSelection();
+    cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, completionPrefix.length());
+
+    int pos = cursor.position();
+
+    cursor.insertText(completion);
+
+    // move cursor to requested position
+    cursor.setPosition(pos);
+    cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, newCursorPos);
+
+    this->setTextCursor(cursor);
 }
 
 void MarkdownEditor::loadStyleFromStylesheet(const QString &fileName)

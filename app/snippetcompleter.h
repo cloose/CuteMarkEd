@@ -29,15 +29,18 @@ class SnippetCompleter : public QObject
 {
     Q_OBJECT
 public:
-    explicit SnippetCompleter(QPlainTextEdit *textEdit);
+    explicit SnippetCompleter(QWidget *parentWidget);
 
-    void performCompletion(const QString &textUnderCursor);
+    void performCompletion(const QString &textUnderCursor, const QRect &popupRect);
 
     bool isPopupVisible() const;
     void hidePopup();
     void setPopupOffset(int leftOffset);
 
     void setSnippetCollection(SnippetCollection *collection);
+
+signals:
+    void snippetSelected(const QString &trigger, const QString &snippetContent, int newCursorPos);
 
 public slots:
     void updateModel();
@@ -50,7 +53,6 @@ private:
     int longestTriggerLength() const;
 
 private:
-    QPlainTextEdit *editor;
     SnippetCollection *snippetCollection;
     QCompleter *completer;
     int popupOffset;
