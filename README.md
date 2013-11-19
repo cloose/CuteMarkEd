@@ -8,12 +8,24 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 ### DOWNLOAD
 
-[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.8.0.tar.gz)  
-[MS Windows (Installer)](https://github.com/cloose/CuteMarkEd/releases/download/v0.8.0/cutemarked-0.8.0.msi)  
-[MS Windows (ZIP file)](https://github.com/cloose/CuteMarkEd/releases/download/v0.8.0/cutemarked-0.8.0.zip)  
+[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.8.1.tar.gz)  
+[MS Windows (Installer)](https://github.com/cloose/CuteMarkEd/releases/download/v0.8.1/cutemarked-0.8.1.msi)  
+[MS Windows (ZIP file)](https://github.com/cloose/CuteMarkEd/releases/download/v0.8.1/cutemarked-0.8.1.zip)  
 [OpenSUSE 12.3 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
+[OpenSUSE 13.1 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
+[Fedora 19 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 
 ### NEWS
+
+#### Version 0.8.1
+
+New Features:
+
+* `NEW` Added French translation created by etienne-gauvin
+
+Fixes:
+
+* `FIXED` Do not crash application if *Find Next* or *Find Previous* actions are used with a previously performed search
 
 #### Version 0.8.0
 
