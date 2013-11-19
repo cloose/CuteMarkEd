@@ -50,7 +50,7 @@ public:
     QSharedPointer<SnippetCollection> userDefinedSnippets() const;
 
 signals:
-    void collectionChanged(SnippetCollection::CollectionChangedType changedType);
+    void collectionChanged(SnippetCollection::CollectionChangedType changedType, const Snippet &snippet);
 
 private:
     QMap<QString, Snippet> snippets;

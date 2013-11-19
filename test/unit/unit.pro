@@ -10,12 +10,14 @@ SOURCES += \
     main.cpp \
     snippettest.cpp \
     jsonsnippettranslatortest.cpp \
-    snippetcollectiontest.cpp
+    snippetcollectiontest.cpp \
+    snippetlistmodeltest.cpp
 
 HEADERS += \
     snippettest.h \
     jsonsnippettranslatortest.h \
-    snippetcollectiontest.h
+    snippetcollectiontest.h \
+    snippetlistmodeltest.h
 
 ##################################################
 # Use internal static library: app-static

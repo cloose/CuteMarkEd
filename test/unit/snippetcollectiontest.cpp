@@ -24,6 +24,7 @@
 void SnippetCollectionTest::initTestCase()
 {
     qRegisterMetaType<SnippetCollection::CollectionChangedType>();  // for QSignalSpy
+    qRegisterMetaType<Snippet>();  // for QSignalSpy
 }
 
 void SnippetCollectionTest::notifiesListenersOfNewSnippets()
@@ -31,7 +32,7 @@ void SnippetCollectionTest::notifiesListenersOfNewSnippets()
     const Snippet snippet;
     SnippetCollection collection;
 
-    QSignalSpy spy(&collection, SIGNAL(collectionChanged(SnippetCollection::CollectionChangedType)));
+    QSignalSpy spy(&collection, SIGNAL(collectionChanged(SnippetCollection::CollectionChangedType, Snippet)));
 
     collection.insert(snippet);
 
@@ -45,7 +46,7 @@ void SnippetCollectionTest::notifiesListenersOfChangedSnippets()
 {
     const Snippet snippet;
     SnippetCollection collection;
-    QSignalSpy spy(&collection, SIGNAL(collectionChanged(SnippetCollection::CollectionChangedType)));
+    QSignalSpy spy(&collection, SIGNAL(collectionChanged(SnippetCollection::CollectionChangedType, Snippet)));
 
     collection.insert(snippet);
     collection.update(snippet);
@@ -60,7 +61,7 @@ void SnippetCollectionTest::notifiesListenersOfRemovedSnippets()
 {
     const Snippet snippet;
     SnippetCollection collection;
-    QSignalSpy spy(&collection, SIGNAL(collectionChanged(SnippetCollection::CollectionChangedType)));
+    QSignalSpy spy(&collection, SIGNAL(collectionChanged(SnippetCollection::CollectionChangedType, Snippet)));
 
     collection.insert(snippet);
     collection.remove(snippet);

@@ -32,20 +32,20 @@ int SnippetCollection::count() const
 int SnippetCollection::insert(const Snippet &snippet)
 {
     QMap<QString, Snippet>::iterator it = snippets.insert(snippet.trigger, snippet);
-    emit collectionChanged(SnippetCollection::ItemAdded);
+    emit collectionChanged(SnippetCollection::ItemAdded, snippet);
     return std::distance(snippets.begin(), it);
 }
 
 void SnippetCollection::update(const Snippet &snippet)
 {
     snippets.insert(snippet.trigger, snippet);
-    emit collectionChanged(SnippetCollection::ItemChanged);
+    emit collectionChanged(SnippetCollection::ItemChanged, snippet);
 }
 
 void SnippetCollection::remove(const Snippet &snippet)
 {
     snippets.remove(snippet.trigger);
-    emit collectionChanged(SnippetCollection::ItemDeleted);
+    emit collectionChanged(SnippetCollection::ItemDeleted, snippet);
 }
 
 bool SnippetCollection::contains(const QString &trigger) const

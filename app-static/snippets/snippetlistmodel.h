@@ -14,28 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <QTest>
+#ifndef SNIPPETLISTMODEL_H
+#define SNIPPETLISTMODEL_H
 
-#include "jsonsnippettranslatortest.h"
-#include "snippetcollectiontest.h"
-#include "snippetlistmodeltest.h"
-#include "snippettest.h"
+#include <QAbstractListModel>
+#include <snippets/snippetcollection.h>
+struct Snippet;
 
-int main(int argc, char *argv[])
+
+class SnippetListModel : public QAbstractListModel
 {
-    int ret = 0;
+    Q_OBJECT
+public:
+    explicit SnippetListModel(QObject *parent = 0);
+    
+    int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
 
-    SnippetTest test;
-    ret += QTest::qExec(&test, argc, argv);
+public slots:
+    void snippetCollectionChanged(SnippetCollection::CollectionChangedType changedType, const Snippet &snippet);
 
-    JsonSnippetTranslatorTest test2;
-    ret += QTest::qExec(&test2, argc, argv);
+private:
+    QList<Snippet> snippets;
+};
 
-    SnippetCollectionTest test3;
-    ret += QTest::qExec(&test3, argc, argv);
-
-    SnippetListModelTest test4;
-    ret += QTest::qExec(&test4, argc, argv);
-
-    return ret;
-}
+#endif // SNIPPETLISTMODEL_H

@@ -38,5 +38,6 @@ private slots:
 };
 
 Q_DECLARE_METATYPE(SnippetCollection::CollectionChangedType) // for QSignalSpy
+Q_DECLARE_METATYPE(Snippet) // for QSignalSpy
 
 #endif // SNIPPETCOLLECTIONTEST_H
