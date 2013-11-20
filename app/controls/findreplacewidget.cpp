@@ -21,7 +21,8 @@
 
 FindReplaceWidget::FindReplaceWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::FindReplaceWidget)
+    ui(new Ui::FindReplaceWidget),
+    textEditor(0)
 {
     ui->setupUi(this);
     setFocusProxy(ui->findLineEdit);
@@ -44,11 +45,15 @@ void FindReplaceWidget::showEvent(QShowEvent *)
 
 void FindReplaceWidget::findPreviousClicked()
 {
+    if (!textEditor) return;
+
     textEditor->find(ui->findLineEdit->text(), QTextDocument::FindBackward);
 }
 
 void FindReplaceWidget::findNextClicked()
 {
+    if (!textEditor) return;
+
     textEditor->find(ui->findLineEdit->text());
 }
 
