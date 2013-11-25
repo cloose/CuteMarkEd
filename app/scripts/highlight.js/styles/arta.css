@@ -20,6 +20,7 @@ pre .comment,
 pre .javadoc,
 pre .preprocessor,
 pre .preprocessor .title,
+pre .pragma,
 pre .shebang,
 pre .profile .summary,
 pre .diff,
@@ -41,7 +42,8 @@ pre .xml .attribute,
 pre .smalltalk .char,
 pre .xml .value,
 pre .ini .value,
-pre .clojure .attribute
+pre .clojure .attribute,
+pre .coffeescript .attribute
 {
   color: #ffcc33;
 }
