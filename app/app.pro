@@ -45,7 +45,6 @@ SOURCES += \
     exporthtmldialog.cpp \
     htmlhighlighter.cpp \
     optionsdialog.cpp \
-    options.cpp \
     hunspell/spellchecker.cpp \
     hunspell/dictionary.cpp \
     controls/languagemenu.cpp \
@@ -72,7 +71,6 @@ HEADERS  += \
     exporthtmldialog.h \
     htmlhighlighter.h \
     optionsdialog.h \
-    options.h \
     hunspell/spellchecker.h \
     hunspell/dictionary.h \
     controls/languagemenu.h \
