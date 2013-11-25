@@ -30,7 +30,6 @@
 #include <markdownhighlighter.h>
 #include "markdownmanipulator.h"
 #include "snippetcompleter.h"
-#include "snippetrepository.h"
 
 #include "hunspell/dictionary.h"
 #include "hunspell/spellchecker.h"
@@ -41,8 +40,7 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
     QPlainTextEdit(parent),
     lineNumberArea(new LineNumberArea(this)),
     spellChecker(new SpellChecker()),
-    snippetRepository(0),
-    completer(new SnippetCompleter(this)),
+    completer(0),
     showHardLinebreaks(false)
 {
     highlighter = new MarkdownHighlighter(this->document(), spellChecker);
@@ -66,8 +64,6 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
 
     new QShortcut(QKeySequence(tr("Ctrl+Space", "Complete")),
                   this, SLOT(performCompletion()));
-
-    completer->setPopupOffset(lineNumberAreaWidth());
 }
 
 MarkdownEditor::~MarkdownEditor()
@@ -181,7 +177,9 @@ void MarkdownEditor::keyPressEvent(QKeyEvent *e)
        }
     }
 
-    completer->hidePopup();
+    if (completer)
+        completer->hidePopup();
+
     QPlainTextEdit::keyPressEvent(e);
 }
 
@@ -279,7 +277,32 @@ void MarkdownEditor::replaceWithSuggestion()
 
 void MarkdownEditor::performCompletion()
 {
-    completer->performCompletion();
+    if (!completer) return;
+
+    QRect popupRect = cursorRect();
+    popupRect.setLeft(popupRect.left() + lineNumberAreaWidth());
+
+    completer->performCompletion(textUnderCursor(), popupRect);
+}
+
+void MarkdownEditor::insertSnippet(const QString &completionPrefix, const QString &completion, int newCursorPos)
+{
+    QTextCursor cursor = this->textCursor();
+
+    // select the completion prefix
+    cursor.clearSelection();
+    cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, completionPrefix.length());
+
+    int pos = cursor.position();
+
+    // replace completion prefix with snippet
+    cursor.insertText(completion);
+
+    // move cursor to requested position
+    cursor.setPosition(pos);
+    cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, newCursorPos);
+
+    this->setTextCursor(cursor);
 }
 
 void MarkdownEditor::loadStyleFromStylesheet(const QString &fileName)
@@ -365,10 +388,12 @@ void MarkdownEditor::setSpellingDictionary(const hunspell::Dictionary &dictionar
     highlighter->rehighlight();
 }
 
-void MarkdownEditor::setSnippetRepository(SnippetRepository *repository)
+void MarkdownEditor::setSnippetCompleter(SnippetCompleter *completer)
 {
-    snippetRepository = repository;
-    completer->setSnippetRepository(snippetRepository);
+    this->completer = completer;
+
+    connect(completer, SIGNAL(snippetSelected(QString,QString, int)),
+            this, SLOT(insertSnippet(QString,QString, int)));
 }
 
 void MarkdownEditor::drawLineEndMarker(QPaintEvent *e)
@@ -399,4 +424,24 @@ void MarkdownEditor::drawLineEndMarker(QPaintEvent *e)
 
         block = block.next();
     }
+}
+
+QString MarkdownEditor::textUnderCursor() const
+{
+    QTextCursor cursor = this->textCursor();
+    QTextDocument *document = this->document();
+
+    // empty text if cursor at start of line
+    if (cursor.atBlockStart()) {
+        return QString();
+    }
+
+    cursor.clearSelection();
+
+    // move left until we find a space or reach the start of line
+    do {
+        cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor);
+    } while(!document->characterAt(cursor.position()-1).isSpace() && !cursor.atBlockStart());
+
+    return cursor.selectedText();
 }

@@ -12,7 +12,7 @@ win32 {
         app \
         fontawesomeicon
 
-    app.depends = 3rdparty peg-markdown-highlight
+    app.depends = 3rdparty peg-markdown-highlight app-static
 }
 
 unix {
@@ -20,6 +20,10 @@ unix {
         app \
         fontawesomeicon
 
-    app.depends = peg-markdown-highlight
+    app.depends = peg-markdown-highlight app-static
 }
+
+SUBDIRS += \
+    test \
+    app-static
 

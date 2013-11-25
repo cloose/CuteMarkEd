@@ -24,7 +24,6 @@ class Dictionary;
 class SpellChecker;
 }
 class MarkdownHighlighter;
-class SnippetRepository;
 class SnippetCompleter;
 
 
@@ -47,7 +46,7 @@ public:
     void setSpellingCheckEnabled(bool enabled);
     void setSpellingDictionary(const hunspell::Dictionary &dictionary);
 
-    void setSnippetRepository(SnippetRepository *repository);
+    void setSnippetCompleter(SnippetCompleter *completer);
 
 signals:
     void loadDroppedFile(const QString &fileName);
@@ -66,15 +65,16 @@ private slots:
     void showContextMenu(const QPoint &pos);
     void replaceWithSuggestion();
     void performCompletion();
+    void insertSnippet(const QString &completionPrefix, const QString &completion, int newCursorPos);
 
 private:
     void drawLineEndMarker(QPaintEvent *e);
+    QString textUnderCursor() const;
 
 private:
     QWidget *lineNumberArea;
     MarkdownHighlighter *highlighter;
     hunspell::SpellChecker *spellChecker;
-    SnippetRepository *snippetRepository;
     SnippetCompleter *completer;
     bool showHardLinebreaks;
 };

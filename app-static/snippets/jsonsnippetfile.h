@@ -14,38 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SNIPPETCOMPLETER_H
-#define SNIPPETCOMPLETER_H
+#ifndef JSONSNIPPETFILE_H
+#define JSONSNIPPETFILE_H
 
-#include <QObject>
-
-class QCompleter;
+class QString;
 class SnippetCollection;
 
 
-class SnippetCompleter : public QObject
+class JsonSnippetFile
 {
-    Q_OBJECT
 public:
-    explicit SnippetCompleter(SnippetCollection *collection, QWidget *parentWidget);
-
-    void performCompletion(const QString &textUnderCursor, const QRect &popupRect);
-
-    bool isPopupVisible() const;
-    void hidePopup();
-
-signals:
-    void snippetSelected(const QString &trigger, const QString &snippetContent, int newCursorPos);
-
-private slots:
-    void insertSnippet(const QString &trigger);
+    static bool load(const QString &fileName, SnippetCollection *collection);
+    static bool save(const QString &fileName, SnippetCollection *collection);
 
 private:
-    void replaceClipboardVariable(QString &snippetContent);
-
-private:
-    SnippetCollection *snippetCollection;
-    QCompleter *completer;
+    JsonSnippetFile();
 };
 
-#endif // SNIPPETCOMPLETER_H
+#endif // JSONSNIPPETFILE_H
