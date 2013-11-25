@@ -15,4 +15,6 @@ before_script:
 script:
   - cd 3rdparty/discount && ./configure.sh && make && sudo make install ; cd ../..
   - qmake QMAKE_CXX=$CXX CuteMarkEd.pro
-  - make         
+  - make
+  - make check
+           

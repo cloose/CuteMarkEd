@@ -6,6 +6,9 @@
 
 QT += testlib
 
+TARGET = unittest
+CONFIG += console testcase
+
 SOURCES += \
     main.cpp \
     snippettest.cpp \

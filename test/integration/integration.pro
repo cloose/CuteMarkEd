@@ -7,6 +7,9 @@
 QT       += testlib
 QT       -= gui
 
+TARGET = integrationtest
+CONFIG += console testcase
+
 SOURCES += \
     jsonsnippetfiletest.cpp \
     main.cpp
