@@ -27,6 +27,11 @@ public:
     virtual MarkdownDocument *createDocument(const QString &text);
     virtual QString renderAsHtml(MarkdownDocument *document);
     virtual QString renderAsTableOfContents(MarkdownDocument *document);
+
+    virtual void setConverterOptions(Options *options);
+
+private:
+    unsigned long converterOptions;
 };
 
 #endif // DISCOUNTMARKDOWNCONVERTER_H

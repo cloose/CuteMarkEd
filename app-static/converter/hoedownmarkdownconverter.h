@@ -27,6 +27,12 @@ public:
     virtual MarkdownDocument *createDocument(const QString &text);
     virtual QString renderAsHtml(MarkdownDocument *document);
     virtual QString renderAsTableOfContents(MarkdownDocument *document);
+
+    virtual void setConverterOptions(Options *options);
+
+private:
+    unsigned long converterOptions;
+    unsigned long renderOptions;
 };
 
 #endif // HOEDOWNMARKDOWNCONVERTER_H

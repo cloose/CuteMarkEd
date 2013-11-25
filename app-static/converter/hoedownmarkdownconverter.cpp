@@ -22,6 +22,7 @@ extern "C" {
 }
 
 #include "markdowndocument.h"
+#include "options.h"
 
 class HoedownMarkdownDocument : public MarkdownDocument
 {
@@ -36,7 +37,9 @@ private:
 };
 
 
-HoedownMarkdownConverter::HoedownMarkdownConverter()
+HoedownMarkdownConverter::HoedownMarkdownConverter() :
+    converterOptions(0),
+    renderOptions(0)
 {
 }
 
@@ -73,8 +76,8 @@ QString HoedownMarkdownConverter::renderAsHtml(MarkdownDocument *document)
             hoedown_buffer *in = doc->document();
             hoedown_buffer *out = hoedown_buffer_new(64);
 
-            hoedown_renderer *renderer = hoedown_html_renderer_new(0, 0);
-            hoedown_markdown *markdown = hoedown_markdown_new(0, 16, renderer);
+            hoedown_renderer *renderer = hoedown_html_renderer_new(renderOptions, 0);
+            hoedown_markdown *markdown = hoedown_markdown_new(converterOptions, 16, renderer);
 
             hoedown_markdown_render(out, in->data, in->size, markdown);
 
@@ -94,17 +97,68 @@ QString HoedownMarkdownConverter::renderAsTableOfContents(MarkdownDocument *docu
 {
     QString toc;
 
-//    if (document) {
-//        DiscountMarkdownDocument *doc = dynamic_cast<DiscountMarkdownDocument*>(document);
+    if (document) {
+        HoedownMarkdownDocument *doc = dynamic_cast<HoedownMarkdownDocument*>(document);
 
-//        if (doc->document()) {
-//            // generate table of contents
-//            char *out;
-//            mkd_toc(doc->document(), &out);
+        if (doc->document()) {
+            hoedown_buffer *in = doc->document();
+            hoedown_buffer *out = hoedown_buffer_new(64);
 
-//            toc = QString::fromUtf8(out);
-//        }
-//    }
+            hoedown_renderer *renderer = hoedown_html_toc_renderer_new(0);
+            hoedown_markdown *markdown = hoedown_markdown_new(converterOptions, 16, renderer);
+
+            hoedown_markdown_render(out, in->data, in->size, markdown);
+
+            hoedown_markdown_free(markdown);
+            hoedown_html_renderer_free(renderer);
+
+            toc = QString::fromUtf8(hoedown_buffer_cstr(out));
+
+            hoedown_buffer_free(out);
+        }
+    }
 
     return toc;
+}
+
+void HoedownMarkdownConverter::setConverterOptions(Options *options)
+{
+    renderOptions = HOEDOWN_HTML_TOC | HOEDOWN_HTML_SKIP_STYLE;
+
+    converterOptions = HOEDOWN_EXT_FENCED_CODE | HOEDOWN_EXT_TABLES;
+
+    // autolink
+    if (options->isAutolinkEnabled()) {
+        converterOptions |= HOEDOWN_EXT_AUTOLINK;
+    }
+
+    // strikethrough
+    if (options->isStrikethroughEnabled()) {
+        converterOptions |= HOEDOWN_EXT_STRIKETHROUGH;
+    }
+
+//    // alphabetic lists
+//    if (!options->isAlphabeticListsEnabled()) {
+//        converterOptions |= MKD_NOALPHALIST;
+//    }
+
+//    // definition lists
+//    if (!options->isDefinitionListsEnabled()) {
+//        converterOptions |= MKD_NODLIST;
+//    }
+
+//    // SmartyPants
+//    if (!options->isSmartyPantsEnabled()) {
+//        converterOptions |= MKD_NOPANTS;
+//    }
+
+    // Footnotes
+    if (options->isFootnotesEnabled()) {
+        converterOptions |= HOEDOWN_EXT_FOOTNOTES;
+    }
+
+    // Superscript
+    if (!options->isSuperscriptEnabled()) {
+        converterOptions |= HOEDOWN_EXT_SUPERSCRIPT;
+    }
 }

@@ -24,6 +24,7 @@ extern "C" {
 }
 
 #include "markdowndocument.h"
+#include "options.h"
 
 class DiscountMarkdownDocument : public MarkdownDocument
 {
@@ -38,7 +39,8 @@ private:
 };
 
 
-DiscountMarkdownConverter::DiscountMarkdownConverter()
+DiscountMarkdownConverter::DiscountMarkdownConverter() :
+    converterOptions(0)
 {
 }
 
@@ -56,9 +58,9 @@ MarkdownDocument *DiscountMarkdownConverter::createDocument(const QString &text)
         }
 
         QByteArray utf8Data = markdownText.toUtf8();
-        doc = mkd_string(utf8Data, utf8Data.length(), 0/*options*/);
+        doc = mkd_string(utf8Data, utf8Data.length(), converterOptions);
 
-        mkd_compile(doc, 0/*options*/);
+        mkd_compile(doc, converterOptions);
     }
 
     return new DiscountMarkdownDocument(doc);
@@ -99,4 +101,44 @@ QString DiscountMarkdownConverter::renderAsTableOfContents(MarkdownDocument *doc
     }
 
     return toc;
+}
+
+void DiscountMarkdownConverter::setConverterOptions(Options *options)
+{
+    converterOptions = MKD_TOC | MKD_NOSTYLE;
+
+    // autolink
+    if (options->isAutolinkEnabled()) {
+        converterOptions |= MKD_AUTOLINK;
+    }
+
+    // strikethrough
+    if (!options->isStrikethroughEnabled()) {
+        converterOptions |= MKD_NOSTRIKETHROUGH;
+    }
+
+    // alphabetic lists
+    if (!options->isAlphabeticListsEnabled()) {
+        converterOptions |= MKD_NOALPHALIST;
+    }
+
+    // definition lists
+    if (!options->isDefinitionListsEnabled()) {
+        converterOptions |= MKD_NODLIST;
+    }
+
+    // SmartyPants
+    if (!options->isSmartyPantsEnabled()) {
+        converterOptions |= MKD_NOPANTS;
+    }
+
+    // Footnotes
+    if (options->isFootnotesEnabled()) {
+        converterOptions |= MKD_EXTRA_FOOTNOTE;
+    }
+
+    // Superscript
+    if (!options->isSuperscriptEnabled()) {
+        converterOptions |= MKD_NOSUPERSCRIPT;
+    }
 }

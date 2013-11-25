@@ -19,6 +19,7 @@
 #include <QFile>
 
 #include <converter/markdownconverter.h>
+#include <converter/markdowndocument.h>
 #include <converter/discountmarkdownconverter.h>
 #include <converter/hoedownmarkdownconverter.h>
 
@@ -131,6 +132,7 @@ void HtmlPreviewGenerator::run()
 
             // generate HTML from markdown
 //            document = new Discount::Document(text, parserOptions());
+            converter->setConverterOptions(options);
             document = converter->createDocument(text);
             generateHtmlFromMarkdown();
 
