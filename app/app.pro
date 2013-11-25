@@ -183,6 +183,18 @@ win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../app-static/
 else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../app-static/debug/libapp-static.a
 else:unix: PRE_TARGETDEPS += $$OUT_PWD/../app-static/libapp-static.a
 
+# hoedown
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/release/ -lhoedown
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/debug/ -lhoedown
+else:unix: LIBS += -L$$OUT_PWD/../3rdparty/hoedown/ -lhoedown
+
+INCLUDEPATH += $$PWD/../3rdparty/hoedown
+DEPENDPATH += $$PWD/../3rdparty/hoedown
+
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/release/libhoedown.a
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/debug/libhoedown.a
+else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hoedown/libhoedown.a
+
 message("Using INCLUDEPATH=$$INCLUDEPATH")
 message("Using LIBS=$$LIBS")
 

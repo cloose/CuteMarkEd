@@ -24,9 +24,11 @@
 
 #include "discount/parser.h"
 
-namespace Discount {
-class Document;
-}
+//namespace Discount {
+//class Document;
+//}
+class MarkdownConverter;
+class MarkdownDocument;
 class Options;
 
 class HtmlPreviewGenerator : public QThread
@@ -62,7 +64,9 @@ private:
 
 private:
     Options *options;
-    Discount::Document *document;
+//    Discount::Document *document;
+    MarkdownDocument *document;
+    MarkdownConverter *converter;
     QQueue<QString> tasks;
     QMutex tasksMutex;
     QWaitCondition bufferNotEmpty;
