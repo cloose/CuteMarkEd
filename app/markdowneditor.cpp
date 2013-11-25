@@ -25,7 +25,6 @@
 #include <QTextBlock>
 #include <QTextStream>
 
-#include <snippets/snippetcollection.h>
 #include <controls/linenumberarea.h>
 #include <peg-markdown-highlight/styleparser.h>
 #include <markdownhighlighter.h>
@@ -41,7 +40,7 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
     QPlainTextEdit(parent),
     lineNumberArea(new LineNumberArea(this)),
     spellChecker(new SpellChecker()),
-    completer(new SnippetCompleter(this)),
+    completer(0),
     showHardLinebreaks(false)
 {
     highlighter = new MarkdownHighlighter(this->document(), spellChecker);
@@ -65,9 +64,6 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
 
     new QShortcut(QKeySequence(tr("Ctrl+Space", "Complete")),
                   this, SLOT(performCompletion()));
-
-    connect(completer, SIGNAL(snippetSelected(QString,QString,int)),
-            this, SLOT(insertSnippet(QString,QString,int)));
 }
 
 MarkdownEditor::~MarkdownEditor()
@@ -181,7 +177,9 @@ void MarkdownEditor::keyPressEvent(QKeyEvent *e)
        }
     }
 
-    completer->hidePopup();
+    if (completer)
+        completer->hidePopup();
+
     QPlainTextEdit::keyPressEvent(e);
 }
 
@@ -279,6 +277,8 @@ void MarkdownEditor::replaceWithSuggestion()
 
 void MarkdownEditor::performCompletion()
 {
+    if (!completer) return;
+
     QRect popupRect = cursorRect();
     popupRect.setLeft(popupRect.left() + lineNumberAreaWidth());
 
@@ -288,11 +288,14 @@ void MarkdownEditor::performCompletion()
 void MarkdownEditor::insertSnippet(const QString &completionPrefix, const QString &completion, int newCursorPos)
 {
     QTextCursor cursor = this->textCursor();
+
+    // select the completion prefix
     cursor.clearSelection();
     cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, completionPrefix.length());
 
     int pos = cursor.position();
 
+    // replace completion prefix with snippet
     cursor.insertText(completion);
 
     // move cursor to requested position
@@ -385,9 +388,12 @@ void MarkdownEditor::setSpellingDictionary(const hunspell::Dictionary &dictionar
     highlighter->rehighlight();
 }
 
-void MarkdownEditor::setSnippetCollection(SnippetCollection *collection)
+void MarkdownEditor::setSnippetCompleter(SnippetCompleter *completer)
 {
-    completer->setSnippetCollection(collection);
+    this->completer = completer;
+
+    connect(completer, SIGNAL(snippetSelected(QString,QString, int)),
+            this, SLOT(insertSnippet(QString,QString, int)));
 }
 
 void MarkdownEditor::drawLineEndMarker(QPaintEvent *e)

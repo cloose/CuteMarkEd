@@ -24,9 +24,7 @@ class Dictionary;
 class SpellChecker;
 }
 class MarkdownHighlighter;
-class SnippetRepository;
 class SnippetCompleter;
-class SnippetCollection;
 
 
 class MarkdownEditor : public QPlainTextEdit
@@ -48,7 +46,7 @@ public:
     void setSpellingCheckEnabled(bool enabled);
     void setSpellingDictionary(const hunspell::Dictionary &dictionary);
 
-    void setSnippetCollection(SnippetCollection *collection);
+    void setSnippetCompleter(SnippetCompleter *completer);
 
 signals:
     void loadDroppedFile(const QString &fileName);

@@ -51,6 +51,7 @@
 #include "exportpdfdialog.h"
 #include "options.h"
 #include "optionsdialog.h"
+#include "snippetcompleter.h"
 #include "tabletooldialog.h"
 
 MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
@@ -917,7 +918,7 @@ void MainWindow::setupStatusBar()
 
 void MainWindow::setupMarkdownEditor()
 {
-    ui->plainTextEdit->setSnippetCollection(snippetCollection);
+    ui->plainTextEdit->setSnippetCompleter(new SnippetCompleter(snippetCollection, ui->plainTextEdit));
 
     // load file that are dropped on the editor
     connect(ui->plainTextEdit, SIGNAL(loadDroppedFile(QString)),

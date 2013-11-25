@@ -21,44 +21,15 @@
 #include <QCompleter>
 #include <QClipboard>
 #include <QScrollBar>
-#include <QStandardItemModel>
 
 #include <snippets/snippet.h>
 #include <snippets/snippetcollection.h>
+#include <snippets/snippetlistmodel.h>
 
 
-class SnippetItem : public QStandardItem
-{
-public:
-    SnippetItem(const QString &text) :
-        QStandardItem(QIcon("icon-puzzle-piece.fontawesome"), text)
-    {
-        QFont font("Monospace", 8);
-        font.setStyleHint(QFont::TypeWriter);
-        setFont(font);
-    }
-    virtual ~SnippetItem() {}
-
-    QVariant data(int role) const {
-        return (role == Qt::EditRole) ? editRoleData : QStandardItem::data(role);
-    }
-
-    void setData(const QVariant &value, int role) {
-        if (role == Qt::EditRole) {
-            editRoleData = value;
-        } else {
-            QStandardItem::setData(value, role);
-        }
-    }
-
-private:
-    QVariant editRoleData;
-};
-
-
-SnippetCompleter::SnippetCompleter(QWidget *parentWidget) :
+SnippetCompleter::SnippetCompleter(SnippetCollection *collection, QWidget *parentWidget) :
     QObject(parentWidget),
-    snippetCollection(0),
+    snippetCollection(collection),
     completer(new QCompleter(this))
 {
     completer->setWidget(parentWidget);
@@ -67,6 +38,11 @@ SnippetCompleter::SnippetCompleter(QWidget *parentWidget) :
 
     connect(completer, SIGNAL(activated(QString)),
             this, SLOT(insertSnippet(QString)));
+
+    SnippetListModel *model = new SnippetListModel(completer);
+    connect(collection, SIGNAL(collectionChanged(SnippetCollection::CollectionChangedType,Snippet)),
+            model, SLOT(snippetCollectionChanged(SnippetCollection::CollectionChangedType,Snippet)));
+    completer->setModel(model);
 }
 
 void SnippetCompleter::performCompletion(const QString &textUnderCursor, const QRect &popupRect)
@@ -78,9 +54,9 @@ void SnippetCompleter::performCompletion(const QString &textUnderCursor, const Q
         completer->popup()->setCurrentIndex(completer->completionModel()->index(0, 0));
     }
 
-    if (completer->completionCount() == 1)
+    if (completer->completionCount() == 1) {
         insertSnippet(completer->currentCompletion());
-    else {
+    } else {
         QRect rect = popupRect;
         rect.setWidth(completer->popup()->sizeHintForColumn(0) +
                 completer->popup()->verticalScrollBar()->sizeHint().width());
@@ -98,41 +74,12 @@ void SnippetCompleter::hidePopup()
     completer->popup()->hide();
 }
 
-void SnippetCompleter::setSnippetCollection(SnippetCollection *collection)
-{
-    snippetCollection = collection;
-    connect(snippetCollection, SIGNAL(collectionChanged(SnippetCollection::CollectionChangedType)),
-            this, SLOT(updateModel()));
-}
-
-void SnippetCompleter::updateModel()
-{
-    QStandardItemModel *model = new QStandardItemModel(completer);
-
-    int triggerTextWidth = longestTriggerLength() * -1;
-
-    for (int i = 0; i < snippetCollection->count(); ++i) {
-        Snippet snippet = snippetCollection->snippetAt(i);
-
-        QString displayText = QString("%1 %2").arg(snippet.trigger, triggerTextWidth).arg(snippet.description);
-
-        SnippetItem *item = new SnippetItem(displayText);
-        item->setData(snippet.trigger, Qt::EditRole);
-        item->setToolTip(snippet.snippet.toHtmlEscaped());
-
-        model->appendRow(item);
-    }
-
-    completer->setModel(model);
-}
-
 void SnippetCompleter::insertSnippet(const QString &trigger)
 {
-    if (!snippetCollection || !snippetCollection->contains(trigger)) {
+    if (!snippetCollection || !snippetCollection->contains(trigger))
         return;
-    }
 
-    Snippet snippet = snippetCollection->snippet(trigger);
+    const Snippet snippet = snippetCollection->snippet(trigger);
 
     QString snippetContent(snippet.snippet);
     replaceClipboardVariable(snippetContent);
@@ -146,16 +93,4 @@ void SnippetCompleter::replaceClipboardVariable(QString &snippetContent)
         QClipboard *clipboard = QApplication::clipboard();
         snippetContent.replace("%clipboard", clipboard->text());
     }
-}
-
-int SnippetCompleter::longestTriggerLength() const
-{
-    int longestTriggerLength = 0;
-
-    for (int i = 0; i < snippetCollection->count(); ++i) {
-        Snippet snippet = snippetCollection->snippetAt(i);
-        longestTriggerLength = qMax(longestTriggerLength, snippet.trigger.length());
-    }
-
-    return longestTriggerLength;
 }

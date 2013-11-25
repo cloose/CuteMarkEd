@@ -21,34 +21,27 @@
 
 class QCompleter;
 class SnippetCollection;
-struct Snippet;
 
 
 class SnippetCompleter : public QObject
 {
     Q_OBJECT
 public:
-    explicit SnippetCompleter(QWidget *parentWidget);
+    explicit SnippetCompleter(SnippetCollection *collection, QWidget *parentWidget);
 
     void performCompletion(const QString &textUnderCursor, const QRect &popupRect);
 
     bool isPopupVisible() const;
     void hidePopup();
 
-    void setSnippetCollection(SnippetCollection *collection);
-
 signals:
     void snippetSelected(const QString &trigger, const QString &snippetContent, int newCursorPos);
-
-public slots:
-    void updateModel();
 
 private slots:
     void insertSnippet(const QString &trigger);
 
 private:
     void replaceClipboardVariable(QString &snippetContent);
-    int longestTriggerLength() const;
 
 private:
     SnippetCollection *snippetCollection;
