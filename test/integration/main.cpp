@@ -14,21 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef JSONSNIPPETFILE_H
-#define JSONSNIPPETFILE_H
+#include <QTest>
 
-class QString;
-class SnippetCollection;
+#include "jsonsnippetfiletest.h"
 
-
-class JsonSnippetFile
+int main(int argc, char *argv[])
 {
-public:
-    static bool load(const QString &fileName, SnippetCollection *collection);
-    static bool save(const QString &fileName, SnippetCollection *collection);
+    int ret = 0;
 
-private:
-    JsonSnippetFile();
-};
+    JsonSnippetFileTest test;
+    ret += QTest::qExec(&test, argc, argv);
 
-#endif // JSONSNIPPETFILE_H
+    return ret;
+}
+

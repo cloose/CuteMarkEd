@@ -24,24 +24,24 @@
 #include "snippetcollection.h"
 
 
-void JsonSnippetFile::load(const QString &fileName, SnippetCollection *collection)
+bool JsonSnippetFile::load(const QString &fileName, SnippetCollection *collection)
 {
     QFile jsonFile(fileName);
     if (!jsonFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return;
+        return false;
     }
 
     QJsonDocument doc = QJsonDocument::fromJson(jsonFile.readAll());
 
     JsonSnippetTranslator translator;
-    translator.processDocument(doc, collection);
+    return translator.processDocument(doc, collection);
 }
 
-void JsonSnippetFile::save(const QString &fileName, SnippetCollection *collection)
+bool JsonSnippetFile::save(const QString &fileName, SnippetCollection *collection)
 {
     QFile jsonFile(fileName);
     if (!jsonFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        return;
+        return false;
     }
 
     JsonSnippetTranslator translator;
@@ -49,4 +49,6 @@ void JsonSnippetFile::save(const QString &fileName, SnippetCollection *collectio
 
     QTextStream out(&jsonFile);
     out << doc.toJson();
+
+    return true;
 }
