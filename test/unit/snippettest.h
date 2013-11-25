@@ -14,38 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SNIPPETCOMPLETER_H
-#define SNIPPETCOMPLETER_H
+#ifndef SNIPPETTEST_H
+#define SNIPPETTEST_H
 
 #include <QObject>
 
-class QCompleter;
-class SnippetCollection;
-
-
-class SnippetCompleter : public QObject
+class SnippetTest : public QObject
 {
     Q_OBJECT
-public:
-    explicit SnippetCompleter(SnippetCollection *collection, QWidget *parentWidget);
-
-    void performCompletion(const QString &textUnderCursor, const QRect &popupRect);
-
-    bool isPopupVisible() const;
-    void hidePopup();
-
-signals:
-    void snippetSelected(const QString &trigger, const QString &snippetContent, int newCursorPos);
 
 private slots:
-    void insertSnippet(const QString &trigger);
-
-private:
-    void replaceClipboardVariable(QString &snippetContent);
-
-private:
-    SnippetCollection *snippetCollection;
-    QCompleter *completer;
+    void isLessThanComparable();
+    void isEqualComparable();
+    void isInitializedAfterCreation();
 };
 
-#endif // SNIPPETCOMPLETER_H
+#endif // SNIPPETTEST_H

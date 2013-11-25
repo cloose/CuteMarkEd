@@ -14,43 +14,46 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SNIPPETREPOSITORY_H
-#define SNIPPETREPOSITORY_H
+#ifndef SNIPPETCOLLECTION_H
+#define SNIPPETCOLLECTION_H
 
 #include <QObject>
 #include <QMap>
-
 #include "snippet.h"
 
 
-class SnippetRepository : public QObject
+class SnippetCollection : public QObject
 {
     Q_OBJECT
+    Q_ENUMS(CollectionChangedType)
+
 public:
-    explicit SnippetRepository(QObject *parent = 0);
-    
-    void loadFromFile(const QString &fileName);
-    void saveToFile(const QString &fileName);
+    enum CollectionChangedType
+    {
+        ItemAdded,
+        ItemChanged,
+        ItemDeleted
+    };
 
-    void clear();
-    int addSnippet(Snippet snippet);
-    void removeSnippet(Snippet snippet);
-    void setSnippetContent(const Snippet &snippet, const QString &content);
-
-    bool contains(const QString &trigger) const;
-    Snippet snippet(const QString &trigger) const;
+    explicit SnippetCollection(QObject *parent = 0);
 
     int count() const;
-    QList<Snippet> values() const;
 
-    int maxTriggerLength() const;
+    int insert(const Snippet& snippet);
+    void update(const Snippet& snippet);
+    void remove(const Snippet& snippet);
+
+    bool contains(const QString &trigger) const;
+    const Snippet snippet(const QString &trigger) const;
+    const Snippet &snippetAt(int offset) const;
+
+    QSharedPointer<SnippetCollection> userDefinedSnippets() const;
 
 signals:
-    void dataChanged();
+    void collectionChanged(SnippetCollection::CollectionChangedType changedType, const Snippet &snippet);
 
 private:
     QMap<QString, Snippet> snippets;
-    int longestTrigger;
 };
 
-#endif // SNIPPETREPOSITORY_H
+#endif // SNIPPETCOLLECTION_H

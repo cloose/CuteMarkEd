@@ -14,38 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SNIPPETCOMPLETER_H
-#define SNIPPETCOMPLETER_H
+#ifndef SNIPPETCOLLECTIONTEST_H
+#define SNIPPETCOLLECTIONTEST_H
 
 #include <QObject>
-
-class QCompleter;
-class SnippetCollection;
+#include <snippets/snippetcollection.h>
 
 
-class SnippetCompleter : public QObject
+class SnippetCollectionTest : public QObject
 {
     Q_OBJECT
-public:
-    explicit SnippetCompleter(SnippetCollection *collection, QWidget *parentWidget);
-
-    void performCompletion(const QString &textUnderCursor, const QRect &popupRect);
-
-    bool isPopupVisible() const;
-    void hidePopup();
-
-signals:
-    void snippetSelected(const QString &trigger, const QString &snippetContent, int newCursorPos);
 
 private slots:
-    void insertSnippet(const QString &trigger);
+    void initTestCase();
 
-private:
-    void replaceClipboardVariable(QString &snippetContent);
+    void notifiesListenersOfNewSnippets();
+    void notifiesListenersOfChangedSnippets();
+    void notifiesListenersOfRemovedSnippets();
 
-private:
-    SnippetCollection *snippetCollection;
-    QCompleter *completer;
+    void holdsSnippetsInTriggerOrder();
+
+    void returnsNewCollectionOfUserDefinedSnippets();
 };
 
-#endif // SNIPPETCOMPLETER_H
+Q_DECLARE_METATYPE(SnippetCollection::CollectionChangedType) // for QSignalSpy
+Q_DECLARE_METATYPE(Snippet) // for QSignalSpy
+
+#endif // SNIPPETCOLLECTIONTEST_H

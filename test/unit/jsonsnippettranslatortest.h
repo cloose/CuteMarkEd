@@ -14,38 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SNIPPETCOMPLETER_H
-#define SNIPPETCOMPLETER_H
+#ifndef JSONSNIPPETTRANSLATORTEST_H
+#define JSONSNIPPETTRANSLATORTEST_H
 
 #include <QObject>
-
-class QCompleter;
-class SnippetCollection;
+class JsonSnippetTranslator;
 
 
-class SnippetCompleter : public QObject
+class JsonSnippetTranslatorTest : public QObject
 {
     Q_OBJECT
-public:
-    explicit SnippetCompleter(SnippetCollection *collection, QWidget *parentWidget);
-
-    void performCompletion(const QString &textUnderCursor, const QRect &popupRect);
-
-    bool isPopupVisible() const;
-    void hidePopup();
-
-signals:
-    void snippetSelected(const QString &trigger, const QString &snippetContent, int newCursorPos);
 
 private slots:
-    void insertSnippet(const QString &trigger);
+    void initTestCase();
+
+    void translatesJsonDocumentToSnippets();
+    void translatesEmptyJsonDocumentToEmptySnippets();
+    void defectIfJsonDocumentIsInvalid();
+
+    void translatesSnippetCollectionToJsonDocument();
+
+    void cleanupTestCase();
 
 private:
-    void replaceClipboardVariable(QString &snippetContent);
-
-private:
-    SnippetCollection *snippetCollection;
-    QCompleter *completer;
+    JsonSnippetTranslator *translator;
 };
 
-#endif // SNIPPETCOMPLETER_H
+#endif // JSONSNIPPETTRANSLATORTEST_H
