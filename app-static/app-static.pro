@@ -72,4 +72,4 @@ DEPENDPATH += $$PWD/../3rdparty/hoedown
 
 win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/release/libhoedown.a
 else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/debug/libhoedown.a
-else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hoedown/libhoedown.a
+else:unix: PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/libhoedown.a
