@@ -24,7 +24,6 @@ extern "C" {
 }
 
 #include "markdowndocument.h"
-#include "options.h"
 
 class DiscountMarkdownDocument : public MarkdownDocument
 {
@@ -39,12 +38,11 @@ private:
 };
 
 
-DiscountMarkdownConverter::DiscountMarkdownConverter() :
-    converterOptions(0)
+DiscountMarkdownConverter::DiscountMarkdownConverter()
 {
 }
 
-MarkdownDocument *DiscountMarkdownConverter::createDocument(const QString &text)
+MarkdownDocument *DiscountMarkdownConverter::createDocument(const QString &text, ConverterOptions options)
 {
     MMIOT *doc = 0;
 
@@ -56,6 +54,8 @@ MarkdownDocument *DiscountMarkdownConverter::createDocument(const QString &text)
         if (!markdownText.endsWith('\n')) {
             markdownText.append('\n');
         }
+
+        unsigned long converterOptions = translateConverterOptions(options);
 
         QByteArray utf8Data = markdownText.toUtf8();
         doc = mkd_string(utf8Data, utf8Data.length(), converterOptions);
@@ -103,42 +103,44 @@ QString DiscountMarkdownConverter::renderAsTableOfContents(MarkdownDocument *doc
     return toc;
 }
 
-void DiscountMarkdownConverter::setConverterOptions(Options *options)
+unsigned long DiscountMarkdownConverter::translateConverterOptions(ConverterOptions options) const
 {
-    converterOptions = MKD_TOC | MKD_NOSTYLE;
+    unsigned long converterOptions = MKD_TOC | MKD_NOSTYLE;
 
     // autolink
-    if (options->isAutolinkEnabled()) {
+    if (options.testFlag(MarkdownConverter::AutolinkOption)) {
         converterOptions |= MKD_AUTOLINK;
     }
 
     // strikethrough
-    if (!options->isStrikethroughEnabled()) {
+    if (options.testFlag(MarkdownConverter::NoStrikethroughOption)) {
         converterOptions |= MKD_NOSTRIKETHROUGH;
     }
 
     // alphabetic lists
-    if (!options->isAlphabeticListsEnabled()) {
+    if (options.testFlag(MarkdownConverter::NoAlphaListOption)) {
         converterOptions |= MKD_NOALPHALIST;
     }
 
     // definition lists
-    if (!options->isDefinitionListsEnabled()) {
+    if (options.testFlag(MarkdownConverter::NoDefinitionListOption)) {
         converterOptions |= MKD_NODLIST;
     }
 
     // SmartyPants
-    if (!options->isSmartyPantsEnabled()) {
+    if (options.testFlag(MarkdownConverter::NoSmartypantsOption)) {
         converterOptions |= MKD_NOPANTS;
     }
 
     // Footnotes
-    if (options->isFootnotesEnabled()) {
+    if (options.testFlag(MarkdownConverter::ExtraFootnoteOption)) {
         converterOptions |= MKD_EXTRA_FOOTNOTE;
     }
 
     // Superscript
-    if (!options->isSuperscriptEnabled()) {
+    if (options.testFlag(MarkdownConverter::NoSuperscriptOption)) {
         converterOptions |= MKD_NOSUPERSCRIPT;
     }
+
+    return converterOptions;
 }

@@ -132,8 +132,7 @@ void HtmlPreviewGenerator::run()
 
             // generate HTML from markdown
 //            document = new Discount::Document(text, parserOptions());
-            converter->setConverterOptions(options);
-            document = converter->createDocument(text);
+            document = converter->createDocument(text, converterOptions());
             generateHtmlFromMarkdown();
 
             // generate table of contents
@@ -194,43 +193,43 @@ QString HtmlPreviewGenerator::buildHtmlHeader() const
     return header;
 }
 
-Discount::Parser::ParserOptions HtmlPreviewGenerator::parserOptions() const
+MarkdownConverter::ConverterOptions HtmlPreviewGenerator::converterOptions() const
 {
-    Discount::Parser::ParserOptions parserOptionFlags(Discount::Parser::TableOfContentsOption | Discount::Parser::NoStyleOption);
+    MarkdownConverter::ConverterOptions parserOptionFlags(MarkdownConverter::TableOfContentsOption | MarkdownConverter::NoStyleOption);
 
     // autolink
     if (options->isAutolinkEnabled()) {
-        parserOptionFlags |= Discount::Parser::AutolinkOption;
+        parserOptionFlags |= MarkdownConverter::AutolinkOption;
     }
 
     // strikethrough
     if (!options->isStrikethroughEnabled()) {
-        parserOptionFlags |= Discount::Parser::NoStrikethroughOption;
+        parserOptionFlags |= MarkdownConverter::NoStrikethroughOption;
     }
 
     // alphabetic lists
     if (!options->isAlphabeticListsEnabled()) {
-        parserOptionFlags |= Discount::Parser::NoAlphaListOption;
+        parserOptionFlags |= MarkdownConverter::NoAlphaListOption;
     }
 
     // definition lists
     if (!options->isDefinitionListsEnabled()) {
-        parserOptionFlags |= Discount::Parser::NoDefinitionListOption;
+        parserOptionFlags |= MarkdownConverter::NoDefinitionListOption;
     }
 
     // SmartyPants
     if (!options->isSmartyPantsEnabled()) {
-        parserOptionFlags |= Discount::Parser::NoSmartypantsOption;
+        parserOptionFlags |= MarkdownConverter::NoSmartypantsOption;
     }
 
     // Footnotes
     if (options->isFootnotesEnabled()) {
-        parserOptionFlags |= Discount::Parser::ExtraFootnoteOption;
+        parserOptionFlags |= MarkdownConverter::ExtraFootnoteOption;
     }
 
     // Superscript
     if (!options->isSuperscriptEnabled()) {
-        parserOptionFlags |= Discount::Parser::NoSuperscriptOption;
+        parserOptionFlags |= MarkdownConverter::NoSuperscriptOption;
     }
 
     return parserOptionFlags;

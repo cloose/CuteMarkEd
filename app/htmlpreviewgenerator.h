@@ -22,12 +22,8 @@
 #include <QtCore/qmutex.h>
 #include <QtCore/qwaitcondition.h>
 
-#include "discount/parser.h"
+#include <converter/markdownconverter.h>
 
-//namespace Discount {
-//class Document;
-//}
-class MarkdownConverter;
 class MarkdownDocument;
 class Options;
 
@@ -60,11 +56,10 @@ private:
     void generateTableOfContents();
     QString renderTemplate(const QString &header, const QString &body);
     QString buildHtmlHeader() const;
-    Discount::Parser::ParserOptions parserOptions() const;
+    MarkdownConverter::ConverterOptions converterOptions() const;
 
 private:
     Options *options;
-//    Discount::Document *document;
     MarkdownDocument *document;
     MarkdownConverter *converter;
     QQueue<QString> tasks;

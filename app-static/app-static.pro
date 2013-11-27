@@ -11,7 +11,6 @@ TEMPLATE = lib
 CONFIG += staticlib
 
 SOURCES += \
-    options.cpp \
     snippets/jsonsnippettranslator.cpp \
     snippets/snippetcollection.cpp \
     snippets/jsonsnippetfile.cpp \
@@ -20,7 +19,6 @@ SOURCES += \
     converter/hoedownmarkdownconverter.cpp
 
 HEADERS += \
-    options.h \
     snippets/snippet.h \
     snippets/jsonsnippettranslator.h \
     snippets/snippetcollection.h \
