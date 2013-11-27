@@ -34,8 +34,6 @@ SOURCES += \
     controls/activelabel.cpp \
     controls/findreplacewidget.cpp \
     controls/recentfilesmenu.cpp \
-    discount/parser.cpp \
-    discount/document.cpp \
     htmlpreviewgenerator.cpp \
     markdownhighlighter.cpp \
     highlightworkerthread.cpp \
@@ -60,8 +58,6 @@ HEADERS  += \
     controls/activelabel.h \
     controls/findreplacewidget.h \
     controls/recentfilesmenu.h \
-    discount/parser.h \
-    discount/document.h \
     htmlpreviewgenerator.h \
     markdownhighlighter.h \
     highlightworkerthread.h \

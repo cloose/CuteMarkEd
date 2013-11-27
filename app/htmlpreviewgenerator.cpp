@@ -23,9 +23,6 @@
 #include <converter/discountmarkdownconverter.h>
 #include <converter/hoedownmarkdownconverter.h>
 
-#include "discount/document.h"
-#include "discount/parser.h"
-
 #include "options.h"
 
 HtmlPreviewGenerator::HtmlPreviewGenerator(Options *opt, QObject *parent) :
@@ -71,7 +68,6 @@ QString HtmlPreviewGenerator::exportHtml(const QString &styleSheet, const QStrin
         header += "\n<script>hljs.initHighlightingOnLoad();</script>";
     }
 
-//    return renderTemplate(header, document->toHtml());
     return renderTemplate(header, converter->renderAsHtml(document));
 }
 
@@ -131,7 +127,6 @@ void HtmlPreviewGenerator::run()
             delete document;
 
             // generate HTML from markdown
-//            document = new Discount::Document(text, parserOptions());
             document = converter->createDocument(text, converterOptions());
             generateHtmlFromMarkdown();
 
@@ -145,7 +140,6 @@ void HtmlPreviewGenerator::generateHtmlFromMarkdown()
 {
     if (!document) return;
 
-//    QString html = renderTemplate(buildHtmlHeader(), document->toHtml());
     QString html = renderTemplate(buildHtmlHeader(), converter->renderAsHtml(document));
     emit htmlResultReady(html);
 }
@@ -154,7 +148,6 @@ void HtmlPreviewGenerator::generateTableOfContents()
 {
     if (!document) return;
 
-//    QString toc = document->generateToc();
     QString toc = converter->renderAsTableOfContents(document);
     QString styledToc = QString("<html><head>\n<style type=\"text/css\">ul { list-style-type: none; padding: 0; margin-left: 1em; } a { text-decoration: none; }</style>\n</head><body>%1</body></html>").arg(toc);
     emit tocResultReady(styledToc);
