@@ -16,14 +16,22 @@
  */
 #include <QTest>
 
+#include "discountmarkdownconvertertest.h"
+#include "hoedownmarkdownconvertertest.h"
 #include "jsonsnippetfiletest.h"
 
 int main(int argc, char *argv[])
 {
     int ret = 0;
 
-    JsonSnippetFileTest test;
+    DiscountMarkdownConverterTest test;
     ret += QTest::qExec(&test, argc, argv);
+
+    HoedownMarkdownConverterTest test2;
+    ret += QTest::qExec(&test2, argc, argv);
+
+    JsonSnippetFileTest test3;
+    ret += QTest::qExec(&test3, argc, argv);
 
     return ret;
 }
