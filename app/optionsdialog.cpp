@@ -209,12 +209,11 @@ OptionsDialog::OptionsDialog(Options *opt, SnippetCollection *collection, QWidge
 {
     ui->setupUi(this);
 
-    ui->tabWidget->setTabIcon(0, QIcon("icon-file-text-alt.fontawesome"));
     ui->tabWidget->setIconSize(QSize(24, 24));
-    ui->tabWidget->setTabIcon(1, QIcon("icon-globe.fontawesome"));
-    ui->tabWidget->setIconSize(QSize(24, 24));
-    ui->tabWidget->setTabIcon(2, QIcon("icon-puzzle-piece.fontawesome"));
-    ui->tabWidget->setIconSize(QSize(24, 24));
+    ui->tabWidget->setTabIcon(0, QIcon("icon-cog.fontawesome"));
+    ui->tabWidget->setTabIcon(1, QIcon("icon-file-text-alt.fontawesome"));
+    ui->tabWidget->setTabIcon(2, QIcon("icon-globe.fontawesome"));
+    ui->tabWidget->setTabIcon(3, QIcon("icon-puzzle-piece.fontawesome"));
 
     ui->fontComboBox->setFontFilters(QFontComboBox::MonospacedFonts);
 
