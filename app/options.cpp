@@ -198,9 +198,25 @@ void Options::setDictionaryLanguage(const QString &language)
     m_dictionaryLanguage = language;
 }
 
+Options::MarkdownConverter Options::markdownConverter() const
+{
+    return m_markdownConverter;
+}
+
+void Options::setMarkdownConverter(Options::MarkdownConverter converter)
+{
+    if (m_markdownConverter != converter) {
+        m_markdownConverter = converter;
+        emit markdownConverterChanged();
+    }
+}
+
 void Options::readSettings()
 {
     QSettings settings;
+
+    // general settings
+    m_markdownConverter = (Options::MarkdownConverter)settings.value("general/converter", 0).toInt();
 
     // editor settings
     QString fontFamily = settings.value("editor/font/family", "Monospace").toString();
@@ -239,6 +255,9 @@ void Options::readSettings()
 void Options::writeSettings()
 {
     QSettings settings;
+
+    // general settings
+    settings.setValue("general/converter", m_markdownConverter);
 
     // editor settings
     settings.setValue("editor/font/family", font.family());

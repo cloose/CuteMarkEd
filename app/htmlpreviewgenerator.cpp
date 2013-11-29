@@ -29,8 +29,10 @@ HtmlPreviewGenerator::HtmlPreviewGenerator(Options *opt, QObject *parent) :
     QThread(parent),
     options(opt),
     document(0),
-    converter(new HoedownMarkdownConverter())
+    converter(0)
 {
+    connect(options, SIGNAL(markdownConverterChanged()), SLOT(markdownConverterChanged()));
+    markdownConverterChanged();
 }
 
 void HtmlPreviewGenerator::setHtmlTemplate(const QString &t)
@@ -93,6 +95,20 @@ void HtmlPreviewGenerator::setCodeHighlightingStyle(const QString &style)
 
     // regenerate a HTML document
     generateHtmlFromMarkdown();
+}
+
+void HtmlPreviewGenerator::markdownConverterChanged()
+{
+    switch (options->markdownConverter()) {
+    case Options::HoedownMarkdownConverter:
+        converter = new HoedownMarkdownConverter();
+        break;
+
+    case Options::DiscountMarkdownConverter:
+    default:
+        converter = new DiscountMarkdownConverter();
+        break;
+    }
 }
 
 void HtmlPreviewGenerator::run()

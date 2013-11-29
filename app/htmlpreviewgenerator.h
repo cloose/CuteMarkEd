@@ -44,6 +44,8 @@ public slots:
     void setCodeHighlightingEnabled(bool enabled);
     void setCodeHighlightingStyle(const QString &style);
 
+    void markdownConverterChanged();
+
 signals:
     void htmlResultReady(const QString &html);
     void tocResultReady(const QString &toc);

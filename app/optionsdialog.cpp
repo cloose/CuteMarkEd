@@ -323,6 +323,9 @@ void OptionsDialog::removeSnippetButtonClicked()
 
 void OptionsDialog::readState()
 {
+    // general settings
+    ui->converterComboBox->setCurrentIndex(options->markdownConverter());
+
     // editor settings
     QFont font = options->editorFont();
     ui->fontComboBox->setCurrentFont(font);
@@ -348,6 +351,9 @@ void OptionsDialog::readState()
 
 void OptionsDialog::saveState()
 {
+    // general settings
+    options->setMarkdownConverter((Options::MarkdownConverter)ui->converterComboBox->currentIndex());
+
     // editor settings
     QFont font = ui->fontComboBox->currentFont();
     font.setPointSize(ui->sizeComboBox->currentText().toInt());
