@@ -4,3 +4,6 @@
 [submodule "3rdparty/hunspell"]
 	path = 3rdparty/hunspell
 	url = https://github.com/zdenop/hunspell-mingw.git
+[submodule "3rdparty/hoedown"]
+	path = 3rdparty/hoedown
+	url = https://github.com/cloose/hoedown.git

@@ -34,8 +34,6 @@ SOURCES += \
     controls/activelabel.cpp \
     controls/findreplacewidget.cpp \
     controls/recentfilesmenu.cpp \
-    discount/parser.cpp \
-    discount/document.cpp \
     htmlpreviewgenerator.cpp \
     markdownhighlighter.cpp \
     highlightworkerthread.cpp \
@@ -44,8 +42,8 @@ SOURCES += \
     exportpdfdialog.cpp \
     exporthtmldialog.cpp \
     htmlhighlighter.cpp \
-    optionsdialog.cpp \
     options.cpp \
+    optionsdialog.cpp \
     hunspell/spellchecker.cpp \
     hunspell/dictionary.cpp \
     controls/languagemenu.cpp \
@@ -60,8 +58,6 @@ HEADERS  += \
     controls/activelabel.h \
     controls/findreplacewidget.h \
     controls/recentfilesmenu.h \
-    discount/parser.h \
-    discount/document.h \
     htmlpreviewgenerator.h \
     markdownhighlighter.h \
     highlightworkerthread.h \
@@ -71,8 +67,8 @@ HEADERS  += \
     exportpdfdialog.h \
     exporthtmldialog.h \
     htmlhighlighter.h \
-    optionsdialog.h \
     options.h \
+    optionsdialog.h \
     hunspell/spellchecker.h \
     hunspell/dictionary.h \
     controls/languagemenu.h \
@@ -120,6 +116,18 @@ QMAKE_EXTRA_COMPILERS += lrelease
 ###################################################################################################
 ## DEPENDENCIES
 ###################################################################################################
+
+# Use internal static library: app-static
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../app-static/release/ -lapp-static
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../app-static/debug/ -lapp-static
+else:unix: LIBS += -L$$OUT_PWD/../app-static/ -lapp-static
+
+INCLUDEPATH += $$PWD/../app-static
+DEPENDPATH += $$PWD/../app-static
+
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../app-static/release/libapp-static.a
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../app-static/debug/libapp-static.a
+else:unix: PRE_TARGETDEPS += $$OUT_PWD/../app-static/libapp-static.a
 
 # discount
 win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/release/ -ldiscount
@@ -171,17 +179,17 @@ else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../
 else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.lib
 #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hunspell/libhunspell.a
 
-# Use internal static library: app-static
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../app-static/release/ -lapp-static
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../app-static/debug/ -lapp-static
-else:unix: LIBS += -L$$OUT_PWD/../app-static/ -lapp-static
+# hoedown
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/release/ -lhoedown
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/debug/ -lhoedown
+else:unix: LIBS += -L$$OUT_PWD/../3rdparty/hoedown/ -lhoedown
 
-INCLUDEPATH += $$PWD/../app-static
-DEPENDPATH += $$PWD/../app-static
+INCLUDEPATH += $$PWD/../3rdparty/hoedown
+DEPENDPATH += $$PWD/../3rdparty/hoedown
 
-win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../app-static/release/libapp-static.a
-else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../app-static/debug/libapp-static.a
-else:unix: PRE_TARGETDEPS += $$OUT_PWD/../app-static/libapp-static.a
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/release/libhoedown.a
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/debug/libhoedown.a
+#else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hoedown/libhoedown.a
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
 message("Using LIBS=$$LIBS")

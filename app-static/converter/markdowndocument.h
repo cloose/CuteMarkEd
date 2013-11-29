@@ -14,25 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <QTest>
+#ifndef MARKDOWNDOCUMENT_H
+#define MARKDOWNDOCUMENT_H
 
-#include "discountmarkdownconvertertest.h"
-#include "hoedownmarkdownconvertertest.h"
-#include "jsonsnippetfiletest.h"
-
-int main(int argc, char *argv[])
+class MarkdownDocument
 {
-    int ret = 0;
+public:
+    virtual ~MarkdownDocument() {}
+};
 
-    DiscountMarkdownConverterTest test;
-    ret += QTest::qExec(&test, argc, argv);
-
-    HoedownMarkdownConverterTest test2;
-    ret += QTest::qExec(&test2, argc, argv);
-
-    JsonSnippetFileTest test3;
-    ret += QTest::qExec(&test3, argc, argv);
-
-    return ret;
-}
-
+#endif // MARKDOWNDOCUMENT_H

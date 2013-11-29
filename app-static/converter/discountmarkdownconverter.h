@@ -14,30 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef DOCUMENT_H
-#define DOCUMENT_H
+#ifndef DISCOUNTMARKDOWNCONVERTER_H
+#define DISCOUNTMARKDOWNCONVERTER_H
 
-#include <QtCore/qstring.h>
-#include "parser.h"
+#include "markdownconverter.h"
 
-namespace Discount
-{
-
-class Document
+class DiscountMarkdownConverter : public MarkdownConverter
 {
 public:
-    Document(const QString &text, Parser::ParserOptions options);
-    ~Document();
+    DiscountMarkdownConverter();
 
-    QString toHtml();
-    QString generateToc();
+    virtual MarkdownDocument *createDocument(const QString &text, ConverterOptions options);
+    virtual QString renderAsHtml(MarkdownDocument *document);
+    virtual QString renderAsTableOfContents(MarkdownDocument *document);
 
 private:
-    MMIOT *document;
-    QString html;
-    QString toc;
+    unsigned long translateConverterOptions(ConverterOptions options) const;
 };
 
-}
-
-#endif // DOCUMENT_H
+#endif // DISCOUNTMARKDOWNCONVERTER_H
