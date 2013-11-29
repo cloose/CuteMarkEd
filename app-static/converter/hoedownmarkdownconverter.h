@@ -14,37 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "document.h"
-using Discount::Document;
-using Discount::Parser;
+#ifndef HOEDOWNMARKDOWNCONVERTER_H
+#define HOEDOWNMARKDOWNCONVERTER_H
 
-Document::Document(const QString &text, Parser::ParserOptions options) :
-    document(0)
+#include "markdownconverter.h"
+
+class HoedownMarkdownConverter : public MarkdownConverter
 {
-    if (text.length() > 0) {
-        document = Parser::parseString(text, options);
-    }
-}
+public:
+    HoedownMarkdownConverter();
 
-Document::~Document()
-{
-    Parser::cleanup(document);
-}
+    virtual MarkdownDocument *createDocument(const QString &text, ConverterOptions options);
+    virtual QString renderAsHtml(MarkdownDocument *document);
+    virtual QString renderAsTableOfContents(MarkdownDocument *document);
 
-QString Document::toHtml()
-{
-    if (html.isNull() && document) {
-        html = Parser::renderAsHtml(document);
-    }
+private:
+    unsigned long translateConverterOptions(ConverterOptions options) const;
+};
 
-    return html;
-}
-
-QString Document::generateToc()
-{
-    if (toc.isNull() && document) {
-        toc = Parser::generateToc(document);
-    }
-
-    return toc;
-}
+#endif // HOEDOWNMARKDOWNCONVERTER_H
