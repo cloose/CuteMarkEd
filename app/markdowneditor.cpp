@@ -253,6 +253,11 @@ void MarkdownEditor::showContextMenu(const QPoint &pos)
         if (suggestions.isEmpty()) {
             subMenu->setEnabled(false);
         }
+
+        QAction *userWordlistAction = contextMenu->addAction(tr("Add to User Dictionary"));
+        userWordlistAction->setData(cursor.selectedText());
+        connect(userWordlistAction, SIGNAL(triggered()),
+                this, SLOT(addWordToUserWordlist()));
     }
 
     // show context menu
@@ -303,6 +308,13 @@ void MarkdownEditor::insertSnippet(const QString &completionPrefix, const QStrin
     cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, newCursorPos);
 
     this->setTextCursor(cursor);
+}
+
+void MarkdownEditor::addWordToUserWordlist()
+{
+    QAction *action = qobject_cast<QAction*>(sender());
+    QString word = action->data().toString();
+    spellChecker->addToUserWordlist(word);
 }
 
 void MarkdownEditor::loadStyleFromStylesheet(const QString &fileName)

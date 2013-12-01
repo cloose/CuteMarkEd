@@ -71,6 +71,20 @@ QStringList SpellChecker::suggestions(const QString &word)
     return suggestions;
 }
 
+void SpellChecker::addToUserWordlist(const QString &word)
+{
+    hunspellChecker->add(textCodec->fromUnicode(word).constData());
+    if(!userWordlist.isEmpty()) {
+        QFile userWordlistFile(userWordlist);
+        if(!userWordlistFile.open(QIODevice::Append))
+            return;
+
+        QTextStream stream(&userWordlistFile);
+        stream << word << "\n";
+        userWordlistFile.close();
+    }
+}
+
 void SpellChecker::loadDictionary(const QString &dictFilePath)
 {
     delete hunspellChecker;
@@ -85,6 +99,24 @@ void SpellChecker::loadDictionary(const QString &dictFilePath)
     textCodec = QTextCodec::codecForName(hunspellChecker->get_dic_encoding());
     if (!textCodec) {
         textCodec = QTextCodec::codecForName("UTF-8");
+    }
+
+    // also load user word list
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    loadUserWordlist(path + "/user.dic");
+}
+
+void SpellChecker::loadUserWordlist(const QString &userWordlistPath)
+{
+    userWordlist = userWordlistPath;
+
+    QFile userWordlistFile(userWordlistPath);
+    if (!userWordlistFile.open(QIODevice::ReadOnly))
+        return;
+
+    QTextStream stream(&userWordlistFile);
+    for (QString word = stream.readLine(); !word.isEmpty(); word = stream.readLine()) {
+        hunspellChecker->add(textCodec->fromUnicode(word).constData());
     }
 }
 

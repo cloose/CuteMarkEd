@@ -66,6 +66,7 @@ private slots:
     void replaceWithSuggestion();
     void performCompletion();
     void insertSnippet(const QString &completionPrefix, const QString &completion, int newCursorPos);
+    void addWordToUserWordlist();
 
 private:
     void drawLineEndMarker(QPaintEvent *e);

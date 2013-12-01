@@ -35,13 +35,16 @@ public:
 
     bool isCorrect(const QString &word);
     QStringList suggestions(const QString &word);
+    void addToUserWordlist(const QString &word);
 
     void loadDictionary(const QString &dictFilePath);
+    void loadUserWordlist(const QString &userWordlistPath);
 
     static QMap<QString, Dictionary> availableDictionaries();
 
 private:
     Hunspell *hunspellChecker;
+    QString userWordlist;
     QTextCodec *textCodec;
 };
 
