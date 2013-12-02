@@ -19,8 +19,8 @@
 
 #include <qplaintextedit.h>
 
-namespace hunspell {
 class Dictionary;
+namespace hunspell {
 class SpellChecker;
 }
 class MarkdownHighlighter;
@@ -44,7 +44,7 @@ public:
 
     void setShowHardLinebreaks(bool enabled);
     void setSpellingCheckEnabled(bool enabled);
-    void setSpellingDictionary(const hunspell::Dictionary &dictionary);
+    void setSpellingDictionary(const Dictionary &dictionary);
 
     void setSnippetCompleter(SnippetCompleter *completer);
 

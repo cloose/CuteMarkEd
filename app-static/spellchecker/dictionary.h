@@ -14,32 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef LANGUAGEMENU_H
-#define LANGUAGEMENU_H
+#ifndef DICTIONARY_H
+#define DICTIONARY_H
 
-#include <QMenu>
+#include <QtCore/qmetatype.h>
+#include <QtCore/qstring.h>
 
-class Dictionary;
-
-class LanguageMenu : public QMenu
+class Dictionary
 {
-    Q_OBJECT
 public:
-    explicit LanguageMenu(QWidget *parent = 0);
-    
-    void loadDictionaries(const QString &currentLanguage);
+    Dictionary();
+    Dictionary(const QString &language, const QString &filePath);
+    Dictionary(const Dictionary &other);
+    ~Dictionary();
 
-signals:
-    void languageTriggered(const Dictionary &dictionary);
+    QString language() const;
+    QString languageName() const;
 
-private slots:
-    void languageTriggered();
+    QString countryName() const;
+
+    QString filePath() const;
 
 private:
-    QAction *createAction(const Dictionary &dictionary);
-
-private:
-    QActionGroup *dictionariesGroup;
+    QString m_language;
+    QString m_filePath;
 };
 
-#endif // LANGUAGEMENU_H
+Q_DECLARE_METATYPE(Dictionary);
+
+#endif // DICTIONARY_H

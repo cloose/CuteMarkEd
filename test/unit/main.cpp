@@ -16,6 +16,7 @@
  */
 #include <QTest>
 
+#include "dictionarytest.h"
 #include "jsonsnippettranslatortest.h"
 #include "snippetcollectiontest.h"
 #include "snippetlistmodeltest.h"
@@ -36,6 +37,9 @@ int main(int argc, char *argv[])
 
     SnippetListModelTest test4;
     ret += QTest::qExec(&test4, argc, argv);
+
+    DictionaryTest test5;
+    ret += QTest::qExec(&test5, argc, argv);
 
     return ret;
 }

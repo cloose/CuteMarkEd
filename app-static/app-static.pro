@@ -16,7 +16,8 @@ SOURCES += \
     snippets/jsonsnippetfile.cpp \
     snippets/snippetlistmodel.cpp \
     converter/discountmarkdownconverter.cpp \
-    converter/hoedownmarkdownconverter.cpp
+    converter/hoedownmarkdownconverter.cpp \
+    spellchecker/dictionary.cpp
 
 HEADERS += \
     snippets/snippet.h \
@@ -27,7 +28,8 @@ HEADERS += \
     converter/markdownconverter.h \
     converter/markdowndocument.h \
     converter/discountmarkdownconverter.h \
-    converter/hoedownmarkdownconverter.h
+    converter/hoedownmarkdownconverter.h \
+    spellchecker/dictionary.h
 
 unix:!symbian {
     maemo5 {

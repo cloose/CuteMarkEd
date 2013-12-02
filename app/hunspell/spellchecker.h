@@ -20,12 +20,11 @@
 #include <QtCore/qmap.h>
 #include <QtCore/qstring.h>
 
+class Dictionary;
 class Hunspell;
 class QTextCodec;
 
 namespace hunspell {
-
-class Dictionary;
 
 class SpellChecker
 {

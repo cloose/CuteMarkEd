@@ -23,14 +23,11 @@ namespace Ui {
 class MainWindow;
 }
 
-namespace hunspell {
-class Dictionary;
-}
-
 class QActionGroup;
 class QLabel;
 class QNetworkDiskCache;
 class ActiveLabel;
+class Dictionary;
 class HtmlPreviewGenerator;
 class HtmlHighlighter;
 class RecentFilesMenu;
@@ -56,7 +53,7 @@ protected:
 private slots:
     void initializeApp();
     void openRecentFile(const QString &fileName);
-    void languageChanged(const hunspell::Dictionary &dictionary);
+    void languageChanged(const Dictionary &dictionary);
 
     void fileNew();
     void fileOpen();

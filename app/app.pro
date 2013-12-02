@@ -45,7 +45,6 @@ SOURCES += \
     options.cpp \
     optionsdialog.cpp \
     hunspell/spellchecker.cpp \
-    hunspell/dictionary.cpp \
     controls/languagemenu.cpp \
     tabletooldialog.cpp \
     imagetooldialog.cpp \
@@ -70,7 +69,6 @@ HEADERS  += \
     options.h \
     optionsdialog.h \
     hunspell/spellchecker.h \
-    hunspell/dictionary.h \
     controls/languagemenu.h \
     tabletooldialog.h \
     imagetooldialog.h \

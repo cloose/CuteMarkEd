@@ -14,48 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "dictionary.h"
-using hunspell::Dictionary;
+#include "dictionarytest.h"
 
-#include <QLocale>
+#include <QTest>
 
-Dictionary::Dictionary()
+#include <spellchecker/dictionary.h>
+
+void DictionaryTest::returnsCountryNameForLanguage()
 {
+    Dictionary german("de_DE", "");
+    QCOMPARE(german.countryName(), QStringLiteral("Deutschland"));
 }
-
-Dictionary::Dictionary(const QString &language, const QString &filePath) :
-    m_language(language),
-    m_filePath(filePath)
-{
-}
-
-Dictionary::Dictionary(const hunspell::Dictionary &other)
-{
-    m_language = other.m_language;
-    m_filePath = other.m_filePath;
-}
-
-Dictionary::~Dictionary()
-{
-}
-
-QString Dictionary::language() const
-{
-    return m_language;
-}
-
-QString Dictionary::languageName() const
-{
-    return QLocale(m_language).nativeLanguageName();
-}
-
-QString Dictionary::countryName() const
-{
-    return QLocale(m_language).nativeCountryName();
-}
-
-QString Dictionary::filePath() const
-{
-    return m_filePath;
-}
-

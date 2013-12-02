@@ -14,36 +14,46 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef HUNSPELL_DICTIONARY_H
-#define HUNSPELL_DICTIONARY_H
+#include "dictionary.h"
 
-#include <QtCore/qmetatype.h>
-#include <QtCore/qstring.h>
+#include <QLocale>
 
-namespace hunspell {
-
-class Dictionary
+Dictionary::Dictionary()
 {
-public:
-    Dictionary();
-    Dictionary(const QString &language, const QString &filePath);
-    Dictionary(const Dictionary &other);
-    ~Dictionary();
+}
 
-    QString language() const;
-    QString languageName() const;
+Dictionary::Dictionary(const QString &language, const QString &filePath) :
+    m_language(language),
+    m_filePath(filePath)
+{
+}
 
-    QString countryName() const;
+Dictionary::Dictionary(const Dictionary &other)
+{
+    m_language = other.m_language;
+    m_filePath = other.m_filePath;
+}
 
-    QString filePath() const;
+Dictionary::~Dictionary()
+{
+}
 
-private:
-    QString m_language;
-    QString m_filePath;
-};
+QString Dictionary::language() const
+{
+    return m_language;
+}
 
-} // namespace hunspell
+QString Dictionary::languageName() const
+{
+    return QLocale(m_language).nativeLanguageName();
+}
 
-Q_DECLARE_METATYPE(hunspell::Dictionary);
+QString Dictionary::countryName() const
+{
+    return QLocale(m_language).nativeCountryName();
+}
 
-#endif // HUNSPELL_DICTIONARY_H
+QString Dictionary::filePath() const
+{
+    return m_filePath;
+}

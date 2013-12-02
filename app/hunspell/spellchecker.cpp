@@ -26,8 +26,7 @@ using hunspell::SpellChecker;
 
 #include <hunspell/hunspell.hxx>
 
-#include "dictionary.h"
-using hunspell::Dictionary;
+#include <spellchecker/dictionary.h>
 
 SpellChecker::SpellChecker() :
     hunspellChecker(0),
@@ -120,9 +119,9 @@ void SpellChecker::loadUserWordlist(const QString &userWordlistPath)
     }
 }
 
-QMap<QString, hunspell::Dictionary> SpellChecker::availableDictionaries()
+QMap<QString, Dictionary> SpellChecker::availableDictionaries()
 {
-    QMap<QString, hunspell::Dictionary> dictionaries;
+    QMap<QString, Dictionary> dictionaries;
 
     QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
     paths << qApp->applicationDirPath();

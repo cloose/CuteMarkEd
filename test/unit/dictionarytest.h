@@ -14,32 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef LANGUAGEMENU_H
-#define LANGUAGEMENU_H
+#ifndef DICTIONARYTEST_H
+#define DICTIONARYTEST_H
 
-#include <QMenu>
+#include <QObject>
 
-class Dictionary;
-
-class LanguageMenu : public QMenu
+class DictionaryTest : public QObject
 {
     Q_OBJECT
-public:
-    explicit LanguageMenu(QWidget *parent = 0);
-    
-    void loadDictionaries(const QString &currentLanguage);
-
-signals:
-    void languageTriggered(const Dictionary &dictionary);
 
 private slots:
-    void languageTriggered();
-
-private:
-    QAction *createAction(const Dictionary &dictionary);
-
-private:
-    QActionGroup *dictionariesGroup;
+    void returnsCountryNameForLanguage();
 };
 
-#endif // LANGUAGEMENU_H
+#endif // DICTIONARYTEST_H

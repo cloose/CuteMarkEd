@@ -39,11 +39,11 @@
 
 #include <snippets/jsonsnippetfile.h>
 #include <snippets/snippetcollection.h>
+#include <spellchecker/dictionary.h>
 #include "controls/activelabel.h"
 #include "controls/findreplacewidget.h"
 #include "controls/languagemenu.h"
 #include "controls/recentfilesmenu.h"
-#include "hunspell/dictionary.h"
 #include "htmlpreviewgenerator.h"
 #include "htmlhighlighter.h"
 #include "markdownmanipulator.h"
@@ -173,7 +173,7 @@ void MainWindow::openRecentFile(const QString &fileName)
     }
 }
 
-void MainWindow::languageChanged(const hunspell::Dictionary &dictionary)
+void MainWindow::languageChanged(const Dictionary &dictionary)
 {
     options->setDictionaryLanguage(dictionary.language());
     ui->plainTextEdit->setSpellingDictionary(dictionary);

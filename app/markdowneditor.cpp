@@ -31,7 +31,7 @@
 #include "markdownmanipulator.h"
 #include "snippetcompleter.h"
 
-#include "hunspell/dictionary.h"
+#include <spellchecker/dictionary.h>
 #include "hunspell/spellchecker.h"
 using hunspell::SpellChecker;
 
@@ -391,7 +391,7 @@ void MarkdownEditor::setSpellingCheckEnabled(bool enabled)
     highlighter->rehighlight();
 }
 
-void MarkdownEditor::setSpellingDictionary(const hunspell::Dictionary &dictionary)
+void MarkdownEditor::setSpellingDictionary(const Dictionary &dictionary)
 {
     spellChecker->loadDictionary(dictionary.filePath());
 
