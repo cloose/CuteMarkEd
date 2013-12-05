@@ -156,7 +156,8 @@ void MainWindow::initializeApp()
     loadCustomStyles();
     ui->menuLanguages->loadDictionaries(options->dictionaryLanguage());
 
-    JsonSnippetFile::load(":/markdown-snippets.json", snippetCollection);
+    //: path to built-in snippets resource.
+    JsonSnippetFile::load(tr(":/markdown-snippets.json"), snippetCollection);
     QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     JsonSnippetFile::load(path + "/user-snippets.json", snippetCollection);
 
