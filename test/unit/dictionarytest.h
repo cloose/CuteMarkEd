@@ -24,6 +24,7 @@ class DictionaryTest : public QObject
     Q_OBJECT
 
 private slots:
+    void returnsLanguageNameForLanguageCode();
     void returnsCountryNameForLanguage();
 };
 

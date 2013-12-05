@@ -20,8 +20,20 @@
 
 #include <spellchecker/dictionary.h>
 
+void DictionaryTest::returnsLanguageNameForLanguageCode()
+{
+    Dictionary german("de_DE", "");
+    QCOMPARE(german.languageName(), QStringLiteral("Deutsch"));
+
+    Dictionary americanEnglish("en_US", "");
+    QCOMPARE(americanEnglish.languageName(), QStringLiteral("U.S. English"));
+}
+
 void DictionaryTest::returnsCountryNameForLanguage()
 {
     Dictionary german("de_DE", "");
     QCOMPARE(german.countryName(), QStringLiteral("Deutschland"));
+
+    Dictionary americanEnglish("en_US", "");
+    QCOMPARE(americanEnglish.countryName(), QStringLiteral("United States"));
 }
