@@ -872,8 +872,8 @@ void MainWindow::setupActions()
             generator, SLOT(setMathSupportEnabled(bool)));
     connect(ui->actionCodeHighlighting, SIGNAL(triggered(bool)),
             generator, SLOT(setCodeHighlightingEnabled(bool)));
-    connect(ui->menuLanguages, SIGNAL(languageTriggered(hunspell::Dictionary)),
-            this, SLOT(languageChanged(hunspell::Dictionary)));
+    connect(ui->menuLanguages, SIGNAL(languageTriggered(Dictionary)),
+            this, SLOT(languageChanged(Dictionary)));
 
     // put style actions in a group
     stylesGroup = new QActionGroup(this);
