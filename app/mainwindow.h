@@ -91,6 +91,7 @@ private slots:
     void viewFullScreenMode();
     void viewHorizontalLayout(bool checked);
 
+    void extrasEmbeddedMediaSupport(bool checked);
     void extrasShowHardLinebreaks(bool checked);
     void extensionsAutolink(bool checked);
     void extensionsStrikethrough(bool checked);

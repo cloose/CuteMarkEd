@@ -120,7 +120,7 @@
      <x>0</x>
      <y>0</y>
      <width>850</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -229,6 +229,7 @@
      <addaction name="actionSmartyPants"/>
      <addaction name="actionFootnotes"/>
      <addaction name="actionSuperscript"/>
+     <addaction name="actionEmbeddedMediaSupport"/>
     </widget>
     <widget class="LanguageMenu" name="menuLanguages">
      <property name="title">
@@ -719,6 +720,14 @@
    </property>
    <property name="text">
     <string>Superscript</string>
+   </property>
+  </action>
+  <action name="actionEmbeddedMediaSupport">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Embedded Media</string>
    </property>
   </action>
  </widget>

@@ -136,6 +136,7 @@ void MainWindow::initializeApp()
     // init option flags
     ui->actionMathSupport->setChecked(options->isMathSupportEnabled());
     ui->actionCodeHighlighting->setChecked(options->isCodeHighlightingEnabled());
+    ui->actionEmbeddedMediaSupport->setChecked(options->isEmbeddedMediaSupportEnabled());
     ui->actionCheckSpelling->setChecked(options->isSpellingCheckEnabled());
     ui->plainTextEdit->setSpellingCheckEnabled(options->isSpellingCheckEnabled());
 
@@ -528,6 +529,11 @@ void MainWindow::viewHorizontalLayout(bool checked)
     }
 }
 
+void MainWindow::extrasEmbeddedMediaSupport(bool checked)
+{
+    QWebSettings::globalSettings()->setAttribute(QWebSettings::PluginsEnabled, checked);
+}
+
 void MainWindow::extrasShowHardLinebreaks(bool checked)
 {
     ui->plainTextEdit->setShowHardLinebreaks(checked);
@@ -872,6 +878,10 @@ void MainWindow::setupActions()
             generator, SLOT(setMathSupportEnabled(bool)));
     connect(ui->actionCodeHighlighting, SIGNAL(triggered(bool)),
             generator, SLOT(setCodeHighlightingEnabled(bool)));
+    connect(ui->actionEmbeddedMediaSupport, SIGNAL(triggered(bool)),
+            generator, SLOT(setEmbeddedMediaSupportEnabled(bool)));
+    connect(ui->actionEmbeddedMediaSupport, SIGNAL(toggled(bool)),
+            SLOT(extrasEmbeddedMediaSupport(bool)));
     connect(ui->menuLanguages, SIGNAL(languageTriggered(Dictionary)),
             this, SLOT(languageChanged(Dictionary)));
 

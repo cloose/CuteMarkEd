@@ -43,6 +43,7 @@ public slots:
     void setMathSupportEnabled(bool enabled);
     void setCodeHighlightingEnabled(bool enabled);
     void setCodeHighlightingStyle(const QString &style);
+    void setEmbeddedMediaSupportEnabled(bool enabled);
 
     void markdownConverterChanged();
 
@@ -54,6 +55,7 @@ protected:
     virtual void run();
 
 private:
+    void preprocessMarkdown(QString &text);
     void generateHtmlFromMarkdown();
     void generateTableOfContents();
     QString renderTemplate(const QString &header, const QString &body);

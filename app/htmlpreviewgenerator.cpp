@@ -17,6 +17,7 @@
 #include "htmlpreviewgenerator.h"
 
 #include <QFile>
+#include <QRegularExpression>
 
 #include <converter/markdownconverter.h>
 #include <converter/markdowndocument.h>
@@ -97,6 +98,14 @@ void HtmlPreviewGenerator::setCodeHighlightingStyle(const QString &style)
     generateHtmlFromMarkdown();
 }
 
+void HtmlPreviewGenerator::setEmbeddedMediaSupportEnabled(bool enabled)
+{
+    options->setEmbeddedMediaSupportEnabled(enabled);
+
+    // regenerate a HTML document
+    generateHtmlFromMarkdown();
+}
+
 void HtmlPreviewGenerator::markdownConverterChanged()
 {
     switch (options->markdownConverter()) {
@@ -142,6 +151,8 @@ void HtmlPreviewGenerator::run()
             // delete previous markdown document
             delete document;
 
+            preprocessMarkdown(text);
+
             // generate HTML from markdown
             document = converter->createDocument(text, converterOptions());
             generateHtmlFromMarkdown();
@@ -149,6 +160,14 @@ void HtmlPreviewGenerator::run()
             // generate table of contents
             generateTableOfContents();
         }
+    }
+}
+
+void HtmlPreviewGenerator::preprocessMarkdown(QString &text)
+{
+    if (options->isEmbeddedMediaSupportEnabled()) {
+        QRegularExpression re("@\\[(.*)\\]\\((.*)\\)");
+        text.replace(re, "<a href=\"\\2\" class=\"embed\">\\1</a>");
     }
 }
 
