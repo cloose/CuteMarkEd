@@ -178,6 +178,16 @@ void Options::setCodeHighlightingEnabled(bool enabled)
     m_codeHighlightingEnabled = enabled;
 }
 
+bool Options::isEmbeddedMediaSupportEnabled() const
+{
+    return m_embeddedMediaSupportEnabled;
+}
+
+void Options::setEmbeddedMediaSupportEnabled(bool enabled)
+{
+    m_embeddedMediaSupportEnabled = enabled;
+}
+
 bool Options::isSpellingCheckEnabled() const
 {
     return m_spellingCheckEnabled;
@@ -244,6 +254,7 @@ void Options::readSettings()
 
     m_mathSupportEnabled = settings.value("mathsupport/enabled", false).toBool();
     m_codeHighlightingEnabled = settings.value("codehighlighting/enabled", false).toBool();
+    m_embeddedMediaSupportEnabled = settings.value("embeddedmedia/enabled", false).toBool();
 
     // spelling check settings
     m_spellingCheckEnabled = settings.value("spelling/enabled", true).toBool();
@@ -281,6 +292,7 @@ void Options::writeSettings()
 
     settings.setValue("mathsupport/enabled", m_mathSupportEnabled);
     settings.setValue("codehighlighting/enabled", m_codeHighlightingEnabled);
+    settings.setValue("embeddedmedia/enabled", m_embeddedMediaSupportEnabled);
 
     // spelling check settings
     settings.setValue("spelling/enabled", m_spellingCheckEnabled);

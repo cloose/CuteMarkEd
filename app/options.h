@@ -76,6 +76,9 @@ public:
     bool isCodeHighlightingEnabled() const;
     void setCodeHighlightingEnabled(bool enabled);
 
+    bool isEmbeddedMediaSupportEnabled() const;
+    void setEmbeddedMediaSupportEnabled(bool enabled);
+
     bool isSpellingCheckEnabled() const;
     void setSpellingCheckEnabled(bool enabled);
 
@@ -109,6 +112,7 @@ private:
     bool m_superscriptEnabled;
     bool m_mathSupportEnabled;
     bool m_codeHighlightingEnabled;
+    bool m_embeddedMediaSupportEnabled;
     bool m_spellingCheckEnabled;
     QString m_dictionaryLanguage;
     MarkdownConverter m_markdownConverter;
