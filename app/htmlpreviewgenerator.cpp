@@ -16,6 +16,7 @@
  */
 #include "htmlpreviewgenerator.h"
 
+#include <QDebug>
 #include <QFile>
 #include <QRegularExpression>
 
@@ -24,6 +25,9 @@
 #include <converter/discountmarkdownconverter.h>
 #include <converter/hoedownmarkdownconverter.h>
 
+#include <oembedmanager.h>
+
+#include "oembedworker.h"
 #include "options.h"
 
 HtmlPreviewGenerator::HtmlPreviewGenerator(Options *opt, QObject *parent) :
@@ -34,6 +38,9 @@ HtmlPreviewGenerator::HtmlPreviewGenerator(Options *opt, QObject *parent) :
 {
     connect(options, SIGNAL(markdownConverterChanged()), SLOT(markdownConverterChanged()));
     markdownConverterChanged();
+
+    qDebug() << "create oembed worker";
+    worker = new OEmbedWorker(new qoembed::OEmbedManager(this));
 }
 
 void HtmlPreviewGenerator::setHtmlTemplate(const QString &t)
@@ -167,7 +174,16 @@ void HtmlPreviewGenerator::preprocessMarkdown(QString &text)
 {
     if (options->isEmbeddedMediaSupportEnabled()) {
         QRegularExpression re("@\\[(.*)\\]\\((.*)\\)");
-        text.replace(re, "<a href=\"\\2\" class=\"embed\">\\1</a>");
+
+        if (text.count(re) > 0) {
+            QRegularExpressionMatch match = re.match(text);
+            while (match.hasMatch()) {
+                QString html = worker->doWork(match.captured(2));
+                text.replace(match.capturedStart(), match.capturedLength(), html);
+
+                match = re.match(text);
+            }
+        }
     }
 }
 

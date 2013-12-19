@@ -26,6 +26,7 @@
 
 class MarkdownDocument;
 class Options;
+class OEmbedWorker;
 
 class HtmlPreviewGenerator : public QThread
 {
@@ -71,6 +72,8 @@ private:
     QWaitCondition bufferNotEmpty;
     QString htmlTemplate;
     QString codeHighlightingStyle;
+
+    OEmbedWorker *worker;
 };
 
 #endif // HTMLPREVIEWGENERATOR_H
