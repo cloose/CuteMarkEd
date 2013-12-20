@@ -49,7 +49,8 @@ SOURCES += \
     tabletooldialog.cpp \
     imagetooldialog.cpp \
     snippetcompleter.cpp \
-    oembedworker.cpp
+    oembedworker.cpp \
+    embeddedmediapostprocessor.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -74,7 +75,8 @@ HEADERS  += \
     tabletooldialog.h \
     imagetooldialog.h \
     snippetcompleter.h \
-    oembedworker.h
+    oembedworker.h \
+    embeddedmediapostprocessor.h
 
 FORMS    += \
     mainwindow.ui \

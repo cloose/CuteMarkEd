@@ -17,7 +17,11 @@ SOURCES += \
     snippets/snippetlistmodel.cpp \
     converter/discountmarkdownconverter.cpp \
     converter/hoedownmarkdownconverter.cpp \
-    spellchecker/dictionary.cpp
+    spellchecker/dictionary.cpp \
+    converter/textpreprocessor.cpp \
+    converter/markdownconverter.cpp \
+    converter/htmlpostprocessor.cpp \
+    converter/embeddedmediapreprocessor.cpp
 
 HEADERS += \
     snippets/snippet.h \
@@ -29,7 +33,10 @@ HEADERS += \
     converter/markdowndocument.h \
     converter/discountmarkdownconverter.h \
     converter/hoedownmarkdownconverter.h \
-    spellchecker/dictionary.h
+    spellchecker/dictionary.h \
+    converter/textpreprocessor.h \
+    converter/htmlpostprocessor.h \
+    converter/embeddedmediapreprocessor.h
 
 unix:!symbian {
     maemo5 {
