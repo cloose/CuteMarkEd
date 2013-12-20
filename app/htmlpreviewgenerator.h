@@ -26,7 +26,6 @@
 
 class MarkdownDocument;
 class Options;
-class OEmbedWorker;
 
 class HtmlPreviewGenerator : public QThread
 {
@@ -56,7 +55,6 @@ protected:
     virtual void run();
 
 private:
-    void preprocessMarkdown(QString &text);
     void generateHtmlFromMarkdown();
     void generateTableOfContents();
     QString renderTemplate(const QString &header, const QString &body);
@@ -73,7 +71,8 @@ private:
     QString htmlTemplate;
     QString codeHighlightingStyle;
 
-    OEmbedWorker *worker;
+    QSharedPointer<TextPreprocessor> preprocessor;
+    QSharedPointer<HtmlPostprocessor> postprocessor;
 };
 
 #endif // HTMLPREVIEWGENERATOR_H

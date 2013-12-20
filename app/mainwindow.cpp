@@ -532,6 +532,9 @@ void MainWindow::viewHorizontalLayout(bool checked)
 void MainWindow::extrasEmbeddedMediaSupport(bool checked)
 {
     QWebSettings::globalSettings()->setAttribute(QWebSettings::PluginsEnabled, checked);
+
+    options->setEmbeddedMediaSupportEnabled(checked);
+    emit plainTextChanged();
 }
 
 void MainWindow::extrasShowHardLinebreaks(bool checked)
@@ -878,7 +881,7 @@ void MainWindow::setupActions()
             generator, SLOT(setMathSupportEnabled(bool)));
     connect(ui->actionCodeHighlighting, SIGNAL(triggered(bool)),
             generator, SLOT(setCodeHighlightingEnabled(bool)));
-    connect(ui->actionEmbeddedMediaSupport, SIGNAL(triggered(bool)),
+    connect(ui->actionEmbeddedMediaSupport, SIGNAL(toggled(bool)),
             generator, SLOT(setEmbeddedMediaSupportEnabled(bool)));
     connect(ui->actionEmbeddedMediaSupport, SIGNAL(toggled(bool)),
             SLOT(extrasEmbeddedMediaSupport(bool)));

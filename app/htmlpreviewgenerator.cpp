@@ -20,14 +20,13 @@
 #include <QFile>
 #include <QRegularExpression>
 
+#include <converter/embeddedmediapreprocessor.h>
 #include <converter/markdownconverter.h>
 #include <converter/markdowndocument.h>
 #include <converter/discountmarkdownconverter.h>
 #include <converter/hoedownmarkdownconverter.h>
 
-#include <oembedmanager.h>
-
-#include "oembedworker.h"
+#include "embeddedmediapostprocessor.h"
 #include "options.h"
 
 HtmlPreviewGenerator::HtmlPreviewGenerator(Options *opt, QObject *parent) :
@@ -38,9 +37,6 @@ HtmlPreviewGenerator::HtmlPreviewGenerator(Options *opt, QObject *parent) :
 {
     connect(options, SIGNAL(markdownConverterChanged()), SLOT(markdownConverterChanged()));
     markdownConverterChanged();
-
-    qDebug() << "create oembed worker";
-    worker = new OEmbedWorker(new qoembed::OEmbedManager(this));
 }
 
 void HtmlPreviewGenerator::setHtmlTemplate(const QString &t)
@@ -107,10 +103,19 @@ void HtmlPreviewGenerator::setCodeHighlightingStyle(const QString &style)
 
 void HtmlPreviewGenerator::setEmbeddedMediaSupportEnabled(bool enabled)
 {
-    options->setEmbeddedMediaSupportEnabled(enabled);
+    if (enabled) {
+        qDebug() << "create preprocessor";
+        preprocessor = QSharedPointer<TextPreprocessor>(new EmbeddedMediaPreprocessor);
+        postprocessor = QSharedPointer<HtmlPostprocessor>(new EmbeddedMediaPostprocessor);
+    } else {
+        qDebug() << "clear preprocessor";
+        preprocessor.clear();
+        postprocessor.clear();
+    }
 
-    // regenerate a HTML document
-    generateHtmlFromMarkdown();
+    qDebug() << "set preprocessor for converter";
+    converter->setTextPreprocessor(preprocessor);
+    converter->setHtmlPostprocessor(postprocessor);
 }
 
 void HtmlPreviewGenerator::markdownConverterChanged()
@@ -158,31 +163,12 @@ void HtmlPreviewGenerator::run()
             // delete previous markdown document
             delete document;
 
-            preprocessMarkdown(text);
-
             // generate HTML from markdown
             document = converter->createDocument(text, converterOptions());
             generateHtmlFromMarkdown();
 
             // generate table of contents
             generateTableOfContents();
-        }
-    }
-}
-
-void HtmlPreviewGenerator::preprocessMarkdown(QString &text)
-{
-    if (options->isEmbeddedMediaSupportEnabled()) {
-        QRegularExpression re("@\\[(.*)\\]\\((.*)\\)");
-
-        if (text.count(re) > 0) {
-            QRegularExpressionMatch match = re.match(text);
-            while (match.hasMatch()) {
-                QString html = worker->doWork(match.captured(2));
-                text.replace(match.capturedStart(), match.capturedLength(), html);
-
-                match = re.match(text);
-            }
         }
     }
 }
