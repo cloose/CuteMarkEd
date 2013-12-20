@@ -42,7 +42,26 @@ DiscountMarkdownConverter::DiscountMarkdownConverter()
 {
 }
 
-MarkdownDocument *DiscountMarkdownConverter::createDocument(const QString &text, ConverterOptions options)
+QString DiscountMarkdownConverter::renderAsTableOfContents(MarkdownDocument *document)
+{
+    QString toc;
+
+    if (document) {
+        DiscountMarkdownDocument *doc = dynamic_cast<DiscountMarkdownDocument*>(document);
+
+        if (doc->document()) {
+            // generate table of contents
+            char *out;
+            mkd_toc(doc->document(), &out);
+
+            toc = QString::fromUtf8(out);
+        }
+    }
+
+    return toc;
+}
+
+MarkdownDocument *DiscountMarkdownConverter::doCreateDocument(const QString &text, ConverterOptions options)
 {
     MMIOT *doc = 0;
 
@@ -66,7 +85,7 @@ MarkdownDocument *DiscountMarkdownConverter::createDocument(const QString &text,
     return new DiscountMarkdownDocument(doc);
 }
 
-QString DiscountMarkdownConverter::renderAsHtml(MarkdownDocument *document)
+QString DiscountMarkdownConverter::doRenderAsHtml(MarkdownDocument *document)
 {
     QString html;
 
@@ -82,25 +101,6 @@ QString DiscountMarkdownConverter::renderAsHtml(MarkdownDocument *document)
     }
 
     return html;
-}
-
-QString DiscountMarkdownConverter::renderAsTableOfContents(MarkdownDocument *document)
-{
-    QString toc;
-
-    if (document) {
-        DiscountMarkdownDocument *doc = dynamic_cast<DiscountMarkdownDocument*>(document);
-
-        if (doc->document()) {
-            // generate table of contents
-            char *out;
-            mkd_toc(doc->document(), &out);
-
-            toc = QString::fromUtf8(out);
-        }
-    }
-
-    return toc;
 }
 
 unsigned long DiscountMarkdownConverter::translateConverterOptions(ConverterOptions options) const

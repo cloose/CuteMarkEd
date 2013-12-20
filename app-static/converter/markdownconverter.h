@@ -17,10 +17,13 @@
 #ifndef MARKDOWNCONVERTER_H
 #define MARKDOWNCONVERTER_H
 
+#include <QSharedPointer>
 #include <QString>
 
+class HtmlPostprocessor;
 class MarkdownDocument;
 class Options;
+class TextPreprocessor;
 
 class MarkdownConverter
 {
@@ -46,9 +49,22 @@ public:
 
     virtual ~MarkdownConverter() {}
 
-    virtual MarkdownDocument *createDocument(const QString &text, ConverterOptions options) = 0;
-    virtual QString renderAsHtml(MarkdownDocument *document) = 0;
+    void setTextPreprocessor(const QSharedPointer<TextPreprocessor> &preprocessor);
+    void setHtmlPostprocessor(const QSharedPointer<HtmlPostprocessor> &postprocessor);
+
+    MarkdownDocument *createDocument(const QString &text, ConverterOptions options);
+    QString renderAsHtml(MarkdownDocument *document);
+
     virtual QString renderAsTableOfContents(MarkdownDocument *document) = 0;
+
+protected:
+    MarkdownConverter();
+    virtual MarkdownDocument *doCreateDocument(const QString &text, ConverterOptions options) = 0;
+    virtual QString doRenderAsHtml(MarkdownDocument *document) = 0;
+
+private:
+    QSharedPointer<TextPreprocessor> preprocessor;
+    QSharedPointer<HtmlPostprocessor> postprocessor;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(MarkdownConverter::ConverterOptions)

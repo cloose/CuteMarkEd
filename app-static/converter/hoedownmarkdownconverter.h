@@ -24,9 +24,11 @@ class HoedownMarkdownConverter : public MarkdownConverter
 public:
     HoedownMarkdownConverter();
 
-    virtual MarkdownDocument *createDocument(const QString &text, ConverterOptions options);
-    virtual QString renderAsHtml(MarkdownDocument *document);
     virtual QString renderAsTableOfContents(MarkdownDocument *document);
+
+protected:
+    virtual MarkdownDocument *doCreateDocument(const QString &text, ConverterOptions options);
+    virtual QString doRenderAsHtml(MarkdownDocument *document);
 
 private:
     unsigned long translateConverterOptions(ConverterOptions options) const;
