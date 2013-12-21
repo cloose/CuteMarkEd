@@ -20,6 +20,7 @@ TRANSLATIONS += \
     translations/cutemarked_de.ts \
     translations/cutemarked_el.ts \
     translations/cutemarked_fr.ts \
+    translations/cutemarked_ja.ts \
     translations/cutemarked_zh_CN.ts
 
 RC_FILE = cutemarked.rc
@@ -92,8 +93,10 @@ OTHER_FILES += \
     cutemarked.desktop \
     syntax.html \
     cutemarked.rc \
+    syntax_cs.html \
     syntax_de.html \
     syntax_el.html \
+    syntax_ja.html \
     syntax_zh_CN.html \
     styles/solarized-dark.css \
     styles/markdown.css \
