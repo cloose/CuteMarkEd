@@ -7,3 +7,6 @@
 [submodule "3rdparty/hoedown"]
 	path = 3rdparty/hoedown
 	url = https://github.com/cloose/hoedown.git
+[submodule "3rdparty/qoembed"]
+	path = 3rdparty/qoembed
+	url = https://cloose@github.com/cloose/qoembed.git
