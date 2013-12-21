@@ -21,12 +21,12 @@
 #include <QRegularExpression>
 
 #include <converter/embeddedmediapreprocessor.h>
+#include <converter/embeddedmediapostprocessor.h>
 #include <converter/markdownconverter.h>
 #include <converter/markdowndocument.h>
 #include <converter/discountmarkdownconverter.h>
 #include <converter/hoedownmarkdownconverter.h>
 
-#include "embeddedmediapostprocessor.h"
 #include "options.h"
 
 HtmlPreviewGenerator::HtmlPreviewGenerator(Options *opt, QObject *parent) :

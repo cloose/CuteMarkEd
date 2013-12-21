@@ -4,7 +4,7 @@
 # Github : https://github.com/cloose/CuteMarkEd
 #
 
-QT += gui
+QT += gui network
 
 TARGET = app-static
 TEMPLATE = lib
@@ -21,7 +21,8 @@ SOURCES += \
     converter/textpreprocessor.cpp \
     converter/markdownconverter.cpp \
     converter/htmlpostprocessor.cpp \
-    converter/embeddedmediapreprocessor.cpp
+    converter/embeddedmediapreprocessor.cpp \
+    converter/embeddedmediapostprocessor.cpp
 
 HEADERS += \
     snippets/snippet.h \
@@ -36,7 +37,8 @@ HEADERS += \
     spellchecker/dictionary.h \
     converter/textpreprocessor.h \
     converter/htmlpostprocessor.h \
-    converter/embeddedmediapreprocessor.h
+    converter/embeddedmediapreprocessor.h \
+    converter/embeddedmediapostprocessor.h
 
 unix:!symbian {
     maemo5 {
@@ -81,3 +83,11 @@ DEPENDPATH += $$PWD/../3rdparty/hoedown
 win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/release/libhoedown.a
 else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/debug/libhoedown.a
 #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/libhoedown.a
+
+#
+# qoembed library
+#
+unix|win32: LIBS += -L$$PWD/../3rdparty/qoembed/build/src/ -llibqoembed
+
+INCLUDEPATH += $$PWD/../3rdparty/qoembed/src
+DEPENDPATH += $$PWD/../3rdparty/qoembed/src

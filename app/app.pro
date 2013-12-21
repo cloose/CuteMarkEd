@@ -48,8 +48,7 @@ SOURCES += \
     controls/languagemenu.cpp \
     tabletooldialog.cpp \
     imagetooldialog.cpp \
-    snippetcompleter.cpp \
-    embeddedmediapostprocessor.cpp
+    snippetcompleter.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -73,8 +72,7 @@ HEADERS  += \
     controls/languagemenu.h \
     tabletooldialog.h \
     imagetooldialog.h \
-    snippetcompleter.h \
-    embeddedmediapostprocessor.h
+    snippetcompleter.h
 
 FORMS    += \
     mainwindow.ui \
@@ -192,12 +190,10 @@ else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty
 #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hoedown/libhoedown.a
 
 # qoembed
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../qoembed-build/src/ -llibqoembed
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../qoembed-build/src/ -llibqoembed
-else:unix: LIBS += -L$$PWD/../../qoembed-build/src/ -llibqoembed
+unix|win32: LIBS += -L$$PWD/../3rdparty/qoembed/build/src/ -llibqoembed
 
-INCLUDEPATH += $$PWD/../../qoembed/src
-DEPENDPATH += $$PWD/../../qoembed/src
+INCLUDEPATH += $$PWD/../3rdparty/qoembed/src
+DEPENDPATH += $$PWD/../3rdparty/qoembed/src
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
 message("Using LIBS=$$LIBS")
