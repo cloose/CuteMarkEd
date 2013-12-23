@@ -8,15 +8,15 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install qtbase5-dev libqt5webkit5-dev libhunspell-dev cmake
 before_script:
-  - lrelease app/translations/cutemarked_cs.ts -qm app/translations/cutemarked_cs.qm
-  - lrelease app/translations/cutemarked_de.ts -qm app/translations/cutemarked_de.qm
-  - lrelease app/translations/cutemarked_el.ts -qm app/translations/cutemarked_el.qm
-  - lrelease app/translations/cutemarked_zh_CN.ts -qm app/translations/cutemarked_zh_CN.qm
+  - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_cs.ts -qm app/translations/cutemarked_cs.qm
+  - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_de.ts -qm app/translations/cutemarked_de.qm
+  - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_el.ts -qm app/translations/cutemarked_el.qm
+  - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_zh_CN.ts -qm app/translations/cutemarked_zh_CN.qm
 script:
   - cd 3rdparty/discount && ./configure.sh && make && sudo make install ; cd ../..
   - cd 3rdparty/hoedown && qmake QMAKE_CXX=$CXX hoedown.pro && make && sudo make install ; cd ../.. 
   - cd 3rdparty/qoembed && mkdir build && cmake .. && make && cd ../..
-  - qmake QMAKE_CXX=$CXX CuteMarkEd.pro
+  - qtchooser -run-tool=qmake -qt=qt5 CuteMarkEd.pro
   - make
   - make check
            
