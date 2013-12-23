@@ -6,7 +6,7 @@ before_install:
   - sudo add-apt-repository -y ppa:ubuntu-sdk-team/ppa    # for Qt5
   - sudo add-apt-repository -y ppa:kalakris/cmake         # for CMake
   - sudo apt-get update
-  - sudo apt-get install qtbase5-dev libqt5webkit5-dev libhunspell-dev cmake
+  - sudo apt-get install qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev qttools5-dev-tools libhunspell-dev cmake
 before_script:
   - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_cs.ts -qm app/translations/cutemarked_cs.qm
   - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_de.ts -qm app/translations/cutemarked_de.qm
