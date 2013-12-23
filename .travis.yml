@@ -15,7 +15,7 @@ before_script:
 script:
   - cd 3rdparty/discount && ./configure.sh && make && sudo make install ; cd ../..
   - cd 3rdparty/hoedown && qtchooser -run-tool=qmake -qt=qt5 hoedown.pro && make && sudo make install ; cd ../.. 
-  - cd 3rdparty/qoembed && mkdir build && cd build && cmake .. && make && cd ../..
+  - cd 3rdparty/qoembed && mkdir build && cd build && cmake .. && make && cd ../../..
   - qtchooser -run-tool=qmake -qt=qt5 CuteMarkEd.pro
   - make
   - make check
