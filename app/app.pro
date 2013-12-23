@@ -190,7 +190,8 @@ else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty
 #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hoedown/libhoedown.a
 
 # qoembed
-unix|win32: LIBS += -L$$PWD/../3rdparty/qoembed/build/src/ -llibqoembed
+win32: LIBS += -L$$PWD/../3rdparty/qoembed/build/src/ -llibqoembed
+else:unix: LIBS += -L$$PWD/../3rdparty/qoembed/build/src/ -lqoembed
 
 INCLUDEPATH += $$PWD/../3rdparty/qoembed/src
 DEPENDPATH += $$PWD/../3rdparty/qoembed/src
