@@ -528,9 +528,9 @@ void MainWindow::viewHorizontalLayout(bool checked)
     }
 }
 
-void MainWindow::extrasShowHardLinebreaks(bool checked)
+void MainWindow::extrasShowSpecialCharacters(bool checked)
 {
-    ui->plainTextEdit->setShowHardLinebreaks(checked);
+    ui->plainTextEdit->setShowSpecialCharacters(checked);
 }
 
 void MainWindow::extensionsAutolink(bool checked)

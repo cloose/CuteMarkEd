@@ -374,9 +374,22 @@ int MarkdownEditor::countWords() const
     return words;
 }
 
-void MarkdownEditor::setShowHardLinebreaks(bool enabled)
+void MarkdownEditor::setShowSpecialCharacters(bool enabled)
 {
     showHardLinebreaks = enabled;
+
+    QTextOption textOption = document()->defaultTextOption();
+    QTextOption::Flags optionFlags = textOption.flags();
+    if (enabled) {
+        optionFlags |= QTextOption::ShowLineAndParagraphSeparators;
+        optionFlags |= QTextOption::ShowTabsAndSpaces;
+    } else {
+        optionFlags &= ~QTextOption::ShowLineAndParagraphSeparators;
+        optionFlags &= ~QTextOption::ShowTabsAndSpaces;
+    }
+    textOption.setFlags(optionFlags);
+
+    document()->setDefaultTextOption(textOption);
 
     // repaint
     viewport()->update();

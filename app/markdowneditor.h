@@ -42,7 +42,7 @@ public:
 
     int countWords() const;
 
-    void setShowHardLinebreaks(bool enabled);
+    void setShowSpecialCharacters(bool enabled);
     void setSpellingCheckEnabled(bool enabled);
     void setSpellingDictionary(const Dictionary &dictionary);
 
