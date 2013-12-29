@@ -13,7 +13,7 @@ before_script:
   - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_zh_CN.ts -qm app/translations/cutemarked_zh_CN.qm
 script:
   - cd 3rdparty/discount && ./configure.sh && make && sudo make install ; cd ../..
-  - cd 3rdparty/hoedown && qmake QMAKE_CXX=$CXX hoedown.pro && make && sudo make install ; cd ../.. 
+  - cd 3rdparty/hoedown && qtchooser -run-tool=qmake -qt=qt5 hoedown.pro && make && sudo make install ; cd ../.. 
   - qtchooser -run-tool=qmake -qt=qt5 CuteMarkEd.pro  
   - make
   - make check
