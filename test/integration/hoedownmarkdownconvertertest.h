@@ -31,6 +31,7 @@ private slots:
 
     void convertsEmptyStringToEmptyHtml();
     void convertsMarkdownParagraphToHtml();
+    void preservesGermanUmlautsInHtml();
 
     void cleanupTestCase();
 

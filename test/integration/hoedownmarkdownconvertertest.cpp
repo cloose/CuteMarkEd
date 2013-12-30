@@ -41,7 +41,18 @@ void HoedownMarkdownConverterTest::convertsMarkdownParagraphToHtml()
     QString html = converter->renderAsHtml(doc);
 
     QVERIFY(!html.isEmpty());
-    QVERIFY(html.contains("<p>This is an example</p>"));
+    QVERIFY2(html.contains("<p>This is an example</p>"), qPrintable(html));
+}
+
+void HoedownMarkdownConverterTest::preservesGermanUmlautsInHtml()
+{
+    QString markdown = QStringLiteral("äöüß");
+
+    MarkdownDocument *doc = converter->createDocument(markdown, 0);
+    QString html = converter->renderAsHtml(doc);
+
+    QVERIFY(!html.isEmpty());
+    QVERIFY2(html.contains(QStringLiteral("<p>äöüß</p>")), qPrintable(html));
 }
 
 void HoedownMarkdownConverterTest::cleanupTestCase()

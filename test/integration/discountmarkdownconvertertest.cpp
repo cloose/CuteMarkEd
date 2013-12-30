@@ -44,6 +44,17 @@ void DiscountMarkdownConverterTest::convertsMarkdownParagraphToHtml()
     QCOMPARE(html, QStringLiteral("<p>This is an example</p>"));
 }
 
+void DiscountMarkdownConverterTest::preservesGermanUmlautsInHtml()
+{
+    QString markdown = QStringLiteral("äöü");
+
+    MarkdownDocument *doc = converter->createDocument(markdown, 0);
+    QString html = converter->renderAsHtml(doc);
+
+    QVERIFY(!html.isEmpty());
+    QCOMPARE(html, QStringLiteral("<p>äöü</p>"));
+}
+
 void DiscountMarkdownConverterTest::cleanupTestCase()
 {
     delete converter;
