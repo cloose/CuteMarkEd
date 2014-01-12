@@ -124,7 +124,7 @@ void MainWindow::initializeApp()
     // set default style
     styleDefault();
 
-    ui->plainTextEdit->setTabStopWidth(options->tabWidth()*10);
+    ui->plainTextEdit->tabWidthChanged(options->tabWidth());
 
     // init extension flags
     ui->actionAutolink->setChecked(options->isAutolinkEnabled());
@@ -639,11 +639,6 @@ void MainWindow::toggleHtmlView()
     updateSplitter(true);
 }
 
-void MainWindow::tabWidthChanged(int tabWidth)
-{
-    ui->plainTextEdit->setTabStopWidth(tabWidth*10);
-}
-
 void MainWindow::plainTextChanged()
 {
     QString code = ui->plainTextEdit->toPlainText();
@@ -939,7 +934,7 @@ void MainWindow::setupMarkdownEditor()
     connect(options, SIGNAL(editorFontChanged(QFont)),
             ui->plainTextEdit, SLOT(editorFontChanged(QFont)));
     connect(options, SIGNAL(tabWidthChanged(int)),
-            this, SLOT(tabWidthChanged(int)));
+            ui->plainTextEdit, SLOT(tabWidthChanged(int)));
 }
 
 void MainWindow::setupHtmlPreview()
