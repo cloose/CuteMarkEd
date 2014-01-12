@@ -331,6 +331,8 @@ void OptionsDialog::readState()
     ui->fontComboBox->setCurrentFont(font);
     ui->sizeComboBox->setCurrentText(QString().setNum(font.pointSize()));
 
+    ui->tabWidthSpinBox->setValue(options->tabWidth());
+
     // proxy settings
     switch (options->proxyMode()) {
     case Options::NoProxy:
@@ -358,6 +360,8 @@ void OptionsDialog::saveState()
     QFont font = ui->fontComboBox->currentFont();
     font.setPointSize(ui->sizeComboBox->currentText().toInt());
     options->setEditorFont(font);
+
+    options->setTabWidth(ui->tabWidthSpinBox->value());
 
     // proxy settings
     if (ui->noProxyRadioButton->isChecked()) {
