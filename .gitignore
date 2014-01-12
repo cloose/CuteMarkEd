@@ -1,3 +1,10 @@
+
+#################
+## Qt
+#################
+moc_*.cpp
+qrc_*.cpp
+
 #################
 ## Eclipse
 #################
@@ -28,6 +35,14 @@ local.properties
 # PDT-specific
 .buildpath
 
+#################
+## Linux
+#################
+Makefile
+*.o
+*.so
+*.a
+app/cutemarked
 
 #################
 ## Visual Studio
