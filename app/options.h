@@ -102,7 +102,7 @@ signals:
 
 private:
     QFont font;
-    int m_TabWidth;
+    int m_tabWidth;
     ProxyMode m_proxyMode;
     QString m_proxyHost;
     quint16 m_proxyPort;

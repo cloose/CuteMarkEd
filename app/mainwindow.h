@@ -108,8 +108,6 @@ private slots:
     void styleContextMenu(const QPoint &pos);
     void toggleHtmlView();
 
-    void tabWidthChanged(int tabWidth);
-
     void plainTextChanged();
     void htmlResultReady(const QString &html);
     void tocResultReady(const QString &toc);
