@@ -541,6 +541,11 @@ void MainWindow::extrasShowSpecialCharacters(bool checked)
     ui->plainTextEdit->setShowSpecialCharacters(checked);
 }
 
+void MainWindow::extrasWordWrap(bool checked)
+{
+    ui->plainTextEdit->setLineWrapMode(checked ? MarkdownEditor::NoWrap : MarkdownEditor::WidgetWidth);
+}
+
 void MainWindow::extensionsAutolink(bool checked)
 {
     options->setAutolinkEnabled(checked);
