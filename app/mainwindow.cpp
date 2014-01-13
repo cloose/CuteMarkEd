@@ -708,7 +708,8 @@ void MainWindow::tocLinkClicked(const QUrl &url)
 void MainWindow::splitterMoved(int pos, int index)
 {
     Q_UNUSED(index)
-    splitFactor = (float)pos / ui->splitter->size().width();
+    int maxViewWidth = ui->splitter->size().width() - ui->splitter->handleWidth();
+    splitFactor = (float)pos / maxViewWidth;
 }
 
 void MainWindow::scrollValueChanged(int value)
