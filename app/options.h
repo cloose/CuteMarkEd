@@ -31,9 +31,14 @@ public:
 
     void apply();
 
+    /* Editor options */
     QFont editorFont() const;
     void setEditorFont(const QFont &font);
 
+    int tabWidth() const;
+    void setTabWidth(int width);
+
+    /* Internet options */
     ProxyMode proxyMode() const;
     void setProxyMode(ProxyMode mode);
 
@@ -49,6 +54,7 @@ public:
     QString proxyPassword() const;
     void setProxyPassword(const QString &password);
 
+    /* Extra menu options */
     bool isAutolinkEnabled() const;
     void setAutolinkEnabled(bool enabled);
 
@@ -90,11 +96,13 @@ public:
 
 signals:
     void editorFontChanged(const QFont &font);
+    void tabWidthChanged(int tabWidth);
     void proxyConfigurationChanged();
     void markdownConverterChanged();
 
 private:
     QFont font;
+    int m_tabWidth;
     ProxyMode m_proxyMode;
     QString m_proxyHost;
     quint16 m_proxyPort;

@@ -125,6 +125,8 @@ void MainWindow::initializeApp()
     // set default style
     styleDefault();
 
+    ui->plainTextEdit->tabWidthChanged(options->tabWidth());
+
     // init extension flags
     ui->actionAutolink->setChecked(options->isAutolinkEnabled());
     ui->actionStrikethroughOption->setChecked(options->isStrikethroughEnabled());
@@ -952,6 +954,8 @@ void MainWindow::setupMarkdownEditor()
 
     connect(options, SIGNAL(editorFontChanged(QFont)),
             ui->plainTextEdit, SLOT(editorFontChanged(QFont)));
+    connect(options, SIGNAL(tabWidthChanged(int)),
+            ui->plainTextEdit, SLOT(tabWidthChanged(int)));
 }
 
 void MainWindow::setupHtmlPreview()
