@@ -23,18 +23,16 @@ namespace Ui {
 class MainWindow;
 }
 
-namespace hunspell {
-class Dictionary;
-}
-
 class QActionGroup;
 class QLabel;
 class QNetworkDiskCache;
 class ActiveLabel;
+class Dictionary;
 class HtmlPreviewGenerator;
 class HtmlHighlighter;
 class RecentFilesMenu;
 class Options;
+class SnippetCollection;
 
 
 class MainWindow : public QMainWindow
@@ -55,7 +53,7 @@ protected:
 private slots:
     void initializeApp();
     void openRecentFile(const QString &fileName);
-    void languageChanged(const hunspell::Dictionary &dictionary);
+    void languageChanged(const Dictionary &dictionary);
 
     void fileNew();
     void fileOpen();
@@ -93,13 +91,14 @@ private slots:
     void viewFullScreenMode();
     void viewHorizontalLayout(bool checked);
 
-    void extrasShowHardLinebreaks(bool checked);
+    void extrasShowSpecialCharacters(bool checked);
     void extensionsAutolink(bool checked);
     void extensionsStrikethrough(bool checked);
     void extensionsAlphabeticLists(bool checked);
     void extensionsDefinitionLists(bool checked);
     void extensionsSmartyPants(bool checked);
     void extensionsFootnotes(bool enabled);
+    void extensionsSuperscript(bool enabled);
     void extrasCheckSpelling(bool checked);
     void extrasOptions();
 
@@ -149,6 +148,7 @@ private:
     ActiveLabel *viewLabel;
     HtmlPreviewGenerator* generator;
     HtmlHighlighter *htmlHighlighter;
+    SnippetCollection *snippetCollection;
     QString fileName;
     float splitFactor;
     int scrollBarPos;

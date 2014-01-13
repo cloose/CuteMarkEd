@@ -23,13 +23,15 @@ namespace Ui {
 class OptionsDialog;
 }
 class Options;
+class SnippetCollection;
+
 
 class OptionsDialog : public QDialog
 {
     Q_OBJECT
     
 public:
-    explicit OptionsDialog(Options *opt, QWidget *parent = 0);
+    OptionsDialog(Options *opt, SnippetCollection *collection, QWidget *parent = 0);
     ~OptionsDialog();
 
 protected:
@@ -37,6 +39,10 @@ protected:
 
 private slots:
     void manualProxyRadioButtonToggled(bool checked);
+    void currentSnippetChanged(const QModelIndex &current, const QModelIndex &previous);
+    void snippetTextChanged();
+    void addSnippetButtonClicked();
+    void removeSnippetButtonClicked();
 
 private:
     void readState();
@@ -45,6 +51,7 @@ private:
 private:
     Ui::OptionsDialog *ui;
     Options *options;
+    SnippetCollection *snippetCollection;
 };
 
 #endif // OPTIONSDIALOG_H

@@ -33,6 +33,7 @@ pre .ini .title,
 pre .tag .value,
 pre .css .rules .value,
 pre .preprocessor,
+pre .pragma,
 pre .ruby .symbol,
 pre .ruby .symbol .string,
 pre .ruby .class .parent,
@@ -54,7 +55,8 @@ pre .envvar,
 pre .apache .tag,
 pre .apache .cbracket,
 pre .tex .command,
-pre .prompt {
+pre .prompt,
+pre .coffeescript .attribute {
   color: #D88;
 }
 

@@ -14,37 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "document.h"
-using Discount::Document;
-using Discount::Parser;
+#include "dictionarytest.h"
 
-Document::Document(const QString &text, Parser::ParserOptions options) :
-    document(0)
+#include <QTest>
+
+#include <spellchecker/dictionary.h>
+
+void DictionaryTest::returnsLanguageNameForLanguageCode()
 {
-    if (text.length() > 0) {
-        document = Parser::parseString(text, options);
-    }
+    Dictionary german("de_DE", "");
+    QCOMPARE(german.languageName(), QStringLiteral("Deutsch"));
+
+    Dictionary americanEnglish("en_US", "");
+    QCOMPARE(americanEnglish.languageName(), QStringLiteral("U.S. English"));
 }
 
-Document::~Document()
+void DictionaryTest::returnsCountryNameForLanguage()
 {
-    Parser::cleanup(document);
-}
+    Dictionary german("de_DE", "");
+    QCOMPARE(german.countryName(), QStringLiteral("Deutschland"));
 
-QString Document::toHtml()
-{
-    if (html.isNull() && document) {
-        html = Parser::renderAsHtml(document);
-    }
-
-    return html;
-}
-
-QString Document::generateToc()
-{
-    if (toc.isNull() && document) {
-        toc = Parser::generateToc(document);
-    }
-
-    return toc;
+    Dictionary americanEnglish("en_US", "");
+    QCOMPARE(americanEnglish.countryName(), QStringLiteral("United States"));
 }

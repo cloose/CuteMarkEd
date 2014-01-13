@@ -14,48 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "dictionary.h"
-using hunspell::Dictionary;
+#ifndef JSONSNIPPETFILETEST_H
+#define JSONSNIPPETFILETEST_H
 
-#include <QLocale>
+#include <QObject>
 
-Dictionary::Dictionary()
+
+class JsonSnippetFileTest : public QObject
 {
-}
+    Q_OBJECT
 
-Dictionary::Dictionary(const QString &language, const QString &filePath) :
-    m_language(language),
-    m_filePath(filePath)
-{
-}
+private slots:
+    void loadsEmptySnippetsCollectionFromFile();
+    void loadsSnippetsCollectionFromFile();
 
-Dictionary::Dictionary(const hunspell::Dictionary &other)
-{
-    m_language = other.m_language;
-    m_filePath = other.m_filePath;
-}
+    void savesEmptySnippetsCollectionToFile();
+    void savesSnippetsCollectionToFile();
 
-Dictionary::~Dictionary()
-{
-}
+    void roundtripTest();
+};
 
-QString Dictionary::language() const
-{
-    return m_language;
-}
-
-QString Dictionary::languageName() const
-{
-    return QLocale(m_language).nativeLanguageName();
-}
-
-QString Dictionary::countryName() const
-{
-    return QLocale(m_language).nativeCountryName();
-}
-
-QString Dictionary::filePath() const
-{
-    return m_filePath;
-}
-
+#endif // JSONSNIPPETFILETEST_H

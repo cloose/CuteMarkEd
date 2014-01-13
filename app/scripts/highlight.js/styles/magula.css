@@ -26,6 +26,7 @@ pre .tag .value,
 pre .rules .value,
 pre .rules .value .number,
 pre .preprocessor,
+pre .pragma,
 pre .ruby .symbol,
 pre .ruby .symbol .string,
 pre .aggregate,
@@ -36,7 +37,8 @@ pre .addition,
 pre .flow,
 pre .stream,
 pre .bash .variable,
-pre .apache .cbracket {
+pre .apache .cbracket,
+pre .coffeescript .attribute {
   color: #050;
 }
 

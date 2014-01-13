@@ -43,7 +43,8 @@ pre .filter .argument,
 pre .attr_selector,
 pre .apache .cbracket,
 pre .date,
-pre .regexp {
+pre .regexp,
+pre .coffeescript .attribute {
   color: #080;
 }
 
@@ -112,7 +113,8 @@ pre .nginx .built_in {
 }
 
 pre .preprocessor,
-pre .preprocessor * {
+pre .preprocessor *,
+pre .pragma {
   color: #444;
 }
 

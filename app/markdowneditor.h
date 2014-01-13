@@ -19,11 +19,12 @@
 
 #include <qplaintextedit.h>
 
-namespace hunspell {
 class Dictionary;
+namespace hunspell {
 class SpellChecker;
 }
 class MarkdownHighlighter;
+class SnippetCompleter;
 
 
 class MarkdownEditor : public QPlainTextEdit
@@ -41,9 +42,11 @@ public:
 
     int countWords() const;
 
-    void setShowHardLinebreaks(bool enabled);
+    void setShowSpecialCharacters(bool enabled);
     void setSpellingCheckEnabled(bool enabled);
-    void setSpellingDictionary(const hunspell::Dictionary &dictionary);
+    void setSpellingDictionary(const Dictionary &dictionary);
+
+    void setSnippetCompleter(SnippetCompleter *completer);
 
 signals:
     void loadDroppedFile(const QString &fileName);
@@ -51,6 +54,7 @@ signals:
 protected:
     void paintEvent(QPaintEvent *e) Q_DECL_OVERRIDE;
     void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
+    void keyPressEvent(QKeyEvent *e) Q_DECL_OVERRIDE;
     bool canInsertFromMimeData(const QMimeData *source) const Q_DECL_OVERRIDE;
     void insertFromMimeData(const QMimeData *source) Q_DECL_OVERRIDE;
 
@@ -60,14 +64,19 @@ private slots:
     void editorFontChanged(const QFont &font);
     void showContextMenu(const QPoint &pos);
     void replaceWithSuggestion();
+    void performCompletion();
+    void insertSnippet(const QString &completionPrefix, const QString &completion, int newCursorPos);
+    void addWordToUserWordlist();
 
 private:
     void drawLineEndMarker(QPaintEvent *e);
+    QString textUnderCursor() const;
 
 private:
     QWidget *lineNumberArea;
     MarkdownHighlighter *highlighter;
     hunspell::SpellChecker *spellChecker;
+    SnippetCompleter *completer;
     bool showHardLinebreaks;
 };
 

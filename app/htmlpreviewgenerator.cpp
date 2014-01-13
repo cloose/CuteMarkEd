@@ -18,16 +18,21 @@
 
 #include <QFile>
 
-#include "discount/document.h"
-#include "discount/parser.h"
+#include <converter/markdownconverter.h>
+#include <converter/markdowndocument.h>
+#include <converter/discountmarkdownconverter.h>
+#include <converter/hoedownmarkdownconverter.h>
 
 #include "options.h"
 
 HtmlPreviewGenerator::HtmlPreviewGenerator(Options *opt, QObject *parent) :
     QThread(parent),
     options(opt),
-    document(0)
+    document(0),
+    converter(0)
 {
+    connect(options, SIGNAL(markdownConverterChanged()), SLOT(markdownConverterChanged()));
+    markdownConverterChanged();
 }
 
 void HtmlPreviewGenerator::setHtmlTemplate(const QString &t)
@@ -65,7 +70,7 @@ QString HtmlPreviewGenerator::exportHtml(const QString &styleSheet, const QStrin
         header += "\n<script>hljs.initHighlightingOnLoad();</script>";
     }
 
-    return renderTemplate(header, document->toHtml());
+    return renderTemplate(header, converter->renderAsHtml(document));
 }
 
 void HtmlPreviewGenerator::setMathSupportEnabled(bool enabled)
@@ -90,6 +95,20 @@ void HtmlPreviewGenerator::setCodeHighlightingStyle(const QString &style)
 
     // regenerate a HTML document
     generateHtmlFromMarkdown();
+}
+
+void HtmlPreviewGenerator::markdownConverterChanged()
+{
+    switch (options->markdownConverter()) {
+    case Options::HoedownMarkdownConverter:
+        converter = new HoedownMarkdownConverter();
+        break;
+
+    case Options::DiscountMarkdownConverter:
+    default:
+        converter = new DiscountMarkdownConverter();
+        break;
+    }
 }
 
 void HtmlPreviewGenerator::run()
@@ -124,7 +143,7 @@ void HtmlPreviewGenerator::run()
             delete document;
 
             // generate HTML from markdown
-            document = new Discount::Document(text, parserOptions());
+            document = converter->createDocument(text, converterOptions());
             generateHtmlFromMarkdown();
 
             // generate table of contents
@@ -137,7 +156,7 @@ void HtmlPreviewGenerator::generateHtmlFromMarkdown()
 {
     if (!document) return;
 
-    QString html = renderTemplate(buildHtmlHeader(), document->toHtml());
+    QString html = renderTemplate(buildHtmlHeader(), converter->renderAsHtml(document));
     emit htmlResultReady(html);
 }
 
@@ -145,7 +164,7 @@ void HtmlPreviewGenerator::generateTableOfContents()
 {
     if (!document) return;
 
-    QString toc = document->generateToc();
+    QString toc = converter->renderAsTableOfContents(document);
     QString styledToc = QString("<html><head>\n<style type=\"text/css\">ul { list-style-type: none; padding: 0; margin-left: 1em; } a { text-decoration: none; }</style>\n</head><body>%1</body></html>").arg(toc);
     emit tocResultReady(styledToc);
 }
@@ -157,61 +176,69 @@ QString HtmlPreviewGenerator::renderTemplate(const QString &header, const QStrin
     }
 
     return QString(htmlTemplate)
-            .replace(QLatin1String("__HTML_HEADER__"), header)
-            .replace(QLatin1String("__HTML_CONTENT__"), body);
+            .replace(QLatin1String("<!--__HTML_HEADER__-->"), header)
+            .replace(QLatin1String("<!--__HTML_CONTENT__-->"), body);
 }
 
 QString HtmlPreviewGenerator::buildHtmlHeader() const
 {
     QString header;
 
+    // add javascript for scrollbar synchronization
+    header += "<script type=\"text/javascript\">window.onscroll = function() { mainwin.webViewScrolled(); }; </script>\n";
+
     // add MathJax.js script to HTML header
     if (options->isMathSupportEnabled()) {
-        header += "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>";
+        header += "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>\n";
     }
 
     // add Highlight.js script to HTML header
     if (options->isCodeHighlightingEnabled()) {
-        header += QString("<link rel=\"stylesheet\" href=\"qrc:/scripts/highlight.js/styles/%1.css\">").arg(codeHighlightingStyle);
-        header += "<script src=\"qrc:/scripts/highlight.js/highlight.pack.js\"></script>";
-        header += "<script>hljs.initHighlightingOnLoad();</script>";
+        header += QString("<link rel=\"stylesheet\" href=\"qrc:/scripts/highlight.js/styles/%1.css\">\n").arg(codeHighlightingStyle);
+        header += "<script src=\"qrc:/scripts/highlight.js/highlight.pack.js\"></script>\n";
+        header += "<script>hljs.initHighlightingOnLoad();</script>\n";
     }
 
     return header;
 }
 
-Discount::Parser::ParserOptions HtmlPreviewGenerator::parserOptions() const
+MarkdownConverter::ConverterOptions HtmlPreviewGenerator::converterOptions() const
 {
-    Discount::Parser::ParserOptions parserOptionFlags(Discount::Parser::TableOfContentsOption | Discount::Parser::NoStyleOption);
+    MarkdownConverter::ConverterOptions parserOptionFlags(MarkdownConverter::TableOfContentsOption | MarkdownConverter::NoStyleOption);
 
     // autolink
     if (options->isAutolinkEnabled()) {
-        parserOptionFlags |= Discount::Parser::AutolinkOption;
+        parserOptionFlags |= MarkdownConverter::AutolinkOption;
     }
 
     // strikethrough
     if (!options->isStrikethroughEnabled()) {
-        parserOptionFlags |= Discount::Parser::NoStrikethroughOption;
+        parserOptionFlags |= MarkdownConverter::NoStrikethroughOption;
     }
 
     // alphabetic lists
     if (!options->isAlphabeticListsEnabled()) {
-        parserOptionFlags |= Discount::Parser::NoAlphaListOption;
+        parserOptionFlags |= MarkdownConverter::NoAlphaListOption;
     }
 
     // definition lists
     if (!options->isDefinitionListsEnabled()) {
-        parserOptionFlags |= Discount::Parser::NoDefinitionListOption;
+        parserOptionFlags |= MarkdownConverter::NoDefinitionListOption;
     }
 
     // SmartyPants
     if (!options->isSmartyPantsEnabled()) {
-        parserOptionFlags |= Discount::Parser::NoSmartypantsOption;
+        parserOptionFlags |= MarkdownConverter::NoSmartypantsOption;
     }
 
     // Footnotes
     if (options->isFootnotesEnabled()) {
-        parserOptionFlags |= Discount::Parser::ExtraFootnoteOption;
+        parserOptionFlags |= MarkdownConverter::ExtraFootnoteOption;
+    }
+
+    // Superscript
+    if (!options->isSuperscriptEnabled()) {
+        parserOptionFlags |= MarkdownConverter::NoSuperscriptOption;
     }
 
     return parserOptionFlags;

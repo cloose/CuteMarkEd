@@ -38,7 +38,8 @@ pre .filter .argument,
 pre .attr_selector,
 pre .apache .cbracket,
 pre .date,
-pre .tex .command {
+pre .tex .command,
+pre .coffeescript .attribute {
   color: #65B042;
 }
 
@@ -111,7 +112,8 @@ pre .nginx .built_in {
   color: #9B859D;
 }
 
-pre .preprocessor {
+pre .preprocessor,
+pre .pragma {
   color: #8996A8;
 }
 

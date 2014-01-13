@@ -25,6 +25,7 @@ class Options : public QObject
     Q_OBJECT
 public:
     enum ProxyMode { NoProxy, SystemProxy, ManualProxy };
+    enum MarkdownConverter { DiscountMarkdownConverter, HoedownMarkdownConverter };
 
     explicit Options(QObject *parent = 0);
 
@@ -66,6 +67,9 @@ public:
     bool isFootnotesEnabled() const;
     void setFootnotesEnabled(bool enabled);
 
+    bool isSuperscriptEnabled() const;
+    void setSuperscriptEnabled(bool enabled);
+
     bool isMathSupportEnabled() const;
     void setMathSupportEnabled(bool enabled);
 
@@ -78,12 +82,16 @@ public:
     QString dictionaryLanguage() const;
     void setDictionaryLanguage(const QString &language);
 
+    MarkdownConverter markdownConverter() const;
+    void setMarkdownConverter(MarkdownConverter converter);
+
     void readSettings();
     void writeSettings();
 
 signals:
     void editorFontChanged(const QFont &font);
     void proxyConfigurationChanged();
+    void markdownConverterChanged();
 
 private:
     QFont font;
@@ -98,10 +106,12 @@ private:
     bool m_definitionListsEnabled;
     bool m_smartyPantsEnabled;
     bool m_footnotesEnabled;
+    bool m_superscriptEnabled;
     bool m_mathSupportEnabled;
     bool m_codeHighlightingEnabled;
     bool m_spellingCheckEnabled;
     QString m_dictionaryLanguage;
+    MarkdownConverter m_markdownConverter;
 };
 
 #endif // OPTIONS_H

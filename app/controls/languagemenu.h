@@ -19,9 +19,7 @@
 
 #include <QMenu>
 
-namespace hunspell {
 class Dictionary;
-}
 
 class LanguageMenu : public QMenu
 {
@@ -32,13 +30,13 @@ public:
     void loadDictionaries(const QString &currentLanguage);
 
 signals:
-    void languageTriggered(const hunspell::Dictionary &dictionary);
+    void languageTriggered(const Dictionary &dictionary);
 
 private slots:
     void languageTriggered();
 
 private:
-    QAction *createAction(const hunspell::Dictionary &dictionary);
+    QAction *createAction(const Dictionary &dictionary);
 
 private:
     QActionGroup *dictionariesGroup;
