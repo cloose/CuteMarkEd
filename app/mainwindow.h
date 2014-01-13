@@ -132,7 +132,7 @@ private:
     void setupHtmlSourceView();
     bool maybeSave();
     void setFileName(const QString &fileName);
-    void updateSplitter(bool htmlViewToggled);
+    void updateSplitter();
     void loadCustomStyles();
     void readSettings();
     void writeSettings();

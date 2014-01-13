@@ -108,7 +108,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 void MainWindow::resizeEvent(QResizeEvent *e)
 {
     Q_UNUSED(e)
-    updateSplitter(false);
+    updateSplitter();
 }
 
 void MainWindow::initializeApp()
@@ -425,7 +425,7 @@ void MainWindow::viewChangeSplit()
         splitFactor = 0.25;
     }
 
-    updateSplitter(true);
+    updateSplitter();
 }
 
 void MainWindow::styleDefault()
@@ -616,8 +616,8 @@ void MainWindow::styleContextMenu(const QPoint &pos)
 void MainWindow::toggleHtmlView()
 {
     if (viewLabel->text() == tr("HTML preview")) {
-        ui->webView->hide();
-        ui->htmlSourceTextEdit->show();
+        ui->stackedWidget->setCurrentWidget(ui->htmlSourcePage);
+
         ui->actionHtmlPreview->setText(tr("HTML source"));
         viewLabel->setText(tr("HTML source"));
 
@@ -625,8 +625,8 @@ void MainWindow::toggleHtmlView()
         htmlHighlighter->setEnabled(true);
         htmlHighlighter->rehighlight();
     } else {
-        ui->webView->show();
-        ui->htmlSourceTextEdit->hide();
+        ui->stackedWidget->setCurrentWidget(ui->webViewPage);
+
         ui->actionHtmlPreview->setText(tr("HTML preview"));
         viewLabel->setText(tr("HTML preview"));
 
@@ -634,7 +634,7 @@ void MainWindow::toggleHtmlView()
         htmlHighlighter->setEnabled(false);
     }
 
-    updateSplitter(true);
+    updateSplitter();
 }
 
 void MainWindow::plainTextChanged()
@@ -1005,7 +1005,7 @@ void MainWindow::setFileName(const QString &fileName)
     setWindowFilePath(shownName);
 }
 
-void MainWindow::updateSplitter(bool htmlViewToggled)
+void MainWindow::updateSplitter()
 {
     // not fully initialized yet?
     if (centralWidget()->size() != ui->splitter->size()) {
@@ -1014,19 +1014,8 @@ void MainWindow::updateSplitter(bool htmlViewToggled)
 
     // calculate new width of left and right pane
     QList<int> childSizes = ui->splitter->sizes();
-    int leftWidth = ui->splitter->width() * splitFactor;
-    int rightWidth = ui->splitter->width() * (1 - splitFactor);
-
-    bool webViewFolded = ui->webView->isVisible() && childSizes[1] == 0;
-    bool htmlSourceFolded = ui->htmlSourceTextEdit->isVisible() && childSizes[2] == 0;
-
-    childSizes[0] = leftWidth;
-    if (htmlViewToggled || !webViewFolded) {
-        childSizes[1] = rightWidth;
-    }
-    if (htmlViewToggled || !htmlSourceFolded) {
-        childSizes[2] = rightWidth;
-    }
+    childSizes[0] = ui->splitter->width() * splitFactor;
+    childSizes[1] = ui->splitter->width() * (1 - splitFactor);
 
     ui->splitter->setSizes(childSizes);
 }
