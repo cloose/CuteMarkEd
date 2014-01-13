@@ -65,7 +65,8 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     generator(new HtmlPreviewGenerator(options, this)),
     snippetCollection(new SnippetCollection(this)),
     splitFactor(0.5),
-    scrollBarPos(0)
+    scrollBarPos(0),
+    rightViewCollapsed(false)
 {
     ui->setupUi(this);
     setupUi();
@@ -425,6 +426,10 @@ void MainWindow::viewChangeSplit()
         splitFactor = 0.25;
     }
 
+    if (rightViewCollapsed) {
+        ui->webView->setHtml(ui->htmlSourceTextEdit->toPlainText());
+    }
+
     updateSplitter();
 }
 
@@ -632,6 +637,9 @@ void MainWindow::toggleHtmlView()
 
         // deactivate HTML highlighter
         htmlHighlighter->setEnabled(false);
+
+        // update webView now since it was not updated while hidden
+        htmlResultReady(ui->htmlSourceTextEdit->toPlainText());
     }
 
     updateSplitter();
@@ -671,7 +679,11 @@ void MainWindow::htmlResultReady(const QString &html)
     } else {
         baseUrl = QUrl::fromLocalFile(QFileInfo(fileName).absolutePath() + "/");
     }
-    ui->webView->setHtml(html, baseUrl);
+
+    QList<int> childSizes = ui->splitter->sizes();
+    if (ui->webView->isVisible() && childSizes[1] != 0) {
+        ui->webView->setHtml(html, baseUrl);
+    }
 
     // show html source
     ui->htmlSourceTextEdit->setPlainText(html);
@@ -708,8 +720,14 @@ void MainWindow::tocLinkClicked(const QUrl &url)
 void MainWindow::splitterMoved(int pos, int index)
 {
     Q_UNUSED(index)
+
     int maxViewWidth = ui->splitter->size().width() - ui->splitter->handleWidth();
     splitFactor = (float)pos / maxViewWidth;
+
+    if (rightViewCollapsed && ui->splitter->sizes().at(1) > 0) {
+        htmlResultReady(ui->htmlSourceTextEdit->toPlainText());
+    }
+    rightViewCollapsed = (ui->splitter->sizes().at(1) == 0);
 }
 
 void MainWindow::scrollValueChanged(int value)

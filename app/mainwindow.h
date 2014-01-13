@@ -152,6 +152,7 @@ private:
     QString fileName;
     float splitFactor;
     int scrollBarPos;
+    bool rightViewCollapsed;
 };
 
 #endif // MAINWINDOW_H
