@@ -130,6 +130,7 @@ private:
     void setupMarkdownEditor();
     void setupHtmlPreview();
     void setupHtmlSourceView();
+    void syncWebViewToHtmlSource();
     bool maybeSave();
     void setFileName(const QString &fileName);
     void updateSplitter();

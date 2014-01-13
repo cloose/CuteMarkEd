@@ -426,11 +426,12 @@ void MainWindow::viewChangeSplit()
         splitFactor = 0.25;
     }
 
-    if (rightViewCollapsed) {
-        ui->webView->setHtml(ui->htmlSourceTextEdit->toPlainText());
-    }
-
     updateSplitter();
+
+    // web view was collapsed and is now visible again, so update it
+    if (rightViewCollapsed) {
+        syncWebViewToHtmlSource();
+    }
 }
 
 void MainWindow::styleDefault()
@@ -639,7 +640,7 @@ void MainWindow::toggleHtmlView()
         htmlHighlighter->setEnabled(false);
 
         // update webView now since it was not updated while hidden
-        htmlResultReady(ui->htmlSourceTextEdit->toPlainText());
+        syncWebViewToHtmlSource();
     }
 
     updateSplitter();
@@ -724,8 +725,9 @@ void MainWindow::splitterMoved(int pos, int index)
     int maxViewWidth = ui->splitter->size().width() - ui->splitter->handleWidth();
     splitFactor = (float)pos / maxViewWidth;
 
+    // web view was collapsed and is now visible again, so update it
     if (rightViewCollapsed && ui->splitter->sizes().at(1) > 0) {
-        htmlResultReady(ui->htmlSourceTextEdit->toPlainText());
+        syncWebViewToHtmlSource();
     }
     rightViewCollapsed = (ui->splitter->sizes().at(1) == 0);
 }
@@ -983,6 +985,11 @@ void MainWindow::setupHtmlSourceView()
     font.setStyleHint(QFont::TypeWriter);
     ui->htmlSourceTextEdit->setFont(font);
     htmlHighlighter = new HtmlHighlighter(ui->htmlSourceTextEdit->document());
+}
+
+void MainWindow::syncWebViewToHtmlSource()
+{
+    htmlResultReady(ui->htmlSourceTextEdit->toPlainText());
 }
 
 bool MainWindow::maybeSave()
