@@ -59,6 +59,7 @@ private:
     QString renderTemplate(const QString &header, const QString &body);
     QString buildHtmlHeader() const;
     MarkdownConverter::ConverterOptions converterOptions() const;
+    int calculateDelay(const QString &text);
 
 private:
     Options *options;

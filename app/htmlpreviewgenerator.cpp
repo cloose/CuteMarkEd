@@ -133,9 +133,9 @@ void HtmlPreviewGenerator::run()
             return;
         }
 
-        // delay processing by 100 ms to see if more tasks are coming
+        // delay processing to see if more tasks are coming
         // (e.g. because the user is typing fast)
-        this->msleep(100);
+        this->msleep(calculateDelay(text));
 
         // no more new tasks?
         if (tasks.isEmpty()) {
@@ -242,4 +242,16 @@ MarkdownConverter::ConverterOptions HtmlPreviewGenerator::converterOptions() con
     }
 
     return parserOptionFlags;
+}
+
+int HtmlPreviewGenerator::calculateDelay(const QString &text)
+{
+    const int MINIMUM_DELAY = 50;
+    const int MAXIMUM_DELAY = 2000;
+
+    // calculate the processing delay based on amount of characters in the
+    // markdown text. The delay is restricted to the interval [50, 2000] milliseconds;
+    int delay = qMin(qMax(text.size() / 100, MINIMUM_DELAY), MAXIMUM_DELAY);
+
+    return delay;
 }
