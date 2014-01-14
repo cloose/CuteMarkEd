@@ -17,14 +17,18 @@
 #include "findreplacewidget.h"
 #include "ui_findreplacewidget.h"
 
+#include <QMenu>
 #include <QPlainTextEdit>
 
 FindReplaceWidget::FindReplaceWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FindReplaceWidget),
-    textEditor(0)
+    textEditor(0),
+    findCaseSensitively(false)
 {
     ui->setupUi(this);
+
+    setupFindOptionsMenu();
     setFocusProxy(ui->findLineEdit);
 }
 
@@ -47,14 +51,24 @@ void FindReplaceWidget::findPreviousClicked()
 {
     if (!textEditor) return;
 
-    textEditor->find(ui->findLineEdit->text(), QTextDocument::FindBackward);
+    QTextDocument::FindFlags findOptions = QTextDocument::FindBackward;
+    if (findCaseSensitively) {
+        findOptions |= QTextDocument::FindCaseSensitively;
+    }
+
+    textEditor->find(ui->findLineEdit->text(), findOptions);
 }
 
 void FindReplaceWidget::findNextClicked()
 {
     if (!textEditor) return;
 
-    textEditor->find(ui->findLineEdit->text());
+    QTextDocument::FindFlags findOptions;
+    if (findCaseSensitively) {
+        findOptions |= QTextDocument::FindCaseSensitively;
+    }
+
+    textEditor->find(ui->findLineEdit->text(), findOptions);
 }
 
 void FindReplaceWidget::replaceClicked()
@@ -93,4 +107,21 @@ void FindReplaceWidget::replaceAllClicked()
     }
 
     cursor.endEditBlock();
+}
+
+void FindReplaceWidget::caseSensitiveToggled(bool enabled)
+{
+    findCaseSensitively = enabled;
+}
+
+void FindReplaceWidget::setupFindOptionsMenu()
+{
+    QMenu *findOptionsMenu = new QMenu(this);
+
+    QAction *action = findOptionsMenu->addAction("Case Sensitive");
+    action->setCheckable(true);
+    connect(action, SIGNAL(toggled(bool)), SLOT(caseSensitiveToggled(bool)));
+
+    ui->findOptionToolButton->setMenu(findOptionsMenu);
+    ui->findOptionToolButton->setIcon(QIcon("icon-search.fontawesome"));
 }

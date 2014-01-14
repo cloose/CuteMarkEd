@@ -43,9 +43,15 @@ private slots:
     void replaceClicked();
     void replaceAllClicked();
 
+    void caseSensitiveToggled(bool enabled);
+
 private:
+    void setupFindOptionsMenu();
+
     Ui::FindReplaceWidget *ui;
     QPlainTextEdit *textEditor;
+
+    bool findCaseSensitively;
 };
 
 #endif // FINDREPLACEWIDGET_H
