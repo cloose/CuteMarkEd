@@ -73,7 +73,7 @@
       <attribute name="title">
        <string>Editor</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout">
+      <layout class="QGridLayout" name="gridLayout_1">
        <item row="0" column="0" colspan="3">
         <widget class="QGroupBox" name="fontGroupBox">
          <property name="title">
@@ -84,9 +84,6 @@
            <widget class="QLabel" name="familyLabel">
             <property name="text">
              <string>Family:</string>
-            </property>
-            <property name="buddy">
-             <cstring></cstring>
             </property>
            </widget>
           </item>
