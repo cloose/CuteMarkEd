@@ -38,6 +38,17 @@ void Options::setEditorFont(const QFont &font)
     emit editorFontChanged(font);
 }
 
+int Options::tabWidth() const
+{
+    return m_tabWidth;
+}
+
+void Options::setTabWidth(int width)
+{
+    m_tabWidth = width;
+    emit tabWidthChanged(width);
+}
+
 Options::ProxyMode Options::proxyMode() const
 {
     return m_proxyMode;
@@ -222,6 +233,8 @@ void Options::readSettings()
     QString fontFamily = settings.value("editor/font/family", "Monospace").toString();
     int fontSize = settings.value("editor/font/size", 10).toInt();
 
+    m_tabWidth = settings.value("editor/tabwidth", 8).toInt();
+
     QFont f(fontFamily, fontSize);
     f.setStyleHint(QFont::TypeWriter);
     setEditorFont(f);
@@ -262,6 +275,7 @@ void Options::writeSettings()
     // editor settings
     settings.setValue("editor/font/family", font.family());
     settings.setValue("editor/font/size", font.pointSize());
+    settings.setValue("editor/tabwidth", m_tabWidth);
 
     // proxy settings
     settings.setValue("internet/proxy/mode", m_proxyMode);
