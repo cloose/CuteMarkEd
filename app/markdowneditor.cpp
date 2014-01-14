@@ -224,6 +224,12 @@ void MarkdownEditor::editorFontChanged(const QFont &font)
     setFont(font);
 }
 
+void MarkdownEditor::tabWidthChanged(int tabWidth)
+{
+    QFontMetrics fm(font());
+    setTabStopWidth(tabWidth*fm.width(' '));
+}
+
 void MarkdownEditor::showContextMenu(const QPoint &pos)
 {
     QMenu *contextMenu = createStandardContextMenu();
