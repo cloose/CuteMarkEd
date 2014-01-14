@@ -82,6 +82,9 @@ public:
     bool isCodeHighlightingEnabled() const;
     void setCodeHighlightingEnabled(bool enabled);
 
+    bool isWordWrapEnabled() const;
+    void setWordWrapEnabled(bool enabled);
+
     bool isSpellingCheckEnabled() const;
     void setSpellingCheckEnabled(bool enabled);
 
@@ -117,6 +120,7 @@ private:
     bool m_superscriptEnabled;
     bool m_mathSupportEnabled;
     bool m_codeHighlightingEnabled;
+    bool m_wordWrapEnabled;
     bool m_spellingCheckEnabled;
     QString m_dictionaryLanguage;
     MarkdownConverter m_markdownConverter;

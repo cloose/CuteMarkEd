@@ -285,6 +285,7 @@
     <addaction name="actionMathSupport"/>
     <addaction name="actionCodeHighlighting"/>
     <addaction name="actionShowSpecialCharacters"/>
+    <addaction name="actionWordWrap"/>
     <addaction name="menuMarkdown_Extensions"/>
     <addaction name="separator"/>
     <addaction name="actionCheckSpelling"/>
@@ -766,6 +767,14 @@
    </property>
    <property name="text">
     <string>Superscript</string>
+   </property>
+  </action>
+  <action name="actionWordWrap">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Word Wrap</string>
    </property>
   </action>
  </widget>
@@ -1709,6 +1718,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionWordWrap</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extrasWordWrap(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>editInsertTable()</slot>
@@ -1718,5 +1743,6 @@
   <slot>extensionsFootnotes(bool)</slot>
   <slot>extensionsSuperscript(bool)</slot>
   <slot>extrasShowSpecialCharacters(bool)</slot>
+  <slot>extrasWordWrap(bool)</slot>
  </slots>
 </ui>

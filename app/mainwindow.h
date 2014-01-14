@@ -92,6 +92,7 @@ private slots:
     void viewHorizontalLayout(bool checked);
 
     void extrasShowSpecialCharacters(bool checked);
+    void extrasWordWrap(bool checked);
     void extensionsAutolink(bool checked);
     void extensionsStrikethrough(bool checked);
     void extensionsAlphabeticLists(bool checked);

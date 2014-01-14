@@ -189,6 +189,16 @@ void Options::setCodeHighlightingEnabled(bool enabled)
     m_codeHighlightingEnabled = enabled;
 }
 
+bool Options::isWordWrapEnabled() const
+{
+    return m_wordWrapEnabled;
+}
+
+void Options::setWordWrapEnabled(bool enabled)
+{
+    m_wordWrapEnabled = enabled;
+}
+
 bool Options::isSpellingCheckEnabled() const
 {
     return m_spellingCheckEnabled;
@@ -257,6 +267,7 @@ void Options::readSettings()
 
     m_mathSupportEnabled = settings.value("mathsupport/enabled", false).toBool();
     m_codeHighlightingEnabled = settings.value("codehighlighting/enabled", false).toBool();
+    m_wordWrapEnabled = settings.value("wordwrap/enabled", false).toBool();
 
     // spelling check settings
     m_spellingCheckEnabled = settings.value("spelling/enabled", true).toBool();
@@ -295,6 +306,7 @@ void Options::writeSettings()
 
     settings.setValue("mathsupport/enabled", m_mathSupportEnabled);
     settings.setValue("codehighlighting/enabled", m_codeHighlightingEnabled);
+    settings.setValue("wordwrap/enabled", m_wordWrapEnabled);
 
     // spelling check settings
     settings.setValue("spelling/enabled", m_spellingCheckEnabled);
