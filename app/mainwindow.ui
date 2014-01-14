@@ -167,7 +167,7 @@
      <x>0</x>
      <y>0</y>
      <width>850</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1720,7 +1720,7 @@
   </connection>
   <connection>
    <sender>actionWordWrap</sender>
-   <signal>triggered(bool)</signal>
+   <signal>toggled(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>extrasWordWrap(bool)</slot>
    <hints>

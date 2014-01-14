@@ -139,6 +139,7 @@ void MainWindow::initializeApp()
     // init option flags
     ui->actionMathSupport->setChecked(options->isMathSupportEnabled());
     ui->actionCodeHighlighting->setChecked(options->isCodeHighlightingEnabled());
+    ui->actionWordWrap->setChecked(options->isWordWrapEnabled());
     ui->actionCheckSpelling->setChecked(options->isSpellingCheckEnabled());
     ui->plainTextEdit->setSpellingCheckEnabled(options->isSpellingCheckEnabled());
 
@@ -543,6 +544,7 @@ void MainWindow::extrasShowSpecialCharacters(bool checked)
 
 void MainWindow::extrasWordWrap(bool checked)
 {
+    options->setWordWrapEnabled(checked);
     ui->plainTextEdit->setLineWrapMode(checked ? MarkdownEditor::NoWrap : MarkdownEditor::WidgetWidth);
 }
 
