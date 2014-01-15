@@ -41,12 +41,12 @@
            <widget class="QComboBox" name="converterComboBox">
             <item>
              <property name="text">
-              <string>Discount (Default)</string>
+              <string extracomment="Name of a Markdown to HTML converter library">Discount (Default)</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Hoedown</string>
+              <string extracomment="Name of a Markdown to HTML converter library">Hoedown</string>
              </property>
             </item>
            </widget>

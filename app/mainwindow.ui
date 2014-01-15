@@ -167,7 +167,7 @@
      <x>0</x>
      <y>0</y>
      <width>850</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -644,7 +644,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Show Special Characters</string>
+    <string extracomment="Option to show characters like line feed or tabs">Show Special Characters</string>
    </property>
   </action>
   <action name="actionOptions">

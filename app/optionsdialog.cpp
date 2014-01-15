@@ -117,7 +117,7 @@ bool SnippetsTableModel::setData(const QModelIndex &index, const QVariant &value
     if (index.column() == 0) {
         const QString &s = value.toString();
         if (!isValidTrigger(s)) {
-            QMessageBox::critical(0, tr("Error"), tr("Not a valid trigger."));
+            QMessageBox::critical(0, tr("Error", "Title of error message box"), tr("Not a valid trigger."));
             if (snippet.trigger.isEmpty())
                 removeSnippet(index);
             return false;
@@ -314,7 +314,7 @@ void OptionsDialog::removeSnippetButtonClicked()
 {
     const QModelIndex &modelIndex = ui->snippetTableView->selectionModel()->currentIndex();
     if (!modelIndex.isValid()) {
-        QMessageBox::critical(0, tr("Error"), tr("No snippet selected."));
+        QMessageBox::critical(0, tr("Error", "Title of error message box"), tr("No snippet selected."));
         return;
     }
 
