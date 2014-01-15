@@ -545,7 +545,7 @@ void MainWindow::extrasShowSpecialCharacters(bool checked)
 void MainWindow::extrasWordWrap(bool checked)
 {
     options->setWordWrapEnabled(checked);
-    ui->plainTextEdit->setLineWrapMode(checked ? MarkdownEditor::NoWrap : MarkdownEditor::WidgetWidth);
+    ui->plainTextEdit->setLineWrapMode(checked ? MarkdownEditor::WidgetWidth : MarkdownEditor::NoWrap);
 }
 
 void MainWindow::extensionsAutolink(bool checked)

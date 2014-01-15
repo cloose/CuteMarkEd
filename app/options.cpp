@@ -267,7 +267,7 @@ void Options::readSettings()
 
     m_mathSupportEnabled = settings.value("mathsupport/enabled", false).toBool();
     m_codeHighlightingEnabled = settings.value("codehighlighting/enabled", false).toBool();
-    m_wordWrapEnabled = settings.value("wordwrap/enabled", false).toBool();
+    m_wordWrapEnabled = settings.value("wordwrap/enabled", true).toBool();
 
     // spelling check settings
     m_spellingCheckEnabled = settings.value("spelling/enabled", true).toBool();
