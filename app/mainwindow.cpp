@@ -139,6 +139,7 @@ void MainWindow::initializeApp()
     // init option flags
     ui->actionMathSupport->setChecked(options->isMathSupportEnabled());
     ui->actionCodeHighlighting->setChecked(options->isCodeHighlightingEnabled());
+    ui->actionShowSpecialCharacters->setChecked(options->isShowSpecialCharactersEnabled());
     ui->actionWordWrap->setChecked(options->isWordWrapEnabled());
     ui->actionCheckSpelling->setChecked(options->isSpellingCheckEnabled());
     ui->plainTextEdit->setSpellingCheckEnabled(options->isSpellingCheckEnabled());
@@ -539,6 +540,7 @@ void MainWindow::viewHorizontalLayout(bool checked)
 
 void MainWindow::extrasShowSpecialCharacters(bool checked)
 {
+    options->setShowSpecialCharactersEnabled(checked);
     ui->plainTextEdit->setShowSpecialCharacters(checked);
 }
 
