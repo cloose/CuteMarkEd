@@ -18,6 +18,7 @@
 #define FINDREPLACEWIDGET_H
 
 #include <QWidget>
+#include <QTextDocument>
 
 namespace Ui {
 class FindReplaceWidget;
@@ -43,9 +44,21 @@ private slots:
     void replaceClicked();
     void replaceAllClicked();
 
+    void caseSensitiveToggled(bool enabled);
+    void wholeWordsOnlyToggled(bool enabled);
+    void useRegularExpressionsToggled(bool enabled);
+
 private:
+    void setupFindOptionsMenu();
+    bool find(const QString &searchString, QTextDocument::FindFlags findOptions = 0) const;
+    bool findUsingRegExp(const QString &pattern, QTextDocument::FindFlags findOptions = 0) const;
+
     Ui::FindReplaceWidget *ui;
     QPlainTextEdit *textEditor;
+
+    bool findCaseSensitively;
+    bool findWholeWordsOnly;
+    bool findUseRegExp;
 };
 
 #endif // FINDREPLACEWIDGET_H
