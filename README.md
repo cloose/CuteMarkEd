@@ -68,6 +68,7 @@ https://github.com/cloose/CuteMarkEd/wiki/Build-Instructions
 ##### Status
 
 [![Build Status](https://travis-ci.org/cloose/CuteMarkEd.png)](https://travis-ci.org/cloose/CuteMarkEd)
+[![Stories in Ready](https://badge.waffle.io/cloose/CuteMarkEd.png?label=ready)](https://waffle.io/cloose/CuteMarkEd)
 
 ### HELP NEEDED
 
