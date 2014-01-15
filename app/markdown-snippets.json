@@ -1,6 +1,20 @@
 {
   "snippets": [
         {
+            "trigger": "img",
+            "description": "Image Link",
+            "snippet": "![]()",
+            "cursor": 2,
+            "builtIn": true
+        },
+        {
+            "trigger": "imgc",
+            "description": "Image Link with URL from clipboard",
+            "snippet": "![](%clipboard)",
+            "cursor": 2,
+            "builtIn": true
+        },
+        {
             "trigger": "kbd",
             "description": "HTML Keyboard Input Element (kbd)",
             "snippet": "<kbd></kbd>",
@@ -22,10 +36,45 @@
             "builtIn": true
         },
         {
+            "trigger": "~~~cmake",
+            "description": "CMake Code Block",
+            "snippet": "~~~cmake\n\n~~~",
+            "cursor": 8,
+            "builtIn": true
+        },
+        {
             "trigger": "~~~cpp",
             "description": "C++ Code Block",
             "snippet": "~~~cpp\n\n~~~",
             "cursor": 7,
+            "builtIn": true
+        },
+        {
+            "trigger": "~~~cs",
+            "description": "C# Code Block",
+            "snippet": "~~~cs\n\n~~~",
+            "cursor": 6,
+            "builtIn": true
+        },
+        {
+            "trigger": "~~~delphi",
+            "description": "Delphi Code Block",
+            "snippet": "~~~delphi\n\n~~~",
+            "cursor": 10,
+            "builtIn": true
+        },
+        {
+            "trigger": "~~~fsharp",
+            "description": "F# Code Block",
+            "snippet": "~~~fsharp\n\n~~~",
+            "cursor": 10,
+            "builtIn": true
+        },
+        {
+            "trigger": "~~~go",
+            "description": "Go Code Block",
+            "snippet": "~~~go\n\n~~~",
+            "cursor": 6,
             "builtIn": true
         },
         {
@@ -36,10 +85,45 @@
             "builtIn": true
         },
         {
+            "trigger": "~~~javascript",
+            "description": "JavaScript Code Block",
+            "snippet": "~~~javascript\n\n~~~",
+            "cursor": 14,
+            "builtIn": true
+        },
+        {
+            "trigger": "~~~json",
+            "description": "JSON Code Block",
+            "snippet": "~~~json\n\n~~~",
+            "cursor": 8,
+            "builtIn": true
+        },
+        {
+            "trigger": "~~~lua",
+            "description": "Lua Code Block",
+            "snippet": "~~~lua\n\n~~~",
+            "cursor": 7,
+            "builtIn": true
+        },
+        {
             "trigger": "~~~objectivec",
             "description": "Objective C Code Block",
             "snippet": "~~~objectivec\n\n~~~",
             "cursor": 14,
+            "builtIn": true
+        },
+        {
+            "trigger": "~~~perl",
+            "description": "Perl Code Block",
+            "snippet": "~~~perl\n\n~~~",
+            "cursor": 8,
+            "builtIn": true
+        },
+        {
+            "trigger": "~~~php",
+            "description": "PHP Code Block",
+            "snippet": "~~~php\n\n~~~",
+            "cursor": 7,
             "builtIn": true
         },
         {
@@ -53,6 +137,13 @@
             "trigger": "~~~ruby",
             "description": "Ruby Code Block",
             "snippet": "~~~ruby\n\n~~~",
+            "cursor": 8,
+            "builtIn": true
+        },
+        {
+            "trigger": "~~~scala",
+            "description": "Scala Code Block",
+            "snippet": "~~~scala\n\n~~~",
             "cursor": 8,
             "builtIn": true
         },
