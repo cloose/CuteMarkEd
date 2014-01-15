@@ -17,6 +17,31 @@
 #include "options.h"
 #include <QSettings>
 
+
+static const char* MARKDOWN_CONVERTER = "general/converter";
+static const char* FONT_FAMILY_DEFAULT = "Monospace";
+static const char* FONT_FAMILY = "editor/font/family";
+static const char* FONT_SIZE = "editor/font/size";
+static const char* TAB_WIDTH = "editor/tabwidth";
+static const char* PROXY_MODE = "internet/proxy/mode";
+static const char* PROXY_HOST = "internet/proxy/host";
+static const char* PROXY_PORT = "internet/proxy/port";
+static const char* PROXY_USER = "internet/proxy/user";
+static const char* PROXY_PASSWORD = "internet/proxy/password";
+static const char* AUTOLINK_ENABLED = "extensions/autolink";
+static const char* STRIKETHROUGH_ENABLED = "extensions/strikethrough";
+static const char* ALPHABETICLISTS_ENABLED = "extensions/alphabeticLists";
+static const char* DEFINITIONSLISTS_ENABLED = "extensions/definitionLists";
+static const char* SMARTYPANTS_ENABLED = "extensions/smartyPants";
+static const char* FOOTNOTES_ENABLED = "extensions/footnotes";
+static const char* SUPERSCRIPT_ENABLED = "extensions/superscript";
+static const char* MATHSUPPORT_ENABLED = "mathsupport/enabled";
+static const char* CODEHIGHLIGHT_ENABLED = "codehighlighting/enabled";
+static const char* SHOWSPECIALCHARACTERS_ENABLED = "specialchars/enabled";
+static const char* WORDWRAP_ENABLED = "wordwrap/enabled";
+static const char* SPELLINGCHECK_ENABLED = "spelling/enabled";
+static const char* DICTIONARY_LANGUAGE = "spelling/language";
+
 Options::Options(QObject *parent) :
     QObject(parent)
 {
@@ -242,71 +267,47 @@ void Options::setMarkdownConverter(Options::MarkdownConverter converter)
     }
 }
 
-static const char* c_markdownConverter = "general/converter";
-static const char* c_fontFamilyDefault = "Monospace";
-static const char* c_fontFamily = "editor/font/family";
-static const char* c_fontSize = "editor/font/size";
-static const char* c_tabWidth = "editor/tabwidth";
-static const char* c_proxyMode = "internet/proxy/mode";
-static const char* c_proxyHost = "internet/proxy/host";
-static const char* c_proxyPort = "internet/proxy/port";
-static const char* c_proxyUser = "internet/proxy/user";
-static const char* c_proxyPassword = "internet/proxy/password";
-static const char* c_autolinkEnabled = "extensions/autolink";
-static const char* c_strikethroughEnabled = "extensions/strikethrough";
-static const char* c_alphabeticListsEnabled = "extensions/alphabeticLists";
-static const char* c_definitionListsEnabled = "extensions/definitionLists";
-static const char* c_smartyPantsEnabled = "extensions/smartyPants";
-static const char* c_footnotesEnabled = "extensions/footnotes";
-static const char* c_superscriptEnabled = "extensions/superscript";
-static const char* c_mathSupportEnabled = "mathsupport/enabled";
-static const char* c_codeHighlightingEnabled = "codehighlighting/enabled";
-static const char* c_showSpecialCharactersEnabled = "specialchars/enabled";
-static const char* c_wordWrapEnabled = "wordwrap/enabled";
-static const char* c_spellingCheckEnabled = "spelling/enabled";
-static const char* c_dictionaryLanguage = "spelling/language";
-
 void Options::readSettings()
 {
     QSettings settings;
 
     // general settings
-    m_markdownConverter = (Options::MarkdownConverter)settings.value(c_markdownConverter, 0).toInt();
+    m_markdownConverter = (Options::MarkdownConverter)settings.value(MARKDOWN_CONVERTER, 0).toInt();
 
     // editor settings
-    QString fontFamily = settings.value(c_fontFamily, c_fontFamilyDefault).toString();
-    int fontSize = settings.value(c_fontSize, 10).toInt();
+    QString fontFamily = settings.value(FONT_FAMILY, FONT_FAMILY_DEFAULT).toString();
+    int fontSize = settings.value(FONT_SIZE, 10).toInt();
 
-    m_tabWidth = settings.value(c_tabWidth, 8).toInt();
+    m_tabWidth = settings.value(TAB_WIDTH, 8).toInt();
 
     QFont f(fontFamily, fontSize);
     f.setStyleHint(QFont::TypeWriter);
     setEditorFont(f);
 
     // proxy settings
-    m_proxyMode = (Options::ProxyMode)settings.value(c_proxyMode, 0).toInt();
-    m_proxyHost = settings.value(c_proxyHost, "").toString();
-    m_proxyPort = settings.value(c_proxyPort, 0).toInt();
-    m_proxyUser = settings.value(c_proxyUser, "").toString();
-    m_proxyPassword = settings.value(c_proxyPassword, "").toString();
+    m_proxyMode = (Options::ProxyMode)settings.value(PROXY_MODE, 0).toInt();
+    m_proxyHost = settings.value(PROXY_HOST, "").toString();
+    m_proxyPort = settings.value(PROXY_PORT, 0).toInt();
+    m_proxyUser = settings.value(PROXY_USER, "").toString();
+    m_proxyPassword = settings.value(PROXY_PASSWORD, "").toString();
 
     // extension settings
-    m_autolinkEnabled = settings.value(c_autolinkEnabled, true).toBool();
-    m_strikethroughEnabled = settings.value(c_strikethroughEnabled, true).toBool();
-    m_alphabeticListsEnabled = settings.value(c_alphabeticListsEnabled, true).toBool();
-    m_definitionListsEnabled = settings.value(c_definitionListsEnabled, true).toBool();
-    m_smartyPantsEnabled = settings.value(c_smartyPantsEnabled, true).toBool();
-    m_footnotesEnabled = settings.value(c_footnotesEnabled, true).toBool();
-    m_superscriptEnabled = settings.value(c_superscriptEnabled, true).toBool();
+    m_autolinkEnabled = settings.value(AUTOLINK_ENABLED, true).toBool();
+    m_strikethroughEnabled = settings.value(STRIKETHROUGH_ENABLED, true).toBool();
+    m_alphabeticListsEnabled = settings.value(ALPHABETICLISTS_ENABLED, true).toBool();
+    m_definitionListsEnabled = settings.value(DEFINITIONSLISTS_ENABLED, true).toBool();
+    m_smartyPantsEnabled = settings.value(SMARTYPANTS_ENABLED, true).toBool();
+    m_footnotesEnabled = settings.value(FOOTNOTES_ENABLED, true).toBool();
+    m_superscriptEnabled = settings.value(SUPERSCRIPT_ENABLED, true).toBool();
 
-    m_mathSupportEnabled = settings.value(c_mathSupportEnabled, false).toBool();
-    m_codeHighlightingEnabled = settings.value(c_codeHighlightingEnabled, false).toBool();
-    m_showSpecialCharactersEnabled = settings.value(c_showSpecialCharactersEnabled, false).toBool();
-    m_wordWrapEnabled = settings.value(c_wordWrapEnabled, false).toBool();
+    m_mathSupportEnabled = settings.value(MATHSUPPORT_ENABLED, false).toBool();
+    m_codeHighlightingEnabled = settings.value(CODEHIGHLIGHT_ENABLED, false).toBool();
+    m_showSpecialCharactersEnabled = settings.value(SHOWSPECIALCHARACTERS_ENABLED, false).toBool();
+    m_wordWrapEnabled = settings.value(WORDWRAP_ENABLED, false).toBool();
 
     // spelling check settings
-    m_spellingCheckEnabled = settings.value(c_spellingCheckEnabled, true).toBool();
-    m_dictionaryLanguage = settings.value(c_dictionaryLanguage, "en_US").toString();
+    m_spellingCheckEnabled = settings.value(SPELLINGCHECK_ENABLED, true).toBool();
+    m_dictionaryLanguage = settings.value(DICTIONARY_LANGUAGE, "en_US").toString();
 
     apply();
 }
@@ -316,35 +317,35 @@ void Options::writeSettings()
     QSettings settings;
 
     // general settings
-    settings.setValue(c_markdownConverter, m_markdownConverter);
+    settings.setValue(MARKDOWN_CONVERTER, m_markdownConverter);
 
     // editor settings
-    settings.setValue(c_fontFamily, font.family());
-    if(font.pointSize()!=10) settings.setValue(c_fontSize, font.pointSize());
-    if(m_tabWidth!=8) settings.setValue(c_tabWidth, m_tabWidth);
+    settings.setValue(FONT_FAMILY, font.family());
+    settings.setValue(FONT_SIZE, font.pointSize());
+    settings.setValue(TAB_WIDTH, m_tabWidth);
 
     // proxy settings
-    settings.setValue(c_proxyMode, m_proxyMode);
-    if(!m_proxyHost.isEmpty()) settings.setValue(c_proxyHost, m_proxyHost);
-    if( m_proxyPort!=0) settings.setValue(c_proxyPort, m_proxyPort);
-    if(!m_proxyUser.isEmpty()) settings.setValue(c_proxyUser, m_proxyUser);
-    if(!m_proxyPassword.isEmpty()) settings.setValue(c_proxyPassword, m_proxyPassword);
+    settings.setValue(PROXY_MODE, m_proxyMode);
+    settings.setValue(PROXY_HOST, m_proxyHost);
+    settings.setValue(PROXY_PORT, m_proxyPort);
+    settings.setValue(PROXY_USER, m_proxyUser);
+    settings.setValue(PROXY_PASSWORD, m_proxyPassword);
 
     // extensions settings
-    settings.setValue(c_autolinkEnabled, m_autolinkEnabled);
-    settings.setValue(c_strikethroughEnabled, m_strikethroughEnabled);
-    settings.setValue(c_alphabeticListsEnabled, m_alphabeticListsEnabled);
-    settings.setValue(c_definitionListsEnabled, m_definitionListsEnabled);
-    settings.setValue(c_smartyPantsEnabled, m_smartyPantsEnabled);
-    settings.setValue(c_footnotesEnabled, m_footnotesEnabled);
-    settings.setValue(c_superscriptEnabled, m_superscriptEnabled);
+    settings.setValue(AUTOLINK_ENABLED, m_autolinkEnabled);
+    settings.setValue(STRIKETHROUGH_ENABLED, m_strikethroughEnabled);
+    settings.setValue(ALPHABETICLISTS_ENABLED, m_alphabeticListsEnabled);
+    settings.setValue(DEFINITIONSLISTS_ENABLED, m_definitionListsEnabled);
+    settings.setValue(SMARTYPANTS_ENABLED, m_smartyPantsEnabled);
+    settings.setValue(FOOTNOTES_ENABLED, m_footnotesEnabled);
+    settings.setValue(SUPERSCRIPT_ENABLED, m_superscriptEnabled);
 
-    settings.setValue(c_mathSupportEnabled, m_mathSupportEnabled);
-    settings.setValue(c_codeHighlightingEnabled, m_codeHighlightingEnabled);
-    settings.setValue(c_showSpecialCharactersEnabled, m_showSpecialCharactersEnabled);
-    settings.setValue(c_wordWrapEnabled, m_wordWrapEnabled);
+    settings.setValue(MATHSUPPORT_ENABLED, m_mathSupportEnabled);
+    settings.setValue(CODEHIGHLIGHT_ENABLED, m_codeHighlightingEnabled);
+    settings.setValue(SHOWSPECIALCHARACTERS_ENABLED, m_showSpecialCharactersEnabled);
+    settings.setValue(WORDWRAP_ENABLED, m_wordWrapEnabled);
 
     // spelling check settings
-    settings.setValue(c_spellingCheckEnabled, m_spellingCheckEnabled);
-    settings.setValue(c_dictionaryLanguage, m_dictionaryLanguage);
+    settings.setValue(SPELLINGCHECK_ENABLED, m_spellingCheckEnabled);
+    settings.setValue(DICTIONARY_LANGUAGE, m_dictionaryLanguage);
 }
