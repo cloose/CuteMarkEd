@@ -22,6 +22,7 @@
 #include <QDirIterator>
 #include <QFileDialog>
 #include <QIcon>
+#include <QInputDialog>
 #include <QLabel>
 #include <QMessageBox>
 #include <QNetworkDiskCache>
@@ -332,6 +333,15 @@ void MainWindow::editCopyHtml()
 {
     QClipboard* clipboard = QApplication::clipboard();
     clipboard->setText(ui->htmlSourceTextEdit->toPlainText());
+}
+
+void MainWindow::editGotoLine()
+{
+    bool ok;
+    int line = QInputDialog::getInt(this, tr("Go to..."),
+                                               tr("line: "), 1, 1, ui->plainTextEdit->document()->blockCount(), 1, &ok);
+    if (!ok)return;
+    ui->plainTextEdit->gotoLine(line);
 }
 
 void MainWindow::editFindReplace()
@@ -891,6 +901,7 @@ void MainWindow::setupActions()
 
     connect(ui->actionFindPrevious, SIGNAL(triggered()),
             ui->findReplaceWidget, SLOT(findPreviousClicked()));
+    ui->actionGotoLine->setShortcut(QKeySequence("Ctrl+L"));
 
     // view menu
     ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());

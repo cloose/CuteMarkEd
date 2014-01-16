@@ -47,6 +47,7 @@ public:
     void setSpellingDictionary(const Dictionary &dictionary);
 
     void setSnippetCompleter(SnippetCompleter *completer);
+    void gotoLine(int line);
 
 signals:
     void loadDroppedFile(const QString &fileName);

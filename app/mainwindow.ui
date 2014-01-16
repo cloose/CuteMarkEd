@@ -225,6 +225,7 @@
     <addaction name="actionInsertImage"/>
     <addaction name="separator"/>
     <addaction name="menuFindReplace"/>
+    <addaction name="actionGotoLine"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -585,6 +586,11 @@
   <action name="actionFindReplace">
    <property name="text">
     <string>Find/Replace</string>
+   </property>
+  </action>
+  <action name="actionGotoLine">
+   <property name="text">
+    <string>Goto line</string>
    </property>
   </action>
   <action name="actionCenterParagraph">
@@ -1355,6 +1361,22 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>editFindReplace()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionGotoLine</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editGotoLine()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
