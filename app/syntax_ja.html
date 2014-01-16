@@ -1,0 +1,236 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 10pt;
+}
+pre {
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  font-size: 10pt;
+}
+table, td, th {
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+}
+table {
+  width: 100%;
+}
+th {
+  text-align: left;
+  background: #eeeeee;
+  padding: 3px;
+}
+</style>
+<title>Markdown シンタックスリファレンス</title>
+</head>
+<body>
+
+  <h3>ヘッダー</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown 入力</th>
+      <th>出力</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre># ヘッダー1
+
+## ヘッダー2
+
+### ヘッダー3
+
+#### ヘッダー4
+
+##### ヘッダー5
+
+###### ヘッダー6</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>ヘッダー1</h1>
+      <h2>ヘッダー2</h2>
+      <h3>ヘッダー3</h3>
+      <h4>ヘッダー4</h4>
+      <h5>ヘッダー5</h5>
+      <h6>ヘッダー6</h6>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>ヘッダー1
+===========
+
+ヘッダー2
+-----------</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>ヘッダー1</h1>
+      <h2>ヘッダー2</h2>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>段落</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown 入力</th>
+      <th>出力</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>段落とは1行
+もしくは複数の連続した行
+のテキストの事で、1行
+もしくは複数の空白行で仕切られています。
+
+これは新しい段落です。</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>段落とは1行もしくは複数の連続した行のテキストの事で、1行もしくは複数の空白行で仕切られています。</p>
+      <p>これは新しい段落です。</p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>改行するには、
+段落の行の最後に
+2個以上のスペースを
+追加します。</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>改行するには<br>段落の行の最後に<br>2個以上のスペースを<br>追加します。</p>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>リスト</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown 入力</th>
+      <th>出力</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>* アイテム1
+* アイテム2
+* アイテム3
+
++ アイテム1
++ アイテム2
++ アイテム
+
+- アイテム
+- アイテム2
+- アイテム3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>アイテム1</li>
+        <li>アイテム2</li>
+        <li>アイテム3</li>
+      </ul>
+<ul>
+<li>アイテム1</li>
+        <li>アイテム2</li>
+        <li>アイテム3</li>
+      </ul>
+<ul>
+<li>アイテム1</li>
+        <li>アイテム2</li>
+        <li>アイテム3</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>1. アイテム1
+2. アイテム2
+3. アイテム3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ol>
+<li>アイテム1</li>
+        <li>アイテム2</li>
+        <li>アイテム3</li>
+      </ol>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>* アイテム1
+1. アイテム2
++ アイテム3
+2. アイテム4</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>アイテム1<ol>
+<li>アイテム2<ul>
+<li>アイテム3</li>
+          </ul>
+</li>
+          <li>アイテム4</li>
+        </ol>
+</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>用語
+：意味</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <dl>
+<dt>用語<dt>
+        </dt>
+</dt>
+<dd>意味</dd>
+      </dl>
+</td>
+    </tr>
+</tbody>
+</table>
+<h3>強調</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown 入力</th>
+      <th>出力</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>私は*強調されている*
+
+私は_強調されている_</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>私は<em>強調されている</em></p>
+
+      <p>私は<em>強調されている</em></p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>私は**太字**
+
+私は__太字__</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>私は<strong>太字</strong></p>
+
+      <p>私は<strong>太字</strong></p>
+      </td>
+    </tr>
+</tbody>
+</table>
+</body>
+</html>

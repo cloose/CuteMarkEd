@@ -21,6 +21,7 @@ pre .tag .value,
 pre .css .rules .value,
 pre .css .rules .value .number,
 pre .preprocessor,
+pre .pragma,
 pre .ruby .symbol,
 pre .ruby .symbol .string,
 pre .built_in,
@@ -32,7 +33,8 @@ pre .addition,
 pre .apache .tag,
 pre .apache .cbracket,
 pre .tex .command,
-pre .clojure .title {
+pre .clojure .title,
+pre .coffeescript .attribute {
   color: #FF0;
 }
 

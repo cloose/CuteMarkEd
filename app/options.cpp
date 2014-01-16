@@ -38,6 +38,17 @@ void Options::setEditorFont(const QFont &font)
     emit editorFontChanged(font);
 }
 
+int Options::tabWidth() const
+{
+    return m_tabWidth;
+}
+
+void Options::setTabWidth(int width)
+{
+    m_tabWidth = width;
+    emit tabWidthChanged(width);
+}
+
 Options::ProxyMode Options::proxyMode() const
 {
     return m_proxyMode;
@@ -148,6 +159,16 @@ void Options::setFootnotesEnabled(bool enabled)
     m_footnotesEnabled = enabled;
 }
 
+bool Options::isSuperscriptEnabled() const
+{
+    return m_superscriptEnabled;
+}
+
+void Options::setSuperscriptEnabled(bool enabled)
+{
+    m_superscriptEnabled = enabled;
+}
+
 bool Options::isMathSupportEnabled() const
 {
     return m_mathSupportEnabled;
@@ -166,6 +187,16 @@ bool Options::isCodeHighlightingEnabled() const
 void Options::setCodeHighlightingEnabled(bool enabled)
 {
     m_codeHighlightingEnabled = enabled;
+}
+
+bool Options::isWordWrapEnabled() const
+{
+    return m_wordWrapEnabled;
+}
+
+void Options::setWordWrapEnabled(bool enabled)
+{
+    m_wordWrapEnabled = enabled;
 }
 
 bool Options::isSpellingCheckEnabled() const
@@ -188,13 +219,31 @@ void Options::setDictionaryLanguage(const QString &language)
     m_dictionaryLanguage = language;
 }
 
+Options::MarkdownConverter Options::markdownConverter() const
+{
+    return m_markdownConverter;
+}
+
+void Options::setMarkdownConverter(Options::MarkdownConverter converter)
+{
+    if (m_markdownConverter != converter) {
+        m_markdownConverter = converter;
+        emit markdownConverterChanged();
+    }
+}
+
 void Options::readSettings()
 {
     QSettings settings;
 
+    // general settings
+    m_markdownConverter = (Options::MarkdownConverter)settings.value("general/converter", 0).toInt();
+
     // editor settings
     QString fontFamily = settings.value("editor/font/family", "Monospace").toString();
     int fontSize = settings.value("editor/font/size", 10).toInt();
+
+    m_tabWidth = settings.value("editor/tabwidth", 8).toInt();
 
     QFont f(fontFamily, fontSize);
     f.setStyleHint(QFont::TypeWriter);
@@ -214,9 +263,11 @@ void Options::readSettings()
     m_definitionListsEnabled = settings.value("extensions/definitionLists", true).toBool();
     m_smartyPantsEnabled = settings.value("extensions/smartyPants", true).toBool();
     m_footnotesEnabled = settings.value("extensions/footnotes", true).toBool();
+    m_superscriptEnabled = settings.value("extensions/superscript", true).toBool();
 
     m_mathSupportEnabled = settings.value("mathsupport/enabled", false).toBool();
     m_codeHighlightingEnabled = settings.value("codehighlighting/enabled", false).toBool();
+    m_wordWrapEnabled = settings.value("wordwrap/enabled", false).toBool();
 
     // spelling check settings
     m_spellingCheckEnabled = settings.value("spelling/enabled", true).toBool();
@@ -229,9 +280,13 @@ void Options::writeSettings()
 {
     QSettings settings;
 
+    // general settings
+    settings.setValue("general/converter", m_markdownConverter);
+
     // editor settings
     settings.setValue("editor/font/family", font.family());
     settings.setValue("editor/font/size", font.pointSize());
+    settings.setValue("editor/tabwidth", m_tabWidth);
 
     // proxy settings
     settings.setValue("internet/proxy/mode", m_proxyMode);
@@ -247,9 +302,11 @@ void Options::writeSettings()
     settings.setValue("extensions/definitionLists", m_definitionListsEnabled);
     settings.setValue("extensions/smartyPants", m_smartyPantsEnabled);
     settings.setValue("extensions/footnotes", m_footnotesEnabled);
+    settings.setValue("extensions/superscript", m_superscriptEnabled);
 
     settings.setValue("mathsupport/enabled", m_mathSupportEnabled);
     settings.setValue("codehighlighting/enabled", m_codeHighlightingEnabled);
+    settings.setValue("wordwrap/enabled", m_wordWrapEnabled);
 
     // spelling check settings
     settings.setValue("spelling/enabled", m_spellingCheckEnabled);

@@ -79,6 +79,7 @@ pre .diff .deletion,
 pre .string,
 pre .tag .value,
 pre .preprocessor,
+pre .pragma,
 pre .built_in,
 pre .sql .aggregate,
 pre .javadoc,
@@ -89,7 +90,8 @@ pre .css .rules .value,
 pre .attr_selector,
 pre .pseudo,
 pre .apache .cbracket,
-pre .tex .formula {
+pre .tex .formula,
+pre .coffeescript .attribute {
   color: #CC9393;
 }
 

@@ -20,6 +20,7 @@
 #include <QMenu>
 #include <QMimeData>
 #include <QPainter>
+#include <QShortcut>
 #include <QStyle>
 #include <QTextBlock>
 #include <QTextStream>
@@ -28,8 +29,9 @@
 #include <peg-markdown-highlight/styleparser.h>
 #include <markdownhighlighter.h>
 #include "markdownmanipulator.h"
+#include "snippetcompleter.h"
 
-#include "hunspell/dictionary.h"
+#include <spellchecker/dictionary.h>
 #include "hunspell/spellchecker.h"
 using hunspell::SpellChecker;
 
@@ -38,6 +40,7 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
     QPlainTextEdit(parent),
     lineNumberArea(new LineNumberArea(this)),
     spellChecker(new SpellChecker()),
+    completer(0),
     showHardLinebreaks(false)
 {
     highlighter = new MarkdownHighlighter(this->document(), spellChecker);
@@ -58,6 +61,9 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
             this, SLOT(showContextMenu(QPoint)));
 
     updateLineNumberAreaWidth(0);
+
+    new QShortcut(QKeySequence(tr("Ctrl+Space", "Complete")),
+                  this, SLOT(performCompletion()));
 }
 
 MarkdownEditor::~MarkdownEditor()
@@ -154,6 +160,29 @@ void MarkdownEditor::resizeEvent(QResizeEvent *event)
                                 QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height())));
 }
 
+void MarkdownEditor::keyPressEvent(QKeyEvent *e)
+{
+    if (completer && completer->isPopupVisible()) {
+        // The following keys are forwarded by the completer to the widget
+       switch (e->key()) {
+       case Qt::Key_Enter:
+       case Qt::Key_Return:
+       case Qt::Key_Escape:
+       case Qt::Key_Tab:
+       case Qt::Key_Backtab:
+            e->ignore();
+            return; // let the completer do default behavior
+       default:
+           break;
+       }
+    }
+
+    if (completer)
+        completer->hidePopup();
+
+    QPlainTextEdit::keyPressEvent(e);
+}
+
 bool MarkdownEditor::canInsertFromMimeData(const QMimeData *source) const
 {
     if (source->hasUrls() && (source->urls().count() == 1) && source->urls().first().isLocalFile()) {
@@ -195,6 +224,12 @@ void MarkdownEditor::editorFontChanged(const QFont &font)
     setFont(font);
 }
 
+void MarkdownEditor::tabWidthChanged(int tabWidth)
+{
+    QFontMetrics fm(font());
+    setTabStopWidth(tabWidth*fm.width(' '));
+}
+
 void MarkdownEditor::showContextMenu(const QPoint &pos)
 {
     QMenu *contextMenu = createStandardContextMenu();
@@ -224,6 +259,11 @@ void MarkdownEditor::showContextMenu(const QPoint &pos)
         if (suggestions.isEmpty()) {
             subMenu->setEnabled(false);
         }
+
+        QAction *userWordlistAction = contextMenu->addAction(tr("Add to User Dictionary"));
+        userWordlistAction->setData(cursor.selectedText());
+        connect(userWordlistAction, SIGNAL(triggered()),
+                this, SLOT(addWordToUserWordlist()));
     }
 
     // show context menu
@@ -244,6 +284,43 @@ void MarkdownEditor::replaceWithSuggestion()
     cursor.insertText(action->text());
 
     cursor.endEditBlock();
+}
+
+void MarkdownEditor::performCompletion()
+{
+    if (!completer) return;
+
+    QRect popupRect = cursorRect();
+    popupRect.setLeft(popupRect.left() + lineNumberAreaWidth());
+
+    completer->performCompletion(textUnderCursor(), popupRect);
+}
+
+void MarkdownEditor::insertSnippet(const QString &completionPrefix, const QString &completion, int newCursorPos)
+{
+    QTextCursor cursor = this->textCursor();
+
+    // select the completion prefix
+    cursor.clearSelection();
+    cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, completionPrefix.length());
+
+    int pos = cursor.position();
+
+    // replace completion prefix with snippet
+    cursor.insertText(completion);
+
+    // move cursor to requested position
+    cursor.setPosition(pos);
+    cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, newCursorPos);
+
+    this->setTextCursor(cursor);
+}
+
+void MarkdownEditor::addWordToUserWordlist()
+{
+    QAction *action = qobject_cast<QAction*>(sender());
+    QString word = action->data().toString();
+    spellChecker->addToUserWordlist(word);
 }
 
 void MarkdownEditor::loadStyleFromStylesheet(const QString &fileName)
@@ -303,9 +380,22 @@ int MarkdownEditor::countWords() const
     return words;
 }
 
-void MarkdownEditor::setShowHardLinebreaks(bool enabled)
+void MarkdownEditor::setShowSpecialCharacters(bool enabled)
 {
     showHardLinebreaks = enabled;
+
+    QTextOption textOption = document()->defaultTextOption();
+    QTextOption::Flags optionFlags = textOption.flags();
+    if (enabled) {
+        optionFlags |= QTextOption::ShowLineAndParagraphSeparators;
+        optionFlags |= QTextOption::ShowTabsAndSpaces;
+    } else {
+        optionFlags &= ~QTextOption::ShowLineAndParagraphSeparators;
+        optionFlags &= ~QTextOption::ShowTabsAndSpaces;
+    }
+    textOption.setFlags(optionFlags);
+
+    document()->setDefaultTextOption(textOption);
 
     // repaint
     viewport()->update();
@@ -320,13 +410,29 @@ void MarkdownEditor::setSpellingCheckEnabled(bool enabled)
     highlighter->rehighlight();
 }
 
-void MarkdownEditor::setSpellingDictionary(const hunspell::Dictionary &dictionary)
+void MarkdownEditor::setSpellingDictionary(const Dictionary &dictionary)
 {
     spellChecker->loadDictionary(dictionary.filePath());
 
     // rehighlight markdown document
     highlighter->reset();
     highlighter->rehighlight();
+}
+
+void MarkdownEditor::setSnippetCompleter(SnippetCompleter *completer)
+{
+    this->completer = completer;
+
+    connect(completer, SIGNAL(snippetSelected(QString,QString, int)),
+            this, SLOT(insertSnippet(QString,QString, int)));
+}
+
+void MarkdownEditor::gotoLine(int line)
+{
+    QTextCursor cursor = this->textCursor();
+    cursor.movePosition(QTextCursor::Start, QTextCursor::MoveAnchor);
+    cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, line-1);
+    this->setTextCursor(cursor);
 }
 
 void MarkdownEditor::drawLineEndMarker(QPaintEvent *e)
@@ -357,4 +463,24 @@ void MarkdownEditor::drawLineEndMarker(QPaintEvent *e)
 
         block = block.next();
     }
+}
+
+QString MarkdownEditor::textUnderCursor() const
+{
+    QTextCursor cursor = this->textCursor();
+    QTextDocument *document = this->document();
+
+    // empty text if cursor at start of line
+    if (cursor.atBlockStart()) {
+        return QString();
+    }
+
+    cursor.clearSelection();
+
+    // move left until we find a space or reach the start of line
+    do {
+        cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor);
+    } while(!document->characterAt(cursor.position()-1).isSpace() && !cursor.atBlockStart());
+
+    return cursor.selectedText();
 }

@@ -41,6 +41,7 @@ pre .haskell .type,
 pre .tag .value,
 pre .css .rules .value,
 pre .preprocessor,
+pre .pragma,
 pre .ruby .symbol,
 pre .ruby .symbol .string,
 pre .ruby .class .parent,
@@ -62,7 +63,8 @@ pre .envvar,
 pre .apache .tag,
 pre .apache .cbracket,
 pre .nginx .built_in,
-pre .tex .command {
+pre .tex .command,
+pre .coffeescript .attribute {
   color: #2C009F;
 }
 

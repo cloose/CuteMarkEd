@@ -44,7 +44,9 @@ pre .tex .formula {
 }
 
 pre .title,
-pre .id {
+pre .id,
+pre .coffeescript .params,
+pre .scss .preprocessor {
   color: #900;
   font-weight: bold
 }
@@ -102,6 +104,7 @@ pre .clojure .built_in {
 }
 
 pre .preprocessor,
+pre .pragma,
 pre .pi,
 pre .doctype,
 pre .shebang,

@@ -14,29 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef PARSER_H
-#define PARSER_H
+#ifndef MARKDOWNCONVERTER_H
+#define MARKDOWNCONVERTER_H
 
-#include <QtCore/qstring.h>
+#include <QString>
 
-extern "C" {
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
-#include <mkdio.h>
-}
+class MarkdownDocument;
+class Options;
 
-namespace Discount
-{
-
-class Parser
+class MarkdownConverter
 {
 public:
-    enum ParserOption {
+    enum ConverterOption {
         NoLinksOption          = 0x00000001, /* don't do link processing, block <a> tags  */
         NoImagesOption         = 0x00000002, /* don't do image processing, block <img> */
         NoSmartypantsOption    = 0x00000004, /* don't run smartypants() */
         NoHtmlOption           = 0x00000008, /* don't allow raw html through AT ALL */
+        NoSuperscriptOption    = 0x00000100, /* don't process a^2 as superscript(<sup>) */
         NoTablesOption         = 0x00000400, /* disallow tables */
         NoStrikethroughOption  = 0x00000800, /* forbid ~~strikethrough~~ */
         TableOfContentsOption  = 0x00001000, /* do table-of-contents processing */
@@ -48,20 +42,15 @@ public:
         ExtraFootnoteOption    = 0x00200000, /* enable markdown extra-style footnotes */
         NoStyleOption          = 0x00400000  /* don't extract <style> blocks */
     };
-    Q_DECLARE_FLAGS(ParserOptions, ParserOption)
+    Q_DECLARE_FLAGS(ConverterOptions, ConverterOption)
 
-    Parser();
-    ~Parser();
+    virtual ~MarkdownConverter() {}
 
-    static MMIOT* parseString(const QString &text, ParserOptions options);
-    static QString renderAsHtml(MMIOT *document);
-    static QString generateToc(MMIOT *document);
-
-    static void cleanup(MMIOT *document);
+    virtual MarkdownDocument *createDocument(const QString &text, ConverterOptions options) = 0;
+    virtual QString renderAsHtml(MarkdownDocument *document) = 0;
+    virtual QString renderAsTableOfContents(MarkdownDocument *document) = 0;
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(Parser::ParserOptions)
+Q_DECLARE_OPERATORS_FOR_FLAGS(MarkdownConverter::ConverterOptions)
 
-}
-
-#endif // PARSER_H
+#endif // MARKDOWNCONVERTER_H
