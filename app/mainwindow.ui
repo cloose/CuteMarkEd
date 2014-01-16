@@ -590,7 +590,10 @@
   </action>
   <action name="actionGotoLine">
    <property name="text">
-    <string>Goto line</string>
+    <string>Go to Line</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
    </property>
   </action>
   <action name="actionCenterParagraph">

@@ -429,9 +429,7 @@ void MarkdownEditor::setSnippetCompleter(SnippetCompleter *completer)
 
 void MarkdownEditor::gotoLine(int line)
 {
-    QTextCursor cursor = this->textCursor();
-    cursor.movePosition(QTextCursor::Start, QTextCursor::MoveAnchor);
-    cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, line-1);
+    QTextCursor cursor(document()->findBlockByNumber(line-1));
     this->setTextCursor(cursor);
 }
 
