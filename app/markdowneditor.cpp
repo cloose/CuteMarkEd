@@ -427,6 +427,12 @@ void MarkdownEditor::setSnippetCompleter(SnippetCompleter *completer)
             this, SLOT(insertSnippet(QString,QString, int)));
 }
 
+void MarkdownEditor::gotoLine(int line)
+{
+    QTextCursor cursor(document()->findBlockByNumber(line-1));
+    this->setTextCursor(cursor);
+}
+
 void MarkdownEditor::drawLineEndMarker(QPaintEvent *e)
 {
     QPainter painter(viewport());

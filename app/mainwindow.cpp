@@ -22,6 +22,7 @@
 #include <QDirIterator>
 #include <QFileDialog>
 #include <QIcon>
+#include <QInputDialog>
 #include <QLabel>
 #include <QMessageBox>
 #include <QNetworkDiskCache>
@@ -333,6 +334,21 @@ void MainWindow::editCopyHtml()
 {
     QClipboard* clipboard = QApplication::clipboard();
     clipboard->setText(ui->htmlSourceTextEdit->toPlainText());
+}
+
+void MainWindow::editGotoLine()
+{
+    const int STEP = 1;
+    const int MIN_VALUE = 1;
+    QTextCursor cursor = ui->plainTextEdit->textCursor();
+    int currentLine = cursor.blockNumber()+1;
+    int maxValue = ui->plainTextEdit->document()->blockCount();
+
+    bool ok;
+    int line = QInputDialog::getInt(this, tr("Go to..."),
+                                               tr("Line: "), currentLine, MIN_VALUE, maxValue, STEP, &ok);
+    if (!ok) return;
+    ui->plainTextEdit->gotoLine(line);
 }
 
 void MainWindow::editFindReplace()
@@ -876,8 +892,8 @@ void MainWindow::setupActions()
     ui->actionEmphasize->setIcon(QIcon("icon-italic.fontawesome"));
     ui->actionStrikethrough->setIcon(QIcon("icon-strikethrough.fontawesome"));
     ui->actionCenterParagraph->setIcon(QIcon("icon-align-center.fontawesome"));
-    ui->actionBlockquote->setIcon(QIcon("icon-quote-left.fontawesome"));
     ui->actionIncreaseHeaderLevel->setIcon(QIcon("icon-level-up.fontawesome"));
+    ui->actionBlockquote->setIcon(QIcon("icon-quote-left.fontawesome"));
     ui->actionDecreaseHeaderLevel->setIcon(QIcon("icon-level-down.fontawesome"));
 
     ui->actionInsertTable->setIcon(QIcon("icon-table.fontawesome"));
