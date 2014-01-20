@@ -167,7 +167,7 @@
      <x>0</x>
      <y>0</y>
      <width>850</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -780,6 +780,9 @@
   </action>
   <action name="actionWordWrap">
    <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="text">
@@ -1489,7 +1492,7 @@
   </connection>
   <connection>
    <sender>actionShowSpecialCharacters</sender>
-   <signal>triggered(bool)</signal>
+   <signal>toggled(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>extrasShowSpecialCharacters(bool)</slot>
    <hints>
