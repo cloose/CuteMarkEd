@@ -632,7 +632,7 @@
     <string>Blockquote</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Q</string>
+    <string>Ctrl+Shift+Q</string>
    </property>
   </action>
   <action name="actionMarkdownSyntax">
@@ -751,7 +751,7 @@
     <string>Insert Image...</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+G</string>
+    <string>Ctrl+Shift+I</string>
    </property>
   </action>
   <action name="actionHorizontalLayout">
