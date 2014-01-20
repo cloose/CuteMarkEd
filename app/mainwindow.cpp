@@ -739,13 +739,15 @@ void MainWindow::previewLinkClicked(const QUrl &url)
         // directories are not supported
         if(QFileInfo(url.toLocalFile()).isDir()) return;
 
+        QString filePath = url.path();
         // Links to markdown files open new instance
-        if(url.fileName().endsWith(".md"))
+        if(filePath.endsWith(".md") || filePath.endsWith(".markdown"))
         {
-            QProcess::execute(qApp->applicationFilePath(), QStringList() << url.toString());
+            QProcess::startDetached(qApp->applicationFilePath(), QStringList() << filePath);
             return;
         }
     }
+
     QDesktopServices::openUrl(url);
 }
 
