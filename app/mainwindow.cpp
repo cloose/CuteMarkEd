@@ -340,13 +340,14 @@ void MainWindow::editGotoLine()
 {
     const int STEP = 1;
     const int MIN_VALUE = 1;
+
     QTextCursor cursor = ui->plainTextEdit->textCursor();
     int currentLine = cursor.blockNumber()+1;
     int maxValue = ui->plainTextEdit->document()->blockCount();
 
     bool ok;
     int line = QInputDialog::getInt(this, tr("Go to..."),
-                                               tr("Line: "), currentLine, MIN_VALUE, maxValue, STEP, &ok);
+                                          tr("Line: ", "Line number in the Markdown editor"), currentLine, MIN_VALUE, maxValue, STEP, &ok);
     if (!ok) return;
     ui->plainTextEdit->gotoLine(line);
 }
