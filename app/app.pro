@@ -181,16 +181,21 @@ else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3r
 #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hunspell/libhunspell.a
 
 # hoedown
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/release/ -lhoedown
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/debug/ -lhoedown
-else:unix: LIBS += -L$$OUT_PWD/../3rdparty/hoedown/ -lhoedown
+with_hoedown {
+    message("app: Enable hoedown markdown converter support")
+    DEFINES += ENABLE_HOEDOWN
 
-INCLUDEPATH += $$PWD/../3rdparty/hoedown
-DEPENDPATH += $$PWD/../3rdparty/hoedown
+    win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/release/ -lhoedown
+    else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/debug/ -lhoedown
+    else:unix: LIBS += -L$$OUT_PWD/../3rdparty/hoedown/ -lhoedown
 
-win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/release/libhoedown.a
-else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/debug/libhoedown.a
-#else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hoedown/libhoedown.a
+    INCLUDEPATH += $$PWD/../3rdparty/hoedown
+    DEPENDPATH += $$PWD/../3rdparty/hoedown
+
+    win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/release/libhoedown.a
+    else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/debug/libhoedown.a
+    #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hoedown/libhoedown.a
+}
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
 message("Using LIBS=$$LIBS")
