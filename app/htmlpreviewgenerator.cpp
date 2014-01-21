@@ -40,6 +40,11 @@ void HtmlPreviewGenerator::setHtmlTemplate(const QString &t)
     htmlTemplate = t;
 }
 
+bool HtmlPreviewGenerator::isSupported(MarkdownConverter::ConverterOption option) const
+{
+    return converter->supportedOptions().testFlag(option);
+}
+
 void HtmlPreviewGenerator::markdownTextChanged(const QString &text)
 {
     // enqueue task to parse the markdown text and generate a new HTML document

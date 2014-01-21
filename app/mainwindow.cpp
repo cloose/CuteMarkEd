@@ -833,6 +833,9 @@ void MainWindow::markdownConverterChanged()
 {
     // regenerate HTML
     plainTextChanged();
+
+    // disable unsupported extensions
+    updateExtensionStatus();
 }
 
 void MainWindow::setupUi()
@@ -1023,6 +1026,17 @@ void MainWindow::setupHtmlSourceView()
     font.setStyleHint(QFont::TypeWriter);
     ui->htmlSourceTextEdit->setFont(font);
     htmlHighlighter = new HtmlHighlighter(ui->htmlSourceTextEdit->document());
+}
+
+void MainWindow::updateExtensionStatus()
+{
+    ui->actionAutolink->setEnabled(generator->isSupported(MarkdownConverter::AutolinkOption));
+    ui->actionAlphabeticLists->setEnabled(generator->isSupported(MarkdownConverter::NoAlphaListOption));
+    ui->actionDefinitionLists->setEnabled(generator->isSupported(MarkdownConverter::NoDefinitionListOption));
+    ui->actionFootnotes->setEnabled(generator->isSupported(MarkdownConverter::ExtraFootnoteOption));
+    ui->actionSmartyPants->setEnabled(generator->isSupported(MarkdownConverter::NoSmartypantsOption));
+    ui->actionStrikethroughOption->setEnabled(generator->isSupported(MarkdownConverter::NoStrikethroughOption));
+    ui->actionSuperscript->setEnabled(generator->isSupported(MarkdownConverter::NoSuperscriptOption));
 }
 
 void MainWindow::syncWebViewToHtmlSource()

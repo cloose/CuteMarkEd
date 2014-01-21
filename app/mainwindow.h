@@ -133,6 +133,7 @@ private:
     void setupMarkdownEditor();
     void setupHtmlPreview();
     void setupHtmlSourceView();
+    void updateExtensionStatus();
     void syncWebViewToHtmlSource();
     bool maybeSave();
     void setFileName(const QString &fileName);
