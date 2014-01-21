@@ -739,7 +739,7 @@ void MainWindow::previewLinkClicked(const QUrl &url)
         // directories are not supported
         if(QFileInfo(url.toLocalFile()).isDir()) return;
 
-        QString filePath = url.path();
+        QString filePath = url.toLocalFile();
         // Links to markdown files open new instance
         if(filePath.endsWith(".md") || filePath.endsWith(".markdown"))
         {
