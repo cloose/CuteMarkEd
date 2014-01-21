@@ -116,6 +116,14 @@ QString HoedownMarkdownConverter::renderAsTableOfContents(MarkdownDocument *docu
     return toc;
 }
 
+MarkdownConverter::ConverterOptions HoedownMarkdownConverter::supportedOptions() const
+{
+    return MarkdownConverter::AutolinkOption |
+           MarkdownConverter::NoStrikethroughOption |
+           MarkdownConverter::ExtraFootnoteOption |
+           MarkdownConverter::NoSuperscriptOption;
+}
+
 unsigned long HoedownMarkdownConverter::translateConverterOptions(ConverterOptions options) const
 {
     unsigned long converterOptions = HOEDOWN_EXT_FENCED_CODE | HOEDOWN_EXT_TABLES;

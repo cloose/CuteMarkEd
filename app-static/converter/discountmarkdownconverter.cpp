@@ -103,6 +103,17 @@ QString DiscountMarkdownConverter::renderAsTableOfContents(MarkdownDocument *doc
     return toc;
 }
 
+MarkdownConverter::ConverterOptions DiscountMarkdownConverter::supportedOptions() const
+{
+    return MarkdownConverter::AutolinkOption |
+           MarkdownConverter::NoStrikethroughOption |
+           MarkdownConverter::NoAlphaListOption |
+           MarkdownConverter::NoDefinitionListOption |
+           MarkdownConverter::NoSmartypantsOption |
+           MarkdownConverter::ExtraFootnoteOption |
+           MarkdownConverter::NoSuperscriptOption;
+}
+
 unsigned long DiscountMarkdownConverter::translateConverterOptions(ConverterOptions options) const
 {
     unsigned long converterOptions = MKD_TOC | MKD_NOSTYLE;

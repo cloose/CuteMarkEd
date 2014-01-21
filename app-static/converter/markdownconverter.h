@@ -49,6 +49,8 @@ public:
     virtual MarkdownDocument *createDocument(const QString &text, ConverterOptions options) = 0;
     virtual QString renderAsHtml(MarkdownDocument *document) = 0;
     virtual QString renderAsTableOfContents(MarkdownDocument *document) = 0;
+
+    virtual ConverterOptions supportedOptions() const = 0;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(MarkdownConverter::ConverterOptions)
