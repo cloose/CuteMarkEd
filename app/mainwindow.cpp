@@ -829,6 +829,12 @@ void MainWindow::proxyConfigurationChanged()
     }
 }
 
+void MainWindow::markdownConverterChanged()
+{
+    // regenerate HTML
+    plainTextChanged();
+}
+
 void MainWindow::setupUi()
 {
     setupActions();
@@ -853,6 +859,8 @@ void MainWindow::setupUi()
 
     connect(options, SIGNAL(proxyConfigurationChanged()),
             this, SLOT(proxyConfigurationChanged()));
+    connect(options, SIGNAL(markdownConverterChanged()),
+            this, SLOT(markdownConverterChanged()));
 
     readSettings();
 }

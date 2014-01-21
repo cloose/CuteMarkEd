@@ -124,6 +124,7 @@ private slots:
     void addJavaScriptObject();
     bool load(const QString &fileName);
     void proxyConfigurationChanged();
+    void markdownConverterChanged();
 
 private:
     void setupUi();
