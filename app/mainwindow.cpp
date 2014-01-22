@@ -50,6 +50,7 @@
 #include "markdownmanipulator.h"
 #include "exporthtmldialog.h"
 #include "exportpdfdialog.h"
+#include "exportrevealdialog.h"
 #include "options.h"
 #include "optionsdialog.h"
 #include "snippetcompleter.h"
@@ -298,6 +299,14 @@ void MainWindow::fileExportToPdf()
     ExportPdfDialog dialog(fileName);
     if (dialog.exec() == QDialog::Accepted) {
         ui->webView->print(dialog.printer());
+    }
+}
+
+void MainWindow::fileExportToReveal()
+{
+    ExportRevealDialog dialog(fileName);
+    if (dialog.exec() == QDialog::Accepted) {
+        RevealOptions options = dialog.getRevealOptions();
     }
 }
 

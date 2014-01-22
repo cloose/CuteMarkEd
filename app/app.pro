@@ -42,6 +42,7 @@ SOURCES += \
     markdownmanipulator.cpp \
     exportpdfdialog.cpp \
     exporthtmldialog.cpp \
+    exportrevealdialog.cpp \
     htmlhighlighter.cpp \
     options.cpp \
     optionsdialog.cpp \
@@ -49,7 +50,8 @@ SOURCES += \
     controls/languagemenu.cpp \
     tabletooldialog.cpp \
     imagetooldialog.cpp \
-    snippetcompleter.cpp
+    snippetcompleter.cpp \
+    reveal/revealoptions.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -66,6 +68,7 @@ HEADERS  += \
     markdownmanipulator.h \
     exportpdfdialog.h \
     exporthtmldialog.h \
+    exportrevealdialog.h \
     htmlhighlighter.h \
     options.h \
     optionsdialog.h \
@@ -73,13 +76,15 @@ HEADERS  += \
     controls/languagemenu.h \
     tabletooldialog.h \
     imagetooldialog.h \
-    snippetcompleter.h
+    snippetcompleter.h \
+    reveal/revealoptions.h
 
 FORMS    += \
     mainwindow.ui \
     controls/findreplacewidget.ui \
     exportpdfdialog.ui \
     exporthtmldialog.ui \
+    exportrevealdialog.ui \
     optionsdialog.ui \
     tabletooldialog.ui \
     imagetooldialog.ui
