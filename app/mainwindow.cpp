@@ -19,6 +19,7 @@
 #include "ui_mainwindow.h"
 
 #include <QClipboard>
+#include <QDesktopServices>
 #include <QDirIterator>
 #include <QFileDialog>
 #include <QIcon>
@@ -29,6 +30,7 @@
 #include <QNetworkProxy>
 #include <QPrintDialog>
 #include <QPrinter>
+#include <QProcess>
 #include <QScrollBar>
 #include <QSettings>
 #include <QStandardPaths>
@@ -733,11 +735,21 @@ void MainWindow::htmlContentSizeChanged()
 
 void MainWindow::previewLinkClicked(const QUrl &url)
 {
-    // only open link if its not a local directory.
-    // this can happen because when the href is empty, url is the base url (see htmlResultReady)
-    if (!url.isLocalFile() || !QFileInfo(url.toLocalFile()).isDir()) {
-        ui->webView->load(url);
+    if(url.isLocalFile())
+    {
+        // directories are not supported
+        if(QFileInfo(url.toLocalFile()).isDir()) return;
+
+        QString filePath = url.toLocalFile();
+        // Links to markdown files open new instance
+        if(filePath.endsWith(".md") || filePath.endsWith(".markdown"))
+        {
+            QProcess::startDetached(qApp->applicationFilePath(), QStringList() << filePath);
+            return;
+        }
     }
+
+    QDesktopServices::openUrl(url);
 }
 
 void MainWindow::tocLinkClicked(const QUrl &url)
