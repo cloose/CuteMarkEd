@@ -17,8 +17,11 @@
 #include <QTest>
 
 #include "discountmarkdownconvertertest.h"
-#include "hoedownmarkdownconvertertest.h"
 #include "jsonsnippetfiletest.h"
+
+#ifdef ENABLE_HOEDOWN
+#include "hoedownmarkdownconvertertest.h"
+#endif
 
 int main(int argc, char *argv[])
 {
@@ -27,8 +30,10 @@ int main(int argc, char *argv[])
     DiscountMarkdownConverterTest test;
     ret += QTest::qExec(&test, argc, argv);
 
+#ifdef ENABLE_HOEDOWN
     HoedownMarkdownConverterTest test2;
     ret += QTest::qExec(&test2, argc, argv);
+#endif
 
     JsonSnippetFileTest test3;
     ret += QTest::qExec(&test3, argc, argv);

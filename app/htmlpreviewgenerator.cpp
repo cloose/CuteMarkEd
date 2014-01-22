@@ -21,7 +21,10 @@
 #include <converter/markdownconverter.h>
 #include <converter/markdowndocument.h>
 #include <converter/discountmarkdownconverter.h>
+
+#ifdef ENABLE_HOEDOWN
 #include <converter/hoedownmarkdownconverter.h>
+#endif
 
 #include "options.h"
 
@@ -100,9 +103,11 @@ void HtmlPreviewGenerator::setCodeHighlightingStyle(const QString &style)
 void HtmlPreviewGenerator::markdownConverterChanged()
 {
     switch (options->markdownConverter()) {
+#ifdef ENABLE_HOEDOWN
     case Options::HoedownMarkdownConverter:
         converter = new HoedownMarkdownConverter();
         break;
+#endif
 
     case Options::DiscountMarkdownConverter:
     default:
