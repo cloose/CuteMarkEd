@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?define ManufacturerName="CuteMarkEd Project"?>
   <?define ProductName="CuteMarkEd"?>
-  <?define ProductVersion="0.8.1"?>
+  <?define ProductVersion="0.9.0"?>
   <Product Name="$(var.ProductName)" 
       Id="CDB11734-84EA-45F1-829C-681CD0E7110F" 
       UpgradeCode="335156FC-CB7F-4357-98D4-B5519E66402B"
