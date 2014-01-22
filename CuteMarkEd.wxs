@@ -86,6 +86,12 @@
       <Component Id="HunspellComponent" Guid="B250CB0F-AB3A-4D76-A434-3C42BF2BC863" DiskId="1">
         <File Id="HunspellLibrary" Source="hunspell.dll"/>
       </Component>
+      <Component Id="DiscountComponent" Guid="8FBA35EE-0441-4C2C-9FAB-95F5B8E66A74" DiskId="1">
+        <File Id="DiscountLibrary" Source="discount.dll"/>
+      </Component>
+      <Component Id="HoedownComponent" Guid="30EECD2D-5125-4909-B15B-1FEAB7395B11" DiskId="1">
+        <File Id="HoedownLibrary" Source="hoedown.dll"/>
+      </Component>
       <Component Id="TextComponent" Guid="8C44FFEF-D648-4D1A-8057-02EBF71DE414" DiskId="1">
         <File Id="LICENSE.md" Source="LICENSE.md"/>
         <File Id="README.md" Source="README.md"/>
@@ -198,6 +204,8 @@
       <ComponentRef Id="OpenSSLComponent"/>
       <ComponentRef Id="IconEngineComponent"/>
       <ComponentRef Id="HunspellComponent"/>
+      <ComponentRef Id="DiscountComponent"/>
+      <ComponentRef Id="HoedownComponent"/>
       <ComponentRef Id="DictionariesComponent"/>
       <ComponentRef Id="TextComponent"/>
       <ComponentRef Id="ApplicationShortcuts"/>
