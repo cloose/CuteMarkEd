@@ -124,6 +124,7 @@ private slots:
     void addJavaScriptObject();
     bool load(const QString &fileName);
     void proxyConfigurationChanged();
+    void markdownConverterChanged();
 
 private:
     void setupUi();
@@ -132,6 +133,7 @@ private:
     void setupMarkdownEditor();
     void setupHtmlPreview();
     void setupHtmlSourceView();
+    void updateExtensionStatus();
     void syncWebViewToHtmlSource();
     bool maybeSave();
     void setFileName(const QString &fileName);
