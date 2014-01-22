@@ -52,7 +52,7 @@ else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../../3rdpa
 with_hoedown {
     DEFINES += ENABLE_HOEDOWN
     SOURCES += hoedownmarkdownconvertertest.cpp
-    HEADERS += hoedownmarkdownconvertertest.
+    HEADERS += hoedownmarkdownconvertertest.h
 
     win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../3rdparty/hoedown/release/ -lhoedown
     else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../3rdparty/hoedown/debug/ -lhoedown
