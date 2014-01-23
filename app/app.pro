@@ -51,7 +51,9 @@ SOURCES += \
     tabletooldialog.cpp \
     imagetooldialog.cpp \
     snippetcompleter.cpp \
-    reveal/revealoptions.cpp
+    reveal/revealexporter.cpp \
+    reveal/revealoptions.cpp \
+    helpers/ziptool.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -68,6 +70,7 @@ HEADERS  += \
     markdownmanipulator.h \
     exportpdfdialog.h \
     exporthtmldialog.h \
+    reveal/revealexporter.h \
     exportrevealdialog.h \
     htmlhighlighter.h \
     options.h \
@@ -77,7 +80,9 @@ HEADERS  += \
     tabletooldialog.h \
     imagetooldialog.h \
     snippetcompleter.h \
-    reveal/revealoptions.h
+    reveal/revealoptions.h \
+    helpers/ziptool.h
+
 
 FORMS    += \
     mainwindow.ui \
@@ -196,6 +201,14 @@ DEPENDPATH += $$PWD/../3rdparty/hoedown
 win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/release/libhoedown.a
 else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/debug/libhoedown.a
 #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hoedown/libhoedown.a
+
+#quazip
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/quazip-0.6/quazip/ -lquazip
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/quazip-0.6/quazip/ -lquazip
+else:unix: LIBS += -L$$OUT_PWD/../3rdparty/quazip-0.6/quazip -lquazip
+
+INCLUDEPATH += $$PWD/../3rdparty/quazip-0.6/quazip
+DEPENDPATH += $$PWD/../3rdparty/quazip-0.6/quazip
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
 message("Using LIBS=$$LIBS")

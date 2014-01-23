@@ -3,4 +3,5 @@ TEMPLATE = subdirs
 SUBDIRS += \
     discount \
     hoedown \
-    hunspell
+    hunspell \
+    quazip-0.6

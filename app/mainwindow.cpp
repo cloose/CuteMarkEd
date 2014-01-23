@@ -55,6 +55,7 @@
 #include "optionsdialog.h"
 #include "snippetcompleter.h"
 #include "tabletooldialog.h"
+#include "reveal/revealexporter.h"
 
 MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
@@ -307,6 +308,8 @@ void MainWindow::fileExportToReveal()
     ExportRevealDialog dialog(fileName);
     if (dialog.exec() == QDialog::Accepted) {
         RevealOptions options = dialog.getRevealOptions();
+        RevealExporter exporter;
+        exporter.run();
     }
 }
 
