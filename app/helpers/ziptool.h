@@ -18,11 +18,28 @@
 #define ZIPTOOL_H
 #include <QString>
 
+enum ZipError
+{
+    ErrNone,
+    ErrFileNotFound,
+    ErrFileInfo,
+    ErrFileOpen,
+    ErrFileRead,
+    ErrZipError,
+    ErrFileEof,
+    ErrFileClose
+};
+
+class QuaZip;
+
 class ZipTool
 {
 public:
     ZipTool();
-    bool extract();
+    ZipError extract(const QString& sourceFile, const QString& destPath);
+private:
+    ZipError processZip(QuaZip& zip, const QString& destPath);
+    void CreateDirectory(const QString& fileName, const QString& destPath);
 };
 
 #endif // ZIPTOOL_H

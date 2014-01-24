@@ -20,5 +20,5 @@
 void RevealExporter::run()
 {
     ZipTool zipTool;
-    zipTool.extract();
+    zipTool.extract("reveal.zip", "tmp");
 }
