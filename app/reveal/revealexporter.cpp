@@ -15,10 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "reveal/revealexporter.h"
+#include "reveal/revealoptions.h"
 #include "helpers/ziptool.h"
 
-void RevealExporter::run()
+void RevealExporter::run(const QString& destPath, const RevealOptions& revealOptions)
 {
     ZipTool zipTool;
-    zipTool.extract("reveal.zip", "tmp");
+    zipTool.extract("reveal.zip", destPath);
 }

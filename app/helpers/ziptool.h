@@ -25,12 +25,16 @@ enum ZipError
     ErrFileInfo,
     ErrFileOpen,
     ErrFileRead,
+    ErrDirCreate,
+    ErrFileCreate,
+    ErrFileWrite,
     ErrZipError,
     ErrFileEof,
     ErrFileClose
 };
 
 class QuaZip;
+class QuaZipFile;
 
 class ZipTool
 {
@@ -39,7 +43,8 @@ public:
     ZipError extract(const QString& sourceFile, const QString& destPath);
 private:
     ZipError processZip(QuaZip& zip, const QString& destPath);
-    void CreateDirectory(const QString& fileName, const QString& destPath);
+    bool createDirectory(const QString& fileName, const QString& destPath);
+    ZipError extractFile(QuaZipFile& zipFile, const QString& destPath);
 };
 
 #endif // ZIPTOOL_H

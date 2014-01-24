@@ -309,7 +309,7 @@ void MainWindow::fileExportToReveal()
     if (dialog.exec() == QDialog::Accepted) {
         RevealOptions options = dialog.getRevealOptions();
         RevealExporter exporter;
-        exporter.run();
+        exporter.run(dialog.pathName(), options);
     }
 }
 

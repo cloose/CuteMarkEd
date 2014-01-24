@@ -17,10 +17,13 @@
 #ifndef REVEALEXPORTER_H
 #define REVEALEXPORTER_H
 
+class QString;
+class RevealOptions;
+
 class RevealExporter
 {
 public:
-    void run();
+    void run(const QString& destPath, const RevealOptions& revealOptions);
 };
 
 #endif // REVEALEXPORTER_H

@@ -19,7 +19,6 @@
 #include "quazip.h"
 #include "quazipfile.h"
 
-//static ZipError extract(const QString & filePath, const QString & extDirPath);
 
 ZipTool::ZipTool()
 {
@@ -47,6 +46,7 @@ ZipError ZipTool::processZip(QuaZip& zip, const QString& destPath)
     qDebug("%d entries\n", zip.getEntriesCount());
     qDebug("Global comment: %s\n", zip.getComment().toLocal8Bit().constData());
 
+    QuaZipFile zipFile(&zip);
     for (bool more = zip.goToFirstFile(); more; more = zip.goToNextFile())
     {
         QuaZipFileInfo info;
@@ -57,122 +57,63 @@ ZipError ZipTool::processZip(QuaZip& zip, const QString& destPath)
         }
 
         qDebug("Zip name:    %s", info.name.toLocal8Bit().constData());
-        qDebug("Zip flags:   %d", info.flags);
-        qDebug("Internal:    %d", info.internalAttr);
-        qDebug("External:    %X\n", info.externalAttr);
 
         QString fileName = info.name;
         if(fileName.endsWith("/"))
         {
-            CreateDirectory(fileName, destPath);
+            if( !createDirectory(fileName, destPath) )
+            {
+                return ErrDirCreate;
+            }
             continue;
+        }
+
+        ZipError error = extractFile(zipFile, destPath);
+        if(error!=ErrNone)
+        {
+            return error;
         }
     }
 
     return ErrNone;
 }
 
-void ZipTool::CreateDirectory(const QString& pathName, const QString& destPath)
+bool ZipTool::createDirectory(const QString& pathName, const QString& destPath)
 {
-    QString current = QDir::currentPath();
-    qDebug("In %s: ", current.toLocal8Bit().constData());
-    qDebug("Creating directory %s/%s in %s", destPath.toLocal8Bit().constData(), pathName.toLocal8Bit().constData());
-    QDir dir(destPath);
-    if(!dir.exists())
-    if( !dir.mkdir(pathName) )
+    QString destName = QString("%1/%2").arg(destPath).arg(pathName);
+    qDebug("Creating directory %s", destName.toLocal8Bit().constData());
+
+    QDir tmpDir(destName);
+    if(!tmpDir.exists(destName))
     {
-        qDebug("Unable to create directory!");
+        QDir dir(destPath);
+        if( !dir.mkpath(pathName) )
+        {
+            qDebug("Unable to create directory!");
+            return false;
+        }
     }
+    return true;
 }
 
-#if 0
-static ZipError extract(const QString & sourceFile, const QString & destPath)
+ZipError ZipTool::extractFile(QuaZipFile& zipFile, const QString& destPath)
 {
-    //char c;
-    for (bool more = zip.goToFirstFile(); more; more = zip.goToNextFile())
+    if( !zipFile.open(QIODevice::ReadOnly) ) return ErrFileOpen;
+    QByteArray buffer = zipFile.readAll();
+    zipFile.close();
+    if (zipFile.getZipError() != UNZ_OK)
     {
-
-/*
-    // set source file in archive
-    QString filePath = archive.getCurrentFileName();
-    QuaZipFile zFile( archive.getZipName(), filePath );
-    // open the source file
-    zFile.open( QIODevice::ReadOnly );
-    // create a bytes array and write the file data into it
-    QByteArray ba = zFile.readAll();
-    // close the source file
-    zFile.close();
-    // set destination file
-    QFile dstFile( filePath );
-    // open the destination file
-    dstFile.open( QIODevice::WriteOnly | QIODevice::Text );
-    // write the data from the bytes array into the destination file
-    dstFile.write( ba.data() );
-    //close the destination file
-    dstFile.close();
- */
-
-        QuaZipFile file(&zip);
-        if (!file.open(QIODevice::ReadOnly))
-        {
-            qWarning("testRead(): file.open(): %d", file.getZipError());
-            return ErrFileOpen;
-        }
-        continue;
-
-        QString name = QString("%1/%2").arg(extDirPath).arg(file.getActualFileName());
-
-        if (file.getZipError() != UNZ_OK)
-        {
-            qWarning("testRead(): file.getFileName(): %d", file.getZipError());
-            return ErrZipError;
-        }
-
-
-        int len = file.size();
-        QByteArray buffer = file.readAll();
-
-        //out.setFileName("out/" + name);
-        QFile out(name);
-
-        // this will fail if "name" contains subdirectories, but we don't mind that
-        out.open(QIODevice::WriteOnly);
-        // Slow like hell (on GNU/Linux at least), but it is not my fault.
-        // Not ZIP/UNZIP package's fault either.
-        // The slowest thing here is out.putChar(c).
-//        while (file.getChar(&c)) out.putChar(c);
-        out.write(buffer.constData(), len);
-        out.close();
-
-        if (file.getZipError() != UNZ_OK)
-        {
-            qWarning("testRead(): file.getFileName(): %d", file.getZipError());
-            return ErrFileRead;
-        }
-
-        if (!file.atEnd())
-        {
-            qWarning("testRead(): read all but not EOF");
-            return ErrFileEof;
-        }
-
-        file.close();
-
-        if (file.getZipError() != UNZ_OK)
-        {
-            qWarning("testRead(): file.close(): %d", file.getZipError());
-            return ErrFileClose;
-        }
-    }
-
-    zip.close();
-
-    if (zip.getZipError() != UNZ_OK)
-    {
-        qWarning("testRead(): zip.close(): %d", zip.getZipError());
         return ErrFileClose;
     }
 
+    QString fileName = QString("%1/%2").arg(destPath).arg(zipFile.getActualFileName());
+    qDebug("Creating file %s", fileName.toLocal8Bit().constData());
+
+    QFile dstFile(fileName);
+    if(!dstFile.open( QIODevice::WriteOnly | QIODevice::Text )) return ErrFileCreate;
+    // write the data from the bytes array into the destination file
+    if(dstFile.write( buffer.data() )<0 ) return ErrFileWrite;
+    dstFile.close();
+
     return ErrNone;
 }
-#endif
