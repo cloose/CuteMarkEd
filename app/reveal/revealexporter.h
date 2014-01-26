@@ -16,14 +16,24 @@
  */
 #ifndef REVEALEXPORTER_H
 #define REVEALEXPORTER_H
+#include <QString>
 
-class QString;
 class RevealOptions;
+class QStringList;
 
 class RevealExporter
 {
 public:
+    RevealExporter(const QString& text);
     void run(const QString& destPath, const RevealOptions& revealOptions);
+private:
+    QString generateOutput(const QString& indexHtml, const QString& title, const QStringList& pages, const RevealOptions& revealOptions);
+    QString readIndexHtml();
+    QString writeIndexHtml(const QString& destPath, const QString& content);
+    QString extractTitle();
+    QStringList extractPages();
+private:
+    QString code;
 };
 
 #endif // REVEALEXPORTER_H

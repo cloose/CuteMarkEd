@@ -308,7 +308,9 @@ void MainWindow::fileExportToReveal()
     ExportRevealDialog dialog(fileName);
     if (dialog.exec() == QDialog::Accepted) {
         RevealOptions options = dialog.getRevealOptions();
-        RevealExporter exporter;
+
+        QString text = ui->plainTextEdit->document()->toPlainText();
+        RevealExporter exporter(text);
         exporter.run(dialog.pathName(), options);
     }
 }
