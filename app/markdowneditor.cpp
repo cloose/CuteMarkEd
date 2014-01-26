@@ -476,9 +476,10 @@ QString MarkdownEditor::textUnderCursor() const
     cursor.clearSelection();
 
     // move left until we find a space or reach the start of line
-    do {
+    while(!document->characterAt(cursor.position()-1).isSpace() && !cursor.atBlockStart()) {
         cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor);
-    } while(!document->characterAt(cursor.position()-1).isSpace() && !cursor.atBlockStart());
+    }
+
 
     return cursor.selectedText();
 }
