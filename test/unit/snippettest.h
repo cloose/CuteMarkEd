@@ -14,36 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef HUNSPELL_DICTIONARY_H
-#define HUNSPELL_DICTIONARY_H
+#ifndef SNIPPETTEST_H
+#define SNIPPETTEST_H
 
-#include <QtCore/qmetatype.h>
-#include <QtCore/qstring.h>
+#include <QObject>
 
-namespace hunspell {
-
-class Dictionary
+class SnippetTest : public QObject
 {
-public:
-    Dictionary();
-    Dictionary(const QString &language, const QString &filePath);
-    Dictionary(const Dictionary &other);
-    ~Dictionary();
+    Q_OBJECT
 
-    QString language() const;
-    QString languageName() const;
-
-    QString countryName() const;
-
-    QString filePath() const;
-
-private:
-    QString m_language;
-    QString m_filePath;
+private slots:
+    void isLessThanComparable();
+    void isEqualComparable();
+    void isInitializedAfterCreation();
 };
 
-} // namespace hunspell
-
-Q_DECLARE_METATYPE(hunspell::Dictionary);
-
-#endif // HUNSPELL_DICTIONARY_H
+#endif // SNIPPETTEST_H

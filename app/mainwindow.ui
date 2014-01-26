@@ -74,41 +74,88 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWebView" name="webView">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
+      <widget class="QStackedWidget" name="stackedWidget">
+       <property name="currentIndex">
+        <number>1</number>
        </property>
-       <property name="minimumSize">
-        <size>
-         <width>200</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="url">
-        <url>
-         <string>about:blank</string>
-        </url>
-       </property>
-      </widget>
-      <widget class="QPlainTextEdit" name="htmlSourceTextEdit">
-       <property name="minimumSize">
-        <size>
-         <width>200</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::NoFrame</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
+       <widget class="QWidget" name="webViewPage">
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QWebView" name="webView">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="url">
+            <url>
+             <string>about:blank</string>
+            </url>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="htmlSourcePage">
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPlainTextEdit" name="htmlSourceTextEdit">
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Plain</enum>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </widget>
     </item>
@@ -178,6 +225,7 @@
     <addaction name="actionInsertImage"/>
     <addaction name="separator"/>
     <addaction name="menuFindReplace"/>
+    <addaction name="actionGotoLine"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -228,6 +276,7 @@
      <addaction name="actionDefinitionLists"/>
      <addaction name="actionSmartyPants"/>
      <addaction name="actionFootnotes"/>
+     <addaction name="actionSuperscript"/>
     </widget>
     <widget class="LanguageMenu" name="menuLanguages">
      <property name="title">
@@ -236,7 +285,8 @@
     </widget>
     <addaction name="actionMathSupport"/>
     <addaction name="actionCodeHighlighting"/>
-    <addaction name="actionShowHardLinebreaks"/>
+    <addaction name="actionShowSpecialCharacters"/>
+    <addaction name="actionWordWrap"/>
     <addaction name="menuMarkdown_Extensions"/>
     <addaction name="separator"/>
     <addaction name="actionCheckSpelling"/>
@@ -538,6 +588,14 @@
     <string>Find/Replace</string>
    </property>
   </action>
+  <action name="actionGotoLine">
+   <property name="text">
+    <string>Go to Line</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
+  </action>
   <action name="actionCenterParagraph">
    <property name="text">
     <string>Center Paragraph</string>
@@ -546,6 +604,9 @@
   <action name="actionHardLinebreak">
    <property name="text">
     <string>Hard Linebreak</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Return</string>
    </property>
   </action>
   <action name="actionFindNext">
@@ -571,7 +632,7 @@
     <string>Blockquote</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Q</string>
+    <string>Ctrl+Shift+Q</string>
    </property>
   </action>
   <action name="actionMarkdownSyntax">
@@ -583,13 +644,16 @@
    <property name="text">
     <string>HTML preview</string>
    </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
   </action>
-  <action name="actionShowHardLinebreaks">
+  <action name="actionShowSpecialCharacters">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Show Hard Linebreaks</string>
+    <string extracomment="Option to show characters like line feed or tabs">Show Special Characters</string>
    </property>
   </action>
   <action name="actionOptions">
@@ -654,10 +718,16 @@
    <property name="text">
     <string>Increase Header Level</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+Right</string>
+   </property>
   </action>
   <action name="actionDecreaseHeaderLevel">
    <property name="text">
     <string>Decrease Header Level</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Left</string>
    </property>
   </action>
   <action name="actionInsertTable">
@@ -681,7 +751,7 @@
     <string>Insert Image...</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+G</string>
+    <string>Ctrl+Shift+I</string>
    </property>
   </action>
   <action name="actionHorizontalLayout">
@@ -698,6 +768,25 @@
    </property>
    <property name="text">
     <string>Footnotes</string>
+   </property>
+  </action>
+  <action name="actionSuperscript">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Superscript</string>
+   </property>
+  </action>
+  <action name="actionWordWrap">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Word Wrap</string>
    </property>
   </action>
  </widget>
@@ -1290,6 +1379,22 @@
    </hints>
   </connection>
   <connection>
+   <sender>actionGotoLine</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editGotoLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>actionCenterParagraph</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
@@ -1386,10 +1491,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionShowHardLinebreaks</sender>
-   <signal>triggered(bool)</signal>
+   <sender>actionShowSpecialCharacters</sender>
+   <signal>toggled(bool)</signal>
    <receiver>MainWindow</receiver>
-   <slot>extrasShowHardLinebreaks(bool)</slot>
+   <slot>extrasShowSpecialCharacters(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -1625,6 +1730,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionSuperscript</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extensionsSuperscript(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionWordWrap</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>extrasWordWrap(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>editInsertTable()</slot>
@@ -1632,5 +1769,8 @@
   <slot>styleBywordDark()</slot>
   <slot>viewHorizontalLayout(bool)</slot>
   <slot>extensionsFootnotes(bool)</slot>
+  <slot>extensionsSuperscript(bool)</slot>
+  <slot>extrasShowSpecialCharacters(bool)</slot>
+  <slot>extrasWordWrap(bool)</slot>
  </slots>
 </ui>

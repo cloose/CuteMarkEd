@@ -14,30 +14,38 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef DOCUMENT_H
-#define DOCUMENT_H
+#ifndef SNIPPETCOMPLETER_H
+#define SNIPPETCOMPLETER_H
 
-#include <QtCore/qstring.h>
-#include "parser.h"
+#include <QObject>
 
-namespace Discount
+class QCompleter;
+class SnippetCollection;
+
+
+class SnippetCompleter : public QObject
 {
-
-class Document
-{
+    Q_OBJECT
 public:
-    Document(const QString &text, Parser::ParserOptions options);
-    ~Document();
+    explicit SnippetCompleter(SnippetCollection *collection, QWidget *parentWidget);
 
-    QString toHtml();
-    QString generateToc();
+    void performCompletion(const QString &textUnderCursor, const QRect &popupRect);
+
+    bool isPopupVisible() const;
+    void hidePopup();
+
+signals:
+    void snippetSelected(const QString &trigger, const QString &snippetContent, int newCursorPos);
+
+private slots:
+    void insertSnippet(const QString &trigger);
 
 private:
-    MMIOT *document;
-    QString html;
-    QString toc;
+    void replaceClipboardVariable(QString &snippetContent);
+
+private:
+    SnippetCollection *snippetCollection;
+    QCompleter *completer;
 };
 
-}
-
-#endif // DOCUMENT_H
+#endif // SNIPPETCOMPLETER_H

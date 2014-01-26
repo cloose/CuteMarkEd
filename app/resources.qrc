@@ -25,6 +25,8 @@
         <file>syntax_cs.html</file>
         <file>syntax_el.html</file>
         <file>syntax_zh_CN.html</file>
+        <file>markdown-snippets.json</file>
+        <file>syntax_ja.html</file>
     </qresource>
     <qresource prefix="/icons">
         <file alias="icon-close.png">images/icon-close.png</file>

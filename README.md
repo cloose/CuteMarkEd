@@ -4,18 +4,41 @@
 
 A Qt-based, free and open source markdown editor with live HTML preview, math expressions, code syntax highlighting and syntax highlighting of markdown document.
 
-![screenshot](images/screenshot_06.png)
+![screenshot](http://cloose.github.io/CuteMarkEd/images/screenshot_06.png)
 
 ### DOWNLOAD
 
-[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.8.1.tar.gz)  
-[MS Windows (Installer)](https://github.com/cloose/CuteMarkEd/releases/download/v0.8.1/cutemarked-0.8.1.msi)  
-[MS Windows (ZIP file)](https://github.com/cloose/CuteMarkEd/releases/download/v0.8.1/cutemarked-0.8.1.zip)  
+[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.9.0.tar.gz)  
+[MS Windows (Installer)](https://github.com/cloose/CuteMarkEd/releases/download/v0.9.0/cutemarked-0.9.0.msi)  
+[MS Windows (ZIP file)](https://github.com/cloose/CuteMarkEd/releases/download/v0.9.0/cutemarked-0.9.0.zip)  
 [OpenSUSE 12.3 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 [OpenSUSE 13.1 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 [Fedora 19 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 
 ### NEWS
+
+#### Version 0.9.0
+
+New Features:
+
+* `NEW` Added a snippets system, that can be activated with the shortcut <kbd>Ctrl+Space</kbd>. We provide several built-in snippets but the system can be extended with user-defined snippets. This powerful functionality can be used to autocomplete Markdown syntax, for inserting repetitive text blocks or even to provide often used document templates. (#81)
+* `NEW` Added _"Go to Line"_ menu item (#114)
+* `NEW` Added options _"case sensitive"_, _"whole words only"_ and _"use regular expressions"_ to find/replace functionality (#63)
+* `NEW` Support for adding the selected word to an user dictionary (#78)
+* `NEW` Option to change width of tab characters (#102)
+* `NEW` Option for superscript Markdown extension (#92)
+* `NEW` Option to control word wrap in Markdown editor (#46)
+* `NEW` Added Japanese translation created by k0ta0uchi (#94)
+* `NEW` Support for additional Markdown converters (#87)
+
+Improvements:
+
+* `IMPROVED` Updated the code highlighting library [highlight.js](http://highlightjs.org/) to version 7.5 (#90)
+* `IMPROVED` Improved perceived performance while typing in long Markdown documents (#100)
+
+Fixes:
+
+* `FIXED` Changed shortcuts for Blockquote to <kbd>Ctrl+Shift+Q</kbd> and for Insert Image to <kbd>Ctrl+Shift+I</kbd> to prevent ambiguous shortcuts on Linux (#115)
 
 #### Version 0.8.1
 
@@ -26,30 +49,6 @@ New Features:
 Fixes:
 
 * `FIXED` Do not crash application if *Find Next* or *Find Previous* actions are used with a previously performed search
-
-#### Version 0.8.0
-
-New Features:
-
-* `NEW` [Tool to insert a table in the markdown document](http://www.christian-loose.de/wordpress/2013/10/cutemarked-v0-8-0-preview-table-tool/)
-* `NEW` [Tool to insert an image link in the markdown document](http://www.christian-loose.de/wordpress/2013/11/cutemarked-v0-8-0-preview-image-tool/)
-* `NEW` Support for Markdown Extra-style footnotes
-* `NEW` Menu item to switch between vertical and horizontal layout
-* `NEW` Added style Byword Dark
-
-Improvements:
-
-* `IMPROVED` Added possibility to insert markdown markup (like bold, italic) without selection
-* `IMPROVED` Added support for code highlighting without internet connection
-* `IMPROVED` Added option to include javascript and CSS needed for code highlighting in the exported HTML
-
-Fixes:
-
-* `FIXED` Resolved problems with adding symbols using <kbd>Alt</kbd> with numpad key by changing shortcuts for styles from <kbd>Alt</kbd>+<kbd>1-6</kbd> to  <kbd>Ctrl</kbd>+<kbd>1-6</kbd>
-* `FIXED` Several encoding problems were fixed.
-  * German umlauts in table of contents
-  * exported HTML was not marked as UTF-8
-  * non-ascii characters with markdown markup like italic
 
 
 ### DEPENDENCIES
@@ -68,6 +67,7 @@ https://github.com/cloose/CuteMarkEd/wiki/Build-Instructions
 ##### Status
 
 [![Build Status](https://travis-ci.org/cloose/CuteMarkEd.png)](https://travis-ci.org/cloose/CuteMarkEd)
+[![Stories in Ready](https://badge.waffle.io/cloose/CuteMarkEd.png?label=ready)](https://waffle.io/cloose/CuteMarkEd)
 
 ### HELP NEEDED
 

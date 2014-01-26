@@ -16,7 +16,7 @@
  */
 #include "languagemenu.h"
 
-#include "hunspell/dictionary.h"
+#include <spellchecker/dictionary.h>
 #include "hunspell/spellchecker.h"
 
 LanguageMenu::LanguageMenu(QWidget *parent) :
@@ -27,13 +27,13 @@ LanguageMenu::LanguageMenu(QWidget *parent) :
 
 void LanguageMenu::loadDictionaries(const QString &currentLanguage)
 {
-    QMap<QString, hunspell::Dictionary> dictionaries = hunspell::SpellChecker::availableDictionaries();
+    QMap<QString, Dictionary> dictionaries = hunspell::SpellChecker::availableDictionaries();
 
-    QMapIterator<QString, hunspell::Dictionary> it(dictionaries);
+    QMapIterator<QString, Dictionary> it(dictionaries);
     while (it.hasNext()) {
         it.next();
 
-        hunspell::Dictionary dictionary = it.value();
+        Dictionary dictionary = it.value();
 
         // create an action for the dictionary
         QAction *action = createAction(dictionary);
@@ -48,10 +48,10 @@ void LanguageMenu::loadDictionaries(const QString &currentLanguage)
 void LanguageMenu::languageTriggered()
 {
     QAction *action = qobject_cast<QAction*>(sender());
-    emit languageTriggered(action->data().value<hunspell::Dictionary>());
+    emit languageTriggered(action->data().value<Dictionary>());
 }
 
-QAction *LanguageMenu::createAction(const hunspell::Dictionary &dictionary)
+QAction *LanguageMenu::createAction(const Dictionary &dictionary)
 {
     QAction *action = this->addAction(QString("%1 / %2").arg(dictionary.languageName()).arg(dictionary.countryName()), this, SLOT(languageTriggered()));
     action->setCheckable(true);

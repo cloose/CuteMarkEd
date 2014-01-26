@@ -23,18 +23,16 @@ namespace Ui {
 class MainWindow;
 }
 
-namespace hunspell {
-class Dictionary;
-}
-
 class QActionGroup;
 class QLabel;
 class QNetworkDiskCache;
 class ActiveLabel;
+class Dictionary;
 class HtmlPreviewGenerator;
 class HtmlHighlighter;
 class RecentFilesMenu;
 class Options;
+class SnippetCollection;
 
 
 class MainWindow : public QMainWindow
@@ -55,7 +53,7 @@ protected:
 private slots:
     void initializeApp();
     void openRecentFile(const QString &fileName);
-    void languageChanged(const hunspell::Dictionary &dictionary);
+    void languageChanged(const Dictionary &dictionary);
 
     void fileNew();
     void fileOpen();
@@ -68,6 +66,7 @@ private slots:
     void editUndo();
     void editRedo();
     void editCopyHtml();
+    void editGotoLine();
     void editFindReplace();
     void editStrong();
     void editEmphasize();
@@ -93,13 +92,15 @@ private slots:
     void viewFullScreenMode();
     void viewHorizontalLayout(bool checked);
 
-    void extrasShowHardLinebreaks(bool checked);
+    void extrasShowSpecialCharacters(bool checked);
+    void extrasWordWrap(bool checked);
     void extensionsAutolink(bool checked);
     void extensionsStrikethrough(bool checked);
     void extensionsAlphabeticLists(bool checked);
     void extensionsDefinitionLists(bool checked);
     void extensionsSmartyPants(bool checked);
     void extensionsFootnotes(bool enabled);
+    void extensionsSuperscript(bool enabled);
     void extrasCheckSpelling(bool checked);
     void extrasOptions();
 
@@ -123,6 +124,7 @@ private slots:
     void addJavaScriptObject();
     bool load(const QString &fileName);
     void proxyConfigurationChanged();
+    void markdownConverterChanged();
 
 private:
     void setupUi();
@@ -131,9 +133,11 @@ private:
     void setupMarkdownEditor();
     void setupHtmlPreview();
     void setupHtmlSourceView();
+    void updateExtensionStatus();
+    void syncWebViewToHtmlSource();
     bool maybeSave();
     void setFileName(const QString &fileName);
-    void updateSplitter(bool htmlViewToggled);
+    void updateSplitter();
     void loadCustomStyles();
     void readSettings();
     void writeSettings();
@@ -149,9 +153,11 @@ private:
     ActiveLabel *viewLabel;
     HtmlPreviewGenerator* generator;
     HtmlHighlighter *htmlHighlighter;
+    SnippetCollection *snippetCollection;
     QString fileName;
     float splitFactor;
     int scrollBarPos;
+    bool rightViewCollapsed;
 };
 
 #endif // MAINWINDOW_H

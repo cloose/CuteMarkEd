@@ -20,6 +20,7 @@ TRANSLATIONS += \
     translations/cutemarked_de.ts \
     translations/cutemarked_el.ts \
     translations/cutemarked_fr.ts \
+    translations/cutemarked_ja.ts \
     translations/cutemarked_zh_CN.ts
 
 RC_FILE = cutemarked.rc
@@ -34,8 +35,6 @@ SOURCES += \
     controls/activelabel.cpp \
     controls/findreplacewidget.cpp \
     controls/recentfilesmenu.cpp \
-    discount/parser.cpp \
-    discount/document.cpp \
     htmlpreviewgenerator.cpp \
     markdownhighlighter.cpp \
     highlightworkerthread.cpp \
@@ -44,13 +43,13 @@ SOURCES += \
     exportpdfdialog.cpp \
     exporthtmldialog.cpp \
     htmlhighlighter.cpp \
-    optionsdialog.cpp \
     options.cpp \
+    optionsdialog.cpp \
     hunspell/spellchecker.cpp \
-    hunspell/dictionary.cpp \
     controls/languagemenu.cpp \
     tabletooldialog.cpp \
-    imagetooldialog.cpp
+    imagetooldialog.cpp \
+    snippetcompleter.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -59,8 +58,6 @@ HEADERS  += \
     controls/activelabel.h \
     controls/findreplacewidget.h \
     controls/recentfilesmenu.h \
-    discount/parser.h \
-    discount/document.h \
     htmlpreviewgenerator.h \
     markdownhighlighter.h \
     highlightworkerthread.h \
@@ -70,13 +67,13 @@ HEADERS  += \
     exportpdfdialog.h \
     exporthtmldialog.h \
     htmlhighlighter.h \
-    optionsdialog.h \
     options.h \
+    optionsdialog.h \
     hunspell/spellchecker.h \
-    hunspell/dictionary.h \
     controls/languagemenu.h \
     tabletooldialog.h \
-    imagetooldialog.h
+    imagetooldialog.h \
+    snippetcompleter.h
 
 FORMS    += \
     mainwindow.ui \
@@ -91,6 +88,25 @@ RESOURCES += \
     resources.qrc \
     translations.qrc
 
+OTHER_FILES += \
+    template.html \
+    cutemarked.desktop \
+    syntax.html \
+    cutemarked.rc \
+    syntax_cs.html \
+    syntax_de.html \
+    syntax_el.html \
+    syntax_ja.html \
+    syntax_zh_CN.html \
+    styles/solarized-dark.css \
+    styles/markdown.css \
+    styles/github.css \
+    styles/clearness-dark.css \
+    styles/clearness.css \
+    styles/byword-dark.css \
+    styles/solarized-light.css \
+    markdown-snippets.json
+
 # translations
 lrelease.input         = TRANSLATIONS
 lrelease.output        = ${QMAKE_FILE_PATH}/${QMAKE_FILE_BASE}.qm
@@ -98,21 +114,37 @@ lrelease.commands      = $$[QT_INSTALL_BINS]/lrelease ${QMAKE_FILE_IN} -qm ${QMA
 lrelease.CONFIG       += no_link target_predeps
 QMAKE_EXTRA_COMPILERS += lrelease
 
+###################################################################################################
+## DEPENDENCIES
+###################################################################################################
+
+# Use internal static library: app-static
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../app-static/release/ -lapp-static
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../app-static/debug/ -lapp-static
+else:unix: LIBS += -L$$OUT_PWD/../app-static/ -lapp-static
+
+INCLUDEPATH += $$PWD/../app-static
+DEPENDPATH += $$PWD/../app-static
+
+win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../app-static/release/libapp-static.a
+else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../app-static/debug/libapp-static.a
+else:unix: PRE_TARGETDEPS += $$OUT_PWD/../app-static/libapp-static.a
+
 # discount
-win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../discount/release/ -ldiscount
-else:win32-g++:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../discount/debug/ -ldiscount
-else:win32-msvc*:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../discount/release/ -llibdiscount
-else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../discount/debug/ -llibdiscount
+win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/release/ -ldiscount
+else:win32-g++:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/debug/ -ldiscount
+else:win32-msvc*:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/release/ -llibdiscount
+else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/debug/ -llibdiscount
 else:unix: LIBS += -L/usr/lib -lmarkdown
 
-win32:INCLUDEPATH += $$PWD/../discount
+win32:INCLUDEPATH += $$PWD/../3rdparty/discount
 unix:INCLUDEPATH += /usr/include
-win32:DEPENDPATH += $$PWD/../discount
+win32:DEPENDPATH += $$PWD/../3rdparty/discount
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../discount/release/libdiscount.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../discount/debug/libdiscount.a
-else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../discount/release/libdiscount.lib
-else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../discount/debug/libdiscount.lib
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/release/libdiscount.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/debug/libdiscount.a
+else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/release/libdiscount.lib
+else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/debug/libdiscount.lib
 #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../discount/libdiscount.a
 
 # peg-markdown-highlight
@@ -132,30 +164,38 @@ else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../pe
 else:unix: PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/libpmh.a
 
 # hunspell
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../hunspell/lib/ -lhunspell
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../hunspell/lib/ -lhunspell
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hunspell/lib/ -lhunspell
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hunspell/lib/ -lhunspell
 
 unix {
   PKGCONFIG += hunspell
 }
 
-win32:INCLUDEPATH += $$PWD/../hunspell/src
-win32:DEPENDPATH += $$PWD/../hunspell/src
+win32:INCLUDEPATH += $$PWD/../3rdparty/hunspell/src
+win32:DEPENDPATH += $$PWD/../3rdparty/hunspell/src
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../hunspell/lib/libhunspell.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../hunspell/lib/libhunspell.a
-else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../hunspell/lib/libhunspell.lib
-else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../hunspell/lib/libhunspell.lib
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.a
+else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.lib
+else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.lib
 #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hunspell/libhunspell.a
 
-OTHER_FILES += \
-    template.html \
-    cutemarked.desktop \
-    syntax.html \
-    cutemarked.rc \
-    syntax_de.html \
-    syntax_el.html \
-    syntax_zh_CN.html \
+# hoedown
+with_hoedown {
+    message("app: Enable hoedown markdown converter support")
+    DEFINES += ENABLE_HOEDOWN
+
+    win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/release/ -lhoedown
+    else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/debug/ -lhoedown
+    else:unix: LIBS += -L$$OUT_PWD/../3rdparty/hoedown/ -lhoedown
+
+    INCLUDEPATH += $$PWD/../3rdparty/hoedown
+    DEPENDPATH += $$PWD/../3rdparty/hoedown
+
+    win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/release/libhoedown.a
+    else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/debug/libhoedown.a
+    #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hoedown/libhoedown.a
+}
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
 message("Using LIBS=$$LIBS")

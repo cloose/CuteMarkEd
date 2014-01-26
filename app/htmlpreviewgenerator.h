@@ -22,11 +22,9 @@
 #include <QtCore/qmutex.h>
 #include <QtCore/qwaitcondition.h>
 
-#include "discount/parser.h"
+#include <converter/markdownconverter.h>
 
-namespace Discount {
-class Document;
-}
+class MarkdownDocument;
 class Options;
 
 class HtmlPreviewGenerator : public QThread
@@ -38,6 +36,8 @@ public:
     
     void setHtmlTemplate(const QString &t);
 
+    bool isSupported(MarkdownConverter::ConverterOption option) const;
+
 public slots:
     void markdownTextChanged(const QString &text);
     QString exportHtml(const QString &styleSheet, const QString &highlightingScript);
@@ -45,6 +45,8 @@ public slots:
     void setMathSupportEnabled(bool enabled);
     void setCodeHighlightingEnabled(bool enabled);
     void setCodeHighlightingStyle(const QString &style);
+
+    void markdownConverterChanged();
 
 signals:
     void htmlResultReady(const QString &html);
@@ -58,11 +60,13 @@ private:
     void generateTableOfContents();
     QString renderTemplate(const QString &header, const QString &body);
     QString buildHtmlHeader() const;
-    Discount::Parser::ParserOptions parserOptions() const;
+    MarkdownConverter::ConverterOptions converterOptions() const;
+    int calculateDelay(const QString &text);
 
 private:
     Options *options;
-    Discount::Document *document;
+    MarkdownDocument *document;
+    MarkdownConverter *converter;
     QQueue<QString> tasks;
     QMutex tasksMutex;
     QWaitCondition bufferNotEmpty;

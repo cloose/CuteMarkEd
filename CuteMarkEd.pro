@@ -7,13 +7,12 @@
 TEMPLATE = subdirs
 
 win32 {
-    SUBDIRS = discount \
+    SUBDIRS = 3rdparty \
         peg-markdown-highlight \
-        hunspell \
         app \
         fontawesomeicon
 
-    app.depends = discount peg-markdown-highlight hunspell
+    app.depends = 3rdparty peg-markdown-highlight app-static
 }
 
 unix {
@@ -21,6 +20,10 @@ unix {
         app \
         fontawesomeicon
 
-    app.depends = peg-markdown-highlight
+    app.depends = peg-markdown-highlight app-static
 }
+
+SUBDIRS += \
+    test \
+    app-static
 

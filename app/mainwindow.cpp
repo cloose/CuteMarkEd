@@ -19,15 +19,18 @@
 #include "ui_mainwindow.h"
 
 #include <QClipboard>
+#include <QDesktopServices>
 #include <QDirIterator>
 #include <QFileDialog>
 #include <QIcon>
+#include <QInputDialog>
 #include <QLabel>
 #include <QMessageBox>
 #include <QNetworkDiskCache>
 #include <QNetworkProxy>
 #include <QPrintDialog>
 #include <QPrinter>
+#include <QProcess>
 #include <QScrollBar>
 #include <QSettings>
 #include <QStandardPaths>
@@ -37,11 +40,13 @@
 #include <QWebPage>
 #include <QWebInspector>
 
+#include <snippets/jsonsnippetfile.h>
+#include <snippets/snippetcollection.h>
+#include <spellchecker/dictionary.h>
 #include "controls/activelabel.h"
 #include "controls/findreplacewidget.h"
 #include "controls/languagemenu.h"
 #include "controls/recentfilesmenu.h"
-#include "hunspell/dictionary.h"
 #include "htmlpreviewgenerator.h"
 #include "htmlhighlighter.h"
 #include "markdownmanipulator.h"
@@ -49,6 +54,7 @@
 #include "exportpdfdialog.h"
 #include "options.h"
 #include "optionsdialog.h"
+#include "snippetcompleter.h"
 #include "tabletooldialog.h"
 
 MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
@@ -60,8 +66,10 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     wordCountLabel(0),
     viewLabel(0),
     generator(new HtmlPreviewGenerator(options, this)),
+    snippetCollection(new SnippetCollection(this)),
     splitFactor(0.5),
-    scrollBarPos(0)
+    scrollBarPos(0),
+    rightViewCollapsed(false)
 {
     ui->setupUi(this);
     setupUi();
@@ -104,7 +112,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 void MainWindow::resizeEvent(QResizeEvent *e)
 {
     Q_UNUSED(e)
-    updateSplitter(false);
+    updateSplitter();
 }
 
 void MainWindow::initializeApp()
@@ -120,6 +128,8 @@ void MainWindow::initializeApp()
     // set default style
     styleDefault();
 
+    ui->plainTextEdit->tabWidthChanged(options->tabWidth());
+
     // init extension flags
     ui->actionAutolink->setChecked(options->isAutolinkEnabled());
     ui->actionStrikethroughOption->setChecked(options->isStrikethroughEnabled());
@@ -127,10 +137,13 @@ void MainWindow::initializeApp()
     ui->actionDefinitionLists->setChecked(options->isDefinitionListsEnabled());
     ui->actionSmartyPants->setChecked(options->isSmartyPantsEnabled());
     ui->actionFootnotes->setChecked(options->isFootnotesEnabled());
+    ui->actionSuperscript->setChecked(options->isSuperscriptEnabled());
 
     // init option flags
     ui->actionMathSupport->setChecked(options->isMathSupportEnabled());
     ui->actionCodeHighlighting->setChecked(options->isCodeHighlightingEnabled());
+    ui->actionShowSpecialCharacters->setChecked(options->isShowSpecialCharactersEnabled());
+    ui->actionWordWrap->setChecked(options->isWordWrapEnabled());
     ui->actionCheckSpelling->setChecked(options->isSpellingCheckEnabled());
     ui->plainTextEdit->setSpellingCheckEnabled(options->isSpellingCheckEnabled());
 
@@ -151,6 +164,11 @@ void MainWindow::initializeApp()
     loadCustomStyles();
     ui->menuLanguages->loadDictionaries(options->dictionaryLanguage());
 
+    //: path to built-in snippets resource.
+    JsonSnippetFile::load(tr(":/markdown-snippets.json"), snippetCollection);
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    JsonSnippetFile::load(path + "/user-snippets.json", snippetCollection);
+
     // load file passed to application on start
     if (!fileName.isEmpty()) {
         load(fileName);
@@ -164,7 +182,7 @@ void MainWindow::openRecentFile(const QString &fileName)
     }
 }
 
-void MainWindow::languageChanged(const hunspell::Dictionary &dictionary)
+void MainWindow::languageChanged(const Dictionary &dictionary)
 {
     options->setDictionaryLanguage(dictionary.language());
     ui->plainTextEdit->setSpellingDictionary(dictionary);
@@ -320,6 +338,22 @@ void MainWindow::editCopyHtml()
     clipboard->setText(ui->htmlSourceTextEdit->toPlainText());
 }
 
+void MainWindow::editGotoLine()
+{
+    const int STEP = 1;
+    const int MIN_VALUE = 1;
+
+    QTextCursor cursor = ui->plainTextEdit->textCursor();
+    int currentLine = cursor.blockNumber()+1;
+    int maxValue = ui->plainTextEdit->document()->blockCount();
+
+    bool ok;
+    int line = QInputDialog::getInt(this, tr("Go to..."),
+                                          tr("Line: ", "Line number in the Markdown editor"), currentLine, MIN_VALUE, maxValue, STEP, &ok);
+    if (!ok) return;
+    ui->plainTextEdit->gotoLine(line);
+}
+
 void MainWindow::editFindReplace()
 {
     ui->findReplaceWidget->setTextEdit(ui->plainTextEdit);
@@ -415,7 +449,12 @@ void MainWindow::viewChangeSplit()
         splitFactor = 0.25;
     }
 
-    updateSplitter(true);
+    updateSplitter();
+
+    // web view was collapsed and is now visible again, so update it
+    if (rightViewCollapsed) {
+        syncWebViewToHtmlSource();
+    }
 }
 
 void MainWindow::styleDefault()
@@ -518,9 +557,16 @@ void MainWindow::viewHorizontalLayout(bool checked)
     }
 }
 
-void MainWindow::extrasShowHardLinebreaks(bool checked)
+void MainWindow::extrasShowSpecialCharacters(bool checked)
 {
-    ui->plainTextEdit->setShowHardLinebreaks(checked);
+    options->setShowSpecialCharactersEnabled(checked);
+    ui->plainTextEdit->setShowSpecialCharacters(checked);
+}
+
+void MainWindow::extrasWordWrap(bool checked)
+{
+    options->setWordWrapEnabled(checked);
+    ui->plainTextEdit->setLineWrapMode(checked ? MarkdownEditor::WidgetWidth : MarkdownEditor::NoWrap);
 }
 
 void MainWindow::extensionsAutolink(bool checked)
@@ -559,6 +605,12 @@ void MainWindow::extensionsFootnotes(bool enabled)
     plainTextChanged();
 }
 
+void MainWindow::extensionsSuperscript(bool enabled)
+{
+    options->setSuperscriptEnabled(enabled);
+    plainTextChanged();
+}
+
 void MainWindow::extrasCheckSpelling(bool checked)
 {
     ui->plainTextEdit->setSpellingCheckEnabled(checked);
@@ -567,9 +619,13 @@ void MainWindow::extrasCheckSpelling(bool checked)
 
 void MainWindow::extrasOptions()
 {
-    OptionsDialog dialog(options, this);
+    OptionsDialog dialog(options, snippetCollection, this);
     if (dialog.exec() == QDialog::Accepted) {
         options->writeSettings();
+
+        QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+        QSharedPointer<SnippetCollection> userDefinedSnippets = snippetCollection->userDefinedSnippets();
+        JsonSnippetFile::save(path + "/user-snippets.json", userDefinedSnippets.data());
     }
 }
 
@@ -596,8 +652,8 @@ void MainWindow::styleContextMenu(const QPoint &pos)
 void MainWindow::toggleHtmlView()
 {
     if (viewLabel->text() == tr("HTML preview")) {
-        ui->webView->hide();
-        ui->htmlSourceTextEdit->show();
+        ui->stackedWidget->setCurrentWidget(ui->htmlSourcePage);
+
         ui->actionHtmlPreview->setText(tr("HTML source"));
         viewLabel->setText(tr("HTML source"));
 
@@ -605,16 +661,19 @@ void MainWindow::toggleHtmlView()
         htmlHighlighter->setEnabled(true);
         htmlHighlighter->rehighlight();
     } else {
-        ui->webView->show();
-        ui->htmlSourceTextEdit->hide();
+        ui->stackedWidget->setCurrentWidget(ui->webViewPage);
+
         ui->actionHtmlPreview->setText(tr("HTML preview"));
         viewLabel->setText(tr("HTML preview"));
 
         // deactivate HTML highlighter
         htmlHighlighter->setEnabled(false);
+
+        // update webView now since it was not updated while hidden
+        syncWebViewToHtmlSource();
     }
 
-    updateSplitter(true);
+    updateSplitter();
 }
 
 void MainWindow::plainTextChanged()
@@ -651,7 +710,11 @@ void MainWindow::htmlResultReady(const QString &html)
     } else {
         baseUrl = QUrl::fromLocalFile(QFileInfo(fileName).absolutePath() + "/");
     }
-    ui->webView->setHtml(html, baseUrl);
+
+    QList<int> childSizes = ui->splitter->sizes();
+    if (ui->webView->isVisible() && childSizes[1] != 0) {
+        ui->webView->setHtml(html, baseUrl);
+    }
 
     // show html source
     ui->htmlSourceTextEdit->setPlainText(html);
@@ -672,11 +735,21 @@ void MainWindow::htmlContentSizeChanged()
 
 void MainWindow::previewLinkClicked(const QUrl &url)
 {
-    // only open link if its not a local directory.
-    // this can happen because when the href is empty, url is the base url (see htmlResultReady)
-    if (!url.isLocalFile() || !QFileInfo(url.toLocalFile()).isDir()) {
-        ui->webView->load(url);
+    if(url.isLocalFile())
+    {
+        // directories are not supported
+        if(QFileInfo(url.toLocalFile()).isDir()) return;
+
+        QString filePath = url.toLocalFile();
+        // Links to markdown files open new instance
+        if(filePath.endsWith(".md") || filePath.endsWith(".markdown"))
+        {
+            QProcess::startDetached(qApp->applicationFilePath(), QStringList() << filePath);
+            return;
+        }
     }
+
+    QDesktopServices::openUrl(url);
 }
 
 void MainWindow::tocLinkClicked(const QUrl &url)
@@ -688,7 +761,15 @@ void MainWindow::tocLinkClicked(const QUrl &url)
 void MainWindow::splitterMoved(int pos, int index)
 {
     Q_UNUSED(index)
-    splitFactor = (float)pos / ui->splitter->size().width();
+
+    int maxViewWidth = ui->splitter->size().width() - ui->splitter->handleWidth();
+    splitFactor = (float)pos / maxViewWidth;
+
+    // web view was collapsed and is now visible again, so update it
+    if (rightViewCollapsed && ui->splitter->sizes().at(1) > 0) {
+        syncWebViewToHtmlSource();
+    }
+    rightViewCollapsed = (ui->splitter->sizes().at(1) == 0);
 }
 
 void MainWindow::scrollValueChanged(int value)
@@ -760,6 +841,15 @@ void MainWindow::proxyConfigurationChanged()
     }
 }
 
+void MainWindow::markdownConverterChanged()
+{
+    // regenerate HTML
+    plainTextChanged();
+
+    // disable unsupported extensions
+    updateExtensionStatus();
+}
+
 void MainWindow::setupUi()
 {
     setupActions();
@@ -784,6 +874,8 @@ void MainWindow::setupUi()
 
     connect(options, SIGNAL(proxyConfigurationChanged()),
             this, SLOT(proxyConfigurationChanged()));
+    connect(options, SIGNAL(markdownConverterChanged()),
+            this, SLOT(markdownConverterChanged()));
 
     readSettings();
 }
@@ -824,12 +916,12 @@ void MainWindow::setupActions()
     ui->actionEmphasize->setIcon(QIcon("icon-italic.fontawesome"));
     ui->actionStrikethrough->setIcon(QIcon("icon-strikethrough.fontawesome"));
     ui->actionCenterParagraph->setIcon(QIcon("icon-align-center.fontawesome"));
-    ui->actionHardLinebreak->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return));
-    ui->actionBlockquote->setIcon(QIcon("icon-quote-left.fontawesome"));
-    ui->actionIncreaseHeaderLevel->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Right));
     ui->actionIncreaseHeaderLevel->setIcon(QIcon("icon-level-up.fontawesome"));
-    ui->actionDecreaseHeaderLevel->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Left));
+    ui->actionBlockquote->setIcon(QIcon("icon-quote-left.fontawesome"));
     ui->actionDecreaseHeaderLevel->setIcon(QIcon("icon-level-down.fontawesome"));
+
+    ui->actionInsertTable->setIcon(QIcon("icon-table.fontawesome"));
+    ui->actionInsertImage->setIcon(QIcon("icon-picture.fontawesome"));
 
     ui->actionFindReplace->setShortcut(QKeySequence::Find);
     ui->actionFindReplace->setIcon(QIcon("icon-search.fontawesome"));
@@ -844,7 +936,6 @@ void MainWindow::setupActions()
 
     // view menu
     ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());
-    ui->actionHtmlPreview->setShortcut(QKeySequence(Qt::Key_F5));
     ui->actionFullScreenMode->setShortcut(QKeySequence::FullScreen);
     ui->actionFullScreenMode->setIcon(QIcon("icon-fullscreen.fontawesome"));
 
@@ -853,8 +944,8 @@ void MainWindow::setupActions()
             generator, SLOT(setMathSupportEnabled(bool)));
     connect(ui->actionCodeHighlighting, SIGNAL(triggered(bool)),
             generator, SLOT(setCodeHighlightingEnabled(bool)));
-    connect(ui->menuLanguages, SIGNAL(languageTriggered(hunspell::Dictionary)),
-            this, SLOT(languageChanged(hunspell::Dictionary)));
+    connect(ui->menuLanguages, SIGNAL(languageTriggered(Dictionary)),
+            this, SLOT(languageChanged(Dictionary)));
 
     // put style actions in a group
     stylesGroup = new QActionGroup(this);
@@ -900,6 +991,8 @@ void MainWindow::setupStatusBar()
 
 void MainWindow::setupMarkdownEditor()
 {
+    ui->plainTextEdit->setSnippetCompleter(new SnippetCompleter(snippetCollection, ui->plainTextEdit));
+
     // load file that are dropped on the editor
     connect(ui->plainTextEdit, SIGNAL(loadDroppedFile(QString)),
             this, SLOT(load(QString)));
@@ -910,6 +1003,8 @@ void MainWindow::setupMarkdownEditor()
 
     connect(options, SIGNAL(editorFontChanged(QFont)),
             ui->plainTextEdit, SLOT(editorFontChanged(QFont)));
+    connect(options, SIGNAL(tabWidthChanged(int)),
+            ui->plainTextEdit, SLOT(tabWidthChanged(int)));
 }
 
 void MainWindow::setupHtmlPreview()
@@ -943,6 +1038,22 @@ void MainWindow::setupHtmlSourceView()
     font.setStyleHint(QFont::TypeWriter);
     ui->htmlSourceTextEdit->setFont(font);
     htmlHighlighter = new HtmlHighlighter(ui->htmlSourceTextEdit->document());
+}
+
+void MainWindow::updateExtensionStatus()
+{
+    ui->actionAutolink->setEnabled(generator->isSupported(MarkdownConverter::AutolinkOption));
+    ui->actionAlphabeticLists->setEnabled(generator->isSupported(MarkdownConverter::NoAlphaListOption));
+    ui->actionDefinitionLists->setEnabled(generator->isSupported(MarkdownConverter::NoDefinitionListOption));
+    ui->actionFootnotes->setEnabled(generator->isSupported(MarkdownConverter::ExtraFootnoteOption));
+    ui->actionSmartyPants->setEnabled(generator->isSupported(MarkdownConverter::NoSmartypantsOption));
+    ui->actionStrikethroughOption->setEnabled(generator->isSupported(MarkdownConverter::NoStrikethroughOption));
+    ui->actionSuperscript->setEnabled(generator->isSupported(MarkdownConverter::NoSuperscriptOption));
+}
+
+void MainWindow::syncWebViewToHtmlSource()
+{
+    htmlResultReady(ui->htmlSourceTextEdit->toPlainText());
 }
 
 bool MainWindow::maybeSave()
@@ -984,7 +1095,7 @@ void MainWindow::setFileName(const QString &fileName)
     setWindowFilePath(shownName);
 }
 
-void MainWindow::updateSplitter(bool htmlViewToggled)
+void MainWindow::updateSplitter()
 {
     // not fully initialized yet?
     if (centralWidget()->size() != ui->splitter->size()) {
@@ -993,19 +1104,8 @@ void MainWindow::updateSplitter(bool htmlViewToggled)
 
     // calculate new width of left and right pane
     QList<int> childSizes = ui->splitter->sizes();
-    int leftWidth = ui->splitter->width() * splitFactor;
-    int rightWidth = ui->splitter->width() * (1 - splitFactor);
-
-    bool webViewFolded = ui->webView->isVisible() && childSizes[1] == 0;
-    bool htmlSourceFolded = ui->htmlSourceTextEdit->isVisible() && childSizes[2] == 0;
-
-    childSizes[0] = leftWidth;
-    if (htmlViewToggled || !webViewFolded) {
-        childSizes[1] = rightWidth;
-    }
-    if (htmlViewToggled || !htmlSourceFolded) {
-        childSizes[2] = rightWidth;
-    }
+    childSizes[0] = ui->splitter->width() * splitFactor;
+    childSizes[1] = ui->splitter->width() * (1 - splitFactor);
 
     ui->splitter->setSizes(childSizes);
 }

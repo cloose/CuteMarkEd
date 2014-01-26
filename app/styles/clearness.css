@@ -41,7 +41,7 @@ hr {
   border: 1px solid #e6e6e6;
 }
 pre > code {
-  font-size: .9em;
+/*  font-size: .9em;*/
   font-family: Consolas, Inconsolata, Courier, monospace;
 }
 blockquote {
