@@ -24,6 +24,8 @@ HEADERS += \
     snippetlistmodeltest.h \
     dictionarytest.h
 
+target.CONFIG += no_default_install
+
 ##################################################
 # Use internal static library: app-static
 ##################################################
