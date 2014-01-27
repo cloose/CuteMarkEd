@@ -29,14 +29,14 @@ HEADERS += \
     converter/discountmarkdownconverter.h \
     spellchecker/dictionary.h
 
-unix:!symbian {
-    maemo5 {
-        target.path = /opt/usr/lib
-    } else {
-        target.path = /usr/lib
-    }
-    INSTALLS += target
-}
+#unix:!symbian {
+#    maemo5 {
+#        target.path = /opt/usr/lib
+#    } else {
+#        target.path = /usr/lib
+#    }
+#    INSTALLS += target
+#}
 
 ##################################################
 # Dependencies
@@ -51,8 +51,9 @@ else:win32-msvc*:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty
 else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/debug/ -llibdiscount
 else:unix: LIBS += -L/usr/lib -lmarkdown
 
-INCLUDEPATH += $$PWD/../3rdparty/
-DEPENDPATH += $$PWD/../3rdparty/
+win32:INCLUDEPATH += $$PWD/../3rdparty/discount
+unix:INCLUDEPATH += /usr/include
+win32:DEPENDPATH += $$PWD/../3rdparty/discount
 
 win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/release/libdiscount.a
 else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/debug/libdiscount.a
