@@ -9,4 +9,4 @@
 	url = https://github.com/cloose/hoedown.git
 [submodule "3rdparty/reveal.js"]
 	path = 3rdparty/reveal.js
-	url = git@github.com:Slesa/reveal.js.git
+	url = https://github.com/Slesa/reveal.js.git
