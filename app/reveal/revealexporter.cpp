@@ -54,10 +54,10 @@ QString RevealExporter::generateOutput(const QString& indexHtml, const QString& 
 {
     const QString STR_TRUE = "true";
     const QString STR_FALSE = "false";
-    const QString STR_PAGE_HDR =
+    const QString STR_PAGE_HEADER =
             "<section data-markdown>\n"
             "  <script type=\"text/template\">\n";
-    const QString STR_PAGE_FTR =
+    const QString STR_PAGE_FOOTER =
             "  </script>\n"
             "</section>\n"
             "\n"
@@ -74,7 +74,7 @@ QString RevealExporter::generateOutput(const QString& indexHtml, const QString& 
 
     for(int i=0; i<pages.count(); i++)
     {
-        output = output.replace("{Pages}", STR_PAGE_HDR + pages[i] + STR_PAGE_FTR, Qt::CaseInsensitive);
+        output = output.replace("{Pages}", STR_PAGE_HEADER + pages[i] + STR_PAGE_FOOTER, Qt::CaseInsensitive);
     }
 
     output = output.replace("{Pages}", "", Qt::CaseInsensitive);
