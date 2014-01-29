@@ -52,33 +52,40 @@ void RevealExporter::run(const QString& destPath, const RevealOptions& revealOpt
 
 QString RevealExporter::generateOutput(const QString& indexHtml, const QString& title, const QStringList& pages, const RevealOptions& revealOptions)
 {
-    const QString STR_TRUE = "true";
-    const QString STR_FALSE = "false";
-    const QString STR_PAGE_HEADER =
+    const QString PAGE_HEADER =
             "<section data-markdown>\n"
             "  <script type=\"text/template\">\n";
-    const QString STR_PAGE_FOOTER =
+    const QString PAGE_FOOTER =
             "  </script>\n"
             "</section>\n"
             "\n"
             "{Pages}\n";
 
     QString output = indexHtml;
-    output = output.replace("{Title}", title, Qt::CaseInsensitive);
-    output = output.replace("{Author}", revealOptions.author, Qt::CaseInsensitive);
-    output = output.replace("{Description}", revealOptions.description, Qt::CaseInsensitive);
-    output = output.replace("{ShowControls}", revealOptions.showControls?STR_TRUE:STR_FALSE, Qt::CaseInsensitive);
-    output = output.replace("{ShowProgress}", revealOptions.showProgress?STR_TRUE:STR_FALSE, Qt::CaseInsensitive);
-    output = output.replace("{UseHistory}", revealOptions.useHistory?STR_TRUE:STR_FALSE, Qt::CaseInsensitive);
-    output = output.replace("{CenterPage}", revealOptions.centerPage?STR_TRUE:STR_FALSE, Qt::CaseInsensitive);
+    ReplaceHtmlPlaceholder(output, "{Title}", title);
+    ReplaceHtmlPlaceholder(output, "{Author}", revealOptions.author);
+    ReplaceHtmlPlaceholder(output, "{Description}", revealOptions.description);
+    ReplaceHtmlPlaceholder(output, "{ShowControls}", revealOptions.showControls);
+    ReplaceHtmlPlaceholder(output, "{ShowProgress}", revealOptions.showProgress);
+    ReplaceHtmlPlaceholder(output, "{UseHistory}", revealOptions.useHistory);
+    ReplaceHtmlPlaceholder(output, "{CenterPage}", revealOptions.centerPage);
 
     for(int i=0; i<pages.count(); i++)
     {
-        output = output.replace("{Pages}", STR_PAGE_HEADER + pages[i] + STR_PAGE_FOOTER, Qt::CaseInsensitive);
+        ReplaceHtmlPlaceholder(output, "{Pages}", PAGE_HEADER + pages[i] + PAGE_FOOTER);
     }
-
-    output = output.replace("{Pages}", "", Qt::CaseInsensitive);
+    ReplaceHtmlPlaceholder(output, "{Pages}", "");
     return output;
+}
+
+void RevealExporter::ReplaceHtmlPlaceholder(QString &html, const QString &placeholder, const QString &value) const
+{
+    html = html.replace(placeholder, value, Qt::CaseInsensitive);
+}
+
+void RevealExporter::ReplaceHtmlPlaceholder(QString &html, const QString &placeholder, bool value) const
+{
+    ReplaceHtmlPlaceholder(html, placeholder, value ? QString("true") : QString("false"));
 }
 
 QString RevealExporter::readIndexHtml()

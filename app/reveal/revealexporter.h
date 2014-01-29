@@ -27,11 +27,14 @@ public:
     RevealExporter(const QString& text);
     void run(const QString& destPath, const RevealOptions& revealOptions);
 private:
-    QString generateOutput(const QString& indexHtml, const QString& title, const QStringList& pages, const RevealOptions& revealOptions);
+    QString generateOutput(const QString &indexHtml, const QString &title, const QStringList &pages, const RevealOptions &revealOptions);
     QString readIndexHtml();
-    QString writeIndexHtml(const QString& destPath, const QString& content);
+    QString writeIndexHtml(const QString &destPath, const QString &content);
     QString extractTitle();
     QStringList extractPages();
+private:
+    void ReplaceHtmlPlaceholder(QString &html, const QString &placeholder, const QString &value) const;
+    void ReplaceHtmlPlaceholder(QString &html, const QString &placeholder, bool value) const;
 private:
     QString code;
 };

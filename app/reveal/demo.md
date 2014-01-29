@@ -36,6 +36,10 @@ nix zu sagen
 
 Nein, nicht wirklich
 
+<p class="fragment grow">grow</p>
+
+<p class="fragment shrink">shrink</p>
+<p class="fragment roll-in">roll-in</p>
 
 ##Drei
 
