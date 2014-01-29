@@ -65,12 +65,12 @@ QString RevealExporter::generateOutput(const QString& indexHtml, const QString& 
 
     QString output = indexHtml;
     output = output.replace("{Title}", title, Qt::CaseInsensitive);
-    output = output.replace("{Author}", revealOptions.author(), Qt::CaseInsensitive);
-    output = output.replace("{Description}", revealOptions.description(), Qt::CaseInsensitive);
-    output = output.replace("{ShowControls}", revealOptions.showControls()?STR_TRUE:STR_FALSE, Qt::CaseInsensitive);
-    output = output.replace("{ShowProgress}", revealOptions.showProgress()?STR_TRUE:STR_FALSE, Qt::CaseInsensitive);
-    output = output.replace("{UseHistory}", revealOptions.useHistory()?STR_TRUE:STR_FALSE, Qt::CaseInsensitive);
-    output = output.replace("{CenterPage}", revealOptions.centerPage()?STR_TRUE:STR_FALSE, Qt::CaseInsensitive);
+    output = output.replace("{Author}", revealOptions.author, Qt::CaseInsensitive);
+    output = output.replace("{Description}", revealOptions.description, Qt::CaseInsensitive);
+    output = output.replace("{ShowControls}", revealOptions.showControls?STR_TRUE:STR_FALSE, Qt::CaseInsensitive);
+    output = output.replace("{ShowProgress}", revealOptions.showProgress?STR_TRUE:STR_FALSE, Qt::CaseInsensitive);
+    output = output.replace("{UseHistory}", revealOptions.useHistory?STR_TRUE:STR_FALSE, Qt::CaseInsensitive);
+    output = output.replace("{CenterPage}", revealOptions.centerPage?STR_TRUE:STR_FALSE, Qt::CaseInsensitive);
 
     for(int i=0; i<pages.count(); i++)
     {

@@ -47,12 +47,12 @@ ExportRevealDialog::~ExportRevealDialog()
 RevealOptions ExportRevealDialog::getRevealOptions()
 {
     RevealOptions options;
-    options.setAuthor(author());
-    options.setDescription(description());
-    options.setShowControls(showControls());
-    options.setShowProgress(showProgress());
-    options.setUseHistory(useHistory());
-    options.setCenterPage(centerPage());
+    options.author = author();
+    options.description = description();
+    options.showControls = showControls();
+    options.showProgress = showProgress();
+    options.useHistory = useHistory();
+    options.centerPage = centerPage();
     return options;
 }
 

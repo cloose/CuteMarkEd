@@ -52,7 +52,6 @@ SOURCES += \
     imagetooldialog.cpp \
     snippetcompleter.cpp \
     reveal/revealexporter.cpp \
-    reveal/revealoptions.cpp \
     helpers/ziptool.cpp
 
 HEADERS  += \

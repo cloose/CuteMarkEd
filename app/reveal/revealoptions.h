@@ -19,28 +19,14 @@
 #include <QString>
 #include <QObject>
 
-class RevealOptions
+struct RevealOptions
 {
-public:
-    QString author() const;
-    void setAuthor(const QString& author);
-    QString description() const;
-    void setDescription(const QString& description);
-    bool showControls() const;
-    void setShowControls(bool on);
-    bool showProgress() const;
-    void setShowProgress(bool on);
-    bool useHistory() const;
-    void setUseHistory(bool on);
-    bool centerPage() const;
-    void setCenterPage(bool on);
-private:
-    QString m_author;
-    QString m_description;
-    bool m_showControls;
-    bool m_showProgress;
-    bool m_useHistory;
-    bool m_centerPage;
+    QString author;
+    QString description;
+    bool showControls;
+    bool showProgress;
+    bool useHistory;
+    bool centerPage;
 };
 
 #endif // REVEALOPTIONS_H
