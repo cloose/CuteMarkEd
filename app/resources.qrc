@@ -39,4 +39,8 @@
         <file alias="highlight.js/styles/github.css">scripts/highlight.js/styles/github.css</file>
         <file alias="highlight.js/styles/solarized_dark.css">scripts/highlight.js/styles/solarized_dark.css</file>
     </qresource>
+    <qresource prefix="/reveal">
+        <file alias="index.html">reveal/index.html</file>
+        <file alias="reveal.zip">reveal/reveal.zip</file>
+    </qresource>
 </RCC>

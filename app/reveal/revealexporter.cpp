@@ -32,7 +32,8 @@ RevealExporter::RevealExporter(const QString& text)
 void RevealExporter::run(const QString& destPath, const RevealOptions& revealOptions)
 {
     ZipTool zipTool;
-    zipTool.extract("reveal.zip", destPath);
+    ZipError zipError = zipTool.extract(":/reveal/reveal.zip", destPath);
+    if(zipError!=ErrNone) return;
 
     QString title = extractTitle();
     qDebug() << "Title: " << title;
@@ -90,8 +91,12 @@ void RevealExporter::ReplaceHtmlPlaceholder(QString &html, const QString &placeh
 
 QString RevealExporter::readIndexHtml()
 {
-    QFile fh("reveal/index.html");
-    if( !fh.open(QIODevice::ReadOnly|QIODevice::Text) ) return QString::null;
+    QFile fh(":/reveal/index.html");
+    if( !fh.open(QIODevice::ReadOnly|QIODevice::Text) )
+    {
+        qWarning("RevealExport, could not open index.html");
+        return QString::null;
+    }
     QString content = QTextStream(&fh).readAll();
     fh.close();
     return content;
@@ -101,7 +106,11 @@ QString RevealExporter::writeIndexHtml(const QString& destPath, const QString& c
 {
     QString fileName = QString("%1/%2").arg(destPath).arg("index.html");
     QFile fh(fileName);
-    if( !fh.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text) ) return QString::null;
+    if( !fh.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text) )
+    {
+        qWarning("RevealExport, unable to create output file");
+        return QString::null;
+    }
     QTextStream(&fh) << content;
     fh.close();
     return fileName;
