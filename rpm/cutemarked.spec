@@ -12,7 +12,7 @@
 Name:                   cutemarked
 Summary:                Qt-based Markdown editor
 Group:                  Productivity/Text/Editors
-Version:                0.9.0
+Version:                0.9.1
 Release:                1
 License:                GPL-2.0+
 Url:                    http://github.com/cloose/CuteMarkEd
@@ -84,29 +84,32 @@ mv $RPM_BUILD_ROOT%{_libdir}/qt5/bin/cutemarked $RPM_BUILD_ROOT%{_bindir}/cutema
 
 %changelog
 
-* Thu Jan 25 2014 Christian Looses <christian.loose@hamburg.de> 0.9.0-1
+* Fri Jan 31 2014 Christian Loose <christian.loose@hamburg.de> 0.9.1-1
+- New patch version 0.9.1 released
+
+* Sat Jan 25 2014 Christian Loose <christian.loose@hamburg.de> 0.9.0-1
 - New minor version 0.9.0 released
 
-* Thu Nov 19 2013 Christian Looses <christian.loose@hamburg.de> 0.8.1-1
+* Tue Nov 19 2013 Christian Loose <christian.loose@hamburg.de> 0.8.1-1
 - New patch version 0.8.1 released
 
-* Thu Nov 08 2013 Christian Looses <christian.loose@hamburg.de> 0.8.0-1
+* Fri Nov 08 2013 Christian Loose <christian.loose@hamburg.de> 0.8.0-1
 - New minor version 0.8.0 released
 
-* Thu Jul 04 2013 Christian Looses <christian.loose@hamburg.de> 0.6.1-1
+* Thu Jul 04 2013 Christian Loose <christian.loose@hamburg.de> 0.6.1-1
 - New patch version 0.6.1 released
 
-* Tue Jun 25 2013 Christian Looses <christian.loose@hamburg.de> 0.6.0-1
+* Tue Jun 25 2013 Christian Loose <christian.loose@hamburg.de> 0.6.0-1
 - New minor version 0.6.0 released
 
-* Fri Jun 14 2013 Christian Looses <christian.loose@hamburg.de> 0.5.0-1
+* Fri Jun 14 2013 Christian Loose <christian.loose@hamburg.de> 0.5.0-1
 - New minor version 0.5.0 released
 
-* Fri Jun 07 2013 Christian Looses <christian.loose@hamburg.de> 0.4.1-2
+* Fri Jun 07 2013 Christian Loose <christian.loose@hamburg.de> 0.4.1-2
 - New patch version 0.4.1 released
 
-* Thu May 30 2013 Christian Looses <christian.loose@hamburg.de> 0.4.1-1
+* Thu May 30 2013 Christian Loose <christian.loose@hamburg.de> 0.4.1-1
 - First Linux packages
 
-* Tue Apr 30 2013 Christian Looses <christian.loose@hamburg.de> 0.1.0-1
+* Tue Apr 30 2013 Christian Loose <christian.loose@hamburg.de> 0.1.0-1
 - Initial release

@@ -20,7 +20,7 @@ extern "C" {
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
-#include <discount/mkdio.h>
+#include <mkdio.h>
 }
 
 #include "markdowndocument.h"
