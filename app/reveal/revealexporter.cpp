@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2014 Jörg Preiß <joerg.preiss@slesa.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -85,7 +85,7 @@ void RevealExporter::ReplaceHtmlPlaceholder(QString &html, const QString &placeh
 
 void RevealExporter::ReplaceHtmlPlaceholder(QString &html, const QString &placeholder, bool value) const
 {
-    ReplaceHtmlPlaceholder(html, placeholder, value ? QString("true") : QString("false"));
+    ReplaceHtmlPlaceholder(html, placeholder, value ? QStringLiteral("true") : QStringLiteral("false"));
 }
 
 QString RevealExporter::readIndexHtml()
