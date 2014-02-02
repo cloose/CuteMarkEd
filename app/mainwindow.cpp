@@ -123,7 +123,7 @@ void MainWindow::initializeApp()
 
     // don't show context menu for HTML preview
     // most actions don't work and can even lead to crashes (like reload)
-    ui->webView->setContextMenuPolicy(Qt::NoContextMenu);
+//    ui->webView->setContextMenuPolicy(Qt::NoContextMenu);
 
     // set default style
     styleDefault();
@@ -157,9 +157,9 @@ void MainWindow::initializeApp()
     QString cacheDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
     diskCache->setCacheDirectory(cacheDir);
 
-//    ui->webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
-//    QWebInspector *inspector = new QWebInspector();
-//    inspector->setPage(ui->webView->page());
+    ui->webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+    QWebInspector *inspector = new QWebInspector();
+    inspector->setPage(ui->webView->page());
 
     loadCustomStyles();
     ui->menuLanguages->loadDictionaries(options->dictionaryLanguage());

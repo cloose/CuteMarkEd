@@ -25,7 +25,7 @@ class Options : public QObject
     Q_OBJECT
 public:
     enum ProxyMode { NoProxy, SystemProxy, ManualProxy };
-    enum MarkdownConverter { DiscountMarkdownConverter, HoedownMarkdownConverter };
+    enum MarkdownConverter { DiscountMarkdownConverter, HoedownMarkdownConverter, RevealMarkdownConverter };
 
     explicit Options(QObject *parent = 0);
 

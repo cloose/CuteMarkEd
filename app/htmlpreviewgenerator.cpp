@@ -21,6 +21,7 @@
 #include <converter/markdownconverter.h>
 #include <converter/markdowndocument.h>
 #include <converter/discountmarkdownconverter.h>
+#include <converter/revealmarkdownconverter.h>
 
 #ifdef ENABLE_HOEDOWN
 #include <converter/hoedownmarkdownconverter.h>
@@ -113,6 +114,10 @@ void HtmlPreviewGenerator::markdownConverterChanged()
         converter = new HoedownMarkdownConverter();
         break;
 #endif
+
+    case Options::RevealMarkdownConverter:
+        converter = new RevealMarkdownConverter();
+        break;
 
     case Options::DiscountMarkdownConverter:
     default:
