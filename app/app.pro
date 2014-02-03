@@ -90,6 +90,7 @@ RESOURCES += \
 
 OTHER_FILES += \
     template.html \
+    template_presentation.html \
     cutemarked.desktop \
     syntax.html \
     cutemarked.rc \
