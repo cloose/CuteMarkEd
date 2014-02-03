@@ -1,5 +1,7 @@
 #include "revealmarkdownconverter.h"
 
+#include <QStringList>
+
 #include "markdowndocument.h"
 
 class RevealMarkdownDocument : public MarkdownDocument
@@ -19,61 +21,26 @@ MarkdownDocument *RevealMarkdownConverter::createDocument(const QString &text, M
     return doc;
 }
 
-#include <QDebug>
-#include <QStringList>
-#include <QRegularExpression>
 QString RevealMarkdownConverter::renderAsHtml(MarkdownDocument *document)
 {
-    QString html = QStringLiteral("<div class=\"reveal\">\n");
-    html += QStringLiteral("<div class=\"slides\">\n");
+    const QString SLIDE_SEPARATOR = "\n\n---\n\n";
+    const QString SLIDE_HEADER = "<section data-markdown>\n"
+                                 "  <script type=\"text/template\">\n";
+    const QString SLIDE_FOOTER = "  </script>\n"
+                                 "</section>\n\n";
+
+    QString html;
 
     if (document) {
         RevealMarkdownDocument *doc = dynamic_cast<RevealMarkdownDocument*>(document);
 
-        QRegularExpression rx("(#{2})[ \t]*(.+?)[ \t]*#*\n+");
-//        QRegularExpressionMatch match = rx.match(doc->markdownText);
-//        while (match.hasMatch()) {
-//            qDebug() << match.capturedTexts() << match.capturedLength()+1;
-
-//            html += QStringLiteral("<section data-markdown>\n");
-//            html += QStringLiteral("<script type=\"text/template\">\n");
-
-//            html += match.captured(0);
-
-//            html += QStringLiteral("</script>\n");
-//            html += QStringLiteral("</section>\n\n");
-
-//            match = rx.match(doc->markdownText, match.capturedLength()+1);
-//        }
-        QRegularExpressionMatchIterator it = rx.globalMatch(doc->markdownText);
-        while (it.hasNext()) {
-            QRegularExpressionMatch match = it.next();
-            qDebug() << match.capturedTexts() << match.capturedLength()+1;
-
-            html += QStringLiteral("<section data-markdown>\n");
-            html += QStringLiteral("<script type=\"text/template\">\n");
-
-            html += match.captured(0);
-
-            html += QStringLiteral("</script>\n");
-            html += QStringLiteral("</section>\n\n");
-
-//            match = rx.match(doc->markdownText, match.capturedLength()+1);
+        QStringList slides = doc->markdownText.split(SLIDE_SEPARATOR, QString::SkipEmptyParts);
+        foreach (QString slide, slides) {
+            html += SLIDE_HEADER;
+            html += slide;
+            html += SLIDE_FOOTER;
         }
-
-//        html += doc->markdownText;
-
     }
-
-    html += QStringLiteral("</div>\n");
-    html += QStringLiteral("</div>\n");
-    html += QStringLiteral("<script src=\"http://cdn.jsdelivr.net/reveal.js/2.5.0/lib/js/head.min.js\"></script>\n");
-    html += QStringLiteral("<script src=\"http://cdn.jsdelivr.net/reveal.js/2.5.0/js/reveal.min.js\"></script>\n");
-    html += QStringLiteral("<script>Reveal.initialize({\n");
-    html += QStringLiteral("dependencies: [\n");
-    html += QStringLiteral("{ src: 'http://cdn.jsdelivr.net/reveal.js/2.5.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },\n");
-    html += QStringLiteral("{ src: 'http://cdn.jsdelivr.net/reveal.js/2.5.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },\n");
-    html += QStringLiteral("]});</script>\n");
 
     return html;
 }

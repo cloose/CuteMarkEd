@@ -855,6 +855,14 @@ void MainWindow::proxyConfigurationChanged()
 
 void MainWindow::markdownConverterChanged()
 {
+    // FIXME: Should be done smarter!
+    // load HTML template
+    QFile f(options->markdownConverter() == Options::RevealMarkdownConverter ? ":/template_presentation.html" : ":/template.html");
+    if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QString htmlTemplate = f.readAll();
+        generator->setHtmlTemplate(htmlTemplate);
+    }
+
     // regenerate HTML
     plainTextChanged();
 
