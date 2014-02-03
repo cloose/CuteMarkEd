@@ -16,6 +16,8 @@ RevealMarkdownConverter::RevealMarkdownConverter()
 
 MarkdownDocument *RevealMarkdownConverter::createDocument(const QString &text, MarkdownConverter::ConverterOptions options)
 {
+    Q_UNUSED(options)
+
     RevealMarkdownDocument *doc = new RevealMarkdownDocument();
     doc->markdownText = text;
     return doc;
@@ -23,23 +25,11 @@ MarkdownDocument *RevealMarkdownConverter::createDocument(const QString &text, M
 
 QString RevealMarkdownConverter::renderAsHtml(MarkdownDocument *document)
 {
-    const QString SLIDE_SEPARATOR = "\n\n---\n\n";
-    const QString SLIDE_HEADER = "<section data-markdown>\n"
-                                 "  <script type=\"text/template\">\n";
-    const QString SLIDE_FOOTER = "  </script>\n"
-                                 "</section>\n\n";
-
     QString html;
 
     if (document) {
         RevealMarkdownDocument *doc = dynamic_cast<RevealMarkdownDocument*>(document);
-
-        QStringList slides = doc->markdownText.split(SLIDE_SEPARATOR, QString::SkipEmptyParts);
-        foreach (QString slide, slides) {
-            html += SLIDE_HEADER;
-            html += slide;
-            html += SLIDE_FOOTER;
-        }
+        html = doc->markdownText;
     }
 
     return html;
@@ -47,6 +37,8 @@ QString RevealMarkdownConverter::renderAsHtml(MarkdownDocument *document)
 
 QString RevealMarkdownConverter::renderAsTableOfContents(MarkdownDocument *document)
 {
+    Q_UNUSED(document)
+
     return QString();
 }
 
