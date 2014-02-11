@@ -47,12 +47,13 @@
         
         <h2><a name="download" class="anchor" href="#download"><span class="octicon octicon-link"></span></a>DOWNLOAD</h2>
 
-        <p><a href="https://github.com/cloose/CuteMarkEd/archive/v0.8.1.tar.gz">Sources</a><br>
-           <a href="https://github.com/cloose/CuteMarkEd/releases/download/v0.8.1/cutemarked-0.8.1.msi">MS Windows (Installer)</a><br>
-           <a href="https://github.com/cloose/CuteMarkEd/releases/download/v0.8.1/cutemarked-0.8.1.zip">MS Windows (ZIP file)</a><br>
+        <p><a href="https://github.com/cloose/CuteMarkEd/archive/v0.9.1.tar.gz">Sources</a><br>
+           <a href="http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.9.0.msi">MS Windows (Installer)</a><br>
+           <a href="http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.9.0.zip">MS Windows (ZIP file)</a><br>
            <a href="https://build.opensuse.org/project/show?project=home%3Acloose1974">OpenSUSE 12.3 (RPM)</a><br>
            <a href="https://build.opensuse.org/project/show?project=home%3Acloose1974">OpenSUSE 13.1 (RPM)</a><br>
-           <a href="https://build.opensuse.org/project/show?project=home%3Acloose1974">Fedora 19 (RPM)</a>
+           <a href="https://build.opensuse.org/project/show?project=home%3Acloose1974">Fedora 19 (RPM)</a><br>
+           <a href="https://build.opensuse.org/project/show?project=home%3Acloose1974">Fedora 20 (RPM)</a>
         </p>
 
         <h2><a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>INSTALLATION</h2>
@@ -65,7 +66,30 @@
         
         <h2><a name="news" class="anchor" href="#news"><span class="octicon octicon-link"></span></a>NEWS</h2>
 
-        <h4><a name="mailinglist" class="anchor" href="#mailinglist"><span class="octicon octicon-link"></span></a>CuteMarkEd Mailing List (January 22, 2014)</h4>
+        <h4><a name="version-090" class="anchor" href="#version-090"><span class="octicon octicon-link"></span></a>Major Release 0.9.0 (January 26th, 2014)</h4>
+
+        <ul>
+          <li><code>NEW</code> Added a snippets system, that can be activated with the shortcut <kbd>Ctrl+Space</kbd>. We provide several built-in snippets but the 
+                               system can be extended with user-defined snippets. This powerful functionality can be used to autocomplete Markdown syntax, for inserting 
+                               repetitive text blocks or even to provide often used document templates.</li>
+          <li><code>NEW</code> Added <em>"Go to Line"</em> menu item</li>
+          <li><code>NEW</code> Added options <em>"case sensitive"</em>, <em>"whole words only"</em> and <em>"use regular expressions"</em> to find/replace functionality</li>
+          <li><code>NEW</code> Support for adding the selected word to an user dictionary</li>
+          <li><code>NEW</code> Option to change width of tab characters</li>
+          <li><code>NEW</code> Option for superscript Markdown extension</li>
+          <li><code>NEW</code> Option to control word wrap in Markdown editor</li>
+          <li><code>NEW</code> Added Japanese translation created by k0ta0uchi</li>
+          <li><code>NEW</code> Support for additional Markdown converters</li>
+        </ul>
+        <ul>
+          <li><code>IMPROVED</code> Updated the code highlighting library <a href="http://highlightjs.org/">highlight.js</a> to version 7.5</li>
+          <li><code>IMPROVED</code> Perceived performance while typing in long Markdown documents</li>
+        </ul>
+        <ul>
+          <li><code>FIXED</code> Changed shortcuts for Blockquote to <kbd>Ctrl+Shift+Q</kbd> and for Insert Image to <kbd>Ctrl+Shift+I</kbd> to prevent ambiguous shortcuts on Linux</li>
+        </ul>
+
+        <h4><a name="mailinglist" class="anchor" href="#mailinglist"><span class="octicon octicon-link"></span></a>CuteMarkEd Mailing List (January 22nd, 2014)</h4>
 
         <p>
           There is now a mailing list for discussions and Q&amp;A around CuteMarkEd on google groups (<a href="https://groups.google.com/forum/#!forum/cutemarked">https://groups.google.com/forum/#!forum/cutemarked</a>). Please join if you're interested.
@@ -80,31 +104,6 @@
           <li><code>FIXED</code> Do not crash application if <em>Find Next</em> or <em>Find Previous</em> actions are used without a previously performed search</li>
         </ul>
 
-        <h4><a name="version-080" class="anchor" href="#version-080"><span class="octicon octicon-link"></span></a>Major Release 0.8.0 (November 3rd, 2013)</h4>
-
-        <ul>
-          <li><code>NEW</code> Tool to insert a table in the markdown document</li>
-          <li><code>NEW</code> Tool to insert an image link in the markdown document</li>
-          <li><code>NEW</code> Support for Markdown Extra-style footnotes</li>
-          <li><code>NEW</code> Menu item to switch between vertical and horizontal layout</li>
-          <li><code>NEW</code> Added style Byword Dark</li>
-        </ul>
-        <ul>
-          <li><code>IMPROVED</code> Added possibility to insert markdown markup (like bold, italic) without selection</li>
-          <li><code>IMPROVED</code> Added support for code highlighting without internet connection</li>
-          <li><code>IMPROVED</code> Added option to include javascript and CSS needed for code highlighting in the exported HTML</li>
-        </ul>
-        <ul>
-          <li><code>FIXED</code> Resolved problems with adding symbols using Alt with numpad key by changing shortcuts for styles from Alt+1-6 to Ctrl+1-6</li>
-          <li><code>FIXED</code> Several encoding problems were fixed.
-            <ul>
-              <li>German umlauts in table of contents</li>
-              <li>exported HTML was not marked as UTF-8</li>
-              <li>non-ascii characters with markdown markup like italic</li>
-            </ul>
-          </li>
-        </ul>
-               
         <h2><a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>DEPENDENCIES</h2>
 
         <ul>
