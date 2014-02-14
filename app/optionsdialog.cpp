@@ -232,13 +232,13 @@ OptionsDialog::OptionsDialog(Options *opt, SnippetCollection *collection, QWidge
     connect(ui->snippetTextEdit, SIGNAL(textChanged()),
             this, SLOT(snippetTextChanged()));
 
-    // FIXME: remove general tab for now, if hoedown is disabled, until more converters are supported
-#ifndef ENABLE_HOEDOWN
-    ui->tabWidget->removeTab(0);
-#endif
-
     // read configuration state
     readState();
+
+    // FIXME: remove general tab for now, if hoedown is disabled, until more converters are supported
+    if(ui->converterComboBox->count()<2)
+        ui->tabWidget->removeTab(0);
+
 }
 
 OptionsDialog::~OptionsDialog()
