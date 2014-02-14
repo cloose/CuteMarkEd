@@ -25,6 +25,7 @@ class RevealExporter
 {
 public:
     RevealExporter(const QString& text);
+    QString generatePreview();
     void run(const QString& destPath, const RevealOptions& revealOptions);
 private:
     QString generateOutput(const QString &indexHtml, const QString &title, const QStringList &pages, const RevealOptions &revealOptions);

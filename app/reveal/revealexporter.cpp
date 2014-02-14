@@ -29,6 +29,15 @@ RevealExporter::RevealExporter(const QString& text)
     this->code = text;
 }
 
+QString RevealExporter::generatePreview()
+{
+    RevealOptions revealOptions;
+    QString indexHtml = readIndexHtml();
+    QStringList pages = extractPages();
+    QString outputHtml = generateOutput(indexHtml, "Preview", pages, revealOptions);
+    return outputHtml;
+}
+
 void RevealExporter::run(const QString& destPath, const RevealOptions& revealOptions)
 {
     ZipTool zipTool;
