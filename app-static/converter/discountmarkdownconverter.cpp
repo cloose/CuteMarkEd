@@ -20,7 +20,7 @@ extern "C" {
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
-#include <discount/mkdio.h>
+#include <mkdio.h>
 }
 
 #include "markdowndocument.h"
@@ -101,6 +101,17 @@ QString DiscountMarkdownConverter::renderAsTableOfContents(MarkdownDocument *doc
     }
 
     return toc;
+}
+
+MarkdownConverter::ConverterOptions DiscountMarkdownConverter::supportedOptions() const
+{
+    return MarkdownConverter::AutolinkOption |
+           MarkdownConverter::NoStrikethroughOption |
+           MarkdownConverter::NoAlphaListOption |
+           MarkdownConverter::NoDefinitionListOption |
+           MarkdownConverter::NoSmartypantsOption |
+           MarkdownConverter::ExtraFootnoteOption |
+           MarkdownConverter::NoSuperscriptOption;
 }
 
 unsigned long DiscountMarkdownConverter::translateConverterOptions(ConverterOptions options) const

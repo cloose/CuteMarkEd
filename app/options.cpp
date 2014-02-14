@@ -50,6 +50,7 @@ Options::Options(QObject *parent) :
 void Options::apply()
 {
     emit proxyConfigurationChanged();
+    emit markdownConverterChanged();
 }
 
 QFont Options::editorFont() const

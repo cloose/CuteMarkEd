@@ -36,6 +36,8 @@ public:
     
     void setHtmlTemplate(const QString &t);
 
+    bool isSupported(MarkdownConverter::ConverterOption option) const;
+
 public slots:
     void markdownTextChanged(const QString &text);
     QString exportHtml(const QString &styleSheet, const QString &highlightingScript);

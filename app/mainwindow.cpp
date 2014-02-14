@@ -19,6 +19,7 @@
 #include "ui_mainwindow.h"
 
 #include <QClipboard>
+#include <QDesktopServices>
 #include <QDirIterator>
 #include <QFileDialog>
 #include <QIcon>
@@ -29,6 +30,7 @@
 #include <QNetworkProxy>
 #include <QPrintDialog>
 #include <QPrinter>
+#include <QProcess>
 #include <QScrollBar>
 #include <QSettings>
 #include <QStandardPaths>
@@ -123,7 +125,7 @@ void MainWindow::initializeApp()
 
     // don't show context menu for HTML preview
     // most actions don't work and can even lead to crashes (like reload)
-    ui->webView->setContextMenuPolicy(Qt::NoContextMenu);
+//    ui->webView->setContextMenuPolicy(Qt::NoContextMenu);
 
     // set default style
     styleDefault();
@@ -157,9 +159,9 @@ void MainWindow::initializeApp()
     QString cacheDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
     diskCache->setCacheDirectory(cacheDir);
 
-//    ui->webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
-//    QWebInspector *inspector = new QWebInspector();
-//    inspector->setPage(ui->webView->page());
+    ui->webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+    QWebInspector *inspector = new QWebInspector();
+    inspector->setPage(ui->webView->page());
 
     loadCustomStyles();
     ui->menuLanguages->loadDictionaries(options->dictionaryLanguage());
@@ -354,13 +356,14 @@ void MainWindow::editGotoLine()
 {
     const int STEP = 1;
     const int MIN_VALUE = 1;
+
     QTextCursor cursor = ui->plainTextEdit->textCursor();
     int currentLine = cursor.blockNumber()+1;
     int maxValue = ui->plainTextEdit->document()->blockCount();
 
     bool ok;
     int line = QInputDialog::getInt(this, tr("Go to..."),
-                                               tr("Line: "), currentLine, MIN_VALUE, maxValue, STEP, &ok);
+                                          tr("Line: ", "Line number in the Markdown editor"), currentLine, MIN_VALUE, maxValue, STEP, &ok);
     if (!ok) return;
     ui->plainTextEdit->gotoLine(line);
 }
@@ -746,11 +749,21 @@ void MainWindow::htmlContentSizeChanged()
 
 void MainWindow::previewLinkClicked(const QUrl &url)
 {
-    // only open link if its not a local directory.
-    // this can happen because when the href is empty, url is the base url (see htmlResultReady)
-    if (!url.isLocalFile() || !QFileInfo(url.toLocalFile()).isDir()) {
-        ui->webView->load(url);
+    if(url.isLocalFile())
+    {
+        // directories are not supported
+        if(QFileInfo(url.toLocalFile()).isDir()) return;
+
+        QString filePath = url.toLocalFile();
+        // Links to markdown files open new instance
+        if(filePath.endsWith(".md") || filePath.endsWith(".markdown"))
+        {
+            QProcess::startDetached(qApp->applicationFilePath(), QStringList() << filePath);
+            return;
+        }
     }
+
+    QDesktopServices::openUrl(url);
 }
 
 void MainWindow::tocLinkClicked(const QUrl &url)
@@ -842,6 +855,23 @@ void MainWindow::proxyConfigurationChanged()
     }
 }
 
+void MainWindow::markdownConverterChanged()
+{
+    // FIXME: Should be done smarter!
+    // load HTML template
+    QFile f(options->markdownConverter() == Options::RevealMarkdownConverter ? ":/template_presentation.html" : ":/template.html");
+    if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QString htmlTemplate = f.readAll();
+        generator->setHtmlTemplate(htmlTemplate);
+    }
+
+    // regenerate HTML
+    plainTextChanged();
+
+    // disable unsupported extensions
+    updateExtensionStatus();
+}
+
 void MainWindow::setupUi()
 {
     setupActions();
@@ -866,6 +896,8 @@ void MainWindow::setupUi()
 
     connect(options, SIGNAL(proxyConfigurationChanged()),
             this, SLOT(proxyConfigurationChanged()));
+    connect(options, SIGNAL(markdownConverterChanged()),
+            this, SLOT(markdownConverterChanged()));
 
     readSettings();
 }
@@ -1028,6 +1060,17 @@ void MainWindow::setupHtmlSourceView()
     font.setStyleHint(QFont::TypeWriter);
     ui->htmlSourceTextEdit->setFont(font);
     htmlHighlighter = new HtmlHighlighter(ui->htmlSourceTextEdit->document());
+}
+
+void MainWindow::updateExtensionStatus()
+{
+    ui->actionAutolink->setEnabled(generator->isSupported(MarkdownConverter::AutolinkOption));
+    ui->actionAlphabeticLists->setEnabled(generator->isSupported(MarkdownConverter::NoAlphaListOption));
+    ui->actionDefinitionLists->setEnabled(generator->isSupported(MarkdownConverter::NoDefinitionListOption));
+    ui->actionFootnotes->setEnabled(generator->isSupported(MarkdownConverter::ExtraFootnoteOption));
+    ui->actionSmartyPants->setEnabled(generator->isSupported(MarkdownConverter::NoSmartypantsOption));
+    ui->actionStrikethroughOption->setEnabled(generator->isSupported(MarkdownConverter::NoStrikethroughOption));
+    ui->actionSuperscript->setEnabled(generator->isSupported(MarkdownConverter::NoSuperscriptOption));
 }
 
 void MainWindow::syncWebViewToHtmlSource()

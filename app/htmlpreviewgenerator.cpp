@@ -21,7 +21,11 @@
 #include <converter/markdownconverter.h>
 #include <converter/markdowndocument.h>
 #include <converter/discountmarkdownconverter.h>
+#include <converter/revealmarkdownconverter.h>
+
+#ifdef ENABLE_HOEDOWN
 #include <converter/hoedownmarkdownconverter.h>
+#endif
 
 #include "options.h"
 
@@ -38,6 +42,11 @@ HtmlPreviewGenerator::HtmlPreviewGenerator(Options *opt, QObject *parent) :
 void HtmlPreviewGenerator::setHtmlTemplate(const QString &t)
 {
     htmlTemplate = t;
+}
+
+bool HtmlPreviewGenerator::isSupported(MarkdownConverter::ConverterOption option) const
+{
+    return converter->supportedOptions().testFlag(option);
 }
 
 void HtmlPreviewGenerator::markdownTextChanged(const QString &text)
@@ -100,8 +109,14 @@ void HtmlPreviewGenerator::setCodeHighlightingStyle(const QString &style)
 void HtmlPreviewGenerator::markdownConverterChanged()
 {
     switch (options->markdownConverter()) {
+#ifdef ENABLE_HOEDOWN
     case Options::HoedownMarkdownConverter:
         converter = new HoedownMarkdownConverter();
+        break;
+#endif
+
+    case Options::RevealMarkdownConverter:
+        converter = new RevealMarkdownConverter();
         break;
 
     case Options::DiscountMarkdownConverter:

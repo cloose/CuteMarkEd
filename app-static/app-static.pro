@@ -16,8 +16,8 @@ SOURCES += \
     snippets/jsonsnippetfile.cpp \
     snippets/snippetlistmodel.cpp \
     converter/discountmarkdownconverter.cpp \
-    converter/hoedownmarkdownconverter.cpp \
-    spellchecker/dictionary.cpp
+    spellchecker/dictionary.cpp \
+    converter/revealmarkdownconverter.cpp
 
 HEADERS += \
     snippets/snippet.h \
@@ -28,17 +28,17 @@ HEADERS += \
     converter/markdownconverter.h \
     converter/markdowndocument.h \
     converter/discountmarkdownconverter.h \
-    converter/hoedownmarkdownconverter.h \
-    spellchecker/dictionary.h
+    spellchecker/dictionary.h \
+    converter/revealmarkdownconverter.h
 
-unix:!symbian {
-    maemo5 {
-        target.path = /opt/usr/lib
-    } else {
-        target.path = /usr/lib
-    }
-    INSTALLS += target
-}
+#unix:!symbian {
+#    maemo5 {
+#        target.path = /opt/usr/lib
+#    } else {
+#        target.path = /usr/lib
+#    }
+#    INSTALLS += target
+#}
 
 ##################################################
 # Dependencies
@@ -53,8 +53,9 @@ else:win32-msvc*:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty
 else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/debug/ -llibdiscount
 else:unix: LIBS += -L/usr/lib -lmarkdown
 
-INCLUDEPATH += $$PWD/../3rdparty/
-DEPENDPATH += $$PWD/../3rdparty/
+win32:INCLUDEPATH += $$PWD/../3rdparty/discount
+unix:INCLUDEPATH += /usr/include
+win32:DEPENDPATH += $$PWD/../3rdparty/discount
 
 win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/release/libdiscount.a
 else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/debug/libdiscount.a
@@ -64,13 +65,21 @@ else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3r
 #
 # Hoedown library
 #
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/release/ -lhoedown
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/debug/ -lhoedown
-else:unix: LIBS += -L$$OUT_PWD/../3rdparty/hoedown/ -lhoedown
+with_hoedown {
+    message("app-static: Enable hoedown markdown converter support")
 
-INCLUDEPATH += $$PWD/../3rdparty/hoedown
-DEPENDPATH += $$PWD/../3rdparty/hoedown
+    DEFINES += ENABLE_HOEDOWN
+    SOURCES += converter/hoedownmarkdownconverter.cpp
+    HEADERS += converter/hoedownmarkdownconverter.h
 
-win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/release/libhoedown.a
-else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/debug/libhoedown.a
-#else:unix: PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/libhoedown.a
+    win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/release/ -lhoedown
+    else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/debug/ -lhoedown
+    else:unix: LIBS += -L$$OUT_PWD/../3rdparty/hoedown/ -lhoedown
+
+    INCLUDEPATH += $$PWD/../3rdparty/hoedown
+    DEPENDPATH += $$PWD/../3rdparty/hoedown
+
+    win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/release/libhoedown.a
+    else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/debug/libhoedown.a
+    #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/libhoedown.a
+}
