@@ -42,6 +42,7 @@ SOURCES += \
     markdownmanipulator.cpp \
     exportpdfdialog.cpp \
     exporthtmldialog.cpp \
+    exportrevealdialog.cpp \
     htmlhighlighter.cpp \
     options.cpp \
     optionsdialog.cpp \
@@ -49,7 +50,9 @@ SOURCES += \
     controls/languagemenu.cpp \
     tabletooldialog.cpp \
     imagetooldialog.cpp \
-    snippetcompleter.cpp
+    snippetcompleter.cpp \
+    reveal/revealexporter.cpp \
+    helpers/ziptool.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -66,6 +69,8 @@ HEADERS  += \
     markdownmanipulator.h \
     exportpdfdialog.h \
     exporthtmldialog.h \
+    reveal/revealexporter.h \
+    exportrevealdialog.h \
     htmlhighlighter.h \
     options.h \
     optionsdialog.h \
@@ -73,13 +78,17 @@ HEADERS  += \
     controls/languagemenu.h \
     tabletooldialog.h \
     imagetooldialog.h \
-    snippetcompleter.h
+    snippetcompleter.h \
+    reveal/revealoptions.h \
+    helpers/ziptool.h
+
 
 FORMS    += \
     mainwindow.ui \
     controls/findreplacewidget.ui \
     exportpdfdialog.ui \
     exporthtmldialog.ui \
+    exportrevealdialog.ui \
     optionsdialog.ui \
     tabletooldialog.ui \
     imagetooldialog.ui
@@ -90,6 +99,7 @@ RESOURCES += \
 
 OTHER_FILES += \
     template.html \
+    template_presentation.html \
     cutemarked.desktop \
     syntax.html \
     cutemarked.rc \
@@ -196,6 +206,14 @@ with_hoedown {
     else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/debug/libhoedown.a
     #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hoedown/libhoedown.a
 }
+
+#quazip
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/quazip-0.6/quazip/ -lquazip
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/quazip-0.6/quazip/ -lquazip
+else:unix: LIBS += -L$$OUT_PWD/../3rdparty/quazip-0.6/quazip -lquazip
+
+INCLUDEPATH += $$PWD/../3rdparty/quazip-0.6/quazip
+DEPENDPATH += $$PWD/../3rdparty/quazip-0.6/quazip
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
 message("Using LIBS=$$LIBS")

@@ -27,6 +27,7 @@
         <file>syntax_zh_CN.html</file>
         <file>markdown-snippets.json</file>
         <file>syntax_ja.html</file>
+        <file>template_presentation.html</file>
     </qresource>
     <qresource prefix="/icons">
         <file alias="icon-close.png">images/icon-close.png</file>
@@ -38,5 +39,9 @@
         <file alias="highlight.js/styles/solarized_light.css">scripts/highlight.js/styles/solarized_light.css</file>
         <file alias="highlight.js/styles/github.css">scripts/highlight.js/styles/github.css</file>
         <file alias="highlight.js/styles/solarized_dark.css">scripts/highlight.js/styles/solarized_dark.css</file>
+    </qresource>
+    <qresource prefix="/reveal">
+        <file alias="index.html">reveal/index.html</file>
+        <file alias="reveal.zip">reveal/reveal.zip</file>
     </qresource>
 </RCC>

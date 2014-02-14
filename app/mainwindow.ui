@@ -181,6 +181,7 @@
     <addaction name="separator"/>
     <addaction name="actionExportToHTML"/>
     <addaction name="actionExportToPDF"/>
+    <addaction name="actionExportToReveal"/>
     <addaction name="separator"/>
     <addaction name="action_Print"/>
     <addaction name="separator"/>
@@ -473,6 +474,11 @@
   <action name="actionExportToPDF">
    <property name="text">
     <string>Export to PDF...</string>
+   </property>
+  </action>
+  <action name="actionExportToReveal">
+   <property name="text">
+    <string>Export to reveal.js...</string>
    </property>
   </action>
   <action name="actionSplit_1_1">
@@ -1047,6 +1053,22 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>fileExportToPdf()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExportToReveal</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fileExportToReveal()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

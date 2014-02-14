@@ -61,6 +61,7 @@ private slots:
     bool fileSaveAs();
     void fileExportToHtml();
     void fileExportToPdf();
+    void fileExportToReveal();
     void filePrint();
 
     void editUndo();

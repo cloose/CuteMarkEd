@@ -52,10 +52,12 @@
 #include "markdownmanipulator.h"
 #include "exporthtmldialog.h"
 #include "exportpdfdialog.h"
+#include "exportrevealdialog.h"
 #include "options.h"
 #include "optionsdialog.h"
 #include "snippetcompleter.h"
 #include "tabletooldialog.h"
+#include "reveal/revealexporter.h"
 
 MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
@@ -123,7 +125,7 @@ void MainWindow::initializeApp()
 
     // don't show context menu for HTML preview
     // most actions don't work and can even lead to crashes (like reload)
-    ui->webView->setContextMenuPolicy(Qt::NoContextMenu);
+//    ui->webView->setContextMenuPolicy(Qt::NoContextMenu);
 
     // set default style
     styleDefault();
@@ -157,9 +159,9 @@ void MainWindow::initializeApp()
     QString cacheDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
     diskCache->setCacheDirectory(cacheDir);
 
-//    ui->webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
-//    QWebInspector *inspector = new QWebInspector();
-//    inspector->setPage(ui->webView->page());
+    ui->webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+    QWebInspector *inspector = new QWebInspector();
+    inspector->setPage(ui->webView->page());
 
     loadCustomStyles();
     ui->menuLanguages->loadDictionaries(options->dictionaryLanguage());
@@ -300,6 +302,18 @@ void MainWindow::fileExportToPdf()
     ExportPdfDialog dialog(fileName);
     if (dialog.exec() == QDialog::Accepted) {
         ui->webView->print(dialog.printer());
+    }
+}
+
+void MainWindow::fileExportToReveal()
+{
+    ExportRevealDialog dialog(fileName);
+    if (dialog.exec() == QDialog::Accepted) {
+        RevealOptions options = dialog.getRevealOptions();
+
+        QString text = ui->plainTextEdit->document()->toPlainText();
+        RevealExporter exporter(text);
+        exporter.run(dialog.pathName(), options);
     }
 }
 
@@ -843,6 +857,14 @@ void MainWindow::proxyConfigurationChanged()
 
 void MainWindow::markdownConverterChanged()
 {
+    // FIXME: Should be done smarter!
+    // load HTML template
+    QFile f(options->markdownConverter() == Options::RevealMarkdownConverter ? ":/template_presentation.html" : ":/template.html");
+    if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QString htmlTemplate = f.readAll();
+        generator->setHtmlTemplate(htmlTemplate);
+    }
+
     // regenerate HTML
     plainTextChanged();
 
