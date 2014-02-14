@@ -45,11 +45,11 @@ void RevealExporter::run(const QString& destPath, const RevealOptions& revealOpt
     if(zipError!=ErrNone) return;
 
     QString title = extractTitle();
-    qDebug() << "Title: " << title;
+//    qDebug() << "Title: " << title;
 
     QStringList pages = extractPages();
-    for(int i=0; i<pages.count(); i++)
-        qDebug() << "Page " << i << ": " << pages[i].left(20);
+//    for(int i=0; i<pages.count(); i++)
+//        qDebug() << "Page " << i << ": " << pages[i].left(20);
 
     QString indexHtml = readIndexHtml();
     QString outputHtml = generateOutput(indexHtml, title, pages, revealOptions);
@@ -163,7 +163,7 @@ QStringList RevealExporter::extractPages()
     for (;;)
     {
         int startIndex = text.indexOf("##", lastIndex);
-qDebug() << "Start index " << startIndex;
+//qDebug() << "Start index " << startIndex;
 
         // Nothing found?
         if(startIndex<0) break;
@@ -175,11 +175,11 @@ qDebug() << "Start index " << startIndex;
         // Found a h3 headline or below?
         if(text[lastIndex]=='#')
         {
-            qDebug("Found h3");
+//            qDebug("Found h3");
             continue;
         }
 
-qDebug() << "lastPage? " << lastPage;
+//qDebug() << "lastPage? " << lastPage;
 
         // Found another page, check if there was one before
         if(lastPage>0)
@@ -190,7 +190,7 @@ qDebug() << "lastPage? " << lastPage;
         }
 
         lastPage = startIndex;
-qDebug() << "lastPage now " << lastPage;
+//qDebug() << "lastPage now " << lastPage;
     }
 
     if(lastPage>0) result.append(text.mid(lastPage));

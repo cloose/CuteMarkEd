@@ -43,8 +43,8 @@ ZipError ZipTool::extract(const QString& sourceFile, const QString& destPath)
 
 ZipError ZipTool::processZip(QuaZip& zip, const QString& destPath)
 {
-    qDebug("%d entries\n", zip.getEntriesCount());
-    qDebug("Global comment: %s\n", zip.getComment().toLocal8Bit().constData());
+//    qDebug("%d entries\n", zip.getEntriesCount());
+//    qDebug("Global comment: %s\n", zip.getComment().toLocal8Bit().constData());
 
     QuaZipFile zipFile(&zip);
     for (bool more = zip.goToFirstFile(); more; more = zip.goToNextFile())
@@ -56,7 +56,7 @@ ZipError ZipTool::processZip(QuaZip& zip, const QString& destPath)
             return ErrFileInfo;
         }
 
-        qDebug("Zip name:    %s", info.name.toLocal8Bit().constData());
+//        qDebug("Zip name:    %s", info.name.toLocal8Bit().constData());
 
         QString fileName = info.name;
         if(fileName.endsWith("/"))
@@ -81,7 +81,7 @@ ZipError ZipTool::processZip(QuaZip& zip, const QString& destPath)
 bool ZipTool::createDirectory(const QString& pathName, const QString& destPath)
 {
     QString destName = QString("%1/%2").arg(destPath).arg(pathName);
-    qDebug("Creating directory %s", destName.toLocal8Bit().constData());
+ //   qDebug("Creating directory %s", destName.toLocal8Bit().constData());
 
     QDir tmpDir(destName);
     if(!tmpDir.exists(destName))
@@ -89,7 +89,7 @@ bool ZipTool::createDirectory(const QString& pathName, const QString& destPath)
         QDir dir(destPath);
         if( !dir.mkpath(pathName) )
         {
-            qDebug("Unable to create directory!");
+            qWarning("Unable to create directory!");
             return false;
         }
     }
@@ -107,7 +107,7 @@ ZipError ZipTool::extractFile(QuaZipFile& zipFile, const QString& destPath)
     }
 
     QString fileName = QString("%1/%2").arg(destPath).arg(zipFile.getActualFileName());
-    qDebug("Creating file %s", fileName.toLocal8Bit().constData());
+//    qDebug("Creating file %s", fileName.toLocal8Bit().constData());
 
     QFile dstFile(fileName);
     if(!dstFile.open( QIODevice::WriteOnly | QIODevice::Text )) return ErrFileCreate;
