@@ -98,151 +98,464 @@ void FontAwesomeIconEngine::loadFont()
         fontName = fontFamilies.at(0);
 
         // 0xf000
-        namedCodepoints.insert("icon-glass", QChar(0xf000));
-        namedCodepoints.insert("icon-music", QChar(0xf001));
-        namedCodepoints.insert("icon-search", QChar(0xf002));
-        namedCodepoints.insert("icon-envelope-alt", QChar(0xf003));
-        namedCodepoints.insert("icon-heart", QChar(0xf004));
-        namedCodepoints.insert("icon-star", QChar(0xf005));
-        namedCodepoints.insert("icon-star-empty", QChar(0xf006));
-        namedCodepoints.insert("icon-user", QChar(0xf007));
-        namedCodepoints.insert("icon-film", QChar(0xf008));
-        namedCodepoints.insert("icon-th-large", QChar(0xf009));
-        namedCodepoints.insert("icon-th", QChar(0xf00a));
-        namedCodepoints.insert("icon-th-list", QChar(0xf00b));
-        namedCodepoints.insert("icon-ok", QChar(0xf00c));
-        namedCodepoints.insert("icon-remove", QChar(0xf00d));
-        namedCodepoints.insert("icon-zoom-in", QChar(0xf00e));
+        namedCodepoints.insert("fa-glass", QChar(0xf000));
+        namedCodepoints.insert("fa-music", QChar(0xf001));
+        namedCodepoints.insert("fa-search", QChar(0xf002));
+        namedCodepoints.insert("fa-envelope-o", QChar(0xf003));
+        namedCodepoints.insert("fa-heart", QChar(0xf004));
+        namedCodepoints.insert("fa-star", QChar(0xf005));
+        namedCodepoints.insert("fa-star-o", QChar(0xf006));
+        namedCodepoints.insert("fa-user", QChar(0xf007));
+        namedCodepoints.insert("fa-film", QChar(0xf008));
+        namedCodepoints.insert("fa-th-large", QChar(0xf009));
+        namedCodepoints.insert("fa-th", QChar(0xf00a));
+        namedCodepoints.insert("fa-th-list", QChar(0xf00b));
+        namedCodepoints.insert("fa-check", QChar(0xf00c));
+        namedCodepoints.insert("fa-times", QChar(0xf00d));
+        namedCodepoints.insert("fa-search-plus", QChar(0xf00e));
 
         // 0xf010
-        namedCodepoints.insert("icon-zoom-out", QChar(0xf010));
-        namedCodepoints.insert("icon-off", QChar(0xf011));
-        namedCodepoints.insert("icon-signal", QChar(0xf012));
-        namedCodepoints.insert("icon-cog", QChar(0xf013));
-        namedCodepoints.insert("icon-trash", QChar(0xf014));
-        namedCodepoints.insert("icon-home", QChar(0xf015));
-        namedCodepoints.insert("icon-file-alt", QChar(0xf016));
-        namedCodepoints.insert("icon-time", QChar(0xf017));
-        namedCodepoints.insert("icon-road", QChar(0xf018));
-        namedCodepoints.insert("icon-download-alt", QChar(0xf019));
-        namedCodepoints.insert("icon-download", QChar(0xf01a));
-        namedCodepoints.insert("icon-upload", QChar(0xf01b));
-        namedCodepoints.insert("icon-inbox", QChar(0xf01c));
-        namedCodepoints.insert("icon-play-circle", QChar(0xf01d));
-        namedCodepoints.insert("icon-repeat", QChar(0xf01e));
+        namedCodepoints.insert("fa-search-minus", QChar(0xf010));
+        namedCodepoints.insert("fa-power-off", QChar(0xf011));
+        namedCodepoints.insert("fa-signal", QChar(0xf012));
+        namedCodepoints.insert("fa-cog", QChar(0xf013));
+        namedCodepoints.insert("fa-gear", QChar(0xf013)); // alias
+        namedCodepoints.insert("fa-trash-o", QChar(0xf014));
+        namedCodepoints.insert("fa-home", QChar(0xf015));
+        namedCodepoints.insert("fa-file-o", QChar(0xf016));
+        namedCodepoints.insert("fa-clock-o", QChar(0xf017));
+        namedCodepoints.insert("fa-road", QChar(0xf018));
+        namedCodepoints.insert("fa-download", QChar(0xf019));
+        namedCodepoints.insert("fa-arrow-circle-o-down", QChar(0xf01a));
+        namedCodepoints.insert("fa-arrow-circle-o-up", QChar(0xf01b));
+        namedCodepoints.insert("fa-inbox", QChar(0xf01c));
+        namedCodepoints.insert("fa-play-circle-o", QChar(0xf01d));
+        namedCodepoints.insert("fa-repeat", QChar(0xf01e));
+        namedCodepoints.insert("fa-rotate-right", QChar(0xf01e)); // alias
 
-        // 0xf020
-        namedCodepoints.insert("icon-refresh", QChar(0xf021));
-        namedCodepoints.insert("icon-print", QChar(0xf02f));
+        // 0xf021
+        namedCodepoints.insert("fa-refresh", QChar(0xf021));
+        namedCodepoints.insert("fa-list-alt", QChar(0xf022));
+        namedCodepoints.insert("fa-lock", QChar(0xf023));
+        namedCodepoints.insert("fa-flag", QChar(0xf024));
+        namedCodepoints.insert("fa-headphones", QChar(0xf025));
+        namedCodepoints.insert("fa-volume-off", QChar(0xf026));
+        namedCodepoints.insert("fa-volume-down", QChar(0xf027));
+        namedCodepoints.insert("fa-volume-up", QChar(0xf028));
+        namedCodepoints.insert("fa-qrcode", QChar(0xf029));
+        namedCodepoints.insert("fa-barcode", QChar(0xf02a));
+        namedCodepoints.insert("fa-tag", QChar(0xf02b));
+        namedCodepoints.insert("fa-tags", QChar(0xf02c));
+        namedCodepoints.insert("fa-book", QChar(0xf02d));
+        namedCodepoints.insert("fa-bookmark", QChar(0xf02e));
+        namedCodepoints.insert("fa-print", QChar(0xf02f));
 
         // 0xf030
-        namedCodepoints.insert("icon-font", QChar(0xf031));
-        namedCodepoints.insert("icon-bold", QChar(0xf032));
-        namedCodepoints.insert("icon-italic", QChar(0xf033));
-        namedCodepoints.insert("icon-text-height", QChar(0xf034));
-        namedCodepoints.insert("icon-text-width", QChar(0xf035));
-        namedCodepoints.insert("icon-align-left", QChar(0xf036));
-        namedCodepoints.insert("icon-align-center", QChar(0xf037));
-        namedCodepoints.insert("icon-align-right", QChar(0xf038));
-        namedCodepoints.insert("icon-align-justify", QChar(0xf039));
-        namedCodepoints.insert("icon-list", QChar(0xf03a));
-        namedCodepoints.insert("icon-indent-left", QChar(0xf03b));
-        namedCodepoints.insert("icon-indent-right", QChar(0xf03c));
-        namedCodepoints.insert("icon-picture", QChar(0xf03e));
+        namedCodepoints.insert("fa-camera", QChar(0xf030));
+        namedCodepoints.insert("fa-font", QChar(0xf031));
+        namedCodepoints.insert("fa-bold", QChar(0xf032));
+        namedCodepoints.insert("fa-italic", QChar(0xf033));
+        namedCodepoints.insert("fa-text-height", QChar(0xf034));
+        namedCodepoints.insert("fa-text-width", QChar(0xf035));
+        namedCodepoints.insert("fa-align-left", QChar(0xf036));
+        namedCodepoints.insert("fa-align-center", QChar(0xf037));
+        namedCodepoints.insert("fa-align-right", QChar(0xf038));
+        namedCodepoints.insert("fa-align-justify", QChar(0xf039));
+        namedCodepoints.insert("fa-list", QChar(0xf03a));
+        namedCodepoints.insert("fa-outdent", QChar(0xf03b));
+        namedCodepoints.insert("fa-dedent", QChar(0xf03b)); // alias
+        namedCodepoints.insert("fa-indent", QChar(0xf03c));
+        namedCodepoints.insert("fa-video-camera", QChar(0xf03d));
+        namedCodepoints.insert("fa-picture-o", QChar(0xf03e));
 
         // 0xf040
-        namedCodepoints.insert("icon-pencil", QChar(0xf040));
-        namedCodepoints.insert("icon-edit", QChar(0xf044));
-        namedCodepoints.insert("icon-share", QChar(0xf045));
-        namedCodepoints.insert("icon-check", QChar(0xf046));
-        namedCodepoints.insert("icon-move", QChar(0xf047));
+        namedCodepoints.insert("fa-pencil", QChar(0xf040));
+        namedCodepoints.insert("fa-map-marker", QChar(0xf041));
+        namedCodepoints.insert("fa-adjust", QChar(0xf042));
+        namedCodepoints.insert("fa-tint", QChar(0xf043));
+        namedCodepoints.insert("fa-pencil-square-o", QChar(0xf044));
+        namedCodepoints.insert("fa-edit", QChar(0xf044)); // alias
+        namedCodepoints.insert("fa-share-square-o", QChar(0xf045));
+        namedCodepoints.insert("fa-check-square-o", QChar(0xf046));
+        namedCodepoints.insert("fa-arrows", QChar(0xf047));
+        namedCodepoints.insert("fa-step-backward", QChar(0xf048));
+        namedCodepoints.insert("fa-fast-backward", QChar(0xf049));
+        namedCodepoints.insert("fa-backward", QChar(0xf04a));
+        namedCodepoints.insert("fa-play", QChar(0xf04b));
+        namedCodepoints.insert("fa-pause", QChar(0xf04c));
+        namedCodepoints.insert("fa-stop", QChar(0xf04d));
+        namedCodepoints.insert("fa-forward", QChar(0xf04e));
 
         // 0xf050
-        namedCodepoints.insert("icon-remove-sign", QChar(0xf057));
-        namedCodepoints.insert("icon-ok-sign", QChar(0xf058));
-        namedCodepoints.insert("icon-question-sign", QChar(0xf059));
-        namedCodepoints.insert("icon-info-sign", QChar(0xf05a));
+        namedCodepoints.insert("fa-fast-forward", QChar(0xf050));
+        namedCodepoints.insert("fa-step-forward", QChar(0xf051));
+        namedCodepoints.insert("fa-eject", QChar(0xf052));
+        namedCodepoints.insert("fa-chevron-left", QChar(0xf053));
+        namedCodepoints.insert("fa-chevron-right", QChar(0xf054));
+        namedCodepoints.insert("fa-plus-circle", QChar(0xf055));
+        namedCodepoints.insert("fa-minus-circle", QChar(0xf056));
+        namedCodepoints.insert("fa-times-circle", QChar(0xf057));
+        namedCodepoints.insert("fa-check-circle", QChar(0xf058));
+        namedCodepoints.insert("fa-question-circle", QChar(0xf059));
+        namedCodepoints.insert("fa-info-circle", QChar(0xf05a));
+        namedCodepoints.insert("fa-crosshairs", QChar(0xf05b));
+        namedCodepoints.insert("fa-times-circle-o", QChar(0xf05c));
+        namedCodepoints.insert("fa-check-circle-o", QChar(0xf05d));
+        namedCodepoints.insert("fa-ban", QChar(0xf05e));
 
         // 0xf060
-        namedCodepoints.insert("icon-exclamation-sign", QChar(0xf06a));
+        namedCodepoints.insert("fa-arrow-left", QChar(0xf060));
+        namedCodepoints.insert("fa-arrow-right", QChar(0xf061));
+        namedCodepoints.insert("fa-arrow-up", QChar(0xf062));
+        namedCodepoints.insert("fa-arrow-down", QChar(0xf063));
+        namedCodepoints.insert("fa-share", QChar(0xf064));
+        namedCodepoints.insert("fa-mail-forward", QChar(0xf064)); // alias
+        namedCodepoints.insert("fa-expand", QChar(0xf065));
+        namedCodepoints.insert("fa-compress", QChar(0xf066));
+        namedCodepoints.insert("fa-plus", QChar(0xf067));
+        namedCodepoints.insert("fa-minus", QChar(0xf068));
+        namedCodepoints.insert("fa-asterisk", QChar(0xf069));
+        namedCodepoints.insert("fa-exclamation-circle", QChar(0xf06a));
+        namedCodepoints.insert("fa-gift", QChar(0xf06b));
+        namedCodepoints.insert("fa-leaf", QChar(0xf06c));
+        namedCodepoints.insert("fa-fire", QChar(0xf06d));
+        namedCodepoints.insert("fa-eye", QChar(0xf06e));
 
         // 0xf070
-        namedCodepoints.insert("icon-warning-sign", QChar(0xf071));
+        namedCodepoints.insert("fa-eye-slash", QChar(0xf070));
+        namedCodepoints.insert("fa-exclamation-triangle", QChar(0xf071));
+        namedCodepoints.insert("fa-warning", QChar(0xf071)); // alias
+        namedCodepoints.insert("fa-plane", QChar(0xf072));
+        namedCodepoints.insert("fa-calendar", QChar(0xf073));
+        namedCodepoints.insert("fa-random", QChar(0xf074));
+        namedCodepoints.insert("fa-comment", QChar(0xf075));
+        namedCodepoints.insert("fa-magnet", QChar(0xf076));
+        namedCodepoints.insert("fa-chevron-up", QChar(0xf077));
+        namedCodepoints.insert("fa-chevron-down", QChar(0xf078));
+        namedCodepoints.insert("fa-retweet", QChar(0xf079));
+        namedCodepoints.insert("fa-shopping-cart", QChar(0xf07a));
+        namedCodepoints.insert("fa-folder", QChar(0xf07b));
+        namedCodepoints.insert("fa-folder-open", QChar(0xf07c));
+        namedCodepoints.insert("fa-arrows-v", QChar(0xf07d));
+        namedCodepoints.insert("fa-arrows-h", QChar(0xf07e));
 
         // 0xf080
-        namedCodepoints.insert("icon-cogs", QChar(0xf085));
-        namedCodepoints.insert("icon-external-link", QChar(0xf08e));
+        namedCodepoints.insert("fa-bar-chart-o", QChar(0xf080));
+        namedCodepoints.insert("fa-twitter-square", QChar(0xf081));
+        namedCodepoints.insert("fa-facebook-square", QChar(0xf082));
+        namedCodepoints.insert("fa-camera-retro", QChar(0xf083));
+        namedCodepoints.insert("fa-key", QChar(0xf084));
+        namedCodepoints.insert("fa-cogs", QChar(0xf085));
+        namedCodepoints.insert("fa-gears", QChar(0xf085)); // alias
+        namedCodepoints.insert("fa-comments", QChar(0xf086));
+        namedCodepoints.insert("fa-thumbs-o-up", QChar(0xf087));
+        namedCodepoints.insert("fa-thumbs-o-down", QChar(0xf088));
+        namedCodepoints.insert("fa-star-half", QChar(0xf089));
+        namedCodepoints.insert("fa-heart-o", QChar(0xf08a));
+        namedCodepoints.insert("fa-sign-out", QChar(0xf08b));
+        namedCodepoints.insert("fa-linkedin-square", QChar(0xf08c));
+        namedCodepoints.insert("fa-thumb-tack", QChar(0xf08d));
+        namedCodepoints.insert("fa-external-link", QChar(0xf08e));
+
+        // 0xf090
+        namedCodepoints.insert("fa-sign-in", QChar(0xf090));
+        namedCodepoints.insert("fa-trophy", QChar(0xf091));
+        namedCodepoints.insert("fa-github-square", QChar(0xf092));
+        namedCodepoints.insert("fa-upload", QChar(0xf093));
+        namedCodepoints.insert("fa-lemon-o", QChar(0xf094));
+        namedCodepoints.insert("fa-phone", QChar(0xf095));
+        namedCodepoints.insert("fa-square-o", QChar(0xf096));
+        namedCodepoints.insert("fa-bookmark-o", QChar(0xf097));
+        namedCodepoints.insert("fa-phone-square", QChar(0xf098));
+        namedCodepoints.insert("fa-twitter", QChar(0xf099));
+        namedCodepoints.insert("fa-facebook", QChar(0xf09a));
+        namedCodepoints.insert("fa-github", QChar(0xf09b));
+        namedCodepoints.insert("fa-unlock", QChar(0xf09c));
+        namedCodepoints.insert("fa-credit-card", QChar(0xf09d));
+        namedCodepoints.insert("fa-rss", QChar(0xf09e));
 
         // 0xf0a0
-        namedCodepoints.insert("icon-globe", QChar(0xf0ac));
-        namedCodepoints.insert("icon-wrench", QChar(0xf0ad));
-        namedCodepoints.insert("icon-tasks", QChar(0xf0ae));
+        namedCodepoints.insert("fa-hdd-o", QChar(0xf0a0));
+        namedCodepoints.insert("fa-bullhorn", QChar(0xf0a1));
+        namedCodepoints.insert("fa-bell-o", QChar(0xf0a2));
+        namedCodepoints.insert("fa-certificate", QChar(0xf0a3));
+        namedCodepoints.insert("fa-hand-o-right", QChar(0xf0a4));
+        namedCodepoints.insert("fa-hand-o-left", QChar(0xf0a5));
+        namedCodepoints.insert("fa-hand-o-up", QChar(0xf0a6));
+        namedCodepoints.insert("fa-hand-o-down", QChar(0xf0a7));
+        namedCodepoints.insert("fa-arrow-circle-left", QChar(0xf0a8));
+        namedCodepoints.insert("fa-arrow-circle-right", QChar(0xf0a9));
+        namedCodepoints.insert("fa-arrow-circle-up", QChar(0xf0aa));
+        namedCodepoints.insert("fa-arrow-circle-down", QChar(0xf0ab));
+        namedCodepoints.insert("fa-globe", QChar(0xf0ac));
+        namedCodepoints.insert("fa-wrench", QChar(0xf0ad));
+        namedCodepoints.insert("fa-tasks", QChar(0xf0ae));
 
         // 0xf0b0
-        namedCodepoints.insert("icon-filter", QChar(0xf0b0));
-        namedCodepoints.insert("icon-briefcase", QChar(0xf0b1));
-        namedCodepoints.insert("icon-fullscreen", QChar(0xf0b2));
+        namedCodepoints.insert("fa-filter", QChar(0xf0b0));
+        namedCodepoints.insert("fa-briefcase", QChar(0xf0b1));
+        namedCodepoints.insert("fa-arrows-alt", QChar(0xf0b2));
 
         // 0xf0c0
-        namedCodepoints.insert("icon-group", QChar(0xf0c0));
-        namedCodepoints.insert("icon-link", QChar(0xf0c1));
-        namedCodepoints.insert("icon-cloud", QChar(0xf0c2));
-        namedCodepoints.insert("icon-cut", QChar(0xf0c4));
-        namedCodepoints.insert("icon-copy", QChar(0xf0c5));
-        namedCodepoints.insert("icon-paper-clip", QChar(0xf0c6));
-        namedCodepoints.insert("icon-save", QChar(0xf0c7));
-        namedCodepoints.insert("icon-sign-blank", QChar(0xf0c8));
-        namedCodepoints.insert("icon-reorder", QChar(0xf0c9));
-        namedCodepoints.insert("icon-list-ul", QChar(0xf0ca));
-        namedCodepoints.insert("icon-list-ol", QChar(0xf0cb));
-        namedCodepoints.insert("icon-strikethrough", QChar(0xf0cc));
-        namedCodepoints.insert("icon-underline", QChar(0xf0cd));
-        namedCodepoints.insert("icon-table", QChar(0xf0ce));
+        namedCodepoints.insert("fa-users", QChar(0xf0c0));
+        namedCodepoints.insert("fa-group", QChar(0xf0c0)); // alias
+        namedCodepoints.insert("fa-link", QChar(0xf0c1));
+        namedCodepoints.insert("fa-chain", QChar(0xf0c1)); // alias
+        namedCodepoints.insert("fa-cloud", QChar(0xf0c2));
+        namedCodepoints.insert("fa-flask", QChar(0xf0c3));
+        namedCodepoints.insert("fa-scissors", QChar(0xf0c4));
+        namedCodepoints.insert("fa-cut", QChar(0xf0c4)); // alias
+        namedCodepoints.insert("fa-files-o", QChar(0xf0c5));
+        namedCodepoints.insert("fa-copy", QChar(0xf0c5)); // alias
+        namedCodepoints.insert("fa-paperclip", QChar(0xf0c6));
+        namedCodepoints.insert("fa-floppy-o", QChar(0xf0c7));
+        namedCodepoints.insert("fa-save", QChar(0xf0c7)); // alias
+        namedCodepoints.insert("fa-square", QChar(0xf0c8));
+        namedCodepoints.insert("fa-bars", QChar(0xf0c9));
+        namedCodepoints.insert("fa-list-ul", QChar(0xf0ca));
+        namedCodepoints.insert("fa-list-ol", QChar(0xf0cb));
+        namedCodepoints.insert("fa-strikethrough", QChar(0xf0cc));
+        namedCodepoints.insert("fa-underline", QChar(0xf0cd));
+        namedCodepoints.insert("fa-table", QChar(0xf0ce));
+
+        // 0xf0d0
+        namedCodepoints.insert("fa-magic", QChar(0xf0d0));
+        namedCodepoints.insert("fa-truck", QChar(0xf0d1));
+        namedCodepoints.insert("fa-pinterest", QChar(0xf0d2));
+        namedCodepoints.insert("fa-pinterest-square", QChar(0xf0d3));
+        namedCodepoints.insert("fa-google-plus-square", QChar(0xf0d4));
+        namedCodepoints.insert("fa-google-plus", QChar(0xf0d5));
+        namedCodepoints.insert("fa-money", QChar(0xf0d6));
+        namedCodepoints.insert("fa-caret-down", QChar(0xf0d7));
+        namedCodepoints.insert("fa-caret-up", QChar(0xf0d8));
+        namedCodepoints.insert("fa-caret-left", QChar(0xf0d9));
+        namedCodepoints.insert("fa-caret-right", QChar(0xf0da));
+        namedCodepoints.insert("fa-columns", QChar(0xf0db));
+        namedCodepoints.insert("fa-sort", QChar(0xf0dc));
+        namedCodepoints.insert("fa-unsorted", QChar(0xf0dc)); // alias
+        namedCodepoints.insert("fa-sort-asc", QChar(0xf0dd));
+        namedCodepoints.insert("fa-sort-down", QChar(0xf0dd)); // alias
+        namedCodepoints.insert("fa-sort-desc", QChar(0xf0de));
+        namedCodepoints.insert("fa-sort-up", QChar(0xf0de)); // alias
 
         // 0xf0e0
-        namedCodepoints.insert("icon-envelope", QChar(0xf0e0));
-        namedCodepoints.insert("icon-undo", QChar(0xf0e2));
-        namedCodepoints.insert("icon-sitemap", QChar(0xf0e8));
-        namedCodepoints.insert("icon-paste", QChar(0xf0ea));
+        namedCodepoints.insert("fa-envelope", QChar(0xf0e0));
+        namedCodepoints.insert("fa-linkedin", QChar(0xf0e1));
+        namedCodepoints.insert("fa-undo", QChar(0xf0e2));
+        namedCodepoints.insert("fa-rotate-left", QChar(0xf0e2)); // alias
+        namedCodepoints.insert("fa-gavel", QChar(0xf0e3));
+        namedCodepoints.insert("fa-legal", QChar(0xf0e3)); // alias
+        namedCodepoints.insert("fa-tachometer", QChar(0xf0e4));
+        namedCodepoints.insert("fa-dashboard", QChar(0xf0e4)); // alias
+        namedCodepoints.insert("fa-comment-o", QChar(0xf0e5));
+        namedCodepoints.insert("fa-comments-o", QChar(0xf0e6));
+        namedCodepoints.insert("fa-bolt", QChar(0xf0e7));
+        namedCodepoints.insert("fa-flash", QChar(0xf0e7)); // alias
+        namedCodepoints.insert("fa-sitemap", QChar(0xf0e8));
+        namedCodepoints.insert("fa-umbrella", QChar(0xf0e9));
+        namedCodepoints.insert("fa-clipboard", QChar(0xf0ea));
+        namedCodepoints.insert("fa-paste", QChar(0xf0ea)); // alias
+        namedCodepoints.insert("fa-lightbulb-o", QChar(0xf0eb));
+        namedCodepoints.insert("fa-exchange", QChar(0xf0ec));
+        namedCodepoints.insert("fa-cloud-download", QChar(0xf0ed));
+        namedCodepoints.insert("fa-cloud-upload", QChar(0xf0ee));
 
         // 0xf0f0
-        namedCodepoints.insert("icon-file-text-alt", QChar(0xf0f6));
+        namedCodepoints.insert("fa-user-md", QChar(0xf0f0));
+        namedCodepoints.insert("fa-stethoscope", QChar(0xf0f1));
+        namedCodepoints.insert("fa-suitcase", QChar(0xf0f2));
+        namedCodepoints.insert("fa-bell", QChar(0xf0f3));
+        namedCodepoints.insert("fa-coffee", QChar(0xf0f4));
+        namedCodepoints.insert("fa-cutlery", QChar(0xf0f5));
+        namedCodepoints.insert("fa-file-text-o", QChar(0xf0f6));
+        namedCodepoints.insert("fa-building-o", QChar(0xf0f7));
+        namedCodepoints.insert("fa-hospital-o", QChar(0xf0f8));
+        namedCodepoints.insert("fa-ambulance", QChar(0xf0f9));
+        namedCodepoints.insert("fa-medkit", QChar(0xf0fa));
+        namedCodepoints.insert("fa-fighter-jet", QChar(0xf0fb));
+        namedCodepoints.insert("fa-beer", QChar(0xf0fc));
+        namedCodepoints.insert("fa-h-square", QChar(0xf0fd));
+        namedCodepoints.insert("fa-plus-square", QChar(0xf0fe));
 
         // 0xf100
-        namedCodepoints.insert("icon-quote-left", QChar(0xf10d));
-        namedCodepoints.insert("icon-quote-right", QChar(0xf10e));
+        namedCodepoints.insert("fa-angle-double-left", QChar(0xf100));
+        namedCodepoints.insert("fa-angle-double-right", QChar(0xf101));
+        namedCodepoints.insert("fa-angle-double-up", QChar(0xf102));
+        namedCodepoints.insert("fa-angle-double-down", QChar(0xf103));
+        namedCodepoints.insert("fa-angle-left", QChar(0xf104));
+        namedCodepoints.insert("fa-angle-right", QChar(0xf105));
+        namedCodepoints.insert("fa-angle-up", QChar(0xf106));
+        namedCodepoints.insert("fa-angle-down", QChar(0xf107));
+        namedCodepoints.insert("fa-desktop", QChar(0xf108));
+        namedCodepoints.insert("fa-laptop", QChar(0xf109));
+        namedCodepoints.insert("fa-tablet", QChar(0xf10a));
+        namedCodepoints.insert("fa-mobile", QChar(0xf10b));
+        namedCodepoints.insert("fa-mobile-phone", QChar(0xf10b)); // alias
+        namedCodepoints.insert("fa-circle-o", QChar(0xf10c));
+        namedCodepoints.insert("fa-quote-left", QChar(0xf10d));
+        namedCodepoints.insert("fa-quote-right", QChar(0xf10e));
 
         // 0xf110
-        namedCodepoints.insert("icon-keyboard", QChar(0xf11c));
+        namedCodepoints.insert("fa-spinner", QChar(0xf110));
+        namedCodepoints.insert("fa-circle", QChar(0xf111));
+        namedCodepoints.insert("fa-reply", QChar(0xf112));
+        namedCodepoints.insert("fa-mail-reply", QChar(0xf112)); // alias
+        namedCodepoints.insert("fa-github-alt", QChar(0xf113));
+        namedCodepoints.insert("fa-folder-o", QChar(0xf114));
+        namedCodepoints.insert("fa-folder-open-o", QChar(0xf115));
+        namedCodepoints.insert("fa-smile-o", QChar(0xf118));
+        namedCodepoints.insert("fa-frown-o", QChar(0xf119));
+        namedCodepoints.insert("fa-meh-o", QChar(0xf11a));
+        namedCodepoints.insert("fa-gamepad", QChar(0xf11b));
+        namedCodepoints.insert("fa-keyboard-o", QChar(0xf11c));
+        namedCodepoints.insert("fa-flag-o", QChar(0xf11d));
+        namedCodepoints.insert("fa-flag-checkered", QChar(0xf11e));
 
         // 0xf120
-        namedCodepoints.insert("icon-terminal", QChar(0xf120));
-        namedCodepoints.insert("icon-code", QChar(0xf121));
-        namedCodepoints.insert("icon-code-fork", QChar(0xf126));
-        namedCodepoints.insert("icon-unlink", QChar(0xf127));
-        namedCodepoints.insert("icon-question", QChar(0xf128));
-        namedCodepoints.insert("icon-info", QChar(0xf129));
-        namedCodepoints.insert("icon-exclamation", QChar(0xf12a));
-        namedCodepoints.insert("icon-superscript", QChar(0xf12b));
-        namedCodepoints.insert("icon-subscript", QChar(0xf12c));
-        namedCodepoints.insert("icon-eraser", QChar(0xf12d));
-        namedCodepoints.insert("icon-puzzle-piece", QChar(0xf12e));
+        namedCodepoints.insert("fa-terminal", QChar(0xf120));
+        namedCodepoints.insert("fa-code", QChar(0xf121));
+        namedCodepoints.insert("fa-reply-all", QChar(0xf122));
+        namedCodepoints.insert("fa-mail-reply-all", QChar(0xf122)); // duplicate
+        namedCodepoints.insert("fa-star-half-o", QChar(0xf123));
+        namedCodepoints.insert("fa-star-half-empty", QChar(0xf123)); // alias
+        namedCodepoints.insert("fa-star-half-full", QChar(0xf123)); // alias
+        namedCodepoints.insert("fa-location-arrow", QChar(0xf124));
+        namedCodepoints.insert("fa-crop", QChar(0xf125));
+        namedCodepoints.insert("fa-code-fork", QChar(0xf126));
+        namedCodepoints.insert("fa-chain-broken", QChar(0xf127));
+        namedCodepoints.insert("fa-unlink", QChar(0xf127)); // alias
+        namedCodepoints.insert("fa-question", QChar(0xf128));
+        namedCodepoints.insert("fa-info", QChar(0xf129));
+        namedCodepoints.insert("fa-exclamation", QChar(0xf12a));
+        namedCodepoints.insert("fa-superscript", QChar(0xf12b));
+        namedCodepoints.insert("fa-subscript", QChar(0xf12c));
+        namedCodepoints.insert("fa-eraser", QChar(0xf12d));
+        namedCodepoints.insert("fa-puzzle-piece", QChar(0xf12e));
 
         // 0xf130
-        namedCodepoints.insert("icon-html5", QChar(0xf13b));
-        namedCodepoints.insert("icon-anchor", QChar(0xf13d));
+        namedCodepoints.insert("fa-microphone", QChar(0xf130));
+        namedCodepoints.insert("fa-microphone-slash", QChar(0xf131));
+        namedCodepoints.insert("fa-shield", QChar(0xf132));
+        namedCodepoints.insert("fa-calendar-o", QChar(0xf133));
+        namedCodepoints.insert("fa-fire-extinguisher", QChar(0xf134));
+        namedCodepoints.insert("fa-rocket", QChar(0xf135));
+        namedCodepoints.insert("fa-maxcdn", QChar(0xf136));
+        namedCodepoints.insert("fa-chevron-circle-left", QChar(0xf137));
+        namedCodepoints.insert("fa-chevron-circle-right", QChar(0xf138));
+        namedCodepoints.insert("fa-chevron-circle-up", QChar(0xf139));
+        namedCodepoints.insert("fa-chevron-circle-down", QChar(0xf13a));
+        namedCodepoints.insert("fa-html5", QChar(0xf13b));
+        namedCodepoints.insert("fa-css3", QChar(0xf13c));
+        namedCodepoints.insert("fa-anchor", QChar(0xf13d));
+        namedCodepoints.insert("fa-unlock-alt", QChar(0xf13e));
 
         // 0xf140
-        namedCodepoints.insert("icon-level-up", QChar(0xf148));
-        namedCodepoints.insert("icon-level-down", QChar(0xf149));
+        namedCodepoints.insert("fa-bullseye", QChar(0xf140));
+        namedCodepoints.insert("fa-ellipsis-h", QChar(0xf141));
+        namedCodepoints.insert("fa-ellipsis-v", QChar(0xf142));
+        namedCodepoints.insert("fa-rss-square", QChar(0xf143));
+        namedCodepoints.insert("fa-play-circle", QChar(0xf144));
+        namedCodepoints.insert("fa-ticket", QChar(0xf145));
+        namedCodepoints.insert("fa-minus-square", QChar(0xf146));
+        namedCodepoints.insert("fa-minus-square-o", QChar(0xf147));
+        namedCodepoints.insert("fa-level-up", QChar(0xf148));
+        namedCodepoints.insert("fa-level-down", QChar(0xf149));
+        namedCodepoints.insert("fa-check-square", QChar(0xf14a));
+        namedCodepoints.insert("fa-pencil-square", QChar(0xf14b));
+        namedCodepoints.insert("fa-external-link-square", QChar(0xf14c));
+        namedCodepoints.insert("fa-share-square", QChar(0xf14d));
+        namedCodepoints.insert("fa-compass", QChar(0xf14e));
 
         // 0xf150
-        namedCodepoints.insert("icon-file", QChar(0xf15b));
-        namedCodepoints.insert("icon-file-text", QChar(0xf15c));
-        namedCodepoints.insert("icon-sort-by-alphabet", QChar(0xf15d));
-        namedCodepoints.insert("icon-sort-by-alphabet-alt", QChar(0xf15e));
+        namedCodepoints.insert("fa-caret-square-o-down", QChar(0xf150));
+        namedCodepoints.insert("fa-toggle-down", QChar(0xf150)); // alias
+        namedCodepoints.insert("fa-caret-square-o-up", QChar(0xf151));
+        namedCodepoints.insert("fa-toggle-up", QChar(0xf151)); // alias
+        namedCodepoints.insert("fa-caret-square-o-right", QChar(0xf152));
+        namedCodepoints.insert("fa-toggle-right", QChar(0xf152)); // alias
+        namedCodepoints.insert("fa-eur", QChar(0xf153));
+        namedCodepoints.insert("fa-euro", QChar(0xf153)); // alias
+        namedCodepoints.insert("fa-gbp", QChar(0xf154));
+        namedCodepoints.insert("fa-usd", QChar(0xf155));
+        namedCodepoints.insert("fa-dollar", QChar(0xf155)); // alias
+        namedCodepoints.insert("fa-inr", QChar(0xf156));
+        namedCodepoints.insert("fa-rupee", QChar(0xf156)); // alias
+        namedCodepoints.insert("fa-jpy", QChar(0xf157));
+        namedCodepoints.insert("fa-cny", QChar(0xf157)); // alias
+        namedCodepoints.insert("fa-rmb", QChar(0xf157)); // alias
+        namedCodepoints.insert("fa-yen", QChar(0xf157)); // alias
+        namedCodepoints.insert("fa-rub", QChar(0xf158));
+        namedCodepoints.insert("fa-ruble", QChar(0xf158)); // alias
+        namedCodepoints.insert("fa-rouble", QChar(0xf158)); // alias
+        namedCodepoints.insert("fa-krw", QChar(0xf159));
+        namedCodepoints.insert("fa-won", QChar(0xf159)); // alias
+        namedCodepoints.insert("fa-btc", QChar(0xf15a));
+        namedCodepoints.insert("fa-bitcoin", QChar(0xf15a)); // alias
+        namedCodepoints.insert("fa-file", QChar(0xf15b));
+        namedCodepoints.insert("fa-file-text", QChar(0xf15c));
+        namedCodepoints.insert("fa-sort-alpha-asc", QChar(0xf15d));
+        namedCodepoints.insert("fa-sort-alpha-desc", QChar(0xf15e));
 
-        // 0xf188
-        namedCodepoints.insert("icon-bug", QChar(0xf188));
+        // 0xf160
+        namedCodepoints.insert("fa-sort-amount-asc", QChar(0xf160));
+        namedCodepoints.insert("fa-sort-amount-desc", QChar(0xf161));
+        namedCodepoints.insert("fa-sort-numeric-asc", QChar(0xf162));
+        namedCodepoints.insert("fa-sort-numeric-desc", QChar(0xf163));
+        namedCodepoints.insert("fa-thumbs-up", QChar(0xf164));
+        namedCodepoints.insert("fa-thumbs-down", QChar(0xf165));
+        namedCodepoints.insert("fa-youtube-square", QChar(0xf166));
+        namedCodepoints.insert("fa-youtube", QChar(0xf167));
+        namedCodepoints.insert("fa-xing", QChar(0xf168));
+        namedCodepoints.insert("fa-xing-square", QChar(0xf169));
+        namedCodepoints.insert("fa-youtube-play", QChar(0xf16a));
+        namedCodepoints.insert("fa-dropbox", QChar(0xf16b));
+        namedCodepoints.insert("fa-stack-overflow", QChar(0xf16c));
+        namedCodepoints.insert("fa-instagram", QChar(0xf16d));
+        namedCodepoints.insert("fa-flickr", QChar(0xf16e));
+
+        // 0xf170
+        namedCodepoints.insert("fa-adn", QChar(0xf170));
+        namedCodepoints.insert("fa-bitbucket", QChar(0xf171));
+        namedCodepoints.insert("fa-bitbucket-square", QChar(0xf172));
+        namedCodepoints.insert("fa-tumblr", QChar(0xf173));
+        namedCodepoints.insert("fa-tumblr-square", QChar(0xf174));
+        namedCodepoints.insert("fa-long-arrow-down", QChar(0xf175));
+        namedCodepoints.insert("fa-long-arrow-up", QChar(0xf176));
+        namedCodepoints.insert("fa-long-arrow-left", QChar(0xf177));
+        namedCodepoints.insert("fa-long-arrow-right", QChar(0xf178));
+        namedCodepoints.insert("fa-apple", QChar(0xf179));
+        namedCodepoints.insert("fa-windows", QChar(0xf17a));
+        namedCodepoints.insert("fa-android", QChar(0xf17b));
+        namedCodepoints.insert("fa-linux", QChar(0xf17c));
+        namedCodepoints.insert("fa-dribbble", QChar(0xf17d));
+        namedCodepoints.insert("fa-skype", QChar(0xf17e));
+
+        // 0xf180
+        namedCodepoints.insert("fa-foursquare", QChar(0xf180));
+        namedCodepoints.insert("fa-trello", QChar(0xf181));
+        namedCodepoints.insert("fa-female", QChar(0xf182));
+        namedCodepoints.insert("fa-male", QChar(0xf183));
+        namedCodepoints.insert("fa-gittip", QChar(0xf184));
+        namedCodepoints.insert("fa-sun-o", QChar(0xf185));
+        namedCodepoints.insert("fa-moon-o", QChar(0xf186));
+        namedCodepoints.insert("fa-archive", QChar(0xf187));
+        namedCodepoints.insert("fa-bug", QChar(0xf188));
+        namedCodepoints.insert("fa-vk", QChar(0xf189));
+        namedCodepoints.insert("fa-weibo", QChar(0xf18a));
+        namedCodepoints.insert("fa-renren", QChar(0xf18b));
+        namedCodepoints.insert("fa-pagelines", QChar(0xf18c));
+        namedCodepoints.insert("fa-stack-exchange", QChar(0xf18d));
+        namedCodepoints.insert("fa-arrow-circle-o-right", QChar(0xf18e));
+
+        // 0xf190
+        namedCodepoints.insert("fa-arrow-circle-o-left", QChar(0xf190));
+        namedCodepoints.insert("fa-caret-square-o-left", QChar(0xf191));
+        namedCodepoints.insert("fa-toggle-left", QChar(0xf191)); // alias
+        namedCodepoints.insert("fa-dot-circle-o", QChar(0xf192));
+        namedCodepoints.insert("fa-wheelchair", QChar(0xf193));
+        namedCodepoints.insert("fa-vimeo-square", QChar(0xf194));
+        namedCodepoints.insert("fa-try", QChar(0xf195));
+        namedCodepoints.insert("fa-turkish-lira", QChar(0xf195)); // alias
+        namedCodepoints.insert("fa-plus-square-o", QChar(0xf196));
     }
 }

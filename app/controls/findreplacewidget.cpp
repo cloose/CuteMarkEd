@@ -133,7 +133,7 @@ void FindReplaceWidget::setupFindOptionsMenu()
     connect(action, SIGNAL(toggled(bool)), SLOT(useRegularExpressionsToggled(bool)));
 
     ui->findOptionToolButton->setMenu(findOptionsMenu);
-    ui->findOptionToolButton->setIcon(QIcon("icon-search.fontawesome"));
+    ui->findOptionToolButton->setIcon(QIcon("fa-search.fontawesome"));
 }
 
 bool FindReplaceWidget::find(const QString &searchString, QTextDocument::FindFlags findOptions) const
