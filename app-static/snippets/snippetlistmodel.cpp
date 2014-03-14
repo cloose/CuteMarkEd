@@ -42,7 +42,7 @@ QVariant SnippetListModel::data(const QModelIndex &index, int role) const
 
     switch (role) {
     case Qt::DecorationRole:
-        return QIcon("icon-puzzle-piece.fontawesome");
+        return QIcon("fa-puzzle-piece.fontawesome");
 
     case Qt::DisplayRole:
         return QString("%1 %2").arg(snippet.trigger, -15).arg(snippet.description);
