@@ -58,8 +58,9 @@ protected:
 private:
     void generateHtmlFromMarkdown();
     void generateTableOfContents();
-    QString renderTemplate(const QString &header, const QString &body);
+    QString renderTemplate(const QString &header, const QString &body, const QString &plugins);
     QString buildHtmlHeader() const;
+    QString buildRevealPlugins() const;
     MarkdownConverter::ConverterOptions converterOptions() const;
     int calculateDelay(const QString &text);
 

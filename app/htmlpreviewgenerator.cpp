@@ -79,7 +79,7 @@ QString HtmlPreviewGenerator::exportHtml(const QString &styleSheet, const QStrin
         header += "\n<script>hljs.initHighlightingOnLoad();</script>";
     }
 
-    return renderTemplate(header, converter->renderAsHtml(document));
+    return renderTemplate(header, converter->renderAsHtml(document), QString());
 }
 
 void HtmlPreviewGenerator::setMathSupportEnabled(bool enabled)
@@ -171,7 +171,7 @@ void HtmlPreviewGenerator::generateHtmlFromMarkdown()
 {
     if (!document) return;
 
-    QString html = renderTemplate(buildHtmlHeader(), converter->renderAsHtml(document));
+    QString html = renderTemplate(buildHtmlHeader(), converter->renderAsHtml(document), buildRevealPlugins());
     emit htmlResultReady(html);
 }
 
@@ -184,7 +184,7 @@ void HtmlPreviewGenerator::generateTableOfContents()
     emit tocResultReady(styledToc);
 }
 
-QString HtmlPreviewGenerator::renderTemplate(const QString &header, const QString &body)
+QString HtmlPreviewGenerator::renderTemplate(const QString &header, const QString &body, const QString &plugins)
 {
     if (htmlTemplate.isEmpty()) {
         return body;
@@ -192,7 +192,8 @@ QString HtmlPreviewGenerator::renderTemplate(const QString &header, const QStrin
 
     return QString(htmlTemplate)
             .replace(QLatin1String("<!--__HTML_HEADER__-->"), header)
-            .replace(QLatin1String("<!--__HTML_CONTENT__-->"), body);
+            .replace(QLatin1String("<!--__HTML_CONTENT__-->"), body)
+            .replace(QLatin1String("<!--__REVEAL_PLUGINS__-->"), plugins);
 }
 
 QString HtmlPreviewGenerator::buildHtmlHeader() const
@@ -204,17 +205,40 @@ QString HtmlPreviewGenerator::buildHtmlHeader() const
 
     // add MathJax.js script to HTML header
     if (options->isMathSupportEnabled()) {
-        header += "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>\n";
+        if (options->markdownConverter() != Options::RevealMarkdownConverter) {
+            header += "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>\n";
+        }
     }
 
     // add Highlight.js script to HTML header
     if (options->isCodeHighlightingEnabled()) {
-        header += QString("<link rel=\"stylesheet\" href=\"qrc:/scripts/highlight.js/styles/%1.css\">\n").arg(codeHighlightingStyle);
-        header += "<script src=\"qrc:/scripts/highlight.js/highlight.pack.js\"></script>\n";
-        header += "<script>hljs.initHighlightingOnLoad();</script>\n";
+        if (options->markdownConverter() != Options::RevealMarkdownConverter) {
+            header += QString("<link rel=\"stylesheet\" href=\"qrc:/scripts/highlight.js/styles/%1.css\">\n").arg(codeHighlightingStyle);
+            header += "<script src=\"qrc:/scripts/highlight.js/highlight.pack.js\"></script>\n";
+            header += "<script>hljs.initHighlightingOnLoad();</script>\n";
+        }
     }
 
     return header;
+}
+
+QString HtmlPreviewGenerator::buildRevealPlugins() const
+{
+    if (options->markdownConverter() != Options::RevealMarkdownConverter) return QString();
+
+    QString plugins;
+
+    // add MathJax.js script as reveal plugin
+    if (options->isMathSupportEnabled()) {
+        plugins += "{ src: 'https://cdn.jsdelivr.net/reveal.js/2.5.0/plugin/math/math.js', async: true },\n";
+    }
+
+    // add Highlight.js script as reveal plugin
+    if (options->isCodeHighlightingEnabled()) {
+        plugins += "{ src: 'https://cdn.jsdelivr.net/reveal.js/2.5.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },\n";
+    }
+
+    return plugins;
 }
 
 MarkdownConverter::ConverterOptions HtmlPreviewGenerator::converterOptions() const
