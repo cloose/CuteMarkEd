@@ -3,6 +3,7 @@
 #include <QStringList>
 
 #include "markdowndocument.h"
+#include "template/presentationtemplate.h"
 
 class RevealMarkdownDocument : public MarkdownDocument
 {
@@ -40,6 +41,12 @@ QString RevealMarkdownConverter::renderAsTableOfContents(MarkdownDocument *docum
     Q_UNUSED(document)
 
     return QString();
+}
+
+Template *RevealMarkdownConverter::templateRenderer() const
+{
+    static PresentationTemplate presentationTemplate;
+    return &presentationTemplate;
 }
 
 MarkdownConverter::ConverterOptions RevealMarkdownConverter::supportedOptions() const

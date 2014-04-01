@@ -27,6 +27,8 @@
 #include <converter/hoedownmarkdownconverter.h>
 #endif
 
+#include <template/template.h>
+
 #include "options.h"
 
 HtmlPreviewGenerator::HtmlPreviewGenerator(Options *opt, QObject *parent) :
@@ -184,16 +186,9 @@ void HtmlPreviewGenerator::generateTableOfContents()
     emit tocResultReady(styledToc);
 }
 
-QString HtmlPreviewGenerator::renderTemplate(const QString &header, const QString &body, const QString &plugins)
+QString HtmlPreviewGenerator::renderTemplate(const QString &, const QString &body, const QString &)
 {
-    if (htmlTemplate.isEmpty()) {
-        return body;
-    }
-
-    return QString(htmlTemplate)
-            .replace(QLatin1String("<!--__HTML_HEADER__-->"), header)
-            .replace(QLatin1String("<!--__HTML_CONTENT__-->"), body)
-            .replace(QLatin1String("<!--__REVEAL_PLUGINS__-->"), plugins);
+    return converter->templateRenderer()->render(body);
 }
 
 QString HtmlPreviewGenerator::buildHtmlHeader() const

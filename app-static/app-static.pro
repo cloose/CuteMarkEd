@@ -17,7 +17,9 @@ SOURCES += \
     snippets/snippetlistmodel.cpp \
     converter/discountmarkdownconverter.cpp \
     spellchecker/dictionary.cpp \
-    converter/revealmarkdownconverter.cpp
+    converter/revealmarkdownconverter.cpp \
+    template/htmltemplate.cpp \
+    template/presentationtemplate.cpp
 
 HEADERS += \
     snippets/snippet.h \
@@ -29,7 +31,10 @@ HEADERS += \
     converter/markdowndocument.h \
     converter/discountmarkdownconverter.h \
     spellchecker/dictionary.h \
-    converter/revealmarkdownconverter.h
+    converter/revealmarkdownconverter.h \
+    template/template.h \
+    template/htmltemplate.h \
+    template/presentationtemplate.h
 
 #unix:!symbian {
 #    maemo5 {
