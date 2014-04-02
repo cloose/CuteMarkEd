@@ -26,13 +26,56 @@ HtmlTemplate::HtmlTemplate()
     }
 }
 
-QString HtmlTemplate::render(const QString &body)
+QString HtmlTemplate::render(const QString &body, RenderOptions options) const
+{
+    // add scrollbar synchronization
+    options |= Template::ScrollbarSynchronization;
+
+    return renderAsHtml(QString(), body, options);
+}
+
+QString HtmlTemplate::exportAsHtml(const QString &header, const QString &body, RenderOptions options) const
+{
+    // clear code highlighting option since it depends on the resource file
+    options &= ~Template::CodeHighlighting;
+
+    return renderAsHtml(header, body, options);
+}
+
+QString HtmlTemplate::renderAsHtml(const QString &header, const QString &body, Template::RenderOptions options) const
 {
     if (htmlTemplate.isEmpty()) {
         return body;
     }
 
+    QString htmlHeader = buildHtmlHeader(options);
+    htmlHeader += header;
+
     return QString(htmlTemplate)
-            .replace(QLatin1String("<!--__HTML_HEADER__-->"), QString())
+            .replace(QLatin1String("<!--__HTML_HEADER__-->"), htmlHeader)
             .replace(QLatin1String("<!--__HTML_CONTENT__-->"), body);
+}
+
+QString HtmlTemplate::buildHtmlHeader(RenderOptions options) const
+{
+    QString header;
+
+    // add javascript for scrollbar synchronization
+    if (options.testFlag(Template::ScrollbarSynchronization)) {
+        header += "<script type=\"text/javascript\">window.onscroll = function() { mainwin.webViewScrolled(); }; </script>\n";
+    }
+
+    // add MathJax.js script to HTML header
+    if (options.testFlag(Template::MathSupport)) {
+        header += "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>\n";
+    }
+
+    // add Highlight.js script to HTML header
+    if (options.testFlag(Template::CodeHighlighting)) {
+        header += QString("<link rel=\"stylesheet\" href=\"qrc:/scripts/highlight.js/styles/%1.css\">\n").arg(codeHighlightingStyle());
+        header += "<script src=\"qrc:/scripts/highlight.js/highlight.pack.js\"></script>\n";
+        header += "<script>hljs.initHighlightingOnLoad();</script>\n";
+    }
+
+    return header;
 }

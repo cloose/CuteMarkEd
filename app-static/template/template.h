@@ -22,9 +22,25 @@
 class Template
 {
 public:
+    enum RenderOption {
+        ScrollbarSynchronization = 0x00000001,
+        MathSupport              = 0x00000002,
+        CodeHighlighting         = 0x00000004
+    };
+    Q_DECLARE_FLAGS(RenderOptions, RenderOption)
+
     virtual ~Template() {}
 
-    virtual QString render(const QString &body) = 0;
+    QString codeHighlightingStyle() const { return highlightingStyle; }
+    void setCodeHighlightingStyle(const QString &style) { highlightingStyle = style; }
+
+    virtual QString render(const QString &body, RenderOptions options) const = 0;
+    virtual QString exportAsHtml(const QString &header, const QString &body, RenderOptions options) const = 0;
+
+private:
+    QString highlightingStyle;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Template::RenderOptions)
 
 #endif // TEMPLATE_H

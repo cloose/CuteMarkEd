@@ -855,14 +855,6 @@ void MainWindow::proxyConfigurationChanged()
 
 void MainWindow::markdownConverterChanged()
 {
-    // FIXME: Should be done smarter!
-    // load HTML template
-    QFile f(options->markdownConverter() == Options::RevealMarkdownConverter ? ":/template_presentation.html" : ":/template.html");
-    if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QString htmlTemplate = f.readAll();
-        generator->setHtmlTemplate(htmlTemplate);
-    }
-
     // regenerate HTML
     plainTextChanged();
 
@@ -1038,13 +1030,6 @@ void MainWindow::setupHtmlPreview()
     // restore scrollbar position after content size changed
     connect(ui->webView->page()->mainFrame(), SIGNAL(contentsSizeChanged(QSize)),
             this, SLOT(htmlContentSizeChanged()));
-
-    // load HTML template for live preview from resources
-    QFile f(":/template.html");
-    if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QString htmlTemplate = f.readAll();
-        generator->setHtmlTemplate(htmlTemplate);
-    }
 
     // start background HTML preview generator
     connect(generator, SIGNAL(htmlResultReady(QString)),

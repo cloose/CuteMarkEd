@@ -24,9 +24,13 @@ class HtmlTemplate : public Template
 public:
     HtmlTemplate();
 
-    virtual QString render(const QString &body);
+    virtual QString render(const QString &body, RenderOptions options) const;
+    virtual QString exportAsHtml(const QString &header, const QString &body, RenderOptions options) const;
 
 private:
+    QString renderAsHtml(const QString &header, const QString &body, RenderOptions options) const;
+    QString buildHtmlHeader(RenderOptions options) const;
+
     QString htmlTemplate;
 };
 

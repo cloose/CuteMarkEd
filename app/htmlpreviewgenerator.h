@@ -23,6 +23,7 @@
 #include <QtCore/qwaitcondition.h>
 
 #include <converter/markdownconverter.h>
+#include <template/template.h>
 
 class MarkdownDocument;
 class Options;
@@ -34,8 +35,6 @@ class HtmlPreviewGenerator : public QThread
 public:
     explicit HtmlPreviewGenerator(Options *opt, QObject *parent = 0);
     
-    void setHtmlTemplate(const QString &t);
-
     bool isSupported(MarkdownConverter::ConverterOption option) const;
 
 public slots:
@@ -58,10 +57,8 @@ protected:
 private:
     void generateHtmlFromMarkdown();
     void generateTableOfContents();
-    QString renderTemplate(const QString &header, const QString &body, const QString &plugins);
-    QString buildHtmlHeader() const;
-    QString buildRevealPlugins() const;
     MarkdownConverter::ConverterOptions converterOptions() const;
+    Template::RenderOptions renderOptions() const;
     int calculateDelay(const QString &text);
 
 private:
@@ -71,8 +68,6 @@ private:
     QQueue<QString> tasks;
     QMutex tasksMutex;
     QWaitCondition bufferNotEmpty;
-    QString htmlTemplate;
-    QString codeHighlightingStyle;
 };
 
 #endif // HTMLPREVIEWGENERATOR_H

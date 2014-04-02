@@ -26,7 +26,7 @@ PresentationTemplate::PresentationTemplate()
     }
 }
 
-QString PresentationTemplate::render(const QString &body)
+QString PresentationTemplate::render(const QString &body, RenderOptions options) const
 {
     if (presentationTemplate.isEmpty()) {
         return body;
@@ -35,5 +35,27 @@ QString PresentationTemplate::render(const QString &body)
     return QString(presentationTemplate)
             .replace(QLatin1String("<!--__HTML_HEADER__-->"), QString())
             .replace(QLatin1String("<!--__HTML_CONTENT__-->"), body)
-            .replace(QLatin1String("<!--__REVEAL_PLUGINS__-->"), QString());
+            .replace(QLatin1String("<!--__REVEAL_PLUGINS__-->"), buildRevealPlugins(options));
+}
+
+QString PresentationTemplate::exportAsHtml(const QString &, const QString &body, RenderOptions options) const
+{
+    return render(body, options);
+}
+
+QString PresentationTemplate::buildRevealPlugins(RenderOptions options) const
+{
+    QString plugins;
+
+    // add MathJax.js script as reveal plugin
+    if (options.testFlag(Template::MathSupport)) {
+        plugins += "{ src: 'https://cdn.jsdelivr.net/reveal.js/2.5.0/plugin/math/math.js', async: true },\n";
+    }
+
+    // add Highlight.js script as reveal plugin
+    if (options.testFlag(Template::CodeHighlighting)) {
+        plugins += "{ src: 'https://cdn.jsdelivr.net/reveal.js/2.5.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },\n";
+    }
+
+    return plugins;
 }

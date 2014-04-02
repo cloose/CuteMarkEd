@@ -24,9 +24,12 @@ class PresentationTemplate : public Template
 public:
     PresentationTemplate();
 
-    virtual QString render(const QString &body);
+    virtual QString render(const QString &body, RenderOptions options) const;
+    virtual QString exportAsHtml(const QString &header, const QString &body, RenderOptions options) const;
 
 private:
+    QString buildRevealPlugins(RenderOptions options) const;
+
     QString presentationTemplate;
 };
 

@@ -41,11 +41,6 @@ HtmlPreviewGenerator::HtmlPreviewGenerator(Options *opt, QObject *parent) :
     markdownConverterChanged();
 }
 
-void HtmlPreviewGenerator::setHtmlTemplate(const QString &t)
-{
-    htmlTemplate = t;
-}
-
 bool HtmlPreviewGenerator::isSupported(MarkdownConverter::ConverterOption option) const
 {
     return converter->supportedOptions().testFlag(option);
@@ -71,7 +66,7 @@ QString HtmlPreviewGenerator::exportHtml(const QString &styleSheet, const QStrin
     if (!highlightingScript.isEmpty()) {
         // FIXME: doesn't really belong here
         QString highlightStyle;
-        QFile f(QString(":/scripts/highlight.js/styles/%1.css").arg(codeHighlightingStyle));
+        QFile f(QString(":/scripts/highlight.js/styles/%1.css").arg(converter->templateRenderer()->codeHighlightingStyle()));
         if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
             highlightStyle = f.readAll();
         }
@@ -81,7 +76,7 @@ QString HtmlPreviewGenerator::exportHtml(const QString &styleSheet, const QStrin
         header += "\n<script>hljs.initHighlightingOnLoad();</script>";
     }
 
-    return renderTemplate(header, converter->renderAsHtml(document), QString());
+    return converter->templateRenderer()->exportAsHtml(header, converter->renderAsHtml(document), renderOptions());
 }
 
 void HtmlPreviewGenerator::setMathSupportEnabled(bool enabled)
@@ -102,7 +97,7 @@ void HtmlPreviewGenerator::setCodeHighlightingEnabled(bool enabled)
 
 void HtmlPreviewGenerator::setCodeHighlightingStyle(const QString &style)
 {
-    codeHighlightingStyle = style;
+    converter->templateRenderer()->setCodeHighlightingStyle(style);
 
     // regenerate a HTML document
     generateHtmlFromMarkdown();
@@ -110,20 +105,30 @@ void HtmlPreviewGenerator::setCodeHighlightingStyle(const QString &style)
 
 void HtmlPreviewGenerator::markdownConverterChanged()
 {
+    QString style;
+
+    if (converter) {
+        style = converter->templateRenderer()->codeHighlightingStyle();
+        delete converter;
+    }
+
     switch (options->markdownConverter()) {
 #ifdef ENABLE_HOEDOWN
     case Options::HoedownMarkdownConverter:
         converter = new HoedownMarkdownConverter();
+        converter->templateRenderer()->setCodeHighlightingStyle(style);
         break;
 #endif
 
     case Options::RevealMarkdownConverter:
         converter = new RevealMarkdownConverter();
+        converter->templateRenderer()->setCodeHighlightingStyle(style);
         break;
 
     case Options::DiscountMarkdownConverter:
     default:
         converter = new DiscountMarkdownConverter();
+        converter->templateRenderer()->setCodeHighlightingStyle(style);
         break;
     }
 }
@@ -173,7 +178,7 @@ void HtmlPreviewGenerator::generateHtmlFromMarkdown()
 {
     if (!document) return;
 
-    QString html = renderTemplate(buildHtmlHeader(), converter->renderAsHtml(document), buildRevealPlugins());
+    QString html = converter->templateRenderer()->render(converter->renderAsHtml(document), renderOptions());
     emit htmlResultReady(html);
 }
 
@@ -184,56 +189,6 @@ void HtmlPreviewGenerator::generateTableOfContents()
     QString toc = converter->renderAsTableOfContents(document);
     QString styledToc = QString("<html><head>\n<style type=\"text/css\">ul { list-style-type: none; padding: 0; margin-left: 1em; } a { text-decoration: none; }</style>\n</head><body>%1</body></html>").arg(toc);
     emit tocResultReady(styledToc);
-}
-
-QString HtmlPreviewGenerator::renderTemplate(const QString &, const QString &body, const QString &)
-{
-    return converter->templateRenderer()->render(body);
-}
-
-QString HtmlPreviewGenerator::buildHtmlHeader() const
-{
-    QString header;
-
-    // add javascript for scrollbar synchronization
-    header += "<script type=\"text/javascript\">window.onscroll = function() { mainwin.webViewScrolled(); }; </script>\n";
-
-    // add MathJax.js script to HTML header
-    if (options->isMathSupportEnabled()) {
-        if (options->markdownConverter() != Options::RevealMarkdownConverter) {
-            header += "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>\n";
-        }
-    }
-
-    // add Highlight.js script to HTML header
-    if (options->isCodeHighlightingEnabled()) {
-        if (options->markdownConverter() != Options::RevealMarkdownConverter) {
-            header += QString("<link rel=\"stylesheet\" href=\"qrc:/scripts/highlight.js/styles/%1.css\">\n").arg(codeHighlightingStyle);
-            header += "<script src=\"qrc:/scripts/highlight.js/highlight.pack.js\"></script>\n";
-            header += "<script>hljs.initHighlightingOnLoad();</script>\n";
-        }
-    }
-
-    return header;
-}
-
-QString HtmlPreviewGenerator::buildRevealPlugins() const
-{
-    if (options->markdownConverter() != Options::RevealMarkdownConverter) return QString();
-
-    QString plugins;
-
-    // add MathJax.js script as reveal plugin
-    if (options->isMathSupportEnabled()) {
-        plugins += "{ src: 'https://cdn.jsdelivr.net/reveal.js/2.5.0/plugin/math/math.js', async: true },\n";
-    }
-
-    // add Highlight.js script as reveal plugin
-    if (options->isCodeHighlightingEnabled()) {
-        plugins += "{ src: 'https://cdn.jsdelivr.net/reveal.js/2.5.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },\n";
-    }
-
-    return plugins;
 }
 
 MarkdownConverter::ConverterOptions HtmlPreviewGenerator::converterOptions() const
@@ -276,6 +231,23 @@ MarkdownConverter::ConverterOptions HtmlPreviewGenerator::converterOptions() con
     }
 
     return parserOptionFlags;
+}
+
+Template::RenderOptions HtmlPreviewGenerator::renderOptions() const
+{
+    Template::RenderOptions renderOptionFlags;
+
+    // math support
+    if (options->isMathSupportEnabled()) {
+        renderOptionFlags |= Template::MathSupport;
+    }
+
+    // code highlighting
+    if (options->isCodeHighlightingEnabled()) {
+        renderOptionFlags |= Template::CodeHighlighting;
+    }
+
+    return renderOptionFlags;
 }
 
 int HtmlPreviewGenerator::calculateDelay(const QString &text)
