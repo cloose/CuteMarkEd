@@ -19,6 +19,7 @@ TRANSLATIONS += \
     translations/cutemarked_cs.ts \
     translations/cutemarked_de.ts \
     translations/cutemarked_el.ts \
+    translations/cutemarked_es.ts \
     translations/cutemarked_fr.ts \
     translations/cutemarked_ja.ts \
     translations/cutemarked_zh_CN.ts

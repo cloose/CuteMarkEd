@@ -6,5 +6,6 @@
         <file>translations/cutemarked_zh_CN.qm</file>
         <file>translations/cutemarked_fr.qm</file>
         <file>translations/cutemarked_ja.qm</file>
+        <file>translations/cutemarked_es.qm</file>
     </qresource>
 </RCC>

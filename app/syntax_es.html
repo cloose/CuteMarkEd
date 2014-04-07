@@ -1,0 +1,233 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 10pt;
+}
+pre {
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  font-size: 10pt;
+}
+table, td, th {
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+}
+table {
+  width: 100%;
+}
+th {
+  text-align: left;
+  background: #eeeeee;
+  padding: 3px;
+}
+</style>
+<title>Guía de sintaxis de Markdown</title>
+</head>
+<body>
+
+  <h3>ENCABEZADOS</h3>
+
+  <table>
+<thead><tr>
+<th>Código Markdown</th>
+      <th>Resultado</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre># Encabezado uno
+
+ ## Encabezado dos
+
+ ### Encabezado tres
+
+ #### Encabezado cuatro
+
+ ##### Encabezado cinco
+
+ ###### Encabezado seis</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Encabezado uno</h1>
+      <h2>Encabezado dos</h2>
+      <h3>Encabezado tres</h3>
+      <h4>Encabezado cuatro</h4>
+      <h5>Encabezado cinco</h5>
+      <h6>Encabezado seis</h6>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Encabezado uno
+ ===========
+
+Encabezado dos
+ -----------</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Encabezado uno</h1>
+      <h2>Encabezado dos</h2>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>Párrafos</h3>
+
+  <table>
+<thead><tr>
+<th>Código Markdown</th>
+      <th>Resultado</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>Un párrafo es simplemente una o más líneas de texto consecutivas, separadas por una o más líneas en blanco
+
+Esto es otro párrafo</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Un párrafo es simplemente una o más líneas de texto consecutivas, separadas por una o más líneas en blanco</p>
+      <p>Esto es otro párrafo</p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Para crear un salto
+de línea, termina una línea de un
+párrafo con dos o más
+espacios.</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Para crear una línea<br>terminar una linea en<br>párrafo con dos o más<br>espacios.</p>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>LISTAS</h3>
+
+  <table>
+<thead><tr>
+<th>Código Markdown</th>
+      <th>Resultado</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre> * Item 1
+ * Item 2
+ * Item 3
+
+ + Item 1
+ + Item 2
+ + Item 3
+
+ - Item 1
+ - Item 2
+ - Item 3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+      </ul>
+<ul>
+<li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+      </ul>
+<ul>
+<li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>1. Item 1
+2. Item 2
+3. Item 3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ol>
+<li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+      </ol>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>* Item 1
+   1. Item 2
+      + Item 3
+   2. Item 4</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>Item 1<ol>
+<li>Item 2<ul>
+<li>Item 3</li>
+          </ul>
+</li>
+          <li>Item 4</li>
+        </ol>
+</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Término
+ : Definición</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <dl>
+<dt>Término<dt>
+        </dt>
+</dt>
+<dd>Definición</dd>
+      </dl>
+</td>
+    </tr>
+</tbody>
+</table>
+<h3>ENFASIS</h3>
+
+  <table>
+<thead><tr>
+<th>Código Markdown</th>
+      <th>Resultado</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>Estoy en *cursiva*
+
+Estoy en _cursiva_</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Estoy en <em>cursiva</em></p>
+
+      <p>Estoy en <em>cursiva</em></p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Estoy en **negrita**
+
+Estoy en __negrita__</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Estoy en <strong>negrita</strong></p>
+
+      <p>Estoy en <strong>negrita</strong></p>
+      </td>
+    </tr>
+</tbody>
+</table>
+</body>
+</html>
