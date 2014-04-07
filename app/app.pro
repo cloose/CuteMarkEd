@@ -23,6 +23,7 @@ TRANSLATIONS += \
     translations/cutemarked_fr.ts \
     translations/cutemarked_ja.ts \
     translations/cutemarked_pt_BR.ts \
+    translations/cutemarked_ru.ts \
     translations/cutemarked_zh_CN.ts
 
 RC_FILE = cutemarked.rc
