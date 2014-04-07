@@ -1,0 +1,236 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 10pt;
+}
+pre {
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  font-size: 10pt;
+}
+table, td, th {
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+}
+table {
+  width: 100%;
+}
+th {
+  text-align: left;
+  background: #eeeeee;
+  padding: 3px;
+}
+</style>
+<title>Referência de Síntaxe Markdown</title>
+</head>
+<body>
+
+  <h3>TÍTULOS</h3>
+
+  <table>
+<thead><tr>
+<th>Entrada Markdown</th>
+      <th>Saída</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre># Título Um
+
+## Título Dois
+
+### Título Três
+
+#### Título Quatro
+
+##### Título Cinco
+
+###### Título Seis</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Título Um</h1>
+      <h2>Título Dois</h2>
+      <h3>Título Três</h3>
+      <h4>Título Quatro</h4>
+      <h5>Título Cinco</h5>
+      <h6>Título Seis</h6>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Título Um
+===========
+
+Título Dois
+-----------</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Título Um</h1>
+      <h2>Título Dois</h2>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>PARÁGRAFOS</h3>
+
+  <table>
+<thead><tr>
+<th>Entrada Markdown</th>
+      <th>Saída</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>Um parágrafo pode ter uma linha
+ou mais linhas consecutivas
+separada por uma
+ou mais linhas em branco.
+
+Este é outro parágrafo.</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Um parágrafo pode ter uma linha ou mais linhas consecutivas separada por uma ou mais linhas em branco.</p>
+      <p>Este é outro parágrafo.</p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Para criar uma quebra
+de linha, termine uma linha
+dentro de um parágrado com dois ou mais
+espaços.</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Para criar uma quebra<br>de linha, termine uma linha<br>dentro de um parágrado com dois ou mais<br>espaços.</p>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>LISTAS</h3>
+
+  <table>
+<thead><tr>
+<th>Entrada Markdown</th>
+      <th>Saída</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>* Item 1
+* Item 2
+* Item 3
+
++ Item 1
++ Item 2
++ Item3
+
+- Item 1
+- Item 2
+- Item 3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+      </ul>
+<ul>
+<li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+      </ul>
+<ul>
+<li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>1. Item 1
+2. Item 3
+3. Item 3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ol>
+<li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+      </ol>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>* Item 1
+1. Item 2
++ Item 3
+2. Item 4</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>Item 1<ol>
+<li>Item 2<ul>
+<li>Item 3</li>
+          </ul>
+</li>
+          <li>Item 4</li>
+        </ol>
+</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Termo
+: Definição</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <dl>
+<dt>Termo<dt>
+        </dt>
+</dt>
+<dd>Definição</dd>
+      </dl>
+</td>
+    </tr>
+</tbody>
+</table>
+<h3>ÊNFASE</h3>
+
+  <table>
+<thead><tr>
+<th>Entrada Markdown</th>
+      <th>Saída</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>Eu estou *enfatizado*
+
+Eu estou _enfatizado_</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Eu estou <em>enfatizado</em></p>
+
+      <p>Eu estou <em>enfatizado</em></p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Eu estou em **negrito**
+
+Eu estou em __negrito__</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Eu estou em <strong>negrito</strong></p>
+
+      <p>Eu estou em <strong>negrito</strong></p>
+      </td>
+    </tr>
+</tbody>
+</table>
+</body>
+</html>
