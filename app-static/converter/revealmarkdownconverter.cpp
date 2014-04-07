@@ -51,11 +51,5 @@ Template *RevealMarkdownConverter::templateRenderer() const
 
 MarkdownConverter::ConverterOptions RevealMarkdownConverter::supportedOptions() const
 {
-    return MarkdownConverter::AutolinkOption |
-           MarkdownConverter::NoStrikethroughOption |
-           MarkdownConverter::NoAlphaListOption |
-           MarkdownConverter::NoDefinitionListOption |
-           MarkdownConverter::NoSmartypantsOption |
-           MarkdownConverter::ExtraFootnoteOption |
-           MarkdownConverter::NoSuperscriptOption;
+    return 0;
 }
