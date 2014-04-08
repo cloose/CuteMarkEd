@@ -20,7 +20,7 @@ before_script:
   - lrelease app/translations/cutemarked_ru.ts -qm app/translations/cutemarked_ru.qm
   - lrelease app/translations/cutemarked_zh_CN.ts -qm app/translations/cutemarked_zh_CN.qm
 script:
-  - cd 3rdparty/discount && ./configure.sh && make && sudo make install ; cd ../..
+  - cd 3rdparty/discount && ./configure.sh --with-id-anchor && make && sudo make install ; cd ../..
   - cd 3rdparty/hoedown && qmake QMAKE_CC=$CC hoedown.pro && make && sudo make install ; cd ../.. 
   - qmake QMAKE_CXX=$CXX CuteMarkEd.pro  
   - make
