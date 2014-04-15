@@ -28,6 +28,7 @@
 
 #include <QFontDatabase>
 #include <QPainter>
+#include <QPalette>
 #include <QPixmapCache>
 
 int FontAwesomeIconEngine::fontId = -1;
@@ -67,6 +68,11 @@ void FontAwesomeIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::M
     QFont font(fontName, pixelSize);
     painter->setFont(font);
 
+    if (mode == QIcon::Disabled) {
+        QPalette palette;
+        painter->setPen(palette.color(QPalette::Disabled, QPalette::WindowText));
+    }
+
     QString text = QString(namedCodepoints.value(iconName));
     painter->drawText(rect, Qt::AlignCenter, text);
 
@@ -75,7 +81,7 @@ void FontAwesomeIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::M
 
 QPixmap FontAwesomeIconEngine::pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state)
 {
-    QString key = QString("icons:%1:%2:%3").arg(iconName).arg(size.width()).arg(size.height());
+    QString key = QString("icons:%1:%2:%3:%4").arg(iconName).arg(size.width()).arg(size.height()).arg(mode);
 
     QPixmap pm(size);
     pm.fill(Qt::transparent);
