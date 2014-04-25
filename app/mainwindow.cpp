@@ -98,6 +98,16 @@ void MainWindow::webViewScrolled()
     ui->plainTextEdit->verticalScrollBar()->setValue(qRound(value * factor));
 }
 
+void MainWindow::webViewContextMenu(const QPoint &pos)
+{
+    QMenu *contextMenu = new QMenu(this);
+
+    contextMenu->insertAction(0, ui->webView->pageAction(QWebPage::Copy));
+
+    contextMenu->exec(ui->webView->mapToGlobal(pos));
+    delete contextMenu;
+}
+
 void MainWindow::closeEvent(QCloseEvent *e)
 {
     // check if file needs saving
@@ -121,9 +131,11 @@ void MainWindow::initializeApp()
     ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 
-    // don't show context menu for HTML preview
+    // show custom context menu for HTML preview
     // most actions don't work and can even lead to crashes (like reload)
-    ui->webView->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->webView->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->webView, SIGNAL(customContextMenuRequested(QPoint)),
+            this, SLOT(webViewContextMenu(QPoint)));
 
     // set default style
     styleDefault();
@@ -959,6 +971,8 @@ void MainWindow::setupActions()
 
     // help menu
     ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);
+
+    ui->webView->pageAction(QWebPage::Copy)->setIcon(QIcon("fa-copy.fontawesome"));
 }
 
 void MainWindow::setupStatusBar()

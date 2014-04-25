@@ -45,6 +45,7 @@ public:
 
 public slots:
     void webViewScrolled();
+    void webViewContextMenu(const QPoint &pos);
 
 protected:
     void closeEvent(QCloseEvent *e) Q_DECL_OVERRIDE;
