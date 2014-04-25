@@ -45,20 +45,33 @@ HEADERS += \
 #
 # Discount library
 #
-win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/release/ -ldiscount
-else:win32-g++:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/debug/ -ldiscount
-else:win32-msvc*:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/release/ -llibdiscount
-else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/debug/ -llibdiscount
-else:unix: LIBS += -L/usr/lib -lmarkdown
+win32 {
+    INCLUDEPATH += $$PWD/../3rdparty/discount
+    DEPENDPATH += $$PWD/../3rdparty/discount
+    CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/release/ -L$$OUT_PWD/../3rdparty/hoedown/release/
+    CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/debug/ -L$$OUT_PWD/../3rdparty/hoedown/debug/
+}
+unix {
+    INCLUDEPATH += /usr/include
+    LIBS += -L/usr/lib
+}
+INCLUDEPATH += $$PWD
+LIBS += -ldiscount
 
-win32:INCLUDEPATH += $$PWD/../3rdparty/discount
-unix:INCLUDEPATH += /usr/include
-win32:DEPENDPATH += $$PWD/../3rdparty/discount
+#win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/release/ -ldiscount
+#else:win32-g++:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/debug/ -ldiscount
+#else:win32-msvc*:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/release/ -llibdiscount
+#else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/debug/ -llibdiscount
+#else:unix: LIBS += -L/usr/lib -lmarkdown
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/release/libdiscount.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/debug/libdiscount.a
-else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/release/libdiscount.lib
-else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/debug/libdiscount.lib
+#win32:INCLUDEPATH += $$PWD/../3rdparty/discount
+#unix:INCLUDEPATH += /usr/include
+#win32:DEPENDPATH += $$PWD/../3rdparty/discount
+
+#win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/release/libdiscount.a
+#else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/debug/libdiscount.a
+#else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/release/libdiscount.lib
+#else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/debug/libdiscount.lib
 
 #
 # Hoedown library
@@ -70,14 +83,14 @@ with_hoedown {
     SOURCES += converter/hoedownmarkdownconverter.cpp
     HEADERS += converter/hoedownmarkdownconverter.h
 
-    win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/release/ -lhoedown
-    else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/debug/ -lhoedown
-    else:unix: LIBS += -L$$OUT_PWD/../3rdparty/hoedown/ -lhoedown
+#    win32:CONFIG(release, debug|release):  -lhoedown
+#    else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/debug/
+#    else:unix: LIBS += -L$$OUT_PWD/../3rdparty/hoedown/ -lhoedown
 
     INCLUDEPATH += $$PWD/../3rdparty/hoedown
     DEPENDPATH += $$PWD/../3rdparty/hoedown
 
-    win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/release/libhoedown.a
-    else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/debug/libhoedown.a
+#    win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/release/libhoedown.a
+#    else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/debug/libhoedown.a
     #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/libhoedown.a
 }
