@@ -6,12 +6,7 @@
 
 QT       -= core gui
 
-win32-msvc* {
-TARGET = libpmh
-} else {
 TARGET = pmh
-}
-
 TEMPLATE = lib
 CONFIG += staticlib
 

@@ -121,84 +121,49 @@ QMAKE_EXTRA_COMPILERS += lrelease
 ## DEPENDENCIES
 ###################################################################################################
 
-# Use internal static library: app-static
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../app-static/release/ -lapp-static
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../app-static/debug/ -lapp-static
-else:unix: LIBS += -L$$OUT_PWD/../app-static/ -lapp-static
+INCLUDEPATH += $$PWD
 
+
+#
+# Use internal static library: app-static
+#
 INCLUDEPATH += $$PWD/../app-static
 DEPENDPATH += $$PWD/../app-static
 
-win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../app-static/release/libapp-static.a
-else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../app-static/debug/libapp-static.a
-else:unix: PRE_TARGETDEPS += $$OUT_PWD/../app-static/libapp-static.a
+win32 {
+    CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../app-static/release/
+    CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../app-static/debug/
+}
+unix {
+    LIBS += -L$$OUT_PWD/../app-static/
+}
+LIBS += -lapp-static
 
-# discount
-win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/release/ -ldiscount
-else:win32-g++:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/debug/ -ldiscount
-else:win32-msvc*:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/release/ -llibdiscount
-else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/debug/ -llibdiscount
-else:unix: LIBS += -L/usr/lib -lmarkdown
-
-win32:INCLUDEPATH += $$PWD/../3rdparty/discount
-unix:INCLUDEPATH += /usr/include
-win32:DEPENDPATH += $$PWD/../3rdparty/discount
-
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/release/libdiscount.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/debug/libdiscount.a
-else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/release/libdiscount.lib
-else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/debug/libdiscount.lib
-#else:unix: PRE_TARGETDEPS += $$OUT_PWD/../discount/libdiscount.a
-
+#
 # peg-markdown-highlight
-win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/release/ -lpmh
-else:win32-g++:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/debug/ -lpmh
-else:win32-msvc*:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/release/ -llibpmh
-else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/debug/ -llibpmh
-else:unix: LIBS += -L$$OUT_PWD/../peg-markdown-highlight/ -lpmh
-
+#
 INCLUDEPATH += $$PWD/../peg-markdown-highlight
 DEPENDPATH += $$PWD/../peg-markdown-highlight
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/release/libpmh.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/debug/libpmh.a
-else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/release/libpmh.lib
-else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/debug/libpmh.lib
-else:unix: PRE_TARGETDEPS += $$OUT_PWD/../peg-markdown-highlight/libpmh.a
-
-# hunspell
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hunspell/lib/ -lhunspell
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hunspell/lib/ -lhunspell
-
+win32 {
+    CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/release/
+    CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/debug/
+}
 unix {
-  PKGCONFIG += hunspell
+    LIBS += -L$$OUT_PWD/../peg-markdown-highlight/
 }
+LIBS += -lpmh
 
-win32:INCLUDEPATH += $$PWD/../3rdparty/hunspell/src
-win32:DEPENDPATH += $$PWD/../3rdparty/hunspell/src
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.a
-else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.lib
-else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.lib
-#else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hunspell/libhunspell.a
+include(../3rdparty/discount.pri)
+include(../3rdparty/hunspell.pri)
 
-# hoedown
 with_hoedown {
-    message("app: Enable hoedown markdown converter support")
-    DEFINES += ENABLE_HOEDOWN
-
-    win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/release/ -lhoedown
-    else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/debug/ -lhoedown
-    else:unix: LIBS += -L$$OUT_PWD/../3rdparty/hoedown/ -lhoedown
-
-    INCLUDEPATH += $$PWD/../3rdparty/hoedown
-    DEPENDPATH += $$PWD/../3rdparty/hoedown
-
-    win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/release/libhoedown.a
-    else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/debug/libhoedown.a
-    #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hoedown/libhoedown.a
+    include(../3rdparty/hoedown.pri)
 }
+
+
+
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
 message("Using LIBS=$$LIBS")
