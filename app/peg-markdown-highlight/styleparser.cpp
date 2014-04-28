@@ -151,7 +151,11 @@ QVector<HighlightingStyle> StyleParser::highlightingStyles(QFont baseFont) const
 
         pmh_element_type type = attr->lang_element_type;
         QTextCharFormat format = getCharFormatFromStyleAttributes(attr, baseFont);
-        highlightingStyles.append((HighlightingStyle){type, format});
+
+        HighlightingStyle style;
+        style.format = format;
+        style.type = type;
+        highlightingStyles.append(style);
     }
 
     return highlightingStyles;
