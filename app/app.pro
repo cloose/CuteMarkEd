@@ -10,6 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = cutemarked
 TEMPLATE = app
+DESTDIR = $$PWD/../build
 
 unix {
   CONFIG += link_pkgconfig
@@ -121,39 +122,10 @@ QMAKE_EXTRA_COMPILERS += lrelease
 ## DEPENDENCIES
 ###################################################################################################
 
-INCLUDEPATH += $$PWD
+#INCLUDEPATH += $$PWD
 
-
-#
-# Use internal static library: app-static
-#
-INCLUDEPATH += $$PWD/../app-static
-DEPENDPATH += $$PWD/../app-static
-
-win32 {
-    CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../app-static/release/
-    CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../app-static/debug/
-}
-unix {
-    LIBS += -L$$OUT_PWD/../app-static/
-}
-LIBS += -lapp-static
-
-#
-# peg-markdown-highlight
-#
-INCLUDEPATH += $$PWD/../peg-markdown-highlight
-DEPENDPATH += $$PWD/../peg-markdown-highlight
-
-win32 {
-    CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/release/
-    CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/debug/
-}
-unix {
-    LIBS += -L$$OUT_PWD/../peg-markdown-highlight/
-}
-LIBS += -lpmh
-
+include(../app-static.pri)
+include(../peg-markdown-highlight.pri)
 
 include(../3rdparty/discount.pri)
 include(../3rdparty/hunspell.pri)

@@ -5,10 +5,11 @@
 #-------------------------------------------------
 
 QT       -= core gui
+CONFIG   += staticlib
 
 TARGET = pmh
 TEMPLATE = lib
-CONFIG += staticlib
+DESTDIR = $$PWD/../libs
 
 SOURCES += \
     pmh_parser.cpp \
