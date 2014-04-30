@@ -28,6 +28,10 @@ target.CONFIG += no_default_install
 
 INCLUDEPATH += $$PWD/../../app-static
 DEPENDPATH += $$PWD/../../app-static
+
+unix {
+    LIBS += -L/usr/lib
+}
 LIBS += -L$$PWD/../../libs
 
 include(../../app-static.pri)

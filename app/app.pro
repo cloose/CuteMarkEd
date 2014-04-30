@@ -122,6 +122,11 @@ QMAKE_EXTRA_COMPILERS += lrelease
 ## DEPENDENCIES
 ###################################################################################################
 
+unix {
+    LIBS += -L/usr/lib
+}
+LIBS += -L$$PWD/../libs
+
 #INCLUDEPATH += $$PWD
 
 include(../app-static.pri)

@@ -25,6 +25,9 @@ target.CONFIG += no_default_install
 # Use internal static library: app-static
 ##################################################
 
+unix {
+    LIBS += -L/usr/lib
+}
 LIBS += -L$$PWD/../../libs
 
 include(../../app-static.pri)
