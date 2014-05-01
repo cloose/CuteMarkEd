@@ -5,15 +5,11 @@
 #-------------------------------------------------
 
 QT       -= core gui
+CONFIG   += staticlib
 
-win32-msvc* {
-TARGET = libpmh
-} else {
 TARGET = pmh
-}
-
 TEMPLATE = lib
-CONFIG += staticlib
+DESTDIR = $$PWD/../libs
 
 SOURCES += \
     pmh_parser.cpp \

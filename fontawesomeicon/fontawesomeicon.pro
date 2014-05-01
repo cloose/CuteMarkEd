@@ -5,15 +5,12 @@
 #-------------------------------------------------
 
 QT       += core gui
+CONFIG   += plugin
 
 TARGET = fontawesomeicon
 TEMPLATE = lib
-CONFIG += plugin
+DLLDESTDIR = $$PWD/../build
 
-win32 {
-   debug:DESTDIR = $$OUT_PWD/../app/debug/iconengines
-   release:DESTDIR = $$OUT_PWD/../app/release/iconengines
-}
 
 SOURCES += fontawesomeiconengineplugin.cpp \
     fontawesomeiconengine.cpp
