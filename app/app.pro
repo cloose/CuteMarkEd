@@ -144,12 +144,6 @@ win32:INCLUDEPATH += $$PWD/../3rdparty/discount
 unix:INCLUDEPATH += /usr/include
 win32:DEPENDPATH += $$PWD/../3rdparty/discount
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/release/libdiscount.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/debug/libdiscount.a
-else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/release/libdiscount.lib
-else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/debug/libdiscount.lib
-#else:unix: PRE_TARGETDEPS += $$OUT_PWD/../discount/libdiscount.a
-
 # peg-markdown-highlight
 win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/release/ -lpmh
 else:win32-g++:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../peg-markdown-highlight/debug/ -lpmh
@@ -177,12 +171,6 @@ unix {
 win32:INCLUDEPATH += $$PWD/../3rdparty/hunspell/src
 win32:DEPENDPATH += $$PWD/../3rdparty/hunspell/src
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.a
-else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.lib
-else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hunspell/lib/libhunspell.lib
-#else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hunspell/libhunspell.a
-
 # hoedown
 with_hoedown {
     message("app: Enable hoedown markdown converter support")
@@ -194,10 +182,6 @@ with_hoedown {
 
     INCLUDEPATH += $$PWD/../3rdparty/hoedown
     DEPENDPATH += $$PWD/../3rdparty/hoedown
-
-    win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/release/libhoedown.a
-    else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/debug/libhoedown.a
-    #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../hoedown/libhoedown.a
 }
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
