@@ -38,7 +38,10 @@ class FontAwesomeIconEnginePlugin : public QIconEnginePlugin
 public:
     FontAwesomeIconEnginePlugin(QObject *parent = 0);
 
+#if QT_VERSION < 0x050000
     QStringList keys() const Q_DECL_OVERRIDE;
+#endif // QT_VERSION < 0x050000
+
     QIconEngine *create(const QString &filename = QString()) Q_DECL_OVERRIDE;
 };
 
