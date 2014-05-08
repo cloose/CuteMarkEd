@@ -10,6 +10,11 @@ before_script:
   - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_cs.ts -qm app/translations/cutemarked_cs.qm
   - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_de.ts -qm app/translations/cutemarked_de.qm
   - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_el.ts -qm app/translations/cutemarked_el.qm
+  - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_es.ts -qm app/translations/cutemarked_es.qm
+  - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_fr.ts -qm app/translations/cutemarked_fr.qm
+  - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_ja.ts -qm app/translations/cutemarked_ja.qm
+  - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_pt_BR.ts -qm app/translations/cutemarked_pt_BR.qm
+  - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_ru.ts -qm app/translations/cutemarked_ru.qm
   - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_zh_CN.ts -qm app/translations/cutemarked_zh_CN.qm
 script:
   - cd 3rdparty/discount && ./configure.sh && make && sudo make install ; cd ../..
