@@ -210,7 +210,7 @@ with_hoedown {
 #quazip
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/quazip-0.6/quazip/ -lquazip
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/quazip-0.6/quazip/ -lquazip
-else:unix: LIBS += -L$$OUT_PWD/../3rdparty/quazip-0.6/quazip -lquazip
+else:unix: LIBS += -L$$OUT_PWD/../3rdparty/quazip-0.6/quazip -L$$PWD/../3rdparty/quazip-0.6/quazip -lquazip
 
 INCLUDEPATH += $$PWD/../3rdparty/quazip-0.6/quazip
 DEPENDPATH += $$PWD/../3rdparty/quazip-0.6/quazip
