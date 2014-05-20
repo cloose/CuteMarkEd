@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef DISCOUNTMARKDOWNCONVERTERTEST_H
-#define DISCOUNTMARKDOWNCONVERTERTEST_H
+#ifndef REVEALMARKDOWNCONVERTERTEST_H
+#define REVEALMARKDOWNCONVERTERTEST_H
 
 #include <QObject>
 
-class DiscountMarkdownConverter;
+class RevealMarkdownConverter;
 
 
-class DiscountMarkdownConverterTest : public QObject
+class RevealMarkdownConverterTest : public QObject
 {
     Q_OBJECT
     
@@ -30,14 +30,13 @@ private slots:
     void initTestCase();
 
     void convertsEmptyStringToEmptyHtml();
-    void convertsMarkdownParagraphToHtml();
-    void convertsMarkdownHeaderToHtml();
+    void returnsAnyMarkdownTextUnchanged();
     void preservesGermanUmlautsInHtml();
 
     void cleanupTestCase();
 
 private:
-    DiscountMarkdownConverter *converter;
+    RevealMarkdownConverter *converter;
 };
 
-#endif // DISCOUNTMARKDOWNCONVERTERTEST_H
+#endif // REVEALMARKDOWNCONVERTERTEST_H

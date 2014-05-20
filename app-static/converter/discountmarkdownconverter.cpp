@@ -24,6 +24,7 @@ extern "C" {
 }
 
 #include "markdowndocument.h"
+#include "template/htmltemplate.h"
 
 class DiscountMarkdownDocument : public MarkdownDocument
 {
@@ -101,6 +102,12 @@ QString DiscountMarkdownConverter::renderAsTableOfContents(MarkdownDocument *doc
     }
 
     return toc;
+}
+
+Template *DiscountMarkdownConverter::templateRenderer() const
+{
+    static HtmlTemplate htmlTemplate;
+    return &htmlTemplate;
 }
 
 MarkdownConverter::ConverterOptions DiscountMarkdownConverter::supportedOptions() const

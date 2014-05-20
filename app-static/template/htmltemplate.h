@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,30 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef DISCOUNTMARKDOWNCONVERTERTEST_H
-#define DISCOUNTMARKDOWNCONVERTERTEST_H
+#ifndef HTMLTEMPLATE_H
+#define HTMLTEMPLATE_H
 
-#include <QObject>
+#include "template.h"
 
-class DiscountMarkdownConverter;
-
-
-class DiscountMarkdownConverterTest : public QObject
+class HtmlTemplate : public Template
 {
-    Q_OBJECT
-    
-private slots:
-    void initTestCase();
+public:
+    HtmlTemplate();
 
-    void convertsEmptyStringToEmptyHtml();
-    void convertsMarkdownParagraphToHtml();
-    void convertsMarkdownHeaderToHtml();
-    void preservesGermanUmlautsInHtml();
-
-    void cleanupTestCase();
+    virtual QString render(const QString &body, RenderOptions options) const;
+    virtual QString exportAsHtml(const QString &header, const QString &body, RenderOptions options) const;
 
 private:
-    DiscountMarkdownConverter *converter;
+    QString renderAsHtml(const QString &header, const QString &body, RenderOptions options) const;
+    QString buildHtmlHeader(RenderOptions options) const;
+
+    QString htmlTemplate;
 };
 
-#endif // DISCOUNTMARKDOWNCONVERTERTEST_H
+#endif // HTMLTEMPLATE_H
