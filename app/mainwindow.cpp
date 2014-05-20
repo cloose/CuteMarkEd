@@ -169,9 +169,9 @@ void MainWindow::initializeApp()
     QString cacheDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
     diskCache->setCacheDirectory(cacheDir);
 
-//    ui->webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
-//    QWebInspector *inspector = new QWebInspector();
-//    inspector->setPage(ui->webView->page());
+    ui->webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+    QWebInspector *inspector = new QWebInspector();
+    inspector->setPage(ui->webView->page());
 
     loadCustomStyles();
     ui->menuLanguages->loadDictionaries(options->dictionaryLanguage());
@@ -1030,13 +1030,6 @@ void MainWindow::setupHtmlPreview()
     // restore scrollbar position after content size changed
     connect(ui->webView->page()->mainFrame(), SIGNAL(contentsSizeChanged(QSize)),
             this, SLOT(htmlContentSizeChanged()));
-
-    // load HTML template for live preview from resources
-    QFile f(":/template.html");
-    if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QString htmlTemplate = f.readAll();
-        generator->setHtmlTemplate(htmlTemplate);
-    }
 
     // start background HTML preview generator
     connect(generator, SIGNAL(htmlResultReady(QString)),

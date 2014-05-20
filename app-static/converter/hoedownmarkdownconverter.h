@@ -28,6 +28,8 @@ public:
     virtual QString renderAsHtml(MarkdownDocument *document);
     virtual QString renderAsTableOfContents(MarkdownDocument *document);
 
+    virtual Template *templateRenderer() const;
+
     virtual ConverterOptions supportedOptions() const;
 
 private:

@@ -49,6 +49,11 @@
               <string extracomment="Name of a Markdown to HTML converter library">Hoedown</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Reveal.js (Presentation)</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>
