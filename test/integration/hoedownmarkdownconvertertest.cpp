@@ -55,6 +55,18 @@ void HoedownMarkdownConverterTest::preservesGermanUmlautsInHtml()
     QVERIFY2(html.contains(QStringLiteral("<p>äöüß</p>")), qPrintable(html));
 }
 
+void HoedownMarkdownConverterTest::supportsSuperscriptIfEnabled()
+{
+    MarkdownDocument *doc = converter->createDocument(QStringLiteral("a^2"), 0);
+    QCOMPARE(converter->renderAsHtml(doc), QStringLiteral("<p>a<sup>2</sup></p>\n"));
+}
+
+void HoedownMarkdownConverterTest::ignoresSuperscriptIfDisabled()
+{
+    MarkdownDocument *doc = converter->createDocument(QStringLiteral("a^2"), HoedownMarkdownConverter::NoSuperscriptOption);
+    QCOMPARE(converter->renderAsHtml(doc), QStringLiteral("<p>a^2</p>\n"));
+}
+
 void HoedownMarkdownConverterTest::cleanupTestCase()
 {
     delete converter;

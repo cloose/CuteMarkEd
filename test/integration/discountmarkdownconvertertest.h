@@ -34,6 +34,9 @@ private slots:
     void convertsMarkdownHeaderToHtml();
     void preservesGermanUmlautsInHtml();
 
+    void supportsSuperscriptIfEnabled();
+    void ignoresSuperscriptIfDisabled();
+
     void cleanupTestCase();
 
 private:
