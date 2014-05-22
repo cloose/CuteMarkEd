@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "imagetooldialog.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -47,8 +46,10 @@
 #include "controls/findreplacewidget.h"
 #include "controls/languagemenu.h"
 #include "controls/recentfilesmenu.h"
+#include "aboutdialog.h"
 #include "htmlpreviewgenerator.h"
 #include "htmlhighlighter.h"
+#include "imagetooldialog.h"
 #include "markdownmanipulator.h"
 #include "exporthtmldialog.h"
 #include "exportpdfdialog.h"
@@ -648,9 +649,8 @@ void MainWindow::helpMarkdownSyntax()
 
 void MainWindow::helpAbout()
 {
-    QMessageBox::about(this, tr("About CuteMarkEd"),
-                       tr("<p><b>CuteMarkEd %1</b><br>Qt-based, free and open source markdown editor with live HTML preview<br>Copyright 2013 Christian Loose</p><p><a href=\"http://cloose.github.io/CuteMarkEd\">http://cloose.github.io/CuteMarkEd</a></p>")
-                       .arg(qApp->applicationVersion()));
+    AboutDialog dialog;
+    dialog.exec();
 }
 
 void MainWindow::styleContextMenu(const QPoint &pos)
