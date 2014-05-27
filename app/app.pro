@@ -52,7 +52,8 @@ SOURCES += \
     controls/languagemenu.cpp \
     tabletooldialog.cpp \
     imagetooldialog.cpp \
-    snippetcompleter.cpp
+    snippetcompleter.cpp \
+    controls/fileexplorerwidget.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -76,7 +77,8 @@ HEADERS  += \
     controls/languagemenu.h \
     tabletooldialog.h \
     imagetooldialog.h \
-    snippetcompleter.h
+    snippetcompleter.h \
+    controls/fileexplorerwidget.h
 
 FORMS    += \
     mainwindow.ui \
@@ -85,7 +87,8 @@ FORMS    += \
     exporthtmldialog.ui \
     optionsdialog.ui \
     tabletooldialog.ui \
-    imagetooldialog.ui
+    imagetooldialog.ui \
+    controls/fileexplorerwidget.ui
 
 RESOURCES += \
     resources.qrc \
