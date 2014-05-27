@@ -167,7 +167,7 @@
      <x>0</x>
      <y>0</y>
      <width>850</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -377,6 +377,15 @@
      </item>
     </layout>
    </widget>
+  </widget>
+  <widget class="QDockWidget" name="fileExplorerDockWidget">
+   <property name="windowTitle">
+    <string>File Explorer</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="FileExplorerWidget" name="fileExplorerDockContents"/>
   </widget>
   <action name="actionExit">
    <property name="text">
@@ -812,6 +821,12 @@
    <class>LanguageMenu</class>
    <extends>QMenu</extends>
    <header>controls/languagemenu.h</header>
+  </customwidget>
+  <customwidget>
+   <class>FileExplorerWidget</class>
+   <extends>QWidget</extends>
+   <header>controls/fileexplorerwidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
