@@ -17,6 +17,7 @@
 #include "mainwindow.h"
 
 #include <QApplication>
+#include <QCommandLineParser>
 #include <QLibraryInfo>
 #include <QTranslator>
 
@@ -41,11 +42,18 @@ int main(int argc, char *argv[])
     translator.load("cutemarked_" + QLocale::system().name(), ":/translations");
     app.installTranslator(&translator);
 
+    // setup command line parser
+    QCommandLineParser parser;
+    parser.addHelpOption();
+    parser.addVersionOption();
+    parser.addPositionalArgument("file", QApplication::translate("main", "The file to open."));
+    parser.process(app);
+
     // get filename from command line arguments
     QString fileName;
-    QStringList cmdLineArgs = app.arguments();
-    if (cmdLineArgs.size() > 1) {
-        fileName = cmdLineArgs.at(1);
+    const QStringList cmdLineArgs = parser.positionalArguments();
+    if (!cmdLineArgs.isEmpty()) {
+        fileName = cmdLineArgs.at(0);
     }
 
     MainWindow w(fileName);
