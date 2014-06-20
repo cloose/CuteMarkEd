@@ -48,6 +48,8 @@ private slots:
     void wholeWordsOnlyToggled(bool enabled);
     void useRegularExpressionsToggled(bool enabled);
 
+    void showOptionsMenu();
+
 private:
     void setupFindOptionsMenu();
     bool find(const QString &searchString, QTextDocument::FindFlags findOptions = 0) const;
