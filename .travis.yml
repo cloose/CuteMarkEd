@@ -3,6 +3,10 @@ compiler:
   - gcc
   - clang
 
+env:
+  global:
+    secure: f/1AlTqkZNnVIh/oxUwuISVYfwC8bDRSE4PKKYcFuxOVCxNo5gO5l0CqlgIIXUoVP5WPsDL+SGkg+QweOfH52ZU6WSrXts9neysiBd2zR468bwzKyLfs57YlgJppWZZL1Aqnn6BjHHxcnNe5wYEqYUak2yk79AOsyy5FyjWRZBs=
+
 addons:
   coverity_scan:
     project:
