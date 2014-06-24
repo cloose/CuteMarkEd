@@ -10,10 +10,10 @@ env:
 addons:
   coverity_scan:
     project:
-      name: "cloose/CuteMarkEd"
+      name: cloose/CuteMarkEd
     notification_email: christian.loose@hamburg.de
-    build_command_prepend: "qmake QMAKE_CXX=$CXX CuteMarkEd.pro"
-    build_command: "make"
+    build_command_prepend: qmake
+    build_command: make
     branch_pattern: coverity_scan
 
 before_install:
