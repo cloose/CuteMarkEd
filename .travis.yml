@@ -2,6 +2,17 @@ language: cpp
 compiler:
   - gcc
   - clang
+
+addons:
+  coverity_scan:
+    project:
+      name: "cloose/CuteMarkEd"
+      description: "A free and open source markdown editor"
+      notification_email: christian.loose@hamburg.de
+      build_command_prepend: "qmake QMAKE_CXX=$CXX CuteMarkEd.pro"
+      build_command: "make"
+      branch_pattern: coverity_scan
+
 before_install:
   - sudo add-apt-repository -y ppa:beineri/opt-qt521 # for Qt 5.2
   - sudo apt-get update -qq
