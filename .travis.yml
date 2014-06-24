@@ -38,5 +38,5 @@ script:
   - cd 3rdparty/hoedown && qmake QMAKE_CC=$CC hoedown.pro && make && sudo make install ; cd ../.. 
   - qmake QMAKE_CXX=$CXX CuteMarkEd.pro  
   - make
-  - make check
+  - if [ ${COVERITY_SCAN_BRANCH} != 1 ]; then make check; fi
 
