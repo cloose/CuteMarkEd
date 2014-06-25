@@ -36,6 +36,7 @@ SOURCES += \
     markdowneditor.cpp \
     controls/linenumberarea.cpp \
     controls/activelabel.cpp \
+    controls/fileexplorerwidget.cpp \
     controls/findreplacewidget.cpp \
     controls/recentfilesmenu.cpp \
     htmlpreviewgenerator.cpp \
@@ -60,6 +61,7 @@ HEADERS  += \
     markdowneditor.h \
     controls/linenumberarea.h \
     controls/activelabel.h \
+    controls/fileexplorerwidget.h \
     controls/findreplacewidget.h \
     controls/recentfilesmenu.h \
     htmlpreviewgenerator.h \
@@ -82,6 +84,7 @@ HEADERS  += \
 
 FORMS    += \
     mainwindow.ui \
+    controls/fileexplorerwidget.ui \
     controls/findreplacewidget.ui \
     exportpdfdialog.ui \
     exporthtmldialog.ui \

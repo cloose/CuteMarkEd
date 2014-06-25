@@ -17,7 +17,8 @@
 #include "htmlhighlighter.h"
 
 HtmlHighlighter::HtmlHighlighter(QTextDocument *document) :
-    QSyntaxHighlighter(document)
+    QSyntaxHighlighter(document),
+    enabled(false)
 {
     keywordFormat.setForeground(QColor("#6c71c4"));
     keywordFormat.setFontWeight(QFont::Bold);
