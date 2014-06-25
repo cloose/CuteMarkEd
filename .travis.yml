@@ -3,15 +3,18 @@ compiler:
   - gcc
   - clang
 
+env:
+  global:
+    secure: f/1AlTqkZNnVIh/oxUwuISVYfwC8bDRSE4PKKYcFuxOVCxNo5gO5l0CqlgIIXUoVP5WPsDL+SGkg+QweOfH52ZU6WSrXts9neysiBd2zR468bwzKyLfs57YlgJppWZZL1Aqnn6BjHHxcnNe5wYEqYUak2yk79AOsyy5FyjWRZBs=
+
 addons:
   coverity_scan:
     project:
-      name: "cloose/CuteMarkEd"
-      description: "A free and open source markdown editor"
-      notification_email: christian.loose@hamburg.de
-      build_command_prepend: "qmake QMAKE_CXX=$CXX CuteMarkEd.pro"
-      build_command: "make"
-      branch_pattern: coverity_scan
+      name: cloose/CuteMarkEd
+    notification_email: christian.loose@hamburg.de
+    build_command_prepend: qmake
+    build_command: make
+    branch_pattern: coverity_scan
 
 before_install:
   - sudo add-apt-repository -y ppa:beineri/opt-qt521 # for Qt 5.2
@@ -30,10 +33,10 @@ before_script:
   - lrelease app/translations/cutemarked_pt_BR.ts -qm app/translations/cutemarked_pt_BR.qm
   - lrelease app/translations/cutemarked_ru.ts -qm app/translations/cutemarked_ru.qm
   - lrelease app/translations/cutemarked_zh_CN.ts -qm app/translations/cutemarked_zh_CN.qm
-script:
   - cd 3rdparty/discount && ./configure.sh --with-id-anchor && make && sudo make install ; cd ../..
+script:
   - cd 3rdparty/hoedown && qmake QMAKE_CC=$CC hoedown.pro && make && sudo make install ; cd ../.. 
   - qmake QMAKE_CXX=$CXX CuteMarkEd.pro  
   - make
-  - make check
-           
+  - if [ ${COVERITY_SCAN_BRANCH} != 1 ]; then make check; fi
+
