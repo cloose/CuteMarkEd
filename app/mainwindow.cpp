@@ -182,6 +182,10 @@ void MainWindow::initializeApp()
     QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     JsonSnippetFile::load(path + "/user-snippets.json", snippetCollection);
 
+    // setup file explorer
+    connect(ui->fileExplorerDockContents, SIGNAL(fileSelected(QString)),
+            this, SLOT(openRecentFile(QString)));
+
     // load file passed to application on start
     if (!fileName.isEmpty()) {
         load(fileName);
@@ -948,6 +952,8 @@ void MainWindow::setupActions()
 
     // view menu
     ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());
+    ui->menuView->insertAction(ui->menuView->actions()[1], ui->fileExplorerDockWidget->toggleViewAction());
+    ui->fileExplorerDockWidget->toggleViewAction()->setShortcut(QKeySequence(Qt::ALT + Qt::Key_E));
     ui->actionFullScreenMode->setShortcut(QKeySequence::FullScreen);
     ui->actionFullScreenMode->setIcon(QIcon("fa-arrows-alt.fontawesome"));
 
