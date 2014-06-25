@@ -74,7 +74,7 @@ QString DiscountMarkdownConverter::renderAsHtml(MarkdownDocument *document)
     if (document) {
         DiscountMarkdownDocument *doc = dynamic_cast<DiscountMarkdownDocument*>(document);
 
-        if (doc->document()) {
+        if (doc && doc->document()) {
             char *out;
             mkd_document(doc->document(), &out);
 
@@ -92,7 +92,7 @@ QString DiscountMarkdownConverter::renderAsTableOfContents(MarkdownDocument *doc
     if (document) {
         DiscountMarkdownDocument *doc = dynamic_cast<DiscountMarkdownDocument*>(document);
 
-        if (doc->document()) {
+        if (doc && doc->document()) {
             // generate table of contents
             char *out;
             mkd_toc(doc->document(), &out);
