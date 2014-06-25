@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,11 @@
 #include <QWebFrame>
 #include <QWebPage>
 #include <QWebInspector>
+
+#ifdef Q_OS_WIN
+#include <QWinJumpList>
+#include <QWinJumpListCategory>
+#endif
 
 #include <snippets/jsonsnippetfile.h>
 #include <snippets/snippetcollection.h>
@@ -185,6 +190,12 @@ void MainWindow::initializeApp()
     // setup file explorer
     connect(ui->fileExplorerDockContents, SIGNAL(fileSelected(QString)),
             this, SLOT(openRecentFile(QString)));
+
+    // setup jump list on windows
+#ifdef Q_OS_WIN
+    QWinJumpList jumplist;
+    jumplist.recent()->setVisible(true);
+#endif
 
     // load file passed to application on start
     if (!fileName.isEmpty()) {

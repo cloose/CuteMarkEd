@@ -69,6 +69,7 @@
         <File Id="Qt5WebKitLibrary" Source="Qt5WebKit.dll"/>
         <File Id="Qt5WebKitWidgetsLibrary" Source="Qt5WebKitWidgets.dll"/>
         <File Id="Qt5WidgetsLibrary" Source="Qt5Widgets.dll"/>
+        <File Id="Qt5WinExtras" Source="Qt5WinExtras.dll"/>
         <File Id="D3DCompilerLibrary" Source="D3DCompiler_43.dll"/>
         <File Id="icudt49Library" Source="icudt49.dll"/>
         <File Id="icuin49Library" Source="icuin49.dll"/>
