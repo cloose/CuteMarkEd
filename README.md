@@ -8,15 +8,27 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 ### DOWNLOAD
 
-[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.9.1.tar.gz)  
-[MS Windows (Installer)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.9.0.msi)  
-[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.9.0.zip)  
+[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.9.2.tar.gz)  
+[MS Windows (Installer)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.9.2.msi)  
+[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.9.2.zip)  
 [OpenSUSE 12.3 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 [OpenSUSE 13.1 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 [Fedora 19 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 [Fedora 20 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 
 ### NEWS
+
+#### Version 0.9.2
+
+New Features:
+
+* `NEW` Added Spanish translation created by moguman
+* `NEW` Added Portuguese (Brazil) translation created by cassiocardoso
+* `NEW` Added Russian translation created by maxbart
+
+Improvements:
+
+* `IMPROVED` Updated the [fontawesome](http://fontawesome.io/) icons to version 4.0.3
 
 #### Version 0.9.1 - Linux only
 
@@ -47,15 +59,6 @@ Fixes:
 
 * `FIXED` Changed shortcuts for Blockquote to <kbd>Ctrl+Shift+Q</kbd> and for Insert Image to <kbd>Ctrl+Shift+I</kbd> to prevent ambiguous shortcuts on Linux (#115)
 
-#### Version 0.8.1
-
-New Features:
-
-* `NEW` Added French translation created by etienne-gauvin
-
-Fixes:
-
-* `FIXED` Do not crash application if *Find Next* or *Find Previous* actions are used with a previously performed search
 
 
 ### DEPENDENCIES
