@@ -8,9 +8,9 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 ### DOWNLOAD
 
-[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.9.2.tar.gz)  
-[MS Windows (Installer)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.9.2.msi)  
-[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.9.2.zip)  
+[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.10.0.tar.gz)  
+[MS Windows (Installer)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.10.0.msi)  
+[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.10.0.zip)  
 [OpenSUSE 12.3 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 [OpenSUSE 13.1 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 [Fedora 19 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
@@ -18,47 +18,21 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 ### NEWS
 
-#### Version 0.9.2
+#### Version 0.10.0
+
+Highlights:
+
+The 0.10.0 release offers support to create presentations. The feature is still
+experimental and needs more work. Your feedback is very appreciated.
+
+![screenshot](http://cloose.github.io/CuteMarkEd/images/20140721-cutemarked-presentation.png)
 
 New Features:
 
-* `NEW` Added Spanish translation created by moguman
-* `NEW` Added Portuguese (Brazil) translation created by cassiocardoso
-* `NEW` Added Russian translation created by maxbart
-
-Improvements:
-
-* `IMPROVED` Updated the [fontawesome](http://fontawesome.io/) icons to version 4.0.3
-
-#### Version 0.9.1 - Linux only
-
-Fixes:
-
-* `FIXED` Build problem on Linux caused by using the system-provided discount library.
-
-#### Version 0.9.0
-
-New Features:
-
-* `NEW` Added a snippets system, that can be activated with the shortcut <kbd>Ctrl+Space</kbd>. We provide several built-in snippets but the system can be extended with user-defined snippets. This powerful functionality can be used to autocomplete Markdown syntax, for inserting repetitive text blocks or even to provide often used document templates. (#81)
-* `NEW` Added _"Go to Line"_ menu item (#114)
-* `NEW` Added options _"case sensitive"_, _"whole words only"_ and _"use regular expressions"_ to find/replace functionality (#63)
-* `NEW` Support for adding the selected word to an user dictionary (#78)
-* `NEW` Option to change width of tab characters (#102)
-* `NEW` Option for superscript Markdown extension (#92)
-* `NEW` Option to control word wrap in Markdown editor (#46)
-* `NEW` Added Japanese translation created by k0ta0uchi (#94)
-* `NEW` Support for additional Markdown converters (#87)
-
-Improvements:
-
-* `IMPROVED` Updated the code highlighting library [highlight.js](http://highlightjs.org/) to version 7.5 (#90)
-* `IMPROVED` Improved perceived performance while typing in long Markdown documents (#100)
-
-Fixes:
-
-* `FIXED` Changed shortcuts for Blockquote to <kbd>Ctrl+Shift+Q</kbd> and for Insert Image to <kbd>Ctrl+Shift+I</kbd> to prevent ambiguous shortcuts on Linux (#115)
-
+* `NEW` Added (experimental) support to create presentations using [reveal.js](http://lab.hakim.se/reveal-js/#/) (#122).
+* `NEW` Added a file explorer view which allows to easily switch between multiple documents (#79)
+* `NEW` Added context menu item to copy preview content as HTML (#133)
+* `NEW` _Windows only_: Added support for showing recent files in taskbar jump list (#145)
 
 
 ### DEPENDENCIES
@@ -87,7 +61,7 @@ We really need help packaging CuteMarkEd. Especially for Linux and Mac OS X. For
 
 ##### Translations
 
-We use [Transifex](https://www.transifex.com/projects/p/cutemarked) for the translations. Currently we have translations for Chinese, Czech, German and Greek. We are always interested in more translations.
+We use [Transifex](https://www.transifex.com/projects/p/cutemarked) for the translations. Currently we have translations like Chinese, Czech, German or Greek. But we are always interested in more translations.
 
 
 ### LINKS
