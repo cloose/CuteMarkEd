@@ -34,10 +34,14 @@ New Features:
 * `NEW` Added context menu item to copy preview content as HTML (#133)
 * `NEW` _Windows only_: Added support for showing recent files in taskbar jump list (#145)
 
+Improvements:
+
+* `IMPROVED` Updated the Qt library to version 5.2 (#145)
+
 
 ### DEPENDENCIES
 
-* Qt 5.x (LGPL v2.1)
+* [Qt 5.2](http://qt-project.org) (LGPL v2.1)
 * [Discount 2.1.7](http://www.pell.portland.or.us/~orc/Code/discount/) (3-clause BSD)
 * [PEG Markdown Highlight](http://hasseg.org/peg-markdown-highlight/) (MIT License)
 * [hunspell 1.3.2](http://hunspell.sourceforge.net/) (LGPL v2.1)
