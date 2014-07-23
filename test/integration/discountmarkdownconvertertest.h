@@ -31,7 +31,11 @@ private slots:
 
     void convertsEmptyStringToEmptyHtml();
     void convertsMarkdownParagraphToHtml();
+    void convertsMarkdownHeaderToHtml();
     void preservesGermanUmlautsInHtml();
+
+    void supportsSuperscriptIfEnabled();
+    void ignoresSuperscriptIfDisabled();
 
     void cleanupTestCase();
 

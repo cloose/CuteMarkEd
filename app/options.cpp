@@ -43,7 +43,23 @@ static const char* SPELLINGCHECK_ENABLED = "spelling/enabled";
 static const char* DICTIONARY_LANGUAGE = "spelling/language";
 
 Options::Options(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    m_tabWidth(8),
+    m_proxyMode(NoProxy),
+    m_proxyPort(0),
+    m_autolinkEnabled(true),
+    m_strikethroughEnabled(true),
+    m_alphabeticListsEnabled(true),
+    m_definitionListsEnabled(true),
+    m_smartyPantsEnabled(true),
+    m_footnotesEnabled(true),
+    m_superscriptEnabled(true),
+    m_mathSupportEnabled(false),
+    m_codeHighlightingEnabled(false),
+    m_showSpecialCharactersEnabled(false),
+    m_wordWrapEnabled(true),
+    m_spellingCheckEnabled(true),
+    m_markdownConverter(DiscountMarkdownConverter)
 {
 }
 

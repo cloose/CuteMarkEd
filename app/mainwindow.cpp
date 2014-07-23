@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "imagetooldialog.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -40,6 +39,11 @@
 #include <QWebPage>
 #include <QWebInspector>
 
+#ifdef Q_OS_WIN
+#include <QWinJumpList>
+#include <QWinJumpListCategory>
+#endif
+
 #include <snippets/jsonsnippetfile.h>
 #include <snippets/snippetcollection.h>
 #include <spellchecker/dictionary.h>
@@ -47,8 +51,10 @@
 #include "controls/findreplacewidget.h"
 #include "controls/languagemenu.h"
 #include "controls/recentfilesmenu.h"
+#include "aboutdialog.h"
 #include "htmlpreviewgenerator.h"
 #include "htmlhighlighter.h"
+#include "imagetooldialog.h"
 #include "markdownmanipulator.h"
 #include "exporthtmldialog.h"
 #include "exportpdfdialog.h"
@@ -98,6 +104,16 @@ void MainWindow::webViewScrolled()
     ui->plainTextEdit->verticalScrollBar()->setValue(qRound(value * factor));
 }
 
+void MainWindow::webViewContextMenu(const QPoint &pos)
+{
+    QMenu *contextMenu = new QMenu(this);
+
+    contextMenu->insertAction(0, ui->webView->pageAction(QWebPage::Copy));
+
+    contextMenu->exec(ui->webView->mapToGlobal(pos));
+    delete contextMenu;
+}
+
 void MainWindow::closeEvent(QCloseEvent *e)
 {
     // check if file needs saving
@@ -121,9 +137,11 @@ void MainWindow::initializeApp()
     ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 
-    // don't show context menu for HTML preview
+    // show custom context menu for HTML preview
     // most actions don't work and can even lead to crashes (like reload)
-    ui->webView->setContextMenuPolicy(Qt::NoContextMenu);
+    ui->webView->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->webView, SIGNAL(customContextMenuRequested(QPoint)),
+            this, SLOT(webViewContextMenu(QPoint)));
 
     // set default style
     styleDefault();
@@ -157,9 +175,9 @@ void MainWindow::initializeApp()
     QString cacheDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
     diskCache->setCacheDirectory(cacheDir);
 
-//    ui->webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
-//    QWebInspector *inspector = new QWebInspector();
-//    inspector->setPage(ui->webView->page());
+    ui->webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+    QWebInspector *inspector = new QWebInspector();
+    inspector->setPage(ui->webView->page());
 
     loadCustomStyles();
     ui->menuLanguages->loadDictionaries(options->dictionaryLanguage());
@@ -168,6 +186,16 @@ void MainWindow::initializeApp()
     JsonSnippetFile::load(tr(":/markdown-snippets.json"), snippetCollection);
     QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     JsonSnippetFile::load(path + "/user-snippets.json", snippetCollection);
+
+    // setup file explorer
+    connect(ui->fileExplorerDockContents, SIGNAL(fileSelected(QString)),
+            this, SLOT(openRecentFile(QString)));
+
+    // setup jump list on windows
+#ifdef Q_OS_WIN
+    QWinJumpList jumplist;
+    jumplist.recent()->setVisible(true);
+#endif
 
     // load file passed to application on start
     if (!fileName.isEmpty()) {
@@ -636,9 +664,8 @@ void MainWindow::helpMarkdownSyntax()
 
 void MainWindow::helpAbout()
 {
-    QMessageBox::about(this, tr("About CuteMarkEd"),
-                       tr("<p><b>CuteMarkEd %1</b><br>Qt-based, free and open source markdown editor with live HTML preview<br>Copyright 2013 Christian Loose</p><p><a href=\"http://cloose.github.io/CuteMarkEd\">http://cloose.github.io/CuteMarkEd</a></p>")
-                       .arg(qApp->applicationVersion()));
+    AboutDialog dialog;
+    dialog.exec();
 }
 
 void MainWindow::styleContextMenu(const QPoint &pos)
@@ -936,6 +963,8 @@ void MainWindow::setupActions()
 
     // view menu
     ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());
+    ui->menuView->insertAction(ui->menuView->actions()[1], ui->fileExplorerDockWidget->toggleViewAction());
+    ui->fileExplorerDockWidget->toggleViewAction()->setShortcut(QKeySequence(Qt::ALT + Qt::Key_E));
     ui->actionFullScreenMode->setShortcut(QKeySequence::FullScreen);
     ui->actionFullScreenMode->setIcon(QIcon("fa-arrows-alt.fontawesome"));
 
@@ -959,6 +988,8 @@ void MainWindow::setupActions()
 
     // help menu
     ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);
+
+    ui->webView->pageAction(QWebPage::Copy)->setIcon(QIcon("fa-copy.fontawesome"));
 }
 
 void MainWindow::setupStatusBar()
@@ -1016,13 +1047,6 @@ void MainWindow::setupHtmlPreview()
     // restore scrollbar position after content size changed
     connect(ui->webView->page()->mainFrame(), SIGNAL(contentsSizeChanged(QSize)),
             this, SLOT(htmlContentSizeChanged()));
-
-    // load HTML template for live preview from resources
-    QFile f(":/template.html");
-    if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QString htmlTemplate = f.readAll();
-        generator->setHtmlTemplate(htmlTemplate);
-    }
 
     // start background HTML preview generator
     connect(generator, SIGNAL(htmlResultReady(QString)),

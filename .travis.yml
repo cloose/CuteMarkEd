@@ -3,18 +3,26 @@ compiler:
   - gcc
   - clang
 before_install:
-  - sudo add-apt-repository -y ppa:ubuntu-sdk-team/ppa # for Qt5
-  - sudo apt-get update
-  - sudo apt-get install -qq qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev qttools5-dev-tools libhunspell-dev
+  - sudo add-apt-repository -y ppa:beineri/opt-qt521 # for Qt 5.2
+  - sudo apt-get update -qq
+install:
+  - sudo apt-get install -qq qt52base qt52declarative qt52webkit qt52tools libhunspell-dev
+  - sudo apt-get install -qq libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
 before_script:
-  - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_cs.ts -qm app/translations/cutemarked_cs.qm
-  - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_de.ts -qm app/translations/cutemarked_de.qm
-  - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_el.ts -qm app/translations/cutemarked_el.qm
-  - qtchooser -run-tool=lrelease -qt=qt5 app/translations/cutemarked_zh_CN.ts -qm app/translations/cutemarked_zh_CN.qm
+  - source /opt/qt52/bin/qt52-env.sh
+  - lrelease app/translations/cutemarked_cs.ts -qm app/translations/cutemarked_cs.qm
+  - lrelease app/translations/cutemarked_de.ts -qm app/translations/cutemarked_de.qm
+  - lrelease app/translations/cutemarked_el.ts -qm app/translations/cutemarked_el.qm
+  - lrelease app/translations/cutemarked_es.ts -qm app/translations/cutemarked_es.qm
+  - lrelease app/translations/cutemarked_fr.ts -qm app/translations/cutemarked_fr.qm
+  - lrelease app/translations/cutemarked_ja.ts -qm app/translations/cutemarked_ja.qm
+  - lrelease app/translations/cutemarked_pt_BR.ts -qm app/translations/cutemarked_pt_BR.qm
+  - lrelease app/translations/cutemarked_ru.ts -qm app/translations/cutemarked_ru.qm
+  - lrelease app/translations/cutemarked_zh_CN.ts -qm app/translations/cutemarked_zh_CN.qm
 script:
-  - cd 3rdparty/discount && ./configure.sh && make && sudo make install ; cd ../..
-  - cd 3rdparty/hoedown && qtchooser -run-tool=qmake -qt=qt5 hoedown.pro && make && sudo make install ; cd ../.. 
-  - qtchooser -run-tool=qmake -qt=qt5 CuteMarkEd.pro  
+  - cd 3rdparty/discount && ./configure.sh --with-id-anchor && make && sudo make install ; cd ../..
+  - cd 3rdparty/hoedown && qmake QMAKE_CC=$CC hoedown.pro && make && sudo make install ; cd ../.. 
+  - qmake QMAKE_CXX=$CXX CuteMarkEd.pro  
   - make
   - make check
            

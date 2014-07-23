@@ -44,6 +44,15 @@ void DiscountMarkdownConverterTest::convertsMarkdownParagraphToHtml()
     QCOMPARE(html, QStringLiteral("<p>This is an example</p>"));
 }
 
+void DiscountMarkdownConverterTest::convertsMarkdownHeaderToHtml()
+{
+    MarkdownDocument *doc = converter->createDocument(QStringLiteral("# This is an example"), 0);
+    QCOMPARE(converter->renderAsHtml(doc), QStringLiteral("<h1 id=\"This.is.an.example\">This is an example</h1>"));
+
+    doc = converter->createDocument(QStringLiteral("## This is an example"), 0);
+    QCOMPARE(converter->renderAsHtml(doc), QStringLiteral("<h2 id=\"This.is.an.example\">This is an example</h2>"));
+}
+
 void DiscountMarkdownConverterTest::preservesGermanUmlautsInHtml()
 {
     QString markdown = QStringLiteral("äöü");
@@ -53,6 +62,18 @@ void DiscountMarkdownConverterTest::preservesGermanUmlautsInHtml()
 
     QVERIFY(!html.isEmpty());
     QCOMPARE(html, QStringLiteral("<p>äöü</p>"));
+}
+
+void DiscountMarkdownConverterTest::supportsSuperscriptIfEnabled()
+{
+    MarkdownDocument *doc = converter->createDocument(QStringLiteral("a^2"), 0);
+    QCOMPARE(converter->renderAsHtml(doc), QStringLiteral("<p>a<sup>2</sup></p>"));
+}
+
+void DiscountMarkdownConverterTest::ignoresSuperscriptIfDisabled()
+{
+    MarkdownDocument *doc = converter->createDocument(QStringLiteral("a^2"), DiscountMarkdownConverter::NoSuperscriptOption);
+    QCOMPARE(converter->renderAsHtml(doc), QStringLiteral("<p>a^2</p>"));
 }
 
 void DiscountMarkdownConverterTest::cleanupTestCase()

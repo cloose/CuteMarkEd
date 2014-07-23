@@ -34,7 +34,8 @@ using hunspell::SpellChecker;
 
 MarkdownHighlighter::MarkdownHighlighter(QTextDocument *document, hunspell::SpellChecker *spellChecker) :
     QSyntaxHighlighter(document),
-    workerThread(new HighlightWorkerThread(this))
+    workerThread(new HighlightWorkerThread(this)),
+    spellingCheckEnabled(false)
 {
     this->spellChecker = spellChecker;
 

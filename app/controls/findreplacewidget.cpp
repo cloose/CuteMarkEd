@@ -116,6 +116,16 @@ void FindReplaceWidget::useRegularExpressionsToggled(bool enabled)
     findUseRegExp = enabled;
 }
 
+void FindReplaceWidget::showOptionsMenu()
+{
+    QMenu *findOptionsMenu = qobject_cast<QAction*>(sender())->menu();
+
+    // show menu above the line edit
+    QPoint pos = ui->findLineEdit->mapToGlobal(QPoint(0, 0));
+    pos.ry() -= findOptionsMenu->sizeHint().height();
+    findOptionsMenu->exec(pos);
+}
+
 void FindReplaceWidget::setupFindOptionsMenu()
 {
     QMenu *findOptionsMenu = new QMenu(this);
@@ -132,8 +142,12 @@ void FindReplaceWidget::setupFindOptionsMenu()
     action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)), SLOT(useRegularExpressionsToggled(bool)));
 
-    ui->findOptionToolButton->setMenu(findOptionsMenu);
-    ui->findOptionToolButton->setIcon(QIcon("fa-search.fontawesome"));
+    // add action to line edit to show the options menu
+    action = new QAction(tr("Find Options"), this);
+    action->setIcon(QIcon("fa-search.fontawesome"));
+    action->setMenu(findOptionsMenu);
+    connect(action, SIGNAL(triggered(bool)), SLOT(showOptionsMenu()));
+    ui->findLineEdit->addAction(action, QLineEdit::LeadingPosition);
 }
 
 bool FindReplaceWidget::find(const QString &searchString, QTextDocument::FindFlags findOptions) const

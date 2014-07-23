@@ -22,6 +22,7 @@ extern "C" {
 }
 
 #include "markdowndocument.h"
+#include "template/htmltemplate.h"
 
 class HoedownMarkdownDocument : public MarkdownDocument
 {
@@ -114,6 +115,12 @@ QString HoedownMarkdownConverter::renderAsTableOfContents(MarkdownDocument *docu
     }
 
     return toc;
+}
+
+Template *HoedownMarkdownConverter::templateRenderer() const
+{
+    static HtmlTemplate htmlTemplate;
+    return &htmlTemplate;
 }
 
 MarkdownConverter::ConverterOptions HoedownMarkdownConverter::supportedOptions() const

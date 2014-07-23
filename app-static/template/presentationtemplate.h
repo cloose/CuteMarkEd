@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,32 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef HOEDOWNMARKDOWNCONVERTERTEST_H
-#define HOEDOWNMARKDOWNCONVERTERTEST_H
+#ifndef PRESENTATIONTEMPLATE_H
+#define PRESENTATIONTEMPLATE_H
 
-#include <QObject>
+#include "template.h"
 
-class HoedownMarkdownConverter;
-
-
-class HoedownMarkdownConverterTest : public QObject
+class PresentationTemplate : public Template
 {
-    Q_OBJECT
+public:
+    PresentationTemplate();
 
-private slots:
-    void initTestCase();
-
-    void convertsEmptyStringToEmptyHtml();
-    void convertsMarkdownParagraphToHtml();
-    void preservesGermanUmlautsInHtml();
-
-    void supportsSuperscriptIfEnabled();
-    void ignoresSuperscriptIfDisabled();
-
-    void cleanupTestCase();
+    virtual QString render(const QString &body, RenderOptions options) const;
+    virtual QString exportAsHtml(const QString &header, const QString &body, RenderOptions options) const;
 
 private:
-    HoedownMarkdownConverter *converter;
+    QString buildRevealPlugins(RenderOptions options) const;
+
+    QString presentationTemplate;
 };
 
-#endif // HOEDOWNMARKDOWNCONVERTERTEST_H
+#endif // PRESENTATIONTEMPLATE_H

@@ -33,11 +33,13 @@ FontAwesomeIconEnginePlugin::FontAwesomeIconEnginePlugin(QObject *parent) :
 {
 }
 
+#if QT_VERSION < 0x050000
 QStringList FontAwesomeIconEnginePlugin::keys() const
 {
     QStringList keys(QLatin1String("fontawesome"));
     return keys;
 }
+#endif // QT_VERSION < 0x050000
 
 QIconEngine *FontAwesomeIconEnginePlugin::create(const QString &filename)
 {

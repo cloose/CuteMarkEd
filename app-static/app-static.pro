@@ -16,7 +16,10 @@ SOURCES += \
     snippets/jsonsnippetfile.cpp \
     snippets/snippetlistmodel.cpp \
     converter/discountmarkdownconverter.cpp \
-    spellchecker/dictionary.cpp
+    spellchecker/dictionary.cpp \
+    converter/revealmarkdownconverter.cpp \
+    template/htmltemplate.cpp \
+    template/presentationtemplate.cpp
 
 HEADERS += \
     snippets/snippet.h \
@@ -27,7 +30,11 @@ HEADERS += \
     converter/markdownconverter.h \
     converter/markdowndocument.h \
     converter/discountmarkdownconverter.h \
-    spellchecker/dictionary.h
+    spellchecker/dictionary.h \
+    converter/revealmarkdownconverter.h \
+    template/template.h \
+    template/htmltemplate.h \
+    template/presentationtemplate.h
 
 #unix:!symbian {
 #    maemo5 {
@@ -55,11 +62,6 @@ win32:INCLUDEPATH += $$PWD/../3rdparty/discount
 unix:INCLUDEPATH += /usr/include
 win32:DEPENDPATH += $$PWD/../3rdparty/discount
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/release/libdiscount.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/debug/libdiscount.a
-else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/release/libdiscount.lib
-else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/discount/debug/libdiscount.lib
-
 #
 # Hoedown library
 #
@@ -76,8 +78,4 @@ with_hoedown {
 
     INCLUDEPATH += $$PWD/../3rdparty/hoedown
     DEPENDPATH += $$PWD/../3rdparty/hoedown
-
-    win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/release/libhoedown.a
-    else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/debug/libhoedown.a
-    #else:unix: PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/hoedown/libhoedown.a
 }
