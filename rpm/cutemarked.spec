@@ -12,7 +12,7 @@
 Name:                   cutemarked
 Summary:                Qt-based Markdown editor
 Group:                  Productivity/Text/Editors
-Version:                0.9.2
+Version:                0.10.0
 Release:                1
 License:                GPL-2.0+
 Url:                    http://github.com/cloose/CuteMarkEd
@@ -83,6 +83,9 @@ mv $RPM_BUILD_ROOT%{_libdir}/qt5/bin/cutemarked $RPM_BUILD_ROOT%{_bindir}/cutema
 
 
 %changelog
+
+* Sat Jul 19 2014 Christian Loose <christian.loose@hamburg.de> 0.10.0-1
+- New minor version 0.10.0 released
 
 * Mon Apr 07 2014 Christian Loose <christian.loose@hamburg.de> 0.9.2-1
 - New patch version 0.9.2 released
