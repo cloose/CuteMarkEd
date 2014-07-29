@@ -2,9 +2,9 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?define ManufacturerName="CuteMarkEd Project"?>
   <?define ProductName="CuteMarkEd"?>
-  <?define ProductVersion="0.9.2"?>
+  <?define ProductVersion="0.10.0"?>
   <Product Name="$(var.ProductName)" 
-      Id="CDB11734-84EA-45F1-829C-681CD0E7110F" 
+      Id="*" 
       UpgradeCode="335156FC-CB7F-4357-98D4-B5519E66402B"
       Language="1033" 
       Version="$(var.ProductVersion)" 
@@ -21,6 +21,10 @@
         Cabinet="cutemarked.cab" 
         EmbedCab="yes"
     />
+
+    <MajorUpgrade
+        DowngradeErrorMessage="CuteMarkEd is already installed with a higher version."
+        AllowSameVersionUpgrades="yes" />
 
     <!-- Directory tree -->                  
     <Directory Id="TARGETDIR" Name="SourceDir">                      
@@ -53,6 +57,15 @@
           <Shortcut Id="StartMenuCuteMarkEd" Directory="ProgramMenuDir" Name="CuteMarkEd" WorkingDirectory="INSTALLDIR" Icon="CuteMarkEd.exe" Advertise="yes"/>
           <!--<Shortcut Id="DesktopCuteMarkEd" Directory="DesktopFolder" Name="CuteMarkEd" WorkingDirectory="INSTALLDIR" Icon="CuteMarkEd.exe" Advertise="yes"/>-->
         </File>
+        <!-- done in main.cpp instead:
+        <ProgId Id="$(var.ProductName)" Icon="ApplicationFile"
+                Description="Markdown Document">
+          <Extension Id="md">
+            <Verb Id="open" Argument="&quot;%1&quot;"
+                  TargetFile="ApplicationFile" />
+          </Extension>
+          <Extension Id="markdown"/>
+        </ProgId>-->
       </Component>
       <Component Id="Qt5Component" Guid="F972C7C4-BF4A-4F45-BD03-09EB4F6EF384" DiskId="1">
         <File Id="Qt5CoreLibrary" Source="Qt5Core.dll"/>
@@ -61,22 +74,20 @@
         <File Id="Qt5MultimediaWidgetsLibrary" Source="Qt5MultimediaWidgets.dll"/>
         <File Id="Qt5NetworkLibrary" Source="Qt5Network.dll"/>
         <File Id="Qt5OpenGLLibrary" Source="Qt5OpenGL.dll"/>
+        <File Id="Qt5PositioningLibrary" Source="Qt5Positioning.dll"/>
         <File Id="Qt5PrintSupportLibrary" Source="Qt5PrintSupport.dll"/>
         <File Id="Qt5QmlLibrary" Source="Qt5Qml.dll"/>
         <File Id="Qt5QuickLibrary" Source="Qt5Quick.dll"/>
+        <File Id="Qt5SensorsLibrary" Source="Qt5Sensors.dll"/>
         <File Id="Qt5SqlLibrary" Source="Qt5Sql.dll"/>
-        <File Id="Qt5V8Library" Source="Qt5V8.dll"/>
         <File Id="Qt5WebKitLibrary" Source="Qt5WebKit.dll"/>
         <File Id="Qt5WebKitWidgetsLibrary" Source="Qt5WebKitWidgets.dll"/>
         <File Id="Qt5WidgetsLibrary" Source="Qt5Widgets.dll"/>
         <File Id="Qt5WinExtras" Source="Qt5WinExtras.dll"/>
-        <File Id="D3DCompilerLibrary" Source="D3DCompiler_43.dll"/>
-        <File Id="icudt49Library" Source="icudt49.dll"/>
-        <File Id="icuin49Library" Source="icuin49.dll"/>
-        <File Id="icuuc49Library" Source="icuuc49.dll"/>
-        <File Id="libEGLLibrary" Source="libEGL.dll"/>
-        <File Id="libgcc_s_sjljLibrary" Source="libgcc_s_sjlj-1.dll"/>
-        <File Id="libGLESv2Library" Source="libGLESv2.dll"/>
+        <File Id="icudt51Library" Source="icudt51.dll"/>
+        <File Id="icuin51Library" Source="icuin51.dll"/>
+        <File Id="icuuc51Library" Source="icuuc51.dll"/>
+        <File Id="libgcc_s_dw2Library" Source="libgcc_s_dw2-1.dll"/>
         <File Id="libstdcppLibrary" Source="libstdc++-6.dll"/>
         <File Id="libwinpthreadLibrary" Source="libwinpthread-1.dll"/>
       </Component>
@@ -144,7 +155,6 @@
 
     <DirectoryRef Id="platforms">
       <Component Id="QtPlatformsComponent" Guid="0F98A860-E96D-4C58-80A8-BF442C782759" DiskId="1">
-        <File Id="QtMinimalPlugin" Source="platforms/qminimal.dll"/>
         <File Id="QtWindowsPlugin" Source="platforms/qwindows.dll"/>
       </Component>
     </DirectoryRef>
@@ -157,40 +167,16 @@
 
     <DirectoryRef Id="translations">
       <Component Id="QtTranslationsComponent" Guid="245EDE4C-00C9-4FA9-9E78-D4B1C526AAF0" DiskId="1">
-        <File Id="QtAssistantCSTranslation" Source="translations/assistant_cs.qm"/>
-        <File Id="QtAssistantDETranslation" Source="translations/assistant_de.qm"/>
-        <File Id="QtAssistantZHCNTranslation" Source="translations/assistant_zh_CN.qm"/>
-        <File Id="QtAssistantZHTWTranslation" Source="translations/assistant_zh_TW.qm"/>
-        <File Id="QtDesignerCSTranslation" Source="translations/designer_cs.qm"/>
-        <File Id="QtDesignerDETranslation" Source="translations/designer_de.qm"/>
-        <File Id="QtDesignerZHCNTranslation" Source="translations/designer_zh_CN.qm"/>
-        <File Id="QtDesignerZHTWTranslation" Source="translations/designer_zh_TW.qm"/>
-        <File Id="QtLinguistCSTranslation" Source="translations/linguist_cs.qm"/>
-        <File Id="QtLinguistDETranslation" Source="translations/linguist_de.qm"/>
-        <File Id="QtLinguistZHCNTranslation" Source="translations/linguist_zh_CN.qm"/>
-        <File Id="QtLinguistZHTWTranslation" Source="translations/linguist_zh_TW.qm"/>
-        <File Id="QtQmlViewerCSTranslation" Source="translations/qmlviewer_cs.qm"/>
         <File Id="QtCSTranslation" Source="translations/qt_cs.qm"/>
         <File Id="QtDETranslation" Source="translations/qt_de.qm"/>
+        <File Id="QtHUTranslation" Source="translations/qt_hu.qm"/>
+        <File Id="QtITTranslation" Source="translations/qt_it.qm"/>
+        <File Id="QtJATranslation" Source="translations/qt_ja.qm"/>
+        <File Id="QtRUTranslation" Source="translations/qt_ru.qm"/>
+        <File Id="QtSKTranslation" Source="translations/qt_sk.qm"/>
+        <File Id="QtUKTranslation" Source="translations/qt_uk.qm"/>
         <File Id="QtZHCNTranslation" Source="translations/qt_zh_CN.qm"/>
         <File Id="QtZHTWTranslation" Source="translations/qt_zh_TW.qm"/>
-        <File Id="QtHelpCSTranslation" Source="translations/qt_help_cs.qm"/>
-        <File Id="QtHelpDETranslation" Source="translations/qt_help_de.qm"/>
-        <File Id="QtHelpZHCNTranslation" Source="translations/qt_help_zh_CN.qm"/>
-        <File Id="QtHelpZHTWTranslation" Source="translations/qt_help_zh_TW.qm"/>
-        <File Id="QtBaseCSTranslation" Source="translations/qtbase_cs.qm"/>
-        <File Id="QtBaseDETranslation" Source="translations/qtbase_de.qm"/>
-        <File Id="QtConfigZHCNTranslation" Source="translations/qtconfig_zh_CN.qm"/>
-        <File Id="QtConfigZHTWTranslation" Source="translations/qtconfig_zh_TW.qm"/>
-        <File Id="QtDeclarativeDETranslation" Source="translations/qtdeclarative_de.qm"/>
-        <File Id="QtMultimediaCSTranslation" Source="translations/qtmultimedia_cs.qm"/>
-        <File Id="QtMultimediaDETranslation" Source="translations/qtmultimedia_de.qm"/>
-        <File Id="QtQuick1CSTranslation" Source="translations/qtquick1_cs.qm"/>
-        <File Id="QtQuick1DETranslation" Source="translations/qtquick1_de.qm"/>
-        <File Id="QtScriptCSTranslation" Source="translations/qtscript_cs.qm"/>
-        <File Id="QtScriptDETranslation" Source="translations/qtscript_de.qm"/>
-        <File Id="QtXmlPatternsCSTranslation" Source="translations/qtxmlpatterns_cs.qm"/>
-        <File Id="QtXmlPatternsDETranslation" Source="translations/qtxmlpatterns_de.qm"/>
       </Component>
     </DirectoryRef>
     
