@@ -17,8 +17,13 @@
 #include "hoedownmarkdownconverter.h"
 
 extern "C" {
+#ifdef Q_OS_WIN
 #include <src/html.h>
 #include <src/markdown.h>
+#else
+#include <hoedown/html.h>
+#include <hoedown/markdown.h>
+#endif
 }
 
 #include "markdowndocument.h"
