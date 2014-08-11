@@ -74,8 +74,14 @@ with_hoedown {
 
     win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/release/ -lhoedown
     else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/debug/ -lhoedown
-    else:unix: LIBS += -L$$OUT_PWD/../3rdparty/hoedown/ -lhoedown
+    else:unix: LIBS += -L/usr/lib -lhoedown
 
-    INCLUDEPATH += $$PWD/../3rdparty/hoedown
-    DEPENDPATH += $$PWD/../3rdparty/hoedown
+    win32 {
+        INCLUDEPATH += $$PWD/../3rdparty/hoedown
+        DEPENDPATH += $$PWD/../3rdparty/hoedown
+    }
+
+    unix {
+        INCLUDEPATH += /usr/include
+    }
 }
