@@ -25,3 +25,4 @@ script:
   - qmake QMAKE_CXX=$CXX CuteMarkEd.pro "CONFIG += with_hoedown" 
   - make
   - make check
+  - sudo make install

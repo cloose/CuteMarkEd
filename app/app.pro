@@ -205,12 +205,15 @@ message("Using LIBS=$$LIBS")
 ## INSTALLATION
 
 unix {
+   isEmpty(PREFIX): PREFIX = /usr
+
    # install desktop file
-   desktop.path = /usr/share/applications
+   desktop.path = $${PREFIX}/share/applications
    desktop.files += cutemarked.desktop
 
    # install application
-   target.path = $$[QT_INSTALL_BINS]
+   target.path = $${PREFIX}/bin
+
    INSTALLS += target desktop
-   message("The project will be installed in $$[QT_INSTALL_BINS]")
+   message("The project will be installed in prefix $${PREFIX}")
 }
