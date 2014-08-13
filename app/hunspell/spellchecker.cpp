@@ -118,32 +118,3 @@ void SpellChecker::loadUserWordlist(const QString &userWordlistPath)
         hunspellChecker->add(textCodec->fromUnicode(word).constData());
     }
 }
-
-QMap<QString, Dictionary> SpellChecker::availableDictionaries()
-{
-    QMap<QString, Dictionary> dictionaries;
-
-    QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
-    paths << qApp->applicationDirPath();
-
-    foreach (const QString &path, paths) {
-        QDir dictPath(path + QDir::separator() + "dictionaries");
-        dictPath.setFilter(QDir::Files);
-        dictPath.setNameFilters(QStringList() << "*.dic");
-        if (dictPath.exists()) {
-            // loop over all dictionaries in directory
-            QDirIterator it(dictPath);
-            while (it.hasNext()) {
-                it.next();
-
-                QString language = it.fileName().remove(".dic");
-                language.truncate(5); // just language and country code
-
-                Dictionary dict(it.fileName(), it.filePath());
-                dictionaries.insert(language, dict);
-            }
-        }
-    }
-
-    return dictionaries;
-}

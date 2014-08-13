@@ -58,6 +58,16 @@ SOURCES += \
     snippetcompleter.cpp \
     aboutdialog.cpp
 
+win32 {
+    SOURCES += \
+        hunspell/spellchecker_win.cpp
+}
+
+unix {
+    SOURCES += \
+        hunspell/spellchecker_unix.cpp
+}
+
 HEADERS  += \
     mainwindow.h \
     markdowneditor.h \
