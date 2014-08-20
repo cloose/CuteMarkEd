@@ -23,8 +23,6 @@ using hunspell::SpellChecker;
 #include <QDirIterator>
 #include <QStandardPaths>
 
-#include <hunspell/hunspell.hxx>
-
 #include <spellchecker/dictionary.h>
 
 QMap<QString, Dictionary> SpellChecker::availableDictionaries()

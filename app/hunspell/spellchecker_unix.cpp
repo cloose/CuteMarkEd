@@ -23,8 +23,6 @@ using hunspell::SpellChecker;
 #include <QDirIterator>
 #include <QStandardPaths>
 
-#include <hunspell/hunspell.hxx>
-
 #include <spellchecker/dictionary.h>
 
 QMap<QString, Dictionary> SpellChecker::availableDictionaries()
@@ -34,15 +32,15 @@ QMap<QString, Dictionary> SpellChecker::availableDictionaries()
     QStringList paths;
 
     // Debian
-    paths << "/usr/local/share/myspell/dicts"
-          << "/usr/share/myspell/dicts";
+    paths << QStringLiteral("/usr/local/share/myspell/dicts")
+          << QStringLiteral("/usr/share/myspell/dicts");
 
     // Ubuntu
-    paths << "/usr/share/hunspell";
+    paths << QStringLiteral("/usr/share/hunspell");
 
     // Fedora
-    paths << "/usr/local/share/myspell"
-          << "/usr/share/myspell";
+    paths << QStringLiteral("/usr/local/share/myspell")
+          << QStringLiteral("/usr/share/myspell");
 
     foreach (const QString &path, paths) {
         QDir dictPath(path);
