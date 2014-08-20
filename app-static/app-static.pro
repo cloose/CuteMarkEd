@@ -19,7 +19,8 @@ SOURCES += \
     spellchecker/dictionary.cpp \
     converter/revealmarkdownconverter.cpp \
     template/htmltemplate.cpp \
-    template/presentationtemplate.cpp
+    template/presentationtemplate.cpp \
+    datalocation.cpp
 
 HEADERS += \
     snippets/snippet.h \
@@ -34,7 +35,8 @@ HEADERS += \
     converter/revealmarkdownconverter.h \
     template/template.h \
     template/htmltemplate.h \
-    template/presentationtemplate.h
+    template/presentationtemplate.h \
+    datalocation.h
 
 #unix:!symbian {
 #    maemo5 {

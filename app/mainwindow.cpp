@@ -47,6 +47,7 @@
 #include <snippets/jsonsnippetfile.h>
 #include <snippets/snippetcollection.h>
 #include <spellchecker/dictionary.h>
+#include <datalocation.h>
 #include "controls/activelabel.h"
 #include "controls/findreplacewidget.h"
 #include "controls/languagemenu.h"
@@ -184,7 +185,7 @@ void MainWindow::initializeApp()
 
     //: path to built-in snippets resource.
     JsonSnippetFile::load(tr(":/markdown-snippets.json"), snippetCollection);
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString path = DataLocation::writableLocation();
     JsonSnippetFile::load(path + "/user-snippets.json", snippetCollection);
 
     // setup file explorer
@@ -651,7 +652,7 @@ void MainWindow::extrasOptions()
     if (dialog.exec() == QDialog::Accepted) {
         options->writeSettings();
 
-        QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+        QString path = DataLocation::writableLocation();
         QSharedPointer<SnippetCollection> userDefinedSnippets = snippetCollection->userDefinedSnippets();
         JsonSnippetFile::save(path + "/user-snippets.json", userDefinedSnippets.data());
     }
@@ -1136,7 +1137,7 @@ void MainWindow::updateSplitter()
 
 void MainWindow::loadCustomStyles()
 {
-    QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+    QStringList paths = DataLocation::standardLocations();
     qDebug() << paths;
     QDir dataPath(paths.first() + QDir::separator() + "styles");
     dataPath.setFilter(QDir::Files);

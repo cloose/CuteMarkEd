@@ -21,7 +21,6 @@ using hunspell::SpellChecker;
 #include <QDebug>
 #include <QDir>
 #include <QDirIterator>
-#include <QStandardPaths>
 
 #include <spellchecker/dictionary.h>
 

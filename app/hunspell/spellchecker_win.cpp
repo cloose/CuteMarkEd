@@ -21,15 +21,15 @@ using hunspell::SpellChecker;
 #include <QDebug>
 #include <QDir>
 #include <QDirIterator>
-#include <QStandardPaths>
 
 #include <spellchecker/dictionary.h>
+#include <datalocation.h>
 
 QMap<QString, Dictionary> SpellChecker::availableDictionaries()
 {
     QMap<QString, Dictionary> dictionaries;
 
-    QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+    QStringList paths = DataLocation::standardLocations();
     paths << qApp->applicationDirPath();
 
     foreach (const QString &path, paths) {

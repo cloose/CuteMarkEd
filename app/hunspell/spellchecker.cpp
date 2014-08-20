@@ -21,12 +21,12 @@ using hunspell::SpellChecker;
 #include <QDebug>
 #include <QDir>
 #include <QDirIterator>
-#include <QStandardPaths>
 #include <QTextCodec>
 
 #include <hunspell/hunspell.hxx>
 
 #include <spellchecker/dictionary.h>
+#include <datalocation.h>
 
 SpellChecker::SpellChecker() :
     hunspellChecker(0),
@@ -101,7 +101,7 @@ void SpellChecker::loadDictionary(const QString &dictFilePath)
     }
 
     // also load user word list
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString path = DataLocation::writableLocation();
     loadUserWordlist(path + "/user.dic");
 }
 
