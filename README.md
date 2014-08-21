@@ -18,6 +18,20 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 ### NEWS
 
+#### Version 0.10.1 (Linux only)
+
+This release fixes some problems on Linux and hopefully makes the packaging for Linux easier.
+
+Improvements:
+
+* `IMPROVED` Added support for dictionaries installed by the package system.
+
+Fixes:
+
+* `FIXED` User snippets and user dictionaries are now saved to disk.
+* `FIXED` Application binary is now installed to /usr/bin
+* `FIXED` Link to system installed hoedown library
+
 #### Version 0.10.0
 
 Highlights:
