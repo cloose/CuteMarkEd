@@ -337,6 +337,12 @@ void OptionsDialog::readState()
     ui->fontComboBox->setCurrentFont(font);
     ui->sizeComboBox->setCurrentText(QString().setNum(font.pointSize()));
     ui->tabWidthSpinBox->setValue(options->tabWidth());
+    if (options->isHorizontalLayout())
+    {
+        ui->layoutComboBox->setCurrentIndex(1);
+    } else {
+        ui->layoutComboBox->setCurrentIndex(0);
+    }
 
     // proxy settings
     switch (options->proxyMode()) {
@@ -366,6 +372,7 @@ void OptionsDialog::saveState()
     font.setPointSize(ui->sizeComboBox->currentText().toInt());
     options->setEditorFont(font);
     options->setTabWidth(ui->tabWidthSpinBox->value());
+    options->setHorizontalLayout(ui->layoutComboBox->currentIndex());
 
     // proxy settings
     if (ui->noProxyRadioButton->isChecked()) {

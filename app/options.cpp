@@ -23,6 +23,7 @@ static const char* FONT_FAMILY_DEFAULT = "Monospace";
 static const char* FONT_FAMILY = "editor/font/family";
 static const char* FONT_SIZE = "editor/font/size";
 static const char* TAB_WIDTH = "editor/tabwidth";
+static const char* HORIZONTAL_LAYOUT = "editor/horitontal";
 static const char* PROXY_MODE = "internet/proxy/mode";
 static const char* PROXY_HOST = "internet/proxy/host";
 static const char* PROXY_PORT = "internet/proxy/port";
@@ -59,7 +60,8 @@ Options::Options(QObject *parent) :
     m_showSpecialCharactersEnabled(false),
     m_wordWrapEnabled(true),
     m_spellingCheckEnabled(true),
-    m_markdownConverter(DiscountMarkdownConverter)
+    m_markdownConverter(DiscountMarkdownConverter),
+    m_horizontalLayout(false)
 {
 }
 
@@ -89,6 +91,20 @@ void Options::setTabWidth(int width)
 {
     m_tabWidth = width;
     emit tabWidthChanged(width);
+}
+
+bool Options::isHorizontalLayout() const
+{
+    return m_horizontalLayout;
+}
+
+void Options::setHorizontalLayout(int opt)
+{
+    if(opt) {
+        m_horizontalLayout = true;
+    } else {
+        m_horizontalLayout = false;
+    }
 }
 
 Options::ProxyMode Options::proxyMode() const
@@ -301,6 +317,8 @@ void Options::readSettings()
     f.setStyleHint(QFont::TypeWriter);
     setEditorFont(f);
 
+    m_horizontalLayout = settings.value(HORIZONTAL_LAYOUT, false).toBool();
+
     // proxy settings
     m_proxyMode = (Options::ProxyMode)settings.value(PROXY_MODE, 0).toInt();
     m_proxyHost = settings.value(PROXY_HOST, "").toString();
@@ -340,6 +358,7 @@ void Options::writeSettings()
     settings.setValue(FONT_FAMILY, font.family());
     settings.setValue(FONT_SIZE, font.pointSize());
     settings.setValue(TAB_WIDTH, m_tabWidth);
+    settings.setValue(HORIZONTAL_LAYOUT, m_horizontalLayout);
 
     // proxy settings
     settings.setValue(PROXY_MODE, m_proxyMode);

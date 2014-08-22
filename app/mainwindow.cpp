@@ -165,6 +165,10 @@ void MainWindow::initializeApp()
     ui->actionCheckSpelling->setChecked(options->isSpellingCheckEnabled());
     ui->plainTextEdit->setSpellingCheckEnabled(options->isSpellingCheckEnabled());
 
+    // view option flags
+    ui->actionHorizontalLayout->setChecked(options->isHorizontalLayout());
+    viewHorizontalLayout(options->isHorizontalLayout());
+
     // set url to markdown syntax help
     ui->webView_2->setUrl(tr("qrc:/syntax.html"));
 
@@ -650,6 +654,9 @@ void MainWindow::extrasOptions()
     OptionsDialog dialog(options, snippetCollection, this);
     if (dialog.exec() == QDialog::Accepted) {
         options->writeSettings();
+
+        ui->actionHorizontalLayout->setChecked(options->isHorizontalLayout());
+        viewHorizontalLayout(options->isHorizontalLayout());
 
         QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
         QSharedPointer<SnippetCollection> userDefinedSnippets = snippetCollection->userDefinedSnippets();
