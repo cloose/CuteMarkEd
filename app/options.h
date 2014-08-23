@@ -42,6 +42,9 @@ public:
     int tabWidth() const;
     void setTabWidth(int width);
 
+    bool isHorizontalLayout() const;
+    void setHorizontalLayout(int opt);
+
     /* Internet options */
     ProxyMode proxyMode() const;
     void setProxyMode(ProxyMode mode);
@@ -130,6 +133,7 @@ private:
     bool m_showSpecialCharactersEnabled;
     bool m_wordWrapEnabled;
     bool m_spellingCheckEnabled;
+    bool m_horizontalLayout;
     QString m_dictionaryLanguage;
     MarkdownConverter m_markdownConverter;
 };
