@@ -58,6 +58,16 @@ SOURCES += \
     snippetcompleter.cpp \
     aboutdialog.cpp
 
+win32 {
+    SOURCES += \
+        hunspell/spellchecker_win.cpp
+}
+
+unix {
+    SOURCES += \
+        hunspell/spellchecker_unix.cpp
+}
+
 HEADERS  += \
     mainwindow.h \
     markdowneditor.h \
@@ -187,10 +197,16 @@ with_hoedown {
 
     win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/release/ -lhoedown
     else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/debug/ -lhoedown
-    else:unix: LIBS += -L$$OUT_PWD/../3rdparty/hoedown/ -lhoedown
+    else:unix: LIBS += -L/usr/lib -lhoedown
 
-    INCLUDEPATH += $$PWD/../3rdparty/hoedown
-    DEPENDPATH += $$PWD/../3rdparty/hoedown
+    win32 {
+        INCLUDEPATH += $$PWD/../3rdparty/hoedown
+        DEPENDPATH += $$PWD/../3rdparty/hoedown
+    }
+
+    unix {
+        INCLUDEPATH += /usr/include
+    }
 }
 
 message("Using INCLUDEPATH=$$INCLUDEPATH")
@@ -199,12 +215,15 @@ message("Using LIBS=$$LIBS")
 ## INSTALLATION
 
 unix {
+   isEmpty(PREFIX): PREFIX = /usr
+
    # install desktop file
-   desktop.path = /usr/share/applications
+   desktop.path = $${PREFIX}/share/applications
    desktop.files += cutemarked.desktop
 
    # install application
-   target.path = $$[QT_INSTALL_BINS]
+   target.path = $${PREFIX}/bin
+
    INSTALLS += target desktop
-   message("The project will be installed in $$[QT_INSTALL_BINS]")
+   message("The project will be installed in prefix $${PREFIX}")
 }
