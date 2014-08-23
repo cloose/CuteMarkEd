@@ -21,12 +21,12 @@ using hunspell::SpellChecker;
 #include <QDebug>
 #include <QDir>
 #include <QDirIterator>
-#include <QStandardPaths>
 #include <QTextCodec>
 
 #include <hunspell/hunspell.hxx>
 
 #include <spellchecker/dictionary.h>
+#include <datalocation.h>
 
 SpellChecker::SpellChecker() :
     hunspellChecker(0),
@@ -101,7 +101,7 @@ void SpellChecker::loadDictionary(const QString &dictFilePath)
     }
 
     // also load user word list
-    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString path = DataLocation::writableLocation();
     loadUserWordlist(path + "/user.dic");
 }
 
@@ -117,33 +117,4 @@ void SpellChecker::loadUserWordlist(const QString &userWordlistPath)
     for (QString word = stream.readLine(); !word.isEmpty(); word = stream.readLine()) {
         hunspellChecker->add(textCodec->fromUnicode(word).constData());
     }
-}
-
-QMap<QString, Dictionary> SpellChecker::availableDictionaries()
-{
-    QMap<QString, Dictionary> dictionaries;
-
-    QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
-    paths << qApp->applicationDirPath();
-
-    foreach (const QString &path, paths) {
-        QDir dictPath(path + QDir::separator() + "dictionaries");
-        dictPath.setFilter(QDir::Files);
-        dictPath.setNameFilters(QStringList() << "*.dic");
-        if (dictPath.exists()) {
-            // loop over all dictionaries in directory
-            QDirIterator it(dictPath);
-            while (it.hasNext()) {
-                it.next();
-
-                QString language = it.fileName().remove(".dic");
-                language.truncate(5); // just language and country code
-
-                Dictionary dict(it.fileName(), it.filePath());
-                dictionaries.insert(language, dict);
-            }
-        }
-    }
-
-    return dictionaries;
 }
