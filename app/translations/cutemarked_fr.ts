@@ -9,7 +9,7 @@
     <message>
         <location filename="../exporthtmldialog.ui" line="23"/>
         <source>Export to:</source>
-        <translation>Exporter vers:</translation>
+        <translation>Exporter vers :</translation>
     </message>
     <message>
         <location filename="../exporthtmldialog.ui" line="51"/>
@@ -52,7 +52,7 @@
     <message>
         <location filename="../exportpdfdialog.ui" line="20"/>
         <source>Export to:</source>
-        <translation>Exporter vers:</translation>
+        <translation>Exporter vers :</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.ui" line="45"/>
@@ -62,12 +62,12 @@
     <message>
         <location filename="../exportpdfdialog.ui" line="54"/>
         <source>Paper Size:</source>
-        <translation>Dimensions papier:</translation>
+        <translation>Dimensions papier :</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.ui" line="64"/>
         <source>Orientation:</source>
-        <translation>Orientation:</translation>
+        <translation>Orientation :</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.ui" line="71"/>
@@ -135,12 +135,12 @@
     <message>
         <location filename="../controls/findreplacewidget.ui" line="14"/>
         <source>Find</source>
-        <translation>Trouver</translation>
+        <translation>Chercher</translation>
     </message>
     <message>
         <location filename="../controls/findreplacewidget.ui" line="20"/>
         <source>Find:</source>
-        <translation>Trouver:</translation>
+        <translation>Chercher :</translation>
     </message>
     <message>
         <location filename="../controls/findreplacewidget.ui" line="35"/>
@@ -151,7 +151,7 @@
     <message>
         <location filename="../controls/findreplacewidget.ui" line="122"/>
         <source>Replace with:</source>
-        <translation>Remplacer par:</translation>
+        <translation>Remplacer par :</translation>
     </message>
     <message>
         <location filename="../controls/findreplacewidget.ui" line="166"/>
@@ -166,17 +166,17 @@
     <message>
         <location filename="../controls/findreplacewidget.cpp" line="123"/>
         <source>Case Sensitive</source>
-        <translation type="unfinished"/>
+        <translation>Sensible à la casse</translation>
     </message>
     <message>
         <location filename="../controls/findreplacewidget.cpp" line="127"/>
         <source>Whole Words Only</source>
-        <translation type="unfinished"/>
+        <translation>Mots complets uniquement</translation>
     </message>
     <message>
         <location filename="../controls/findreplacewidget.cpp" line="131"/>
         <source>Use Regular Expressions</source>
-        <translation type="unfinished"/>
+        <translation>Utiliser des expressions rationnelles</translation>
     </message>
 </context>
 <context>
@@ -189,12 +189,12 @@
     <message>
         <location filename="../imagetooldialog.ui" line="20"/>
         <source>Image Link:</source>
-        <translation>Lien vers l&apos;image:</translation>
+        <translation>Lien vers l&apos;image :</translation>
     </message>
     <message>
         <location filename="../imagetooldialog.ui" line="35"/>
         <source>http://example.com/image.jpg</source>
-        <translation>http://example.com/image.jpg</translation>
+        <translation>http://exemple.com/image.jpg</translation>
     </message>
     <message>
         <location filename="../imagetooldialog.ui" line="42"/>
@@ -204,12 +204,12 @@
     <message>
         <location filename="../imagetooldialog.ui" line="51"/>
         <source>Alternate Text:</source>
-        <translation>Texte alternatif:</translation>
+        <translation>Texte alternatif :</translation>
     </message>
     <message>
         <location filename="../imagetooldialog.ui" line="68"/>
         <source>Optional Title:</source>
-        <translation>Titre facultatif:</translation>
+        <translation>Titre facultatif :</translation>
     </message>
     <message>
         <location filename="../imagetooldialog.cpp" line="52"/>
@@ -227,7 +227,7 @@
     <message>
         <location filename="../controls/languagemenu.cpp" line="23"/>
         <source>Languages</source>
-        <translation>Langages</translation>
+        <translation>Langues</translation>
     </message>
 </context>
 <context>
@@ -246,7 +246,7 @@
     <message>
         <location filename="../mainwindow.ui" line="191"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Editer</translation>
+        <translation>&amp;Éditer</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="195"/>
@@ -257,7 +257,7 @@
         <location filename="../mainwindow.ui" line="209"/>
         <location filename="../mainwindow.ui" line="588"/>
         <source>Find/Replace</source>
-        <translation>Chercher/Remplacer</translation>
+        <translation>Rechercher/Remplacer</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="232"/>
@@ -287,7 +287,7 @@
     <message>
         <location filename="../mainwindow.ui" line="283"/>
         <source>Languages</source>
-        <translation>Langages</translation>
+        <translation>Langues</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="308"/>
@@ -324,12 +324,12 @@
     <message>
         <location filename="../mainwindow.ui" line="398"/>
         <source>&amp;Save</source>
-        <translation>&amp;Sauvegarder</translation>
+        <translation>&amp;Enregistrer</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="403"/>
         <source>Save &amp;As...</source>
-        <translation>S&amp;auvegarder sous ...</translation>
+        <translation>Enregister &amp;sous...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="408"/>
@@ -344,7 +344,7 @@
     <message>
         <location filename="../mainwindow.ui" line="424"/>
         <source>Default</source>
-        <translation>Défaut</translation>
+        <translation>Par défaut</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="427"/>
@@ -354,7 +354,7 @@
     <message>
         <location filename="../mainwindow.ui" line="435"/>
         <source>Github</source>
-        <translation>Github</translation>
+        <translation>GitHub</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="438"/>
@@ -364,7 +364,7 @@
     <message>
         <location filename="../mainwindow.ui" line="446"/>
         <source>Solarized Light</source>
-        <translation>Clair solarisé</translation>
+        <translation>Solarized (clair)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="449"/>
@@ -374,7 +374,7 @@
     <message>
         <location filename="../mainwindow.ui" line="457"/>
         <source>Solarized Dark</source>
-        <translation>Sombre solarisé</translation>
+        <translation>Solarized (foncé)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="460"/>
@@ -434,7 +434,7 @@
     <message>
         <location filename="../mainwindow.ui" line="515"/>
         <source>&amp;Copy</source>
-        <translation>&amp;Kopírovat</translation>
+        <translation>&amp;Copier</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="520"/>
@@ -470,7 +470,7 @@
     <message>
         <location filename="../mainwindow.ui" line="553"/>
         <source>Math Support</source>
-        <translation>Support maths</translation>
+        <translation>Fonctions Maths</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="561"/>
@@ -480,7 +480,7 @@
     <message>
         <location filename="../mainwindow.ui" line="569"/>
         <source>Clearness</source>
-        <translation>Clarifier</translation>
+        <translation>Clearness</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="572"/>
@@ -490,7 +490,7 @@
     <message>
         <location filename="../mainwindow.ui" line="580"/>
         <source>Clearness Dark</source>
-        <translation>Clarifier (sombre)</translation>
+        <translation>Clearness (foncé)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="583"/>
@@ -500,12 +500,12 @@
     <message>
         <location filename="../mainwindow.ui" line="593"/>
         <source>Go to Line</source>
-        <translation type="unfinished"/>
+        <translation>Aller à la ligne</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="596"/>
         <source>Ctrl+L</source>
-        <translation type="unfinished"/>
+        <translation>Ctrl+L</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="601"/>
@@ -520,17 +520,17 @@
     <message>
         <location filename="../mainwindow.ui" line="609"/>
         <source>Ctrl+Return</source>
-        <translation type="unfinished"/>
+        <translation>Ctrl+Entrée</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="614"/>
         <source>Find Next</source>
-        <translation>Trouver le suivant</translation>
+        <translation>Trouver l'occurence suivante</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="619"/>
         <source>Find Previous</source>
-        <translation>Trouver le précédent</translation>
+        <translation>Trouver l'occurence précédente</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="627"/>
@@ -540,7 +540,7 @@
     <message>
         <location filename="../mainwindow.ui" line="632"/>
         <source>Blockquote</source>
-        <translation>Bloc citation</translation>
+        <translation>Bloc de citation</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="635"/>
@@ -558,18 +558,18 @@
     <message>
         <location filename="../mainwindow.ui" line="648"/>
         <source>F5</source>
-        <translation type="unfinished"/>
+        <translation>F5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="656"/>
         <source>Show Special Characters</source>
         <extracomment>Option to show characters like line feed or tabs</extracomment>
-        <translation type="unfinished"/>
+        <translation>Montrer les caractères spéciaux</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="661"/>
         <source>Options...</source>
-        <translation>Options...</translation>
+        <translation>Paramètres...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="669"/>
@@ -594,12 +594,12 @@
     <message>
         <location filename="../mainwindow.ui" line="706"/>
         <source>Language</source>
-        <translation>Langage</translation>
+        <translation>Langue</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="714"/>
         <source>Check Spelling</source>
-        <translation>Ověřit pravopis</translation>
+        <translation>Vérification orthographique</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="719"/>
@@ -609,7 +609,7 @@
     <message>
         <location filename="../mainwindow.ui" line="722"/>
         <source>Alt+Right</source>
-        <translation type="unfinished"/>
+        <translation>Alt+Droite</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="727"/>
@@ -619,7 +619,7 @@
     <message>
         <location filename="../mainwindow.ui" line="730"/>
         <source>Alt+Left</source>
-        <translation type="unfinished"/>
+        <translation>Alt+Gauche</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="735"/>
@@ -634,7 +634,7 @@
     <message>
         <location filename="../mainwindow.ui" line="743"/>
         <source>Byword Dark</source>
-        <translation>Synonyme foncé</translation>
+        <translation>Byword (foncé)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="746"/>
@@ -664,18 +664,18 @@
     <message>
         <location filename="../mainwindow.ui" line="778"/>
         <source>Superscript</source>
-        <translation type="unfinished"/>
+        <translation>Exposant</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="786"/>
         <source>Word Wrap</source>
-        <translation type="unfinished"/>
+        <translation>Retour à la ligne dynamique</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="166"/>
         <source>:/markdown-snippets.json</source>
         <extracomment>path to built-in snippets resource.</extracomment>
-        <translation type="unfinished"/>
+        <translation>:/markdown-snippets.json</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="205"/>
@@ -701,13 +701,13 @@
     <message>
         <location filename="../mainwindow.cpp" line="349"/>
         <source>Go to...</source>
-        <translation type="unfinished"/>
+        <translation>Aller à...</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="350"/>
         <source>Line: </source>
         <comment>Line number in the Markdown editor</comment>
-        <translation type="unfinished"/>
+        <translation>Ligne :</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="637"/>
@@ -717,7 +717,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="638"/>
         <source>&lt;p&gt;&lt;b&gt;CuteMarkEd %1&lt;/b&gt;&lt;br&gt;Qt-based, free and open source markdown editor with live HTML preview&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;b&gt;CuteMarkEd %1&lt;/b&gt;&lt;br&gt;Qt-based, free and open source markdown editor with live HTML preview&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;&lt;b&gt;CuteMarkEd %1&lt;/b&gt;&lt;br&gt;Éditeur de documents en Markdown, libre et basé sur les bibliothèques Qt, avec prévisualisation en HTML en temps réel&lt;br&gt;Copyright 2013 Christian Loose&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://cloose.github.io/CuteMarkEd&quot;&gt;http://cloose.github.io/CuteMarkEd&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="655"/>
@@ -763,7 +763,7 @@
         <location filename="../markdowneditor.cpp" line="65"/>
         <source>Ctrl+Space</source>
         <comment>Complete</comment>
-        <translation type="unfinished"/>
+        <translation>Ctrl+Espace</translation>
     </message>
     <message>
         <location filename="../markdowneditor.cpp" line="246"/>
@@ -773,7 +773,7 @@
     <message>
         <location filename="../markdowneditor.cpp" line="263"/>
         <source>Add to User Dictionary</source>
-        <translation type="unfinished"/>
+        <translation>Ajouter au dictionnaire</translation>
     </message>
 </context>
 <context>
@@ -786,34 +786,34 @@
     <message>
         <location filename="../optionsdialog.ui" line="24"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>Général</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="30"/>
         <source>Markdown Converter</source>
-        <translation type="unfinished"/>
+        <translation>Convertisseur Markdown</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="36"/>
         <source>Converter Library:</source>
-        <translation type="unfinished"/>
+        <translation>Bibliothèque de conversion :</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="44"/>
         <source>Discount (Default)</source>
         <extracomment>Name of a Markdown to HTML converter library</extracomment>
-        <translation type="unfinished"/>
+        <translation>Discount (Par défaut)</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="49"/>
         <source>Hoedown</source>
         <extracomment>Name of a Markdown to HTML converter library</extracomment>
-        <translation type="unfinished"/>
+        <translation>Hoedown</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="74"/>
         <source>Editor</source>
-        <translation>Editeur</translation>
+        <translation>Éditeur</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="80"/>
@@ -823,22 +823,22 @@
     <message>
         <location filename="../optionsdialog.ui" line="86"/>
         <source>Family:</source>
-        <translation>Famille:</translation>
+        <translation>Famille :</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="96"/>
         <source>Size:</source>
-        <translation>Taille:</translation>
+        <translation>Taille :</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="109"/>
         <source>Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Tabulations</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="115"/>
         <source>Tab width:</source>
-        <translation type="unfinished"/>
+        <translation>Largeur des tabulations :</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="165"/>
@@ -863,53 +863,53 @@
     <message>
         <location filename="../optionsdialog.ui" line="194"/>
         <source>Manual proxy configuration:</source>
-        <translation>Configuration manuelle du proxy:</translation>
+        <translation>Configuration manuelle du proxy :</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="210"/>
         <source>Host:</source>
-        <translation>Host:</translation>
+        <translation>Hôte :</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="217"/>
         <source>Port:</source>
-        <translation>Port:</translation>
+        <translation>Port :</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="224"/>
         <source>User Name:</source>
-        <translation>Nom d&apos;utilisateur:</translation>
+        <translation>Nom d&apos;utilisateur :</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="231"/>
         <source>Password:</source>
-        <translation>Mot de passe:</translation>
+        <translation>Mot de passe :</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="286"/>
         <source>Snippets</source>
-        <translation type="unfinished"/>
+        <translation>Raccourcis</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="325"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Ajouter</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="332"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="317"/>
         <source>Error</source>
         <comment>Title of error message box</comment>
-        <translation type="unfinished"/>
+        <translation>Erreur</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="317"/>
         <source>No snippet selected.</source>
-        <translation type="unfinished"/>
+        <translation>Aucun raccourci sélectionné.</translation>
     </message>
 </context>
 <context>
@@ -931,22 +931,22 @@
         <location filename="../optionsdialog.cpp" line="120"/>
         <source>Error</source>
         <comment>Title of error message box</comment>
-        <translation type="unfinished"/>
+        <translation>Erreur</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="120"/>
         <source>Not a valid trigger.</source>
-        <translation type="unfinished"/>
+        <translation>Abbréviation invalide.</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="140"/>
         <source>Trigger</source>
-        <translation type="unfinished"/>
+        <translation>Abbréviation</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="142"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Description</translation>
     </message>
 </context>
 <context>
@@ -959,17 +959,17 @@
     <message>
         <location filename="../tabletooldialog.ui" line="20"/>
         <source>Rows:</source>
-        <translation>Lignes:</translation>
+        <translation>Lignes :</translation>
     </message>
     <message>
         <location filename="../tabletooldialog.ui" line="37"/>
         <source>Columns:</source>
-        <translation>Colonnes:</translation>
+        <translation>Colonnes :</translation>
     </message>
     <message>
         <location filename="../tabletooldialog.ui" line="54"/>
         <source>Table:</source>
-        <translation>Tableau:</translation>
+        <translation>Tableau :</translation>
     </message>
     <message>
         <location filename="../tabletooldialog.ui" line="70"/>
