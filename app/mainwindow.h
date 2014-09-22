@@ -23,6 +23,7 @@ namespace Ui {
 class MainWindow;
 }
 
+class QAction;
 class QActionGroup;
 class QLabel;
 class QNetworkDiskCache;
@@ -111,6 +112,10 @@ private slots:
     void styleContextMenu(const QPoint &pos);
     void toggleHtmlView();
 
+    void webViewZoomIn();
+    void webViewZoomOut();
+    void webViewResetZoom();
+
     void plainTextChanged();
     void htmlResultReady(const QString &html);
     void tocResultReady(const QString &toc);
@@ -149,6 +154,9 @@ private:
     Options *options;
     QNetworkDiskCache *diskCache;
     QActionGroup *stylesGroup;
+    QAction *zoomInAction;
+    QAction *zoomOutAction;
+    QAction *zoomResetAction;
     QLabel *styleLabel;
     QLabel *wordCountLabel;
     ActiveLabel *viewLabel;
