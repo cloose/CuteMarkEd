@@ -14,25 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef ABOUTDIALOG_H
-#define ABOUTDIALOG_H
+#include "datalocation.h"
 
-#include <QDialog>
+#include <QDir>
+#include <QStandardPaths>
 
-namespace Ui {
-class AboutDialog;
+
+QString DataLocation::writableLocation()
+{
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    ensurePathExists(path);
+    return path;
 }
 
-class AboutDialog : public QDialog
+QStringList DataLocation::standardLocations()
 {
-    Q_OBJECT
+    return QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+}
 
-public:
-    explicit AboutDialog(QWidget *parent = 0);
-    ~AboutDialog();
-
-private:
-    Ui::AboutDialog *ui;
-};
-
-#endif // ABOUTDIALOG_H
+void DataLocation::ensurePathExists(const QString &path)
+{
+    QDir p(path);
+    if (!p.exists()) {
+        p.mkpath(path);
+    }
+}

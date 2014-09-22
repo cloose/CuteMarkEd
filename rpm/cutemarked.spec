@@ -1,8 +1,5 @@
 %if 0%{?suse_version}
-%define _qt5_qmake qmake
-%endif
-%if 0%{?suse_version} >= 1310
-%define _qt5_qmake qmake-qt5
+%define _qt5_qmake /usr/%_lib/qt5/bin/qmake
 %endif
 %define lrelease lrelease
 %if 0%{?fedora_version}
@@ -12,7 +9,7 @@
 Name:                   cutemarked
 Summary:                Qt-based Markdown editor
 Group:                  Productivity/Text/Editors
-Version:                0.10.0
+Version:                0.10.1
 Release:                1
 License:                GPL-2.0+
 Url:                    http://github.com/cloose/CuteMarkEd
@@ -29,17 +26,25 @@ BuildRequires:          pkgconfig(Qt5Core)
 BuildRequires:          pkgconfig(Qt5Gui)
 BuildRequires:          pkgconfig(Qt5Network)
 BuildRequires:          pkgconfig(Qt5WebKitWidgets)
-BuildRequires:          libqt5-qttools-devel
 BuildRequires:          libmarkdown-devel
 BuildRequires:          pkgconfig(hunspell)
 %if 0%{?suse_version}
 BuildRequires:          update-desktop-files
+BuildRequires:          pkgconfig(Qt5Test)
+BuildRequires:          libqt5-qttools-devel
+%endif
+%if 0%{?fedora_version} <= 19
+BuildRequires:          libqt5-qttools-devel
+%endif
+%if 0%{?fedora_version} >= 20
+BuildRequires:          qt5-qttools-devel
 %endif
 %if 0%{?fedora_version}
 BuildRequires:          desktop-file-utils
 BuildRequires:          pkgconfig(gstreamer-0.10) pkgconfig(gstreamer-app-0.10)
 BuildRequires:          pkgconfig(sqlite3)
 %endif
+
 
 %description
 A Qt-based Markdown editor with live HTML preview and syntax highlighting of markdown document.
@@ -62,16 +67,6 @@ make
 %install
 make INSTALL_ROOT="%buildroot" install
 
-%if 0%{?fedora_version}
-mkdir $RPM_BUILD_ROOT%{_bindir}
-mv $RPM_BUILD_ROOT%{_qt5_bindir}/cutemarked $RPM_BUILD_ROOT%{_bindir}/cutemarked
-%endif
-
-%if 0%{?suse_version} >= 1310
-mkdir $RPM_BUILD_ROOT%{_bindir}
-mv $RPM_BUILD_ROOT%{_libdir}/qt5/bin/cutemarked $RPM_BUILD_ROOT%{_bindir}/cutemarked
-%endif
-
 %files 
 %defattr(-,root,root,755)
 %_bindir/cutemarked
@@ -80,11 +75,15 @@ mv $RPM_BUILD_ROOT%{_libdir}/qt5/bin/cutemarked $RPM_BUILD_ROOT%{_bindir}/cutema
 %files plugin-fontawesome
 %defattr(-,root,root,-)
 %{_libdir}/qt5/plugins/iconengines/libfontawesomeicon.so
+/usr/%_lib/qt5/plugins/iconengines
 
 
 %changelog
 
-* Sat Jul 19 2014 Christian Loose <christian.loose@hamburg.de> 0.10.0-1
+* Sun Aug 24 2014 Christian Loose <christian.loose@hamburg.de> 0.10.1-1
+- New patch version 0.10.1 released
+
+* Wed Jul 23 2014 Christian Loose <christian.loose@hamburg.de> 0.10.0-1
 - New minor version 0.10.0 released
 
 * Mon Apr 07 2014 Christian Loose <christian.loose@hamburg.de> 0.9.2-1

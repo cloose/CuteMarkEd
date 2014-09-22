@@ -19,7 +19,8 @@ SOURCES += \
     spellchecker/dictionary.cpp \
     converter/revealmarkdownconverter.cpp \
     template/htmltemplate.cpp \
-    template/presentationtemplate.cpp
+    template/presentationtemplate.cpp \
+    datalocation.cpp
 
 HEADERS += \
     snippets/snippet.h \
@@ -34,7 +35,8 @@ HEADERS += \
     converter/revealmarkdownconverter.h \
     template/template.h \
     template/htmltemplate.h \
-    template/presentationtemplate.h
+    template/presentationtemplate.h \
+    datalocation.h
 
 #unix:!symbian {
 #    maemo5 {
@@ -74,8 +76,14 @@ with_hoedown {
 
     win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/release/ -lhoedown
     else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/debug/ -lhoedown
-    else:unix: LIBS += -L$$OUT_PWD/../3rdparty/hoedown/ -lhoedown
+    else:unix: LIBS += -L/usr/lib -lhoedown
 
-    INCLUDEPATH += $$PWD/../3rdparty/hoedown
-    DEPENDPATH += $$PWD/../3rdparty/hoedown
+    win32 {
+        INCLUDEPATH += $$PWD/../3rdparty/hoedown
+        DEPENDPATH += $$PWD/../3rdparty/hoedown
+    }
+
+    unix {
+        INCLUDEPATH += /usr/include
+    }
 }

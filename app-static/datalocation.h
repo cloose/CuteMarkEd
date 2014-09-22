@@ -14,25 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef ABOUTDIALOG_H
-#define ABOUTDIALOG_H
+#ifndef DATALOCATION_H
+#define DATALOCATION_H
 
-#include <QDialog>
+#include <QStringList>
 
-namespace Ui {
-class AboutDialog;
-}
 
-class AboutDialog : public QDialog
+class DataLocation
 {
-    Q_OBJECT
-
 public:
-    explicit AboutDialog(QWidget *parent = 0);
-    ~AboutDialog();
+    static QString writableLocation();
+    static QStringList standardLocations();
 
 private:
-    Ui::AboutDialog *ui;
+    DataLocation();
+    ~DataLocation();
+
+    static void ensurePathExists(const QString &path);
 };
 
-#endif // ABOUTDIALOG_H
+#endif // DATALOCATION_H

@@ -15,7 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "options.h"
+
 #include <QSettings>
+#include <QWebSettings>
 
 
 static const char* MARKDOWN_CONVERTER = "general/converter";
@@ -23,6 +25,12 @@ static const char* FONT_FAMILY_DEFAULT = "Monospace";
 static const char* FONT_FAMILY = "editor/font/family";
 static const char* FONT_SIZE = "editor/font/size";
 static const char* TAB_WIDTH = "editor/tabwidth";
+static const char* PREVIEW_STANDARD_FONT = "preview/standardfont";
+static const char* PREVIEW_FIXED_FONT = "preview/fixedfont";
+static const char* PREVIEW_SERIF_FONT = "preview/seriffont";
+static const char* PREVIEW_SANSSERIF_FONT = "preview/sansseriffont";
+static const char* PREVIEW_DEFAULT_FONT_SIZE = "preview/defaultfontsize";
+static const char* PREVIEW_DEFAULT_FIXED_FONT_SIZE = "preview/defaultfixedfontsize";
 static const char* PROXY_MODE = "internet/proxy/mode";
 static const char* PROXY_HOST = "internet/proxy/host";
 static const char* PROXY_PORT = "internet/proxy/port";
@@ -65,6 +73,14 @@ Options::Options(QObject *parent) :
 
 void Options::apply()
 {
+    QWebSettings *globalWebSettings = QWebSettings::globalSettings();
+    globalWebSettings->setFontFamily(QWebSettings::StandardFont, m_standardFontFamily);
+    globalWebSettings->setFontFamily(QWebSettings::FixedFont, m_fixedFontFamily);
+    globalWebSettings->setFontFamily(QWebSettings::SerifFont, m_serifFontFamily);
+    globalWebSettings->setFontFamily(QWebSettings::SansSerifFont, m_sansSerifFontFamily);
+    globalWebSettings->setFontSize(QWebSettings::DefaultFontSize, m_defaultFontSize);
+    globalWebSettings->setFontSize(QWebSettings::DefaultFixedFontSize, m_defaultFixedFontSize);
+
     emit proxyConfigurationChanged();
     emit markdownConverterChanged();
 }
@@ -89,6 +105,66 @@ void Options::setTabWidth(int width)
 {
     m_tabWidth = width;
     emit tabWidthChanged(width);
+}
+
+QFont Options::standardFont() const
+{
+    return QFont(m_standardFontFamily);
+}
+
+void Options::setStandardFont(const QFont &font)
+{
+    m_standardFontFamily = font.family();
+}
+
+QFont Options::serifFont() const
+{
+    return QFont(m_serifFontFamily);
+}
+
+void Options::setSerifFont(const QFont &font)
+{
+    m_serifFontFamily = font.family();
+}
+
+QFont Options::sansSerifFont() const
+{
+    return QFont(m_sansSerifFontFamily);
+}
+
+void Options::setSansSerifFont(const QFont &font)
+{
+    m_sansSerifFontFamily = font.family();
+}
+
+QFont Options::fixedFont() const
+{
+    return QFont(m_fixedFontFamily);
+}
+
+void Options::setFixedFont(const QFont &font)
+{
+    m_fixedFontFamily = font.family();
+}
+
+int Options::defaultFontSize() const
+{
+    return m_defaultFontSize;
+}
+
+void Options::setDefaultFontSize(int size)
+{
+    m_defaultFontSize = size;
+}
+
+int Options::defaultFixedFontSize() const
+{
+    return m_defaultFixedFontSize;
+}
+
+void Options::setDefaultFixedFontSize(int size)
+{
+    m_defaultFixedFontSize = size;
 }
 
 Options::ProxyMode Options::proxyMode() const
@@ -301,6 +377,15 @@ void Options::readSettings()
     f.setStyleHint(QFont::TypeWriter);
     setEditorFont(f);
 
+    // html preview settings
+    QWebSettings *globalWebSettings = QWebSettings::globalSettings();
+    m_standardFontFamily = settings.value(PREVIEW_STANDARD_FONT, globalWebSettings->fontFamily(QWebSettings::StandardFont)).toString();
+    m_fixedFontFamily = settings.value(PREVIEW_FIXED_FONT, globalWebSettings->fontFamily(QWebSettings::FixedFont)).toString();
+    m_serifFontFamily = settings.value(PREVIEW_SERIF_FONT, globalWebSettings->fontFamily(QWebSettings::SerifFont)).toString();
+    m_sansSerifFontFamily = settings.value(PREVIEW_SANSSERIF_FONT, globalWebSettings->fontFamily(QWebSettings::SansSerifFont)).toString();
+    m_defaultFontSize = settings.value(PREVIEW_DEFAULT_FONT_SIZE, globalWebSettings->fontSize(QWebSettings::DefaultFontSize)).toInt();
+    m_defaultFixedFontSize = settings.value(PREVIEW_DEFAULT_FIXED_FONT_SIZE, globalWebSettings->fontSize(QWebSettings::DefaultFixedFontSize)).toInt();
+
     // proxy settings
     m_proxyMode = (Options::ProxyMode)settings.value(PROXY_MODE, 0).toInt();
     m_proxyHost = settings.value(PROXY_HOST, "").toString();
@@ -340,6 +425,14 @@ void Options::writeSettings()
     settings.setValue(FONT_FAMILY, font.family());
     settings.setValue(FONT_SIZE, font.pointSize());
     settings.setValue(TAB_WIDTH, m_tabWidth);
+
+    // html preview settings
+    settings.setValue(PREVIEW_STANDARD_FONT, m_standardFontFamily);
+    settings.setValue(PREVIEW_FIXED_FONT, m_fixedFontFamily);
+    settings.setValue(PREVIEW_SERIF_FONT, m_serifFontFamily);
+    settings.setValue(PREVIEW_SANSSERIF_FONT, m_sansSerifFontFamily);
+    settings.setValue(PREVIEW_DEFAULT_FONT_SIZE, m_defaultFontSize);
+    settings.setValue(PREVIEW_DEFAULT_FIXED_FONT_SIZE, m_defaultFixedFontSize);
 
     // proxy settings
     settings.setValue(PROXY_MODE, m_proxyMode);
