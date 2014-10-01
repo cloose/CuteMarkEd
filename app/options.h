@@ -42,6 +42,25 @@ public:
     int tabWidth() const;
     void setTabWidth(int width);
 
+    /* HTML preview options */
+    QFont standardFont() const;
+    void setStandardFont(const QFont &font);
+
+    QFont serifFont() const;
+    void setSerifFont(const QFont &font);
+
+    QFont sansSerifFont() const;
+    void setSansSerifFont(const QFont &font);
+
+    QFont fixedFont() const;
+    void setFixedFont(const QFont &font);
+
+    int defaultFontSize() const;
+    void setDefaultFontSize(int size);
+
+    int defaultFixedFontSize() const;
+    void setDefaultFixedFontSize(int size);
+
     /* Internet options */
     ProxyMode proxyMode() const;
     void setProxyMode(ProxyMode mode);
@@ -132,6 +151,12 @@ private:
     bool m_spellingCheckEnabled;
     QString m_dictionaryLanguage;
     MarkdownConverter m_markdownConverter;
+    QString m_standardFontFamily;
+    QString m_fixedFontFamily;
+    QString m_serifFontFamily;
+    QString m_sansSerifFontFamily;
+    int m_defaultFontSize;
+    int m_defaultFixedFontSize;
 };
 
 #endif // OPTIONS_H

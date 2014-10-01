@@ -69,6 +69,9 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     ui(new Ui::MainWindow),
     options(new Options(this)),
     diskCache(new QNetworkDiskCache(this)),
+    zoomInAction(0),
+    zoomOutAction(0),
+    zoomResetAction(0),
     styleLabel(0),
     wordCountLabel(0),
     viewLabel(0),
@@ -110,6 +113,10 @@ void MainWindow::webViewContextMenu(const QPoint &pos)
     QMenu *contextMenu = new QMenu(this);
 
     contextMenu->insertAction(0, ui->webView->pageAction(QWebPage::Copy));
+
+    contextMenu->insertAction(0, zoomInAction);
+    contextMenu->insertAction(0, zoomOutAction);
+    contextMenu->insertAction(0, zoomResetAction);
 
     contextMenu->exec(ui->webView->mapToGlobal(pos));
     delete contextMenu;
@@ -704,6 +711,21 @@ void MainWindow::toggleHtmlView()
     updateSplitter();
 }
 
+void MainWindow::webViewZoomIn()
+{
+    ui->webView->setZoomFactor(ui->webView->zoomFactor() + 0.1);
+}
+
+void MainWindow::webViewZoomOut()
+{
+    ui->webView->setZoomFactor(ui->webView->zoomFactor() - 0.1);
+}
+
+void MainWindow::webViewResetZoom()
+{
+    ui->webView->setZoomFactor(1.0);
+}
+
 void MainWindow::plainTextChanged()
 {
     QString code = ui->plainTextEdit->toPlainText();
@@ -991,6 +1013,22 @@ void MainWindow::setupActions()
     ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);
 
     ui->webView->pageAction(QWebPage::Copy)->setIcon(QIcon("fa-copy.fontawesome"));
+
+    // zoom actions for html view
+    zoomInAction = new QAction(tr("Zoom &In"), this);
+    zoomInAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Plus));
+    connect(zoomInAction, SIGNAL(triggered()), this, SLOT(webViewZoomIn()));
+    ui->webView->addAction(zoomInAction);
+
+    zoomOutAction = new QAction(tr("Zoom &Out"), this);
+    zoomOutAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
+    connect(zoomOutAction, SIGNAL(triggered()), this, SLOT(webViewZoomOut()));
+    ui->webView->addAction(zoomOutAction);
+
+    zoomResetAction = new QAction(tr("Reset &Zoom"), this);
+    zoomResetAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_0));
+    connect(zoomResetAction, SIGNAL(triggered()), this, SLOT(webViewResetZoom()));
+    ui->webView->addAction(zoomResetAction);
 }
 
 void MainWindow::setupStatusBar()

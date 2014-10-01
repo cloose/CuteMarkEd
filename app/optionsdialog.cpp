@@ -213,13 +213,16 @@ OptionsDialog::OptionsDialog(Options *opt, SnippetCollection *collection, QWidge
     ui->tabWidget->setIconSize(QSize(24, 24));
     ui->tabWidget->setTabIcon(0, QIcon("fa-cog.fontawesome"));
     ui->tabWidget->setTabIcon(1, QIcon("fa-file-text-o.fontawesome"));
-    ui->tabWidget->setTabIcon(2, QIcon("fa-globe.fontawesome"));
-    ui->tabWidget->setTabIcon(3, QIcon("fa-puzzle-piece.fontawesome"));
+    ui->tabWidget->setTabIcon(2, QIcon("fa-html5.fontawesome"));
+    ui->tabWidget->setTabIcon(3, QIcon("fa-globe.fontawesome"));
+    ui->tabWidget->setTabIcon(4, QIcon("fa-puzzle-piece.fontawesome"));
 
     ui->fontComboBox->setFontFilters(QFontComboBox::MonospacedFonts);
 
     foreach (int size, QFontDatabase::standardSizes()) {
         ui->sizeComboBox->addItem(QString().setNum(size));
+        ui->defaultSizeComboBox->addItem(QString().setNum(size));
+        ui->defaultFixedSizeComboBox->addItem(QString().setNum(size));
     }
 
     ui->portLineEdit->setValidator(new QIntValidator(0, 65535));
@@ -338,6 +341,14 @@ void OptionsDialog::readState()
     ui->sizeComboBox->setCurrentText(QString().setNum(font.pointSize()));
     ui->tabWidthSpinBox->setValue(options->tabWidth());
 
+    // html preview settings
+    ui->standardFontComboBox->setCurrentFont(options->standardFont());
+    ui->defaultSizeComboBox->setCurrentText(QString().setNum(options->defaultFontSize()));
+    ui->serifFontComboBox->setCurrentFont(options->serifFont());
+    ui->sansSerifFontComboBox->setCurrentFont(options->sansSerifFont());
+    ui->fixedFontComboBox->setCurrentFont(options->fixedFont());
+    ui->defaultFixedSizeComboBox->setCurrentText(QString().setNum(options->defaultFixedFontSize()));
+
     // proxy settings
     switch (options->proxyMode()) {
     case Options::NoProxy:
@@ -366,6 +377,14 @@ void OptionsDialog::saveState()
     font.setPointSize(ui->sizeComboBox->currentText().toInt());
     options->setEditorFont(font);
     options->setTabWidth(ui->tabWidthSpinBox->value());
+
+    // html preview settings
+    options->setStandardFont(ui->standardFontComboBox->currentFont());
+    options->setDefaultFontSize(ui->defaultSizeComboBox->currentText().toInt());
+    options->setSerifFont(ui->serifFontComboBox->currentFont());
+    options->setSansSerifFont(ui->sansSerifFontComboBox->currentFont());
+    options->setFixedFont(ui->fixedFontComboBox->currentFont());
+    options->setDefaultFixedFontSize(ui->defaultFixedSizeComboBox->currentText().toInt());
 
     // proxy settings
     if (ui->noProxyRadioButton->isChecked()) {

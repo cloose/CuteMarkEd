@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>440</width>
-    <height>351</height>
+    <width>550</width>
+    <height>450</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -159,6 +159,95 @@
           <size>
            <width>20</width>
            <height>146</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="htmlPreviewTab">
+      <attribute name="title">
+       <string>HTML Preview</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <item>
+        <widget class="QGroupBox" name="previewFontsGroupBox">
+         <property name="title">
+          <string>Fonts</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="standardFontLabel">
+            <property name="text">
+             <string>Standard Font:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QFontComboBox" name="standardFontComboBox"/>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="defaultSizeLabel">
+            <property name="text">
+             <string>Size:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QComboBox" name="defaultSizeComboBox"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="serifFontLabel">
+            <property name="text">
+             <string>Serif Font:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QFontComboBox" name="serifFontComboBox"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="sansSerifFontLabel">
+            <property name="text">
+             <string>Sans Serif Font:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QFontComboBox" name="sansSerifFontComboBox"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="fixedFontLabel">
+            <property name="text">
+             <string>Fixed Font:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QFontComboBox" name="fixedFontComboBox"/>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLabel" name="defaultFixedSizeLabel">
+            <property name="text">
+             <string>Size:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QComboBox" name="defaultFixedSizeComboBox"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>120</height>
           </size>
          </property>
         </spacer>

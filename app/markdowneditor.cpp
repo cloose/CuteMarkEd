@@ -35,6 +35,20 @@
 #include "hunspell/spellchecker.h"
 using hunspell::SpellChecker;
 
+#include <QScrollBar>
+
+class ScrollBarFix : public QScrollBar {
+public:
+    ScrollBarFix(Qt::Orientation orient, QWidget *parent=0)
+        : QScrollBar(orient, parent) {}
+
+protected:
+    void sliderChange(SliderChange change) {
+        if (signalsBlocked() && change == QAbstractSlider::SliderValueChange)
+            blockSignals(false);
+        QScrollBar::sliderChange(change);
+    }
+};
 
 MarkdownEditor::MarkdownEditor(QWidget *parent) :
     QPlainTextEdit(parent),
@@ -50,6 +64,8 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
 
     lineNumberArea->setFont(font);
     setFont(font);
+
+    setVerticalScrollBar(new ScrollBarFix(Qt::Vertical, this));
 
     connect(this, SIGNAL(blockCountChanged(int)),
             this, SLOT(updateLineNumberAreaWidth(int)));
@@ -185,7 +201,7 @@ void MarkdownEditor::keyPressEvent(QKeyEvent *e)
 
 bool MarkdownEditor::canInsertFromMimeData(const QMimeData *source) const
 {
-    if (source->hasUrls() && (source->urls().count() == 1) && source->urls().first().isLocalFile()) {
+    if (isUrlToLocalFile(source)) {
         return true;
     }
 
@@ -194,7 +210,7 @@ bool MarkdownEditor::canInsertFromMimeData(const QMimeData *source) const
 
 void MarkdownEditor::insertFromMimeData(const QMimeData *source)
 {
-    if (source->hasUrls()) {
+    if (isUrlToLocalFile(source)) {
         emit loadDroppedFile(source->urls().first().toLocalFile());
     } else {
         QPlainTextEdit::insertFromMimeData(source);
@@ -321,6 +337,11 @@ void MarkdownEditor::addWordToUserWordlist()
     QAction *action = qobject_cast<QAction*>(sender());
     QString word = action->data().toString();
     spellChecker->addToUserWordlist(word);
+}
+
+bool MarkdownEditor::isUrlToLocalFile(const QMimeData *source) const
+{
+    return source->hasUrls() && (source->urls().count() == 1) && source->urls().first().isLocalFile();
 }
 
 void MarkdownEditor::loadStyleFromStylesheet(const QString &fileName)
