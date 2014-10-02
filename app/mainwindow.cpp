@@ -79,7 +79,9 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     snippetCollection(new SnippetCollection(this)),
     splitFactor(0.5),
     scrollBarPos(0),
-    rightViewCollapsed(false)
+    rightViewCollapsed(false),
+    m_revealHorizontal(0),
+    m_revealVertical(0)
 {
     ui->setupUi(this);
     setupUi();
@@ -97,6 +99,16 @@ MainWindow::~MainWindow()
     delete generator;
 
     delete ui;
+}
+
+int MainWindow::revealHorizontal() const
+{
+    return m_revealHorizontal;
+}
+
+int MainWindow::revealVertical() const
+{
+    return m_revealVertical;
 }
 
 void MainWindow::webViewScrolled()
@@ -120,6 +132,26 @@ void MainWindow::webViewContextMenu(const QPoint &pos)
 
     contextMenu->exec(ui->webView->mapToGlobal(pos));
     delete contextMenu;
+}
+
+void MainWindow::setRevealPosition(int horizontal, int vertical)
+{
+    if (m_revealHorizontal == horizontal && m_revealVertical == vertical)
+        return;
+
+    m_revealHorizontal = horizontal;
+    m_revealVertical = vertical;
+    emit revealPositionChanged(horizontal, vertical);
+}
+
+void MainWindow::feedbackRevealPosition(int horizontal, int vertical)
+{
+    if (m_revealHorizontal == horizontal && m_revealVertical == vertical)
+        return;
+
+    m_revealHorizontal = horizontal;
+    m_revealVertical = vertical;
+    moveCursorToSlide();
 }
 
 void MainWindow::closeEvent(QCloseEvent *e)
@@ -739,6 +771,10 @@ void MainWindow::plainTextChanged()
         wordCountLabel->setToolTip(tr("Lines: %1  Words: %2  Characters: %3").arg(lines).arg(words).arg(chars));
     }
 
+    if (options->markdownConverter() == Options::RevealMarkdownConverter) {
+        buildSlideMap(code);
+    }
+
     // generate HTML from markdown
     generator->markdownTextChanged(code);
 
@@ -824,17 +860,66 @@ void MainWindow::splitterMoved(int pos, int index)
 
 void MainWindow::scrollValueChanged(int value)
 {
-    double factor = (double)ui->webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical) /
-                   ui->plainTextEdit->verticalScrollBar()->maximum();
+    if (options->markdownConverter() == Options::DiscountMarkdownConverter) {
+        int webMax = ui->webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical);
+        int textMax = ui->plainTextEdit->verticalScrollBar()->maximum();
+        double factor = (double)webMax / textMax;
 
-    ui->webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, qRound(value * factor));
+        ui->webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, qRound(value * factor));
+    }
+}
+
+void MainWindow::cursorPositionChanged()
+{
+    if (options->markdownConverter() == Options::RevealMarkdownConverter) {
+        updateRevealPosition();
+    }
+}
+
+void MainWindow::moveCursorToSlide()
+{
+    RevealSlideToLine::iterator it = m_revealSlideToLine.find(qMakePair(m_revealHorizontal, m_revealVertical));
+    if (it != m_revealSlideToLine.end()) {
+        ui->plainTextEdit->gotoLine(it.value());
+    }
 }
 
 void MainWindow::addJavaScriptObject()
 {
-    // add mainwindow object to javascript engine, so when
-    // the scrollbar of the webview changes the method webViewScrolled() can be called
-    ui->webView->page()->mainFrame()->addToJavaScriptWindowObject("mainwin", this);
+    if (options->markdownConverter() == Options::DiscountMarkdownConverter) {
+        // add mainwindow object to javascript engine, so when
+        // the scrollbar of the webview changes the method webViewScrolled() can be called
+        ui->webView->page()->mainFrame()->addToJavaScriptWindowObject("mainwin", this);
+    }
+    if (options->markdownConverter() == Options::RevealMarkdownConverter) {
+        ui->webView->page()->mainFrame()->addToJavaScriptWindowObject("mainwin", this);
+        static QString restorePosition =
+                "window.location.hash = '/'+mainwin.revealHorizontal+'/'+mainwin.revealVertical;";
+        ui->webView->page()->mainFrame()->evaluateJavaScript(restorePosition);
+    }
+}
+
+void MainWindow::registerEvents()
+{
+    if (options->markdownConverter() == Options::RevealMarkdownConverter) {
+        ui->webView->page()->mainFrame()->evaluateJavaScript(
+                    "(function(){"
+                    "  var mainWinUpdate = false;"
+                    "  function updatePosition() {"
+                    "    mainWinUpdate = true;"
+                    "    Reveal.slide(mainwin.revealHorizontal, mainwin.revealVertical);"
+                    "    mainWinUpdate = false;"
+                    "  }"
+                    "  function feedbackPosition(event) {"
+                    "    if (mainWinUpdate) return;"
+                    "    mainwin.feedbackRevealPosition(event.indexh, event.indexv);"
+                    "  }"
+                    "  mainwin.revealPositionChanged.connect(updatePosition);"
+                    "  Reveal.addEventListener('ready', function() {"
+                    "    Reveal.addEventListener('slidechanged', feedbackPosition);"
+                    "  });"
+                    "})();");
+    }
 }
 
 bool MainWindow::load(const QString &fileName)
@@ -1070,6 +1155,8 @@ void MainWindow::setupMarkdownEditor()
     // synchronize scrollbars
     connect(ui->plainTextEdit->verticalScrollBar(), SIGNAL(valueChanged(int)),
             this, SLOT(scrollValueChanged(int)));
+    connect(ui->plainTextEdit, SIGNAL(cursorPositionChanged()),
+            this, SLOT(cursorPositionChanged()));
 
     connect(options, SIGNAL(editorFontChanged(QFont)),
             ui->plainTextEdit, SLOT(editorFontChanged(QFont)));
@@ -1082,6 +1169,8 @@ void MainWindow::setupHtmlPreview()
     // add our objects everytime JavaScript environment is cleared
     connect(ui->webView->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),
             this, SLOT(addJavaScriptObject()));
+    connect(ui->webView, SIGNAL(loadFinished(bool)),
+            this, SLOT(registerEvents()));
 
     // restore scrollbar position after content size changed
     connect(ui->webView->page()->mainFrame(), SIGNAL(contentsSizeChanged(QSize)),
@@ -1225,3 +1314,72 @@ void MainWindow::writeSettings()
     settings.setValue("mainWindow/windowState", saveState());
 }
 
+void MainWindow::updateRevealPosition()
+{
+    int lineNumber = ui->plainTextEdit->textCursor().blockNumber() + 1;
+
+    RevealLineToSlide::iterator it = m_revealLineToSlide.upperBound( lineNumber );
+    if (it != m_revealLineToSlide.end()) {
+        setRevealPosition(it.value().first, it.value().second);
+    }
+}
+
+static bool isLineBreak(QChar chr) {
+    return chr == '\n' || chr == '\r';
+}
+
+class IsNotComplementLineBreak {
+public:
+    IsNotComplementLineBreak(QChar chr)
+        : m_complement(chr == '\n' ? '\r' : '\n')
+    {}
+
+    bool operator()(QChar chr) {
+        return chr != m_complement;
+    }
+
+private:
+    QChar m_complement;
+};
+
+static bool equals(const QString& string, const QString::const_iterator& begin, const QString::const_iterator& end) {
+    return (string.length() == end-begin) && std::equal(string.begin(), string.end(), begin);
+}
+
+void MainWindow::buildSlideMap(const QString &code)
+{
+    static const QString horizontalMarker("---");
+    static const QString verticalMarker("--");
+
+    m_revealLineToSlide.clear();
+    m_revealSlideToLine.clear();
+    QString::const_iterator codeBegin = code.begin();
+    QString::const_iterator codeEnd = code.end();
+    QString::const_iterator it = codeBegin;
+    int line = 0;
+    int horizontal = 0;
+    int vertical = 0;
+    m_revealSlideToLine.insert(qMakePair(horizontal, vertical), line+1);
+    while (it != codeEnd) {
+        ++line;
+        QString::const_iterator lineEnd = std::find_if(it, codeEnd, isLineBreak);
+
+        if (lineEnd == codeEnd) {
+            break;
+        }
+        if (equals(horizontalMarker, it, lineEnd)) {
+            m_revealLineToSlide.insert(line, qMakePair(horizontal, vertical));
+            horizontal++;
+            vertical = 0;
+            m_revealSlideToLine.insert(qMakePair(horizontal, vertical), line+1);
+        }
+        if (equals(verticalMarker, it, lineEnd)) {
+            m_revealLineToSlide.insert(line, qMakePair(horizontal, vertical));
+            vertical++;
+            m_revealSlideToLine.insert(qMakePair(horizontal, vertical), line+1);
+        }
+
+        it = std::find_if(lineEnd + 1, codeEnd, IsNotComplementLineBreak(*lineEnd));
+    }
+    m_revealLineToSlide.insert(line, qMakePair(horizontal, vertical));
+}

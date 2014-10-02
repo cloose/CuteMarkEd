@@ -18,6 +18,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMap>
+#include <QHash>
 
 namespace Ui {
 class MainWindow;
@@ -39,14 +41,25 @@ class SnippetCollection;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    
+    Q_PROPERTY(int revealHorizontal READ revealHorizontal NOTIFY revealPositionChanged)
+    Q_PROPERTY(int revealVertical READ revealVertical NOTIFY revealPositionChanged)
+
 public:
     explicit MainWindow(const QString &fileName = QString(), QWidget *parent = 0);
     ~MainWindow();
 
+    int revealHorizontal() const;
+    int revealVertical() const;
+
 public slots:
     void webViewScrolled();
     void webViewContextMenu(const QPoint &pos);
+
+    void setRevealPosition(int horizontal, int vertical);
+    void feedbackRevealPosition(int horizontal, int vertical);
+
+signals:
+    void revealPositionChanged(int horizontal, int vertical);
 
 protected:
     void closeEvent(QCloseEvent *e) Q_DECL_OVERRIDE;
@@ -126,8 +139,11 @@ private slots:
 
     void splitterMoved(int pos, int index);
     void scrollValueChanged(int value);
+    void cursorPositionChanged();
+    void moveCursorToSlide();
 
     void addJavaScriptObject();
+    void registerEvents();
     bool load(const QString &fileName);
     void proxyConfigurationChanged();
     void markdownConverterChanged();
@@ -147,6 +163,8 @@ private:
     void loadCustomStyles();
     void readSettings();
     void writeSettings();
+    void updateRevealPosition();
+    void buildSlideMap(const QString& code);
 
 private:
     Ui::MainWindow *ui;
@@ -167,6 +185,13 @@ private:
     float splitFactor;
     int scrollBarPos;
     bool rightViewCollapsed;
+
+    typedef QMap<int, QPair<int, int> > RevealLineToSlide;
+    typedef QHash<QPair<int, int>, int > RevealSlideToLine;
+    RevealLineToSlide m_revealLineToSlide;
+    RevealSlideToLine m_revealSlideToLine;
+    int m_revealHorizontal;
+    int m_revealVertical;
 };
 
 #endif // MAINWINDOW_H
