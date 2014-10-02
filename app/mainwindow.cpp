@@ -1319,7 +1319,8 @@ void MainWindow::updateRevealPosition()
     int lineNumber = ui->plainTextEdit->textCursor().blockNumber() + 1;
 
     RevealLineToSlide::iterator it = m_revealLineToSlide.upperBound( lineNumber );
-    if (it != m_revealLineToSlide.end()) {
+    RevealLineToSlide::iterator it2 = m_revealLineToSlide.lowerBound( lineNumber );
+    if (it != m_revealLineToSlide.end() && it == it2) {
         setRevealPosition(it.value().first, it.value().second);
     }
 }
