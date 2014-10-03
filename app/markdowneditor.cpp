@@ -35,6 +35,20 @@
 #include "hunspell/spellchecker.h"
 using hunspell::SpellChecker;
 
+#include <QScrollBar>
+
+class ScrollBarFix : public QScrollBar {
+public:
+    ScrollBarFix(Qt::Orientation orient, QWidget *parent=0)
+        : QScrollBar(orient, parent) {}
+
+protected:
+    void sliderChange(SliderChange change) {
+        if (signalsBlocked() && change == QAbstractSlider::SliderValueChange)
+            blockSignals(false);
+        QScrollBar::sliderChange(change);
+    }
+};
 
 MarkdownEditor::MarkdownEditor(QWidget *parent) :
     QPlainTextEdit(parent),
@@ -50,6 +64,8 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
 
     lineNumberArea->setFont(font);
     setFont(font);
+
+    setVerticalScrollBar(new ScrollBarFix(Qt::Vertical, this));
 
     connect(this, SIGNAL(blockCountChanged(int)),
             this, SLOT(updateLineNumberAreaWidth(int)));
