@@ -1,5 +1,4 @@
 ## CuteMarkEd
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/cloose/CuteMarkEd?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ### DESCRIPTION
 
@@ -84,6 +83,9 @@ We use [Transifex](https://www.transifex.com/projects/p/cutemarked) for the tran
 
 
 ### LINKS
+
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/cloose/CuteMarkEd?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
+[Mailing List](https://groups.google.com/forum/#!forum/cutemarked)
 
 [http://www.ohloh.net/p/CuteMarkEd](http://www.ohloh.net/p/CuteMarkEd)  
 [http://freecode.com/projects/cutemarked](http://freecode.com/projects/cutemarked)  
