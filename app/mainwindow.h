@@ -187,7 +187,7 @@ private:
     bool rightViewCollapsed;
 
     typedef QMap<int, QPair<int, int> > RevealLineToSlide;
-    typedef QHash<QPair<int, int>, int > RevealSlideToLine;
+    typedef QMap<QPair<int, int>, int > RevealSlideToLine;
     RevealLineToSlide m_revealLineToSlide;
     RevealSlideToLine m_revealSlideToLine;
     int m_revealHorizontal;

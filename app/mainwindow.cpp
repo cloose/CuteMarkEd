@@ -61,6 +61,7 @@
 #include "exportpdfdialog.h"
 #include "options.h"
 #include "optionsdialog.h"
+#include "slidelinemapping.h"
 #include "snippetcompleter.h"
 #include "tabletooldialog.h"
 
@@ -1325,62 +1326,10 @@ void MainWindow::updateRevealPosition()
     }
 }
 
-static bool isLineBreak(QChar chr) {
-    return chr == '\n' || chr == '\r';
-}
-
-class IsNotComplementLineBreak {
-public:
-    IsNotComplementLineBreak(QChar chr)
-        : m_complement(chr == '\n' ? '\r' : '\n')
-    {}
-
-    bool operator()(QChar chr) {
-        return chr != m_complement;
-    }
-
-private:
-    QChar m_complement;
-};
-
-static bool equals(const QString& string, const QString::const_iterator& begin, const QString::const_iterator& end) {
-    return (string.length() == end-begin) && std::equal(string.begin(), string.end(), begin);
-}
-
 void MainWindow::buildSlideMap(const QString &code)
 {
-    static const QString horizontalMarker("---");
-    static const QString verticalMarker("--");
-
-    m_revealLineToSlide.clear();
-    m_revealSlideToLine.clear();
-    QString::const_iterator codeBegin = code.begin();
-    QString::const_iterator codeEnd = code.end();
-    QString::const_iterator it = codeBegin;
-    int line = 0;
-    int horizontal = 0;
-    int vertical = 0;
-    m_revealSlideToLine.insert(qMakePair(horizontal, vertical), line+1);
-    while (it != codeEnd) {
-        ++line;
-        QString::const_iterator lineEnd = std::find_if(it, codeEnd, isLineBreak);
-
-        if (lineEnd == codeEnd) {
-            break;
-        }
-        if (equals(horizontalMarker, it, lineEnd)) {
-            m_revealLineToSlide.insert(line, qMakePair(horizontal, vertical));
-            horizontal++;
-            vertical = 0;
-            m_revealSlideToLine.insert(qMakePair(horizontal, vertical), line+1);
-        }
-        if (equals(verticalMarker, it, lineEnd)) {
-            m_revealLineToSlide.insert(line, qMakePair(horizontal, vertical));
-            vertical++;
-            m_revealSlideToLine.insert(qMakePair(horizontal, vertical), line+1);
-        }
-
-        it = std::find_if(lineEnd + 1, codeEnd, IsNotComplementLineBreak(*lineEnd));
-    }
-    m_revealLineToSlide.insert(line, qMakePair(horizontal, vertical));
+    SlideLineMapping mapping;
+    mapping.build(code);
+    m_revealLineToSlide = mapping.lineToSlide();
+    m_revealSlideToLine = mapping.slideToLine();
 }

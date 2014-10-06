@@ -20,7 +20,8 @@ SOURCES += \
     converter/revealmarkdownconverter.cpp \
     template/htmltemplate.cpp \
     template/presentationtemplate.cpp \
-    datalocation.cpp
+    datalocation.cpp \
+    slidelinemapping.cpp
 
 HEADERS += \
     snippets/snippet.h \
@@ -36,7 +37,8 @@ HEADERS += \
     template/template.h \
     template/htmltemplate.h \
     template/presentationtemplate.h \
-    datalocation.h
+    datalocation.h \
+    slidelinemapping.h
 
 #unix:!symbian {
 #    maemo5 {
