@@ -27,10 +27,15 @@ class SlideLineMapping
 public:
     void build(const QString &code);
 
+    int lineForSlide(const QPair<int, int>& slide) const;
+
     QMap<int, QPair<int, int> > lineToSlide() const;
     QMap<QPair<int, int>, int> slideToLine() const;
 
 private:
+    bool isHorizontalSlideSeparator(const QStringList &lines, int lineNumber) const;
+    bool isVerticalSlideSeparator(const QStringList &lines, int lineNumber) const;
+
     QMap<int, QPair<int, int> > m_lineToSlide;
     QMap<QPair<int, int>, int> m_slideToLine;
 };

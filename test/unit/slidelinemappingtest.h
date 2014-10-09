@@ -25,6 +25,8 @@ class SlideLineMappingTest : public QObject
 
 private slots:
     void holdsSingleEntryForEmptyDocuments();
+    void horizontalSlideSeparatorMustBeSurroundedByBlankLines();
+    void verticalSlideSeparatorMustBeSurroundedByBlankLines();
     void holdsEntryForeachSlide();
 };
 

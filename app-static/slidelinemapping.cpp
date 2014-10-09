@@ -22,8 +22,6 @@
 void SlideLineMapping::build(const QString &code)
 {
     static const QRegularExpression re("\n|\r\n|\r");
-    static const QString horizontalMarker("---");
-    static const QString verticalMarker("--");
 
     m_lineToSlide.clear();
     m_slideToLine.clear();
@@ -33,15 +31,15 @@ void SlideLineMapping::build(const QString &code)
 
     QStringList lines = code.split(re);
     m_slideToLine.insert(qMakePair(horizontal, vertical), lineNumber+1);
-    foreach (const QString &line, lines) {
+    for (int i = 0; i < lines.count(); ++i) {
         ++lineNumber;
-        if (line == horizontalMarker) {
+        if (isHorizontalSlideSeparator(lines, i)) {
             m_lineToSlide.insert(lineNumber, qMakePair(horizontal, vertical));
             horizontal++;
             vertical = 0;
             m_slideToLine.insert(qMakePair(horizontal, vertical), lineNumber+1);
         }
-        if (line == verticalMarker) {
+        if (isVerticalSlideSeparator(lines, i)) {
             m_lineToSlide.insert(lineNumber, qMakePair(horizontal, vertical));
             vertical++;
             m_slideToLine.insert(qMakePair(horizontal, vertical), lineNumber+1);
@@ -50,6 +48,15 @@ void SlideLineMapping::build(const QString &code)
     m_lineToSlide.insert(lineNumber, qMakePair(horizontal, vertical));
 }
 
+int SlideLineMapping::lineForSlide(const QPair<int, int>& slide) const
+{
+    QMap<QPair<int, int>, int>::const_iterator it = m_slideToLine.find(slide);
+    if (it != m_slideToLine.end()) {
+        return it.value();
+    }
+
+    return -1;
+}
 
 QMap<int, QPair<int, int> > SlideLineMapping::lineToSlide() const
 {
@@ -61,3 +68,24 @@ QMap<QPair<int, int>, int> SlideLineMapping::slideToLine() const
     return m_slideToLine;
 }
 
+bool SlideLineMapping::isHorizontalSlideSeparator(const QStringList &lines, int lineNumber) const
+{
+    static const QString horizontalMarker("---");
+
+    return lineNumber > 1 &&
+           lineNumber < lines.count()-1 &&
+           lines[lineNumber-1].isEmpty() &&
+           lines[lineNumber] == horizontalMarker &&
+           lines[lineNumber+1].isEmpty();
+}
+
+bool SlideLineMapping::isVerticalSlideSeparator(const QStringList &lines, int lineNumber) const
+{
+    static const QString verticalMarker("--");
+
+    return lineNumber > 1 &&
+           lineNumber < lines.count()-1 &&
+           lines[lineNumber-1].isEmpty() &&
+           lines[lineNumber] == verticalMarker &&
+           lines[lineNumber+1].isEmpty();
+}

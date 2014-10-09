@@ -77,6 +77,7 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     wordCountLabel(0),
     viewLabel(0),
     generator(new HtmlPreviewGenerator(options, this)),
+    slideLineMapping(new SlideLineMapping()),
     snippetCollection(new SnippetCollection(this)),
     splitFactor(0.5),
     scrollBarPos(0),
@@ -94,6 +95,8 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete slideLineMapping;
+
     // stop background HTML preview generator
     generator->markdownTextChanged(QString());
     generator->wait();
@@ -879,9 +882,9 @@ void MainWindow::cursorPositionChanged()
 
 void MainWindow::moveCursorToSlide()
 {
-    RevealSlideToLine::iterator it = m_revealSlideToLine.find(qMakePair(m_revealHorizontal, m_revealVertical));
-    if (it != m_revealSlideToLine.end()) {
-        ui->plainTextEdit->gotoLine(it.value());
+    int lineNumber = slideLineMapping->lineForSlide(qMakePair(m_revealHorizontal, m_revealVertical));
+    if (lineNumber > 0) {
+        ui->plainTextEdit->gotoLine(lineNumber);
     }
 }
 
@@ -1328,8 +1331,6 @@ void MainWindow::updateRevealPosition()
 
 void MainWindow::buildSlideMap(const QString &code)
 {
-    SlideLineMapping mapping;
-    mapping.build(code);
-    m_revealLineToSlide = mapping.lineToSlide();
-    m_revealSlideToLine = mapping.slideToLine();
+    slideLineMapping->build(code);
+    m_revealLineToSlide = slideLineMapping->lineToSlide();
 }

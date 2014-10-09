@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@ class HtmlPreviewGenerator;
 class HtmlHighlighter;
 class RecentFilesMenu;
 class Options;
+class SlideLineMapping;
 class SnippetCollection;
 
 
@@ -180,6 +181,7 @@ private:
     ActiveLabel *viewLabel;
     HtmlPreviewGenerator* generator;
     HtmlHighlighter *htmlHighlighter;
+    SlideLineMapping *slideLineMapping;
     SnippetCollection *snippetCollection;
     QString fileName;
     float splitFactor;
@@ -187,9 +189,7 @@ private:
     bool rightViewCollapsed;
 
     typedef QMap<int, QPair<int, int> > RevealLineToSlide;
-    typedef QMap<QPair<int, int>, int > RevealSlideToLine;
     RevealLineToSlide m_revealLineToSlide;
-    RevealSlideToLine m_revealSlideToLine;
     int m_revealHorizontal;
     int m_revealVertical;
 };
