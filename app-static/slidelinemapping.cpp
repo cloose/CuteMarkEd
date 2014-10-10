@@ -58,6 +58,16 @@ int SlideLineMapping::lineForSlide(const QPair<int, int>& slide) const
     return -1;
 }
 
+QPair<int, int> SlideLineMapping::slideForLine(int lineNumber) const
+{
+    QMap<int, QPair<int, int> >::const_iterator it = m_lineToSlide.lowerBound(lineNumber);
+    if (it != m_lineToSlide.end()) {
+        return it.value();
+    }
+
+    return qMakePair(-1, -1);
+}
+
 QMap<int, QPair<int, int> > SlideLineMapping::lineToSlide() const
 {
     return m_lineToSlide;

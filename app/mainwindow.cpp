@@ -776,7 +776,7 @@ void MainWindow::plainTextChanged()
     }
 
     if (options->markdownConverter() == Options::RevealMarkdownConverter) {
-        buildSlideMap(code);
+        slideLineMapping->build(code);
     }
 
     // generate HTML from markdown
@@ -1322,15 +1322,9 @@ void MainWindow::updateRevealPosition()
 {
     int lineNumber = ui->plainTextEdit->textCursor().blockNumber() + 1;
 
-    RevealLineToSlide::iterator it = m_revealLineToSlide.upperBound( lineNumber );
-    RevealLineToSlide::iterator it2 = m_revealLineToSlide.lowerBound( lineNumber );
-    if (it != m_revealLineToSlide.end() && it == it2) {
-        setRevealPosition(it.value().first, it.value().second);
+    QPair<int, int> slide = slideLineMapping->slideForLine(lineNumber);
+    if (slide.first >= 0 && slide.second >= 0) {
+        setRevealPosition(slide.first, slide.second);
     }
 }
 
-void MainWindow::buildSlideMap(const QString &code)
-{
-    slideLineMapping->build(code);
-    m_revealLineToSlide = slideLineMapping->lineToSlide();
-}

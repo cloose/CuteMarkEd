@@ -31,7 +31,7 @@ void SlideLineMappingTest::holdsSingleEntryForEmptyDocuments()
 
     QCOMPARE(mapping.lineToSlide().count(), 1);
     QCOMPARE(mapping.slideToLine().count(), 1);
-    QCOMPARE(mapping.lineToSlide().value(expectedLineNumber), expectedSlide);
+    QCOMPARE(mapping.slideForLine(expectedLineNumber), expectedSlide);
     QCOMPARE(mapping.lineForSlide(expectedSlide), expectedLineNumber);
 }
 
@@ -46,7 +46,7 @@ void SlideLineMappingTest::horizontalSlideSeparatorMustBeSurroundedByBlankLines(
 
     QCOMPARE(mapping.lineToSlide().count(), 1);
     QCOMPARE(mapping.slideToLine().count(), 1);
-    QCOMPARE(mapping.lineToSlide().value(expectedLineNumber), expectedSlide);
+    QCOMPARE(mapping.slideForLine(expectedLineNumber), expectedSlide);
     QCOMPARE(mapping.lineForSlide(expectedSlide), expectedLineNumber);
 }
 
@@ -61,7 +61,7 @@ void SlideLineMappingTest::verticalSlideSeparatorMustBeSurroundedByBlankLines()
 
     QCOMPARE(mapping.lineToSlide().count(), 1);
     QCOMPARE(mapping.slideToLine().count(), 1);
-    QCOMPARE(mapping.lineToSlide().value(expectedLineNumber), expectedSlide);
+    QCOMPARE(mapping.slideForLine(expectedLineNumber), expectedSlide);
     QCOMPARE(mapping.lineForSlide(expectedSlide), expectedLineNumber);
 }
 
@@ -75,10 +75,30 @@ void SlideLineMappingTest::holdsEntryForeachSlide()
     QCOMPARE(mapping.lineToSlide().count(), 3);
     QCOMPARE(mapping.slideToLine().count(), 3);
 
-    QCOMPARE(mapping.lineToSlide().value(3), qMakePair(0, 0));
-    QCOMPARE(mapping.lineToSlide().value(7), qMakePair(1, 0));
-    QCOMPARE(mapping.lineToSlide().value(9), qMakePair(2, 0));
+    QCOMPARE(mapping.slideForLine(3), qMakePair(0, 0));
+    QCOMPARE(mapping.slideForLine(7), qMakePair(1, 0));
+    QCOMPARE(mapping.slideForLine(9), qMakePair(2, 0));
     QCOMPARE(mapping.lineForSlide(qMakePair(0, 0)), 1);
     QCOMPARE(mapping.lineForSlide(qMakePair(1, 0)), 4);
     QCOMPARE(mapping.lineForSlide(qMakePair(2, 0)), 8);
+}
+
+void SlideLineMappingTest::returnsSlideForEachLine()
+{
+    SlideLineMapping mapping;
+    QString markdownDocument = "Slide 1\n\n---\n\nSlide 2\n---\n";
+
+    mapping.build(markdownDocument);
+
+    QCOMPARE(mapping.lineToSlide().count(), 2);
+    QCOMPARE(mapping.slideToLine().count(), 2);
+
+    QCOMPARE(mapping.slideForLine(1), qMakePair(0, 0));
+    QCOMPARE(mapping.slideForLine(2), qMakePair(0, 0));
+    QCOMPARE(mapping.slideForLine(3), qMakePair(0, 0));
+    QCOMPARE(mapping.slideForLine(4), qMakePair(1, 0));
+    QCOMPARE(mapping.slideForLine(5), qMakePair(1, 0));
+    QCOMPARE(mapping.slideForLine(6), qMakePair(1, 0));
+    QCOMPARE(mapping.slideForLine(7), qMakePair(1, 0));
+    QCOMPARE(mapping.slideForLine(8), qMakePair(-1, -1));
 }

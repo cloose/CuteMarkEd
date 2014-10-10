@@ -165,7 +165,6 @@ private:
     void readSettings();
     void writeSettings();
     void updateRevealPosition();
-    void buildSlideMap(const QString& code);
 
 private:
     Ui::MainWindow *ui;
@@ -188,8 +187,6 @@ private:
     int scrollBarPos;
     bool rightViewCollapsed;
 
-    typedef QMap<int, QPair<int, int> > RevealLineToSlide;
-    RevealLineToSlide m_revealLineToSlide;
     int m_revealHorizontal;
     int m_revealVertical;
 };

@@ -28,6 +28,7 @@ private slots:
     void horizontalSlideSeparatorMustBeSurroundedByBlankLines();
     void verticalSlideSeparatorMustBeSurroundedByBlankLines();
     void holdsEntryForeachSlide();
+    void returnsSlideForEachLine();
 };
 
 #endif // SLIDELINEMAPPINGTEST_H
