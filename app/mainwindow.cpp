@@ -61,7 +61,7 @@
 #include "exportpdfdialog.h"
 #include "options.h"
 #include "optionsdialog.h"
-#include "slidelinemapping.h"
+#include "revealviewsynchronizer.h"
 #include "snippetcompleter.h"
 #include "tabletooldialog.h"
 
@@ -77,13 +77,11 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     wordCountLabel(0),
     viewLabel(0),
     generator(new HtmlPreviewGenerator(options, this)),
-    slideLineMapping(new SlideLineMapping()),
     snippetCollection(new SnippetCollection(this)),
+    viewSynchronizer(0),
     splitFactor(0.5),
     scrollBarPos(0),
-    rightViewCollapsed(false),
-    m_revealHorizontal(0),
-    m_revealVertical(0)
+    rightViewCollapsed(false)
 {
     ui->setupUi(this);
     setupUi();
@@ -95,7 +93,7 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    delete slideLineMapping;
+    delete viewSynchronizer;
 
     // stop background HTML preview generator
     generator->markdownTextChanged(QString());
@@ -103,16 +101,6 @@ MainWindow::~MainWindow()
     delete generator;
 
     delete ui;
-}
-
-int MainWindow::revealHorizontal() const
-{
-    return m_revealHorizontal;
-}
-
-int MainWindow::revealVertical() const
-{
-    return m_revealVertical;
 }
 
 void MainWindow::webViewScrolled()
@@ -136,26 +124,6 @@ void MainWindow::webViewContextMenu(const QPoint &pos)
 
     contextMenu->exec(ui->webView->mapToGlobal(pos));
     delete contextMenu;
-}
-
-void MainWindow::setRevealPosition(int horizontal, int vertical)
-{
-    if (m_revealHorizontal == horizontal && m_revealVertical == vertical)
-        return;
-
-    m_revealHorizontal = horizontal;
-    m_revealVertical = vertical;
-    emit revealPositionChanged(horizontal, vertical);
-}
-
-void MainWindow::feedbackRevealPosition(int horizontal, int vertical)
-{
-    if (m_revealHorizontal == horizontal && m_revealVertical == vertical)
-        return;
-
-    m_revealHorizontal = horizontal;
-    m_revealVertical = vertical;
-    moveCursorToSlide();
 }
 
 void MainWindow::closeEvent(QCloseEvent *e)
@@ -775,10 +743,6 @@ void MainWindow::plainTextChanged()
         wordCountLabel->setToolTip(tr("Lines: %1  Words: %2  Characters: %3").arg(lines).arg(words).arg(chars));
     }
 
-    if (options->markdownConverter() == Options::RevealMarkdownConverter) {
-        slideLineMapping->build(code);
-    }
-
     // generate HTML from markdown
     generator->markdownTextChanged(code);
 
@@ -873,21 +837,6 @@ void MainWindow::scrollValueChanged(int value)
     }
 }
 
-void MainWindow::cursorPositionChanged()
-{
-    if (options->markdownConverter() == Options::RevealMarkdownConverter) {
-        updateRevealPosition();
-    }
-}
-
-void MainWindow::moveCursorToSlide()
-{
-    int lineNumber = slideLineMapping->lineForSlide(qMakePair(m_revealHorizontal, m_revealVertical));
-    if (lineNumber > 0) {
-        ui->plainTextEdit->gotoLine(lineNumber);
-    }
-}
-
 void MainWindow::addJavaScriptObject()
 {
     if (options->markdownConverter() == Options::DiscountMarkdownConverter) {
@@ -897,32 +846,7 @@ void MainWindow::addJavaScriptObject()
     }
     if (options->markdownConverter() == Options::RevealMarkdownConverter) {
         ui->webView->page()->mainFrame()->addToJavaScriptWindowObject("mainwin", this);
-        static QString restorePosition =
-                "window.location.hash = '/'+mainwin.revealHorizontal+'/'+mainwin.revealVertical;";
-        ui->webView->page()->mainFrame()->evaluateJavaScript(restorePosition);
-    }
-}
-
-void MainWindow::registerEvents()
-{
-    if (options->markdownConverter() == Options::RevealMarkdownConverter) {
-        ui->webView->page()->mainFrame()->evaluateJavaScript(
-                    "(function(){"
-                    "  var mainWinUpdate = false;"
-                    "  function updatePosition() {"
-                    "    mainWinUpdate = true;"
-                    "    Reveal.slide(mainwin.revealHorizontal, mainwin.revealVertical);"
-                    "    mainWinUpdate = false;"
-                    "  }"
-                    "  function feedbackPosition(event) {"
-                    "    if (mainWinUpdate) return;"
-                    "    mainwin.feedbackRevealPosition(event.indexh, event.indexv);"
-                    "  }"
-                    "  mainwin.revealPositionChanged.connect(updatePosition);"
-                    "  Reveal.addEventListener('ready', function() {"
-                    "    Reveal.addEventListener('slidechanged', feedbackPosition);"
-                    "  });"
-                    "})();");
+        ui->webView->page()->mainFrame()->addToJavaScriptWindowObject("synchronizer", viewSynchronizer);
     }
 }
 
@@ -987,6 +911,16 @@ void MainWindow::markdownConverterChanged()
 
     // disable unsupported extensions
     updateExtensionStatus();
+
+    delete viewSynchronizer;
+    switch (options->markdownConverter()) {
+    case Options::RevealMarkdownConverter:
+        viewSynchronizer = new RevealViewSynchronizer(ui->webView, ui->plainTextEdit);
+        break;
+    default:
+        viewSynchronizer = 0;
+        break;
+    }
 }
 
 void MainWindow::setupUi()
@@ -1316,15 +1250,5 @@ void MainWindow::writeSettings()
     QSettings settings;
     settings.setValue("mainWindow/geometry", saveGeometry());
     settings.setValue("mainWindow/windowState", saveState());
-}
-
-void MainWindow::updateRevealPosition()
-{
-    int lineNumber = ui->plainTextEdit->textCursor().blockNumber() + 1;
-
-    QPair<int, int> slide = slideLineMapping->slideForLine(lineNumber);
-    if (slide.first >= 0 && slide.second >= 0) {
-        setRevealPosition(slide.first, slide.second);
-    }
 }
 

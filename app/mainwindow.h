@@ -37,30 +37,20 @@ class RecentFilesMenu;
 class Options;
 class SlideLineMapping;
 class SnippetCollection;
+class ViewSynchronizer;
 
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    Q_PROPERTY(int revealHorizontal READ revealHorizontal NOTIFY revealPositionChanged)
-    Q_PROPERTY(int revealVertical READ revealVertical NOTIFY revealPositionChanged)
 
 public:
     explicit MainWindow(const QString &fileName = QString(), QWidget *parent = 0);
     ~MainWindow();
 
-    int revealHorizontal() const;
-    int revealVertical() const;
-
 public slots:
     void webViewScrolled();
     void webViewContextMenu(const QPoint &pos);
-
-    void setRevealPosition(int horizontal, int vertical);
-    void feedbackRevealPosition(int horizontal, int vertical);
-
-signals:
-    void revealPositionChanged(int horizontal, int vertical);
 
 protected:
     void closeEvent(QCloseEvent *e) Q_DECL_OVERRIDE;
@@ -140,11 +130,8 @@ private slots:
 
     void splitterMoved(int pos, int index);
     void scrollValueChanged(int value);
-    void cursorPositionChanged();
-    void moveCursorToSlide();
 
     void addJavaScriptObject();
-    void registerEvents();
     bool load(const QString &fileName);
     void proxyConfigurationChanged();
     void markdownConverterChanged();
@@ -164,7 +151,6 @@ private:
     void loadCustomStyles();
     void readSettings();
     void writeSettings();
-    void updateRevealPosition();
 
 private:
     Ui::MainWindow *ui;
@@ -180,15 +166,12 @@ private:
     ActiveLabel *viewLabel;
     HtmlPreviewGenerator* generator;
     HtmlHighlighter *htmlHighlighter;
-    SlideLineMapping *slideLineMapping;
     SnippetCollection *snippetCollection;
+    ViewSynchronizer *viewSynchronizer;
     QString fileName;
     float splitFactor;
     int scrollBarPos;
     bool rightViewCollapsed;
-
-    int m_revealHorizontal;
-    int m_revealVertical;
 };
 
 #endif // MAINWINDOW_H
