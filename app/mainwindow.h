@@ -49,7 +49,6 @@ public:
     ~MainWindow();
 
 public slots:
-    void webViewScrolled();
     void webViewContextMenu(const QPoint &pos);
 
 protected:
@@ -123,13 +122,11 @@ private slots:
     void plainTextChanged();
     void htmlResultReady(const QString &html);
     void tocResultReady(const QString &toc);
-    void htmlContentSizeChanged();
 
     void previewLinkClicked(const QUrl &url);
     void tocLinkClicked(const QUrl &url);
 
     void splitterMoved(int pos, int index);
-    void scrollValueChanged(int value);
 
     void addJavaScriptObject();
     bool load(const QString &fileName);
@@ -170,7 +167,6 @@ private:
     ViewSynchronizer *viewSynchronizer;
     QString fileName;
     float splitFactor;
-    int scrollBarPos;
     bool rightViewCollapsed;
 };
 

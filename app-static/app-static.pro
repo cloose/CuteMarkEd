@@ -23,7 +23,8 @@ SOURCES += \
     datalocation.cpp \
     slidelinemapping.cpp \
     viewsynchronizer.cpp \
-    revealviewsynchronizer.cpp
+    revealviewsynchronizer.cpp \
+    htmlviewsynchronizer.cpp
 
 HEADERS += \
     snippets/snippet.h \
@@ -42,7 +43,8 @@ HEADERS += \
     datalocation.h \
     slidelinemapping.h \
     viewsynchronizer.h \
-    revealviewsynchronizer.h
+    revealviewsynchronizer.h \
+    htmlviewsynchronizer.h
 
 #unix:!symbian {
 #    maemo5 {
