@@ -35,8 +35,12 @@ public:
     
     void setTextEdit(QPlainTextEdit *editor);
 
+signals:
+    void dialogClosed();
+
 protected:
     void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
+    void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
     void findPreviousClicked();

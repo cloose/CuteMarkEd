@@ -910,6 +910,8 @@ void MainWindow::setupUi()
 
     // hide find/replace widget on startup
     ui->findReplaceWidget->hide();
+    connect(ui->findReplaceWidget, SIGNAL(dialogClosed()),
+            ui->plainTextEdit, SLOT(setFocus()));
 
     // close table of contents dockwidget
     ui->dockWidget->close();
