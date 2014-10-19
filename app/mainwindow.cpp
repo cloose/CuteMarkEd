@@ -655,7 +655,40 @@ void MainWindow::extrasCheckSpelling(bool checked)
 
 void MainWindow::extrasOptions()
 {
-    OptionsDialog dialog(options, snippetCollection, this);
+    QList<QAction*> actions;
+    // file menu
+    actions << ui->actionNew 
+            << ui->actionOpen 
+            << ui->actionSave
+            << ui->actionSaveAs
+            << ui->actionExportToHTML
+            << ui->actionExportToPDF
+            << ui->action_Print
+            << ui->actionExit;
+    // edit menu
+    actions << ui->actionUndo
+            << ui->actionRedo
+            << ui->actionCut
+            << ui->actionCopy
+            << ui->actionPaste
+            << ui->actionStrong
+            << ui->actionCopyHtmlToClipboard
+            << ui->actionEmphasize
+            << ui->actionStrikethrough
+            << ui->actionInline_Code
+            << ui->actionCenterParagraph
+            << ui->actionBlockquote
+            << ui->actionIncreaseHeaderLevel
+            << ui->actionDecreaseHeaderLevel
+            << ui->actionInsertTable
+            << ui->actionInsertImage
+            << ui->actionFindReplace
+            << ui->actionFindNext
+            << ui->actionFindPrevious
+            << ui->actionGotoLine;
+    // view menu
+    actions << ui->dockWidget->toggleViewAction();
+    OptionsDialog dialog(options, snippetCollection, actions, this);
     if (dialog.exec() == QDialog::Accepted) {
         options->writeSettings();
 
@@ -930,19 +963,26 @@ void MainWindow::setupUi()
             this, SLOT(markdownConverterChanged()));
 
     readSettings();
+    setupCustomShortcuts();
+}
+
+void SetActionShortcut(QAction *action, const QKeySequence &shortcut)
+{
+    action->setShortcut(shortcut);
+    action->setProperty("defaultshortcut", shortcut);
 }
 
 void MainWindow::setupActions()
 {
     // file menu
-    ui->actionNew->setShortcut(QKeySequence::New);
-    ui->actionOpen->setShortcut(QKeySequence::Open);
-    ui->actionSave->setShortcut(QKeySequence::Save);
+    SetActionShortcut(ui->actionNew, QKeySequence::New);
+    SetActionShortcut(ui->actionOpen, QKeySequence::Open);
+    SetActionShortcut(ui->actionSave, QKeySequence::Save);
     ui->actionSave->setIcon(QIcon("fa-floppy-o.fontawesome"));
-    ui->actionSaveAs->setShortcut(QKeySequence::SaveAs);
-    ui->action_Print->setShortcut(QKeySequence::Print);
+    SetActionShortcut(ui->actionSaveAs, QKeySequence::SaveAs);
+    SetActionShortcut(ui->action_Print, QKeySequence::Print);
     ui->action_Print->setIcon(QIcon("fa-print.fontawesome"));
-    ui->actionExit->setShortcut(QKeySequence::Quit);
+    SetActionShortcut(ui->actionExit, QKeySequence::Quit);
 
     recentFilesMenu = new RecentFilesMenu(ui->menuFile);
     ui->menuFile->insertMenu(ui->actionSave, recentFilesMenu);
@@ -951,20 +991,20 @@ void MainWindow::setupActions()
             this, SLOT(openRecentFile(QString)));
 
     // edit menu
-    ui->actionUndo->setShortcut(QKeySequence::Undo);
+    SetActionShortcut(ui->actionUndo, QKeySequence::Undo);
     ui->actionUndo->setIcon(QIcon("fa-undo.fontawesome"));
-    ui->actionRedo->setShortcut(QKeySequence::Redo);
+    SetActionShortcut(ui->actionRedo, QKeySequence::Redo);
     ui->actionRedo->setIcon(QIcon("fa-repeat.fontawesome"));
 
-    ui->actionCut->setShortcut(QKeySequence::Cut);
+    SetActionShortcut(ui->actionCut, QKeySequence::Cut);
     ui->actionCut->setIcon(QIcon("fa-scissors.fontawesome"));
-    ui->actionCopy->setShortcut(QKeySequence::Copy);
+    SetActionShortcut(ui->actionCopy, QKeySequence::Copy);
     ui->actionCopy->setIcon(QIcon("fa-files-o.fontawesome"));
-    ui->actionPaste->setShortcut(QKeySequence::Paste);
+    SetActionShortcut(ui->actionPaste, QKeySequence::Paste);
     ui->actionPaste->setIcon(QIcon("fa-clipboard.fontawesome"));
-    ui->actionStrong->setShortcut(QKeySequence::Bold);
+    SetActionShortcut(ui->actionStrong, QKeySequence::Bold);
     ui->actionStrong->setIcon(QIcon("fa-bold.fontawesome"));
-    ui->actionEmphasize->setShortcut(QKeySequence::Italic);
+    SetActionShortcut(ui->actionEmphasize, QKeySequence::Italic);
     ui->actionEmphasize->setIcon(QIcon("fa-italic.fontawesome"));
     ui->actionStrikethrough->setIcon(QIcon("fa-strikethrough.fontawesome"));
     ui->actionCenterParagraph->setIcon(QIcon("fa-align-center.fontawesome"));
@@ -975,10 +1015,10 @@ void MainWindow::setupActions()
     ui->actionInsertTable->setIcon(QIcon("fa-table.fontawesome"));
     ui->actionInsertImage->setIcon(QIcon("fa-picture-o.fontawesome"));
 
-    ui->actionFindReplace->setShortcut(QKeySequence::Find);
+    SetActionShortcut(ui->actionFindReplace, QKeySequence::Find);
     ui->actionFindReplace->setIcon(QIcon("fa-search.fontawesome"));
-    ui->actionFindNext->setShortcut(QKeySequence::FindNext);
-    ui->actionFindPrevious->setShortcut(QKeySequence::FindPrevious);
+    SetActionShortcut(ui->actionFindNext, QKeySequence::FindNext);
+    SetActionShortcut(ui->actionFindPrevious, QKeySequence::FindPrevious);
 
     connect(ui->actionFindNext, SIGNAL(triggered()),
             ui->findReplaceWidget, SLOT(findNextClicked()));
@@ -989,8 +1029,8 @@ void MainWindow::setupActions()
     // view menu
     ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());
     ui->menuView->insertAction(ui->menuView->actions()[1], ui->fileExplorerDockWidget->toggleViewAction());
-    ui->fileExplorerDockWidget->toggleViewAction()->setShortcut(QKeySequence(Qt::ALT + Qt::Key_E));
-    ui->actionFullScreenMode->setShortcut(QKeySequence::FullScreen);
+    SetActionShortcut(ui->fileExplorerDockWidget->toggleViewAction(), QKeySequence(Qt::ALT + Qt::Key_E));
+    SetActionShortcut(ui->actionFullScreenMode, QKeySequence::FullScreen);
     ui->actionFullScreenMode->setIcon(QIcon("fa-arrows-alt.fontawesome"));
 
     // extras menu
@@ -1031,6 +1071,9 @@ void MainWindow::setupActions()
     zoomResetAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_0));
     connect(zoomResetAction, SIGNAL(triggered()), this, SLOT(webViewResetZoom()));
     ui->webView->addAction(zoomResetAction);
+
+    // setup default shortcuts
+    ui->actionGotoLine->setProperty("defaultshortcut", ui->actionGotoLine->shortcut());
 }
 
 void MainWindow::setupStatusBar()
@@ -1103,6 +1146,23 @@ void MainWindow::setupHtmlSourceView()
     font.setStyleHint(QFont::TypeWriter);
     ui->htmlSourceTextEdit->setFont(font);
     htmlHighlighter = new HtmlHighlighter(ui->htmlSourceTextEdit->document());
+}
+
+void MainWindow::setupCustomShortcuts()
+{
+    // file menu
+    ui->actionNew->setShortcut(options->customShortcut(ui->actionNew->objectName()));
+    ui->actionOpen->setShortcut(options->customShortcut(ui->actionOpen->objectName()));
+    ui->actionSave->setShortcut(options->customShortcut(ui->actionSave->objectName()));
+    ui->actionSaveAs->setShortcut(options->customShortcut(ui->actionSaveAs->objectName()));
+    ui->action_Print->setShortcut(options->customShortcut(ui->action_Print->objectName()));
+    ui->actionExit->setShortcut(options->customShortcut(ui->actionExit->objectName()));
+    // edit menu
+    ui->actionUndo->setShortcut(options->customShortcut(ui->actionUndo->objectName()));
+    ui->actionRedo->setShortcut(options->customShortcut(ui->actionRedo->objectName()));
+    ui->actionCut->setShortcut(options->customShortcut(ui->actionCut->objectName()));
+    ui->actionCopy->setShortcut(options->customShortcut(ui->actionCopy->objectName()));
+    ui->actionPaste->setShortcut(options->customShortcut(ui->actionPaste->objectName()));
 }
 
 void MainWindow::updateExtensionStatus()

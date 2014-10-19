@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ class OptionsDialog : public QDialog
     Q_OBJECT
     
 public:
-    OptionsDialog(Options *opt, SnippetCollection *collection, QWidget *parent = 0);
+    OptionsDialog(Options *opt, SnippetCollection *collection, const QList<QAction*> &acts, QWidget *parent = 0);
     ~OptionsDialog();
 
 protected:
@@ -45,6 +45,7 @@ private slots:
     void removeSnippetButtonClicked();
 
 private:
+    void setupShortcutsTable();
     void readState();
     void saveState();
 
@@ -52,6 +53,7 @@ private:
     Ui::OptionsDialog *ui;
     Options *options;
     SnippetCollection *snippetCollection;
+    QList<QAction*> actions;
 };
 
 #endif // OPTIONSDIALOG_H

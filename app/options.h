@@ -19,6 +19,8 @@
 
 #include <QObject>
 #include <QFont>
+#include <QKeySequence>
+#include <QMap>
 
 class Options : public QObject
 {
@@ -76,6 +78,10 @@ public:
 
     QString proxyPassword() const;
     void setProxyPassword(const QString &password);
+
+    /* Shortcuts options */
+    void addCustomShortcut(const QString &actionName, const QKeySequence &keySequence);
+    QKeySequence customShortcut(const QString &actionName);
 
     /* Extra menu options */
     bool isAutolinkEnabled() const;
@@ -157,6 +163,7 @@ private:
     QString m_sansSerifFontFamily;
     int m_defaultFontSize;
     int m_defaultFixedFontSize;
+    QMap<QString, QKeySequence> m_customShortcuts;
 };
 
 #endif // OPTIONS_H

@@ -139,6 +139,7 @@ private:
     void setupMarkdownEditor();
     void setupHtmlPreview();
     void setupHtmlSourceView();
+    void setupCustomShortcuts();
     void updateExtensionStatus();
     void syncWebViewToHtmlSource();
     bool maybeSave();
