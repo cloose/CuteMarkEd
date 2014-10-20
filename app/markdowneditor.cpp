@@ -16,6 +16,7 @@
  */
 #include "markdowneditor.h"
 
+#include <QAction>
 #include <QApplication>
 #include <QMenu>
 #include <QMimeData>
@@ -78,8 +79,13 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
 
     updateLineNumberAreaWidth(0);
 
-    new QShortcut(QKeySequence(tr("Ctrl+Space", "Complete")),
-                  this, SLOT(performCompletion()));
+    QAction * actionComplete = new QAction(tr("Snippet Complete"), this);
+    actionComplete->setObjectName("actionComplete");
+    actionComplete->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Space));
+    actionComplete->setProperty("defaultshortcut", actionComplete->shortcut());
+    connect(actionComplete, SIGNAL(triggered()),
+            this, SLOT(performCompletion()));
+    this->addAction(actionComplete);
 }
 
 MarkdownEditor::~MarkdownEditor()

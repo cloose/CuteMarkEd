@@ -252,7 +252,6 @@ public:
 };
 
 
-#include <QDebug>
 OptionsDialog::OptionsDialog(Options *opt, SnippetCollection *collection, const QList<QAction*> &acts, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::OptionsDialog),
@@ -384,6 +383,38 @@ void OptionsDialog::removeSnippetButtonClicked()
     snippetModel->removeSnippet(modelIndex);
 }
 
+void OptionsDialog::validateShortcut(int row, int column)
+{
+    // Check changes to shortcut column only
+    if (column != 1)
+        return;
+
+    QString newShortcut = ui->shortcutsTable->item(row, column)->text();
+    QKeySequence ks(newShortcut);
+    if (ks.isEmpty() && !newShortcut.isEmpty()) {
+        // If new shortcut was invalid, restore the original
+        ui->shortcutsTable->setItem(row, column,
+            new QTableWidgetItem(actions[row]->shortcut().toString()));
+    } else {
+        // Check for conflicts.
+        if (!ks.isEmpty()) {
+            for (int c = 0; c < actions.size(); ++c) {
+                if (c != row && ks == QKeySequence(ui->shortcutsTable->item(c, 1)->text())) {
+                    ui->shortcutsTable->setItem(row, column,
+                        new QTableWidgetItem(actions[row]->shortcut().toString()));
+                    QMessageBox::information(this, tr("Conflict"), tr("This shortcut is already used for \"%1\"").arg(actions[c]->text().remove('&')));
+                    return;
+                }
+            }
+        }
+        // If the new shortcut is not the same as the default, make the
+        // action label bold.
+        QFont font = ui->shortcutsTable->item(row, 0)->font();
+        font.setBold(ks != actions[row]->property("defaultshortcut").value<QKeySequence>());
+        ui->shortcutsTable->item(row, 0)->setFont(font);
+    }
+}
+
 void OptionsDialog::setupShortcutsTable()
 {
     QStyledItemDelegate *delegate = new QStyledItemDelegate(ui->shortcutsTable);
@@ -392,13 +423,10 @@ void OptionsDialog::setupShortcutsTable()
     delegate->setItemEditorFactory(factory);
     ui->shortcutsTable->setItemDelegateForColumn(1, delegate);
 
-    qDebug() << actions.size();
     ui->shortcutsTable->setRowCount(actions.size());
 
     int i = 0;
     foreach (QAction *action, actions) {
-        qDebug() << i << action->text();
-        qDebug() << action->shortcut();
         QTableWidgetItem *label = new QTableWidgetItem(action->text().remove('&'));
         label->setFlags(Qt::ItemIsSelectable);
         const QKeySequence &defaultKeySeq = action->property("defaultshortcut").value<QKeySequence>();
@@ -407,7 +435,6 @@ void OptionsDialog::setupShortcutsTable()
             font.setBold(true);
             label->setFont(font);
         }
-        qDebug() << defaultKeySeq;
         QTableWidgetItem *accel = new KeySequenceTableItem(action->shortcut());
         QTableWidgetItem *def = new QTableWidgetItem(defaultKeySeq.toString());
         def->setFlags(Qt::ItemIsSelectable);
@@ -420,6 +447,9 @@ void OptionsDialog::setupShortcutsTable()
     ui->shortcutsTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     ui->shortcutsTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     ui->shortcutsTable->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+
+    connect(ui->shortcutsTable, SIGNAL(cellChanged(int,int)),
+            this, SLOT(validateShortcut(int,int)));
 }
 
 void OptionsDialog::readState()

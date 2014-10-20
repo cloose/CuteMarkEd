@@ -81,7 +81,8 @@ public:
 
     /* Shortcuts options */
     void addCustomShortcut(const QString &actionName, const QKeySequence &keySequence);
-    QKeySequence customShortcut(const QString &actionName);
+    bool hasCustomShortcut(const QString &actionName) const;
+    QKeySequence customShortcut(const QString &actionName) const;
 
     /* Extra menu options */
     bool isAutolinkEnabled() const;

@@ -140,6 +140,7 @@ private:
     void setupHtmlPreview();
     void setupHtmlSourceView();
     void setupCustomShortcuts();
+    void setCustomShortcut(QAction *action);
     void updateExtensionStatus();
     void syncWebViewToHtmlSource();
     bool maybeSave();

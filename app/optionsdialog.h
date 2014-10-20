@@ -43,6 +43,7 @@ private slots:
     void snippetTextChanged();
     void addSnippetButtonClicked();
     void removeSnippetButtonClicked();
+    void validateShortcut(int row, int column);
 
 private:
     void setupShortcutsTable();

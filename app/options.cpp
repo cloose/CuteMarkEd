@@ -217,15 +217,18 @@ void Options::setProxyPassword(const QString &password)
     m_proxyPassword = password;
 }
 
-#include <QDebug>
 void Options::addCustomShortcut(const QString &actionName, const QKeySequence &keySequence)
 {
     if (actionName.isEmpty()) return;
-    qDebug() << "ADD" << actionName << keySequence;
     m_customShortcuts.insert(actionName, keySequence);
 }
 
-QKeySequence Options::customShortcut(const QString &actionName)
+bool Options::hasCustomShortcut(const QString &actionName) const
+{
+    return m_customShortcuts.contains(actionName);
+}
+
+QKeySequence Options::customShortcut(const QString &actionName) const
 {
     return m_customShortcuts.value(actionName);
 }

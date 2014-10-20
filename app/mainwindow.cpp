@@ -687,7 +687,20 @@ void MainWindow::extrasOptions()
             << ui->actionFindPrevious
             << ui->actionGotoLine;
     // view menu
-    actions << ui->dockWidget->toggleViewAction();
+    actions << ui->dockWidget->toggleViewAction()
+            << ui->fileExplorerDockWidget->toggleViewAction()
+            << ui->actionHtmlPreview
+            << ui->actionSplit_1_1
+            << ui->actionSplit_2_1
+            << ui->actionSplit_1_2
+            << ui->actionSplit_3_1
+            << ui->actionSplit_1_3
+            << ui->actionFullScreenMode
+            << ui->actionHorizontalLayout;
+
+    // snippet complete
+    actions << ui->plainTextEdit->actions();
+
     OptionsDialog dialog(options, snippetCollection, actions, this);
     if (dialog.exec() == QDialog::Accepted) {
         options->writeSettings();
@@ -695,6 +708,9 @@ void MainWindow::extrasOptions()
         QString path = DataLocation::writableLocation();
         QSharedPointer<SnippetCollection> userDefinedSnippets = snippetCollection->userDefinedSnippets();
         JsonSnippetFile::save(path + "/user-snippets.json", userDefinedSnippets.data());
+
+        // update shortcuts
+        setupCustomShortcuts();
     }
 }
 
@@ -1072,8 +1088,20 @@ void MainWindow::setupActions()
     connect(zoomResetAction, SIGNAL(triggered()), this, SLOT(webViewResetZoom()));
     ui->webView->addAction(zoomResetAction);
 
+    // set names for dock widget actions
+    ui->dockWidget->toggleViewAction()->setObjectName("actionTableOfContents");
+    ui->fileExplorerDockWidget->toggleViewAction()->setObjectName("actionFileExplorer");
+
     // setup default shortcuts
     ui->actionGotoLine->setProperty("defaultshortcut", ui->actionGotoLine->shortcut());
+    ui->actionBlockquote->setProperty("defaultshortcut", ui->actionBlockquote->shortcut());
+    ui->actionIncreaseHeaderLevel->setProperty("defaultshortcut", ui->actionIncreaseHeaderLevel->shortcut());
+    ui->actionDecreaseHeaderLevel->setProperty("defaultshortcut", ui->actionDecreaseHeaderLevel->shortcut());
+    ui->actionInsertTable->setProperty("defaultshortcut", ui->actionInsertTable->shortcut());
+    ui->actionInsertImage->setProperty("defaultshortcut", ui->actionInsertImage->shortcut());
+    ui->dockWidget->toggleViewAction()->setProperty("defaultshortcut", ui->dockWidget->toggleViewAction()->shortcut());
+    ui->fileExplorerDockWidget->toggleViewAction()->setProperty("defaultshortcut", ui->fileExplorerDockWidget->toggleViewAction()->shortcut());
+    ui->actionHtmlPreview->setProperty("defaultshortcut", ui->actionHtmlPreview->shortcut());
 }
 
 void MainWindow::setupStatusBar()
@@ -1151,18 +1179,27 @@ void MainWindow::setupHtmlSourceView()
 void MainWindow::setupCustomShortcuts()
 {
     // file menu
-    ui->actionNew->setShortcut(options->customShortcut(ui->actionNew->objectName()));
-    ui->actionOpen->setShortcut(options->customShortcut(ui->actionOpen->objectName()));
-    ui->actionSave->setShortcut(options->customShortcut(ui->actionSave->objectName()));
-    ui->actionSaveAs->setShortcut(options->customShortcut(ui->actionSaveAs->objectName()));
-    ui->action_Print->setShortcut(options->customShortcut(ui->action_Print->objectName()));
-    ui->actionExit->setShortcut(options->customShortcut(ui->actionExit->objectName()));
+    foreach (QAction *action, ui->menuFile->actions()) {
+        setCustomShortcut(action);
+    }
     // edit menu
-    ui->actionUndo->setShortcut(options->customShortcut(ui->actionUndo->objectName()));
-    ui->actionRedo->setShortcut(options->customShortcut(ui->actionRedo->objectName()));
-    ui->actionCut->setShortcut(options->customShortcut(ui->actionCut->objectName()));
-    ui->actionCopy->setShortcut(options->customShortcut(ui->actionCopy->objectName()));
-    ui->actionPaste->setShortcut(options->customShortcut(ui->actionPaste->objectName()));
+    foreach (QAction *action, ui->menuEdit->actions()) {
+        setCustomShortcut(action);
+    }
+    // view menu
+    foreach (QAction *action, ui->menuView->actions()) {
+        setCustomShortcut(action);
+    }
+    foreach (QAction *action, ui->plainTextEdit->actions()) {
+        setCustomShortcut(action);
+    }
+}
+
+void MainWindow::setCustomShortcut(QAction *action)
+{
+    if (options->hasCustomShortcut(action->objectName())) {
+        action->setShortcut(options->customShortcut(action->objectName()));
+    }
 }
 
 void MainWindow::updateExtensionStatus()
