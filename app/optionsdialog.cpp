@@ -269,6 +269,7 @@ OptionsDialog::OptionsDialog(Options *opt, SnippetCollection *collection, const 
     ui->tabWidget->setTabIcon(2, QIcon("fa-html5.fontawesome"));
     ui->tabWidget->setTabIcon(3, QIcon("fa-globe.fontawesome"));
     ui->tabWidget->setTabIcon(4, QIcon("fa-puzzle-piece.fontawesome"));
+    ui->tabWidget->setTabIcon(5, QIcon("fa-keyboard-o.fontawesome"));
 
     ui->fontComboBox->setFontFilters(QFontComboBox::MonospacedFonts);
 
