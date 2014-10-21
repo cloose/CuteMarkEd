@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>550</width>
-    <height>450</height>
+    <width>700</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -447,6 +447,41 @@
          <property name="readOnly">
           <bool>true</bool>
          </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="shortcutsTab">
+      <attribute name="title">
+       <string>Shortcuts</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <item>
+        <widget class="QTableWidget" name="shortcutsTable">
+         <property name="cornerButtonEnabled">
+          <bool>false</bool>
+         </property>
+         <property name="columnCount">
+          <number>3</number>
+         </property>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>Action</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Shortcut</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Default</string>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>
