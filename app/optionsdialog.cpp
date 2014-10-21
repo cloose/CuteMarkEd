@@ -231,6 +231,8 @@ public:
     {
         if (role == Qt::EditRole)
             m_keySequence = data.value<QKeySequence>();
+
+        QTableWidgetItem::setData(role, data);
     }
 
 private:
