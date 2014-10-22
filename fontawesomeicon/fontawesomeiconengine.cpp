@@ -118,6 +118,8 @@ void FontAwesomeIconEngine::loadFont()
         namedCodepoints.insert("fa-th-list", QChar(0xf00b));
         namedCodepoints.insert("fa-check", QChar(0xf00c));
         namedCodepoints.insert("fa-times", QChar(0xf00d));
+        namedCodepoints.insert("fa-close", QChar(0xf00d)); // alias
+        namedCodepoints.insert("fa-remove", QChar(0xf00d)); // alias
         namedCodepoints.insert("fa-search-plus", QChar(0xf00e));
 
         // 0xf010
@@ -173,6 +175,8 @@ void FontAwesomeIconEngine::loadFont()
         namedCodepoints.insert("fa-indent", QChar(0xf03c));
         namedCodepoints.insert("fa-video-camera", QChar(0xf03d));
         namedCodepoints.insert("fa-picture-o", QChar(0xf03e));
+        namedCodepoints.insert("fa-photo", QChar(0xf03e)); // alias
+        namedCodepoints.insert("fa-image", QChar(0xf03e)); // alias
 
         // 0xf040
         namedCodepoints.insert("fa-pencil", QChar(0xf040));
@@ -246,7 +250,8 @@ void FontAwesomeIconEngine::loadFont()
         namedCodepoints.insert("fa-arrows-h", QChar(0xf07e));
 
         // 0xf080
-        namedCodepoints.insert("fa-bar-chart-o", QChar(0xf080));
+        namedCodepoints.insert("fa-bar-chart", QChar(0xf080));
+        namedCodepoints.insert("fa-bar-chart-o", QChar(0xf080)); // alias
         namedCodepoints.insert("fa-twitter-square", QChar(0xf081));
         namedCodepoints.insert("fa-facebook-square", QChar(0xf082));
         namedCodepoints.insert("fa-camera-retro", QChar(0xf083));
@@ -318,6 +323,8 @@ void FontAwesomeIconEngine::loadFont()
         namedCodepoints.insert("fa-save", QChar(0xf0c7)); // alias
         namedCodepoints.insert("fa-square", QChar(0xf0c8));
         namedCodepoints.insert("fa-bars", QChar(0xf0c9));
+        namedCodepoints.insert("fa-navicon", QChar(0xf0c9)); // alias
+        namedCodepoints.insert("fa-reorder", QChar(0xf0c9)); // alias
         namedCodepoints.insert("fa-list-ul", QChar(0xf0ca));
         namedCodepoints.insert("fa-list-ol", QChar(0xf0cb));
         namedCodepoints.insert("fa-strikethrough", QChar(0xf0cc));
@@ -563,5 +570,152 @@ void FontAwesomeIconEngine::loadFont()
         namedCodepoints.insert("fa-try", QChar(0xf195));
         namedCodepoints.insert("fa-turkish-lira", QChar(0xf195)); // alias
         namedCodepoints.insert("fa-plus-square-o", QChar(0xf196));
+        namedCodepoints.insert("fa-space-shuttle", QChar(0xf197));
+        namedCodepoints.insert("fa-slack", QChar(0xf198));
+        namedCodepoints.insert("fa-envelope-square", QChar(0xf199));
+        namedCodepoints.insert("fa-wordpress", QChar(0xf19a));
+        namedCodepoints.insert("fa-openid", QChar(0xf19b));
+        namedCodepoints.insert("fa-university", QChar(0xf19c));
+        namedCodepoints.insert("fa-bank", QChar(0xf19c)); // alias
+        namedCodepoints.insert("fa-institution", QChar(0xf19c)); // alias
+        namedCodepoints.insert("fa-graduation-cap", QChar(0xf19d));
+        namedCodepoints.insert("fa-mortar-board", QChar(0xf19d)); // alias
+        namedCodepoints.insert("fa-yahoo", QChar(0xf19e));
+
+        // 0xf1a0
+        namedCodepoints.insert("fa-google", QChar(0xf1a0));
+        namedCodepoints.insert("fa-reddit", QChar(0xf1a1));
+        namedCodepoints.insert("fa-reddit-square", QChar(0xf1a2));
+        namedCodepoints.insert("fa-stumbleupon-circle", QChar(0xf1a3));
+        namedCodepoints.insert("fa-stumbleupon", QChar(0xf1a4));
+        namedCodepoints.insert("fa-delicious", QChar(0xf1a5));
+        namedCodepoints.insert("fa-digg", QChar(0xf1a6));
+        namedCodepoints.insert("fa-pied-piper", QChar(0xf1a7));
+        namedCodepoints.insert("fa-pied-piper-alt", QChar(0xf1a8));
+        namedCodepoints.insert("fa-drupal", QChar(0xf1a9));
+        namedCodepoints.insert("fa-joomla", QChar(0xf1aa));
+        namedCodepoints.insert("fa-language", QChar(0xf1ab));
+        namedCodepoints.insert("fa-fax", QChar(0xf1ac));
+        namedCodepoints.insert("fa-building", QChar(0xf1ad));
+        namedCodepoints.insert("fa-child", QChar(0xf1ae));
+
+        // 0xf1b0
+        namedCodepoints.insert("fa-paw", QChar(0xf1b0));
+        namedCodepoints.insert("fa-spoon", QChar(0xf1b1));
+        namedCodepoints.insert("fa-cube", QChar(0xf1b2));
+        namedCodepoints.insert("fa-cubes", QChar(0xf1b3));
+        namedCodepoints.insert("fa-behance", QChar(0xf1b4));
+        namedCodepoints.insert("fa-behance-square", QChar(0xf1b5));
+        namedCodepoints.insert("fa-steam", QChar(0xf1b6));
+        namedCodepoints.insert("fa-steam-square", QChar(0xf1b7));
+        namedCodepoints.insert("fa-recycle", QChar(0xf1b8));
+        namedCodepoints.insert("fa-car", QChar(0xf1b9));
+        namedCodepoints.insert("fa-automobile", QChar(0xf1b9)); // alias
+        namedCodepoints.insert("fa-cab", QChar(0xf1ba)); // alias
+        namedCodepoints.insert("fa-taxi", QChar(0xf1ba));
+        namedCodepoints.insert("fa-tree", QChar(0xf1bb));
+        namedCodepoints.insert("fa-spotify", QChar(0xf1bc));
+        namedCodepoints.insert("fa-deviantart", QChar(0xf1bd));
+        namedCodepoints.insert("fa-soundcloud", QChar(0xf1be));
+
+        // 0xf1c0
+        namedCodepoints.insert("fa-database", QChar(0xf1c0));
+        namedCodepoints.insert("fa-file-pdf-o", QChar(0xf1c1));
+        namedCodepoints.insert("fa-file-word-o", QChar(0xf1c2));
+        namedCodepoints.insert("fa-file-excel-o", QChar(0xf1c3));
+        namedCodepoints.insert("fa-file-powerpoint-o", QChar(0xf1c4));
+        namedCodepoints.insert("fa-file-image-o", QChar(0xf1c5));
+        namedCodepoints.insert("fa-file-photo-o", QChar(0xf1c5)); // alias
+        namedCodepoints.insert("fa-file-picture-o", QChar(0xf1c5)); // alias
+        namedCodepoints.insert("fa-file-archive-o", QChar(0xf1c6));
+        namedCodepoints.insert("fa-file-zip-o", QChar(0xf1c6)); // alias
+        namedCodepoints.insert("fa-file-audio-o", QChar(0xf1c7));
+        namedCodepoints.insert("fa-file-sound-o", QChar(0xf1c7)); // alias
+        namedCodepoints.insert("fa-file-video-o", QChar(0xf1c8));
+        namedCodepoints.insert("fa-file-movie-o", QChar(0xf1c8)); // alias
+        namedCodepoints.insert("fa-file-code-o", QChar(0xf1c9));
+        namedCodepoints.insert("fa-vine", QChar(0xf1ca));
+        namedCodepoints.insert("fa-codepen", QChar(0xf1cb));
+        namedCodepoints.insert("fa-jsfiddle", QChar(0xf1cc));
+        namedCodepoints.insert("fa-life-bouy", QChar(0xf1cd)); // alias
+        namedCodepoints.insert("fa-life-buoy", QChar(0xf1cd)); // alias
+        namedCodepoints.insert("fa-life-ring", QChar(0xf1cd));
+        namedCodepoints.insert("fa-life-saver", QChar(0xf1cd)); // alias
+        namedCodepoints.insert("fa-support", QChar(0xf1cd)); // alias
+        namedCodepoints.insert("fa-circle-o-notch", QChar(0xf1ce));
+
+        // 0xf1d0
+        namedCodepoints.insert("fa-rebel", QChar(0xf1d0));
+        namedCodepoints.insert("fa-ra", QChar(0xf1d0)); // alias
+        namedCodepoints.insert("fa-empire", QChar(0xf1d1));
+        namedCodepoints.insert("fa-ge", QChar(0xf1d1)); // alias
+        namedCodepoints.insert("fa-git-square", QChar(0xf1d2));
+        namedCodepoints.insert("fa-git", QChar(0xf1d3));
+        namedCodepoints.insert("fa-hacker-news", QChar(0xf1d4));
+        namedCodepoints.insert("fa-tencent-weibo", QChar(0xf1d5));
+        namedCodepoints.insert("fa-qq", QChar(0xf1d6));
+        namedCodepoints.insert("fa-wechat", QChar(0xf1d7)); // alias
+        namedCodepoints.insert("fa-weixin", QChar(0xf1d7));
+        namedCodepoints.insert("fa-paper-plane", QChar(0xf1d8));
+        namedCodepoints.insert("fa-send", QChar(0xf1d8)); // alias
+        namedCodepoints.insert("fa-paper-plane-o", QChar(0xf1d9));
+        namedCodepoints.insert("fa-send-o", QChar(0xf1d9)); // alias
+        namedCodepoints.insert("fa-history", QChar(0xf1da));
+        namedCodepoints.insert("fa-circle-thin", QChar(0xf1db));
+        namedCodepoints.insert("fa-header", QChar(0xf1dc));
+        namedCodepoints.insert("fa-paragraph", QChar(0xf1dd));
+        namedCodepoints.insert("fa-sliders", QChar(0xf1de));
+
+        // 0xf1e0
+        namedCodepoints.insert("fa-share-alt", QChar(0xf1e0));
+        namedCodepoints.insert("fa-share-alt-square", QChar(0xf1e1));
+        namedCodepoints.insert("fa-bomb", QChar(0xf1e2));
+        namedCodepoints.insert("fa-futbol-o", QChar(0xf1e3));
+        namedCodepoints.insert("fa-soccer-ball-o", QChar(0xf1e3)); // alias
+        namedCodepoints.insert("fa-tty", QChar(0xf1e4));
+        namedCodepoints.insert("fa-binoculars", QChar(0xf1e5));
+        namedCodepoints.insert("fa-plug", QChar(0xf1e6));
+        namedCodepoints.insert("fa-slideshare", QChar(0xf1e7));
+        namedCodepoints.insert("fa-twitch", QChar(0xf1e8));
+        namedCodepoints.insert("fa-yelp", QChar(0xf1e9));
+        namedCodepoints.insert("fa-newspaper-o", QChar(0xf1ea));
+        namedCodepoints.insert("fa-wifi", QChar(0xf1eb));
+        namedCodepoints.insert("fa-calculator", QChar(0xf1ec));
+        namedCodepoints.insert("fa-paypal", QChar(0xf1ed));
+        namedCodepoints.insert("fa-google-wallet", QChar(0xf1ee));
+
+        // 0xf1f0
+        namedCodepoints.insert("fa-cc-visa", QChar(0xf1f0));
+        namedCodepoints.insert("fa-cc-mastercard", QChar(0xf1f1));
+        namedCodepoints.insert("fa-cc-discover", QChar(0xf1f2));
+        namedCodepoints.insert("fa-cc-amex", QChar(0xf1f3));
+        namedCodepoints.insert("fa-cc-paypal", QChar(0xf1f4));
+        namedCodepoints.insert("fa-cc-stripe", QChar(0xf1f5));
+        namedCodepoints.insert("fa-bell-slash", QChar(0xf1f6));
+        namedCodepoints.insert("fa-bell-slash-o", QChar(0xf1f7));
+        namedCodepoints.insert("fa-trash", QChar(0xf1f8));
+        namedCodepoints.insert("fa-copyright", QChar(0xf1f9));
+        namedCodepoints.insert("fa-at", QChar(0xf1fa));
+        namedCodepoints.insert("fa-eyedropper", QChar(0xf1fb));
+        namedCodepoints.insert("fa-paint-brush", QChar(0xf1fc));
+        namedCodepoints.insert("fa-birthday-cake", QChar(0xf1fd));
+        namedCodepoints.insert("fa-area-chart", QChar(0xf1fe));
+
+        // 0xf200
+        namedCodepoints.insert("fa-pie-chart", QChar(0xf200));
+        namedCodepoints.insert("fa-line-chart", QChar(0xf201));
+        namedCodepoints.insert("fa-lastfm", QChar(0xf202));
+        namedCodepoints.insert("fa-lastfm-square", QChar(0xf203));
+        namedCodepoints.insert("fa-toggle-off", QChar(0xf204));
+        namedCodepoints.insert("fa-toggle-on", QChar(0xf205));
+        namedCodepoints.insert("fa-bicycle", QChar(0xf206));
+        namedCodepoints.insert("fa-bus", QChar(0xf207));
+        namedCodepoints.insert("fa-ioxhost", QChar(0xf208));
+        namedCodepoints.insert("fa-angellist", QChar(0xf209));
+        namedCodepoints.insert("fa-cc", QChar(0xf20a));
+        namedCodepoints.insert("fa-ils", QChar(0xf20b));
+        namedCodepoints.insert("fa-shekel", QChar(0xf20b)); // alias
+        namedCodepoints.insert("fa-sheqel", QChar(0xf20b)); // alias
+        namedCodepoints.insert("fa-meanpath", QChar(0xf20c));
     }
 }
