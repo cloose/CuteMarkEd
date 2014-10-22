@@ -986,6 +986,7 @@ void MainWindow::setupActions()
     SetActionShortcut(ui->actionSave, QKeySequence::Save);
     ui->actionSave->setIcon(QIcon("fa-floppy-o.fontawesome"));
     SetActionShortcut(ui->actionSaveAs, QKeySequence::SaveAs);
+    ui->actionExportToPDF->setIcon(QIcon("fa-file-pdf-o.fontawesome"));
     SetActionShortcut(ui->action_Print, QKeySequence::Print);
     ui->action_Print->setIcon(QIcon("fa-print.fontawesome"));
     SetActionShortcut(ui->actionExit, QKeySequence::Quit);
