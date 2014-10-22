@@ -54,6 +54,7 @@
 #include "controls/recentfilesmenu.h"
 #include "aboutdialog.h"
 #include "htmlpreviewgenerator.h"
+#include "htmlviewsynchronizer.h"
 #include "htmlhighlighter.h"
 #include "imagetooldialog.h"
 #include "markdownmanipulator.h"
@@ -61,6 +62,7 @@
 #include "exportpdfdialog.h"
 #include "options.h"
 #include "optionsdialog.h"
+#include "revealviewsynchronizer.h"
 #include "snippetcompleter.h"
 #include "tabletooldialog.h"
 
@@ -77,8 +79,8 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     viewLabel(0),
     generator(new HtmlPreviewGenerator(options, this)),
     snippetCollection(new SnippetCollection(this)),
+    viewSynchronizer(0),
     splitFactor(0.5),
-    scrollBarPos(0),
     rightViewCollapsed(false)
 {
     ui->setupUi(this);
@@ -91,21 +93,14 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete viewSynchronizer;
+
     // stop background HTML preview generator
     generator->markdownTextChanged(QString());
     generator->wait();
     delete generator;
 
     delete ui;
-}
-
-void MainWindow::webViewScrolled()
-{
-    double factor = (double)ui->plainTextEdit->verticalScrollBar()->maximum() /
-                   ui->webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical);
-    int value = ui->webView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
-
-    ui->plainTextEdit->verticalScrollBar()->setValue(qRound(value * factor));
 }
 
 void MainWindow::webViewContextMenu(const QPoint &pos)
@@ -799,9 +794,6 @@ void MainWindow::htmlResultReady(const QString &html)
 {
     ui->webView->page()->networkAccessManager()->setCache(diskCache);
 
-    // remember scrollbar position
-    scrollBarPos = ui->plainTextEdit->verticalScrollBar()->value();
-
     // show html preview
     QUrl baseUrl;
     if (fileName.isEmpty()) {
@@ -822,14 +814,6 @@ void MainWindow::htmlResultReady(const QString &html)
 void MainWindow::tocResultReady(const QString &toc)
 {
     ui->tocWebView->setHtml(toc);
-}
-
-void MainWindow::htmlContentSizeChanged()
-{
-    if (scrollBarPos > 0) {
-        // restore previous scrollbar position
-        scrollValueChanged(scrollBarPos);
-    }
 }
 
 void MainWindow::previewLinkClicked(const QUrl &url)
@@ -871,19 +855,10 @@ void MainWindow::splitterMoved(int pos, int index)
     rightViewCollapsed = (ui->splitter->sizes().at(1) == 0);
 }
 
-void MainWindow::scrollValueChanged(int value)
-{
-    double factor = (double)ui->webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical) /
-                   ui->plainTextEdit->verticalScrollBar()->maximum();
-
-    ui->webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, qRound(value * factor));
-}
-
 void MainWindow::addJavaScriptObject()
 {
-    // add mainwindow object to javascript engine, so when
-    // the scrollbar of the webview changes the method webViewScrolled() can be called
-    ui->webView->page()->mainFrame()->addToJavaScriptWindowObject("mainwin", this);
+    // add view synchronizer object to javascript engine
+    ui->webView->page()->mainFrame()->addToJavaScriptWindowObject("synchronizer", viewSynchronizer);
 }
 
 bool MainWindow::load(const QString &fileName)
@@ -947,6 +922,21 @@ void MainWindow::markdownConverterChanged()
 
     // disable unsupported extensions
     updateExtensionStatus();
+
+    delete viewSynchronizer;
+    switch (options->markdownConverter()) {
+    case Options::DiscountMarkdownConverter:
+        viewSynchronizer = new HtmlViewSynchronizer(ui->webView, ui->plainTextEdit);
+        connect(generator, SIGNAL(htmlResultReady(QString)),
+                viewSynchronizer, SLOT(rememberScrollBarPos()));
+        break;
+    case Options::RevealMarkdownConverter:
+        viewSynchronizer = new RevealViewSynchronizer(ui->webView, ui->plainTextEdit);
+        break;
+    default:
+        viewSynchronizer = 0;
+        break;
+    }
 }
 
 void MainWindow::setupUi()
@@ -1140,10 +1130,6 @@ void MainWindow::setupMarkdownEditor()
     connect(ui->plainTextEdit, SIGNAL(loadDroppedFile(QString)),
             this, SLOT(load(QString)));
 
-    // synchronize scrollbars
-    connect(ui->plainTextEdit->verticalScrollBar(), SIGNAL(valueChanged(int)),
-            this, SLOT(scrollValueChanged(int)));
-
     connect(options, SIGNAL(editorFontChanged(QFont)),
             ui->plainTextEdit, SLOT(editorFontChanged(QFont)));
     connect(options, SIGNAL(tabWidthChanged(int)),
@@ -1155,10 +1141,6 @@ void MainWindow::setupHtmlPreview()
     // add our objects everytime JavaScript environment is cleared
     connect(ui->webView->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),
             this, SLOT(addJavaScriptObject()));
-
-    // restore scrollbar position after content size changed
-    connect(ui->webView->page()->mainFrame(), SIGNAL(contentsSizeChanged(QSize)),
-            this, SLOT(htmlContentSizeChanged()));
 
     // start background HTML preview generator
     connect(generator, SIGNAL(htmlResultReady(QString)),

@@ -18,6 +18,7 @@
 
 #include "dictionarytest.h"
 #include "jsonsnippettranslatortest.h"
+#include "slidelinemappingtest.h"
 #include "snippetcollectiontest.h"
 #include "snippetlistmodeltest.h"
 #include "snippettest.h"
@@ -40,6 +41,9 @@ int main(int argc, char *argv[])
 
     DictionaryTest test5;
     ret += QTest::qExec(&test5, argc, argv);
+
+    SlideLineMappingTest test6;
+    ret += QTest::qExec(&test6, argc, argv);
 
     return ret;
 }

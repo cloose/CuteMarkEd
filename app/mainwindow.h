@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMap>
+#include <QHash>
 
 namespace Ui {
 class MainWindow;
@@ -33,19 +35,20 @@ class HtmlPreviewGenerator;
 class HtmlHighlighter;
 class RecentFilesMenu;
 class Options;
+class SlideLineMapping;
 class SnippetCollection;
+class ViewSynchronizer;
 
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    
+
 public:
     explicit MainWindow(const QString &fileName = QString(), QWidget *parent = 0);
     ~MainWindow();
 
 public slots:
-    void webViewScrolled();
     void webViewContextMenu(const QPoint &pos);
 
 protected:
@@ -119,13 +122,11 @@ private slots:
     void plainTextChanged();
     void htmlResultReady(const QString &html);
     void tocResultReady(const QString &toc);
-    void htmlContentSizeChanged();
 
     void previewLinkClicked(const QUrl &url);
     void tocLinkClicked(const QUrl &url);
 
     void splitterMoved(int pos, int index);
-    void scrollValueChanged(int value);
 
     void addJavaScriptObject();
     bool load(const QString &fileName);
@@ -165,9 +166,9 @@ private:
     HtmlPreviewGenerator* generator;
     HtmlHighlighter *htmlHighlighter;
     SnippetCollection *snippetCollection;
+    ViewSynchronizer *viewSynchronizer;
     QString fileName;
     float splitFactor;
-    int scrollBarPos;
     bool rightViewCollapsed;
 };
 
