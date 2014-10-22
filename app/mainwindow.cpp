@@ -970,6 +970,8 @@ void MainWindow::setupUi()
 
     readSettings();
     setupCustomShortcuts();
+
+    ui->actionFullScreenMode->setChecked(this->isFullScreen());
 }
 
 void SetActionShortcut(QAction *action, const QKeySequence &shortcut)
