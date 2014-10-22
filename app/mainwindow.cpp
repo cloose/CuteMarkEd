@@ -54,6 +54,7 @@
 #include "controls/recentfilesmenu.h"
 #include "aboutdialog.h"
 #include "htmlpreviewgenerator.h"
+#include "htmlviewsynchronizer.h"
 #include "htmlhighlighter.h"
 #include "imagetooldialog.h"
 #include "markdownmanipulator.h"
@@ -61,6 +62,7 @@
 #include "exportpdfdialog.h"
 #include "options.h"
 #include "optionsdialog.h"
+#include "revealviewsynchronizer.h"
 #include "snippetcompleter.h"
 #include "tabletooldialog.h"
 
@@ -77,8 +79,8 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     viewLabel(0),
     generator(new HtmlPreviewGenerator(options, this)),
     snippetCollection(new SnippetCollection(this)),
+    viewSynchronizer(0),
     splitFactor(0.5),
-    scrollBarPos(0),
     rightViewCollapsed(false)
 {
     ui->setupUi(this);
@@ -91,21 +93,14 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete viewSynchronizer;
+
     // stop background HTML preview generator
     generator->markdownTextChanged(QString());
     generator->wait();
     delete generator;
 
     delete ui;
-}
-
-void MainWindow::webViewScrolled()
-{
-    double factor = (double)ui->plainTextEdit->verticalScrollBar()->maximum() /
-                   ui->webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical);
-    int value = ui->webView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
-
-    ui->plainTextEdit->verticalScrollBar()->setValue(qRound(value * factor));
 }
 
 void MainWindow::webViewContextMenu(const QPoint &pos)
@@ -655,13 +650,62 @@ void MainWindow::extrasCheckSpelling(bool checked)
 
 void MainWindow::extrasOptions()
 {
-    OptionsDialog dialog(options, snippetCollection, this);
+    QList<QAction*> actions;
+    // file menu
+    actions << ui->actionNew 
+            << ui->actionOpen 
+            << ui->actionSave
+            << ui->actionSaveAs
+            << ui->actionExportToHTML
+            << ui->actionExportToPDF
+            << ui->action_Print
+            << ui->actionExit;
+    // edit menu
+    actions << ui->actionUndo
+            << ui->actionRedo
+            << ui->actionCut
+            << ui->actionCopy
+            << ui->actionPaste
+            << ui->actionStrong
+            << ui->actionCopyHtmlToClipboard
+            << ui->actionEmphasize
+            << ui->actionStrikethrough
+            << ui->actionInline_Code
+            << ui->actionCenterParagraph
+            << ui->actionBlockquote
+            << ui->actionIncreaseHeaderLevel
+            << ui->actionDecreaseHeaderLevel
+            << ui->actionInsertTable
+            << ui->actionInsertImage
+            << ui->actionFindReplace
+            << ui->actionFindNext
+            << ui->actionFindPrevious
+            << ui->actionGotoLine;
+    // view menu
+    actions << ui->dockWidget->toggleViewAction()
+            << ui->fileExplorerDockWidget->toggleViewAction()
+            << ui->actionHtmlPreview
+            << ui->actionSplit_1_1
+            << ui->actionSplit_2_1
+            << ui->actionSplit_1_2
+            << ui->actionSplit_3_1
+            << ui->actionSplit_1_3
+            << ui->actionFullScreenMode
+            << ui->actionHorizontalLayout;
+
+    // snippet complete
+    actions << ui->plainTextEdit->actions();
+
+    OptionsDialog dialog(options, snippetCollection, actions, this);
     if (dialog.exec() == QDialog::Accepted) {
         options->writeSettings();
 
         QString path = DataLocation::writableLocation();
         QSharedPointer<SnippetCollection> userDefinedSnippets = snippetCollection->userDefinedSnippets();
         JsonSnippetFile::save(path + "/user-snippets.json", userDefinedSnippets.data());
+
+        // update shortcuts
+        setupCustomShortcuts();
     }
 }
 
@@ -750,9 +794,6 @@ void MainWindow::htmlResultReady(const QString &html)
 {
     ui->webView->page()->networkAccessManager()->setCache(diskCache);
 
-    // remember scrollbar position
-    scrollBarPos = ui->plainTextEdit->verticalScrollBar()->value();
-
     // show html preview
     QUrl baseUrl;
     if (fileName.isEmpty()) {
@@ -773,14 +814,6 @@ void MainWindow::htmlResultReady(const QString &html)
 void MainWindow::tocResultReady(const QString &toc)
 {
     ui->tocWebView->setHtml(toc);
-}
-
-void MainWindow::htmlContentSizeChanged()
-{
-    if (scrollBarPos > 0) {
-        // restore previous scrollbar position
-        scrollValueChanged(scrollBarPos);
-    }
 }
 
 void MainWindow::previewLinkClicked(const QUrl &url)
@@ -822,19 +855,10 @@ void MainWindow::splitterMoved(int pos, int index)
     rightViewCollapsed = (ui->splitter->sizes().at(1) == 0);
 }
 
-void MainWindow::scrollValueChanged(int value)
-{
-    double factor = (double)ui->webView->page()->mainFrame()->scrollBarMaximum(Qt::Vertical) /
-                   ui->plainTextEdit->verticalScrollBar()->maximum();
-
-    ui->webView->page()->mainFrame()->setScrollBarValue(Qt::Vertical, qRound(value * factor));
-}
-
 void MainWindow::addJavaScriptObject()
 {
-    // add mainwindow object to javascript engine, so when
-    // the scrollbar of the webview changes the method webViewScrolled() can be called
-    ui->webView->page()->mainFrame()->addToJavaScriptWindowObject("mainwin", this);
+    // add view synchronizer object to javascript engine
+    ui->webView->page()->mainFrame()->addToJavaScriptWindowObject("synchronizer", viewSynchronizer);
 }
 
 bool MainWindow::load(const QString &fileName)
@@ -898,6 +922,21 @@ void MainWindow::markdownConverterChanged()
 
     // disable unsupported extensions
     updateExtensionStatus();
+
+    delete viewSynchronizer;
+    switch (options->markdownConverter()) {
+    case Options::DiscountMarkdownConverter:
+        viewSynchronizer = new HtmlViewSynchronizer(ui->webView, ui->plainTextEdit);
+        connect(generator, SIGNAL(htmlResultReady(QString)),
+                viewSynchronizer, SLOT(rememberScrollBarPos()));
+        break;
+    case Options::RevealMarkdownConverter:
+        viewSynchronizer = new RevealViewSynchronizer(ui->webView, ui->plainTextEdit);
+        break;
+    default:
+        viewSynchronizer = 0;
+        break;
+    }
 }
 
 void MainWindow::setupUi()
@@ -910,6 +949,8 @@ void MainWindow::setupUi()
 
     // hide find/replace widget on startup
     ui->findReplaceWidget->hide();
+    connect(ui->findReplaceWidget, SIGNAL(dialogClosed()),
+            ui->plainTextEdit, SLOT(setFocus()));
 
     // close table of contents dockwidget
     ui->dockWidget->close();
@@ -928,19 +969,26 @@ void MainWindow::setupUi()
             this, SLOT(markdownConverterChanged()));
 
     readSettings();
+    setupCustomShortcuts();
+}
+
+void SetActionShortcut(QAction *action, const QKeySequence &shortcut)
+{
+    action->setShortcut(shortcut);
+    action->setProperty("defaultshortcut", shortcut);
 }
 
 void MainWindow::setupActions()
 {
     // file menu
-    ui->actionNew->setShortcut(QKeySequence::New);
-    ui->actionOpen->setShortcut(QKeySequence::Open);
-    ui->actionSave->setShortcut(QKeySequence::Save);
+    SetActionShortcut(ui->actionNew, QKeySequence::New);
+    SetActionShortcut(ui->actionOpen, QKeySequence::Open);
+    SetActionShortcut(ui->actionSave, QKeySequence::Save);
     ui->actionSave->setIcon(QIcon("fa-floppy-o.fontawesome"));
-    ui->actionSaveAs->setShortcut(QKeySequence::SaveAs);
-    ui->action_Print->setShortcut(QKeySequence::Print);
+    SetActionShortcut(ui->actionSaveAs, QKeySequence::SaveAs);
+    SetActionShortcut(ui->action_Print, QKeySequence::Print);
     ui->action_Print->setIcon(QIcon("fa-print.fontawesome"));
-    ui->actionExit->setShortcut(QKeySequence::Quit);
+    SetActionShortcut(ui->actionExit, QKeySequence::Quit);
 
     recentFilesMenu = new RecentFilesMenu(ui->menuFile);
     ui->menuFile->insertMenu(ui->actionSave, recentFilesMenu);
@@ -949,20 +997,20 @@ void MainWindow::setupActions()
             this, SLOT(openRecentFile(QString)));
 
     // edit menu
-    ui->actionUndo->setShortcut(QKeySequence::Undo);
+    SetActionShortcut(ui->actionUndo, QKeySequence::Undo);
     ui->actionUndo->setIcon(QIcon("fa-undo.fontawesome"));
-    ui->actionRedo->setShortcut(QKeySequence::Redo);
+    SetActionShortcut(ui->actionRedo, QKeySequence::Redo);
     ui->actionRedo->setIcon(QIcon("fa-repeat.fontawesome"));
 
-    ui->actionCut->setShortcut(QKeySequence::Cut);
+    SetActionShortcut(ui->actionCut, QKeySequence::Cut);
     ui->actionCut->setIcon(QIcon("fa-scissors.fontawesome"));
-    ui->actionCopy->setShortcut(QKeySequence::Copy);
+    SetActionShortcut(ui->actionCopy, QKeySequence::Copy);
     ui->actionCopy->setIcon(QIcon("fa-files-o.fontawesome"));
-    ui->actionPaste->setShortcut(QKeySequence::Paste);
+    SetActionShortcut(ui->actionPaste, QKeySequence::Paste);
     ui->actionPaste->setIcon(QIcon("fa-clipboard.fontawesome"));
-    ui->actionStrong->setShortcut(QKeySequence::Bold);
+    SetActionShortcut(ui->actionStrong, QKeySequence::Bold);
     ui->actionStrong->setIcon(QIcon("fa-bold.fontawesome"));
-    ui->actionEmphasize->setShortcut(QKeySequence::Italic);
+    SetActionShortcut(ui->actionEmphasize, QKeySequence::Italic);
     ui->actionEmphasize->setIcon(QIcon("fa-italic.fontawesome"));
     ui->actionStrikethrough->setIcon(QIcon("fa-strikethrough.fontawesome"));
     ui->actionCenterParagraph->setIcon(QIcon("fa-align-center.fontawesome"));
@@ -973,10 +1021,10 @@ void MainWindow::setupActions()
     ui->actionInsertTable->setIcon(QIcon("fa-table.fontawesome"));
     ui->actionInsertImage->setIcon(QIcon("fa-picture-o.fontawesome"));
 
-    ui->actionFindReplace->setShortcut(QKeySequence::Find);
+    SetActionShortcut(ui->actionFindReplace, QKeySequence::Find);
     ui->actionFindReplace->setIcon(QIcon("fa-search.fontawesome"));
-    ui->actionFindNext->setShortcut(QKeySequence::FindNext);
-    ui->actionFindPrevious->setShortcut(QKeySequence::FindPrevious);
+    SetActionShortcut(ui->actionFindNext, QKeySequence::FindNext);
+    SetActionShortcut(ui->actionFindPrevious, QKeySequence::FindPrevious);
 
     connect(ui->actionFindNext, SIGNAL(triggered()),
             ui->findReplaceWidget, SLOT(findNextClicked()));
@@ -987,8 +1035,8 @@ void MainWindow::setupActions()
     // view menu
     ui->menuView->insertAction(ui->menuView->actions()[0], ui->dockWidget->toggleViewAction());
     ui->menuView->insertAction(ui->menuView->actions()[1], ui->fileExplorerDockWidget->toggleViewAction());
-    ui->fileExplorerDockWidget->toggleViewAction()->setShortcut(QKeySequence(Qt::ALT + Qt::Key_E));
-    ui->actionFullScreenMode->setShortcut(QKeySequence::FullScreen);
+    SetActionShortcut(ui->fileExplorerDockWidget->toggleViewAction(), QKeySequence(Qt::ALT + Qt::Key_E));
+    SetActionShortcut(ui->actionFullScreenMode, QKeySequence::FullScreen);
     ui->actionFullScreenMode->setIcon(QIcon("fa-arrows-alt.fontawesome"));
 
     // extras menu
@@ -1029,6 +1077,21 @@ void MainWindow::setupActions()
     zoomResetAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_0));
     connect(zoomResetAction, SIGNAL(triggered()), this, SLOT(webViewResetZoom()));
     ui->webView->addAction(zoomResetAction);
+
+    // set names for dock widget actions
+    ui->dockWidget->toggleViewAction()->setObjectName("actionTableOfContents");
+    ui->fileExplorerDockWidget->toggleViewAction()->setObjectName("actionFileExplorer");
+
+    // setup default shortcuts
+    ui->actionGotoLine->setProperty("defaultshortcut", ui->actionGotoLine->shortcut());
+    ui->actionBlockquote->setProperty("defaultshortcut", ui->actionBlockquote->shortcut());
+    ui->actionIncreaseHeaderLevel->setProperty("defaultshortcut", ui->actionIncreaseHeaderLevel->shortcut());
+    ui->actionDecreaseHeaderLevel->setProperty("defaultshortcut", ui->actionDecreaseHeaderLevel->shortcut());
+    ui->actionInsertTable->setProperty("defaultshortcut", ui->actionInsertTable->shortcut());
+    ui->actionInsertImage->setProperty("defaultshortcut", ui->actionInsertImage->shortcut());
+    ui->dockWidget->toggleViewAction()->setProperty("defaultshortcut", ui->dockWidget->toggleViewAction()->shortcut());
+    ui->fileExplorerDockWidget->toggleViewAction()->setProperty("defaultshortcut", ui->fileExplorerDockWidget->toggleViewAction()->shortcut());
+    ui->actionHtmlPreview->setProperty("defaultshortcut", ui->actionHtmlPreview->shortcut());
 }
 
 void MainWindow::setupStatusBar()
@@ -1067,10 +1130,6 @@ void MainWindow::setupMarkdownEditor()
     connect(ui->plainTextEdit, SIGNAL(loadDroppedFile(QString)),
             this, SLOT(load(QString)));
 
-    // synchronize scrollbars
-    connect(ui->plainTextEdit->verticalScrollBar(), SIGNAL(valueChanged(int)),
-            this, SLOT(scrollValueChanged(int)));
-
     connect(options, SIGNAL(editorFontChanged(QFont)),
             ui->plainTextEdit, SLOT(editorFontChanged(QFont)));
     connect(options, SIGNAL(tabWidthChanged(int)),
@@ -1082,10 +1141,6 @@ void MainWindow::setupHtmlPreview()
     // add our objects everytime JavaScript environment is cleared
     connect(ui->webView->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),
             this, SLOT(addJavaScriptObject()));
-
-    // restore scrollbar position after content size changed
-    connect(ui->webView->page()->mainFrame(), SIGNAL(contentsSizeChanged(QSize)),
-            this, SLOT(htmlContentSizeChanged()));
 
     // start background HTML preview generator
     connect(generator, SIGNAL(htmlResultReady(QString)),
@@ -1101,6 +1156,32 @@ void MainWindow::setupHtmlSourceView()
     font.setStyleHint(QFont::TypeWriter);
     ui->htmlSourceTextEdit->setFont(font);
     htmlHighlighter = new HtmlHighlighter(ui->htmlSourceTextEdit->document());
+}
+
+void MainWindow::setupCustomShortcuts()
+{
+    // file menu
+    foreach (QAction *action, ui->menuFile->actions()) {
+        setCustomShortcut(action);
+    }
+    // edit menu
+    foreach (QAction *action, ui->menuEdit->actions()) {
+        setCustomShortcut(action);
+    }
+    // view menu
+    foreach (QAction *action, ui->menuView->actions()) {
+        setCustomShortcut(action);
+    }
+    foreach (QAction *action, ui->plainTextEdit->actions()) {
+        setCustomShortcut(action);
+    }
+}
+
+void MainWindow::setCustomShortcut(QAction *action)
+{
+    if (options->hasCustomShortcut(action->objectName())) {
+        action->setShortcut(options->customShortcut(action->objectName()));
+    }
 }
 
 void MainWindow::updateExtensionStatus()

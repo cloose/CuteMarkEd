@@ -217,6 +217,22 @@ void Options::setProxyPassword(const QString &password)
     m_proxyPassword = password;
 }
 
+void Options::addCustomShortcut(const QString &actionName, const QKeySequence &keySequence)
+{
+    if (actionName.isEmpty()) return;
+    m_customShortcuts.insert(actionName, keySequence);
+}
+
+bool Options::hasCustomShortcut(const QString &actionName) const
+{
+    return m_customShortcuts.contains(actionName);
+}
+
+QKeySequence Options::customShortcut(const QString &actionName) const
+{
+    return m_customShortcuts.value(actionName);
+}
+
 bool Options::isAutolinkEnabled() const
 {
     return m_autolinkEnabled;
@@ -393,6 +409,14 @@ void Options::readSettings()
     m_proxyUser = settings.value(PROXY_USER, "").toString();
     m_proxyPassword = settings.value(PROXY_PASSWORD, "").toString();
 
+    // shortcut settings
+    settings.beginGroup("shortcuts");
+    foreach (QString actionName, settings.childKeys()) {
+        QKeySequence keySequence = settings.value(actionName, "").value<QKeySequence>();
+        addCustomShortcut(actionName, keySequence);
+    }
+    settings.endGroup();
+
     // extension settings
     m_autolinkEnabled = settings.value(AUTOLINK_ENABLED, true).toBool();
     m_strikethroughEnabled = settings.value(STRIKETHROUGH_ENABLED, true).toBool();
@@ -440,6 +464,15 @@ void Options::writeSettings()
     settings.setValue(PROXY_PORT, m_proxyPort);
     settings.setValue(PROXY_USER, m_proxyUser);
     settings.setValue(PROXY_PASSWORD, m_proxyPassword);
+
+    // shortcut settings
+    settings.beginGroup("shortcuts");
+    QMap<QString, QKeySequence>::const_iterator it = m_customShortcuts.constBegin();
+    while (it != m_customShortcuts.constEnd()) {
+        settings.setValue(it.key(), it.value());
+        ++it;
+    }
+    settings.endGroup();
 
     // extensions settings
     settings.setValue(AUTOLINK_ENABLED, m_autolinkEnabled);

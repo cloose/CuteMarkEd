@@ -49,6 +49,15 @@ void FindReplaceWidget::showEvent(QShowEvent *)
     ui->findLineEdit->selectAll();
 }
 
+void FindReplaceWidget::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Escape) {
+        event->accept();
+        close();
+        emit dialogClosed();
+    }
+}
+
 void FindReplaceWidget::findPreviousClicked()
 {
     if (!textEditor) return;

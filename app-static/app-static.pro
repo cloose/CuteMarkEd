@@ -4,7 +4,7 @@
 # Github : https://github.com/cloose/CuteMarkEd
 #
 
-QT += gui
+QT += gui webkitwidgets
 
 TARGET = app-static
 TEMPLATE = lib
@@ -20,7 +20,11 @@ SOURCES += \
     converter/revealmarkdownconverter.cpp \
     template/htmltemplate.cpp \
     template/presentationtemplate.cpp \
-    datalocation.cpp
+    datalocation.cpp \
+    slidelinemapping.cpp \
+    viewsynchronizer.cpp \
+    revealviewsynchronizer.cpp \
+    htmlviewsynchronizer.cpp
 
 HEADERS += \
     snippets/snippet.h \
@@ -36,7 +40,11 @@ HEADERS += \
     template/template.h \
     template/htmltemplate.h \
     template/presentationtemplate.h \
-    datalocation.h
+    datalocation.h \
+    slidelinemapping.h \
+    viewsynchronizer.h \
+    revealviewsynchronizer.h \
+    htmlviewsynchronizer.h
 
 #unix:!symbian {
 #    maemo5 {

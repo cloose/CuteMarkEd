@@ -49,12 +49,12 @@ QString PresentationTemplate::buildRevealPlugins(RenderOptions options) const
 
     // add MathJax.js script as reveal plugin
     if (options.testFlag(Template::MathSupport)) {
-        plugins += "{ src: 'https://cdn.jsdelivr.net/reveal.js/2.5.0/plugin/math/math.js', async: true },\n";
+        plugins += "{ src: 'https://cdn.jsdelivr.net/reveal.js/2.6.2/plugin/math/math.js', async: true },\n";
     }
 
     // add Highlight.js script as reveal plugin
     if (options.testFlag(Template::CodeHighlighting)) {
-        plugins += "{ src: 'https://cdn.jsdelivr.net/reveal.js/2.5.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },\n";
+        plugins += "{ src: 'https://cdn.jsdelivr.net/reveal.js/2.6.2/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },\n";
     }
 
     return plugins;

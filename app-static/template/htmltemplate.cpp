@@ -62,7 +62,7 @@ QString HtmlTemplate::buildHtmlHeader(RenderOptions options) const
 
     // add javascript for scrollbar synchronization
     if (options.testFlag(Template::ScrollbarSynchronization)) {
-        header += "<script type=\"text/javascript\">window.onscroll = function() { mainwin.webViewScrolled(); }; </script>\n";
+        header += "<script type=\"text/javascript\">window.onscroll = function() { synchronizer.webViewScrolled(); }; </script>\n";
     }
 
     // add MathJax.js script to HTML header

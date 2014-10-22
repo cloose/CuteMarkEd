@@ -13,6 +13,7 @@ SOURCES += \
     main.cpp \
     snippettest.cpp \
     jsonsnippettranslatortest.cpp \
+    slidelinemappingtest.cpp \
     snippetcollectiontest.cpp \
     snippetlistmodeltest.cpp \
     dictionarytest.cpp
@@ -20,6 +21,7 @@ SOURCES += \
 HEADERS += \
     snippettest.h \
     jsonsnippettranslatortest.h \
+    slidelinemappingtest.h \
     snippetcollectiontest.h \
     snippetlistmodeltest.h \
     dictionarytest.h
