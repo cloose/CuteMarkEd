@@ -25,6 +25,7 @@
 #include <snippets/snippet.h>
 #include <snippets/snippetcollection.h>
 #include <snippets/snippetlistmodel.h>
+#include <completionlistmodel.h>
 
 
 SnippetCompleter::SnippetCompleter(SnippetCollection *collection, QWidget *parentWidget) :
@@ -39,15 +40,20 @@ SnippetCompleter::SnippetCompleter(SnippetCollection *collection, QWidget *paren
     connect(completer, SIGNAL(activated(QString)),
             this, SLOT(insertSnippet(QString)));
 
-    SnippetListModel *model = new SnippetListModel(completer);
+    CompletionListModel *model = new CompletionListModel(completer);
     connect(collection, SIGNAL(collectionChanged(SnippetCollection::CollectionChangedType,Snippet)),
             model, SLOT(snippetCollectionChanged(SnippetCollection::CollectionChangedType,Snippet)));
     completer->setModel(model);
 }
 
-void SnippetCompleter::performCompletion(const QString &textUnderCursor, const QRect &popupRect)
+#include <QDebug>
+void SnippetCompleter::performCompletion(const QString &textUnderCursor, const QStringList &words, const QRect &popupRect)
 {
     const QString completionPrefix = textUnderCursor;
+
+    // TODO: find more elegant solution
+    qDebug() << words.size() << words;
+    qobject_cast<CompletionListModel*>(completer->model())->setWords(words);
 
     if (completionPrefix != completer->completionPrefix()) {
         completer->setCompletionPrefix(completionPrefix);
@@ -76,8 +82,14 @@ void SnippetCompleter::hidePopup()
 
 void SnippetCompleter::insertSnippet(const QString &trigger)
 {
-    if (!snippetCollection || !snippetCollection->contains(trigger))
+    qDebug() << "INSERT SNIPPET" << trigger;
+    if (!snippetCollection/* || !snippetCollection->contains(trigger)*/)
         return;
+
+    if (!snippetCollection->contains(trigger)) {
+        emit snippetSelected(completer->completionPrefix(), trigger, trigger.length());
+        return;
+    }
 
     const Snippet snippet = snippetCollection->snippet(trigger);
 

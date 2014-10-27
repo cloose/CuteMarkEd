@@ -20,6 +20,7 @@ SOURCES += \
     converter/revealmarkdownconverter.cpp \
     template/htmltemplate.cpp \
     template/presentationtemplate.cpp \
+    completionlistmodel.cpp \
     datalocation.cpp \
     slidelinemapping.cpp \
     viewsynchronizer.cpp \
@@ -40,6 +41,7 @@ HEADERS += \
     template/template.h \
     template/htmltemplate.h \
     template/presentationtemplate.h \
+    completionlistmodel.h \
     datalocation.h \
     slidelinemapping.h \
     viewsynchronizer.h \

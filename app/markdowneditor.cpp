@@ -308,6 +308,7 @@ void MarkdownEditor::replaceWithSuggestion()
     cursor.endEditBlock();
 }
 
+#include <QDebug>
 void MarkdownEditor::performCompletion()
 {
     if (!completer) return;
@@ -315,7 +316,15 @@ void MarkdownEditor::performCompletion()
     QRect popupRect = cursorRect();
     popupRect.setLeft(popupRect.left() + lineNumberAreaWidth());
 
-    completer->performCompletion(textUnderCursor(), popupRect);
+    QStringList allWords = toPlainText().split(QRegExp("\\W+"), QString::SkipEmptyParts);
+    qDebug() << allWords.size() << allWords;
+    QStringList words;
+    foreach (const QString &word, allWords) {
+        if (word.length() > 3 && !words.contains(word)) {
+            words << word;
+        }
+    }
+    completer->performCompletion(textUnderCursor(), words, popupRect);
 }
 
 void MarkdownEditor::insertSnippet(const QString &completionPrefix, const QString &completion, int newCursorPos)
