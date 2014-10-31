@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 
 #ifdef Q_OS_WIN
     QStringList fileTypes;
-    fileTypes << ".markdown" << ".md";
+    fileTypes << ".markdown" << ".md" << ".mdown";
     associateFileTypes(fileTypes);
 #endif
 

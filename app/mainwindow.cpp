@@ -236,7 +236,7 @@ void MainWindow::fileOpen()
 {
     if (maybeSave()) {
         QString name = QFileDialog::getOpenFileName(this, tr("Open File..."),
-                                                    QString(), tr("Markdown Files (*.markdown *.md);;All Files (*)"));
+                                                    QString(), tr("Markdown Files (*.markdown *.md *.mdown);;All Files (*)"));
         if (!name.isEmpty()) {
             load(name);
         }
@@ -267,7 +267,7 @@ bool MainWindow::fileSave()
 bool MainWindow::fileSaveAs()
 {
     QString name = QFileDialog::getSaveFileName(this, tr("Save as..."), QString(),
-                                              tr("Markdown Files (*.markdown *.md);;All Files (*)"));
+                                              tr("Markdown Files (*.markdown *.md *.mdown);;All Files (*)"));
     if (name.isEmpty()) {
         return false;
     }
@@ -825,7 +825,7 @@ void MainWindow::previewLinkClicked(const QUrl &url)
 
         QString filePath = url.toLocalFile();
         // Links to markdown files open new instance
-        if(filePath.endsWith(".md") || filePath.endsWith(".markdown"))
+        if(filePath.endsWith(".md") || filePath.endsWith(".markdown") || filePath.endsWith(".mdown"))
         {
             QProcess::startDetached(qApp->applicationFilePath(), QStringList() << filePath);
             return;
