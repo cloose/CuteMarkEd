@@ -68,10 +68,12 @@ void FontAwesomeIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::M
     QFont font(fontName, pixelSize);
     painter->setFont(font);
 
+    QPalette::ColorGroup colorGroup = QPalette::Active;
     if (mode == QIcon::Disabled) {
-        QPalette palette;
-        painter->setPen(palette.color(QPalette::Disabled, QPalette::WindowText));
+        colorGroup = QPalette::Disabled;
     }
+    QPalette palette;
+    painter->setPen(palette.color(colorGroup, QPalette::WindowText));
 
     QString text = QString(namedCodepoints.value(iconName));
     painter->drawText(rect, Qt::AlignCenter, text);
