@@ -37,6 +37,7 @@ class RecentFilesMenu;
 class Options;
 class SlideLineMapping;
 class SnippetCollection;
+class Styles;
 class ViewSynchronizer;
 
 
@@ -167,6 +168,7 @@ private:
     HtmlHighlighter *htmlHighlighter;
     SnippetCollection *snippetCollection;
     ViewSynchronizer *viewSynchronizer;
+    Styles *styles;
     QString fileName;
     float splitFactor;
     bool rightViewCollapsed;

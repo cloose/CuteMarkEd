@@ -64,6 +64,7 @@
 #include "optionsdialog.h"
 #include "revealviewsynchronizer.h"
 #include "snippetcompleter.h"
+#include "styles.h"
 #include "tabletooldialog.h"
 
 MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
@@ -80,6 +81,7 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     generator(new HtmlPreviewGenerator(options, this)),
     snippetCollection(new SnippetCollection(this)),
     viewSynchronizer(0),
+    styles(new Styles()),
     splitFactor(0.5),
     rightViewCollapsed(false)
 {
@@ -148,6 +150,9 @@ void MainWindow::initializeApp()
 
     // set default style
     styleDefault();
+    qDebug() << styles->markdownHighlightings();
+    qDebug() << styles->codeHighlightings();
+    qDebug() << styles->previewStylesheets();
 
     ui->plainTextEdit->tabWidthChanged(options->tabWidth());
 
@@ -490,70 +495,77 @@ void MainWindow::viewChangeSplit()
 
 void MainWindow::styleDefault()
 {
-    generator->setCodeHighlightingStyle("default");
+    Style defaultStyle = styles->style("Default");
+    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(defaultStyle));
 
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/markdown.css"));
+    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(defaultStyle));
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(defaultStyle)));
 
     styleLabel->setText(ui->actionDefault->text());
 }
 
 void MainWindow::styleGithub()
 {
-    generator->setCodeHighlightingStyle("github");
+    Style githubStyle = styles->style("Github");
+    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(githubStyle));
 
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/github.css"));
+    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(githubStyle));
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(githubStyle)));
 
     styleLabel->setText(ui->actionGithub->text());
 }
 
 void MainWindow::styleSolarizedLight()
 {
-    generator->setCodeHighlightingStyle("solarized_light");
+    Style solarizedLightStyle = styles->style("Solarized Light");
+    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(solarizedLightStyle));
 
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-light+.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-light.css"));
+    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(solarizedLightStyle));
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(solarizedLightStyle)));
 
     styleLabel->setText(ui->actionSolarizedLight->text());
 }
 
 void MainWindow::styleSolarizedDark()
 {
-    generator->setCodeHighlightingStyle("solarized_dark");
+    Style solarizedDarkStyle = styles->style("Solarized Dark");
+    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(solarizedDarkStyle));
 
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-dark+.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-dark.css"));
+    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(solarizedDarkStyle));
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(solarizedDarkStyle)));
 
     styleLabel->setText(ui->actionSolarizedDark->text());
 }
 
 void MainWindow::styleClearness()
 {
-    generator->setCodeHighlightingStyle("default");
+    Style clearnessStyle = styles->style("Clearness");
+    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(clearnessStyle));
 
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness.css"));
+    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(clearnessStyle));
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(clearnessStyle)));
 
     styleLabel->setText(ui->actionClearness->text());
 }
 
 void MainWindow::styleClearnessDark()
 {
-    generator->setCodeHighlightingStyle("default");
+    Style clearnessDarkStyle = styles->style("Clearness Dark");
+    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(clearnessDarkStyle));
 
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/clearness-dark+.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness-dark.css"));
+    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(clearnessDarkStyle));
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(clearnessDarkStyle)));
 
     styleLabel->setText(ui->actionClearnessDark->text());
 }
 
 void MainWindow::styleBywordDark()
 {
-    generator->setCodeHighlightingStyle("default");
+    Style bywordDarkStyle = styles->style("Byword Dark");
+    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(bywordDarkStyle));
 
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/byword-dark.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/byword-dark.css"));
+    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(bywordDarkStyle));
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(bywordDarkStyle)));
 
     styleLabel->setText(ui->actionBywordDark->text());
 }
@@ -562,9 +574,9 @@ void MainWindow::styleCustomStyle()
 {
     QAction *action = qobject_cast<QAction*>(sender());
 
-    generator->setCodeHighlightingStyle("default");
+    //generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting("Default"));
 
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
+    //ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting("Default"));
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl::fromLocalFile(action->data().toString()));
 
     styleLabel->setText(action->text());
