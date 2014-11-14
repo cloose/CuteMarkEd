@@ -148,12 +148,14 @@ void MainWindow::initializeApp()
     connect(ui->webView, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(webViewContextMenu(QPoint)));
 
-    // set default style
-    styleDefault();
-    qDebug() << styles->markdownHighlightings();
-    qDebug() << styles->codeHighlightings();
-    qDebug() << styles->previewStylesheets();
+    loadBuiltinStyles();
 
+    // set default style
+    Style defaultStyle = styles->style("Default");
+    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(defaultStyle));
+    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(defaultStyle));
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(defaultStyle)));
+    
     ui->plainTextEdit->tabWidthChanged(options->tabWidth());
 
     // init extension flags
@@ -493,90 +495,24 @@ void MainWindow::viewChangeSplit()
     }
 }
 
-void MainWindow::styleDefault()
+void MainWindow::styleBuiltinStyle()
 {
-    Style defaultStyle = styles->style("Default");
-    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(defaultStyle));
+    QAction *action = qobject_cast<QAction*>(sender());
+    Style style = styles->style(action->data().toString());
+    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(style));
 
-    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(defaultStyle));
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(defaultStyle)));
-
-    styleLabel->setText(ui->actionDefault->text());
-}
-
-void MainWindow::styleGithub()
-{
-    Style githubStyle = styles->style("Github");
-    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(githubStyle));
-
-    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(githubStyle));
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(githubStyle)));
-
-    styleLabel->setText(ui->actionGithub->text());
-}
-
-void MainWindow::styleSolarizedLight()
-{
-    Style solarizedLightStyle = styles->style("Solarized Light");
-    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(solarizedLightStyle));
-
-    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(solarizedLightStyle));
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(solarizedLightStyle)));
-
-    styleLabel->setText(ui->actionSolarizedLight->text());
-}
-
-void MainWindow::styleSolarizedDark()
-{
-    Style solarizedDarkStyle = styles->style("Solarized Dark");
-    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(solarizedDarkStyle));
-
-    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(solarizedDarkStyle));
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(solarizedDarkStyle)));
-
-    styleLabel->setText(ui->actionSolarizedDark->text());
-}
-
-void MainWindow::styleClearness()
-{
-    Style clearnessStyle = styles->style("Clearness");
-    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(clearnessStyle));
-
-    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(clearnessStyle));
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(clearnessStyle)));
-
-    styleLabel->setText(ui->actionClearness->text());
-}
-
-void MainWindow::styleClearnessDark()
-{
-    Style clearnessDarkStyle = styles->style("Clearness Dark");
-    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(clearnessDarkStyle));
-
-    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(clearnessDarkStyle));
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(clearnessDarkStyle)));
-
-    styleLabel->setText(ui->actionClearnessDark->text());
-}
-
-void MainWindow::styleBywordDark()
-{
-    Style bywordDarkStyle = styles->style("Byword Dark");
-    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(bywordDarkStyle));
-
-    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(bywordDarkStyle));
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(bywordDarkStyle)));
-
-    styleLabel->setText(ui->actionBywordDark->text());
+    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(style));
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(style)));
 }
 
 void MainWindow::styleCustomStyle()
 {
     QAction *action = qobject_cast<QAction*>(sender());
 
-    //generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting("Default"));
+    Style defaultStyle = { "Default", "Default", "Default" };
+    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(defaultStyle));
 
-    //ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting("Default"));
+    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(defaultStyle));
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl::fromLocalFile(action->data().toString()));
 
     styleLabel->setText(action->text());
@@ -1062,16 +998,6 @@ void MainWindow::setupActions()
     connect(ui->menuLanguages, SIGNAL(languageTriggered(Dictionary)),
             this, SLOT(languageChanged(Dictionary)));
 
-    // put style actions in a group
-    stylesGroup = new QActionGroup(this);
-    ui->actionDefault->setActionGroup(stylesGroup);
-    ui->actionGithub->setActionGroup(stylesGroup);
-    ui->actionSolarizedLight->setActionGroup(stylesGroup);
-    ui->actionSolarizedDark->setActionGroup(stylesGroup);
-    ui->actionClearness->setActionGroup(stylesGroup);
-    ui->actionClearnessDark->setActionGroup(stylesGroup);
-    ui->actionBywordDark->setActionGroup(stylesGroup);
-
     // help menu
     ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);
 
@@ -1267,6 +1193,23 @@ void MainWindow::updateSplitter()
     childSizes[1] = ui->splitter->width() * (1 - splitFactor);
 
     ui->splitter->setSizes(childSizes);
+}
+
+void MainWindow::loadBuiltinStyles()
+{
+    // put style actions in a group
+    stylesGroup = new QActionGroup(this);
+
+    int key = 1;
+    foreach(const QString &styleName, styles->styleNames()) {
+        QAction *action = ui->menuStyles->addAction(styleName);
+        action->setShortcut(QKeySequence(tr("Ctrl+%1").arg(key++)));
+        action->setCheckable(true);
+        action->setActionGroup(stylesGroup);
+        action->setData(styleName);
+        connect(action, SIGNAL(triggered()),
+                this, SLOT(styleBuiltinStyle()));
+    }
 }
 
 void MainWindow::loadCustomStyles()

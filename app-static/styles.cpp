@@ -16,6 +16,13 @@
  */
 #include "styles.h"
 
+static const Style BUILTIN_DEFAULT_STYLE = { "Default", "Default", "Default" };
+static const Style BUILTIN_GITHUB_STYLE = { "Default", "Github", "Github" };
+static const Style BUILTIN_SOLARIZED_LIGHT_STYLE = { "Solarized Light", "Solarized Light", "Solarized Light" };
+static const Style BUILTIN_SOLARIZED_DARK_STYLE = { "Solarized Dark", "Solarized Dark", "Solarized Dark" };
+static const Style BUILTIN_CLEARNESS_STYLE = { "Default", "Default", "Clearness" };
+static const Style BUILTIN_CLEARNESS_DARK_STYLE = { "Clearness Dark", "Default", "Clearness Dark" };
+static const Style BUILTIN_BYWORD_DARK_STYLE = { "Byword Dark", "Default", "Byword Dark" };
 
 Styles::Styles() 
 {
@@ -25,9 +32,14 @@ Styles::Styles()
     setupBuiltinStyles();
 }
 
+QStringList Styles::styleNames() const 
+{
+    return QStringList(m_stylesIndex);
+}
+
 Style Styles::style(const QString &name) const
 {
-    return m_styles[name];
+    return m_styles[m_stylesIndex.indexOf(name)];
 }
 
 QStringList Styles::markdownHighlightings() const 
@@ -88,34 +100,14 @@ void Styles::setupBuiltinPreviewStylesheets()
     m_previewStylesheets.insert("Byword Dark", "qrc:/css/byword-dark.css");
 }
 
-#include <QDebug>
 void Styles::setupBuiltinStyles()
 {
-    Style defaultStyle = { "Default", "Default", "Default" };
-    m_styles.insert("Default", defaultStyle);
-
-    Style githubStyle = { "Default", "Github", "Github" };
-    m_styles.insert("Github", githubStyle);
-
-    Style solarizedLightStyle = { "Solarized Light", "Solarized Light", "Solarized Light" };
-    m_styles.insert("Solarized Light", solarizedLightStyle);
-
-    Style solarizedDarkStyle = { "Solarized Dark", "Solarized Dark", "Solarized Dark" };
-    m_styles.insert("Solarized Dark", solarizedDarkStyle);
-
-    Style clearnessStyle = { "Default", "Default", "Clearness" };
-    m_styles.insert("Clearness", clearnessStyle);
-
-    Style clearnessDarkStyle = { "Clearness Dark", "Default", "Clearness Dark" };
-    m_styles.insert("Clearness Dark", clearnessDarkStyle);
-
-    Style bywordDarkStyle = { "Byword Dark", "Default", "Byword Dark" };
-    m_styles.insert("Byword Dark", bywordDarkStyle);
-    qDebug() << m_styles;
+    m_stylesIndex << "Default" << "Github" << "Solarized Light" 
+                  << "Solarized Dark" << "Clearness" << "Clearness Dark" 
+                  << "Byword Dark";
+    m_styles << BUILTIN_DEFAULT_STYLE << BUILTIN_GITHUB_STYLE 
+             << BUILTIN_SOLARIZED_LIGHT_STYLE << BUILTIN_SOLARIZED_DARK_STYLE
+             << BUILTIN_CLEARNESS_STYLE << BUILTIN_CLEARNESS_DARK_STYLE
+             << BUILTIN_BYWORD_DARK_STYLE;
 }
 
-QDebug operator<<(QDebug dbg, const Style &s)
-{
-    dbg << s.markdownHighlighting << s.codeHighlighting << s.previewStylesheet;
-    return dbg.space();
-}

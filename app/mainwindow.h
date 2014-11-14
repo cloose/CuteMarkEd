@@ -87,13 +87,7 @@ private slots:
     void editInsertImage();
 
     void viewChangeSplit();
-    void styleDefault();
-    void styleGithub();
-    void styleSolarizedLight();
-    void styleSolarizedDark();
-    void styleClearness();
-    void styleClearnessDark();
-    void styleBywordDark();
+    void styleBuiltinStyle();
     void styleCustomStyle();
     void viewFullScreenMode();
     void viewHorizontalLayout(bool checked);
@@ -148,6 +142,7 @@ private:
     bool maybeSave();
     void setFileName(const QString &fileName);
     void updateSplitter();
+    void loadBuiltinStyles();
     void loadCustomStyles();
     void readSettings();
     void writeSettings();
