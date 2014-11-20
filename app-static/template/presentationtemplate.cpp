@@ -33,7 +33,7 @@ QString PresentationTemplate::render(const QString &body, RenderOptions options)
     }
 
     return QString(presentationTemplate)
-            .replace(QLatin1String("<!--__HTML_HEADER__-->"), QString())
+            .replace(QLatin1String("<!--__HTML_HEADER__-->"), buildHtmlHeader())
             .replace(QLatin1String("<!--__HTML_CONTENT__-->"), body)
             .replace(QLatin1String("<!--__REVEAL_PLUGINS__-->"), buildRevealPlugins(options));
 }
@@ -41,6 +41,15 @@ QString PresentationTemplate::render(const QString &body, RenderOptions options)
 QString PresentationTemplate::exportAsHtml(const QString &, const QString &body, RenderOptions options) const
 {
     return render(body, options);
+}
+
+QString PresentationTemplate::buildHtmlHeader() const
+{
+    QString header;
+
+    header += QString("<link rel=\"stylesheet\" href=\"%1\" id=\"theme\">").arg(previewStyleSheet());
+
+    return header;
 }
 
 QString PresentationTemplate::buildRevealPlugins(RenderOptions options) const

@@ -28,6 +28,7 @@ public:
     virtual QString exportAsHtml(const QString &header, const QString &body, RenderOptions options) const;
 
 private:
+    QString buildHtmlHeader() const;
     QString buildRevealPlugins(RenderOptions options) const;
 
     QString presentationTemplate;
