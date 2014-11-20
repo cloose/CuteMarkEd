@@ -72,6 +72,8 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     ui(new Ui::MainWindow),
     options(new Options(this)),
     diskCache(new QNetworkDiskCache(this)),
+    htmlPreviewStylesGroup(0),
+    presentationStylesGroup(0),
     zoomInAction(0),
     zoomOutAction(0),
     zoomResetAction(0),
@@ -500,6 +502,7 @@ void MainWindow::styleBuiltinStyle()
     QAction *action = qobject_cast<QAction*>(sender());
     Style style = styles->style(action->data().toString());
     generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(style));
+    generator->setPreviewStyleSheet(styles->pathForPreviewStylesheet(style));
 
     ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(style));
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(style)));
@@ -671,7 +674,7 @@ void MainWindow::helpAbout()
 void MainWindow::styleContextMenu(const QPoint &pos)
 {
     QMenu *menu = new QMenu();
-    menu->addActions(stylesGroup->actions());
+    menu->addActions(htmlPreviewStylesGroup->actions());
 
     menu->exec(styleLabel->mapToGlobal(pos));
 }
@@ -877,9 +880,11 @@ void MainWindow::markdownConverterChanged()
         viewSynchronizer = new HtmlViewSynchronizer(ui->webView, ui->plainTextEdit);
         connect(generator, SIGNAL(htmlResultReady(QString)),
                 viewSynchronizer, SLOT(rememberScrollBarPos()));
+        loadBuiltinStyles();
         break;
     case Options::RevealMarkdownConverter:
         viewSynchronizer = new RevealViewSynchronizer(ui->webView, ui->plainTextEdit);
+        setupPresentationStyles();
         break;
     default:
         viewSynchronizer = 0;
@@ -1195,17 +1200,40 @@ void MainWindow::updateSplitter()
     ui->splitter->setSizes(childSizes);
 }
 
-void MainWindow::loadBuiltinStyles()
+void MainWindow::setupPresentationStyles()
 {
+    ui->menuStyles->clear();
+
     // put style actions in a group
-    stylesGroup = new QActionGroup(this);
+    delete presentationStylesGroup;
+    presentationStylesGroup = new QActionGroup(this);
 
     int key = 1;
-    foreach(const QString &styleName, styles->styleNames()) {
+    foreach(const QString &styleName, styles->presentationStyleNames()) {
         QAction *action = ui->menuStyles->addAction(styleName);
         action->setShortcut(QKeySequence(tr("Ctrl+%1").arg(key++)));
         action->setCheckable(true);
-        action->setActionGroup(stylesGroup);
+        action->setActionGroup(presentationStylesGroup);
+        action->setData(styleName);
+        connect(action, SIGNAL(triggered()),
+                this, SLOT(styleBuiltinStyle()));
+    }
+}
+
+void MainWindow::loadBuiltinStyles()
+{
+    ui->menuStyles->clear();
+
+    // put style actions in a group
+    delete htmlPreviewStylesGroup;
+    htmlPreviewStylesGroup = new QActionGroup(this);
+
+    int key = 1;
+    foreach(const QString &styleName, styles->htmlPreviewStyleNames()) {
+        QAction *action = ui->menuStyles->addAction(styleName);
+        action->setShortcut(QKeySequence(tr("Ctrl+%1").arg(key++)));
+        action->setCheckable(true);
+        action->setActionGroup(htmlPreviewStylesGroup);
         action->setData(styleName);
         connect(action, SIGNAL(triggered()),
                 this, SLOT(styleBuiltinStyle()));
@@ -1229,7 +1257,7 @@ void MainWindow::loadCustomStyles()
             QString fileName = it.fileName();
             QAction *action = ui->menuStyles->addAction(QFileInfo(fileName).baseName());
             action->setCheckable(true);
-            action->setActionGroup(stylesGroup);
+            action->setActionGroup(htmlPreviewStylesGroup);
             action->setData(it.filePath());
 
             connect(action, SIGNAL(triggered()),

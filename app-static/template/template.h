@@ -31,14 +31,18 @@ public:
 
     virtual ~Template() {}
 
-    QString codeHighlightingStyle() const { return highlightingStyle; }
-    void setCodeHighlightingStyle(const QString &style) { highlightingStyle = style; }
+    QString codeHighlightingStyle() const { return m_highlightingStyle; }
+    void setCodeHighlightingStyle(const QString &style) { m_highlightingStyle = style; }
+
+    QString previewStyleSheet() const { return m_previewStyleSheet; }
+    void setPreviewStyleSheet(const QString &stylesheet) { m_previewStyleSheet = stylesheet; }
 
     virtual QString render(const QString &body, RenderOptions options) const = 0;
     virtual QString exportAsHtml(const QString &header, const QString &body, RenderOptions options) const = 0;
 
 private:
-    QString highlightingStyle;
+    QString m_highlightingStyle;
+    QString m_previewStyleSheet;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Template::RenderOptions)

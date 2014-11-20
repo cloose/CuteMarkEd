@@ -33,7 +33,8 @@ class Styles
 public:
     Styles();
 
-    QStringList styleNames() const;
+    QStringList htmlPreviewStyleNames() const;
+    QStringList presentationStyleNames() const;
     Style style(const QString &name) const;
 
     QStringList markdownHighlightings() const;
@@ -54,8 +55,10 @@ private:
     QMap<QString, QString> m_markdownHighlightings;
     QMap<QString, QString> m_codeHighlightings;
     QMap<QString, QString> m_previewStylesheets;
-    QList<QString> m_stylesIndex;
-    QList<Style> m_styles;
+    QStringList m_htmlPreviewStylesIndex;
+    QList<Style> m_htmlPreviewStyles;
+    QStringList m_presentationStylesIndex;
+    QList<Style> m_presentationStyles;
 };
 
 #endif // STYLES_H

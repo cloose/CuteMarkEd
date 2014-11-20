@@ -142,6 +142,7 @@ private:
     bool maybeSave();
     void setFileName(const QString &fileName);
     void updateSplitter();
+    void setupPresentationStyles();
     void loadBuiltinStyles();
     void loadCustomStyles();
     void readSettings();
@@ -152,7 +153,8 @@ private:
     RecentFilesMenu *recentFilesMenu;
     Options *options;
     QNetworkDiskCache *diskCache;
-    QActionGroup *stylesGroup;
+    QActionGroup *htmlPreviewStylesGroup;
+    QActionGroup *presentationStylesGroup;
     QAction *zoomInAction;
     QAction *zoomOutAction;
     QAction *zoomResetAction;

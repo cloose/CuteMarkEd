@@ -24,6 +24,15 @@ static const Style BUILTIN_CLEARNESS_STYLE = { "Default", "Default", "Clearness"
 static const Style BUILTIN_CLEARNESS_DARK_STYLE = { "Clearness Dark", "Default", "Clearness Dark" };
 static const Style BUILTIN_BYWORD_DARK_STYLE = { "Byword Dark", "Default", "Byword Dark" };
 
+static const Style DEFAULT_PRESENTATION_STYLE = { "Default", "Default", "Default Presentation" };
+static const Style BEIGE_PRESENTATION_STYLE = { "Default", "Default", "Beige" };
+static const Style SKY_PRESENTATION_STYLE = { "Default", "Default", "Sky" };
+static const Style NIGHT_PRESENTATION_STYLE = { "Default", "Default", "Night" };
+static const Style SERIF_PRESENTATION_STYLE = { "Default", "Default", "Serif" };
+static const Style SIMPLE_PRESENTATION_STYLE = { "Default", "Default", "Simple" };
+static const Style SOLARIZED_PRESENTATION_STYLE = { "Solarized Light", "Default", "Solarized" };
+
+
 Styles::Styles() 
 {
     setupBuiltinMarkdownHighlightings();
@@ -32,14 +41,22 @@ Styles::Styles()
     setupBuiltinStyles();
 }
 
-QStringList Styles::styleNames() const 
+QStringList Styles::htmlPreviewStyleNames() const 
 {
-    return QStringList(m_stylesIndex);
+    return m_htmlPreviewStylesIndex;
+}
+
+QStringList Styles::presentationStyleNames() const
+{
+    return m_presentationStylesIndex;
 }
 
 Style Styles::style(const QString &name) const
 {
-    return m_styles[m_stylesIndex.indexOf(name)];
+    if (m_htmlPreviewStylesIndex.contains(name))
+        return m_htmlPreviewStyles[m_htmlPreviewStylesIndex.indexOf(name)];
+    else
+        return m_presentationStyles[m_presentationStylesIndex.indexOf(name)];
 }
 
 QStringList Styles::markdownHighlightings() const 
@@ -98,16 +115,40 @@ void Styles::setupBuiltinPreviewStylesheets()
     m_previewStylesheets.insert("Clearness", "qrc:/css/clearness.css");
     m_previewStylesheets.insert("Clearness Dark", "qrc:/css/clearness-dark.css");
     m_previewStylesheets.insert("Byword Dark", "qrc:/css/byword-dark.css");
+
+    m_previewStylesheets.insert("Default Presentation", "https://cdn.jsdelivr.net/reveal.js/2.6.2/css/theme/default.css");
+    m_previewStylesheets.insert("Beige", "https://cdn.jsdelivr.net/reveal.js/2.6.2/css/theme/beige.css");
+    m_previewStylesheets.insert("Sky", "https://cdn.jsdelivr.net/reveal.js/2.6.2/css/theme/sky.css");
+    m_previewStylesheets.insert("Night", "https://cdn.jsdelivr.net/reveal.js/2.6.2/css/theme/night.css");
+    m_previewStylesheets.insert("Serif", "https://cdn.jsdelivr.net/reveal.js/2.6.2/css/theme/serif.css");
+    m_previewStylesheets.insert("Simple", "https://cdn.jsdelivr.net/reveal.js/2.6.2/css/theme/simple.css");
+    m_previewStylesheets.insert("Solarized", "https://cdn.jsdelivr.net/reveal.js/2.6.2/css/theme/solarized.css");
 }
 
 void Styles::setupBuiltinStyles()
 {
-    m_stylesIndex << "Default" << "Github" << "Solarized Light" 
+    m_htmlPreviewStylesIndex << "Default" << "Github" << "Solarized Light" 
                   << "Solarized Dark" << "Clearness" << "Clearness Dark" 
                   << "Byword Dark";
-    m_styles << BUILTIN_DEFAULT_STYLE << BUILTIN_GITHUB_STYLE 
+    m_htmlPreviewStyles << BUILTIN_DEFAULT_STYLE << BUILTIN_GITHUB_STYLE 
              << BUILTIN_SOLARIZED_LIGHT_STYLE << BUILTIN_SOLARIZED_DARK_STYLE
              << BUILTIN_CLEARNESS_STYLE << BUILTIN_CLEARNESS_DARK_STYLE
              << BUILTIN_BYWORD_DARK_STYLE;
+
+    m_presentationStylesIndex << DEFAULT_PRESENTATION_STYLE.previewStylesheet
+                              << BEIGE_PRESENTATION_STYLE.previewStylesheet
+                              << SKY_PRESENTATION_STYLE.previewStylesheet
+                              << NIGHT_PRESENTATION_STYLE.previewStylesheet
+                              << SERIF_PRESENTATION_STYLE.previewStylesheet
+                              << SIMPLE_PRESENTATION_STYLE.previewStylesheet
+                              << SOLARIZED_PRESENTATION_STYLE.previewStylesheet;
+
+    m_presentationStyles << DEFAULT_PRESENTATION_STYLE
+                         << BEIGE_PRESENTATION_STYLE
+                         << SKY_PRESENTATION_STYLE
+                         << NIGHT_PRESENTATION_STYLE
+                         << SERIF_PRESENTATION_STYLE
+                         << SIMPLE_PRESENTATION_STYLE
+                         << SOLARIZED_PRESENTATION_STYLE;
 }
 
