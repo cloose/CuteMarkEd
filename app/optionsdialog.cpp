@@ -30,6 +30,7 @@
 
 #include <snippets/snippetcollection.h>
 #include "options.h"
+#include "styles.h"
 
 class SnippetsTableModel : public QAbstractTableModel
 {
@@ -296,6 +297,23 @@ OptionsDialog::OptionsDialog(Options *opt, SnippetCollection *collection, const 
 
     setupShortcutsTable();
 
+    Styles *styles = new Styles();
+    ui->htmlPreviewStylesComboBox->addItems(styles->htmlPreviewStyleNames());
+    ui->markdownHighlightingComboBox->addItems(styles->markdownHighlightings());
+    ui->codeHighlightingComboBox->addItems(styles->codeHighlightings());
+    ui->previewStylesheetComboBox->addItems(styles->previewStylesheets());
+    ui->presentationStylesComboBox->addItems(styles->presentationStyleNames());
+    ui->presentationMarkdownHighlightingComboBox->addItems(styles->markdownHighlightings());
+    ui->presentationStylesheetComboBox->addItems(styles->previewStylesheets());
+
+    connect(ui->htmlPreviewStylesComboBox, SIGNAL(currentTextChanged(QString)),
+            this, SLOT(currentHtmlPreviewStyleChanged(QString)));
+    currentHtmlPreviewStyleChanged(ui->htmlPreviewStylesComboBox->currentText());
+
+    connect(ui->presentationStylesComboBox, SIGNAL(currentTextChanged(QString)),
+            this, SLOT(currentPresentationStyleChanged(QString)));
+    currentPresentationStyleChanged(ui->presentationStylesComboBox->currentText());
+
     // read configuration state
     readState();
 }
@@ -416,6 +434,23 @@ void OptionsDialog::validateShortcut(int row, int column)
         font.setBold(ks != actions[row]->property("defaultshortcut").value<QKeySequence>());
         ui->shortcutsTable->item(row, 0)->setFont(font);
     }
+}
+
+void OptionsDialog::currentHtmlPreviewStyleChanged(const QString &styleName)
+{
+    Styles *styles = new Styles();
+    Style htmlPreviewStyle = styles->style(styleName);
+    ui->markdownHighlightingComboBox->setCurrentText(htmlPreviewStyle.markdownHighlighting);
+    ui->codeHighlightingComboBox->setCurrentText(htmlPreviewStyle.codeHighlighting);
+    ui->previewStylesheetComboBox->setCurrentText(htmlPreviewStyle.previewStylesheet);
+}
+
+void OptionsDialog::currentPresentationStyleChanged(const QString &styleName)
+{
+    Styles *styles = new Styles();
+    Style presentationStyle = styles->style(styleName);
+    ui->presentationMarkdownHighlightingComboBox->setCurrentText(presentationStyle.markdownHighlighting);
+    ui->presentationStylesheetComboBox->setCurrentText(presentationStyle.previewStylesheet);
 }
 
 void OptionsDialog::setupShortcutsTable()
