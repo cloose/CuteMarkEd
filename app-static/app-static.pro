@@ -41,6 +41,7 @@ HEADERS += \
     template/template.h \
     template/htmltemplate.h \
     template/presentationtemplate.h \
+    styles/style.h \
     datalocation.h \
     slidelinemapping.h \
     viewsynchronizer.h \

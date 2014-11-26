@@ -21,12 +21,8 @@
 #include <QString>
 #include <QStringList>
 
-struct Style
-{
-    QString markdownHighlighting;
-    QString codeHighlighting;
-    QString previewStylesheet;
-};
+#include "styles/style.h"
+
 
 class Styles
 {

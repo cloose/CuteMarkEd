@@ -22,6 +22,7 @@
 #include "snippetcollectiontest.h"
 #include "snippetlistmodeltest.h"
 #include "snippettest.h"
+#include "styletest.h"
 
 int main(int argc, char *argv[])
 {
@@ -44,6 +45,9 @@ int main(int argc, char *argv[])
 
     SlideLineMappingTest test6;
     ret += QTest::qExec(&test6, argc, argv);
+
+    StyleTest test7;
+    ret += QTest::qExec(&test7, argc, argv);
 
     return ret;
 }
