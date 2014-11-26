@@ -512,7 +512,7 @@ void MainWindow::styleCustomStyle()
 {
     QAction *action = qobject_cast<QAction*>(sender());
 
-    Style defaultStyle = { "Default", "Default", "Default" };
+    Style defaultStyle = Style("Custom", "Default", "Default", "Default", false);
     generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(defaultStyle));
 
     ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(defaultStyle));
