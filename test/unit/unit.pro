@@ -16,7 +16,8 @@ SOURCES += \
     slidelinemappingtest.cpp \
     snippetcollectiontest.cpp \
     snippetlistmodeltest.cpp \
-    dictionarytest.cpp
+    dictionarytest.cpp \
+    styletest.cpp
 
 HEADERS += \
     snippettest.h \
@@ -24,7 +25,8 @@ HEADERS += \
     slidelinemappingtest.h \
     snippetcollectiontest.h \
     snippetlistmodeltest.h \
-    dictionarytest.h
+    dictionarytest.h \
+    styletest.h
 
 target.CONFIG += no_default_install
 
