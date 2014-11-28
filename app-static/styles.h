@@ -22,6 +22,7 @@
 #include <QStringList>
 
 #include "styles/style.h"
+#include "styles/stylecollection.h"
 
 
 class Styles
@@ -51,10 +52,8 @@ private:
     QMap<QString, QString> m_markdownHighlightings;
     QMap<QString, QString> m_codeHighlightings;
     QMap<QString, QString> m_previewStylesheets;
-    QStringList m_htmlPreviewStylesIndex;
-    QList<Style> m_htmlPreviewStyles;
-    QStringList m_presentationStylesIndex;
-    QList<Style> m_presentationStyles;
+    StyleCollection m_htmlPreviewStyles;
+    StyleCollection m_presentationStyles;
 };
 
 #endif // STYLES_H

@@ -43,20 +43,20 @@ Styles::Styles()
 
 QStringList Styles::htmlPreviewStyleNames() const 
 {
-    return m_htmlPreviewStylesIndex;
+    return m_htmlPreviewStyles.styleNames();
 }
 
 QStringList Styles::presentationStyleNames() const
 {
-    return m_presentationStylesIndex;
+    return m_presentationStyles.styleNames();
 }
 
 Style Styles::style(const QString &name) const
 {
-    if (m_htmlPreviewStylesIndex.contains(name))
-        return m_htmlPreviewStyles[m_htmlPreviewStylesIndex.indexOf(name)];
+    if (m_htmlPreviewStyles.styleNames().contains(name))
+        return m_htmlPreviewStyles.style(name);
     else
-        return m_presentationStyles[m_presentationStylesIndex.indexOf(name)];
+        return m_presentationStyles.style(name);
 }
 
 QStringList Styles::markdownHighlightings() const 
@@ -127,28 +127,20 @@ void Styles::setupBuiltinPreviewStylesheets()
 
 void Styles::setupBuiltinStyles()
 {
-    m_htmlPreviewStylesIndex << "Default" << "Github" << "Solarized Light" 
-                  << "Solarized Dark" << "Clearness" << "Clearness Dark" 
-                  << "Byword Dark";
-    m_htmlPreviewStyles << BUILTIN_DEFAULT_STYLE << BUILTIN_GITHUB_STYLE 
-             << BUILTIN_SOLARIZED_LIGHT_STYLE << BUILTIN_SOLARIZED_DARK_STYLE
-             << BUILTIN_CLEARNESS_STYLE << BUILTIN_CLEARNESS_DARK_STYLE
-             << BUILTIN_BYWORD_DARK_STYLE;
+    m_htmlPreviewStyles.insert(BUILTIN_DEFAULT_STYLE);
+    m_htmlPreviewStyles.insert(BUILTIN_GITHUB_STYLE);
+    m_htmlPreviewStyles.insert(BUILTIN_SOLARIZED_LIGHT_STYLE);
+    m_htmlPreviewStyles.insert(BUILTIN_SOLARIZED_DARK_STYLE);
+    m_htmlPreviewStyles.insert(BUILTIN_CLEARNESS_STYLE);
+    m_htmlPreviewStyles.insert(BUILTIN_CLEARNESS_DARK_STYLE);
+    m_htmlPreviewStyles.insert(BUILTIN_BYWORD_DARK_STYLE);
 
-    m_presentationStylesIndex << DEFAULT_PRESENTATION_STYLE.previewStylesheet
-                              << BEIGE_PRESENTATION_STYLE.previewStylesheet
-                              << SKY_PRESENTATION_STYLE.previewStylesheet
-                              << NIGHT_PRESENTATION_STYLE.previewStylesheet
-                              << SERIF_PRESENTATION_STYLE.previewStylesheet
-                              << SIMPLE_PRESENTATION_STYLE.previewStylesheet
-                              << SOLARIZED_PRESENTATION_STYLE.previewStylesheet;
-
-    m_presentationStyles << DEFAULT_PRESENTATION_STYLE
-                         << BEIGE_PRESENTATION_STYLE
-                         << SKY_PRESENTATION_STYLE
-                         << NIGHT_PRESENTATION_STYLE
-                         << SERIF_PRESENTATION_STYLE
-                         << SIMPLE_PRESENTATION_STYLE
-                         << SOLARIZED_PRESENTATION_STYLE;
+    m_presentationStyles.insert(DEFAULT_PRESENTATION_STYLE);
+    m_presentationStyles.insert(BEIGE_PRESENTATION_STYLE);
+    m_presentationStyles.insert(SKY_PRESENTATION_STYLE);
+    m_presentationStyles.insert(NIGHT_PRESENTATION_STYLE);
+    m_presentationStyles.insert(SERIF_PRESENTATION_STYLE);
+    m_presentationStyles.insert(SIMPLE_PRESENTATION_STYLE);
+    m_presentationStyles.insert(SOLARIZED_PRESENTATION_STYLE);
 }
 

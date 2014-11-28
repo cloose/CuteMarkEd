@@ -20,6 +20,7 @@ SOURCES += \
     converter/revealmarkdownconverter.cpp \
     template/htmltemplate.cpp \
     template/presentationtemplate.cpp \
+    styles/stylecollection.cpp \
     datalocation.cpp \
     slidelinemapping.cpp \
     viewsynchronizer.cpp \
@@ -42,6 +43,7 @@ HEADERS += \
     template/htmltemplate.h \
     template/presentationtemplate.h \
     styles/style.h \
+    styles/stylecollection.h \
     datalocation.h \
     slidelinemapping.h \
     viewsynchronizer.h \
