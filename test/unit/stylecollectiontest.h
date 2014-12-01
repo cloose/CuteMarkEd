@@ -30,6 +30,7 @@ private slots:
 
     void holdsStylesInInserationOrder();
     void canRetrieveStyleByName();
+    void canCheckIfContainsStyleByName();
 };
 
 #endif // SNIPPETCOLLECTIONTEST_H

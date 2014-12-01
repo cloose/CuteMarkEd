@@ -32,6 +32,11 @@ QStringList StyleCollection::styleNames() const
     return stylesIndex;
 }
 
+bool StyleCollection::contains(const QString &name) const
+{
+    return stylesIndex.contains(name);
+}
+
 const Style StyleCollection::style(const QString &name) const
 {
     return styles.at(stylesIndex.indexOf(name));

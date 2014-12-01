@@ -53,7 +53,7 @@ QStringList Styles::presentationStyleNames() const
 
 Style Styles::style(const QString &name) const
 {
-    if (m_htmlPreviewStyles.styleNames().contains(name))
+    if (m_htmlPreviewStyles.contains(name))
         return m_htmlPreviewStyles.style(name);
     else
         return m_presentationStyles.style(name);

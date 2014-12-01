@@ -30,6 +30,7 @@ public:
     void insert(const Style &style);
 
     QStringList styleNames() const;
+    bool contains(const QString &name) const;
     const Style style(const QString &name) const;
 
 private:

@@ -51,3 +51,14 @@ void StyleCollectionTest::canRetrieveStyleByName()
 
     QCOMPARE(collection.style("ArbitraryName").name, style.name);
 }
+
+void StyleCollectionTest::canCheckIfContainsStyleByName()
+{
+    Style style; style.name = "ArbitraryName";
+    StyleCollection collection;
+
+    collection.insert(style);
+
+    QCOMPARE(collection.contains("ArbitraryName"), true);
+    QCOMPARE(collection.contains("NonExistingName"), false);
+}
