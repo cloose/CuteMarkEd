@@ -23,6 +23,7 @@
 #include "snippetlistmodeltest.h"
 #include "snippettest.h"
 #include "styletest.h"
+#include "stylecollectiontest.h"
 
 int main(int argc, char *argv[])
 {
@@ -48,6 +49,9 @@ int main(int argc, char *argv[])
 
     StyleTest test7;
     ret += QTest::qExec(&test7, argc, argv);
+
+    StyleCollectionTest test8;
+    ret += QTest::qExec(&test8, argc, argv);
 
     return ret;
 }

@@ -17,7 +17,8 @@ SOURCES += \
     snippetcollectiontest.cpp \
     snippetlistmodeltest.cpp \
     dictionarytest.cpp \
-    styletest.cpp
+    styletest.cpp \
+    stylecollectiontest.cpp
 
 HEADERS += \
     snippettest.h \
@@ -26,7 +27,8 @@ HEADERS += \
     snippetcollectiontest.h \
     snippetlistmodeltest.h \
     dictionarytest.h \
-    styletest.h
+    styletest.h \
+    stylecollectiontest.h
 
 target.CONFIG += no_default_install
 
