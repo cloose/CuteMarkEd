@@ -19,10 +19,11 @@
 
 #include <QObject>
 #include <QMap>
+#include "collection.h"
 #include "snippet.h"
 
 
-class SnippetCollection : public QObject
+class SnippetCollection : public QObject, public Collection<Snippet>
 {
     Q_OBJECT
     Q_ENUMS(CollectionChangedType)
@@ -45,7 +46,7 @@ public:
 
     bool contains(const QString &trigger) const;
     const Snippet snippet(const QString &trigger) const;
-    const Snippet &snippetAt(int offset) const;
+    const Snippet &at(int offset) const;
 
     QSharedPointer<SnippetCollection> userDefinedSnippets() const;
 

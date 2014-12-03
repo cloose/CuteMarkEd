@@ -17,17 +17,18 @@
 #ifndef JSONSNIPPETTRANSLATOR_H
 #define JSONSNIPPETTRANSLATOR_H
 
+#include "jsontranslator.h"
 #include <QJsonObject>
 class QJsonDocument;
 class SnippetCollection;
 struct Snippet;
 
 
-class JsonSnippetTranslator
+class JsonSnippetTranslator : public JsonTranslator<Snippet>
 {
 public:
-    bool processDocument(const QJsonDocument &jsonDocument, SnippetCollection *collection);
-    QJsonDocument createDocument(SnippetCollection *collection);
+    bool processDocument(const QJsonDocument &jsonDocument, Collection<Snippet> *collection) Q_DECL_OVERRIDE;
+    QJsonDocument createDocument(Collection<Snippet> *collection) Q_DECL_OVERRIDE;
 
 private:
     Snippet fromJsonObject(const QJsonObject &object);

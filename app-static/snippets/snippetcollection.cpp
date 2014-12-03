@@ -58,7 +58,7 @@ const Snippet SnippetCollection::snippet(const QString &trigger) const
     return snippets.value(trigger);
 }
 
-const Snippet &SnippetCollection::snippetAt(int offset) const
+const Snippet &SnippetCollection::at(int offset) const
 {
     return (snippets.begin() + offset).value();
 }

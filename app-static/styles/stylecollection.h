@@ -19,15 +19,19 @@
 
 #include <QString>
 #include <QStringList>
+#include "collection.h"
 #include "style.h"
 
 
-class StyleCollection
+class StyleCollection : public Collection<Style>
 {
 public:
     StyleCollection();
 
-    void insert(const Style &style);
+    int insert(const Style &style);
+
+    int count() const;
+    const Style &at(int offset) const;
 
     QStringList styleNames() const;
     bool contains(const QString &name) const;

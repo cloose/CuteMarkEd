@@ -78,7 +78,7 @@ Qt::ItemFlags SnippetsTableModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags itemFlags = QAbstractTableModel::flags(index);
     if (index.isValid()) {
-        const Snippet snippet = snippetCollection->snippetAt(index.row());
+        const Snippet snippet = snippetCollection->at(index.row());
         if (!snippet.builtIn) {
             itemFlags |= Qt::ItemIsEditable;
         }
@@ -92,7 +92,7 @@ QVariant SnippetsTableModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
-    const Snippet snippet = snippetCollection->snippetAt(index.row());
+    const Snippet snippet = snippetCollection->at(index.row());
 
     if (role == Qt::DisplayRole) {
         if (index.column() == 0) {
@@ -118,7 +118,7 @@ bool SnippetsTableModel::setData(const QModelIndex &index, const QVariant &value
     if (!index.isValid() || role != Qt::EditRole)
         return false;
 
-    Snippet snippet = snippetCollection->snippetAt(index.row());
+    Snippet snippet = snippetCollection->at(index.row());
 
     if (index.column() == 0) {
         const QString &s = value.toString();
@@ -161,7 +161,7 @@ QModelIndex SnippetsTableModel::createSnippet()
 void SnippetsTableModel::removeSnippet(const QModelIndex &index)
 {
     beginRemoveRows(QModelIndex(), index.row(), index.row());
-    Snippet snippet = snippetCollection->snippetAt(index.row());
+    Snippet snippet = snippetCollection->at(index.row());
     snippetCollection->remove(snippet);
     endRemoveRows();
 }
@@ -170,7 +170,7 @@ void SnippetsTableModel::replaceSnippet(const Snippet &snippet, const QModelInde
 {
     const int row = index.row();
 
-    Snippet previousSnippet = snippetCollection->snippetAt(index.row());
+    Snippet previousSnippet = snippetCollection->at(index.row());
     snippetCollection->remove(previousSnippet);
 
     int insertedRow = snippetCollection->insert(snippet);
@@ -343,7 +343,7 @@ void OptionsDialog::manualProxyRadioButtonToggled(bool checked)
 
 void OptionsDialog::currentSnippetChanged(const QModelIndex &current, const QModelIndex &)
 {
-    const Snippet snippet = snippetCollection->snippetAt(current.row());
+    const Snippet snippet = snippetCollection->at(current.row());
 
     // update text edit for snippet content
     QString formattedSnippet(snippet.snippet);
@@ -359,7 +359,7 @@ void OptionsDialog::snippetTextChanged()
 {
     const QModelIndex &modelIndex = ui->snippetTableView->selectionModel()->currentIndex();
     if (modelIndex.isValid()) {
-        Snippet snippet = snippetCollection->snippetAt(modelIndex.row());
+        Snippet snippet = snippetCollection->at(modelIndex.row());
         if (!snippet.builtIn) {
             snippet.snippet = ui->snippetTextEdit->toPlainText();
 

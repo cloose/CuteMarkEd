@@ -14,42 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "stylecollection.h"
+#ifndef COLLECTION_H
+#define COLLECTION_H
 
-
-StyleCollection::StyleCollection() 
+template <class T>
+class Collection
 {
-}
+public:
+    virtual ~Collection() {}
 
-int StyleCollection::insert(const Style &style)
-{
-    stylesIndex << style.name;
-    styles << style;
-    return count(); 
-}
+    virtual int insert(const T &item) = 0;
+    virtual int count() const = 0;
+    virtual const T &at(int offset) const = 0;
+};
 
-int StyleCollection::count() const
-{
-    return styles.count();
-}
-
-const Style &StyleCollection::at(int offset) const
-{
-    return styles.at(offset);
-}
-
-QStringList StyleCollection::styleNames() const
-{
-    return stylesIndex;
-}
-
-bool StyleCollection::contains(const QString &name) const
-{
-    return stylesIndex.contains(name);
-}
-
-const Style StyleCollection::style(const QString &name) const
-{
-    return styles.at(stylesIndex.indexOf(name));
-}
+#endif // COLLECTION_H
 

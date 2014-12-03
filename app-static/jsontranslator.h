@@ -14,42 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "stylecollection.h"
+#ifndef JSONTRANSLATOR_H
+#define JSONTRANSLATOR_H
 
+#include <QJsonObject>
+#include "collection.h"
+class QJsonDocument;
 
-StyleCollection::StyleCollection() 
+template <class T>
+class JsonTranslator
 {
-}
+public:
+    virtual bool processDocument(const QJsonDocument &jsonDocument, Collection<T> *collection) = 0;
+    virtual QJsonDocument createDocument(Collection<T> *collection) = 0;
+};
 
-int StyleCollection::insert(const Style &style)
-{
-    stylesIndex << style.name;
-    styles << style;
-    return count(); 
-}
-
-int StyleCollection::count() const
-{
-    return styles.count();
-}
-
-const Style &StyleCollection::at(int offset) const
-{
-    return styles.at(offset);
-}
-
-QStringList StyleCollection::styleNames() const
-{
-    return stylesIndex;
-}
-
-bool StyleCollection::contains(const QString &name) const
-{
-    return stylesIndex.contains(name);
-}
-
-const Style StyleCollection::style(const QString &name) const
-{
-    return styles.at(stylesIndex.indexOf(name));
-}
+#endif // JSONTRANSLATOR_H
 

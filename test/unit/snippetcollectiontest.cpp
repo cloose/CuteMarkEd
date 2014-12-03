@@ -84,9 +84,9 @@ void SnippetCollectionTest::holdsSnippetsInTriggerOrder()
     collection.insert(snippet3);    // c
     collection.insert(snippet1);    // a
 
-    QCOMPARE(collection.snippetAt(0).trigger, snippet1.trigger);    // a
-    QCOMPARE(collection.snippetAt(1).trigger, snippet2.trigger);    // b
-    QCOMPARE(collection.snippetAt(2).trigger, snippet3.trigger);    // c
+    QCOMPARE(collection.at(0).trigger, snippet1.trigger);    // a
+    QCOMPARE(collection.at(1).trigger, snippet2.trigger);    // b
+    QCOMPARE(collection.at(2).trigger, snippet3.trigger);    // c
 }
 
 void SnippetCollectionTest::returnsNewCollectionOfUserDefinedSnippets()
