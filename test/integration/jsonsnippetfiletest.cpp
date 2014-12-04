@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 #include <QTemporaryFile>
 #include <QTextStream>
 
-#include <snippets/jsonsnippetfile.h>
+#include <jsonfile.h>
 #include <snippets/snippetcollection.h>
 
 void JsonSnippetFileTest::loadsEmptySnippetsCollectionFromFile()
@@ -34,7 +34,7 @@ void JsonSnippetFileTest::loadsEmptySnippetsCollectionFromFile()
     snippetFile.close();
 
     SnippetCollection collection;
-    bool success = JsonSnippetFile::load(snippetFile.fileName(), &collection);
+    bool success = JsonFile<Snippet>::load(snippetFile.fileName(), &collection);
 
     QVERIFY(success);
     QCOMPARE(collection.count(), 0);
@@ -62,7 +62,7 @@ void JsonSnippetFileTest::loadsSnippetsCollectionFromFile()
     snippetFile.close();
 
     SnippetCollection collection;
-    bool success = JsonSnippetFile::load(snippetFile.fileName(), &collection);
+    bool success = JsonFile<Snippet>::load(snippetFile.fileName(), &collection);
 
     QVERIFY(success);
     QCOMPARE(collection.count(), 2);
@@ -77,7 +77,7 @@ void JsonSnippetFileTest::savesEmptySnippetsCollectionToFile()
         QFAIL("Failed to create temporary snippet file");
 
     SnippetCollection collection;
-    bool success = JsonSnippetFile::save(snippetFile.fileName(), &collection);
+    bool success = JsonFile<Snippet>::save(snippetFile.fileName(), &collection);
 
     QVERIFY(success);
 
@@ -105,7 +105,7 @@ void JsonSnippetFileTest::savesSnippetsCollectionToFile()
     collection.insert(snippet1);
     collection.insert(snippet2);
 
-    bool success = JsonSnippetFile::save(snippetFile.fileName(), &collection);
+    bool success = JsonFile<Snippet>::save(snippetFile.fileName(), &collection);
 
     QVERIFY(success);
 
@@ -143,11 +143,11 @@ void JsonSnippetFileTest::roundtripTest()
     collection1.insert(snippet1);
     collection1.insert(snippet2);
 
-    bool saveSuccess = JsonSnippetFile::save(snippetFile.fileName(), &collection1);
+    bool saveSuccess = JsonFile<Snippet>::save(snippetFile.fileName(), &collection1);
     QVERIFY(saveSuccess);
 
     SnippetCollection collection2;
-    bool loadSuccess = JsonSnippetFile::load(snippetFile.fileName(), &collection2);
+    bool loadSuccess = JsonFile<Snippet>::load(snippetFile.fileName(), &collection2);
     QVERIFY(loadSuccess);
 
     QCOMPARE(collection2.count(), 2);

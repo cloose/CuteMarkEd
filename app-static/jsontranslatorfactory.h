@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,21 +14,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef JSONSNIPPETFILE_H
-#define JSONSNIPPETFILE_H
+#ifndef JSONTRANSLATORFACTORY_H
+#define JSONTRANSLATORFACTORY_H
 
-class QString;
-class SnippetCollection;
+#include "jsontranslator.h"
+
+#include "snippets/snippet.h"
+#include "snippets/jsonsnippettranslator.h"
+
+#include "styles/style.h"
 
 
-class JsonSnippetFile
+template <class T>
+class JsonTranslatorFactory
 {
 public:
-    static bool load(const QString &fileName, SnippetCollection *collection);
-    static bool save(const QString &fileName, SnippetCollection *collection);
-
-private:
-    JsonSnippetFile();
+    static JsonTranslator<T> *create() { return 0; }
 };
 
-#endif // JSONSNIPPETFILE_H
+template <> class JsonTranslatorFactory<Snippet>
+{
+public:
+    static JsonTranslator<Snippet> *create()
+    {
+        return new JsonSnippetTranslator();
+    }
+};
+
+#endif // JSONTRANSLATOR_H
+
+

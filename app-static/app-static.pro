@@ -13,7 +13,6 @@ CONFIG += staticlib
 SOURCES += \
     snippets/jsonsnippettranslator.cpp \
     snippets/snippetcollection.cpp \
-    snippets/jsonsnippetfile.cpp \
     snippets/snippetlistmodel.cpp \
     converter/discountmarkdownconverter.cpp \
     spellchecker/dictionary.cpp \
@@ -26,13 +25,12 @@ SOURCES += \
     viewsynchronizer.cpp \
     revealviewsynchronizer.cpp \
     htmlviewsynchronizer.cpp \
-    styles.cpp
+    styles.cpp 
 
 HEADERS += \
     snippets/snippet.h \
     snippets/jsonsnippettranslator.h \
     snippets/snippetcollection.h \
-    snippets/jsonsnippetfile.h \
     snippets/snippetlistmodel.h \
     converter/markdownconverter.h \
     converter/markdowndocument.h \
@@ -49,7 +47,11 @@ HEADERS += \
     viewsynchronizer.h \
     revealviewsynchronizer.h \
     htmlviewsynchronizer.h \
-    styles.h
+    styles.h \
+    collection.h \
+    jsonfile.h \
+    jsontranslator.h \
+    jsontranslatorfactory.h
 
 #unix:!symbian {
 #    maemo5 {

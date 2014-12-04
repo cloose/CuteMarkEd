@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,17 +14,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "jsonsnippetfile.h"
+#ifndef JSONFILE_H
+#define JSONFILE_H
 
 #include <QFile>
 #include <QJsonDocument>
-#include <QTextStream>
+#include "collection.h"
+#include "jsontranslator.h"
+#include "jsontranslatorfactory.h"
 
-#include "jsonsnippettranslator.h"
-#include "snippetcollection.h"
+class QString;
 
 
-bool JsonSnippetFile::load(const QString &fileName, SnippetCollection *collection)
+template <class T>
+class JsonFile
+{
+public:
+    static bool load(const QString &fileName, Collection<T> *collection);
+    static bool save(const QString &fileName, Collection<T> *collection);
+
+private:
+    JsonFile();
+};
+
+template <class T>
+bool JsonFile<T>::load(const QString &fileName, Collection<T> *collection)
 {
     QFile jsonFile(fileName);
     if (!jsonFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -33,22 +47,26 @@ bool JsonSnippetFile::load(const QString &fileName, SnippetCollection *collectio
 
     QJsonDocument doc = QJsonDocument::fromJson(jsonFile.readAll());
 
-    JsonSnippetTranslator translator;
-    return translator.processDocument(doc, collection);
+    JsonTranslator<T> *translator = JsonTranslatorFactory<T>::create();
+    return translator->processDocument(doc,collection);
 }
 
-bool JsonSnippetFile::save(const QString &fileName, SnippetCollection *collection)
+template <class T>
+bool JsonFile<T>::save(const QString &fileName, Collection<T> *collection)
 {
     QFile jsonFile(fileName);
     if (!jsonFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
         return false;
     }
 
-    JsonSnippetTranslator translator;
-    QJsonDocument doc = translator.createDocument(collection);
+    JsonTranslator<T> *translator = JsonTranslatorFactory<T>::create();
+    QJsonDocument doc = translator->createDocument(collection);
 
     QTextStream out(&jsonFile);
     out << doc.toJson();
 
     return true;
 }
+
+#endif // JSONFILE_H
+
