@@ -17,6 +17,7 @@ SOURCES += \
     snippetcollectiontest.cpp \
     snippetlistmodeltest.cpp \
     dictionarytest.cpp \
+    jsonstyletranslatortest.cpp \
     styletest.cpp \
     stylecollectiontest.cpp
 
@@ -27,6 +28,7 @@ HEADERS += \
     snippetcollectiontest.h \
     snippetlistmodeltest.h \
     dictionarytest.h \
+    jsonstyletranslatortest.h \
     styletest.h \
     stylecollectiontest.h
 

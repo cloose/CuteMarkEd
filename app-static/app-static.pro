@@ -19,6 +19,7 @@ SOURCES += \
     converter/revealmarkdownconverter.cpp \
     template/htmltemplate.cpp \
     template/presentationtemplate.cpp \
+    styles/jsonstyletranslator.cpp \
     styles/stylecollection.cpp \
     datalocation.cpp \
     slidelinemapping.cpp \
@@ -40,6 +41,7 @@ HEADERS += \
     template/template.h \
     template/htmltemplate.h \
     template/presentationtemplate.h \
+    styles/jsonstyletranslator.h \
     styles/style.h \
     styles/stylecollection.h \
     datalocation.h \
