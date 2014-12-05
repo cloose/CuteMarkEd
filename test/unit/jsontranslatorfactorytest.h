@@ -14,43 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef JSONTRANSLATORFACTORY_H
-#define JSONTRANSLATORFACTORY_H
+#ifndef JSONTRANSLATORFACTORYTEST_H
+#define JSONTRANSLATORFACTORYTEST_H
 
-#include "jsontranslator.h"
+#include <QObject>
 
-#include "snippets/snippet.h"
-#include "snippets/jsonsnippettranslator.h"
-
-#include "styles/style.h"
-#include "styles/jsonstyletranslator.h"
-
-
-template <class T>
-class JsonTranslatorFactory
+class JsonTranslatorFactoryTest : public QObject
 {
-public:
-    static JsonTranslator<T> *create() { return 0; }
+    Q_OBJECT
+
+private slots:
+    void returnsNullIfNoJsonTranslatorExists();
+    void returnsValidJsonTranslatorForSnippets();
+    void returnsValidJsonTranslatorForStyles();
 };
 
-template <> class JsonTranslatorFactory<Snippet>
-{
-public:
-    static JsonTranslator<Snippet> *create()
-    {
-        return new JsonSnippetTranslator();
-    }
-};
-
-template <> class JsonTranslatorFactory<Style>
-{
-public:
-    static JsonTranslator<Style> *create()
-    {
-        return new JsonStyleTranslator();
-    }
-};
-
-#endif // JSONTRANSLATOR_H
-
+#endif // JSONTRANSLATORFACTORYTEST_H
 

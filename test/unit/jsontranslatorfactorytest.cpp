@@ -14,43 +14,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef JSONTRANSLATORFACTORY_H
-#define JSONTRANSLATORFACTORY_H
+#include "jsontranslatorfactorytest.h"
 
-#include "jsontranslator.h"
+#include <QTest>
 
-#include "snippets/snippet.h"
-#include "snippets/jsonsnippettranslator.h"
-
-#include "styles/style.h"
-#include "styles/jsonstyletranslator.h"
+#include <jsontranslator.h>
+#include <jsontranslatorfactory.h>
+#include <snippets/snippet.h>
+#include <styles/style.h>
 
 
-template <class T>
-class JsonTranslatorFactory
+void JsonTranslatorFactoryTest::returnsNullIfNoJsonTranslatorExists()
 {
-public:
-    static JsonTranslator<T> *create() { return 0; }
-};
+    JsonTranslator<int> *translator = JsonTranslatorFactory<int>::create();
 
-template <> class JsonTranslatorFactory<Snippet>
+    QVERIFY(translator == 0);
+}
+
+void JsonTranslatorFactoryTest::returnsValidJsonTranslatorForSnippets()
 {
-public:
-    static JsonTranslator<Snippet> *create()
-    {
-        return new JsonSnippetTranslator();
-    }
-};
+    JsonTranslator<Snippet> *translator = JsonTranslatorFactory<Snippet>::create();
 
-template <> class JsonTranslatorFactory<Style>
+    QVERIFY(translator != 0);
+}
+
+void JsonTranslatorFactoryTest::returnsValidJsonTranslatorForStyles()
 {
-public:
-    static JsonTranslator<Style> *create()
-    {
-        return new JsonStyleTranslator();
-    }
-};
+    JsonTranslator<Style> *translator = JsonTranslatorFactory<Style>::create();
 
-#endif // JSONTRANSLATOR_H
-
+    QVERIFY(translator != 0);
+}
 

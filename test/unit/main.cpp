@@ -25,6 +25,7 @@
 #include "jsonstyletranslatortest.h"
 #include "styletest.h"
 #include "stylecollectiontest.h"
+#include "jsontranslatorfactorytest.h"
 
 int main(int argc, char *argv[])
 {
@@ -56,6 +57,9 @@ int main(int argc, char *argv[])
 
     StyleCollectionTest test9;
     ret += QTest::qExec(&test9, argc, argv);
+
+    JsonTranslatorFactoryTest test10;
+    ret += QTest::qExec(&test10, argc, argv);
 
     return ret;
 }
