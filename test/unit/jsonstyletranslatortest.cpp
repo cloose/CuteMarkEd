@@ -47,16 +47,16 @@ void JsonStyleTranslatorTest::translatesJsonDocumentToStyles()
 {
     Style expected;
     expected.name = "name";
-    //expected.description = "description";
-    //expected.style = "style";
-    //expected.cursorPosition = 1;
+    expected.markdownHighlighting = "markdownHighlighting";
+    expected.codeHighlighting = "codeHighlighting";
+    expected.previewStylesheet = "previewStylesheet";
     expected.builtIn = true;
 
     QJsonObject jsonObject;
     jsonObject.insert("name", expected.name);
-    //jsonObject.insert("description", expected.description);
-    //jsonObject.insert("style", expected.style);
-    //jsonObject.insert("cursor", expected.cursorPosition);
+    jsonObject.insert("markdownHighlighting", expected.markdownHighlighting);
+    jsonObject.insert("codeHighlighting", expected.codeHighlighting);
+    jsonObject.insert("previewStylesheet", expected.previewStylesheet);
     jsonObject.insert("builtIn", expected.builtIn);
 
     QJsonDocument doc = NewStyleDocumentWithObject(jsonObject);
@@ -67,9 +67,9 @@ void JsonStyleTranslatorTest::translatesJsonDocumentToStyles()
     QVERIFY(success);
     QCOMPARE(collection.count(), 1);
     QCOMPARE(collection.at(0).name, expected.name);
-    //QCOMPARE(collection.at(0).description, expected.description);
-    //QCOMPARE(collection.at(0).style, expected.style);
-    //QCOMPARE(collection.at(0).cursorPosition, expected.cursorPosition);
+    QCOMPARE(collection.at(0).markdownHighlighting, expected.markdownHighlighting);
+    QCOMPARE(collection.at(0).codeHighlighting, expected.codeHighlighting);
+    QCOMPARE(collection.at(0).previewStylesheet, expected.previewStylesheet);
     QCOMPARE(collection.at(0).builtIn, expected.builtIn);
 }
 
@@ -77,9 +77,9 @@ void JsonStyleTranslatorTest::translatesEmptyJsonDocumentToEmptyStyles()
 {
     Style expected;
     expected.name = QString();
-    //expected.description = QString();
-    //expected.style = QString();
-    //expected.cursorPosition = 0;
+    expected.markdownHighlighting = QString();
+    expected.codeHighlighting = QString();
+    expected.previewStylesheet = QString();
     expected.builtIn = false;
 
     QJsonObject emptyJsonObject;
@@ -91,9 +91,9 @@ void JsonStyleTranslatorTest::translatesEmptyJsonDocumentToEmptyStyles()
     QVERIFY(success);
     QCOMPARE(collection.count(), 1);
     QCOMPARE(collection.at(0).name, expected.name);
-    //QCOMPARE(collection.at(0).description, expected.description);
-    //QCOMPARE(collection.at(0).style, expected.style);
-    //QCOMPARE(collection.at(0).cursorPosition, expected.cursorPosition);
+    QCOMPARE(collection.at(0).markdownHighlighting, expected.markdownHighlighting);
+    QCOMPARE(collection.at(0).codeHighlighting, expected.codeHighlighting);
+    QCOMPARE(collection.at(0).previewStylesheet, expected.previewStylesheet);
     QCOMPARE(collection.at(0).builtIn, expected.builtIn);
 }
 
@@ -112,9 +112,9 @@ void JsonStyleTranslatorTest::translatesStyleCollectionToJsonDocument()
 {
     Style style;
     style.name = "name";
-    //style.description = "description";
-    //style.style = "style";
-    //style.cursorPosition = 1;
+    style.markdownHighlighting = "markdownHighlighting";
+    style.codeHighlighting = "codeHighlighting";
+    style.previewStylesheet = "previewStylesheet";
     style.builtIn = true;
 
     StyleCollection collection;
@@ -122,9 +122,9 @@ void JsonStyleTranslatorTest::translatesStyleCollectionToJsonDocument()
 
     QJsonObject expected;
     expected.insert("name", style.name);
-    //expected.insert("description", style.description);
-    //expected.insert("style", style.style);
-    //expected.insert("cursor", style.cursorPosition);
+    expected.insert("markdownHighlighting", style.markdownHighlighting);
+    expected.insert("codeHighlighting", style.codeHighlighting);
+    expected.insert("previewStylesheet", style.previewStylesheet);
     expected.insert("builtIn", style.builtIn);
 
     QJsonDocument actual = translator->createDocument(&collection);
@@ -135,9 +135,9 @@ void JsonStyleTranslatorTest::translatesStyleCollectionToJsonDocument()
 
     QJsonObject actualObject = actual.object().value("styles").toArray().first().toObject();
     QCOMPARE(actualObject["name"], expected["name"]);
-    //QCOMPARE(actualObject["description"], expected["description"]);
-    //QCOMPARE(actualObject["style"], expected["style"]);
-    //QCOMPARE(actualObject["cursorPosition"], expected["cursorPosition"]);
+    QCOMPARE(actualObject["markdownHighlighting"], expected["markdownHighlighting"]);
+    QCOMPARE(actualObject["codeHighlighting"], expected["codeHighlighting"]);
+    QCOMPARE(actualObject["previewStylesheet"], expected["previewStylesheet"]);
     QCOMPARE(actualObject["builtIn"], expected["builtIn"]);
 }
 

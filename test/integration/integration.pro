@@ -13,12 +13,14 @@ CONFIG += console testcase
 SOURCES += \
     discountmarkdownconvertertest.cpp \
     jsonsnippetfiletest.cpp \
+    jsonstylefiletest.cpp \
     main.cpp \
     revealmarkdownconvertertest.cpp
 
 HEADERS += \
     discountmarkdownconvertertest.h \
     jsonsnippetfiletest.h \
+    jsonstylefiletest.h \
     revealmarkdownconvertertest.h
 
 target.CONFIG += no_default_install
