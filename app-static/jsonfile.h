@@ -19,6 +19,7 @@
 
 #include <QFile>
 #include <QJsonDocument>
+#include <QTextStream>
 #include "collection.h"
 #include "jsontranslator.h"
 #include "jsontranslatorfactory.h"
