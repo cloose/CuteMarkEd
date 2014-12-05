@@ -25,6 +25,8 @@ template <class T>
 class JsonTranslator
 {
 public:
+    virtual ~JsonTranslator() {}
+
     virtual bool processDocument(const QJsonDocument &jsonDocument, Collection<T> *collection) = 0;
     virtual QJsonDocument createDocument(Collection<T> *collection) = 0;
 };
