@@ -47,7 +47,7 @@ bool JsonFile<T>::load(const QString &fileName, Collection<T> *collection)
 
     QJsonDocument doc = QJsonDocument::fromJson(jsonFile.readAll());
 
-    JsonTranslator<T> *translator = JsonTranslatorFactory<T>::create();
+    QScopedPointer<JsonTranslator<T> > translator(JsonTranslatorFactory<T>::create());
     return translator->processDocument(doc,collection);
 }
 
@@ -59,7 +59,7 @@ bool JsonFile<T>::save(const QString &fileName, Collection<T> *collection)
         return false;
     }
 
-    JsonTranslator<T> *translator = JsonTranslatorFactory<T>::create();
+    QScopedPointer<JsonTranslator<T> > translator(JsonTranslatorFactory<T>::create());
     QJsonDocument doc = translator->createDocument(collection);
 
     QTextStream out(&jsonFile);
