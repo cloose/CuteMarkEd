@@ -1,0 +1,12 @@
+{
+  "styles": [
+        {
+            "name": "Default Presentation",
+            "markdownHighlighting": "Default",
+            "codeHighlighting": "Default",
+            "previewStylesheet": "Default Presentation",
+            "builtIn": true
+        }
+  ]
+}
+

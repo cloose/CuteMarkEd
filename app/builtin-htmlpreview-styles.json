@@ -6,6 +6,27 @@
             "codeHighlighting": "Default",
             "previewStylesheet": "Default",
             "builtIn": true
+        },
+        {
+            "name": "Github",
+            "markdownHighlighting": "Default",
+            "codeHighlighting": "Github",
+            "previewStylesheet": "Github",
+            "builtIn": true
+        },
+        {
+            "name": "Solarized Light",
+            "markdownHighlighting": "Solarized Light",
+            "codeHighlighting": "Solarized Light",
+            "previewStylesheet": "Solarized Light",
+            "builtIn": true
+        },
+        {
+            "name": "Solarized Dark",
+            "markdownHighlighting": "Solarized Dark",
+            "codeHighlighting": "Solarized Dark",
+            "previewStylesheet": "Solarized Dark",
+            "builtIn": true
         }
   ]
 }
