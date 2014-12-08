@@ -30,7 +30,9 @@
 
 #include <snippets/snippetcollection.h>
 #include "options.h"
+#include "styledialog.h"
 #include "styles.h"
+
 
 class SnippetsTableModel : public QAbstractTableModel
 {
@@ -299,9 +301,6 @@ OptionsDialog::OptionsDialog(Options *opt, SnippetCollection *collection, const 
 
     Styles *styles = new Styles();
     ui->htmlPreviewStylesComboBox->addItems(styles->htmlPreviewStyleNames());
-    ui->markdownHighlightingComboBox->addItems(styles->markdownHighlightings());
-    ui->codeHighlightingComboBox->addItems(styles->codeHighlightings());
-    ui->previewStylesheetComboBox->addItems(styles->previewStylesheets());
     ui->presentationStylesComboBox->addItems(styles->presentationStyleNames());
     ui->presentationMarkdownHighlightingComboBox->addItems(styles->markdownHighlightings());
     ui->presentationStylesheetComboBox->addItems(styles->previewStylesheets());
@@ -440,9 +439,8 @@ void OptionsDialog::currentHtmlPreviewStyleChanged(const QString &styleName)
 {
     Styles *styles = new Styles();
     Style htmlPreviewStyle = styles->style(styleName);
-    ui->markdownHighlightingComboBox->setCurrentText(htmlPreviewStyle.markdownHighlighting);
-    ui->codeHighlightingComboBox->setCurrentText(htmlPreviewStyle.codeHighlighting);
-    ui->previewStylesheetComboBox->setCurrentText(htmlPreviewStyle.previewStylesheet);
+    ui->editHtmlStyleButton->setEnabled(!htmlPreviewStyle.builtIn);
+    ui->removeHtmlStyleButton->setEnabled(!htmlPreviewStyle.builtIn);
 }
 
 void OptionsDialog::currentPresentationStyleChanged(const QString &styleName)
@@ -451,6 +449,22 @@ void OptionsDialog::currentPresentationStyleChanged(const QString &styleName)
     Style presentationStyle = styles->style(styleName);
     ui->presentationMarkdownHighlightingComboBox->setCurrentText(presentationStyle.markdownHighlighting);
     ui->presentationStylesheetComboBox->setCurrentText(presentationStyle.previewStylesheet);
+}
+
+void OptionsDialog::addHtmlStyleButtonClicked()
+{
+    StyleDialog dialog(QString(), this);
+    dialog.exec();
+}
+
+void OptionsDialog::editHtmlStyleButtonClicked()
+{
+    StyleDialog dialog(ui->htmlPreviewStylesComboBox->currentText(), this);
+    dialog.exec();
+}
+
+void OptionsDialog::removeHtmlStyleButtonClicked()
+{
 }
 
 void OptionsDialog::setupShortcutsTable()

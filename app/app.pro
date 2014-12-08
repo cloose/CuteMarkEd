@@ -56,7 +56,8 @@ SOURCES += \
     tabletooldialog.cpp \
     imagetooldialog.cpp \
     snippetcompleter.cpp \
-    aboutdialog.cpp
+    aboutdialog.cpp \
+    styledialog.cpp
 
 win32 {
     SOURCES += \
@@ -92,7 +93,8 @@ HEADERS  += \
     tabletooldialog.h \
     imagetooldialog.h \
     snippetcompleter.h \
-    aboutdialog.h
+    aboutdialog.h \
+    styledialog.h
 
 FORMS    += \
     mainwindow.ui \
@@ -103,7 +105,8 @@ FORMS    += \
     optionsdialog.ui \
     tabletooldialog.ui \
     imagetooldialog.ui \
-    aboutdialog.ui
+    aboutdialog.ui \
+    styledialog.ui
 
 RESOURCES += \
     resources.qrc \
