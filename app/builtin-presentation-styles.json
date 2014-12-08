@@ -6,6 +6,48 @@
             "codeHighlighting": "Default",
             "previewStylesheet": "Default Presentation",
             "builtIn": true
+        },
+        {
+            "name": "Beige",
+            "markdownHighlighting": "Default",
+            "codeHighlighting": "Default",
+            "previewStylesheet": "Beige",
+            "builtIn": true
+        },
+        {
+            "name": "Sky",
+            "markdownHighlighting": "Default",
+            "codeHighlighting": "Default",
+            "previewStylesheet": "Sky",
+            "builtIn": true
+        },
+        {
+            "name": "Night",
+            "markdownHighlighting": "Default",
+            "codeHighlighting": "Default",
+            "previewStylesheet": "Night",
+            "builtIn": true
+        },
+        {
+            "name": "Serif",
+            "markdownHighlighting": "Default",
+            "codeHighlighting": "Default",
+            "previewStylesheet": "Serif",
+            "builtIn": true
+        },
+        {
+            "name": "Simple",
+            "markdownHighlighting": "Default",
+            "codeHighlighting": "Default",
+            "previewStylesheet": "Simple",
+            "builtIn": true
+        },
+        {
+            "name": "Solarized",
+            "markdownHighlighting": "Solarized Light",
+            "codeHighlighting": "Default",
+            "previewStylesheet": "Solarized",
+            "builtIn": true
         }
   ]
 }

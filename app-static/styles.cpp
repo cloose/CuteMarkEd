@@ -19,20 +19,7 @@
 #include <jsonfile.h>
 
 static const Style BUILTIN_DEFAULT_STYLE = Style("Default", "Default", "Default", "Default", true );
-static const Style BUILTIN_GITHUB_STYLE = Style("Github", "Default", "Github", "Github", true );
-static const Style BUILTIN_SOLARIZED_LIGHT_STYLE = Style("Solarized Light", "Solarized Light", "Solarized Light", "Solarized Light", true );
-static const Style BUILTIN_SOLARIZED_DARK_STYLE = Style("Solarized Dark", "Solarized Dark", "Solarized Dark", "Solarized Dark", true );
-static const Style BUILTIN_CLEARNESS_STYLE = Style("Clearness", "Default", "Default", "Clearness", true );
-static const Style BUILTIN_CLEARNESS_DARK_STYLE = Style("Clearness Dark", "Clearness Dark", "Default", "Clearness Dark", true );
-static const Style BUILTIN_BYWORD_DARK_STYLE = Style("Byword Dark", "Byword Dark", "Default", "Byword Dark", true );
-
 static const Style DEFAULT_PRESENTATION_STYLE = Style("Default Presentation", "Default", "Default", "Default Presentation", true );
-static const Style BEIGE_PRESENTATION_STYLE = Style("Beige", "Default", "Default", "Beige", true );
-static const Style SKY_PRESENTATION_STYLE = Style("Sky", "Default", "Default", "Sky", true );
-static const Style NIGHT_PRESENTATION_STYLE = Style("Night", "Default", "Default", "Night", true );
-static const Style SERIF_PRESENTATION_STYLE = Style("Serif", "Default", "Default", "Serif", true );
-static const Style SIMPLE_PRESENTATION_STYLE = Style("Simple", "Default", "Default", "Simple", true );
-static const Style SOLARIZED_PRESENTATION_STYLE = Style("Solarized", "Solarized Light", "Default", "Solarized", true);
 
 
 Styles::Styles() 
@@ -131,22 +118,10 @@ void Styles::setupBuiltinStyles()
 {
     if (!JsonFile<Style>::load(":/builtin-htmlpreview-styles.json", &m_htmlPreviewStyles)) {
         m_htmlPreviewStyles.insert(BUILTIN_DEFAULT_STYLE);
-        m_htmlPreviewStyles.insert(BUILTIN_GITHUB_STYLE);
-        m_htmlPreviewStyles.insert(BUILTIN_SOLARIZED_LIGHT_STYLE);
-        m_htmlPreviewStyles.insert(BUILTIN_SOLARIZED_DARK_STYLE);
-        m_htmlPreviewStyles.insert(BUILTIN_CLEARNESS_STYLE);
-        m_htmlPreviewStyles.insert(BUILTIN_CLEARNESS_DARK_STYLE);
-        m_htmlPreviewStyles.insert(BUILTIN_BYWORD_DARK_STYLE);
     }
 
     if (!JsonFile<Style>::load(":/builtin-presentation-styles.json", &m_presentationStyles)) {
         m_presentationStyles.insert(DEFAULT_PRESENTATION_STYLE);
-        m_presentationStyles.insert(BEIGE_PRESENTATION_STYLE);
-        m_presentationStyles.insert(SKY_PRESENTATION_STYLE);
-        m_presentationStyles.insert(NIGHT_PRESENTATION_STYLE);
-        m_presentationStyles.insert(SERIF_PRESENTATION_STYLE);
-        m_presentationStyles.insert(SIMPLE_PRESENTATION_STYLE);
-        m_presentationStyles.insert(SOLARIZED_PRESENTATION_STYLE);
     }
 }
 

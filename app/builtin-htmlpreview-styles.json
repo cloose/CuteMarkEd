@@ -27,6 +27,27 @@
             "codeHighlighting": "Solarized Dark",
             "previewStylesheet": "Solarized Dark",
             "builtIn": true
+        },
+        {
+            "name": "Clearness",
+            "markdownHighlighting": "Default",
+            "codeHighlighting": "Default",
+            "previewStylesheet": "Clearness",
+            "builtIn": true
+        },
+        {
+            "name": "Clearness Dark",
+            "markdownHighlighting": "Clearness Dark",
+            "codeHighlighting": "Default",
+            "previewStylesheet": "Clearness Dark",
+            "builtIn": true
+        },
+        {
+            "name": "Byword Dark",
+            "markdownHighlighting": "Byword Dark",
+            "codeHighlighting": "Default",
+            "previewStylesheet": "Byword Dark",
+            "builtIn": true
         }
   ]
 }
