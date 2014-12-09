@@ -7,7 +7,14 @@ set(app-static_SRCS
     snippets/jsonsnippettranslator.cpp
     snippets/snippetcollection.cpp
     snippets/snippetlistmodel.cpp
+    spellchecker/dictionary.cpp
+    template/htmltemplate.cpp
+    template/presentationtemplate.cpp
     datalocation.cpp
+    htmlviewsynchronizer.cpp
+    revealviewsynchronizer.cpp
+    slidelinemapping.cpp
+    viewsynchronizer.cpp
 )
 
 add_library(app-static STATIC ${app-static_SRCS})
