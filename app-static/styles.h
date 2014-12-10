@@ -33,6 +33,7 @@ public:
     QStringList htmlPreviewStyleNames() const;
     QStringList presentationStyleNames() const;
     Style style(const QString &name) const;
+    void addHtmlPreviewStyle(const Style &style);
 
     QStringList markdownHighlightings() const;
     QString pathForMarkdownHighlighting(const Style &style) const;

@@ -35,6 +35,9 @@ public:
 protected:
     void done(int result);
 
+private slots:
+    void updateOkButtonEnabledState();
+
 private:
     Ui::StyleDialog *ui;
 };

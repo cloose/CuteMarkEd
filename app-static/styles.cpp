@@ -48,6 +48,11 @@ Style Styles::style(const QString &name) const
         return m_presentationStyles.style(name);
 }
 
+void Styles::addHtmlPreviewStyle(const Style &style)
+{
+    m_htmlPreviewStyles.insert(style);
+}
+
 QStringList Styles::markdownHighlightings() const 
 {
     return QStringList(m_markdownHighlightings.keys());

@@ -104,5 +104,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>styleNameLineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>StyleDialog</receiver>
+   <slot>updateOkButtonEnabledState()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>257</x>
+     <y>19</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>198</x>
+     <y>73</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>updateOkButtonEnabledState()</slot>
+ </slots>
 </ui>

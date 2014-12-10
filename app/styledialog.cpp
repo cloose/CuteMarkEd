@@ -17,6 +17,8 @@
 #include "styledialog.h"
 #include "ui_styledialog.h"
 
+#include <QPushButton>
+
 #include <styles/style.h>
 #include <styles.h>
 
@@ -36,6 +38,8 @@ StyleDialog::StyleDialog(const QString &styleName, QWidget *parent) :
         Style style = styles.style(styleName);
         ui->styleNameLineEdit->setText(styleName);
     }
+
+    updateOkButtonEnabledState();
 }
 
 StyleDialog::~StyleDialog()
@@ -46,8 +50,18 @@ StyleDialog::~StyleDialog()
 void StyleDialog::done(int result)
 {
     if (result == QDialog::Accepted) {
+        Style newStyle;
+        newStyle.name = ui->styleNameLineEdit->text();
+
+        Styles styles;
+        styles.addHtmlPreviewStyle(newStyle);
     }
 
     QDialog::done(result);
 }
 
+void StyleDialog::updateOkButtonEnabledState()
+{
+    bool isNameEditFilled = !ui->styleNameLineEdit->text().isEmpty();
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(isNameEditFilled);
+}
