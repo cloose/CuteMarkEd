@@ -22,6 +22,7 @@
 namespace Ui {
 class StyleDialog;
 }
+class Styles;
 
 
 class StyleDialog : public QDialog
@@ -29,7 +30,14 @@ class StyleDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit StyleDialog(const QString &styleName, QWidget *parent = 0);
+    enum DialogMode
+    {
+        AddMode,
+        EditMode,
+        RemoveMode
+    };
+
+    explicit StyleDialog(DialogMode mode, const QString &styleName, QWidget *parent = 0);
     ~StyleDialog();
 
 protected:
@@ -39,7 +47,13 @@ private slots:
     void updateOkButtonEnabledState();
 
 private:
+    void addNewStyle();
+    void updateStyle();
+    void removeStyle();
+
     Ui::StyleDialog *ui;
+    Styles *styles;
+    DialogMode dialogMode;
 };
 
 #endif // STYLEDIALOG_H

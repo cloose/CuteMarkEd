@@ -16,41 +16,60 @@
  */
 #include "styles.h"
 
+#include <QSharedPointer>
 #include <jsonfile.h>
 
 static const Style BUILTIN_DEFAULT_STYLE = Style("Default", "Default", "Default", "Default", true );
 static const Style DEFAULT_PRESENTATION_STYLE = Style("Default Presentation", "Default", "Default", "Default Presentation", true );
 
+QMap<QString, QString> Styles::m_markdownHighlightings;
+QMap<QString, QString> Styles::m_codeHighlightings;
+QMap<QString, QString> Styles::m_previewStylesheets;
+QSharedPointer<StyleCollection> Styles::m_htmlPreviewStyles;
+QSharedPointer<StyleCollection> Styles::m_presentationStyles;
 
 Styles::Styles() 
 {
-    setupBuiltinMarkdownHighlightings();
-    setupBuiltinCodeHighlightings();
-    setupBuiltinPreviewStylesheets();
-    setupBuiltinStyles();
+    if (m_htmlPreviewStyles.isNull()) {
+        setupBuiltinMarkdownHighlightings();
+        setupBuiltinCodeHighlightings();
+        setupBuiltinPreviewStylesheets();
+        setupBuiltinStyles();
+    }
 }
 
 QStringList Styles::htmlPreviewStyleNames() const 
 {
-    return m_htmlPreviewStyles.styleNames();
+    return m_htmlPreviewStyles->styleNames();
 }
 
 QStringList Styles::presentationStyleNames() const
 {
-    return m_presentationStyles.styleNames();
+    return m_presentationStyles->styleNames();
 }
 
 Style Styles::style(const QString &name) const
 {
-    if (m_htmlPreviewStyles.contains(name))
-        return m_htmlPreviewStyles.style(name);
+    if (m_htmlPreviewStyles->contains(name))
+        return m_htmlPreviewStyles->style(name);
     else
-        return m_presentationStyles.style(name);
+        return m_presentationStyles->style(name);
 }
 
 void Styles::addHtmlPreviewStyle(const Style &style)
 {
-    m_htmlPreviewStyles.insert(style);
+    m_htmlPreviewStyles->insert(style);
+}
+
+void Styles::updateHtmlPreviewStyle(const Style &style)
+{
+    m_htmlPreviewStyles->update(style);
+}
+
+void Styles::removeHtmlPreviewStyle(const QString &styleName)
+{
+    Style style = this->style(styleName);
+    m_htmlPreviewStyles->remove(style);
 }
 
 QStringList Styles::markdownHighlightings() const 
@@ -81,6 +100,11 @@ QStringList Styles::previewStylesheets() const
 QString Styles::pathForPreviewStylesheet(const Style &style) const
 {
     return m_previewStylesheets[style.previewStylesheet];
+}
+
+QSharedPointer<StyleCollection> Styles::htmlPreviewStyles() const
+{
+    return m_htmlPreviewStyles;
 }
 
 void Styles::setupBuiltinMarkdownHighlightings() 
@@ -121,12 +145,14 @@ void Styles::setupBuiltinPreviewStylesheets()
 
 void Styles::setupBuiltinStyles()
 {
-    if (!JsonFile<Style>::load(":/builtin-htmlpreview-styles.json", &m_htmlPreviewStyles)) {
-        m_htmlPreviewStyles.insert(BUILTIN_DEFAULT_STYLE);
+    m_htmlPreviewStyles = QSharedPointer<StyleCollection>::create();
+    if (!JsonFile<Style>::load(":/builtin-htmlpreview-styles.json", m_htmlPreviewStyles.data())) {
+        m_htmlPreviewStyles->insert(BUILTIN_DEFAULT_STYLE);
     }
 
-    if (!JsonFile<Style>::load(":/builtin-presentation-styles.json", &m_presentationStyles)) {
-        m_presentationStyles.insert(DEFAULT_PRESENTATION_STYLE);
+    m_presentationStyles = QSharedPointer<StyleCollection>::create();
+    if (!JsonFile<Style>::load(":/builtin-presentation-styles.json", m_presentationStyles.data())) {
+        m_presentationStyles->insert(DEFAULT_PRESENTATION_STYLE);
     }
 }
 

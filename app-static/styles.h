@@ -34,6 +34,8 @@ public:
     QStringList presentationStyleNames() const;
     Style style(const QString &name) const;
     void addHtmlPreviewStyle(const Style &style);
+    void updateHtmlPreviewStyle(const Style &style);
+    void removeHtmlPreviewStyle(const QString &styleName);
 
     QStringList markdownHighlightings() const;
     QString pathForMarkdownHighlighting(const Style &style) const;
@@ -44,17 +46,19 @@ public:
     QStringList previewStylesheets() const;
     QString pathForPreviewStylesheet(const Style &style) const;
 
+    QSharedPointer<StyleCollection> htmlPreviewStyles() const;
+
 private:
     void setupBuiltinMarkdownHighlightings();
     void setupBuiltinCodeHighlightings();
     void setupBuiltinPreviewStylesheets();
     void setupBuiltinStyles();
 
-    QMap<QString, QString> m_markdownHighlightings;
-    QMap<QString, QString> m_codeHighlightings;
-    QMap<QString, QString> m_previewStylesheets;
-    StyleCollection m_htmlPreviewStyles;
-    StyleCollection m_presentationStyles;
+    static QMap<QString, QString> m_markdownHighlightings;
+    static QMap<QString, QString> m_codeHighlightings;
+    static QMap<QString, QString> m_previewStylesheets;
+    static QSharedPointer<StyleCollection> m_htmlPreviewStyles;
+    static QSharedPointer<StyleCollection> m_presentationStyles;
 };
 
 #endif // STYLES_H

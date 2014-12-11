@@ -23,20 +23,24 @@
 #include <styles.h>
 
 
-StyleDialog::StyleDialog(const QString &styleName, QWidget *parent) :
+StyleDialog::StyleDialog(DialogMode mode, const QString &styleName, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::StyleDialog)
+    ui(new Ui::StyleDialog),
+    styles(new Styles()),
+    dialogMode(mode)
 {
     ui->setupUi(this);
 
-    Styles styles;
-    ui->markdownHighlightingComboBox->addItems(styles.htmlPreviewStyleNames());
-    ui->codeHighlightingComboBox->addItems(styles.codeHighlightings());
-    ui->previewStylesheetComboBox->addItems(styles.previewStylesheets());
+    ui->markdownHighlightingComboBox->addItems(styles->markdownHighlightings());
+    ui->codeHighlightingComboBox->addItems(styles->codeHighlightings());
+    ui->previewStylesheetComboBox->addItems(styles->previewStylesheets());
 
     if (!styleName.isEmpty()) {
-        Style style = styles.style(styleName);
+        Style style = styles->style(styleName);
         ui->styleNameLineEdit->setText(styleName);
+        ui->markdownHighlightingComboBox->setCurrentText(style.markdownHighlighting);
+        ui->codeHighlightingComboBox->setCurrentText(style.codeHighlighting);
+        ui->previewStylesheetComboBox->setCurrentText(style.previewStylesheet);
     }
 
     updateOkButtonEnabledState();
@@ -44,17 +48,27 @@ StyleDialog::StyleDialog(const QString &styleName, QWidget *parent) :
 
 StyleDialog::~StyleDialog()
 {
+    delete styles;
     delete ui;
 }
 
 void StyleDialog::done(int result)
 {
     if (result == QDialog::Accepted) {
-        Style newStyle;
-        newStyle.name = ui->styleNameLineEdit->text();
+        switch (dialogMode)
+        {
+            case AddMode:
+                addNewStyle();
+                break;
 
-        Styles styles;
-        styles.addHtmlPreviewStyle(newStyle);
+            case EditMode:
+                updateStyle();
+                break;
+
+            case RemoveMode:
+                removeStyle();
+                break;
+        }
     }
 
     QDialog::done(result);
@@ -62,6 +76,36 @@ void StyleDialog::done(int result)
 
 void StyleDialog::updateOkButtonEnabledState()
 {
-    bool isNameEditFilled = !ui->styleNameLineEdit->text().isEmpty();
-    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(isNameEditFilled);
+    QString styleName = ui->styleNameLineEdit->text();
+
+    bool isNameFilled = !styleName.isEmpty();
+    bool nameDoesNotExists = dialogMode != AddMode || !styles->htmlPreviewStyleNames().contains(styleName);
+
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(isNameFilled && nameDoesNotExists);
+}
+
+void StyleDialog::addNewStyle()
+{
+    Style newStyle;
+    newStyle.name = ui->styleNameLineEdit->text();
+    newStyle.markdownHighlighting = ui->markdownHighlightingComboBox->currentText();
+    newStyle.codeHighlighting = ui->codeHighlightingComboBox->currentText();
+    newStyle.previewStylesheet = ui->previewStylesheetComboBox->currentText();
+
+    styles->addHtmlPreviewStyle(newStyle);
+}
+
+void StyleDialog::updateStyle()
+{
+    Style style = styles->style(ui->styleNameLineEdit->text());
+    style.markdownHighlighting = ui->markdownHighlightingComboBox->currentText();
+    style.codeHighlighting = ui->codeHighlightingComboBox->currentText();
+    style.previewStylesheet = ui->previewStylesheetComboBox->currentText();
+
+    styles->updateHtmlPreviewStyle(style);
+}
+
+void StyleDialog::removeStyle()
+{
+    styles->removeHtmlPreviewStyle(ui->styleNameLineEdit->text());
 }

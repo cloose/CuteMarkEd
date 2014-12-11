@@ -257,6 +257,8 @@ public:
 };
 
 
+#include <QDebug>
+
 OptionsDialog::OptionsDialog(Options *opt, SnippetCollection *collection, const QList<QAction*> &acts, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::OptionsDialog),
@@ -437,6 +439,9 @@ void OptionsDialog::validateShortcut(int row, int column)
 
 void OptionsDialog::currentHtmlPreviewStyleChanged(const QString &styleName)
 {
+    if (styleName.isEmpty()) return;
+    qDebug() << "currentHtmlPreviewStyleChanged" << styleName;
+
     Styles *styles = new Styles();
     Style htmlPreviewStyle = styles->style(styleName);
     ui->editHtmlStyleButton->setEnabled(!htmlPreviewStyle.builtIn);
@@ -445,6 +450,8 @@ void OptionsDialog::currentHtmlPreviewStyleChanged(const QString &styleName)
 
 void OptionsDialog::currentPresentationStyleChanged(const QString &styleName)
 {
+    if (styleName.isEmpty()) return;
+    qDebug() << "currentPresentationStyleChanged" << styleName;
     Styles *styles = new Styles();
     Style presentationStyle = styles->style(styleName);
     ui->presentationMarkdownHighlightingComboBox->setCurrentText(presentationStyle.markdownHighlighting);
@@ -453,18 +460,32 @@ void OptionsDialog::currentPresentationStyleChanged(const QString &styleName)
 
 void OptionsDialog::addHtmlStyleButtonClicked()
 {
-    StyleDialog dialog(QString(), this);
-    dialog.exec();
+    StyleDialog dialog(StyleDialog::AddMode, QString(), this);
+    if (dialog.exec() == QDialog::Accepted) {
+        qDebug() << "addHtmlStyleButtonClicked" << "ACCEPTED";
+        Styles *styles = new Styles();
+        ui->htmlPreviewStylesComboBox->clear();
+        qDebug() << "addHtmlStyleButtonClicked" << "ACCEPTED" << "1";
+        ui->htmlPreviewStylesComboBox->addItems(styles->htmlPreviewStyleNames());
+    }
 }
 
 void OptionsDialog::editHtmlStyleButtonClicked()
 {
-    StyleDialog dialog(ui->htmlPreviewStylesComboBox->currentText(), this);
+    StyleDialog dialog(StyleDialog::EditMode, ui->htmlPreviewStylesComboBox->currentText(), this);
     dialog.exec();
 }
 
 void OptionsDialog::removeHtmlStyleButtonClicked()
 {
+    StyleDialog dialog(StyleDialog::RemoveMode, ui->htmlPreviewStylesComboBox->currentText(), this);
+    if (dialog.exec() == QDialog::Accepted) {
+        qDebug() << "removeHtmlStyleButtonClicked" << "ACCEPTED";
+        Styles *styles = new Styles();
+        ui->htmlPreviewStylesComboBox->clear();
+        qDebug() << "removeHtmlStyleButtonClicked" << "ACCEPTED" << "1";
+        ui->htmlPreviewStylesComboBox->addItems(styles->htmlPreviewStyleNames());
+    }
 }
 
 void OptionsDialog::setupShortcutsTable()

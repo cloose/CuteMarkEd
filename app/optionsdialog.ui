@@ -510,14 +510,14 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="removeHtmlStyleButton">
+             <widget class="QPushButton" name="editHtmlStyleButton">
               <property name="text">
                <string>Edit...</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="editHtmlStyleButton">
+             <widget class="QPushButton" name="removeHtmlStyleButton">
               <property name="text">
                <string>Remove</string>
               </property>
@@ -688,10 +688,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>editHtmlStyleButton</sender>
+   <sender>removeHtmlStyleButton</sender>
    <signal>clicked()</signal>
    <receiver>OptionsDialog</receiver>
-   <slot>editHtmlStyleButtonClicked()</slot>
+   <slot>removeHtmlStyleButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>616</x>
@@ -704,10 +704,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>removeHtmlStyleButton</sender>
+   <sender>editHtmlStyleButton</sender>
    <signal>clicked()</signal>
    <receiver>OptionsDialog</receiver>
-   <slot>removeHtmlStyleButtonClicked()</slot>
+   <slot>editHtmlStyleButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>509</x>
