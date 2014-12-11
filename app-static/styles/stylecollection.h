@@ -29,6 +29,8 @@ public:
     StyleCollection();
 
     int insert(const Style &style);
+    void update(const Style &style);
+    void remove(const Style &style);
 
     int count() const;
     const Style &at(int offset) const;

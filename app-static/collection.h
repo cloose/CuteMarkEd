@@ -24,6 +24,9 @@ public:
     virtual ~Collection() {}
 
     virtual int insert(const T &item) = 0;
+    virtual void update(const T &item) = 0;
+    virtual void remove(const T &item) = 0;
+
     virtual int count() const = 0;
     virtual const T &at(int offset) const = 0;
 };

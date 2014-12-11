@@ -28,6 +28,17 @@ int StyleCollection::insert(const Style &style)
     return count(); 
 }
 
+void StyleCollection::update(const Style &style)
+{
+    styles.replace(stylesIndex.indexOf(style.name), style);
+}
+
+void StyleCollection::remove(const Style &style)
+{
+    styles.removeAt(stylesIndex.indexOf(style.name));
+    stylesIndex.removeOne(style.name);
+}
+
 int StyleCollection::count() const
 {
     return styles.count();
