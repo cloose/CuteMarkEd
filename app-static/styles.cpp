@@ -17,7 +17,7 @@
 #include "styles.h"
 
 #include <QSharedPointer>
-#include <jsonfile.h>
+#include <json/jsonfile.h>
 
 static const Style BUILTIN_DEFAULT_STYLE = Style("Default", "Default", "Default", "Default", true );
 static const Style DEFAULT_PRESENTATION_STYLE = Style("Default Presentation", "Default", "Default", "Default Presentation", true );

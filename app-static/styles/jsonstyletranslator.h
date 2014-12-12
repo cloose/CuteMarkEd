@@ -17,7 +17,7 @@
 #ifndef JSONSTYLETRANSLATOR_H
 #define JSONSTYLETRANSLATOR_H
 
-#include "jsontranslator.h"
+#include "json/jsontranslator.h"
 #include <QJsonObject>
 class QJsonDocument;
 struct Style;

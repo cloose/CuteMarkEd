@@ -20,7 +20,7 @@
 #include <QTemporaryFile>
 #include <QTextStream>
 
-#include <jsonfile.h>
+#include <json/jsonfile.h>
 #include <styles/stylecollection.h>
 
 void JsonStyleFileTest::loadsEmptyStylesCollectionFromFile()

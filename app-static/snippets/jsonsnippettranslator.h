@@ -17,7 +17,7 @@
 #ifndef JSONSNIPPETTRANSLATOR_H
 #define JSONSNIPPETTRANSLATOR_H
 
-#include "jsontranslator.h"
+#include "json/jsontranslator.h"
 #include <QJsonObject>
 class QJsonDocument;
 class SnippetCollection;

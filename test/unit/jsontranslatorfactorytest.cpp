@@ -18,8 +18,8 @@
 
 #include <QTest>
 
-#include <jsontranslator.h>
-#include <jsontranslatorfactory.h>
+#include <json/jsontranslator.h>
+#include <json/jsontranslatorfactory.h>
 #include <snippets/snippet.h>
 #include <styles/style.h>
 

@@ -51,9 +51,9 @@ HEADERS += \
     htmlviewsynchronizer.h \
     styles.h \
     collection.h \
-    jsonfile.h \
-    jsontranslator.h \
-    jsontranslatorfactory.h
+    json/jsonfile.h \
+    json/jsontranslator.h \
+    json/jsontranslatorfactory.h
 
 #unix:!symbian {
 #    maemo5 {
