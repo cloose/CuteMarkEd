@@ -34,7 +34,7 @@ static const QLatin1String BUILTIN("builtIn");
 
 bool JsonStyleTranslator::processDocument(const QJsonDocument &jsonDocument, JsonCollection<Style> *collection)
 {
-    if (!isValid(jsonDocument))
+    if (!isValid(jsonDocument, collection->name()))
         return false;
 
     QJsonArray styleArray = jsonDocument.object().value(collection->name()).toArray();
@@ -89,11 +89,11 @@ QJsonObject JsonStyleTranslator::toJsonObject(const Style &style)
     return object;
 }
 
-bool JsonStyleTranslator::isValid(const QJsonDocument &jsonDocument) const
+bool JsonStyleTranslator::isValid(const QJsonDocument &jsonDocument, const QString &arrayName) const
 {
     return !jsonDocument.isEmpty() &&
            jsonDocument.isObject() &&
-           jsonDocument.object().contains("styles") &&
-           jsonDocument.object().value("styles").isArray();
+           jsonDocument.object().contains(arrayName) &&
+           jsonDocument.object().value(arrayName).isArray();
 }
 

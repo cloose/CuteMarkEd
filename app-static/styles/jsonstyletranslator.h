@@ -33,7 +33,7 @@ private:
     Style fromJsonObject(const QJsonObject &object);
     QJsonObject toJsonObject(const Style &style);
 
-    bool isValid(const QJsonDocument &jsonDocument) const;
+    bool isValid(const QJsonDocument &jsonDocument, const QString &arrayName) const;
 };
 
 #endif // JSONSTYLETRANSLATOR_H

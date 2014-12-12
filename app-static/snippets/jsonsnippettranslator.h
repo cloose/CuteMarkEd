@@ -34,7 +34,7 @@ private:
     Snippet fromJsonObject(const QJsonObject &object);
     QJsonObject toJsonObject(const Snippet &snippet);
 
-    bool isValid(const QJsonDocument &jsonDocument) const;
+    bool isValid(const QJsonDocument &jsonDocument, const QString &arrayName) const;
 };
 
 #endif // JSONSNIPPETTRANSLATOR_H
