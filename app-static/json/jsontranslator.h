@@ -18,7 +18,7 @@
 #define JSONTRANSLATOR_H
 
 #include <QJsonObject>
-#include "collection.h"
+#include "jsoncollection.h"
 class QJsonDocument;
 
 template <class T>
@@ -27,8 +27,8 @@ class JsonTranslator
 public:
     virtual ~JsonTranslator() {}
 
-    virtual bool processDocument(const QJsonDocument &jsonDocument, Collection<T> *collection) = 0;
-    virtual QJsonDocument createDocument(Collection<T> *collection) = 0;
+    virtual bool processDocument(const QJsonDocument &jsonDocument, JsonCollection<T> *collection) = 0;
+    virtual QJsonDocument createDocument(JsonCollection<T> *collection) = 0;
 };
 
 #endif // JSONTRANSLATOR_H

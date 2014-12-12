@@ -14,22 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef COLLECTION_H
-#define COLLECTION_H
+#ifndef JSONCOLLECTION_H
+#define JSONCOLLECTION_H
 
 template <class T>
-class Collection
+class JsonCollection
 {
 public:
-    virtual ~Collection() {}
+    virtual ~JsonCollection() {}
 
     virtual int insert(const T &item) = 0;
-    virtual void update(const T &item) = 0;
-    virtual void remove(const T &item) = 0;
 
     virtual int count() const = 0;
     virtual const T &at(int offset) const = 0;
 };
 
-#endif // COLLECTION_H
+#endif // JSONCOLLECTION_H
 

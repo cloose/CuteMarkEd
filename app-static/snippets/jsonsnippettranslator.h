@@ -27,8 +27,8 @@ struct Snippet;
 class JsonSnippetTranslator : public JsonTranslator<Snippet>
 {
 public:
-    bool processDocument(const QJsonDocument &jsonDocument, Collection<Snippet> *collection) Q_DECL_OVERRIDE;
-    QJsonDocument createDocument(Collection<Snippet> *collection) Q_DECL_OVERRIDE;
+    bool processDocument(const QJsonDocument &jsonDocument, JsonCollection<Snippet> *collection) Q_DECL_OVERRIDE;
+    QJsonDocument createDocument(JsonCollection<Snippet> *collection) Q_DECL_OVERRIDE;
 
 private:
     Snippet fromJsonObject(const QJsonObject &object);

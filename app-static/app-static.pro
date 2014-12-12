@@ -50,7 +50,7 @@ HEADERS += \
     revealviewsynchronizer.h \
     htmlviewsynchronizer.h \
     styles.h \
-    collection.h \
+    json/jsoncollection.h \
     json/jsonfile.h \
     json/jsontranslator.h \
     json/jsontranslatorfactory.h

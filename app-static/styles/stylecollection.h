@@ -19,11 +19,11 @@
 
 #include <QString>
 #include <QStringList>
-#include "collection.h"
+#include "json/jsoncollection.h"
 #include "style.h"
 
 
-class StyleCollection : public Collection<Style>
+class StyleCollection : public JsonCollection<Style>
 {
 public:
     StyleCollection();

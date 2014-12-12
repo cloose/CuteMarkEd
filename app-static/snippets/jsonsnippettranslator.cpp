@@ -32,7 +32,7 @@ static const QLatin1String BUILTIN("builtIn");
 
 }
 
-bool JsonSnippetTranslator::processDocument(const QJsonDocument &jsonDocument, Collection<Snippet> *collection)
+bool JsonSnippetTranslator::processDocument(const QJsonDocument &jsonDocument, JsonCollection<Snippet> *collection)
 {
     if (!isValid(jsonDocument))
         return false;
@@ -46,7 +46,7 @@ bool JsonSnippetTranslator::processDocument(const QJsonDocument &jsonDocument, C
     return true;
 }
 
-QJsonDocument JsonSnippetTranslator::createDocument(Collection<Snippet> *collection)
+QJsonDocument JsonSnippetTranslator::createDocument(JsonCollection<Snippet> *collection)
 {
     QJsonArray snippetArray;
     for (int i = 0; i < collection->count(); ++i) {

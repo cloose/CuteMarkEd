@@ -20,7 +20,7 @@
 #include <QFile>
 #include <QJsonDocument>
 #include <QTextStream>
-#include "collection.h"
+#include "jsoncollection.h"
 #include "jsontranslator.h"
 #include "jsontranslatorfactory.h"
 
@@ -31,15 +31,15 @@ template <class T>
 class JsonFile
 {
 public:
-    static bool load(const QString &fileName, Collection<T> *collection);
-    static bool save(const QString &fileName, Collection<T> *collection);
+    static bool load(const QString &fileName, JsonCollection<T> *collection);
+    static bool save(const QString &fileName, JsonCollection<T> *collection);
 
 private:
     JsonFile();
 };
 
 template <class T>
-bool JsonFile<T>::load(const QString &fileName, Collection<T> *collection)
+bool JsonFile<T>::load(const QString &fileName, JsonCollection<T> *collection)
 {
     QFile jsonFile(fileName);
     if (!jsonFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -53,7 +53,7 @@ bool JsonFile<T>::load(const QString &fileName, Collection<T> *collection)
 }
 
 template <class T>
-bool JsonFile<T>::save(const QString &fileName, Collection<T> *collection)
+bool JsonFile<T>::save(const QString &fileName, JsonCollection<T> *collection)
 {
     QFile jsonFile(fileName);
     if (!jsonFile.open(QIODevice::WriteOnly | QIODevice::Text)) {

@@ -19,8 +19,8 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 
+#include "json/jsoncollection.h"
 #include "style.h"
-#include "collection.h"
 
 namespace {
 
@@ -32,7 +32,7 @@ static const QLatin1String BUILTIN("builtIn");
 
 }
 
-bool JsonStyleTranslator::processDocument(const QJsonDocument &jsonDocument, Collection<Style> *collection)
+bool JsonStyleTranslator::processDocument(const QJsonDocument &jsonDocument, JsonCollection<Style> *collection)
 {
     if (!isValid(jsonDocument))
         return false;
@@ -46,7 +46,7 @@ bool JsonStyleTranslator::processDocument(const QJsonDocument &jsonDocument, Col
     return true;
 }
 
-QJsonDocument JsonStyleTranslator::createDocument(Collection<Style> *collection)
+QJsonDocument JsonStyleTranslator::createDocument(JsonCollection<Style> *collection)
 {
     QJsonArray styleArray;
     for (int i = 0; i < collection->count(); ++i) {

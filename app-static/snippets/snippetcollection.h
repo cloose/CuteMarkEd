@@ -19,11 +19,11 @@
 
 #include <QObject>
 #include <QMap>
-#include "collection.h"
+#include "json/jsoncollection.h"
 #include "snippet.h"
 
 
-class SnippetCollection : public QObject, public Collection<Snippet>
+class SnippetCollection : public QObject, public JsonCollection<Snippet>
 {
     Q_OBJECT
     Q_ENUMS(CollectionChangedType)

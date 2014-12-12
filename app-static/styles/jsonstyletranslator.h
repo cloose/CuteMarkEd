@@ -26,8 +26,8 @@ struct Style;
 class JsonStyleTranslator : public JsonTranslator<Style>
 {
 public:
-    bool processDocument(const QJsonDocument &jsonDocument, Collection<Style> *collection) Q_DECL_OVERRIDE;
-    QJsonDocument createDocument(Collection<Style> *collection) Q_DECL_OVERRIDE;
+    bool processDocument(const QJsonDocument &jsonDocument, JsonCollection<Style> *collection) Q_DECL_OVERRIDE;
+    QJsonDocument createDocument(JsonCollection<Style> *collection) Q_DECL_OVERRIDE;
 
 private:
     Style fromJsonObject(const QJsonObject &object);
