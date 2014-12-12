@@ -44,6 +44,7 @@ public:
     void update(const Snippet& snippet);
     void remove(const Snippet& snippet);
 
+    const QString name() const;
     bool contains(const QString &trigger) const;
     const Snippet snippet(const QString &trigger) const;
     const Snippet &at(int offset) const;

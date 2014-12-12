@@ -36,6 +36,7 @@ public:
     const Style &at(int offset) const;
 
     QStringList styleNames() const;
+    const QString name() const;
     bool contains(const QString &name) const;
     const Style style(const QString &name) const;
 

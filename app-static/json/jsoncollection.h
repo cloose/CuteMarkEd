@@ -25,6 +25,7 @@ public:
 
     virtual int insert(const T &item) = 0;
 
+    virtual const QString name() const = 0;
     virtual int count() const = 0;
     virtual const T &at(int offset) const = 0;
 };

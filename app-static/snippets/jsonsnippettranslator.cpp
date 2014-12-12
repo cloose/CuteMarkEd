@@ -37,7 +37,7 @@ bool JsonSnippetTranslator::processDocument(const QJsonDocument &jsonDocument, J
     if (!isValid(jsonDocument))
         return false;
 
-    QJsonArray snippetArray = jsonDocument.object().value("snippets").toArray();
+    QJsonArray snippetArray = jsonDocument.object().value(collection->name()).toArray();
     foreach (QJsonValue entry, snippetArray) {
         Snippet snippet = fromJsonObject(entry.toObject());
         collection->insert(snippet);
@@ -57,7 +57,7 @@ QJsonDocument JsonSnippetTranslator::createDocument(JsonCollection<Snippet> *col
     }
 
     QJsonObject object;
-    object.insert("snippets", snippetArray);
+    object.insert(collection->name(), snippetArray);
 
     QJsonDocument doc(object);
     return doc;

@@ -54,6 +54,11 @@ QStringList StyleCollection::styleNames() const
     return stylesIndex;
 }
 
+const QString StyleCollection::name() const
+{
+    return QStringLiteral("styles");
+}
+
 bool StyleCollection::contains(const QString &name) const
 {
     return stylesIndex.contains(name);

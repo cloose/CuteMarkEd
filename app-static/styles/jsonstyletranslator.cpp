@@ -37,7 +37,7 @@ bool JsonStyleTranslator::processDocument(const QJsonDocument &jsonDocument, Jso
     if (!isValid(jsonDocument))
         return false;
 
-    QJsonArray styleArray = jsonDocument.object().value("styles").toArray();
+    QJsonArray styleArray = jsonDocument.object().value(collection->name()).toArray();
     foreach (QJsonValue entry, styleArray) {
         Style style = fromJsonObject(entry.toObject());
         collection->insert(style);
@@ -57,7 +57,7 @@ QJsonDocument JsonStyleTranslator::createDocument(JsonCollection<Style> *collect
     }
 
     QJsonObject object;
-    object.insert("styles", styleArray);
+    object.insert(collection->name(), styleArray);
 
     QJsonDocument doc(object);
     return doc;
