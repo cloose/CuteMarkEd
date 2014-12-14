@@ -13,7 +13,6 @@ CONFIG += staticlib
 SOURCES += \
     snippets/jsonsnippettranslator.cpp \
     snippets/snippetcollection.cpp \
-    snippets/jsonsnippetfile.cpp \
     snippets/snippetlistmodel.cpp \
     converter/discountmarkdownconverter.cpp \
     spellchecker/dictionary.cpp \
@@ -27,10 +26,13 @@ SOURCES += \
     htmlviewsynchronizer.cpp
 
 HEADERS += \
+    json/jsoncollection.h \
+    json/jsonfile.h \
+    json/jsontranslator.h \
+    json/jsontranslatorfactory.h \
     snippets/snippet.h \
     snippets/jsonsnippettranslator.h \
     snippets/snippetcollection.h \
-    snippets/jsonsnippetfile.h \
     snippets/snippetlistmodel.h \
     converter/markdownconverter.h \
     converter/markdowndocument.h \

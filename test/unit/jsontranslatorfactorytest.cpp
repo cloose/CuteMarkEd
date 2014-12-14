@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,21 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef JSONSNIPPETFILE_H
-#define JSONSNIPPETFILE_H
+#include "jsontranslatorfactorytest.h"
 
-class QString;
-class SnippetCollection;
+#include <QTest>
+
+#include <json/jsontranslator.h>
+#include <json/jsontranslatorfactory.h>
+#include <snippets/snippet.h>
 
 
-class JsonSnippetFile
+void JsonTranslatorFactoryTest::returnsNullIfNoJsonTranslatorExists()
 {
-public:
-    static bool load(const QString &fileName, SnippetCollection *collection);
-    static bool save(const QString &fileName, SnippetCollection *collection);
+    JsonTranslator<int> *translator = JsonTranslatorFactory<int>::create();
 
-private:
-    JsonSnippetFile();
-};
+    QVERIFY(translator == 0);
+}
 
-#endif // JSONSNIPPETFILE_H
+void JsonTranslatorFactoryTest::returnsValidJsonTranslatorForSnippets()
+{
+    JsonTranslator<Snippet> *translator = JsonTranslatorFactory<Snippet>::create();
+
+    QVERIFY(translator != 0);
+}

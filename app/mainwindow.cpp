@@ -44,7 +44,7 @@
 #include <QWinJumpListCategory>
 #endif
 
-#include <snippets/jsonsnippetfile.h>
+#include <json/jsonfile.h>
 #include <snippets/snippetcollection.h>
 #include <spellchecker/dictionary.h>
 #include <datalocation.h>
@@ -186,9 +186,9 @@ void MainWindow::initializeApp()
     ui->menuLanguages->loadDictionaries(options->dictionaryLanguage());
 
     //: path to built-in snippets resource.
-    JsonSnippetFile::load(tr(":/markdown-snippets.json"), snippetCollection);
+    JsonFile<Snippet>::load(tr(":/markdown-snippets.json"), snippetCollection);
     QString path = DataLocation::writableLocation();
-    JsonSnippetFile::load(path + "/user-snippets.json", snippetCollection);
+    JsonFile<Snippet>::load(path + "/user-snippets.json", snippetCollection);
 
     // setup file explorer
     connect(ui->fileExplorerDockContents, SIGNAL(fileSelected(QString)),
@@ -702,7 +702,7 @@ void MainWindow::extrasOptions()
 
         QString path = DataLocation::writableLocation();
         QSharedPointer<SnippetCollection> userDefinedSnippets = snippetCollection->userDefinedSnippets();
-        JsonSnippetFile::save(path + "/user-snippets.json", userDefinedSnippets.data());
+        JsonFile<Snippet>::save(path + "/user-snippets.json", userDefinedSnippets.data());
 
         // update shortcuts
         setupCustomShortcuts();

@@ -19,10 +19,11 @@
 
 #include <QObject>
 #include <QMap>
+#include "json/jsoncollection.h"
 #include "snippet.h"
 
 
-class SnippetCollection : public QObject
+class SnippetCollection : public QObject, public JsonCollection<Snippet>
 {
     Q_OBJECT
     Q_ENUMS(CollectionChangedType)
@@ -43,9 +44,10 @@ public:
     void update(const Snippet& snippet);
     void remove(const Snippet& snippet);
 
+    const QString name() const;
     bool contains(const QString &trigger) const;
     const Snippet snippet(const QString &trigger) const;
-    const Snippet &snippetAt(int offset) const;
+    const Snippet &at(int offset) const;
 
     QSharedPointer<SnippetCollection> userDefinedSnippets() const;
 

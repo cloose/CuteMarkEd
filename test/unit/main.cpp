@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 #include "dictionarytest.h"
 #include "jsonsnippettranslatortest.h"
+#include "jsontranslatorfactorytest.h"
 #include "slidelinemappingtest.h"
 #include "snippetcollectiontest.h"
 #include "snippetlistmodeltest.h"
@@ -44,6 +45,9 @@ int main(int argc, char *argv[])
 
     SlideLineMappingTest test6;
     ret += QTest::qExec(&test6, argc, argv);
+
+    JsonTranslatorFactoryTest test7;
+    ret += QTest::qExec(&test7, argc, argv);
 
     return ret;
 }

@@ -32,12 +32,12 @@ static const QLatin1String BUILTIN("builtIn");
 
 }
 
-bool JsonSnippetTranslator::processDocument(const QJsonDocument &jsonDocument, SnippetCollection *collection)
+bool JsonSnippetTranslator::processDocument(const QJsonDocument &jsonDocument, JsonCollection<Snippet> *collection)
 {
-    if (!isValid(jsonDocument))
+    if (!isValid(jsonDocument, collection->name()))
         return false;
 
-    QJsonArray snippetArray = jsonDocument.object().value("snippets").toArray();
+    QJsonArray snippetArray = jsonDocument.object().value(collection->name()).toArray();
     foreach (QJsonValue entry, snippetArray) {
         Snippet snippet = fromJsonObject(entry.toObject());
         collection->insert(snippet);
@@ -46,18 +46,18 @@ bool JsonSnippetTranslator::processDocument(const QJsonDocument &jsonDocument, S
     return true;
 }
 
-QJsonDocument JsonSnippetTranslator::createDocument(SnippetCollection *collection)
+QJsonDocument JsonSnippetTranslator::createDocument(JsonCollection<Snippet> *collection)
 {
     QJsonArray snippetArray;
     for (int i = 0; i < collection->count(); ++i) {
-        Snippet snippet = collection->snippetAt(i);
+        Snippet snippet = collection->at(i);
 
         QJsonObject entry = toJsonObject(snippet);
         snippetArray.append(entry);
     }
 
     QJsonObject object;
-    object.insert("snippets", snippetArray);
+    object.insert(collection->name(), snippetArray);
 
     QJsonDocument doc(object);
     return doc;
@@ -89,10 +89,10 @@ QJsonObject JsonSnippetTranslator::toJsonObject(const Snippet &snippet)
     return object;
 }
 
-bool JsonSnippetTranslator::isValid(const QJsonDocument &jsonDocument) const
+bool JsonSnippetTranslator::isValid(const QJsonDocument &jsonDocument, const QString &arrayName) const
 {
     return !jsonDocument.isEmpty() &&
            jsonDocument.isObject() &&
-           jsonDocument.object().contains("snippets") &&
-           jsonDocument.object().value("snippets").isArray();
+           jsonDocument.object().contains(arrayName) &&
+           jsonDocument.object().value(arrayName).isArray();
 }
