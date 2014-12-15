@@ -19,21 +19,14 @@
 
 #include "json/jsontranslator.h"
 #include <QJsonObject>
-class QJsonDocument;
 struct Style;
 
 
 class JsonStyleTranslator : public JsonTranslator<Style>
 {
-public:
-    bool processDocument(const QJsonDocument &jsonDocument, JsonCollection<Style> *collection) Q_DECL_OVERRIDE;
-    QJsonDocument createDocument(JsonCollection<Style> *collection) Q_DECL_OVERRIDE;
-
 private:
     Style fromJsonObject(const QJsonObject &object);
     QJsonObject toJsonObject(const Style &style);
-
-    bool isValid(const QJsonDocument &jsonDocument, const QString &arrayName) const;
 };
 
 #endif // JSONSTYLETRANSLATOR_H

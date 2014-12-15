@@ -16,10 +16,6 @@
  */
 #include "jsonstyletranslator.h"
 
-#include <QJsonArray>
-#include <QJsonDocument>
-
-#include "json/jsoncollection.h"
 #include "style.h"
 
 namespace {
@@ -30,37 +26,6 @@ static const QLatin1String CODE_HIGHLIGHTING("codeHighlighting");
 static const QLatin1String PREVIEW_STYLESHEET("previewStylesheet");
 static const QLatin1String BUILTIN("builtIn");
 
-}
-
-bool JsonStyleTranslator::processDocument(const QJsonDocument &jsonDocument, JsonCollection<Style> *collection)
-{
-    if (!isValid(jsonDocument, collection->name()))
-        return false;
-
-    QJsonArray styleArray = jsonDocument.object().value(collection->name()).toArray();
-    foreach (QJsonValue entry, styleArray) {
-        Style style = fromJsonObject(entry.toObject());
-        collection->insert(style);
-    }
-
-    return true;
-}
-
-QJsonDocument JsonStyleTranslator::createDocument(JsonCollection<Style> *collection)
-{
-    QJsonArray styleArray;
-    for (int i = 0; i < collection->count(); ++i) {
-        Style style = collection->at(i);
-
-        QJsonObject entry = toJsonObject(style);
-        styleArray.append(entry);
-    }
-
-    QJsonObject object;
-    object.insert(collection->name(), styleArray);
-
-    QJsonDocument doc(object);
-    return doc;
 }
 
 Style JsonStyleTranslator::fromJsonObject(const QJsonObject &object)
@@ -87,13 +52,5 @@ QJsonObject JsonStyleTranslator::toJsonObject(const Style &style)
     object.insert(BUILTIN, style.builtIn);
 
     return object;
-}
-
-bool JsonStyleTranslator::isValid(const QJsonDocument &jsonDocument, const QString &arrayName) const
-{
-    return !jsonDocument.isEmpty() &&
-           jsonDocument.isObject() &&
-           jsonDocument.object().contains(arrayName) &&
-           jsonDocument.object().value(arrayName).isArray();
 }
 
