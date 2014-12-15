@@ -17,9 +17,10 @@
 #ifndef JSONTRANSLATOR_H
 #define JSONTRANSLATOR_H
 
+#include <QJsonArray>
+#include <QJsonDocument>
 #include <QJsonObject>
 #include "jsoncollection.h"
-class QJsonDocument;
 
 template <class T>
 class JsonTranslator
@@ -27,9 +28,57 @@ class JsonTranslator
 public:
     virtual ~JsonTranslator() {}
 
-    virtual bool processDocument(const QJsonDocument &jsonDocument, JsonCollection<T> *collection) = 0;
-    virtual QJsonDocument createDocument(JsonCollection<T> *collection) = 0;
+    bool processDocument(const QJsonDocument &jsonDocument, JsonCollection<T> *collection);
+    QJsonDocument createDocument(JsonCollection<T> *collection);
+
+private:
+    virtual T fromJsonObject(const QJsonObject &object) = 0;
+    virtual QJsonObject toJsonObject(const T &item) = 0;
+
+    virtual bool isValid(const QJsonDocument &jsonDocument, const QString &arrayName) const;
 };
+
+template <class T>
+bool JsonTranslator<T>::processDocument(const QJsonDocument &jsonDocument, JsonCollection<T> *collection)
+{
+    if (!isValid(jsonDocument, collection->name()))
+        return false;
+
+    QJsonArray array = jsonDocument.object().value(collection->name()).toArray();
+    foreach (QJsonValue entry, array) {
+        T newItem = fromJsonObject(entry.toObject());
+        collection->insert(newItem);
+    }
+
+    return true;
+}
+
+template <class T>
+QJsonDocument JsonTranslator<T>::createDocument(JsonCollection<T> *collection)
+{
+    QJsonArray array;
+    for (int i = 0; i < collection->count(); ++i) {
+        T item = collection->at(i);
+
+        QJsonObject entry = toJsonObject(item);
+        array.append(entry);
+    }
+
+    QJsonObject object;
+    object.insert(collection->name(), array);
+
+    QJsonDocument doc(object);
+    return doc;
+}
+
+template <class T>
+bool JsonTranslator<T>::isValid(const QJsonDocument &jsonDocument, const QString &arrayName) const
+{
+    return !jsonDocument.isEmpty() &&
+           jsonDocument.isObject() &&
+           jsonDocument.object().contains(arrayName) &&
+           jsonDocument.object().value(arrayName).isArray();
+}
 
 #endif // JSONTRANSLATOR_H
 
