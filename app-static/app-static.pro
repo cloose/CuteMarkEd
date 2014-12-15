@@ -19,11 +19,14 @@ SOURCES += \
     converter/revealmarkdownconverter.cpp \
     template/htmltemplate.cpp \
     template/presentationtemplate.cpp \
+    styles/jsonstyletranslator.cpp \
+    styles/stylecollection.cpp \
     datalocation.cpp \
     slidelinemapping.cpp \
     viewsynchronizer.cpp \
     revealviewsynchronizer.cpp \
-    htmlviewsynchronizer.cpp
+    htmlviewsynchronizer.cpp \
+    styles.cpp 
 
 HEADERS += \
     json/jsoncollection.h \
@@ -42,11 +45,15 @@ HEADERS += \
     template/template.h \
     template/htmltemplate.h \
     template/presentationtemplate.h \
+    styles/jsonstyletranslator.h \
+    styles/style.h \
+    styles/stylecollection.h \
     datalocation.h \
     slidelinemapping.h \
     viewsynchronizer.h \
     revealviewsynchronizer.h \
-    htmlviewsynchronizer.h
+    htmlviewsynchronizer.h \
+    styles.h 
 
 #unix:!symbian {
 #    maemo5 {

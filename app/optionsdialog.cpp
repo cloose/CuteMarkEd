@@ -30,6 +30,9 @@
 
 #include <snippets/snippetcollection.h>
 #include "options.h"
+#include "styledialog.h"
+#include "styles.h"
+
 
 class SnippetsTableModel : public QAbstractTableModel
 {
@@ -254,6 +257,8 @@ public:
 };
 
 
+#include <QDebug>
+
 OptionsDialog::OptionsDialog(Options *opt, SnippetCollection *collection, const QList<QAction*> &acts, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::OptionsDialog),
@@ -295,6 +300,20 @@ OptionsDialog::OptionsDialog(Options *opt, SnippetCollection *collection, const 
 #endif
 
     setupShortcutsTable();
+
+    Styles *styles = new Styles();
+    ui->htmlPreviewStylesComboBox->addItems(styles->htmlPreviewStyleNames());
+    ui->presentationStylesComboBox->addItems(styles->presentationStyleNames());
+    ui->presentationMarkdownHighlightingComboBox->addItems(styles->markdownHighlightings());
+    ui->presentationStylesheetComboBox->addItems(styles->previewStylesheets());
+
+    connect(ui->htmlPreviewStylesComboBox, SIGNAL(currentTextChanged(QString)),
+            this, SLOT(currentHtmlPreviewStyleChanged(QString)));
+    currentHtmlPreviewStyleChanged(ui->htmlPreviewStylesComboBox->currentText());
+
+    connect(ui->presentationStylesComboBox, SIGNAL(currentTextChanged(QString)),
+            this, SLOT(currentPresentationStyleChanged(QString)));
+    currentPresentationStyleChanged(ui->presentationStylesComboBox->currentText());
 
     // read configuration state
     readState();
@@ -415,6 +434,57 @@ void OptionsDialog::validateShortcut(int row, int column)
         QFont font = ui->shortcutsTable->item(row, 0)->font();
         font.setBold(ks != actions[row]->property("defaultshortcut").value<QKeySequence>());
         ui->shortcutsTable->item(row, 0)->setFont(font);
+    }
+}
+
+void OptionsDialog::currentHtmlPreviewStyleChanged(const QString &styleName)
+{
+    if (styleName.isEmpty()) return;
+    qDebug() << "currentHtmlPreviewStyleChanged" << styleName;
+
+    Styles *styles = new Styles();
+    Style htmlPreviewStyle = styles->style(styleName);
+    ui->editHtmlStyleButton->setEnabled(!htmlPreviewStyle.builtIn);
+    ui->removeHtmlStyleButton->setEnabled(!htmlPreviewStyle.builtIn);
+}
+
+void OptionsDialog::currentPresentationStyleChanged(const QString &styleName)
+{
+    if (styleName.isEmpty()) return;
+    qDebug() << "currentPresentationStyleChanged" << styleName;
+    Styles *styles = new Styles();
+    Style presentationStyle = styles->style(styleName);
+    ui->presentationMarkdownHighlightingComboBox->setCurrentText(presentationStyle.markdownHighlighting);
+    ui->presentationStylesheetComboBox->setCurrentText(presentationStyle.previewStylesheet);
+}
+
+void OptionsDialog::addHtmlStyleButtonClicked()
+{
+    StyleDialog dialog(StyleDialog::AddMode, QString(), this);
+    if (dialog.exec() == QDialog::Accepted) {
+        qDebug() << "addHtmlStyleButtonClicked" << "ACCEPTED";
+        Styles *styles = new Styles();
+        ui->htmlPreviewStylesComboBox->clear();
+        qDebug() << "addHtmlStyleButtonClicked" << "ACCEPTED" << "1";
+        ui->htmlPreviewStylesComboBox->addItems(styles->htmlPreviewStyleNames());
+    }
+}
+
+void OptionsDialog::editHtmlStyleButtonClicked()
+{
+    StyleDialog dialog(StyleDialog::EditMode, ui->htmlPreviewStylesComboBox->currentText(), this);
+    dialog.exec();
+}
+
+void OptionsDialog::removeHtmlStyleButtonClicked()
+{
+    StyleDialog dialog(StyleDialog::RemoveMode, ui->htmlPreviewStylesComboBox->currentText(), this);
+    if (dialog.exec() == QDialog::Accepted) {
+        qDebug() << "removeHtmlStyleButtonClicked" << "ACCEPTED";
+        Styles *styles = new Styles();
+        ui->htmlPreviewStylesComboBox->clear();
+        qDebug() << "removeHtmlStyleButtonClicked" << "ACCEPTED" << "1";
+        ui->htmlPreviewStylesComboBox->addItems(styles->htmlPreviewStyleNames());
     }
 }
 

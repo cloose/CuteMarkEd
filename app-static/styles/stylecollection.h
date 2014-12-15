@@ -14,24 +14,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef PRESENTATIONTEMPLATE_H
-#define PRESENTATIONTEMPLATE_H
+#ifndef STYLECOLLECTION_H
+#define STYLECOLLECTION_H
 
-#include "template.h"
+#include <QString>
+#include <QStringList>
+#include "json/jsoncollection.h"
+#include "style.h"
 
-class PresentationTemplate : public Template
+
+class StyleCollection : public JsonCollection<Style>
 {
 public:
-    PresentationTemplate();
+    StyleCollection();
 
-    virtual QString render(const QString &body, RenderOptions options) const;
-    virtual QString exportAsHtml(const QString &header, const QString &body, RenderOptions options) const;
+    int insert(const Style &style);
+    void update(const Style &style);
+    void remove(const Style &style);
+
+    int count() const;
+    const Style &at(int offset) const;
+
+    QStringList styleNames() const;
+    const QString name() const;
+    bool contains(const QString &name) const;
+    const Style style(const QString &name) const;
 
 private:
-    QString buildHtmlHeader() const;
-    QString buildRevealPlugins(RenderOptions options) const;
-
-    QString presentationTemplate;
+    QStringList stylesIndex;
+    QList<Style> styles;
 };
 
-#endif // PRESENTATIONTEMPLATE_H
+#endif // STYLECOLLECTION_H
+

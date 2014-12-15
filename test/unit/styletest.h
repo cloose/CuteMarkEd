@@ -14,24 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef PRESENTATIONTEMPLATE_H
-#define PRESENTATIONTEMPLATE_H
+#ifndef STYLETEST_H
+#define STYLETTEST_H
 
-#include "template.h"
+#include <QObject>
 
-class PresentationTemplate : public Template
+class StyleTest : public QObject
 {
-public:
-    PresentationTemplate();
+    Q_OBJECT
 
-    virtual QString render(const QString &body, RenderOptions options) const;
-    virtual QString exportAsHtml(const QString &header, const QString &body, RenderOptions options) const;
-
-private:
-    QString buildHtmlHeader() const;
-    QString buildRevealPlugins(RenderOptions options) const;
-
-    QString presentationTemplate;
+private slots:
+    void isEqualComparable();
+    void isInitializedAfterCreation();
 };
 
-#endif // PRESENTATIONTEMPLATE_H
+#endif // STYLETEST_H
+

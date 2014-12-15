@@ -37,6 +37,7 @@ class RecentFilesMenu;
 class Options;
 class SlideLineMapping;
 class SnippetCollection;
+class Styles;
 class ViewSynchronizer;
 
 
@@ -86,13 +87,7 @@ private slots:
     void editInsertImage();
 
     void viewChangeSplit();
-    void styleDefault();
-    void styleGithub();
-    void styleSolarizedLight();
-    void styleSolarizedDark();
-    void styleClearness();
-    void styleClearnessDark();
-    void styleBywordDark();
+    void styleBuiltinStyle();
     void styleCustomStyle();
     void viewFullScreenMode();
     void viewHorizontalLayout(bool checked);
@@ -147,6 +142,8 @@ private:
     bool maybeSave();
     void setFileName(const QString &fileName);
     void updateSplitter();
+    void setupPresentationStyles();
+    void loadBuiltinStyles();
     void loadCustomStyles();
     void readSettings();
     void writeSettings();
@@ -156,7 +153,8 @@ private:
     RecentFilesMenu *recentFilesMenu;
     Options *options;
     QNetworkDiskCache *diskCache;
-    QActionGroup *stylesGroup;
+    QActionGroup *htmlPreviewStylesGroup;
+    QActionGroup *presentationStylesGroup;
     QAction *zoomInAction;
     QAction *zoomOutAction;
     QAction *zoomResetAction;
@@ -167,6 +165,7 @@ private:
     HtmlHighlighter *htmlHighlighter;
     SnippetCollection *snippetCollection;
     ViewSynchronizer *viewSynchronizer;
+    Styles *styles;
     QString fileName;
     float splitFactor;
     bool rightViewCollapsed;

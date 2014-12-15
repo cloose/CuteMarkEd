@@ -44,6 +44,11 @@ private slots:
     void addSnippetButtonClicked();
     void removeSnippetButtonClicked();
     void validateShortcut(int row, int column);
+    void currentHtmlPreviewStyleChanged(const QString &styleName);
+    void currentPresentationStyleChanged(const QString &styleName);
+    void addHtmlStyleButtonClicked();
+    void editHtmlStyleButtonClicked();
+    void removeHtmlStyleButtonClicked();
 
 private:
     void setupShortcutsTable();

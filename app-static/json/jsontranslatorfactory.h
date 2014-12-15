@@ -22,6 +22,8 @@
 #include "snippets/snippet.h"
 #include "snippets/jsonsnippettranslator.h"
 
+#include "styles/style.h"
+#include "styles/jsonstyletranslator.h"
 
 template <class T>
 class JsonTranslatorFactory
@@ -36,6 +38,15 @@ public:
     static JsonTranslator<Snippet> *create()
     {
         return new JsonSnippetTranslator();
+    }
+};
+
+template <> class JsonTranslatorFactory<Style>
+{
+public:
+    static JsonTranslator<Style> *create()
+    {
+        return new JsonStyleTranslator();
     }
 };
 

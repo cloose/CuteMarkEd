@@ -14,24 +14,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef PRESENTATIONTEMPLATE_H
-#define PRESENTATIONTEMPLATE_H
+#ifndef STYLE_H
+#define STYLE_H
 
-#include "template.h"
+#include <QString>
 
-class PresentationTemplate : public Template
+
+struct Style
 {
-public:
-    PresentationTemplate();
+    QString name;
+    QString markdownHighlighting;
+    QString codeHighlighting;
+    QString previewStylesheet;
+    bool builtIn;
 
-    virtual QString render(const QString &body, RenderOptions options) const;
-    virtual QString exportAsHtml(const QString &header, const QString &body, RenderOptions options) const;
+    Style() : builtIn(false) {}
+    Style(const QString &styleName,
+          const QString &markdown,
+          const QString &code,
+          const QString &preview,
+          bool b) : 
+        name(styleName), 
+        markdownHighlighting(markdown),
+        codeHighlighting(code),
+        previewStylesheet(preview),
+        builtIn(b) 
+    {
+    }
 
-private:
-    QString buildHtmlHeader() const;
-    QString buildRevealPlugins(RenderOptions options) const;
-
-    QString presentationTemplate;
+    bool operator==(const Style &rhs) const
+    {
+        return name == rhs.name;
+    }
 };
 
-#endif // PRESENTATIONTEMPLATE_H
+#endif // STYLE_H
+

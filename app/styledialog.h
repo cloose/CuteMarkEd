@@ -14,24 +14,47 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef PRESENTATIONTEMPLATE_H
-#define PRESENTATIONTEMPLATE_H
+#ifndef STYLEDIALOG_H
+#define STYLEDIALOG_H
 
-#include "template.h"
+#include <QDialog>
 
-class PresentationTemplate : public Template
+namespace Ui {
+class StyleDialog;
+}
+class Styles;
+
+
+class StyleDialog : public QDialog
 {
+    Q_OBJECT
+    
 public:
-    PresentationTemplate();
+    enum DialogMode
+    {
+        AddMode,
+        EditMode,
+        RemoveMode
+    };
 
-    virtual QString render(const QString &body, RenderOptions options) const;
-    virtual QString exportAsHtml(const QString &header, const QString &body, RenderOptions options) const;
+    explicit StyleDialog(DialogMode mode, const QString &styleName, QWidget *parent = 0);
+    ~StyleDialog();
+
+protected:
+    void done(int result);
+
+private slots:
+    void updateOkButtonEnabledState();
 
 private:
-    QString buildHtmlHeader() const;
-    QString buildRevealPlugins(RenderOptions options) const;
+    void addNewStyle();
+    void updateStyle();
+    void removeStyle();
 
-    QString presentationTemplate;
+    Ui::StyleDialog *ui;
+    Styles *styles;
+    DialogMode dialogMode;
 };
 
-#endif // PRESENTATIONTEMPLATE_H
+#endif // STYLEDIALOG_H
+

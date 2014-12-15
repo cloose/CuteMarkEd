@@ -14,24 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef PRESENTATIONTEMPLATE_H
-#define PRESENTATIONTEMPLATE_H
+#ifndef JSONSTYLETRANSLATOR_H
+#define JSONSTYLETRANSLATOR_H
 
-#include "template.h"
+#include "json/jsontranslator.h"
+#include <QJsonObject>
+struct Style;
 
-class PresentationTemplate : public Template
+
+class JsonStyleTranslator : public JsonTranslator<Style>
 {
-public:
-    PresentationTemplate();
-
-    virtual QString render(const QString &body, RenderOptions options) const;
-    virtual QString exportAsHtml(const QString &header, const QString &body, RenderOptions options) const;
-
 private:
-    QString buildHtmlHeader() const;
-    QString buildRevealPlugins(RenderOptions options) const;
-
-    QString presentationTemplate;
+    Style fromJsonObject(const QJsonObject &object);
+    QJsonObject toJsonObject(const Style &style);
 };
 
-#endif // PRESENTATIONTEMPLATE_H
+#endif // JSONSTYLETRANSLATOR_H
+

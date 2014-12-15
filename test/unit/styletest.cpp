@@ -14,34 +14,38 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "jsontranslatorfactorytest.h"
+#include "styletest.h"
 
 #include <QTest>
 
-#include <json/jsontranslator.h>
-#include <json/jsontranslatorfactory.h>
-#include <snippets/snippet.h>
 #include <styles/style.h>
 
-
-void JsonTranslatorFactoryTest::returnsNullIfNoJsonTranslatorExists()
+void StyleTest::isEqualComparable()
 {
-    JsonTranslator<int> *translator = JsonTranslatorFactory<int>::create();
+    Style style1;
+    style1.name = "abc";
+    style1.markdownHighlighting = "markdownHighlighting 1";
 
-    QVERIFY(translator == 0);
+    Style style2;
+    style2.name = "abc";
+    style2.markdownHighlighting = "markdownHighlighting 2";
+
+    Style style3;
+    style3.name = "xyz";
+    style3.markdownHighlighting = "markdownHighlighting 1";
+
+    QCOMPARE(style1 == style1, true);
+    QCOMPARE(style1 == style2, true);
+    QCOMPARE(style1 == style3, false);
 }
 
-void JsonTranslatorFactoryTest::returnsValidJsonTranslatorForSnippets()
+void StyleTest::isInitializedAfterCreation()
 {
-    JsonTranslator<Snippet> *translator = JsonTranslatorFactory<Snippet>::create();
-
-    QVERIFY(translator != 0);
-}
-
-void JsonTranslatorFactoryTest::returnsValidJsonTranslatorForStyles()
-{
-    JsonTranslator<Style> *translator = JsonTranslatorFactory<Style>::create();
-
-    QVERIFY(translator != 0);
+    Style style;
+    QVERIFY(style.name.isNull());
+    QVERIFY(style.markdownHighlighting.isNull());
+    QVERIFY(style.codeHighlighting.isNull());
+    QVERIFY(style.previewStylesheet.isNull());
+    QCOMPARE(style.builtIn, false);
 }
 

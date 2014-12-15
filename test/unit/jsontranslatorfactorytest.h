@@ -26,6 +26,7 @@ class JsonTranslatorFactoryTest : public QObject
 private slots:
     void returnsNullIfNoJsonTranslatorExists();
     void returnsValidJsonTranslatorForSnippets();
+    void returnsValidJsonTranslatorForStyles();
 };
 
 #endif // JSONTRANSLATORFACTORYTEST_H

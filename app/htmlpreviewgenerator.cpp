@@ -103,6 +103,11 @@ void HtmlPreviewGenerator::setCodeHighlightingStyle(const QString &style)
     generateHtmlFromMarkdown();
 }
 
+void HtmlPreviewGenerator::setPreviewStyleSheet(const QString &stylesheet)
+{
+    converter->templateRenderer()->setPreviewStyleSheet(stylesheet);
+}
+
 void HtmlPreviewGenerator::markdownConverterChanged()
 {
     QString style;

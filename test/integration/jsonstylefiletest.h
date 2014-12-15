@@ -14,24 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef PRESENTATIONTEMPLATE_H
-#define PRESENTATIONTEMPLATE_H
+#ifndef JSONSTYLEFILETEST_H
+#define JSONSTYLEFILETEST_H
 
-#include "template.h"
+#include <QObject>
 
-class PresentationTemplate : public Template
+
+class JsonStyleFileTest : public QObject
 {
-public:
-    PresentationTemplate();
+    Q_OBJECT
 
-    virtual QString render(const QString &body, RenderOptions options) const;
-    virtual QString exportAsHtml(const QString &header, const QString &body, RenderOptions options) const;
+private slots:
+    void loadsEmptyStylesCollectionFromFile();
+    void loadsStylesCollectionFromFile();
 
-private:
-    QString buildHtmlHeader() const;
-    QString buildRevealPlugins(RenderOptions options) const;
+    void savesEmptyStylesCollectionToFile();
+    void savesStylesCollectionToFile();
 
-    QString presentationTemplate;
+    void roundtripTest();
 };
 
-#endif // PRESENTATIONTEMPLATE_H
+#endif // JSONSTYLEFILETEST_H
+

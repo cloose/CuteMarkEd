@@ -64,6 +64,7 @@
 #include "optionsdialog.h"
 #include "revealviewsynchronizer.h"
 #include "snippetcompleter.h"
+#include "styles.h"
 #include "tabletooldialog.h"
 
 MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
@@ -71,6 +72,8 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     ui(new Ui::MainWindow),
     options(new Options(this)),
     diskCache(new QNetworkDiskCache(this)),
+    htmlPreviewStylesGroup(0),
+    presentationStylesGroup(0),
     zoomInAction(0),
     zoomOutAction(0),
     zoomResetAction(0),
@@ -80,6 +83,7 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     generator(new HtmlPreviewGenerator(options, this)),
     snippetCollection(new SnippetCollection(this)),
     viewSynchronizer(0),
+    styles(new Styles()),
     splitFactor(0.5),
     rightViewCollapsed(false)
 {
@@ -146,9 +150,14 @@ void MainWindow::initializeApp()
     connect(ui->webView, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(webViewContextMenu(QPoint)));
 
-    // set default style
-    styleDefault();
+    loadBuiltinStyles();
 
+    // set default style
+    Style defaultStyle = styles->style("Default");
+    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(defaultStyle));
+    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(defaultStyle));
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(defaultStyle)));
+    
     ui->plainTextEdit->tabWidthChanged(options->tabWidth());
 
     // init extension flags
@@ -488,83 +497,25 @@ void MainWindow::viewChangeSplit()
     }
 }
 
-void MainWindow::styleDefault()
+void MainWindow::styleBuiltinStyle()
 {
-    generator->setCodeHighlightingStyle("default");
+    QAction *action = qobject_cast<QAction*>(sender());
+    Style style = styles->style(action->data().toString());
+    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(style));
+    generator->setPreviewStyleSheet(styles->pathForPreviewStylesheet(style));
 
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/markdown.css"));
-
-    styleLabel->setText(ui->actionDefault->text());
-}
-
-void MainWindow::styleGithub()
-{
-    generator->setCodeHighlightingStyle("github");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/github.css"));
-
-    styleLabel->setText(ui->actionGithub->text());
-}
-
-void MainWindow::styleSolarizedLight()
-{
-    generator->setCodeHighlightingStyle("solarized_light");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-light+.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-light.css"));
-
-    styleLabel->setText(ui->actionSolarizedLight->text());
-}
-
-void MainWindow::styleSolarizedDark()
-{
-    generator->setCodeHighlightingStyle("solarized_dark");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-dark+.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-dark.css"));
-
-    styleLabel->setText(ui->actionSolarizedDark->text());
-}
-
-void MainWindow::styleClearness()
-{
-    generator->setCodeHighlightingStyle("default");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness.css"));
-
-    styleLabel->setText(ui->actionClearness->text());
-}
-
-void MainWindow::styleClearnessDark()
-{
-    generator->setCodeHighlightingStyle("default");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/clearness-dark+.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness-dark.css"));
-
-    styleLabel->setText(ui->actionClearnessDark->text());
-}
-
-void MainWindow::styleBywordDark()
-{
-    generator->setCodeHighlightingStyle("default");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/byword-dark.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/byword-dark.css"));
-
-    styleLabel->setText(ui->actionBywordDark->text());
+    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(style));
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(styles->pathForPreviewStylesheet(style)));
 }
 
 void MainWindow::styleCustomStyle()
 {
     QAction *action = qobject_cast<QAction*>(sender());
 
-    generator->setCodeHighlightingStyle("default");
+    Style defaultStyle = Style("Custom", "Default", "Default", "Default", false);
+    generator->setCodeHighlightingStyle(styles->pathForCodeHighlighting(defaultStyle));
 
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
+    ui->plainTextEdit->loadStyleFromStylesheet(styles->pathForMarkdownHighlighting(defaultStyle));
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl::fromLocalFile(action->data().toString()));
 
     styleLabel->setText(action->text());
@@ -723,7 +674,7 @@ void MainWindow::helpAbout()
 void MainWindow::styleContextMenu(const QPoint &pos)
 {
     QMenu *menu = new QMenu();
-    menu->addActions(stylesGroup->actions());
+    menu->addActions(htmlPreviewStylesGroup->actions());
 
     menu->exec(styleLabel->mapToGlobal(pos));
 }
@@ -932,9 +883,11 @@ void MainWindow::markdownConverterChanged()
         viewSynchronizer = new HtmlViewSynchronizer(ui->webView, ui->plainTextEdit);
         connect(generator, SIGNAL(htmlResultReady(QString)),
                 viewSynchronizer, SLOT(rememberScrollBarPos()));
+        loadBuiltinStyles();
         break;
     case Options::RevealMarkdownConverter:
         viewSynchronizer = new RevealViewSynchronizer(ui->webView, ui->plainTextEdit);
+        setupPresentationStyles();
         break;
     default:
         viewSynchronizer = 0;
@@ -1052,16 +1005,6 @@ void MainWindow::setupActions()
             generator, SLOT(setCodeHighlightingEnabled(bool)));
     connect(ui->menuLanguages, SIGNAL(languageTriggered(Dictionary)),
             this, SLOT(languageChanged(Dictionary)));
-
-    // put style actions in a group
-    stylesGroup = new QActionGroup(this);
-    ui->actionDefault->setActionGroup(stylesGroup);
-    ui->actionGithub->setActionGroup(stylesGroup);
-    ui->actionSolarizedLight->setActionGroup(stylesGroup);
-    ui->actionSolarizedDark->setActionGroup(stylesGroup);
-    ui->actionClearness->setActionGroup(stylesGroup);
-    ui->actionClearnessDark->setActionGroup(stylesGroup);
-    ui->actionBywordDark->setActionGroup(stylesGroup);
 
     // help menu
     ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);
@@ -1260,6 +1203,46 @@ void MainWindow::updateSplitter()
     ui->splitter->setSizes(childSizes);
 }
 
+void MainWindow::setupPresentationStyles()
+{
+    ui->menuStyles->clear();
+
+    // put style actions in a group
+    delete presentationStylesGroup;
+    presentationStylesGroup = new QActionGroup(this);
+
+    int key = 1;
+    foreach(const QString &styleName, styles->presentationStyleNames()) {
+        QAction *action = ui->menuStyles->addAction(styleName);
+        action->setShortcut(QKeySequence(tr("Ctrl+%1").arg(key++)));
+        action->setCheckable(true);
+        action->setActionGroup(presentationStylesGroup);
+        action->setData(styleName);
+        connect(action, SIGNAL(triggered()),
+                this, SLOT(styleBuiltinStyle()));
+    }
+}
+
+void MainWindow::loadBuiltinStyles()
+{
+    ui->menuStyles->clear();
+
+    // put style actions in a group
+    delete htmlPreviewStylesGroup;
+    htmlPreviewStylesGroup = new QActionGroup(this);
+
+    int key = 1;
+    foreach(const QString &styleName, styles->htmlPreviewStyleNames()) {
+        QAction *action = ui->menuStyles->addAction(styleName);
+        action->setShortcut(QKeySequence(tr("Ctrl+%1").arg(key++)));
+        action->setCheckable(true);
+        action->setActionGroup(htmlPreviewStylesGroup);
+        action->setData(styleName);
+        connect(action, SIGNAL(triggered()),
+                this, SLOT(styleBuiltinStyle()));
+    }
+}
+
 void MainWindow::loadCustomStyles()
 {
     QStringList paths = DataLocation::standardLocations();
@@ -1277,7 +1260,7 @@ void MainWindow::loadCustomStyles()
             QString fileName = it.fileName();
             QAction *action = ui->menuStyles->addAction(QFileInfo(fileName).baseName());
             action->setCheckable(true);
-            action->setActionGroup(stylesGroup);
+            action->setActionGroup(htmlPreviewStylesGroup);
             action->setData(it.filePath());
 
             connect(action, SIGNAL(triggered()),

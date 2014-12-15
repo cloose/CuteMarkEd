@@ -23,6 +23,10 @@
 #include "snippetcollectiontest.h"
 #include "snippetlistmodeltest.h"
 #include "snippettest.h"
+#include "jsonstyletranslatortest.h"
+#include "styletest.h"
+#include "stylecollectiontest.h"
+#include "jsontranslatorfactorytest.h"
 
 int main(int argc, char *argv[])
 {
@@ -46,8 +50,17 @@ int main(int argc, char *argv[])
     SlideLineMappingTest test6;
     ret += QTest::qExec(&test6, argc, argv);
 
-    JsonTranslatorFactoryTest test7;
+    JsonStyleTranslatorTest test7;
     ret += QTest::qExec(&test7, argc, argv);
+
+    StyleTest test8;
+    ret += QTest::qExec(&test8, argc, argv);
+
+    StyleCollectionTest test9;
+    ret += QTest::qExec(&test9, argc, argv);
+
+    JsonTranslatorFactoryTest test10;
+    ret += QTest::qExec(&test10, argc, argv);
 
     return ret;
 }
