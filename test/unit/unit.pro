@@ -20,8 +20,7 @@ SOURCES += \
     dictionarytest.cpp \
     jsonstyletranslatortest.cpp \
     styletest.cpp \
-    stylecollectiontest.cpp \
-    jsontranslatorfactorytest.cpp
+    stylecollectiontest.cpp 
 
 HEADERS += \
     snippettest.h \
@@ -33,8 +32,7 @@ HEADERS += \
     dictionarytest.h \
     jsonstyletranslatortest.h \
     styletest.h \
-    stylecollectiontest.h \
-    jsontranslatorfactorytest.h
+    stylecollectiontest.h 
 
 target.CONFIG += no_default_install
 
