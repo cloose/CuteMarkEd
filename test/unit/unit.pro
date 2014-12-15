@@ -13,6 +13,7 @@ SOURCES += \
     main.cpp \
     snippettest.cpp \
     jsonsnippettranslatortest.cpp \
+    jsontranslatorfactorytest.cpp \
     slidelinemappingtest.cpp \
     snippetcollectiontest.cpp \
     snippetlistmodeltest.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
 HEADERS += \
     snippettest.h \
     jsonsnippettranslatortest.h \
+    jsontranslatorfactorytest.h \
     slidelinemappingtest.h \
     snippetcollectiontest.h \
     snippetlistmodeltest.h \

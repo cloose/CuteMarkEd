@@ -29,6 +29,10 @@ SOURCES += \
     styles.cpp 
 
 HEADERS += \
+    json/jsoncollection.h \
+    json/jsonfile.h \
+    json/jsontranslator.h \
+    json/jsontranslatorfactory.h \
     snippets/snippet.h \
     snippets/jsonsnippettranslator.h \
     snippets/snippetcollection.h \

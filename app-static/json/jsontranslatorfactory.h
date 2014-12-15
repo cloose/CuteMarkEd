@@ -25,7 +25,6 @@
 #include "styles/style.h"
 #include "styles/jsonstyletranslator.h"
 
-
 template <class T>
 class JsonTranslatorFactory
 {
