@@ -140,6 +140,11 @@ QMAKE_EXTRA_COMPILERS += lrelease
 ## DEPENDENCIES
 ###################################################################################################
 
+#
+# JSON configuration library
+#
+INCLUDEPATH += $$PWD/../libs/jsonconfig
+
 # Use internal static library: app-static
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../app-static/release/ -lapp-static
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../app-static/debug/ -lapp-static

@@ -20,7 +20,7 @@
 #include <QTemporaryFile>
 #include <QTextStream>
 
-#include <json/jsonfile.h>
+#include <jsonfile.h>
 #include <snippets/snippetcollection.h>
 
 void JsonSnippetFileTest::loadsEmptySnippetsCollectionFromFile()

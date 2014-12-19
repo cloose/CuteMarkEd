@@ -44,7 +44,7 @@
 #include <QWinJumpListCategory>
 #endif
 
-#include <json/jsonfile.h>
+#include <jsonfile.h>
 #include <snippets/snippetcollection.h>
 #include <spellchecker/dictionary.h>
 #include <datalocation.h>

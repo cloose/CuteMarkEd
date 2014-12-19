@@ -23,6 +23,11 @@ HEADERS += \
 
 target.CONFIG += no_default_install
 
+#
+# JSON configuration library
+#
+INCLUDEPATH += $$PWD/../../libs/jsonconfig
+
 ##################################################
 # Use internal static library: app-static
 ##################################################
