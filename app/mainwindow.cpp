@@ -45,6 +45,7 @@
 #endif
 
 #include <jsonfile.h>
+#include <snippets/jsonsnippettranslatorfactory.h>
 #include <snippets/snippetcollection.h>
 #include <spellchecker/dictionary.h>
 #include <datalocation.h>

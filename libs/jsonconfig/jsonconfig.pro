@@ -1,5 +1,5 @@
 #
-# Application Static Libary Project for CuteMarkEd
+# JSON Configuration Module Libary Project for CuteMarkEd
 #
 # Github : https://github.com/cloose/CuteMarkEd
 #

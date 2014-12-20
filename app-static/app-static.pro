@@ -28,6 +28,7 @@ SOURCES += \
 HEADERS += \
     snippets/snippet.h \
     snippets/jsonsnippettranslator.h \
+    snippets/jsonsnippettranslatorfactory.h \
     snippets/snippetcollection.h \
     snippets/snippetlistmodel.h \
     converter/markdownconverter.h \

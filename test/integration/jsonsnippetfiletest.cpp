@@ -21,6 +21,7 @@
 #include <QTextStream>
 
 #include <jsonfile.h>
+#include <snippets/jsonsnippettranslatorfactory.h>
 #include <snippets/snippetcollection.h>
 
 void JsonSnippetFileTest::loadsEmptySnippetsCollectionFromFile()

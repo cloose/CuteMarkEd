@@ -20,6 +20,7 @@
 
 #include <jsontranslator.h>
 #include <jsontranslatorfactory.h>
+#include <snippets/jsonsnippettranslatorfactory.h>
 #include <snippets/snippet.h>
 
 

@@ -14,18 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef JSONTRANSLATORFACTORY_H
-#define JSONTRANSLATORFACTORY_H
+#ifndef JSONSNIPPETTRANSLATORFACTORY_H
+#define JSONSNIPPETTRANSLATORFACTORY_H
 
-#include "jsontranslator.h"
+#include <jsontranslatorfactory.h>
+#include <jsontranslator.h>
+
+#include "snippets/snippet.h"
+#include "snippets/jsonsnippettranslator.h"
 
 
-template <class T>
-class JsonTranslatorFactory
+template <> class JsonTranslatorFactory<Snippet>
 {
 public:
-    static JsonTranslator<T> *create() { return 0; }
+    static JsonTranslator<Snippet> *create()
+    {
+        return new JsonSnippetTranslator();
+    }
 };
 
-#endif // JSONTRANSLATORFACTORY_H
+#endif // JSONSNIPPETTRANSLATORFACTORY_H
 
