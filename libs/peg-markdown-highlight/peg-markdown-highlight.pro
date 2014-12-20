@@ -4,14 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       -= core gui
+QT -= core gui
 
-win32-msvc* {
-TARGET = libpmh
-} else {
 TARGET = pmh
-}
-
 TEMPLATE = lib
 CONFIG += staticlib
 
@@ -24,11 +19,3 @@ HEADERS += \
     pmh_parser.h \
     pmh_definitions.h
 
-#unix:!symbian {
-#    maemo5 {
-#        target.path = /opt/usr/lib
-#    } else {
-#        target.path = /usr/lib
-#    }
-#    INSTALLS += target
-#}

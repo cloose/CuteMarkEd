@@ -1,4 +1,6 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    jsonconfig
+    jsonconfig \
+    peg-markdown-highlight
+
