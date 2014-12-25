@@ -192,7 +192,7 @@
     </property>
     <widget class="QMenu" name="menuFormat">
      <property name="title">
-      <string>Format</string>
+      <string>F&amp;ormat</string>
      </property>
      <addaction name="actionStrong"/>
      <addaction name="actionEmphasize"/>
@@ -206,7 +206,7 @@
     </widget>
     <widget class="QMenu" name="menuFindReplace">
      <property name="title">
-      <string>Find/Replace</string>
+      <string>&amp;Find/Replace</string>
      </property>
      <addaction name="actionFindReplace"/>
      <addaction name="actionFindNext"/>
@@ -256,7 +256,7 @@
     </property>
     <widget class="QMenu" name="menuStyles">
      <property name="title">
-      <string>Styles</string>
+      <string>St&amp;yles</string>
      </property>
      <addaction name="actionDefault"/>
      <addaction name="actionGithub"/>
@@ -268,7 +268,7 @@
     </widget>
     <widget class="QMenu" name="menuMarkdown_Extensions">
      <property name="title">
-      <string>Markdown Extensions</string>
+      <string>Markdown E&amp;xtensions</string>
      </property>
      <addaction name="actionAutolink"/>
      <addaction name="actionStrikethroughOption"/>
@@ -280,7 +280,7 @@
     </widget>
     <widget class="LanguageMenu" name="menuLanguages">
      <property name="title">
-      <string>Languages</string>
+      <string>&amp;Languages</string>
      </property>
     </widget>
     <addaction name="actionMathSupport"/>
@@ -476,12 +476,12 @@
   </action>
   <action name="actionExportToHTML">
    <property name="text">
-    <string>Export to HTML...</string>
+    <string>Export to &amp;HTML...</string>
    </property>
   </action>
   <action name="actionExportToPDF">
    <property name="text">
-    <string>Export to PDF...</string>
+    <string>&amp;Export to PDF...</string>
    </property>
   </action>
   <action name="actionSplit_1_1">
@@ -511,7 +511,7 @@
   </action>
   <action name="actionCopyHtmlToClipboard">
    <property name="text">
-    <string>Copy HTML to Clipboard</string>
+    <string>Copy &amp;HTML to Clipboard</string>
    </property>
   </action>
   <action name="actionCut">
@@ -559,7 +559,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Math Support</string>
+    <string>&amp;Math Support</string>
    </property>
   </action>
   <action name="actionCodeHighlighting">
@@ -567,7 +567,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Code Highlighting</string>
+    <string>Code &amp;Highlighting</string>
    </property>
   </action>
   <action name="actionClearness">
@@ -599,7 +599,7 @@
   </action>
   <action name="actionGotoLine">
    <property name="text">
-    <string>Go to Line</string>
+    <string>Go to &amp;Line</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+L</string>
@@ -633,7 +633,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Full Screen Mode</string>
+    <string>&amp;Full Screen Mode</string>
    </property>
   </action>
   <action name="actionBlockquote">
@@ -646,12 +646,12 @@
   </action>
   <action name="actionMarkdownSyntax">
    <property name="text">
-    <string>Markdown Syntax</string>
+    <string>&amp;Markdown Syntax</string>
    </property>
   </action>
   <action name="actionHtmlPreview">
    <property name="text">
-    <string>HTML preview</string>
+    <string>HTML &amp;Preview</string>
    </property>
    <property name="shortcut">
     <string>F5</string>
@@ -662,12 +662,12 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string extracomment="Option to show characters like line feed or tabs">Show Special Characters</string>
+    <string extracomment="Option to show characters like line feed or tabs">&amp;Show Special Characters</string>
    </property>
   </action>
   <action name="actionOptions">
    <property name="text">
-    <string>Options...</string>
+    <string>&amp;Options...</string>
    </property>
   </action>
   <action name="actionAutolink">
@@ -720,7 +720,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Check Spelling</string>
+    <string>&amp;Check Spelling</string>
    </property>
   </action>
   <action name="actionIncreaseHeaderLevel">
@@ -757,7 +757,7 @@
   </action>
   <action name="actionInsertImage">
    <property name="text">
-    <string>Insert Image...</string>
+    <string>Insert &amp;Image...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+I</string>
@@ -768,7 +768,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Horizontal Layout</string>
+    <string>&amp;Horizontal Layout</string>
    </property>
   </action>
   <action name="actionFootnotes">
@@ -795,7 +795,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Word Wrap</string>
+    <string>&amp;Word Wrap</string>
    </property>
   </action>
  </widget>
