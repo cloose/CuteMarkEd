@@ -36,6 +36,9 @@ private slots:
     void supportsSuperscriptIfEnabled();
     void ignoresSuperscriptIfDisabled();
 
+    void benchmark_data();
+    void benchmark();
+
     void cleanupTestCase();
 
 private:
