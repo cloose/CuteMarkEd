@@ -16,7 +16,6 @@
  */
 #include "completionlistmodel.h"
 
-#include <QDebug>
 #include <QFont>
 #include <QIcon>
 
@@ -36,7 +35,7 @@ QVariant CompletionListModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
 
-    if (index.row() > rowCount()/*snippets.count()*/)
+    if (index.row() > rowCount())
         return QVariant();
 
     if (index.row() < snippets.count()) {
@@ -64,7 +63,6 @@ QVariant CompletionListModel::data(const QModelIndex &index, int role) const
                 break;
         }
     } else {
-        qDebug() << "data() WORD" << index.row() << (index.row() - snippets.count());
         switch (role) {
             case Qt::DisplayRole:
             case Qt::EditRole:
@@ -77,7 +75,6 @@ QVariant CompletionListModel::data(const QModelIndex &index, int role) const
 
 void CompletionListModel::setWords(const QStringList &words)
 {
-    qDebug() << "SET WORDS" << snippets.count() << snippets.count() + words.count();
     beginInsertRows(QModelIndex(), snippets.count(), snippets.count() + words.count());
     this->words = words;
     endInsertRows();
