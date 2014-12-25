@@ -14,38 +14,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SNIPPETCOMPLETER_H
-#define SNIPPETCOMPLETER_H
+#ifndef COMPLETIONLISTMODEL_H
+#define COMPLETIONLISTMODEL_H
 
-#include <QObject>
+#include <QAbstractListModel>
+#include <snippets/snippetcollection.h>
+struct Snippet;
 
-class QCompleter;
-class SnippetCollection;
 
-
-class SnippetCompleter : public QObject
+class CompletionListModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    explicit SnippetCompleter(SnippetCollection *collection, QWidget *parentWidget);
+    explicit CompletionListModel(QObject *parent = 0);
 
-    void performCompletion(const QString &textUnderCursor, const QStringList &words, const QRect &popupRect);
+    int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
 
-    bool isPopupVisible() const;
-    void hidePopup();
+    void setWords(const QStringList &words);
 
-signals:
-    void snippetSelected(const QString &trigger, const QString &snippetContent, int newCursorPos);
-
-private slots:
-    void insertSnippet(const QString &trigger);
+public slots:
+    void snippetCollectionChanged(SnippetCollection::CollectionChangedType changedType, const Snippet &snippet);
 
 private:
-    void replaceClipboardVariable(QString &snippetContent);
-
-private:
-    SnippetCollection *snippetCollection;
-    QCompleter *completer;
+    QList<Snippet> snippets;
+    QStringList words;
 };
 
-#endif // SNIPPETCOMPLETER_H
+#endif // COMPLETIONLISTMODEL_H

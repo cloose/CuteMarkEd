@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -315,7 +315,8 @@ void MarkdownEditor::performCompletion()
     QRect popupRect = cursorRect();
     popupRect.setLeft(popupRect.left() + lineNumberAreaWidth());
 
-    completer->performCompletion(textUnderCursor(), popupRect);
+    QStringList words = extractDistinctWordsFromDocument();
+    completer->performCompletion(textUnderCursor(), words, popupRect);
 }
 
 void MarkdownEditor::insertSnippet(const QString &completionPrefix, const QString &completion, int newCursorPos)
@@ -509,4 +510,41 @@ QString MarkdownEditor::textUnderCursor() const
 
 
     return cursor.selectedText();
+}
+
+bool GreaterThanMinimumWordLength(const QString &word)
+{
+    static const int MINIMUM_WORD_LENGTH = 3;
+    return word.length() > MINIMUM_WORD_LENGTH;
+}
+
+QStringList MarkdownEditor::extractDistinctWordsFromDocument() const
+{
+    QStringList allWords = retrieveAllWordsFromDocument();
+    allWords.removeDuplicates();
+
+    QStringList words = filterWordList(allWords, GreaterThanMinimumWordLength);
+    words.sort(Qt::CaseInsensitive);
+
+    return words;
+}
+
+QStringList MarkdownEditor::retrieveAllWordsFromDocument() const
+{
+    return toPlainText().split(QRegExp("\\W+"), QString::SkipEmptyParts);
+}
+
+template <class UnaryPredicate>
+QStringList MarkdownEditor::filterWordList(const QStringList &words, UnaryPredicate predicate) const
+{
+    QStringList filteredWordList;
+
+    foreach (const QString &word, words) {
+        if (predicate(word))
+        {
+           filteredWordList << word; 
+        }
+    }
+
+    return filteredWordList;
 }
