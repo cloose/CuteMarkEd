@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,13 +46,11 @@ SnippetCompleter::SnippetCompleter(SnippetCollection *collection, QWidget *paren
     completer->setModel(model);
 }
 
-#include <QDebug>
 void SnippetCompleter::performCompletion(const QString &textUnderCursor, const QStringList &words, const QRect &popupRect)
 {
     const QString completionPrefix = textUnderCursor;
 
     // TODO: find more elegant solution
-    qDebug() << words.size() << words;
     qobject_cast<CompletionListModel*>(completer->model())->setWords(words);
 
     if (completionPrefix != completer->completionPrefix()) {
@@ -82,11 +80,8 @@ void SnippetCompleter::hidePopup()
 
 void SnippetCompleter::insertSnippet(const QString &trigger)
 {
-    qDebug() << "INSERT SNIPPET" << trigger;
-    if (!snippetCollection/* || !snippetCollection->contains(trigger)*/)
-        return;
-
-    if (!snippetCollection->contains(trigger)) {
+    if (!snippetCollection || !snippetCollection->contains(trigger)) {
+        // insert word directly
         emit snippetSelected(completer->completionPrefix(), trigger, trigger.length());
         return;
     }
