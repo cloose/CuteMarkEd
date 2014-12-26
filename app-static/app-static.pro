@@ -13,7 +13,6 @@ CONFIG += staticlib
 SOURCES += \
     snippets/jsonsnippettranslator.cpp \
     snippets/snippetcollection.cpp \
-    snippets/snippetlistmodel.cpp \
     converter/discountmarkdownconverter.cpp \
     spellchecker/dictionary.cpp \
     converter/revealmarkdownconverter.cpp \
@@ -31,7 +30,6 @@ HEADERS += \
     snippets/jsonsnippettranslator.h \
     snippets/jsonsnippettranslatorfactory.h \
     snippets/snippetcollection.h \
-    snippets/snippetlistmodel.h \
     converter/markdownconverter.h \
     converter/markdowndocument.h \
     converter/discountmarkdownconverter.h \

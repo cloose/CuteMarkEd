@@ -11,21 +11,21 @@ CONFIG += console testcase
 
 SOURCES += \
     main.cpp \
+    completionlistmodeltest.cpp \
     snippettest.cpp \
     jsonsnippettranslatortest.cpp \
     jsontranslatorfactorytest.cpp \
     slidelinemappingtest.cpp \
     snippetcollectiontest.cpp \
-    snippetlistmodeltest.cpp \
     dictionarytest.cpp
 
 HEADERS += \
+    completionlistmodeltest.h \
     snippettest.h \
     jsonsnippettranslatortest.h \
     jsontranslatorfactorytest.h \
     slidelinemappingtest.h \
     snippetcollectiontest.h \
-    snippetlistmodeltest.h \
     dictionarytest.h
 
 target.CONFIG += no_default_install

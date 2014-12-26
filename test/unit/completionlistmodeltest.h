@@ -1,13 +1,13 @@
-#ifndef SNIPPETLISTMODELTEST_H
-#define SNIPPETLISTMODELTEST_H
+#ifndef COMPLETIONLISTMODELTEST_H
+#define COMPLETIONLISTMODELTEST_H
 
 #include <QObject>
 
 struct Snippet;
-class SnippetListModel;
+class CompletionListModel;
 
 
-class SnippetListModelTest : public QObject
+class CompletionListModelTest : public QObject
 {
     Q_OBJECT
     
@@ -22,7 +22,7 @@ private:
     QVariant itemValue(int row, int role);
 
 private:
-    SnippetListModel *model;
+    CompletionListModel *model;
 };
 
-#endif // SNIPPETLISTMODELTEST_H
+#endif // COMPLETIONLISTMODELTEST_H

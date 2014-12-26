@@ -21,7 +21,7 @@
 #include "jsontranslatorfactorytest.h"
 #include "slidelinemappingtest.h"
 #include "snippetcollectiontest.h"
-#include "snippetlistmodeltest.h"
+#include "completionlistmodeltest.h"
 #include "snippettest.h"
 
 int main(int argc, char *argv[])
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     SnippetCollectionTest test3;
     ret += QTest::qExec(&test3, argc, argv);
 
-    SnippetListModelTest test4;
+    CompletionListModelTest test4;
     ret += QTest::qExec(&test4, argc, argv);
 
     DictionaryTest test5;

@@ -24,7 +24,6 @@
 
 #include <snippets/snippet.h>
 #include <snippets/snippetcollection.h>
-#include <snippets/snippetlistmodel.h>
 #include <completionlistmodel.h>
 
 
