@@ -26,7 +26,13 @@ void DictionaryTest::returnsLanguageNameForLanguageCode()
     QCOMPARE(german.languageName(), QStringLiteral("Deutsch"));
 
     Dictionary americanEnglish("en_US", "");
+// Qt 5.3 and higher uses at least CLDR v24 which introduced long/short
+// names for english language variantes
+#if QT_VERSION < QT_VERSION_CHECK(5, 3, 0)
     QCOMPARE(americanEnglish.languageName(), QStringLiteral("U.S. English"));
+#else
+    QCOMPARE(americanEnglish.languageName(), QStringLiteral("American English"));
+#endif
 }
 
 void DictionaryTest::returnsCountryNameForLanguage()
