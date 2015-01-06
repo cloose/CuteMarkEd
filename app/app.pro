@@ -56,7 +56,8 @@ SOURCES += \
     tabletooldialog.cpp \
     imagetooldialog.cpp \
     snippetcompleter.cpp \
-    aboutdialog.cpp
+    aboutdialog.cpp \
+    htmlpreviewcontroller.cpp
 
 win32 {
     SOURCES += \
@@ -90,7 +91,8 @@ HEADERS  += \
     tabletooldialog.h \
     imagetooldialog.h \
     snippetcompleter.h \
-    aboutdialog.h
+    aboutdialog.h \
+    htmlpreviewcontroller.h
 
 FORMS    += \
     mainwindow.ui \

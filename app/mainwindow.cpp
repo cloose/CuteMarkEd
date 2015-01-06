@@ -54,6 +54,7 @@
 #include "controls/languagemenu.h"
 #include "controls/recentfilesmenu.h"
 #include "aboutdialog.h"
+#include "htmlpreviewcontroller.h"
 #include "htmlpreviewgenerator.h"
 #include "htmlviewsynchronizer.h"
 #include "htmlhighlighter.h"
@@ -81,6 +82,7 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     generator(new HtmlPreviewGenerator(options, this)),
     snippetCollection(new SnippetCollection(this)),
     viewSynchronizer(0),
+    htmlPreviewController(0),
     splitFactor(0.5),
     rightViewCollapsed(false)
 {
@@ -756,21 +758,6 @@ void MainWindow::toggleHtmlView()
     updateSplitter();
 }
 
-void MainWindow::webViewZoomIn()
-{
-    ui->webView->setZoomFactor(ui->webView->zoomFactor() + 0.1);
-}
-
-void MainWindow::webViewZoomOut()
-{
-    ui->webView->setZoomFactor(ui->webView->zoomFactor() - 0.1);
-}
-
-void MainWindow::webViewResetZoom()
-{
-    ui->webView->setZoomFactor(1.0);
-}
-
 void MainWindow::plainTextChanged()
 {
     QString code = ui->plainTextEdit->toPlainText();
@@ -945,6 +932,8 @@ void MainWindow::markdownConverterChanged()
 
 void MainWindow::setupUi()
 {
+    htmlPreviewController = new HtmlPreviewController(ui->webView, this);
+
     setupActions();
     setupStatusBar();
     setupMarkdownEditor();
@@ -1072,17 +1061,20 @@ void MainWindow::setupActions()
     // zoom actions for html view
     zoomInAction = new QAction(tr("Zoom &In"), this);
     zoomInAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Plus));
-    connect(zoomInAction, SIGNAL(triggered()), this, SLOT(webViewZoomIn()));
+    connect(zoomInAction, SIGNAL(triggered()), 
+            htmlPreviewController, SLOT(zoomInView()));
     ui->webView->addAction(zoomInAction);
 
     zoomOutAction = new QAction(tr("Zoom &Out"), this);
     zoomOutAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
-    connect(zoomOutAction, SIGNAL(triggered()), this, SLOT(webViewZoomOut()));
+    connect(zoomOutAction, SIGNAL(triggered()),
+            htmlPreviewController, SLOT(zoomOutView()));
     ui->webView->addAction(zoomOutAction);
 
     zoomResetAction = new QAction(tr("Reset &Zoom"), this);
     zoomResetAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_0));
-    connect(zoomResetAction, SIGNAL(triggered()), this, SLOT(webViewResetZoom()));
+    connect(zoomResetAction, SIGNAL(triggered()),
+            htmlPreviewController, SLOT(resetZoomOfView()));
     ui->webView->addAction(zoomResetAction);
 
     // set names for dock widget actions
