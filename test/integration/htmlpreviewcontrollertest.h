@@ -14,27 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef HTMLPREVIEWCONTROLLER_H
-#define HTMLPREVIEWCONTROLLER_H
+#ifndef HTMLPREVIEWCONTROLLERTEST_H
+#define HTMLPREVIEWCONTROLLERTEST_H
 
 #include <QObject>
-
 class QWebView;
+class HtmlPreviewController;
 
-class HtmlPreviewController : public QObject
+class HtmlPreviewControllerTest : public QObject
 {
     Q_OBJECT
-public:
-    explicit HtmlPreviewController(QWebView *view, QObject *parent = 0);
 
-public slots:
-    void zoomInView();
-    void zoomOutView();
-    void resetZoomOfView();
+private slots:
+    void initTestCase();
+    void cleanupTestCase();
+
+    void increasesZoomFactorOnZoomIn();
+    void decreasesZoomFactorOnZoomOut();
+    void resetsZoomFactorOnZoomReset();
 
 private:
-    QWebView *view;
+    QWebView *webView;
+    HtmlPreviewController *controller;
 };
 
-#endif // HTMLPREVIEWCONTROLLER_H
+#endif // HTMLPREVIEWCONTROLLERTEST_H
 
