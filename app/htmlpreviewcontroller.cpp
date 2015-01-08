@@ -16,14 +16,53 @@
  */
 #include "htmlpreviewcontroller.h"
 
+#include <QAction>
 #include <QWebView>
 
 static const qreal ZOOM_CHANGE_VALUE = 0.1;
 
 HtmlPreviewController::HtmlPreviewController(QWebView *view, QObject *parent) :
     QObject(parent),
-    view(view)
+    view(view),
+    zoomInAction(0),
+    zoomOutAction(0),
+    zoomResetAction(0)
 {
+    createActions();
+    registerActionsWithView();
+
+    // use registered actions as custom context menu
+    view->setContextMenuPolicy(Qt::ActionsContextMenu);
+}
+
+void HtmlPreviewController::createActions()
+{
+    zoomInAction = createAction(tr("Zoom &In"), QKeySequence(Qt::CTRL | Qt::Key_Plus));
+    connect(zoomInAction, SIGNAL(triggered()), 
+            this, SLOT(zoomInView()));
+
+    zoomOutAction = createAction(tr("Zoom &Out"), QKeySequence(Qt::CTRL | Qt::Key_Minus));
+    connect(zoomOutAction, SIGNAL(triggered()),
+            this, SLOT(zoomOutView()));
+
+    zoomResetAction = createAction(tr("Reset &Zoom"), QKeySequence(Qt::CTRL | Qt::Key_0));
+    connect(zoomResetAction, SIGNAL(triggered()),
+            this, SLOT(resetZoomOfView()));
+}
+
+QAction *HtmlPreviewController::createAction(const QString &text, const QKeySequence &shortcut)
+{
+    QAction *action = new QAction(text, this);
+    action->setShortcut(shortcut);
+    return action;
+}
+
+void HtmlPreviewController::registerActionsWithView()
+{
+    view->addAction(view->pageAction(QWebPage::Copy));
+    view->addAction(zoomInAction);
+    view->addAction(zoomOutAction);
+    view->addAction(zoomResetAction);
 }
 
 void HtmlPreviewController::zoomInView()
@@ -40,3 +79,4 @@ void HtmlPreviewController::resetZoomOfView()
 {
     view->setZoomFactor(1.0);
 }
+

@@ -33,6 +33,10 @@ private slots:
     void decreasesZoomFactorOnZoomOut();
     void resetsZoomFactorOnZoomReset();
 
+    void zoomsInOnCtrlPlusKeyPress();
+    void zoomsOutOnCtrlMinusKeyPress();
+    void resetsZoomOnCtrlZeroKeyPress();
+
 private:
     QWebView *webView;
     HtmlPreviewController *controller;

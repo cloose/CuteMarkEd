@@ -49,9 +49,6 @@ public:
     explicit MainWindow(const QString &fileName = QString(), QWidget *parent = 0);
     ~MainWindow();
 
-public slots:
-    void webViewContextMenu(const QPoint &pos);
-
 protected:
     void closeEvent(QCloseEvent *e) Q_DECL_OVERRIDE;
     void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
@@ -154,9 +151,6 @@ private:
     Options *options;
     QNetworkDiskCache *diskCache;
     QActionGroup *stylesGroup;
-    QAction *zoomInAction;
-    QAction *zoomOutAction;
-    QAction *zoomResetAction;
     QLabel *styleLabel;
     QLabel *wordCountLabel;
     ActiveLabel *viewLabel;

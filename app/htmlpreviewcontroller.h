@@ -19,6 +19,7 @@
 
 #include <QObject>
 
+class QAction;
 class QWebView;
 
 class HtmlPreviewController : public QObject
@@ -33,7 +34,15 @@ public slots:
     void resetZoomOfView();
 
 private:
+    void createActions();
+    QAction *createAction(const QString &text, const QKeySequence &shortcut);
+    void registerActionsWithView();
+    
+private:
     QWebView *view;
+    QAction *zoomInAction;
+    QAction *zoomOutAction;
+    QAction *zoomResetAction;
 };
 
 #endif // HTMLPREVIEWCONTROLLER_H

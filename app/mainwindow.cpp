@@ -73,9 +73,6 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     ui(new Ui::MainWindow),
     options(new Options(this)),
     diskCache(new QNetworkDiskCache(this)),
-    zoomInAction(0),
-    zoomOutAction(0),
-    zoomResetAction(0),
     styleLabel(0),
     wordCountLabel(0),
     viewLabel(0),
@@ -106,20 +103,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::webViewContextMenu(const QPoint &pos)
-{
-    QMenu *contextMenu = new QMenu(this);
-
-    contextMenu->insertAction(0, ui->webView->pageAction(QWebPage::Copy));
-
-    contextMenu->insertAction(0, zoomInAction);
-    contextMenu->insertAction(0, zoomOutAction);
-    contextMenu->insertAction(0, zoomResetAction);
-
-    contextMenu->exec(ui->webView->mapToGlobal(pos));
-    delete contextMenu;
-}
-
 void MainWindow::closeEvent(QCloseEvent *e)
 {
     // check if file needs saving
@@ -142,12 +125,6 @@ void MainWindow::initializeApp()
     // inform us when a link in the table of contents or preview view is clicked
     ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-
-    // show custom context menu for HTML preview
-    // most actions don't work and can even lead to crashes (like reload)
-    ui->webView->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(ui->webView, SIGNAL(customContextMenuRequested(QPoint)),
-            this, SLOT(webViewContextMenu(QPoint)));
 
     // set default style
     styleDefault();
@@ -1057,25 +1034,6 @@ void MainWindow::setupActions()
     ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);
 
     ui->webView->pageAction(QWebPage::Copy)->setIcon(QIcon("fa-copy.fontawesome"));
-
-    // zoom actions for html view
-    zoomInAction = new QAction(tr("Zoom &In"), this);
-    zoomInAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Plus));
-    connect(zoomInAction, SIGNAL(triggered()), 
-            htmlPreviewController, SLOT(zoomInView()));
-    ui->webView->addAction(zoomInAction);
-
-    zoomOutAction = new QAction(tr("Zoom &Out"), this);
-    zoomOutAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
-    connect(zoomOutAction, SIGNAL(triggered()),
-            htmlPreviewController, SLOT(zoomOutView()));
-    ui->webView->addAction(zoomOutAction);
-
-    zoomResetAction = new QAction(tr("Reset &Zoom"), this);
-    zoomResetAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_0));
-    connect(zoomResetAction, SIGNAL(triggered()),
-            htmlPreviewController, SLOT(resetZoomOfView()));
-    ui->webView->addAction(zoomResetAction);
 
     // set names for dock widget actions
     ui->dockWidget->toggleViewAction()->setObjectName("actionTableOfContents");

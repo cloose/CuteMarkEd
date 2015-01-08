@@ -25,6 +25,11 @@ void HtmlPreviewControllerTest::initTestCase()
 {
     webView = new QWebView();
     controller = new HtmlPreviewController(webView);
+
+    webView->show();
+    QTest::qWaitForWindowExposed(webView);
+    webView->activateWindow();
+    QTest::qWaitForWindowActive(webView);
 }
 
 void HtmlPreviewControllerTest::cleanupTestCase()
@@ -63,4 +68,32 @@ void HtmlPreviewControllerTest::resetsZoomFactorOnZoomReset()
     QCOMPARE(webView->zoomFactor(), 1.0);
 }
 
+void HtmlPreviewControllerTest::zoomsInOnCtrlPlusKeyPress()
+{
+    qreal previousZoomFactor = 1.0;
+    webView->setZoomFactor(previousZoomFactor);
 
+    QTest::keyClick(webView, Qt::Key_Plus, Qt::ControlModifier);
+
+    QVERIFY(webView->zoomFactor() > previousZoomFactor);
+}
+
+void HtmlPreviewControllerTest::zoomsOutOnCtrlMinusKeyPress()
+{
+    qreal previousZoomFactor = 1.0;
+    webView->setZoomFactor(previousZoomFactor);
+
+    QTest::keyClick(webView, Qt::Key_Minus, Qt::ControlModifier);
+
+    QVERIFY(webView->zoomFactor() < previousZoomFactor);
+}
+
+void HtmlPreviewControllerTest::resetsZoomOnCtrlZeroKeyPress()
+{
+    qreal previousZoomFactor = 2.0;
+    webView->setZoomFactor(previousZoomFactor);
+
+    QTest::keyClick(webView, Qt::Key_0, Qt::ControlModifier);
+
+    QCOMPARE(webView->zoomFactor(), 1.0);
+}
