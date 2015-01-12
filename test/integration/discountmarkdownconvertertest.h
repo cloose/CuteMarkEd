@@ -39,6 +39,8 @@ private slots:
 
     void benchmark_data();
     void benchmark();
+    void benchmarkTableOfContents_data();
+    void benchmarkTableOfContents();
 
     void cleanupTestCase();
 
