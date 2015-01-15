@@ -8,7 +8,8 @@ QT += gui webkitwidgets
 
 TARGET = app-static
 TEMPLATE = lib
-CONFIG += staticlib
+CONFIG += staticlib 
+CONFIG += c++11
 
 SOURCES += \
     snippets/jsonsnippettranslator.cpp \

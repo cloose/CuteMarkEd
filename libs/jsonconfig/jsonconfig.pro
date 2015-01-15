@@ -9,6 +9,7 @@ QT += core
 TARGET = jsonconfig
 TEMPLATE = lib
 CONFIG += staticlib
+CONFIG += c++11
 
 HEADERS += \
     jsoncollection.h \

@@ -12,6 +12,7 @@ win32: QT += winextras
 
 TARGET = cutemarked
 TEMPLATE = app
+CONFIG += c++11
 
 unix {
   CONFIG += link_pkgconfig
