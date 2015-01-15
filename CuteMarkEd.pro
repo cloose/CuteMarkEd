@@ -6,6 +6,8 @@
 
 TEMPLATE = subdirs
 
+CONFIG += c++11
+
 win32 {
     SUBDIRS = 3rdparty \
         libs \
