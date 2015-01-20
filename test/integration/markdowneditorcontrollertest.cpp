@@ -38,3 +38,48 @@ void MarkdownEditorControllerTest::cleanupTestCase()
     delete editorView;
 }
 
+void MarkdownEditorControllerTest::returnsZeroWordsForEmptyText()
+{
+    editorView->clear();
+
+    int wordCount = controller->countWords();
+
+    QCOMPARE(wordCount, 0);
+}
+
+void MarkdownEditorControllerTest::returnsZeroWordsForWhitespaceOnlyText()
+{
+    editorView->setPlainText("   ");
+
+    int wordCount = controller->countWords();
+
+    QCOMPARE(wordCount, 0);
+}
+
+void MarkdownEditorControllerTest::returnsWordCountOneForSingleWord()
+{
+    editorView->setPlainText("word");
+
+    int wordCount = controller->countWords();
+
+    QCOMPARE(wordCount, 1);
+}
+
+void MarkdownEditorControllerTest::returnsWordCountForMultipleWords()
+{
+    editorView->setPlainText("word word word");
+
+    int wordCount = controller->countWords();
+
+    QCOMPARE(wordCount, 3);
+}
+
+void MarkdownEditorControllerTest::returnedWordCountIncludesNumbers()
+{
+    editorView->setPlainText("1. word 42");
+
+    int wordCount = controller->countWords();
+
+    QCOMPARE(wordCount, 3);
+}
+

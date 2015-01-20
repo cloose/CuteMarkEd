@@ -25,3 +25,13 @@ MarkdownEditorController::MarkdownEditorController(QPlainTextEdit *view, QObject
 {
 }
 
+int MarkdownEditorController::countWords() const
+{
+    QStringList words = splitTextIntoWords(view->toPlainText());
+    return words.count();
+}
+
+QStringList MarkdownEditorController::splitTextIntoWords(const QString &text) const
+{
+    return text.split(QRegExp("\\W+"), QString::SkipEmptyParts);
+}

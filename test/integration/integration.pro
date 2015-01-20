@@ -32,6 +32,14 @@ HEADERS += \
 target.CONFIG += no_default_install
 
 #
+# Application
+# (TODO: think about how to restructure the code so that
+# it's available to the test code.
+# Should it move to app-static library?)
+#
+INCLUDEPATH += $$PWD/../../app
+
+#
 # JSON configuration library
 #
 INCLUDEPATH += $$PWD/../../libs/jsonconfig

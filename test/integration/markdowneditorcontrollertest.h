@@ -29,6 +29,12 @@ private slots:
     void initTestCase();
     void cleanupTestCase();
 
+    void returnsZeroWordsForEmptyText();
+    void returnsZeroWordsForWhitespaceOnlyText();
+    void returnsWordCountOneForSingleWord();
+    void returnsWordCountForMultipleWords();
+    void returnedWordCountIncludesNumbers();
+
 private:
     QPlainTextEdit *editorView;
     MarkdownEditorController *controller;

@@ -28,6 +28,11 @@ class MarkdownEditorController : public QObject
 public:
     explicit MarkdownEditorController(QPlainTextEdit *view, QObject *parent = 0);
 
+    int countWords() const;
+
+private:
+    QStringList splitTextIntoWords(const QString &text) const;
+
 private:
     QPlainTextEdit *view;
 };
