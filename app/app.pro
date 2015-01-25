@@ -142,6 +142,14 @@ QMAKE_EXTRA_COMPILERS += lrelease
 ###################################################################################################
 
 #
+# Add search paths below /usr/local for Mac OSX
+#
+macx {
+  LIBS += -L/usr/local/lib
+  INCLUDEPATH += /usr/local/include
+}
+
+#
 # JSON configuration library
 #
 INCLUDEPATH += $$PWD/../libs/jsonconfig
@@ -189,8 +197,12 @@ else:unix: PRE_TARGETDEPS += $$OUT_PWD/../libs/peg-markdown-highlight/libpmh.a
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hunspell/lib/ -lhunspell
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hunspell/lib/ -lhunspell
 
-unix {
+unix:!macx {
   PKGCONFIG += hunspell
+}
+
+macx {
+  LIBS += -lhunspell
 }
 
 win32:INCLUDEPATH += $$PWD/../3rdparty/hunspell/src

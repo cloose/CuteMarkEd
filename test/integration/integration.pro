@@ -28,6 +28,14 @@ target.CONFIG += no_default_install
 #
 INCLUDEPATH += $$PWD/../../libs/jsonconfig
 
+#
+# Add search paths below /usr/local for Mac OSX
+#
+macx {
+  LIBS += -L/usr/local/lib
+  INCLUDEPATH += /usr/local/include
+}
+
 ##################################################
 # Use internal static library: app-static
 ##################################################

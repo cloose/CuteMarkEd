@@ -60,6 +60,14 @@ HEADERS += \
 ##################################################
 
 #
+# Add search paths below /usr/local for Mac OSX
+#
+macx {
+  LIBS += -L/usr/local/lib
+  INCLUDEPATH += /usr/local/include
+}
+
+#
 # JSON configuration library
 #
 INCLUDEPATH += $$PWD/../libs/jsonconfig
