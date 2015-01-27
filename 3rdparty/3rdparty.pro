@@ -2,7 +2,8 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     discount \
-    hunspell
+    hunspell \
+    peg-markdown-highlight
 
 with_hoedown {
     message("3rdparty: Build hoedown markdown converter library")
