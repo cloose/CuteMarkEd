@@ -8,24 +8,13 @@ TEMPLATE = subdirs
 
 CONFIG += c++11
 
-win32 {
-    SUBDIRS = 3rdparty \
-        libs \
-        app \
-        fontawesomeicon
+SUBDIRS = \
+    3rdparty \
+    libs \
+    app-static \
+    app \
+    fontawesomeicon \
+    test
 
-    app.depends = 3rdparty libs app-static
-}
-
-unix {
-    SUBDIRS = libs \
-        app \
-        fontawesomeicon
-
-    app.depends = libs app-static
-}
-
-SUBDIRS += \
-    test \
-    app-static
+app.depends = 3rdparty libs app-static
 
