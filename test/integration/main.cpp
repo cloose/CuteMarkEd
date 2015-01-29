@@ -18,6 +18,7 @@
 
 #include "discountmarkdownconvertertest.h"
 #include "jsonsnippetfiletest.h"
+#include "pmhmarkdownparsertest.h"
 #include "revealmarkdownconvertertest.h"
 
 #ifdef ENABLE_HOEDOWN
@@ -41,6 +42,9 @@ int main(int argc, char *argv[])
 
     JsonSnippetFileTest test4;
     ret += QTest::qExec(&test4, argc, argv);
+
+    PmhMarkdownParserTest test5;
+    ret += QTest::qExec(&test5, argc, argv);
 
     return ret;
 }

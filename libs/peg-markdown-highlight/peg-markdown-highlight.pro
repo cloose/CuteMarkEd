@@ -12,9 +12,11 @@ CONFIG += staticlib
 CONFIG += c++11
 
 SOURCES += \
+    pmhmarkdownparser.cpp \
     styleparser.cpp 
 
 HEADERS  += \
+    pmhmarkdownparser.h \
     styleparser.h \
     definitions.h 
 
