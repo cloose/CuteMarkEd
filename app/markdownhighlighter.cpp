@@ -18,7 +18,6 @@
 
 #include <QDebug>
 #include <QFile>
-#include <QRegularExpression>
 #include <QTextDocument>
 #include <QTextLayout>
 

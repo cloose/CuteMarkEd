@@ -167,7 +167,7 @@
      <x>0</x>
      <y>0</y>
      <width>850</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -252,7 +252,7 @@
    </widget>
    <widget class="QMenu" name="menuExtras">
     <property name="title">
-     <string>Ext&amp;ras</string>
+     <string>E&amp;xtras</string>
     </property>
     <widget class="QMenu" name="menuStyles">
      <property name="title">
@@ -306,7 +306,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget">
    <property name="windowTitle">
-    <string>Tab&amp;le of contents</string>
+    <string>Table of contents</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -345,7 +345,7 @@
     <bool>false</bool>
    </property>
    <property name="windowTitle">
-    <string>&amp;Markdown Syntax</string>
+    <string>Markdown Syntax</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -381,7 +381,7 @@
   </widget>
   <widget class="QDockWidget" name="fileExplorerDockWidget">
    <property name="windowTitle">
-    <string>F&amp;ile Explorer</string>
+    <string>File Explorer</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
@@ -431,7 +431,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>&amp;Default</string>
+    <string>Default</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+1</string>
@@ -442,7 +442,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>&amp;Github</string>
+    <string>Github</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+2</string>
@@ -453,7 +453,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>&amp;Solarized Light</string>
+    <string>Solarized Light</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+3</string>
@@ -464,7 +464,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>S&amp;olarized Dark</string>
+    <string>Solarized Dark</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+4</string>
@@ -487,27 +487,27 @@
   </action>
   <action name="actionSplit_1_1">
    <property name="text">
-    <string>&amp;Split 1:1</string>
+    <string>Split 1:1</string>
    </property>
   </action>
   <action name="actionSplit_2_1">
    <property name="text">
-    <string>Split &amp;2:1</string>
+    <string>Split 2:1</string>
    </property>
   </action>
   <action name="actionSplit_1_2">
    <property name="text">
-    <string>Split &amp;1:2</string>
+    <string>Split 1:2</string>
    </property>
   </action>
   <action name="actionSplit_3_1">
    <property name="text">
-    <string>Split &amp;3:1</string>
+    <string>Split 3:1</string>
    </property>
   </action>
   <action name="actionSplit_1_3">
    <property name="text">
-    <string>Sp&amp;lit 1:3</string>
+    <string>Split 1:3</string>
    </property>
   </action>
   <action name="actionCopyHtmlToClipboard">
@@ -532,12 +532,12 @@
   </action>
   <action name="actionStrong">
    <property name="text">
-    <string>&amp;Strong</string>
+    <string>Strong</string>
    </property>
   </action>
   <action name="actionEmphasize">
    <property name="text">
-    <string>&amp;Emphasize</string>
+    <string>Emphasize</string>
    </property>
   </action>
   <action name="action_Print">
@@ -547,12 +547,12 @@
   </action>
   <action name="actionStrikethrough">
    <property name="text">
-    <string>S&amp;trikethrough</string>
+    <string>Strikethrough</string>
    </property>
   </action>
   <action name="actionInline_Code">
    <property name="text">
-    <string>&amp;Inline Code</string>
+    <string>Inline Code</string>
    </property>
   </action>
   <action name="actionMathSupport">
@@ -576,7 +576,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>&amp;Clearness</string>
+    <string>Clearness</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+5</string>
@@ -587,7 +587,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>C&amp;learness Dark</string>
+    <string>Clearness Dark</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+6</string>
@@ -595,7 +595,7 @@
   </action>
   <action name="actionFindReplace">
    <property name="text">
-    <string>&amp;Find/Replace</string>
+    <string>Find/Replace</string>
    </property>
   </action>
   <action name="actionGotoLine">
@@ -608,12 +608,12 @@
   </action>
   <action name="actionCenterParagraph">
    <property name="text">
-    <string>&amp;Center Paragraph</string>
+    <string>Center Paragraph</string>
    </property>
   </action>
   <action name="actionHardLinebreak">
    <property name="text">
-    <string>&amp;Hard Linebreak</string>
+    <string>Hard Linebreak</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Return</string>
@@ -621,12 +621,12 @@
   </action>
   <action name="actionFindNext">
    <property name="text">
-    <string>Find &amp;Next</string>
+    <string>Find Next</string>
    </property>
   </action>
   <action name="actionFindPrevious">
    <property name="text">
-    <string>Find &amp;Previous</string>
+    <string>Find Previous</string>
    </property>
   </action>
   <action name="actionFullScreenMode">
@@ -639,7 +639,7 @@
   </action>
   <action name="actionBlockquote">
    <property name="text">
-    <string>&amp;Blockquote</string>
+    <string>Blockquote</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+Q</string>
@@ -676,7 +676,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>&amp;Autolink</string>
+    <string>Autolink</string>
    </property>
   </action>
   <action name="actionStrikethroughOption">
@@ -684,7 +684,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>&amp;Strikethrough</string>
+    <string>Strikethrough</string>
    </property>
   </action>
   <action name="actionAlphabeticLists">
@@ -692,7 +692,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Alphabetic &amp;Lists</string>
+    <string>Alphabetic Lists</string>
    </property>
   </action>
   <action name="actionDefinitionLists">
@@ -700,7 +700,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>&amp;Definition Lists</string>
+    <string>Definition Lists</string>
    </property>
   </action>
   <action name="actionSmartyPants">
@@ -708,7 +708,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>S&amp;martyPants</string>
+    <string>SmartyPants</string>
    </property>
   </action>
   <action name="actionLanguage">
@@ -726,7 +726,7 @@
   </action>
   <action name="actionIncreaseHeaderLevel">
    <property name="text">
-    <string>Increase Header &amp;Level</string>
+    <string>Increase Header Level</string>
    </property>
    <property name="shortcut">
     <string>Alt+Right</string>
@@ -734,7 +734,7 @@
   </action>
   <action name="actionDecreaseHeaderLevel">
    <property name="text">
-    <string>&amp;Decrease Header Level</string>
+    <string>Decrease Header Level</string>
    </property>
    <property name="shortcut">
     <string>Alt+Left</string>
@@ -742,7 +742,7 @@
   </action>
   <action name="actionInsertTable">
    <property name="text">
-    <string>I&amp;nsert Table...</string>
+    <string>Insert Table...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
@@ -750,7 +750,7 @@
   </action>
   <action name="actionBywordDark">
    <property name="text">
-    <string>&amp;Byword Dark</string>
+    <string>Byword Dark</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+7</string>
@@ -777,7 +777,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>&amp;Footnotes</string>
+    <string>Footnotes</string>
    </property>
   </action>
   <action name="actionSuperscript">
@@ -785,7 +785,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>S&amp;uperscript</string>
+    <string>Superscript</string>
    </property>
   </action>
   <action name="actionWordWrap">
@@ -929,8 +929,8 @@
    <slot>plainTextChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>113</x>
-     <y>178</y>
+     <x>54</x>
+     <y>156</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>
@@ -1105,8 +1105,8 @@
    <slot>previewLinkClicked(QUrl)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>462</x>
-     <y>51</y>
+     <x>403</x>
+     <y>300</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
