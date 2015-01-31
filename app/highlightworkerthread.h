@@ -24,6 +24,12 @@
 
 #include "pmh_definitions.h"
 
+struct Task
+{
+    QString text;
+    unsigned long offset;
+};
+
 class HighlightWorkerThread : public QThread
 {
     Q_OBJECT
@@ -31,16 +37,16 @@ class HighlightWorkerThread : public QThread
 public:
     explicit HighlightWorkerThread(QObject *parent = 0);
 
-    void enqueue(const QString &text);
+    void enqueue(const QString &text, unsigned long offset = 0);
 
 signals:
-    void resultReady(pmh_element **elements);
+    void resultReady(pmh_element **elements, unsigned long offset);
 
 protected:
     virtual void run();
 
 private:
-    QQueue<QString> tasks;
+    QQueue<Task> tasks;
     QMutex tasksMutex;
     QWaitCondition bufferNotEmpty;
 };

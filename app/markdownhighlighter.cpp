@@ -18,10 +18,12 @@
 
 #include <QDebug>
 #include <QFile>
+#include <QRegularExpression>
 #include <QTextDocument>
 #include <QTextLayout>
 
 #include "pmh_parser.h"
+#include "yamlheaderchecker.h"
 
 #include "peg-markdown-highlight/definitions.h"
 using PegMarkdownHighlight::HighlightingStyle;
@@ -31,11 +33,11 @@ using hunspell::SpellChecker;
 
 #include <QDebug>
 
-
 MarkdownHighlighter::MarkdownHighlighter(QTextDocument *document, hunspell::SpellChecker *spellChecker) :
     QSyntaxHighlighter(document),
     workerThread(new HighlightWorkerThread(this)),
-    spellingCheckEnabled(false)
+    spellingCheckEnabled(false),
+    yamlHeaderSupportEnabled(false)
 {
     this->spellChecker = spellChecker;
 
@@ -43,8 +45,8 @@ MarkdownHighlighter::MarkdownHighlighter(QTextDocument *document, hunspell::Spel
     spellFormat.setUnderlineStyle(QTextCharFormat::WaveUnderline);
     spellFormat.setUnderlineColor(Qt::red);
 
-    connect(workerThread, SIGNAL(resultReady(pmh_element**)),
-            this, SLOT(resultReady(pmh_element**)));
+    connect(workerThread, SIGNAL(resultReady(pmh_element**, unsigned long)),
+            this, SLOT(resultReady(pmh_element**, unsigned long)));
     workerThread->start();
 }
 
@@ -70,6 +72,11 @@ void MarkdownHighlighter::setStyles(const QVector<PegMarkdownHighlight::Highligh
 void MarkdownHighlighter::setSpellingCheckEnabled(bool enabled)
 {
     spellingCheckEnabled = enabled;
+}
+
+void MarkdownHighlighter::setYamlHeaderSupportEnabled(bool enabled)
+{
+    yamlHeaderSupportEnabled = enabled;
 }
 
 void MarkdownHighlighter::highlightBlock(const QString &textBlock)
@@ -99,89 +106,110 @@ void MarkdownHighlighter::highlightBlock(const QString &textBlock)
         return;
     }
 
-    workerThread->enqueue(text);
+    // cut YAML headers
+    QString actualText;
+    unsigned long offset = 0;
+    if (yamlHeaderSupportEnabled) {
+        YamlHeaderChecker checker(text);
+        actualText = checker.body();
+        offset = checker.header().length();
+    } else {
+        actualText = text;
+    }
+
+    workerThread->enqueue(actualText, offset);
 
     previousText = text;
 }
 
-void MarkdownHighlighter::resultReady(pmh_element **elements)
+void MarkdownHighlighter::applyFormat(unsigned long pos, unsigned long end,
+                                      QTextCharFormat format, bool merge)
+{
+    // The QTextDocument contains an additional single paragraph separator (unicode 0x2029).
+    // https://bugreports.qt-project.org/browse/QTBUG-4841
+    unsigned long max_offset = document()->characterCount() - 1;
+
+    if (end <= pos || max_offset < pos) {
+        return;
+    }
+
+    if (max_offset < end) {
+        end = max_offset;
+    }
+
+    // "The QTextLayout object can only be modified from the
+    // documentChanged implementation of a QAbstractTextDocumentLayout
+    // subclass. Any changes applied from the outside cause undefined
+    // behavior." -- we are breaking this rule here. There might be
+    // a better (more correct) way to do this.
+
+    int startBlockNum = document()->findBlock(pos).blockNumber();
+    int endBlockNum = document()->findBlock(end).blockNumber();
+    for (int j = startBlockNum; j <= endBlockNum; j++)
+    {
+        QTextBlock block = document()->findBlockByNumber(j);
+
+        QTextLayout *layout = block.layout();
+        int blockpos = block.position();
+        QTextLayout::FormatRange r;
+        r.format = format;
+        QList<QTextLayout::FormatRange> list;
+        if (merge) {
+            list = layout->additionalFormats();
+        }
+
+        if (j == startBlockNum) {
+            r.start = pos - blockpos;
+            r.length = (startBlockNum == endBlockNum)
+                        ? end - pos
+                        : block.length() - r.start;
+        } else if (j == endBlockNum) {
+            r.start = 0;
+            r.length = end - blockpos;
+        } else {
+            r.start = 0;
+            r.length = block.length();
+        }
+
+        list.append(r);
+        layout->setAdditionalFormats(list);
+    }
+}
+
+void MarkdownHighlighter::resultReady(pmh_element **elements, unsigned long base_offset)
 {
     if (!elements) {
         qDebug() << "elements is null";
         return;
     }
 
-    // The QTextDocument contains an additional single paragraph separator (unicode 0x2029).
-    // https://bugreports.qt-project.org/browse/QTBUG-4841
-    unsigned long max_offset = document()->characterCount() - 1;
+    // clear any format before base_offset
+    applyFormat(0, base_offset - 1, QTextCharFormat(), false);
 
+    // apply highlight results
     for (int i = 0; i < highlightingStyles.size(); i++) {
         HighlightingStyle style = highlightingStyles.at(i);
         pmh_element *elem_cursor = elements[style.type];
         while (elem_cursor != NULL) {
-            unsigned long pos = elem_cursor->pos;
-            unsigned long end = elem_cursor->end;
+            unsigned long pos = elem_cursor->pos + base_offset;
+            unsigned long end = elem_cursor->end + base_offset;
 
-            if (end <= pos || max_offset < pos) {
-                elem_cursor = elem_cursor->next;
-                continue;
-            }
-
-            if (max_offset < end) {
-                end = max_offset;
-            }
-
-            // "The QTextLayout object can only be modified from the
-            // documentChanged implementation of a QAbstractTextDocumentLayout
-            // subclass. Any changes applied from the outside cause undefined
-            // behavior." -- we are breaking this rule here. There might be
-            // a better (more correct) way to do this.
-
-            int startBlockNum = document()->findBlock(pos).blockNumber();
-            int endBlockNum = document()->findBlock(end).blockNumber();
-            for (int j = startBlockNum; j <= endBlockNum; j++)
+            QTextCharFormat format = style.format;
+            if (/*_makeLinksClickable
+                &&*/ (elem_cursor->type == pmh_LINK
+                    || elem_cursor->type == pmh_AUTO_LINK_URL
+                    || elem_cursor->type == pmh_AUTO_LINK_EMAIL
+                    || elem_cursor->type == pmh_REFERENCE)
+                && elem_cursor->address != NULL)
             {
-                QTextBlock block = document()->findBlockByNumber(j);
-
-                QTextLayout *layout = block.layout();
-                QList<QTextLayout::FormatRange> list = layout->additionalFormats();
-                int blockpos = block.position();
-                QTextLayout::FormatRange r;
-                r.format = style.format;
-
-                if (/*_makeLinksClickable
-                    &&*/ (elem_cursor->type == pmh_LINK
-                        || elem_cursor->type == pmh_AUTO_LINK_URL
-                        || elem_cursor->type == pmh_AUTO_LINK_EMAIL
-                        || elem_cursor->type == pmh_REFERENCE)
-                    && elem_cursor->address != NULL)
-                {
-                    QString address(elem_cursor->address);
-                    if (elem_cursor->type == pmh_AUTO_LINK_EMAIL && !address.startsWith("mailto:"))
-                        address = "mailto:" + address;
-                    QTextCharFormat linkFormat(r.format);
-                    linkFormat.setAnchor(true);
-                    linkFormat.setAnchorHref(address);
-                    linkFormat.setToolTip(address);
-                    r.format = linkFormat;
-                }
-
-                if (j == startBlockNum) {
-                    r.start = pos - blockpos;
-                    r.length = (startBlockNum == endBlockNum)
-                                ? end - pos
-                                : block.length() - r.start;
-                } else if (j == endBlockNum) {
-                    r.start = 0;
-                    r.length = end - blockpos;
-                } else {
-                    r.start = 0;
-                    r.length = block.length();
-                }
-
-                list.append(r);
-                layout->setAdditionalFormats(list);
+                QString address(elem_cursor->address);
+                if (elem_cursor->type == pmh_AUTO_LINK_EMAIL && !address.startsWith("mailto:"))
+                    address = "mailto:" + address;
+                format.setAnchor(true);
+                format.setAnchorHref(address);
+                format.setToolTip(address);
             }
+            applyFormat(pos, end, format, true);
 
             elem_cursor = elem_cursor->next;
         }

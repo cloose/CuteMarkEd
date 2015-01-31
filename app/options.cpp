@@ -49,6 +49,7 @@ static const char* SHOWSPECIALCHARACTERS_ENABLED = "specialchars/enabled";
 static const char* WORDWRAP_ENABLED = "wordwrap/enabled";
 static const char* SPELLINGCHECK_ENABLED = "spelling/enabled";
 static const char* DICTIONARY_LANGUAGE = "spelling/language";
+static const char* YAMLHEADERSUPPORT_ENABLED = "yamlheadersupport/enabled";
 
 Options::Options(QObject *parent) :
     QObject(parent),
@@ -353,6 +354,16 @@ void Options::setSpellingCheckEnabled(bool enabled)
     m_spellingCheckEnabled = enabled;
 }
 
+bool Options::isYamlHeaderSupportEnabled() const
+{
+    return m_yamlHeaderSupportEnabled;
+}
+
+void Options::setYamlHeaderSupportEnabled(bool enabled)
+{
+    m_yamlHeaderSupportEnabled = enabled;
+}
+
 QString Options::dictionaryLanguage() const
 {
     return m_dictionaryLanguage;
@@ -430,6 +441,7 @@ void Options::readSettings()
     m_codeHighlightingEnabled = settings.value(CODEHIGHLIGHT_ENABLED, false).toBool();
     m_showSpecialCharactersEnabled = settings.value(SHOWSPECIALCHARACTERS_ENABLED, false).toBool();
     m_wordWrapEnabled = settings.value(WORDWRAP_ENABLED, true).toBool();
+    m_yamlHeaderSupportEnabled = settings.value(YAMLHEADERSUPPORT_ENABLED, false).toBool();
 
     // spelling check settings
     m_spellingCheckEnabled = settings.value(SPELLINGCHECK_ENABLED, true).toBool();
@@ -487,6 +499,7 @@ void Options::writeSettings()
     settings.setValue(CODEHIGHLIGHT_ENABLED, m_codeHighlightingEnabled);
     settings.setValue(SHOWSPECIALCHARACTERS_ENABLED, m_showSpecialCharactersEnabled);
     settings.setValue(WORDWRAP_ENABLED, m_wordWrapEnabled);
+    settings.setValue(YAMLHEADERSUPPORT_ENABLED, m_yamlHeaderSupportEnabled);
 
     // spelling check settings
     settings.setValue(SPELLINGCHECK_ENABLED, m_spellingCheckEnabled);
