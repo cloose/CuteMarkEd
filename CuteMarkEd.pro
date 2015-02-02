@@ -6,7 +6,7 @@
 
 TEMPLATE = subdirs
 
-CONFIG += c++11 ordered
+CONFIG += c++11
 
 SUBDIRS = \
     3rdparty \
@@ -17,3 +17,6 @@ SUBDIRS = \
     test
 
 app.depends = 3rdparty libs app-static
+libs.depends = 3rdparty
+app-static.depends = 3rdparty
+test.depends = 3rdparty libs app-static
