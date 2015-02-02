@@ -804,7 +804,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Y&amp;AML Header Support</string>
+    <string>Ignore Y&amp;AML Header</string>
    </property>
   </action>
  </widget>
