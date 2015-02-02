@@ -16,6 +16,7 @@ SUBDIRS = \
     fontawesomeicon \
     test
 
-app.depends = libs app-static
+# build order: 3rdparty -> libs -> app-static -> app & test
 libs.depends = 3rdparty
+app.depends = libs app-static
 test.depends = libs app-static
