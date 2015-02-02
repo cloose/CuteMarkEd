@@ -44,3 +44,8 @@ QString YamlHeaderChecker::body() const
 {
     return m_body;
 }
+
+int YamlHeaderChecker::bodyOffset() const
+{
+    return m_header.length();
+}

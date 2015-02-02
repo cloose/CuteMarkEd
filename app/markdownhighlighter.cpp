@@ -1,5 +1,6 @@
 /*
  * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2015 Aetf <7437103@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -111,7 +112,7 @@ void MarkdownHighlighter::highlightBlock(const QString &textBlock)
     if (yamlHeaderSupportEnabled) {
         YamlHeaderChecker checker(text);
         actualText = checker.body();
-        offset = checker.header().length();
+        offset = checker.bodyOffset();
     } else {
         actualText = text;
     }

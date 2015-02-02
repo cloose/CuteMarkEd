@@ -28,6 +28,8 @@ public:
     QString header() const;
     QString body() const;
 
+    int bodyOffset() const;
+
 private:
     QString m_header;
     QString m_body;
