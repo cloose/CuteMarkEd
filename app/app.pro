@@ -56,8 +56,7 @@ SOURCES += \
     tabletooldialog.cpp \
     imagetooldialog.cpp \
     snippetcompleter.cpp \
-    aboutdialog.cpp \
-    yamlheaderchecker.cpp
+    aboutdialog.cpp
 
 win32 {
     SOURCES += \
@@ -91,8 +90,7 @@ HEADERS  += \
     tabletooldialog.h \
     imagetooldialog.h \
     snippetcompleter.h \
-    aboutdialog.h \
-    yamlheaderchecker.h
+    aboutdialog.h
 
 FORMS    += \
     mainwindow.ui \
