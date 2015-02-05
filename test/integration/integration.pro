@@ -17,7 +17,6 @@ SOURCES += \
     main.cpp \
     pmhmarkdownparsertest.cpp \
     revealmarkdownconvertertest.cpp
-    ../../app/htmlpreviewcontroller.cpp
 
 HEADERS += \
     discountmarkdownconvertertest.h \
@@ -25,7 +24,6 @@ HEADERS += \
     jsonsnippetfiletest.h \
     pmhmarkdownparsertest.h \
     revealmarkdownconvertertest.h
-    ../../app/htmlpreviewcontroller.h
 
 target.CONFIG += no_default_install
 
