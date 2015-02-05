@@ -5,13 +5,14 @@
 #
 
 QT       += testlib
-QT       -= gui
+QT       += gui webkitwidgets
 
 TARGET = integrationtest
 CONFIG += console testcase
 
 SOURCES += \
     discountmarkdownconvertertest.cpp \
+    htmlpreviewcontrollertest.cpp \
     jsonsnippetfiletest.cpp \
     main.cpp \
     pmhmarkdownparsertest.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 
 HEADERS += \
     discountmarkdownconvertertest.h \
+    htmlpreviewcontrollertest.h \
     jsonsnippetfiletest.h \
     pmhmarkdownparsertest.h \
     revealmarkdownconvertertest.h

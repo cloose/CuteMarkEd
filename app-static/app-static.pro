@@ -24,6 +24,7 @@ SOURCES += \
     slidelinemapping.cpp \
     viewsynchronizer.cpp \
     revealviewsynchronizer.cpp \
+    htmlpreviewcontroller.cpp \
     htmlviewsynchronizer.cpp
 
 HEADERS += \
@@ -44,6 +45,7 @@ HEADERS += \
     slidelinemapping.h \
     viewsynchronizer.h \
     revealviewsynchronizer.h \
+    htmlpreviewcontroller.h \
     htmlviewsynchronizer.h
 
 #unix:!symbian {

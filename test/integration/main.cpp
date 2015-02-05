@@ -16,7 +16,10 @@
  */
 #include <QTest>
 
+#include <QApplication>
+
 #include "discountmarkdownconvertertest.h"
+#include "htmlpreviewcontrollertest.h"
 #include "jsonsnippetfiletest.h"
 #include "pmhmarkdownparsertest.h"
 #include "revealmarkdownconvertertest.h"
@@ -27,6 +30,8 @@
 
 int main(int argc, char *argv[])
 {
+    QApplication app(argc, argv);
+
     int ret = 0;
 
     DiscountMarkdownConverterTest test;
@@ -45,6 +50,9 @@ int main(int argc, char *argv[])
 
     PmhMarkdownParserTest test5;
     ret += QTest::qExec(&test5, argc, argv);
+
+    HtmlPreviewControllerTest test6;
+    ret += QTest::qExec(&test6, argc, argv);
 
     return ret;
 }

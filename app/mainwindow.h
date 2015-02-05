@@ -31,6 +31,7 @@ class QLabel;
 class QNetworkDiskCache;
 class ActiveLabel;
 class Dictionary;
+class HtmlPreviewController;
 class HtmlPreviewGenerator;
 class HtmlHighlighter;
 class RecentFilesMenu;
@@ -47,9 +48,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(const QString &fileName = QString(), QWidget *parent = 0);
     ~MainWindow();
-
-public slots:
-    void webViewContextMenu(const QPoint &pos);
 
 protected:
     void closeEvent(QCloseEvent *e) Q_DECL_OVERRIDE;
@@ -115,10 +113,6 @@ private slots:
     void styleContextMenu(const QPoint &pos);
     void toggleHtmlView();
 
-    void webViewZoomIn();
-    void webViewZoomOut();
-    void webViewResetZoom();
-
     void plainTextChanged();
     void htmlResultReady(const QString &html);
     void tocResultReady(const QString &toc);
@@ -157,9 +151,6 @@ private:
     Options *options;
     QNetworkDiskCache *diskCache;
     QActionGroup *stylesGroup;
-    QAction *zoomInAction;
-    QAction *zoomOutAction;
-    QAction *zoomResetAction;
     QLabel *styleLabel;
     QLabel *wordCountLabel;
     ActiveLabel *viewLabel;
@@ -167,6 +158,7 @@ private:
     HtmlHighlighter *htmlHighlighter;
     SnippetCollection *snippetCollection;
     ViewSynchronizer *viewSynchronizer;
+    HtmlPreviewController *htmlPreviewController;
     QString fileName;
     float splitFactor;
     bool rightViewCollapsed;
