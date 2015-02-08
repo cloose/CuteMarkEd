@@ -15,17 +15,29 @@ SOURCES += \
     htmlpreviewcontrollertest.cpp \
     jsonsnippetfiletest.cpp \
     main.cpp \
+    markdowneditorcontrollertest.cpp \
     pmhmarkdownparsertest.cpp \
-    revealmarkdownconvertertest.cpp
+    revealmarkdownconvertertest.cpp \
+    ../../app/markdowneditorcontroller.cpp
 
 HEADERS += \
     discountmarkdownconvertertest.h \
     htmlpreviewcontrollertest.h \
     jsonsnippetfiletest.h \
+    markdowneditorcontrollertest.h \
     pmhmarkdownparsertest.h \
-    revealmarkdownconvertertest.h
+    revealmarkdownconvertertest.h \
+    ../../app/markdowneditorcontroller.h
 
 target.CONFIG += no_default_install
+
+#
+# Application
+# (TODO: think about how to restructure the code so that
+# it's available to the test code.
+# Should it move to app-static library?)
+#
+INCLUDEPATH += $$PWD/../../app
 
 #
 # JSON configuration library

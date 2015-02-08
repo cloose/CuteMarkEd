@@ -20,6 +20,7 @@
 
 #include "discountmarkdownconvertertest.h"
 #include "htmlpreviewcontrollertest.h"
+#include "markdowneditorcontrollertest.h"
 #include "jsonsnippetfiletest.h"
 #include "pmhmarkdownparsertest.h"
 #include "revealmarkdownconvertertest.h"
@@ -53,6 +54,9 @@ int main(int argc, char *argv[])
 
     HtmlPreviewControllerTest test6;
     ret += QTest::qExec(&test6, argc, argv);
+
+    MarkdownEditorControllerTest test7;
+    ret += QTest::qExec(&test7, argc, argv);
 
     return ret;
 }
