@@ -84,6 +84,7 @@ private slots:
     void editInsertImage();
 
     void viewChangeSplit();
+    void lastUsedStyle();
     void styleDefault();
     void styleGithub();
     void styleSolarizedLight();

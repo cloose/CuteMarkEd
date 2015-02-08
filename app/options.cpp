@@ -21,6 +21,8 @@
 
 
 static const char* MARKDOWN_CONVERTER = "general/converter";
+static const char* LAST_USED_STYLE = "general/lastusedstyle";
+static const char* STYLE_DEFAULT = "actionDefault";
 static const char* FONT_FAMILY_DEFAULT = "Monospace";
 static const char* FONT_FAMILY = "editor/font/family";
 static const char* FONT_SIZE = "editor/font/size";
@@ -67,7 +69,8 @@ Options::Options(QObject *parent) :
     m_showSpecialCharactersEnabled(false),
     m_wordWrapEnabled(true),
     m_spellingCheckEnabled(true),
-    m_markdownConverter(DiscountMarkdownConverter)
+    m_markdownConverter(DiscountMarkdownConverter),
+    m_lastUsedStyle(STYLE_DEFAULT)
 {
 }
 
@@ -376,12 +379,23 @@ void Options::setMarkdownConverter(Options::MarkdownConverter converter)
     }
 }
 
+QString Options::lastUsedStyle() const
+{
+    return m_lastUsedStyle;
+}
+
+void Options::setLastUsedStyle(const QString &style)
+{
+    m_lastUsedStyle = style;
+}
+
 void Options::readSettings()
 {
     QSettings settings;
 
     // general settings
     m_markdownConverter = (Options::MarkdownConverter)settings.value(MARKDOWN_CONVERTER, 0).toInt();
+    m_lastUsedStyle = settings.value(LAST_USED_STYLE, STYLE_DEFAULT).toString();
 
     // editor settings
     QString fontFamily = settings.value(FONT_FAMILY, FONT_FAMILY_DEFAULT).toString();
@@ -444,6 +458,7 @@ void Options::writeSettings()
 
     // general settings
     settings.setValue(MARKDOWN_CONVERTER, m_markdownConverter);
+    settings.setValue(LAST_USED_STYLE, m_lastUsedStyle);
 
     // editor settings
     settings.setValue(FONT_FAMILY, font.family());
