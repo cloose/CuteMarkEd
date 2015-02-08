@@ -593,6 +593,13 @@ void MainWindow::extrasShowSpecialCharacters(bool checked)
     ui->plainTextEdit->setShowSpecialCharacters(checked);
 }
 
+void MainWindow::extrasYamlHeaderSupport(bool checked)
+{
+    options->setYamlHeaderSupportEnabled(checked);
+    ui->plainTextEdit->setYamlHeaderSupportEnabled(checked);
+    plainTextChanged();
+}
+
 void MainWindow::extrasWordWrap(bool checked)
 {
     options->setWordWrapEnabled(checked);

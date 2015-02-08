@@ -23,6 +23,7 @@
 #include "snippetcollectiontest.h"
 #include "completionlistmodeltest.h"
 #include "snippettest.h"
+#include "yamlheadercheckertest.h"
 
 int main(int argc, char *argv[])
 {
@@ -48,6 +49,9 @@ int main(int argc, char *argv[])
 
     JsonTranslatorFactoryTest test7;
     ret += QTest::qExec(&test7, argc, argv);
+
+    YamlHeaderCheckerTest test8;
+    ret += QTest::qExec(&test8, argc, argv);
 
     return ret;
 }

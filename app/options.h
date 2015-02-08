@@ -121,6 +121,9 @@ public:
     bool isSpellingCheckEnabled() const;
     void setSpellingCheckEnabled(bool enabled);
 
+    bool isYamlHeaderSupportEnabled() const;
+    void setYamlHeaderSupportEnabled(bool enabled);
+
     QString dictionaryLanguage() const;
     void setDictionaryLanguage(const QString &language);
 
@@ -159,6 +162,7 @@ private:
     bool m_showSpecialCharactersEnabled;
     bool m_wordWrapEnabled;
     bool m_spellingCheckEnabled;
+    bool m_yamlHeaderSupportEnabled;
     QString m_dictionaryLanguage;
     MarkdownConverter m_markdownConverter;
     QString m_lastUsedStyle;
