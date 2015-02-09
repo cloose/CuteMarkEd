@@ -121,11 +121,17 @@ public:
     bool isSpellingCheckEnabled() const;
     void setSpellingCheckEnabled(bool enabled);
 
+    bool isYamlHeaderSupportEnabled() const;
+    void setYamlHeaderSupportEnabled(bool enabled);
+
     QString dictionaryLanguage() const;
     void setDictionaryLanguage(const QString &language);
 
     MarkdownConverter markdownConverter() const;
     void setMarkdownConverter(MarkdownConverter converter);
+
+    QString lastUsedStyle() const;
+    void setLastUsedStyle(const QString &style);
 
     void readSettings();
     void writeSettings();
@@ -156,8 +162,10 @@ private:
     bool m_showSpecialCharactersEnabled;
     bool m_wordWrapEnabled;
     bool m_spellingCheckEnabled;
+    bool m_yamlHeaderSupportEnabled;
     QString m_dictionaryLanguage;
     MarkdownConverter m_markdownConverter;
+    QString m_lastUsedStyle;
     QString m_standardFontFamily;
     QString m_fixedFontFamily;
     QString m_serifFontFamily;

@@ -17,7 +17,8 @@ SOURCES += \
     jsontranslatorfactorytest.cpp \
     slidelinemappingtest.cpp \
     snippetcollectiontest.cpp \
-    dictionarytest.cpp
+    dictionarytest.cpp \
+    yamlheadercheckertest.cpp
 
 HEADERS += \
     completionlistmodeltest.h \
@@ -26,7 +27,8 @@ HEADERS += \
     jsontranslatorfactorytest.h \
     slidelinemappingtest.h \
     snippetcollectiontest.h \
-    dictionarytest.h
+    dictionarytest.h \
+    yamlheadercheckertest.h
 
 target.CONFIG += no_default_install
 

@@ -46,6 +46,8 @@ public:
     void setSpellingCheckEnabled(bool enabled);
     void setSpellingDictionary(const Dictionary &dictionary);
 
+    void setYamlHeaderSupportEnabled(bool enabled);
+
     void setSnippetCompleter(SnippetCompleter *completer);
     void gotoLine(int line);
 

@@ -84,6 +84,7 @@ private slots:
     void editInsertImage();
 
     void viewChangeSplit();
+    void lastUsedStyle();
     void styleDefault();
     void styleGithub();
     void styleSolarizedLight();
@@ -96,6 +97,7 @@ private slots:
     void viewHorizontalLayout(bool checked);
 
     void extrasShowSpecialCharacters(bool checked);
+    void extrasYamlHeaderSupport(bool checked);
     void extrasWordWrap(bool checked);
     void extensionsAutolink(bool checked);
     void extensionsStrikethrough(bool checked);

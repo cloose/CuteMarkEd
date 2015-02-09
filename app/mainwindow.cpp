@@ -126,8 +126,8 @@ void MainWindow::initializeApp()
     ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 
-    // set default style
-    styleDefault();
+    // set last used style
+    lastUsedStyle();
 
     ui->plainTextEdit->tabWidthChanged(options->tabWidth());
 
@@ -468,6 +468,17 @@ void MainWindow::viewChangeSplit()
     }
 }
 
+void MainWindow::lastUsedStyle()
+{
+    if (stylesGroup) {
+        foreach(QAction *action, stylesGroup->actions()) {
+            if (action->objectName() == options->lastUsedStyle()) {
+                action->trigger();
+            }
+        }
+    }
+}
+
 void MainWindow::styleDefault()
 {
     generator->setCodeHighlightingStyle("default");
@@ -476,6 +487,7 @@ void MainWindow::styleDefault()
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/markdown.css"));
 
     styleLabel->setText(ui->actionDefault->text());
+    options->setLastUsedStyle(ui->actionDefault->objectName());
 }
 
 void MainWindow::styleGithub()
@@ -486,6 +498,7 @@ void MainWindow::styleGithub()
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/github.css"));
 
     styleLabel->setText(ui->actionGithub->text());
+    options->setLastUsedStyle(ui->actionGithub->objectName());
 }
 
 void MainWindow::styleSolarizedLight()
@@ -496,6 +509,7 @@ void MainWindow::styleSolarizedLight()
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-light.css"));
 
     styleLabel->setText(ui->actionSolarizedLight->text());
+    options->setLastUsedStyle(ui->actionSolarizedLight->objectName());
 }
 
 void MainWindow::styleSolarizedDark()
@@ -506,6 +520,7 @@ void MainWindow::styleSolarizedDark()
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-dark.css"));
 
     styleLabel->setText(ui->actionSolarizedDark->text());
+    options->setLastUsedStyle(ui->actionSolarizedDark->objectName());
 }
 
 void MainWindow::styleClearness()
@@ -516,6 +531,7 @@ void MainWindow::styleClearness()
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness.css"));
 
     styleLabel->setText(ui->actionClearness->text());
+    options->setLastUsedStyle(ui->actionClearness->objectName());
 }
 
 void MainWindow::styleClearnessDark()
@@ -526,6 +542,7 @@ void MainWindow::styleClearnessDark()
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness-dark.css"));
 
     styleLabel->setText(ui->actionClearnessDark->text());
+    options->setLastUsedStyle(ui->actionClearnessDark->objectName());
 }
 
 void MainWindow::styleBywordDark()
@@ -536,6 +553,7 @@ void MainWindow::styleBywordDark()
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/byword-dark.css"));
 
     styleLabel->setText(ui->actionBywordDark->text());
+    options->setLastUsedStyle(ui->actionBywordDark->objectName());
 }
 
 void MainWindow::styleCustomStyle()
@@ -548,6 +566,7 @@ void MainWindow::styleCustomStyle()
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl::fromLocalFile(action->data().toString()));
 
     styleLabel->setText(action->text());
+    options->setLastUsedStyle(action->objectName());
 }
 
 void MainWindow::viewFullScreenMode()
@@ -572,6 +591,13 @@ void MainWindow::extrasShowSpecialCharacters(bool checked)
 {
     options->setShowSpecialCharactersEnabled(checked);
     ui->plainTextEdit->setShowSpecialCharacters(checked);
+}
+
+void MainWindow::extrasYamlHeaderSupport(bool checked)
+{
+    options->setYamlHeaderSupportEnabled(checked);
+    ui->plainTextEdit->setYamlHeaderSupportEnabled(checked);
+    plainTextChanged();
 }
 
 void MainWindow::extrasWordWrap(bool checked)

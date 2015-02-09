@@ -30,6 +30,7 @@
 #include <template/template.h>
 
 #include "options.h"
+#include "yamlheaderchecker.h"
 
 HtmlPreviewGenerator::HtmlPreviewGenerator(Options *opt, QObject *parent) :
     QThread(parent),
@@ -48,9 +49,14 @@ bool HtmlPreviewGenerator::isSupported(MarkdownConverter::ConverterOption option
 
 void HtmlPreviewGenerator::markdownTextChanged(const QString &text)
 {
+    // cut YAML header
+    YamlHeaderChecker checker(text);
+    QString actualText = checker.hasHeader() && options->isYamlHeaderSupportEnabled() ?
+                            checker.body()
+                          : text;
     // enqueue task to parse the markdown text and generate a new HTML document
     QMutexLocker locker(&tasksMutex);
-    tasks.enqueue(text);
+    tasks.enqueue(actualText);
     bufferNotEmpty.wakeOne();
 }
 
