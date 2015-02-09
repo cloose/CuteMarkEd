@@ -56,6 +56,7 @@ SOURCES += \
     tabletooldialog.cpp \
     imagetooldialog.cpp \
     snippetcompleter.cpp \
+    snippetstablemodel.cpp \
     aboutdialog.cpp
 
 win32 {
@@ -90,6 +91,7 @@ HEADERS  += \
     tabletooldialog.h \
     imagetooldialog.h \
     snippetcompleter.h \
+    snippetstablemodel.h \
     aboutdialog.h
 
 FORMS    += \
