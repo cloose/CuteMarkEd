@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2014-2015 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,8 @@
 #include "htmlpreviewcontroller.h"
 
 #include <QAction>
+#include <QNetworkDiskCache>
+#include <QStandardPaths>
 #include <QWebView>
 
 static const qreal ZOOM_CHANGE_VALUE = 0.1;
@@ -26,13 +28,16 @@ HtmlPreviewController::HtmlPreviewController(QWebView *view, QObject *parent) :
     view(view),
     zoomInAction(0),
     zoomOutAction(0),
-    zoomResetAction(0)
+    zoomResetAction(0),
+    diskCache(new QNetworkDiskCache(this))
 {
     createActions();
     registerActionsWithView();
 
     // use registered actions as custom context menu
     view->setContextMenuPolicy(Qt::ActionsContextMenu);
+
+    setupNetworkDiskCache();
 }
 
 void HtmlPreviewController::createActions()
@@ -63,6 +68,15 @@ void HtmlPreviewController::registerActionsWithView()
     view->addAction(zoomInAction);
     view->addAction(zoomOutAction);
     view->addAction(zoomResetAction);
+}
+
+void HtmlPreviewController::setupNetworkDiskCache()
+{
+    // setup disk cache for network access
+    QString cacheDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+    diskCache->setCacheDirectory(cacheDir);
+
+    view->page()->networkAccessManager()->setCache(diskCache);
 }
 
 void HtmlPreviewController::zoomInView()

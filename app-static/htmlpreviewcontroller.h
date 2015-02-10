@@ -20,6 +20,7 @@
 #include <QObject>
 
 class QAction;
+class QNetworkDiskCache;
 class QWebView;
 
 class HtmlPreviewController : public QObject
@@ -37,12 +38,15 @@ private:
     void createActions();
     QAction *createAction(const QString &text, const QKeySequence &shortcut);
     void registerActionsWithView();
+
+    void setupNetworkDiskCache();
     
 private:
     QWebView *view;
     QAction *zoomInAction;
     QAction *zoomOutAction;
     QAction *zoomResetAction;
+    QNetworkDiskCache *diskCache;
 };
 
 #endif // HTMLPREVIEWCONTROLLER_H

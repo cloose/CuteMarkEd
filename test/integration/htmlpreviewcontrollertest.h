@@ -37,6 +37,8 @@ private slots:
     void zoomsOutOnCtrlMinusKeyPress();
     void resetsZoomOnCtrlZeroKeyPress();
 
+    void setupsNetworkDiskCache();
+
 private:
     QWebView *webView;
     HtmlPreviewController *controller;

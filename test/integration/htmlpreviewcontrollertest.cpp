@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2014-2015 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,4 +96,9 @@ void HtmlPreviewControllerTest::resetsZoomOnCtrlZeroKeyPress()
     QTest::keyClick(webView, Qt::Key_0, Qt::ControlModifier);
 
     QCOMPARE(webView->zoomFactor(), 1.0);
+}
+
+void HtmlPreviewControllerTest::setupsNetworkDiskCache()
+{
+    QVERIFY(webView->page()->networkAccessManager()->cache() != 0);
 }

@@ -25,7 +25,6 @@
 #include <QInputDialog>
 #include <QLabel>
 #include <QMessageBox>
-#include <QNetworkDiskCache>
 #include <QNetworkProxy>
 #include <QPrintDialog>
 #include <QPrinter>
@@ -72,7 +71,6 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     options(new Options(this)),
-    diskCache(new QNetworkDiskCache(this)),
     styleLabel(0),
     wordCountLabel(0),
     viewLabel(0),
@@ -153,10 +151,6 @@ void MainWindow::initializeApp()
 
     // allow loading of remote javascript
     QWebSettings::globalSettings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
-
-    // setup disk cache for network access
-    QString cacheDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
-    diskCache->setCacheDirectory(cacheDir);
 
     ui->webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
     QWebInspector *inspector = new QWebInspector();
@@ -783,8 +777,6 @@ void MainWindow::plainTextChanged()
 
 void MainWindow::htmlResultReady(const QString &html)
 {
-    ui->webView->page()->networkAccessManager()->setCache(diskCache);
-
     // show html preview
     QUrl baseUrl;
     if (fileName.isEmpty()) {

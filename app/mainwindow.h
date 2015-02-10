@@ -28,7 +28,6 @@ class MainWindow;
 class QAction;
 class QActionGroup;
 class QLabel;
-class QNetworkDiskCache;
 class ActiveLabel;
 class Dictionary;
 class HtmlPreviewController;
@@ -151,7 +150,6 @@ private:
     Ui::MainWindow *ui;
     RecentFilesMenu *recentFilesMenu;
     Options *options;
-    QNetworkDiskCache *diskCache;
     QActionGroup *stylesGroup;
     QLabel *styleLabel;
     QLabel *wordCountLabel;
