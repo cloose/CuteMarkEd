@@ -145,6 +145,7 @@ void MainWindow::initializeApp()
     ui->actionWordWrap->setChecked(options->isWordWrapEnabled());
     ui->actionCheckSpelling->setChecked(options->isSpellingCheckEnabled());
     ui->plainTextEdit->setSpellingCheckEnabled(options->isSpellingCheckEnabled());
+    ui->actionYamlHeaderSupport->setChecked(options->isYamlHeaderSupportEnabled());
 
     // set url to markdown syntax help
     ui->webView_2->setUrl(tr("qrc:/syntax.html"));
