@@ -19,7 +19,7 @@
 
 #include <QAbstractTableModel>
 
-class Snippet;
+struct Snippet;
 class SnippetCollection;
 
 class SnippetsTableModel : public QAbstractTableModel
