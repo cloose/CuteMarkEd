@@ -161,15 +161,15 @@ else:unix: LIBS += -L$$OUT_PWD/../app-static/ -lapp-static
 INCLUDEPATH += $$PWD/../app-static
 DEPENDPATH += $$PWD/../app-static
 
-win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../app-static/release/libapp-static.a
-else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../app-static/debug/libapp-static.a
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../app-static/release/libapp-static.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../app-static/debug/libapp-static.a
+else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../app-static/release/app-static.lib
+else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../app-static/debug/app-static.lib
 else:unix: PRE_TARGETDEPS += $$OUT_PWD/../app-static/libapp-static.a
 
 # discount
-win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/release/ -ldiscount
-else:win32-g++:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/debug/ -ldiscount
-else:win32-msvc*:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/release/ -llibdiscount
-else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/debug/ -llibdiscount
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/release/ -ldiscount
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/debug/ -ldiscount
 else:unix: LIBS += -L/usr/lib -lmarkdown
 
 win32:INCLUDEPATH += $$PWD/../3rdparty/discount
@@ -184,15 +184,15 @@ else:unix: LIBS += -L$$OUT_PWD/../libs/peg-markdown-highlight/ -lpmh-adapter
 INCLUDEPATH += $$PWD/../libs/
 DEPENDPATH += $$PWD/../libs/peg-markdown-highlight
 
-win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../libs/peg-markdown-highlight/release/libpmh-adapter.a
-else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../libs/peg-markdown-highlight/debug/libpmh-adapter.a
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../libs/peg-markdown-highlight/release/libpmh-adapter.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../libs/peg-markdown-highlight/debug/libpmh-adapter.a
+else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../libs/peg-markdown-highlight/release/pmh-adapter.lib
+else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../libs/peg-markdown-highlight/debug/pmh-adapter.lib
 else:unix: PRE_TARGETDEPS += $$OUT_PWD/../libs/peg-markdown-highlight/libpmh-adapter.a
 
 # peg-markdown-highlight
-win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/peg-markdown-highlight/release/ -lpmh
-else:win32-g++:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/peg-markdown-highlight/debug/ -lpmh
-else:win32-msvc*:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/peg-markdown-highlight/release/ -llibpmh
-else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/peg-markdown-highlight/debug/ -llibpmh
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/peg-markdown-highlight/release/ -lpmh
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/peg-markdown-highlight/debug/ -lpmh
 else:unix: LIBS += -L$$OUT_PWD/../3rdparty/peg-markdown-highlight/ -lpmh
 
 INCLUDEPATH += $$PWD/../3rdparty/peg-markdown-highlight
@@ -200,8 +200,8 @@ DEPENDPATH += $$PWD/../3rdparty/peg-markdown-highlight
 
 win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/peg-markdown-highlight/release/libpmh.a
 else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/peg-markdown-highlight/debug/libpmh.a
-else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/peg-markdown-highlight/release/libpmh.lib
-else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/peg-markdown-highlight/debug/libpmh.lib
+else:win32-msvc*:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/peg-markdown-highlight/release/pmh.lib
+else:win32-msvc*:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/peg-markdown-highlight/debug/pmh.lib
 else:unix: PRE_TARGETDEPS += $$OUT_PWD/../3rdparty/peg-markdown-highlight/libpmh.a
 
 # hunspell

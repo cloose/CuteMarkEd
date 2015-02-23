@@ -19,7 +19,7 @@
 
 YamlHeaderChecker::YamlHeaderChecker(const QString &text)
 {
-    QRegularExpression rx(QStringLiteral(R"(^---\s*\n(.*?\n)?(---|\.\.\.)\s*(\n|$))"),
+    QRegularExpression rx(R"(^---\s*\n(.*?\n)?(---|\.\.\.)\s*(\n|$))",
                           QRegularExpression::DotMatchesEverythingOption);
     QRegularExpressionMatch match = rx.match(text);
     if (match.hasMatch()) {
