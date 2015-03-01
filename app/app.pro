@@ -23,6 +23,7 @@ TRANSLATIONS += \
     translations/cutemarked_el.ts \
     translations/cutemarked_es.ts \
     translations/cutemarked_fr.ts \
+    translations/cutemarked_id.ts \
     translations/cutemarked_ja.ts \
     translations/cutemarked_pt_BR.ts \
     translations/cutemarked_ru.ts \
@@ -118,6 +119,7 @@ OTHER_FILES += \
     syntax_cs.html \
     syntax_de.html \
     syntax_el.html \
+    syntax_id.html \
     syntax_ja.html \
     syntax_zh_CN.html \
     styles/solarized-dark.css \

@@ -1,0 +1,236 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 10pt;
+}
+pre {
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  font-size: 10pt;
+}
+table, td, th {
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+}
+table {
+  width: 100%;
+}
+th {
+  text-align: left;
+  background: #eeeeee;
+  padding: 3px;
+}
+</style>
+<title>Referensi Sintaksis Markdown</title>
+</head>
+<body>
+
+  <h3>TAJUK</h3>
+
+  <table>
+<thead><tr>
+<th>Masukan Markdown</th>
+      <th>Hasil Keluaran</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre># Tajuk Satu
+
+ ## Tajuk Dua
+
+ ### Tajuk Tiga
+
+ #### Tajuk Empat
+
+ ##### Tajuk Lima
+
+ ###### Tajuk Enam</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Tajuk Satu</h1>
+      <h2>Tajuk Dua</h2>
+      <h3>Tajuk Tiga</h3>
+      <h4>Tajuk Empat</h4>
+      <h5>Tajuk Lima</h5>
+      <h6>Tajuk Enam</h6>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Tajuk Satu
+ ===========
+
+ Tajuk Dua
+ -----------</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Tajuk Satu</h1>
+      <h2>Tajuk Dua</h2>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>PARAGRAF</h3>
+
+  <table>
+<thead><tr>
+<th>Masukan Markdown</th>
+      <th>Hasil Keluaran</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>Sebuah paragraf hanyalah satu
+ baris teks berurutan atau lebih,
+ yang dipisahkan oleh satu
+ baris kosong atau lebih.
+
+ Ini adalah paragraf lainnya.</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Sebuah paragraf hanyalah satu baris teks berurutan atau lebih, yang dipisahkan oleh satu baris kosong atau lebih.</p>
+      <p>Ini adalah paragraf lainnya.</p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Untuk membuat pemisah
+ baris, akhiri baris dalam
+ paragraf dengan dua spasi
+ atau lebih.</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Untuk membuat pemisah<br>baris, akhiri baris dalam<br>paragraf dengan dua spasi<br>atau lebih.</p>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>SENARAI</h3>
+
+  <table>
+<thead><tr>
+<th>Masukan Markdown</th>
+      <th>Hasil Keluaran</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>* Butir 1
+ * Butir 2
+ * Butir 3
+
+ + Butir 1
+ + Butir 2
+ + Butir 3
+
+ - Butir 1
+ - Butir 2
+ - Butir 3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>Butir 1</li>
+        <li>Butir 2</li>
+        <li>Butir 3</li>
+      </ul>
+<ul>
+<li>Butir 1</li>
+        <li>Butir 2</li>
+        <li>Butir 3</li>
+      </ul>
+<ul>
+<li>Butir 1</li>
+        <li>Butir 2</li>
+        <li>Butir 3</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>1. Butir 1
+ 2. Butir 2
+ 3. Butir 3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ol>
+<li>Butir 1</li>
+        <li>Butir 2</li>
+        <li>Butir 3</li>
+      </ol>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>* Butir 1
+   1. Butir 2
+      + Butir 3
+   2. Butir 4</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>Butir 1<ol>
+<li>Butir 2<ul>
+<li>Butir 3</li>
+          </ul>
+</li>
+          <li>Butir 4</li>
+        </ol>
+</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Istilah
+ : Definisi</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <dl>
+<dt>Istilah<dt>
+        </dt>
+</dt>
+<dd>Definisi</dd>
+      </dl>
+</td>
+    </tr>
+</tbody>
+</table>
+<h3>PENEKANAN</h3>
+
+  <table>
+<thead><tr>
+<th>Masukan Markdown</th>
+      <th>Hasil Keluaran</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>Aku *ditegaskan*
+
+ Aku _ditegaskan_</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Aku <em>ditegaskan</em></p>
+
+      <p>Aku <em>ditegaskan</em></p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Aku **tebal**
+
+ Aku __tebal__</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Aku <strong>tebal</strong></p>
+
+      <p>Aku <strong>tebal</strong></p>
+      </td>
+    </tr>
+</tbody>
+</table>
+</body>
+</html>
