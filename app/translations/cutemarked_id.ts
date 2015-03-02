@@ -339,7 +339,7 @@
         <location filename="../mainwindow.ui" line="373"/>
         <location filename="../mainwindow.cpp" line="169"/>
         <source>qrc:/syntax.html</source>
-        <translation>qrc:/syntax.html</translation>
+        <translation>qrc:/syntax_id.html</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="383"/>
