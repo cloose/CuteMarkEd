@@ -213,14 +213,34 @@ message("Using LIBS=$$LIBS")
 
 unix {
    isEmpty(PREFIX): PREFIX = /usr
+   DATADIR = $${PREFIX}/share
 
    # install desktop file
-   desktop.path = $${PREFIX}/share/applications
+   desktop.path = $${DATADIR}/applications
    desktop.files += cutemarked.desktop
+
+   # install icons
+   icon16.path = $${DATADIR}/icons/hicolor/16x16/apps
+   icon16.files = icons/16x16/cutemarked.png
+
+   icon32.path = $${DATADIR}/icons/hicolor/32x32/apps
+   icon32.files = icons/32x32/cutemarked.png
+
+   icon48.path = $${DATADIR}/icons/hicolor/48x48/apps
+   icon48.files = icons/48x48/cutemarked.png
+
+   icon64.path = $${DATADIR}/icons/hicolor/64x64/apps
+   icon64.files = icons/64x64/cutemarked.png
+
+   icon128.path = $${DATADIR}/icons/hicolor/128x128/apps
+   icon128.files = icons/128x128/cutemarked.png
+
+   iconsvg.path = $${DATADIR}/icons/hicolor/scalable/apps
+   iconsvg.files = icons/scalable/cutemarked.svg
 
    # install application
    target.path = $${PREFIX}/bin
 
-   INSTALLS += target desktop
+   INSTALLS += target desktop icon16 icon32 icon48 icon64 icon128 iconsvg
    message("The project will be installed in prefix $${PREFIX}")
 }

@@ -35,7 +35,7 @@
     <qresource prefix="/icons">
         <file alias="icon-close.png">images/icon-close.png</file>
         <file>app-icon.ico</file>
-        <file alias="app-icon-64.png">icons/app-icon-64.png</file>
+        <file alias="app-icon-64.png">icons/64x64/cutemarked.png</file>
     </qresource>
     <qresource prefix="/scripts">
         <file alias="highlight.js/highlight.pack.js">scripts/highlight.js/highlight.pack.js</file>
