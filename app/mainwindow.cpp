@@ -906,6 +906,8 @@ void MainWindow::setupUi()
             this, SLOT(markdownConverterChanged()));
 
     readSettings();
+
+    ui->actionFullScreenMode->setChecked(this->isFullScreen());
 }
 
 void MainWindow::setupActions()

@@ -73,6 +73,7 @@ private slots:
     void addWordToUserWordlist();
 
 private:
+    bool isUrlToLocalFile(const QMimeData *source) const;
     void drawLineEndMarker(QPaintEvent *e);
     QString textUnderCursor() const;
 
