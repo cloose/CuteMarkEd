@@ -1,33 +1,33 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="da" version="2.1">
 <context>
     <name>AboutDialog</name>
     <message>
         <location filename="../aboutdialog.ui" line="14"/>
         <source>About CuteMarkEd</source>
-        <translation>关于 CuteMardEd</translation>
+        <translation>Om CuteMarkEd</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="70"/>
         <source>&amp;About</source>
         <extracomment>Tab with information about the application</extracomment>
-        <translation>关于(&amp;A)</translation>
+        <translation>&amp;Om</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="103"/>
         <source>A&amp;uthors</source>
         <extracomment>Tab with information about the authors of the application</extracomment>
-        <translation>作者(&amp;u)</translation>
+        <translation>&amp;Forfattere</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="156"/>
         <source>&amp;Thanks To</source>
         <extracomment>Tab with information about 3rd party libraries</extracomment>
-        <translation>感谢(&amp;T)</translation>
+        <translation>&amp;Tak Til</translation>
     </message>
     <message>
         <location filename="../aboutdialog.cpp" line="16"/>
         <source>Qt-based, free and open source markdown editor with live HTML preview</source>
-        <translation>基于 Qt , 提供 HTML 实时预览功能的开源 Markdown 编辑器</translation>
+        <translation>Qt-baseret, gratis og open source markdown editor med HTML forhåndsvisning</translation>
     </message>
 </context>
 <context>
@@ -35,12 +35,12 @@
     <message>
         <location filename="../exporthtmldialog.ui" line="14"/>
         <source>Export to HTML</source>
-        <translation>导出为HTML</translation>
+        <translation>Eksporter til HTML</translation>
     </message>
     <message>
         <location filename="../exporthtmldialog.ui" line="23"/>
         <source>Export to:</source>
-        <translation>导出为:</translation>
+        <translation>Eksporter til:</translation>
     </message>
     <message>
         <location filename="../exporthtmldialog.ui" line="51"/>
@@ -50,27 +50,27 @@
     <message>
         <location filename="../exporthtmldialog.ui" line="70"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;embed the current CSS style into the exported HTML&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;将当前样式表嵌入到导出的HTML&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;integrér det nuværende CSS style i den eksporterede HTML&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../exporthtmldialog.ui" line="73"/>
         <source>Include CSS style</source>
-        <translation>内嵌样式表</translation>
+        <translation>Inkludér CSS style</translation>
     </message>
     <message>
         <location filename="../exporthtmldialog.ui" line="86"/>
         <source>Include Code Highlighting Javascript</source>
-        <translation>内嵌代码高亮 Javascript</translation>
+        <translation>Inkludér Javascript til fremhævning af kode</translation>
     </message>
     <message>
         <location filename="../exporthtmldialog.cpp" line="74"/>
         <source>Export to HTML...</source>
-        <translation>导出为HTML...</translation>
+        <translation>Eksportér til HTML</translation>
     </message>
     <message>
         <location filename="../exporthtmldialog.cpp" line="75"/>
         <source>HTML Files (*.html *.htm);;All Files (*)</source>
-        <translation>HTML Files (*.html *.htm);;All Files (*)</translation>
+        <translation>HTML Filer (*.html *.htm);;Alle Filer (*)</translation>
     </message>
 </context>
 <context>
@@ -78,12 +78,12 @@
     <message>
         <location filename="../exportpdfdialog.ui" line="14"/>
         <source>Export to PDF</source>
-        <translation>导出为PDF</translation>
+        <translation>Eksportér til PDF</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.ui" line="20"/>
         <source>Export to:</source>
-        <translation>导出为:</translation>
+        <translation>Eksportér til:</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.ui" line="45"/>
@@ -93,37 +93,37 @@
     <message>
         <location filename="../exportpdfdialog.ui" line="54"/>
         <source>Paper Size:</source>
-        <translation>纸张大小:</translation>
+        <translation>Papirformat:</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.ui" line="64"/>
         <source>Orientation:</source>
-        <translation>方向:</translation>
+        <translation>Retning:</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.ui" line="71"/>
         <source>Portrait</source>
-        <translation>纵向</translation>
+        <translation>Stående</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.ui" line="81"/>
         <source>Landscape</source>
-        <translation>横向</translation>
+        <translation>Liggende</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.cpp" line="41"/>
         <source>A4 (210 x 297 mm, 8.26 x 11.69 inches)</source>
-        <translation>A4 (210 x 297 mm, 8.26 x 11.69 inches)</translation>
+        <translation>A4 (210 x 297 mm, 8,26 x 11,69 tommer)</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.cpp" line="42"/>
         <source>Letter (8.5 x 11 inches, 215.9 x 279.4 mm)</source>
-        <translation>Letter (8.5 x 11 inches, 215.9 x 279.4 mm)</translation>
+        <translation>Letter (215,9 x 279,4 mm, 8,5 x 11 tommer)</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.cpp" line="43"/>
         <source>Legal (8.5 x 14 inches, 215.9 x 355.6 mm)</source>
-        <translation>Legal (8.5 x 14 inches, 215.9 x 355.6 mm)</translation>
+        <translation>Legal (215,9 x 355,6 mm, 8,5 x 14 tommer)</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.cpp" line="44"/>
@@ -148,17 +148,17 @@
     <message>
         <location filename="../exportpdfdialog.cpp" line="48"/>
         <source>B5 (176 x 250 mm, 6.93 x 9.84 inches)</source>
-        <translation>B5 (176 x 250 mm, 6.93 x 9.84 inches)</translation>
+        <translation>B5 (176 x 250 mm, 6,93 x 9,84 tommer)</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.cpp" line="93"/>
         <source>Export to PDF...</source>
-        <translation>导出为PDF...</translation>
+        <translation>Eksportér til PDF...</translation>
     </message>
     <message>
         <location filename="../exportpdfdialog.cpp" line="94"/>
         <source>PDF Files (*.pdf);;All Files (*)</source>
-        <translation>PDF Files (*.pdf);;All Files (*)</translation>
+        <translation>PDF Filer (*.pdf);;Alle Filer (*)</translation>
     </message>
 </context>
 <context>
@@ -166,27 +166,27 @@
     <message>
         <location filename="../controls/findreplacewidget.ui" line="14"/>
         <source>Find</source>
-        <translation>查找</translation>
+        <translation>Søg</translation>
     </message>
     <message>
         <location filename="../controls/findreplacewidget.ui" line="43"/>
         <source>Find:</source>
-        <translation>查找:</translation>
+        <translation>Søg:</translation>
     </message>
     <message>
         <location filename="../controls/findreplacewidget.ui" line="53"/>
         <source>Replace with:</source>
-        <translation>替换为:</translation>
+        <translation>Erstat med:</translation>
     </message>
     <message>
         <location filename="../controls/findreplacewidget.ui" line="87"/>
         <source>Replace</source>
-        <translation>替换</translation>
+        <translation>Erstat</translation>
     </message>
     <message>
         <location filename="../controls/findreplacewidget.ui" line="100"/>
         <source>Replace All</source>
-        <translation>替换所有</translation>
+        <translation>Erstat Alle</translation>
     </message>
     <message>
         <location filename="../controls/findreplacewidget.ui" line="177"/>
@@ -196,22 +196,22 @@
     <message>
         <location filename="../controls/findreplacewidget.cpp" line="133"/>
         <source>Case Sensitive</source>
-        <translation>区分大小写</translation>
+        <translation>Forskel på små og store bogstaver</translation>
     </message>
     <message>
         <location filename="../controls/findreplacewidget.cpp" line="137"/>
         <source>Whole Words Only</source>
-        <translation>全词匹配</translation>
+        <translation>Kun hele ord</translation>
     </message>
     <message>
         <location filename="../controls/findreplacewidget.cpp" line="141"/>
         <source>Use Regular Expressions</source>
-        <translation>使用正则表达式</translation>
+        <translation>Brug Regulære Udtryk</translation>
     </message>
     <message>
         <location filename="../controls/findreplacewidget.cpp" line="146"/>
         <source>Find Options</source>
-        <translation>查找选项</translation>
+        <translation>Søgeindstillinger</translation>
     </message>
 </context>
 <context>
@@ -219,17 +219,17 @@
     <message>
         <location filename="../imagetooldialog.ui" line="14"/>
         <source>Insert Image</source>
-        <translation>插入图像</translation>
+        <translation>Indsæt Billede</translation>
     </message>
     <message>
         <location filename="../imagetooldialog.ui" line="20"/>
         <source>Image Link:</source>
-        <translation>图像链接:</translation>
+        <translation>Billedadresse:</translation>
     </message>
     <message>
         <location filename="../imagetooldialog.ui" line="35"/>
         <source>http://example.com/image.jpg</source>
-        <translation>http://example.com/image.jpg</translation>
+        <translation>http://eksempel.dk/billede.jpg</translation>
     </message>
     <message>
         <location filename="../imagetooldialog.ui" line="42"/>
@@ -239,22 +239,22 @@
     <message>
         <location filename="../imagetooldialog.ui" line="51"/>
         <source>Alternate Text:</source>
-        <translation>替代文本:</translation>
+        <translation>Supplerende tekst:</translation>
     </message>
     <message>
         <location filename="../imagetooldialog.ui" line="68"/>
         <source>Optional Title:</source>
-        <translation>可选标题:</translation>
+        <translation>Valgfri Titel:</translation>
     </message>
     <message>
         <location filename="../imagetooldialog.cpp" line="52"/>
         <source>Open File</source>
-        <translation>打开文件</translation>
+        <translation>Åbn Fil</translation>
     </message>
     <message>
         <location filename="../imagetooldialog.cpp" line="54"/>
         <source>Images (*.bmp *.gif *.jpg *.jpe *.jpeg *.png *.tif *.tiff *.xpm);;All Files (*)</source>
-        <translation>Images (*.bmp *.gif *.jpg *.jpe *.jpeg *.png *.tif *.tiff *.xpm);;All Files (*)</translation>
+        <translation>Billeder (*.bmp *.gif *.jpg *.jpe *.jpeg *.png *.tif *.tiff *.xpm);;Alle Filer (*)</translation>
     </message>
 </context>
 <context>
@@ -262,7 +262,7 @@
     <message>
         <location filename="../controls/languagemenu.cpp" line="23"/>
         <source>Languages</source>
-        <translation>语言</translation>
+        <translation>Sprog</translation>
     </message>
 </context>
 <context>
@@ -276,115 +276,115 @@
     <message>
         <location filename="../mainwindow.ui" line="175"/>
         <source>&amp;File</source>
-        <translation>文件(&amp;F)</translation>
+        <translation>&amp;Filer</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="191"/>
         <source>&amp;Edit</source>
-        <translation>编辑(&amp;E)</translation>
+        <translation>&amp;Rediger</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="195"/>
         <source>Format</source>
-        <translation>格式化</translation>
+        <translation>Formater</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="209"/>
         <location filename="../mainwindow.ui" line="597"/>
         <source>Find/Replace</source>
-        <translation>查找/替换</translation>
+        <translation>Søg/Erstat</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="232"/>
         <source>&amp;Help</source>
-        <translation>帮助(&amp;F)</translation>
+        <translation>&amp;Hjælp</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="240"/>
         <source>&amp;View</source>
-        <translation>查看(&amp;V)</translation>
+        <translation>&amp;Vis</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="255"/>
         <source>E&amp;xtras</source>
-        <translation>其他(&amp;x)</translation>
+        <translation>&amp;Extras</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="259"/>
         <source>Styles</source>
-        <translation>样式</translation>
+        <translation>Typografier</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="271"/>
         <source>Markdown Extensions</source>
-        <translation>Markdown 扩展</translation>
+        <translation>Markdown Udvidelser</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="283"/>
         <source>Languages</source>
-        <translation>语言</translation>
+        <translation>Sprog</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="308"/>
         <source>Table of contents</source>
-        <translation>目录</translation>
+        <translation>Indholdsfortegnelse</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="347"/>
         <location filename="../mainwindow.ui" line="649"/>
         <source>Markdown Syntax</source>
-        <translation>Markdown语法</translation>
+        <translation>Markdown Syntaks</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="373"/>
         <location filename="../mainwindow.cpp" line="169"/>
         <source>qrc:/syntax.html</source>
-        <translation>qrc:/syntax_zh_CN.html</translation>
+        <translation>qrc:/syntax_da.html</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="383"/>
         <source>File Explorer</source>
-        <translation>文件浏览器</translation>
+        <translation>Stifinder</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="392"/>
         <source>E&amp;xit</source>
-        <translation>退出(&amp;x)</translation>
+        <translation>&amp;Afslut</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="397"/>
         <source>&amp;New</source>
-        <translation>新建(&amp;N)</translation>
+        <translation>&amp;Ny</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="402"/>
         <source>&amp;Open...</source>
-        <translation>打开(&amp;O)...</translation>
+        <translation>Å&amp;bn...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="407"/>
         <source>&amp;Save</source>
-        <translation>保存(&amp;S)</translation>
+        <translation>&amp;Gem</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="412"/>
         <source>Save &amp;As...</source>
-        <translation>另存为(&amp;A)...</translation>
+        <translation>Gem &amp;som...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="417"/>
         <source>&amp;Undo</source>
-        <translation>撤销(&amp;U)</translation>
+        <translation>Fo&amp;rtryd</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="422"/>
         <source>&amp;Redo</source>
-        <translation>重做(&amp;R)</translation>
+        <translation>&amp;Gentag</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="433"/>
         <source>Default</source>
-        <translation>默认</translation>
+        <translation>Standard</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="436"/>
@@ -424,98 +424,98 @@
     <message>
         <location filename="../mainwindow.ui" line="474"/>
         <source>&amp;About CuteMarkEd...</source>
-        <translation>关于CuteMarkEd(&amp;A)...</translation>
+        <translation>&amp;Om CuteMarkEd...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="479"/>
         <source>Export to HTML...</source>
-        <translation>导出为HTML...</translation>
+        <translation>Eksportér til HTML...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="484"/>
         <source>Export to PDF...</source>
-        <translation>导出为PDF...</translation>
+        <translation>Eksportér til PDF...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="489"/>
         <source>Split 1:1</source>
-        <translation>分屏 1:1</translation>
+        <translation>Opdel 1:1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="494"/>
         <source>Split 2:1</source>
-        <translation>分屏 2:1</translation>
+        <translation>Opdel 2:1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="499"/>
         <source>Split 1:2</source>
-        <translation>分屏 1:2</translation>
+        <translation>Opdel 1:2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="504"/>
         <source>Split 3:1</source>
-        <translation>分屏 3:1</translation>
+        <translation>Opdel 3:1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="509"/>
         <source>Split 1:3</source>
-        <translation>分屏 1:3</translation>
+        <translation>Opdel 1:3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="514"/>
         <source>Copy HTML to Clipboard</source>
-        <translation>复制HTML到剪贴板</translation>
+        <translation>Kopiér HTML til Udklipsholder</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="519"/>
         <source>Cu&amp;t</source>
-        <translation>剪切(&amp;t)</translation>
+        <translation>&amp;Klip</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="524"/>
         <source>&amp;Copy</source>
-        <translation>复制(&amp;C)</translation>
+        <translation>K&amp;opiér</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="529"/>
         <source>&amp;Paste</source>
-        <translation>粘贴(&amp;P)</translation>
+        <translation>Sæt i&amp;nd</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="534"/>
         <source>Strong</source>
-        <translation>粗体</translation>
+        <translation>Fed</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="539"/>
         <source>Emphasize</source>
-        <translation>斜体</translation>
+        <translation>Kursiv</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="544"/>
         <source>&amp;Print...</source>
-        <translation>打印(&amp;P)...</translation>
+        <translation>&amp;Udskriv...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="549"/>
         <location filename="../mainwindow.ui" line="686"/>
         <source>Strikethrough</source>
-        <translation>删除线</translation>
+        <translation>Gennemstreget</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="554"/>
         <source>Inline Code</source>
-        <translation>行内代码</translation>
+        <translation>Indlejret Kode</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="562"/>
         <source>Math Support</source>
-        <translation>数学支持</translation>
+        <translation>Understøttelse for Matematik</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="570"/>
         <source>Code Highlighting</source>
-        <translation>代码高亮</translation>
+        <translation>Fremhævning af kode</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="578"/>
@@ -540,7 +540,7 @@
     <message>
         <location filename="../mainwindow.ui" line="602"/>
         <source>Go to Line</source>
-        <translation>跳转到行</translation>
+        <translation>Gå til linje</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="605"/>
@@ -550,37 +550,37 @@
     <message>
         <location filename="../mainwindow.ui" line="610"/>
         <source>Center Paragraph</source>
-        <translation>段落居中</translation>
+        <translation>Centrér afsnit</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="615"/>
         <source>Hard Linebreak</source>
-        <translation>换行</translation>
+        <translation>Linjeskift</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="618"/>
         <source>Ctrl+Return</source>
-        <translation>Ctrl+Return</translation>
+        <translation>Ctrl+Enter</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="623"/>
         <source>Find Next</source>
-        <translation>下一个</translation>
+        <translation>Find næste</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="628"/>
         <source>Find Previous</source>
-        <translation>上一个</translation>
+        <translation>Find forrige</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="636"/>
         <source>Full Screen Mode</source>
-        <translation>全屏模式</translation>
+        <translation>Fuldskærmstilstand</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="641"/>
         <source>Blockquote</source>
-        <translation>引用</translation>
+        <translation>Citat</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="644"/>
@@ -593,7 +593,7 @@
         <location filename="../mainwindow.cpp" line="693"/>
         <location filename="../mainwindow.cpp" line="694"/>
         <source>HTML preview</source>
-        <translation>HTML预览</translation>
+        <translation>HTML forhåndsvisning</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="657"/>
@@ -604,27 +604,27 @@
         <location filename="../mainwindow.ui" line="665"/>
         <source>Show Special Characters</source>
         <extracomment>Option to show characters like line feed or tabs</extracomment>
-        <translation>显示特殊字符</translation>
+        <translation>Vis specielle tegn</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="670"/>
         <source>Options...</source>
-        <translation>选项...</translation>
+        <translation>Indstillinger...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="678"/>
         <source>Autolink</source>
-        <translation>自动链接</translation>
+        <translation>Autolink</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="694"/>
         <source>Alphabetic Lists</source>
-        <translation>字母列表</translation>
+        <translation>Alfabetisk ordnede lister</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="702"/>
         <source>Definition Lists</source>
-        <translation>定义列表</translation>
+        <translation>Definitionslister</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="710"/>
@@ -634,37 +634,37 @@
     <message>
         <location filename="../mainwindow.ui" line="715"/>
         <source>Language</source>
-        <translation>语言</translation>
+        <translation>Sprog</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="723"/>
         <source>Check Spelling</source>
-        <translation>检查拼写</translation>
+        <translation>Kontrollér stavning</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="728"/>
         <source>Increase Header Level</source>
-        <translation>提升标题等级</translation>
+        <translation>Forøg Overskriftsniveau</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="731"/>
         <source>Alt+Right</source>
-        <translation>Alt+Right</translation>
+        <translation>Alt+Højre piletast</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="736"/>
         <source>Decrease Header Level</source>
-        <translation>降低标题等级</translation>
+        <translation>Formindsk Overskriftsniveau</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="739"/>
         <source>Alt+Left</source>
-        <translation>Alt+Left</translation>
+        <translation>Alt+Venstre piletast</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="744"/>
         <source>Insert Table...</source>
-        <translation>插入表格...</translation>
+        <translation>Indsæt Tabel...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="747"/>
@@ -684,7 +684,7 @@
     <message>
         <location filename="../mainwindow.ui" line="760"/>
         <source>Insert Image...</source>
-        <translation>插入图像...</translation>
+        <translation>Indsæt Billede...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="763"/>
@@ -694,22 +694,22 @@
     <message>
         <location filename="../mainwindow.ui" line="771"/>
         <source>Horizontal Layout</source>
-        <translation>横向布局</translation>
+        <translation>Vandret Layout</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="779"/>
         <source>Footnotes</source>
-        <translation>脚注</translation>
+        <translation>Fodnoter</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="787"/>
         <source>Superscript</source>
-        <translation>上标</translation>
+        <translation>Hævet skrift</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="798"/>
         <source>Word Wrap</source>
-        <translation>自动换行</translation>
+        <translation>Tekstombrydning</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="186"/>
@@ -720,71 +720,71 @@
     <message>
         <location filename="../mainwindow.cpp" line="235"/>
         <source>Open File...</source>
-        <translation>打开文件...</translation>
+        <translation>Åbn Fil...</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="236"/>
         <location filename="../mainwindow.cpp" line="267"/>
         <source>Markdown Files (*.markdown *.md);;All Files (*)</source>
-        <translation>Markdown Files (*.markdown *.md);;All Files (*)</translation>
+        <translation>Markdown Filer (*.markdown *.md);;Alle Filer (*)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="266"/>
         <source>Save as...</source>
-        <translation>另存为...</translation>
+        <translation>Gem som...</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="338"/>
         <source>Print Document</source>
-        <translation>打印文档</translation>
+        <translation>Udskriv dokument</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="379"/>
         <source>Go to...</source>
-        <translation>跳转到...</translation>
+        <translation>Gå til...</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="380"/>
         <source>Line: </source>
         <comment>Line number in the Markdown editor</comment>
-        <translation>行:</translation>
+        <translation>Linje:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="684"/>
         <location filename="../mainwindow.cpp" line="685"/>
         <source>HTML source</source>
-        <translation>HTML源代码</translation>
+        <translation>HTML kildekode</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="715"/>
         <source>%1 words</source>
-        <translation>%1 个词语</translation>
+        <translation>%1 ord</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="716"/>
         <source>Lines: %1  Words: %2  Characters: %3</source>
-        <translation>行: %1  词语: %2  字符: %3</translation>
+        <translation>Linjer: %1  Ord: %2  Tegn: %3</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1002"/>
         <source>Change Preview Style</source>
-        <translation>修改预览样式</translation>
+        <translation>Skift forhåndsvisningstypografi</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1092"/>
         <source>Save Changes</source>
-        <translation>保存修改</translation>
+        <translation>Gem ændringer</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1093"/>
         <source>The document has been modified.&lt;br&gt;Do you want to save your changes?</source>
-        <translation>文件已修改.&lt;br&gt;需要保存吗?</translation>
+        <translation>Dokumentet er blevet ændret.&lt;br&gt;Vil du gemme dine ændringer?</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1117"/>
         <source>untitled.md</source>
         <extracomment>default file name for new markdown documents</extracomment>
-        <translation>untitled.md</translation>
+        <translation>unavngivet.md</translation>
     </message>
 </context>
 <context>
@@ -793,17 +793,17 @@
         <location filename="../markdowneditor.cpp" line="65"/>
         <source>Ctrl+Space</source>
         <comment>Complete</comment>
-        <translation>Ctrl+Space</translation>
+        <translation>Ctrl+Mellemrum</translation>
     </message>
     <message>
         <location filename="../markdowneditor.cpp" line="246"/>
         <source>Suggestions</source>
-        <translation>建议</translation>
+        <translation>Forslag</translation>
     </message>
     <message>
         <location filename="../markdowneditor.cpp" line="263"/>
         <source>Add to User Dictionary</source>
-        <translation>添加到用户词典</translation>
+        <translation>Tilføj til brugerordbog</translation>
     </message>
 </context>
 <context>
@@ -811,28 +811,28 @@
     <message>
         <location filename="../optionsdialog.ui" line="14"/>
         <source>Options...</source>
-        <translation>选项...</translation>
+        <translation>Indstillinger...</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="24"/>
         <source>General</source>
-        <translation>默认</translation>
+        <translation>Generelt</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="30"/>
         <source>Markdown Converter</source>
-        <translation>Markdown 翻译器</translation>
+        <translation>Markdown Converter</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="36"/>
         <source>Converter Library:</source>
-        <translation>翻译词典:</translation>
+        <translation>Converterbibliotek:</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="44"/>
         <source>Discount (Default)</source>
         <extracomment>Name of a Markdown to HTML converter library</extracomment>
-        <translation>Discount (默认)</translation>
+        <translation>Discount (Standard)</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="49"/>
@@ -843,27 +843,27 @@
     <message>
         <location filename="../optionsdialog.ui" line="54"/>
         <source>Reveal.js (Presentation)</source>
-        <translation>Reveal.js (展示)</translation>
+        <translation>Reveal.js (Præsentation)</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="79"/>
         <source>Editor</source>
-        <translation>编辑器</translation>
+        <translation>Editor</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="85"/>
         <source>Font</source>
-        <translation>文字</translation>
+        <translation>Skrifttype</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="91"/>
         <source>Family:</source>
-        <translation>字体:</translation>
+        <translation>Familie:</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="101"/>
         <source>Size:</source>
-        <translation>字号:</translation>
+        <translation>Størrelse:</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="114"/>
@@ -873,78 +873,78 @@
     <message>
         <location filename="../optionsdialog.ui" line="120"/>
         <source>Tab width:</source>
-        <translation>制表符宽度:</translation>
+        <translation>Tab bredde:</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="170"/>
         <source>Internet</source>
-        <translation>网络</translation>
+        <translation>Internet</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="176"/>
         <source>Configure Proxy to Access the Internet</source>
-        <translation>配置网络代理</translation>
+        <translation>Konfigurér Proxy for Tilgang til Internettet</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="182"/>
         <source>No proxy</source>
-        <translation>不使用代理</translation>
+        <translation>Ingen proxy</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="192"/>
         <source>Use system proxy settings</source>
-        <translation>使用系统代理设置</translation>
+        <translation>Brug systemindstillinger for proxy</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="199"/>
         <source>Manual proxy configuration:</source>
-        <translation>手动配置代理:</translation>
+        <translation>Manuel proxy konfiguration:</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="215"/>
         <source>Host:</source>
-        <translation>服务器地址:</translation>
+        <translation>Host:</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="222"/>
         <source>Port:</source>
-        <translation>端口:</translation>
+        <translation>Port:</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="229"/>
         <source>User Name:</source>
-        <translation>用户名:</translation>
+        <translation>Brugernavn:</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="236"/>
         <source>Password:</source>
-        <translation>密码:</translation>
+        <translation>Password:</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="291"/>
         <source>Snippets</source>
-        <translation>片段</translation>
+        <translation>Tilføjelser</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="330"/>
         <source>Add</source>
-        <translation>添加</translation>
+        <translation>Tilføj</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="337"/>
         <source>Remove</source>
-        <translation>删除</translation>
+        <translation>Fjern</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="322"/>
         <source>Error</source>
         <comment>Title of error message box</comment>
-        <translation>错误</translation>
+        <translation>Fejl</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="322"/>
         <source>No snippet selected.</source>
-        <translation>未选择片段.</translation>
+        <translation>Ingen tilføjelse valgt.</translation>
     </message>
 </context>
 <context>
@@ -952,12 +952,12 @@
     <message>
         <location filename="../controls/recentfilesmenu.cpp" line="23"/>
         <source>Recent &amp;Files</source>
-        <translation>最近打开的文件(&amp;F)</translation>
+        <translation>Nylige &amp;dokumenter</translation>
     </message>
     <message>
         <location filename="../controls/recentfilesmenu.cpp" line="92"/>
         <source>Clear Menu</source>
-        <translation>清空列表</translation>
+        <translation>Ryd liste</translation>
     </message>
 </context>
 <context>
@@ -966,22 +966,22 @@
         <location filename="../optionsdialog.cpp" line="120"/>
         <source>Error</source>
         <comment>Title of error message box</comment>
-        <translation>错误</translation>
+        <translation>Fejl</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="120"/>
         <source>Not a valid trigger.</source>
-        <translation>无效的触发器.</translation>
+        <translation>Den valgte udløser er ikke gyldig</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="140"/>
         <source>Trigger</source>
-        <translation>触发器</translation>
+        <translation>Udløser</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="142"/>
         <source>Description</source>
-        <translation>描述</translation>
+        <translation>Beskrivelse</translation>
     </message>
 </context>
 <context>
@@ -989,47 +989,47 @@
     <message>
         <location filename="../tabletooldialog.ui" line="14"/>
         <source>Insert Table</source>
-        <translation>插入表格</translation>
+        <translation>Indsæt tabel</translation>
     </message>
     <message>
         <location filename="../tabletooldialog.ui" line="20"/>
         <source>Rows:</source>
-        <translation>行:</translation>
+        <translation>Rækker:</translation>
     </message>
     <message>
         <location filename="../tabletooldialog.ui" line="37"/>
         <source>Columns:</source>
-        <translation>列:</translation>
+        <translation>Kolonner:</translation>
     </message>
     <message>
         <location filename="../tabletooldialog.ui" line="54"/>
         <source>Table:</source>
-        <translation>表格:</translation>
+        <translation>Tabel:</translation>
     </message>
     <message>
         <location filename="../tabletooldialog.ui" line="70"/>
         <source>Headers</source>
-        <translation>标题</translation>
+        <translation>Overskrifter</translation>
     </message>
     <message>
         <location filename="../tabletooldialog.ui" line="77"/>
         <source>Alignment</source>
-        <translation>对齐</translation>
+        <translation>Justering</translation>
     </message>
     <message>
         <location filename="../tabletooldialog.cpp" line="114"/>
         <source>Left</source>
-        <translation>居左</translation>
+        <translation>Venstre</translation>
     </message>
     <message>
         <location filename="../tabletooldialog.cpp" line="115"/>
         <source>Center</source>
-        <translation>居中</translation>
+        <translation>Centreret</translation>
     </message>
     <message>
         <location filename="../tabletooldialog.cpp" line="116"/>
         <source>Right</source>
-        <translation>居右</translation>
+        <translation>Højre</translation>
     </message>
 </context>
 <context>
@@ -1037,7 +1037,7 @@
     <message>
         <location filename="../main.cpp" line="84"/>
         <source>The file to open.</source>
-        <translation>要打开的文件.</translation>
+        <translation>Filen der skal åbnes.</translation>
     </message>
 </context>
 </TS>

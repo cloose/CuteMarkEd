@@ -30,6 +30,7 @@
         <file>syntax_es.html</file>
         <file>syntax_pt_BR.html</file>
         <file>syntax_id.html</file>
+        <file>syntax_da.html</file>
         <file>template_presentation.html</file>
     </qresource>
     <qresource prefix="/icons">
