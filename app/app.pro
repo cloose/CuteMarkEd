@@ -19,6 +19,7 @@ unix {
 
 TRANSLATIONS += \
     translations/cutemarked_cs.ts \
+    translations/cutemarked_da.ts \
     translations/cutemarked_de.ts \
     translations/cutemarked_el.ts \
     translations/cutemarked_es.ts \
@@ -117,6 +118,7 @@ OTHER_FILES += \
     syntax.html \
     cutemarked.rc \
     syntax_cs.html \
+    syntax_da.html \
     syntax_de.html \
     syntax_el.html \
     syntax_id.html \

@@ -1,0 +1,236 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 10pt;
+}
+pre {
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  font-size: 10pt;
+}
+table, td, th {
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+}
+table {
+  width: 100%;
+}
+th {
+  text-align: left;
+  background: #eeeeee;
+  padding: 3px;
+}
+</style>
+<title>Markdown Syntax</title>
+</head>
+<body>
+
+  <h3>OVERSKRIFTER</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown input</th>
+      <th>Output</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre># Overskrift 1
+
+ ## Overskrift 2
+
+ ### Overskrift 3
+
+ #### Overskrift 4
+
+ ##### Overskrift 5
+
+ ###### Overskrift 6</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Overskrift 1</h1>
+      <h2>Overskrift 2</h2>
+      <h3>Overskrift 3</h3>
+      <h4>Overskrift 4</h4>
+      <h5>Overskrift 5</h5>
+      <h6>Overskrift 6</h6>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Overskrift 1
+ ============
+
+ Overskrift 2
+ ------------</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Overskrift 1</h1>
+      <h2>Overskrift 2</h2>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>AFSNIT</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown input</th>
+      <th>Output</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>Et afsnit er bare en
+eller flere på hinanden følgende
+linjer tekst, adskilt af en
+flere tomme linjer.
+
+Dette er et nyt afsnit.</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Et afsnit er bare en eller flere på hinanden følgende linjer tekst, adskilt af en eller flere tomme linjer.</p>
+      <p>Dette er et nyt afsnit.</p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>For at lave linjeskift,
+afslut en linje i et afsnit
+med to eller flere
+mellemrum.</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>For at lave linjeskift,<br>afslut en linje i et afsnit<br>med to eller flere<br>mellemrum.</p>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>LISTER</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown input</th>
+      <th>Output</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>* Punkt 1
+ * Punkt 2
+ * Punkt 3
+
+ + Punkt 1
+ + Punkt 2
+ + Punkt 3
+
+ - Punkt 1
+ - Punkt 2
+ - Punkt 3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>Punkt 1</li>
+        <li>Punkt 2</li>
+        <li>Punkt 3</li>
+      </ul>
+<ul>
+<li>Punkt 1</li>
+        <li>Punkt 2</li>
+        <li>Punkt 3</li>
+      </ul>
+<ul>
+<li>Punkt 1</li>
+        <li>Punkt 2</li>
+        <li>Punkt 3</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>1. Punkt 1
+2. Punkt 2
+3. Punkt 3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ol>
+<li>Punkt 1</li>
+        <li>Punkt 2</li>
+        <li>Punkt 3</li>
+      </ol>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>* Punkt 1
+   1. Punkt 2
+      + Punkt 3
+   2. Punkt 4</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>Punkt 1<ol>
+<li>Punkt 2<ul>
+<li>Punkt 3</li>
+          </ul>
+</li>
+          <li>Punkt 4</li>
+        </ol>
+</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Term
+: Definition</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <dl>
+<dt>Term<dt>
+        </dt>
+</dt>
+<dd>Definition</dd>
+      </dl>
+</td>
+    </tr>
+</tbody>
+</table>
+<h3>FREMHÆVNING</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown input</th>
+      <th>Output</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>Jeg er *kursiv*
+
+ Jeg er _kursiv_</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Jeg er <em>kursiv</em></p>
+
+      <p>Jeg er <em>kursiv</em></p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Jeg er **fed**
+
+Jeg er __fed__</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Jeg er <strong>fed</strong></p>
+
+      <p>Jeg er <strong>fed</strong></p>
+      </td>
+    </tr>
+</tbody>
+</table>
+</body>
+</html>
