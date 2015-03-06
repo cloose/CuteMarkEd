@@ -18,6 +18,23 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 ### NEWS
 
+#### Version 0.10.2
+
+New Features:
+
+* `NEW` Added Indonesian translation created by bedouin
+
+Improvements:
+
+* `IMPROVED` Updated Greek translation
+
+Fixes:
+
+* `FIXED` Copy & Paste problems on Windows (#161, #203)
+* `FIXED` Restore fullscreen Mode after startup (#164)
+* `FIXED` Build on Fedora with both Qt4 and Qt5 installed (#165)
+* `FIXED` Replaced generic editor icon with own icon on Linux
+
 #### Version 0.10.1 (Linux only)
 
 This release fixes some problems on Linux and hopefully makes the packaging for Linux easier.
