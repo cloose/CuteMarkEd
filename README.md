@@ -28,6 +28,7 @@ New Features:
 Improvements:
 
 * `IMPROVED` Updated Greek translation
+* `IMPROVED` Updated Chinese translation
 
 Fixes:
 
