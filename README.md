@@ -8,13 +8,12 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 ### DOWNLOAD
 
-[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.10.0.tar.gz)  
-[MS Windows (Installer)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.10.0.msi)  
-[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.10.0.zip)  
-[OpenSUSE 12.3 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
+[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.10.2.tar.gz)  
+[MS Windows (Installer)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.10.2.msi)  
+[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.10.2.zip)  
 [OpenSUSE 13.1 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
-[Fedora 19 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 [Fedora 20 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
+[Fedora 21 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 
 ### NEWS
 
