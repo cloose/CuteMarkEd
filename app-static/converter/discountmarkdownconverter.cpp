@@ -31,6 +31,8 @@
  */
 #include "discountmarkdownconverter.h"
 
+#include <QRegularExpression>
+
 extern "C" {
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -70,6 +72,10 @@ MarkdownDocument *DiscountMarkdownConverter::createDocument(const QString &text,
         if (!markdownText.endsWith('\n')) {
             markdownText.append('\n');
         }
+
+        QRegularExpression rx(R"(^(`{3}|~{3})mermaid\n([\s\S]*?)\g1$)",
+                              QRegularExpression::DotMatchesEverythingOption);
+        markdownText.replace(rx, "<div class=\"mermaid\">\n\\2</div>");
 
         unsigned long converterOptions = translateConverterOptions(options);
 

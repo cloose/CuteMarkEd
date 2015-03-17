@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2014-2015 Christian Loose <christian.loose@hamburg.de>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -40,7 +40,8 @@ public:
     enum RenderOption {
         ScrollbarSynchronization = 0x00000001,
         MathSupport              = 0x00000002,
-        CodeHighlighting         = 0x00000004
+        CodeHighlighting         = 0x00000004,
+        DiagramSupport           = 0x00000008
     };
     Q_DECLARE_FLAGS(RenderOptions, RenderOption)
 

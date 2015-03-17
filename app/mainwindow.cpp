@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2015 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1034,7 +1034,9 @@ void MainWindow::setupActions()
     // extras menu
     connect(ui->actionMathSupport, SIGNAL(triggered(bool)),
             generator, SLOT(setMathSupportEnabled(bool)));
-    connect(ui->actionCodeHighlighting, SIGNAL(triggered(bool)),
+    connect(ui->actionDiagramSupport, SIGNAL(triggered(bool)),
+            generator, SLOT(setDiagramSupportEnabled(bool)));
+     connect(ui->actionCodeHighlighting, SIGNAL(triggered(bool)),
             generator, SLOT(setCodeHighlightingEnabled(bool)));
     connect(ui->menuLanguages, SIGNAL(languageTriggered(Dictionary)),
             this, SLOT(languageChanged(Dictionary)));

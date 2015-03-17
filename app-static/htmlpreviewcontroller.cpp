@@ -65,6 +65,7 @@ QAction *HtmlPreviewController::createAction(const QString &text, const QKeySequ
 void HtmlPreviewController::registerActionsWithView()
 {
     view->addAction(view->pageAction(QWebPage::Copy));
+    view->addAction(view->pageAction(QWebPage::InspectElement));
     view->addAction(zoomInAction);
     view->addAction(zoomOutAction);
     view->addAction(zoomResetAction);

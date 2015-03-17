@@ -52,6 +52,7 @@ static const char* WORDWRAP_ENABLED = "wordwrap/enabled";
 static const char* SPELLINGCHECK_ENABLED = "spelling/enabled";
 static const char* DICTIONARY_LANGUAGE = "spelling/language";
 static const char* YAMLHEADERSUPPORT_ENABLED = "yamlheadersupport/enabled";
+static const char* DIAGRAMSUPPORT_ENABLED = "diagramsupport/enabled";
 
 Options::Options(QObject *parent) :
     QObject(parent),
@@ -70,6 +71,7 @@ Options::Options(QObject *parent) :
     m_showSpecialCharactersEnabled(false),
     m_wordWrapEnabled(true),
     m_spellingCheckEnabled(true),
+    m_diagramSupportEnabled(false),
     m_markdownConverter(DiscountMarkdownConverter),
     m_lastUsedStyle(STYLE_DEFAULT)
 {
@@ -367,6 +369,16 @@ void Options::setYamlHeaderSupportEnabled(bool enabled)
     m_yamlHeaderSupportEnabled = enabled;
 }
 
+bool Options::isDiagramSupportEnabled() const
+{
+    return m_diagramSupportEnabled;
+}
+
+void Options::setDiagramSupportEnabled(bool enabled)
+{
+    m_diagramSupportEnabled = enabled;
+}
+
 QString Options::dictionaryLanguage() const
 {
     return m_dictionaryLanguage;
@@ -456,6 +468,7 @@ void Options::readSettings()
     m_showSpecialCharactersEnabled = settings.value(SHOWSPECIALCHARACTERS_ENABLED, false).toBool();
     m_wordWrapEnabled = settings.value(WORDWRAP_ENABLED, true).toBool();
     m_yamlHeaderSupportEnabled = settings.value(YAMLHEADERSUPPORT_ENABLED, false).toBool();
+    m_diagramSupportEnabled = settings.value(DIAGRAMSUPPORT_ENABLED, false).toBool();
 
     // spelling check settings
     m_spellingCheckEnabled = settings.value(SPELLINGCHECK_ENABLED, true).toBool();
@@ -515,6 +528,7 @@ void Options::writeSettings()
     settings.setValue(SHOWSPECIALCHARACTERS_ENABLED, m_showSpecialCharactersEnabled);
     settings.setValue(WORDWRAP_ENABLED, m_wordWrapEnabled);
     settings.setValue(YAMLHEADERSUPPORT_ENABLED, m_yamlHeaderSupportEnabled);
+    settings.setValue(DIAGRAMSUPPORT_ENABLED, m_diagramSupportEnabled);
 
     // spelling check settings
     settings.setValue(SPELLINGCHECK_ENABLED, m_spellingCheckEnabled);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2014-2015 Christian Loose <christian.loose@hamburg.de>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -90,6 +90,11 @@ QString HtmlTemplate::buildHtmlHeader(RenderOptions options) const
         header += QString("<link rel=\"stylesheet\" href=\"qrc:/scripts/highlight.js/styles/%1.css\">\n").arg(codeHighlightingStyle());
         header += "<script src=\"qrc:/scripts/highlight.js/highlight.pack.js\"></script>\n";
         header += "<script>hljs.initHighlightingOnLoad();</script>\n";
+    }
+
+    // add mermaid.js script to HTML header
+    if (options.testFlag(Template::DiagramSupport)) {
+        header += "<script src=\"qrc:/scripts/mermaid/mermaid.full.min.js\"></script>\n";
     }
 
     return header;
