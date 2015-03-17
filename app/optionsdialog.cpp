@@ -94,8 +94,6 @@ OptionsDialog::OptionsDialog(Options *opt, SnippetCollection *collection, const 
     ui->tabWidget->setTabIcon(4, QIcon("fa-puzzle-piece.fontawesome"));
     ui->tabWidget->setTabIcon(5, QIcon("fa-keyboard-o.fontawesome"));
 
-    ui->fontComboBox->setFontFilters(QFontComboBox::MonospacedFonts);
-
     foreach (int size, QFontDatabase::standardSizes()) {
         ui->sizeComboBox->addItem(QString().setNum(size));
         ui->defaultSizeComboBox->addItem(QString().setNum(size));
