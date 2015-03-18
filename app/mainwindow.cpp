@@ -140,6 +140,7 @@ void MainWindow::initializeApp()
 
     // init option flags
     ui->actionMathSupport->setChecked(options->isMathSupportEnabled());
+    ui->actionDiagramSupport->setChecked(options->isDiagramSupportEnabled());
     ui->actionCodeHighlighting->setChecked(options->isCodeHighlightingEnabled());
     ui->actionShowSpecialCharacters->setChecked(options->isShowSpecialCharactersEnabled());
     ui->actionWordWrap->setChecked(options->isWordWrapEnabled());
