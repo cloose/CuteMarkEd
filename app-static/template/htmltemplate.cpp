@@ -32,6 +32,7 @@
 #include "htmltemplate.h"
 
 #include <QFile>
+#include <QRegularExpression>
 
 HtmlTemplate::HtmlTemplate()
 {
@@ -46,7 +47,15 @@ QString HtmlTemplate::render(const QString &body, RenderOptions options) const
     // add scrollbar synchronization
     options |= Template::ScrollbarSynchronization;
 
-    return renderAsHtml(QString(), body, options);
+    QString htmlBody(body);
+
+    // Mermaid and highlighting.js don't work nicely together
+    // So we need to replace the <code> section by a <div> section
+    if (options.testFlag(Template::CodeHighlighting) && options.testFlag(Template::DiagramSupport)) {
+        convertDiagramCodeSectionToDiv(htmlBody);
+    }
+
+    return renderAsHtml(QString(), htmlBody, options);
 }
 
 QString HtmlTemplate::exportAsHtml(const QString &header, const QString &body, RenderOptions options) const
@@ -98,4 +107,11 @@ QString HtmlTemplate::buildHtmlHeader(RenderOptions options) const
     }
 
     return header;
+}
+
+void HtmlTemplate::convertDiagramCodeSectionToDiv(QString &body) const
+{
+    static const QRegularExpression rx(QStringLiteral("<pre><code class=\"mermaid\">(.*?)</code></pre>"),
+                                       QRegularExpression::DotMatchesEverythingOption);
+    body.replace(rx, QStringLiteral("<div class=\"mermaid\">\n\\1</div>"));
 }

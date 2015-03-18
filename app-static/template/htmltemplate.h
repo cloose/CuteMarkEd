@@ -45,6 +45,7 @@ public:
 private:
     QString renderAsHtml(const QString &header, const QString &body, RenderOptions options) const;
     QString buildHtmlHeader(RenderOptions options) const;
+    void convertDiagramCodeSectionToDiv(QString &body) const;
 
     QString htmlTemplate;
 };
