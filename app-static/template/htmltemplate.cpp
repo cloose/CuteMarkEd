@@ -41,6 +41,11 @@ HtmlTemplate::HtmlTemplate()
     }
 }
 
+HtmlTemplate::HtmlTemplate(const QString &templateString) :
+	htmlTemplate(templateString)
+{
+}
+
 QString HtmlTemplate::render(const QString &body, RenderOptions options) const
 {
     // add scrollbar synchronization

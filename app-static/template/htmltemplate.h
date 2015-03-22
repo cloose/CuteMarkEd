@@ -38,6 +38,7 @@ class HtmlTemplate : public Template
 {
 public:
     HtmlTemplate();
+	explicit HtmlTemplate(const QString &templateString);
 
     virtual QString render(const QString &body, RenderOptions options) const;
     virtual QString exportAsHtml(const QString &header, const QString &body, RenderOptions options) const;
