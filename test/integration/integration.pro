@@ -13,6 +13,7 @@ CONFIG += console testcase
 SOURCES += \
     discountmarkdownconvertertest.cpp \
     htmlpreviewcontrollertest.cpp \
+    htmltemplatetest.cpp \
     jsonsnippetfiletest.cpp \
     main.cpp \
     pmhmarkdownparsertest.cpp \
@@ -21,6 +22,7 @@ SOURCES += \
 HEADERS += \
     discountmarkdownconvertertest.h \
     htmlpreviewcontrollertest.h \
+    htmltemplatetest.h \
     jsonsnippetfiletest.h \
     pmhmarkdownparsertest.h \
     revealmarkdownconvertertest.h

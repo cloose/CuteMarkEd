@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2015 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,6 +88,14 @@ QString HtmlPreviewGenerator::exportHtml(const QString &styleSheet, const QStrin
 void HtmlPreviewGenerator::setMathSupportEnabled(bool enabled)
 {
     options->setMathSupportEnabled(enabled);
+
+    // regenerate a HTML document
+    generateHtmlFromMarkdown();
+}
+
+void HtmlPreviewGenerator::setDiagramSupportEnabled(bool enabled)
+{
+    options->setDiagramSupportEnabled(enabled);
 
     // regenerate a HTML document
     generateHtmlFromMarkdown();
@@ -246,6 +254,11 @@ Template::RenderOptions HtmlPreviewGenerator::renderOptions() const
     // math support
     if (options->isMathSupportEnabled()) {
         renderOptionFlags |= Template::MathSupport;
+    }
+
+    // diagram support
+    if (options->isDiagramSupportEnabled()) {
+        renderOptionFlags |= Template::DiagramSupport;
     }
 
     // code highlighting

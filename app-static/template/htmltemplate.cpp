@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2014-2015 Christian Loose <christian.loose@hamburg.de>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -32,6 +32,7 @@
 #include "htmltemplate.h"
 
 #include <QFile>
+#include <QRegularExpression>
 
 HtmlTemplate::HtmlTemplate()
 {
@@ -41,12 +42,25 @@ HtmlTemplate::HtmlTemplate()
     }
 }
 
+HtmlTemplate::HtmlTemplate(const QString &templateString) :
+	htmlTemplate(templateString)
+{
+}
+
 QString HtmlTemplate::render(const QString &body, RenderOptions options) const
 {
     // add scrollbar synchronization
     options |= Template::ScrollbarSynchronization;
 
-    return renderAsHtml(QString(), body, options);
+    QString htmlBody(body);
+
+    // Mermaid and highlighting.js don't work nicely together
+    // So we need to replace the <code> section by a <div> section
+    if (options.testFlag(Template::CodeHighlighting) && options.testFlag(Template::DiagramSupport)) {
+        convertDiagramCodeSectionToDiv(htmlBody);
+    }
+
+    return renderAsHtml(QString(), htmlBody, options);
 }
 
 QString HtmlTemplate::exportAsHtml(const QString &header, const QString &body, RenderOptions options) const
@@ -92,5 +106,17 @@ QString HtmlTemplate::buildHtmlHeader(RenderOptions options) const
         header += "<script>hljs.initHighlightingOnLoad();</script>\n";
     }
 
+    // add mermaid.js script to HTML header
+    if (options.testFlag(Template::DiagramSupport)) {
+        header += "<script src=\"qrc:/scripts/mermaid/mermaid.full.min.js\"></script>\n";
+    }
+
     return header;
+}
+
+void HtmlTemplate::convertDiagramCodeSectionToDiv(QString &body) const
+{
+    static const QRegularExpression rx(QStringLiteral("<pre><code class=\"mermaid\">(.*?)</code></pre>"),
+                                       QRegularExpression::DotMatchesEverythingOption);
+    body.replace(rx, QStringLiteral("<div class=\"mermaid\">\n\\1</div>"));
 }

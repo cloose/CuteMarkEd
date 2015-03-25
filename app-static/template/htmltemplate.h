@@ -38,6 +38,7 @@ class HtmlTemplate : public Template
 {
 public:
     HtmlTemplate();
+	explicit HtmlTemplate(const QString &templateString);
 
     virtual QString render(const QString &body, RenderOptions options) const;
     virtual QString exportAsHtml(const QString &header, const QString &body, RenderOptions options) const;
@@ -45,6 +46,7 @@ public:
 private:
     QString renderAsHtml(const QString &header, const QString &body, RenderOptions options) const;
     QString buildHtmlHeader(RenderOptions options) const;
+    void convertDiagramCodeSectionToDiv(QString &body) const;
 
     QString htmlTemplate;
 };
