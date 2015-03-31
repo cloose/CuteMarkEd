@@ -2,9 +2,10 @@ os: MinGW
 
 environment:
     QTDIR: C:\Qt\5.4\mingw491_32
+    MINGW_DIR: C:\Qt\Tools\mingw491_32 
 
 install:
-    - set PATH=%PATH%;%QTDIR%\bin
+    - set PATH=%PATH%;%QTDIR%\bin;%MINGW_DIR%\bin
 
 before_build:
     - qmake CuteMarkEd.pro
