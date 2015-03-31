@@ -21,4 +21,5 @@ build_script:
     - mingw32-make
 
 test_script:
+    - cd test\unit
     - mingw32-make check
