@@ -6,9 +6,12 @@ environment:
 
 install:
     - set PATH=%PATH%;%QTDIR%\bin;%MINGW_DIR%\bin
+    - git submodule update --init --recursive
 
 before_build:
-    - qmake CuteMarkEd.pro
+    - mkdir build
+    - cd build
+    - qmake ..\CuteMarkEd.pro
 
 build_script:
     - mingw32-make
