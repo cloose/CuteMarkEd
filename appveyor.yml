@@ -1,5 +1,9 @@
 os: MinGW
 
+branches:
+    except:
+        - gh-pages
+
 environment:
     QTDIR: C:\Qt\5.4\mingw491_32
     MINGW_DIR: C:\Qt\Tools\mingw491_32 
@@ -15,3 +19,6 @@ before_build:
 
 build_script:
     - mingw32-make
+
+test_script:
+    - mingw32-make check
