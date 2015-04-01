@@ -86,7 +86,10 @@ https://github.com/cloose/CuteMarkEd/wiki/Build-Instructions
 
 ##### Status
 
-[![Build Status](https://travis-ci.org/cloose/CuteMarkEd.png)](https://travis-ci.org/cloose/CuteMarkEd)
+| Linux | Windows |
+|--|--|
+| [![Build Status](https://travis-ci.org/cloose/CuteMarkEd.png)](https://travis-ci.org/cloose/CuteMarkEd) | [![](https://ci.appveyor.com/api/projects/status/github/cloose/CuteMarkEd)](https://ci.appveyor.com/project/cloose/cutemarked) |
+
 [![Stories in Ready](https://badge.waffle.io/cloose/CuteMarkEd.png?label=ready)](https://waffle.io/cloose/CuteMarkEd)
 
 ### HELP NEEDED
