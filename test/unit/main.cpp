@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,10 +18,12 @@
 
 #include "dictionarytest.h"
 #include "jsonsnippettranslatortest.h"
+#include "jsontranslatorfactorytest.h"
 #include "slidelinemappingtest.h"
 #include "snippetcollectiontest.h"
-#include "snippetlistmodeltest.h"
+#include "completionlistmodeltest.h"
 #include "snippettest.h"
+#include "yamlheadercheckertest.h"
 
 int main(int argc, char *argv[])
 {
@@ -36,7 +38,7 @@ int main(int argc, char *argv[])
     SnippetCollectionTest test3;
     ret += QTest::qExec(&test3, argc, argv);
 
-    SnippetListModelTest test4;
+    CompletionListModelTest test4;
     ret += QTest::qExec(&test4, argc, argv);
 
     DictionaryTest test5;
@@ -44,6 +46,12 @@ int main(int argc, char *argv[])
 
     SlideLineMappingTest test6;
     ret += QTest::qExec(&test6, argc, argv);
+
+    JsonTranslatorFactoryTest test7;
+    ret += QTest::qExec(&test7, argc, argv);
+
+    YamlHeaderCheckerTest test8;
+    ret += QTest::qExec(&test8, argc, argv);
 
     return ret;
 }

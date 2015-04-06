@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -117,7 +117,7 @@ void MarkdownEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
         bottom = top + height;
 
         if (block.isVisible() && bottom >= event->rect().top()) {
-            painter.setPen(palette.color(QPalette::Dark));
+            painter.setPen(palette.windowText().color());
 
             bool selected = (
                                 (selStart < block.position() + block.length() && selEnd > block.position())
@@ -126,7 +126,7 @@ void MarkdownEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
 
             if (selected) {
                 painter.save();
-                painter.setPen(Qt::black);
+                painter.setPen(palette.highlight().color());
             }
 
             const QString number = QString::number(blockNumber + 1);
@@ -315,7 +315,8 @@ void MarkdownEditor::performCompletion()
     QRect popupRect = cursorRect();
     popupRect.setLeft(popupRect.left() + lineNumberAreaWidth());
 
-    completer->performCompletion(textUnderCursor(), popupRect);
+    QStringList words = extractDistinctWordsFromDocument();
+    completer->performCompletion(textUnderCursor(), words, popupRect);
 }
 
 void MarkdownEditor::insertSnippet(const QString &completionPrefix, const QString &completion, int newCursorPos)
@@ -454,6 +455,15 @@ void MarkdownEditor::setSnippetCompleter(SnippetCompleter *completer)
             this, SLOT(insertSnippet(QString,QString, int)));
 }
 
+void MarkdownEditor::setYamlHeaderSupportEnabled(bool enabled)
+{
+    highlighter->setYamlHeaderSupportEnabled(enabled);
+
+    // rehighlight markdown document
+    highlighter->reset();
+    highlighter->rehighlight();
+}
+
 void MarkdownEditor::gotoLine(int line)
 {
     QTextCursor cursor(document()->findBlockByNumber(line-1));
@@ -509,4 +519,41 @@ QString MarkdownEditor::textUnderCursor() const
 
 
     return cursor.selectedText();
+}
+
+bool GreaterThanMinimumWordLength(const QString &word)
+{
+    static const int MINIMUM_WORD_LENGTH = 3;
+    return word.length() > MINIMUM_WORD_LENGTH;
+}
+
+QStringList MarkdownEditor::extractDistinctWordsFromDocument() const
+{
+    QStringList allWords = retrieveAllWordsFromDocument();
+    allWords.removeDuplicates();
+
+    QStringList words = filterWordList(allWords, GreaterThanMinimumWordLength);
+    words.sort(Qt::CaseInsensitive);
+
+    return words;
+}
+
+QStringList MarkdownEditor::retrieveAllWordsFromDocument() const
+{
+    return toPlainText().split(QRegExp("\\W+"), QString::SkipEmptyParts);
+}
+
+template <class UnaryPredicate>
+QStringList MarkdownEditor::filterWordList(const QStringList &words, UnaryPredicate predicate) const
+{
+    QStringList filteredWordList;
+
+    foreach (const QString &word, words) {
+        if (predicate(word))
+        {
+           filteredWordList << word; 
+        }
+    }
+
+    return filteredWordList;
 }

@@ -19,6 +19,7 @@
 #include <QtTest>
 
 #include <converter/hoedownmarkdownconverter.h>
+#include "loremipsumtestdata.h"
 
 void HoedownMarkdownConverterTest::initTestCase()
 {
@@ -65,6 +66,58 @@ void HoedownMarkdownConverterTest::ignoresSuperscriptIfDisabled()
 {
     MarkdownDocument *doc = converter->createDocument(QStringLiteral("a^2"), HoedownMarkdownConverter::NoSuperscriptOption);
     QCOMPARE(converter->renderAsHtml(doc), QStringLiteral("<p>a^2</p>\n"));
+}
+
+void HoedownMarkdownConverterTest::benchmark_data()
+{
+    QTest::addColumn<QString>("text");
+    QTest::newRow("500 words text") << fiveHundredWordsLoremIpsumText;
+    QString twoThousandWordsLoremIpsumText = (fiveHundredWordsLoremIpsumText +
+                                              fiveHundredWordsLoremIpsumText +
+                                              fiveHundredWordsLoremIpsumText +
+                                              fiveHundredWordsLoremIpsumText);
+    QTest::newRow("2000 words text") << twoThousandWordsLoremIpsumText;
+    QString tenThousandWordsLoremIpsumText = (twoThousandWordsLoremIpsumText +
+                                              twoThousandWordsLoremIpsumText +
+                                              twoThousandWordsLoremIpsumText +
+                                              twoThousandWordsLoremIpsumText +
+                                              twoThousandWordsLoremIpsumText);
+    QTest::newRow("10000 words text") << tenThousandWordsLoremIpsumText;
+}
+
+void HoedownMarkdownConverterTest::benchmark()
+{
+    QFETCH(QString, text);
+    QBENCHMARK {
+        MarkdownDocument *doc = converter->createDocument(text, 0);
+        QString html = converter->renderAsHtml(doc);
+    }
+}
+
+void HoedownMarkdownConverterTest::benchmarkTableOfContents_data()
+{
+    QTest::addColumn<QString>("text");
+    QTest::newRow("500 words text") << fiveHundredWordsLoremIpsumText;
+    QString twoThousandWordsLoremIpsumText = (fiveHundredWordsLoremIpsumText +
+                                              fiveHundredWordsLoremIpsumText +
+                                              fiveHundredWordsLoremIpsumText +
+                                              fiveHundredWordsLoremIpsumText);
+    QTest::newRow("2000 words text") << twoThousandWordsLoremIpsumText;
+    QString tenThousandWordsLoremIpsumText = (twoThousandWordsLoremIpsumText +
+                                              twoThousandWordsLoremIpsumText +
+                                              twoThousandWordsLoremIpsumText +
+                                              twoThousandWordsLoremIpsumText +
+                                              twoThousandWordsLoremIpsumText);
+    QTest::newRow("10000 words text") << tenThousandWordsLoremIpsumText;
+}
+
+void HoedownMarkdownConverterTest::benchmarkTableOfContents()
+{
+    QFETCH(QString, text);
+    QBENCHMARK {
+        MarkdownDocument *doc = converter->createDocument(text, 0);
+        QString toc = converter->renderAsTableOfContents(doc);
+    }
 }
 
 void HoedownMarkdownConverterTest::cleanupTestCase()

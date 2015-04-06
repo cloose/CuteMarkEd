@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,9 +37,16 @@ private slots:
     void supportsSuperscriptIfEnabled();
     void ignoresSuperscriptIfDisabled();
 
+    void benchmark_data();
+    void benchmark();
+    void benchmarkTableOfContents_data();
+    void benchmarkTableOfContents();
+
     void cleanupTestCase();
 
 private:
+    QString transformMarkdownToHtml(const QString &text);
+    bool isIdAnchorDisabled(const QString &html);
     DiscountMarkdownConverter *converter;
 };
 

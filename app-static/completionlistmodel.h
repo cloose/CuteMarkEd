@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,28 +14,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SNIPPETLISTMODEL_H
-#define SNIPPETLISTMODEL_H
+#ifndef COMPLETIONLISTMODEL_H
+#define COMPLETIONLISTMODEL_H
 
 #include <QAbstractListModel>
 #include <snippets/snippetcollection.h>
 struct Snippet;
 
 
-class SnippetListModel : public QAbstractListModel
+class CompletionListModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    explicit SnippetListModel(QObject *parent = 0);
-    
+    explicit CompletionListModel(QObject *parent = 0);
+
     int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
+
+    void setWords(const QStringList &words);
 
 public slots:
     void snippetCollectionChanged(SnippetCollection::CollectionChangedType changedType, const Snippet &snippet);
 
 private:
     QList<Snippet> snippets;
+    QStringList words;
 };
 
-#endif // SNIPPETLISTMODEL_H
+#endif // COMPLETIONLISTMODEL_H

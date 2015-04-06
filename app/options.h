@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2015 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -121,11 +121,20 @@ public:
     bool isSpellingCheckEnabled() const;
     void setSpellingCheckEnabled(bool enabled);
 
+    bool isYamlHeaderSupportEnabled() const;
+    void setYamlHeaderSupportEnabled(bool enabled);
+
+    bool isDiagramSupportEnabled() const;
+    void setDiagramSupportEnabled(bool enabled);
+
     QString dictionaryLanguage() const;
     void setDictionaryLanguage(const QString &language);
 
     MarkdownConverter markdownConverter() const;
     void setMarkdownConverter(MarkdownConverter converter);
+
+    QString lastUsedStyle() const;
+    void setLastUsedStyle(const QString &style);
 
     void readSettings();
     void writeSettings();
@@ -156,8 +165,11 @@ private:
     bool m_showSpecialCharactersEnabled;
     bool m_wordWrapEnabled;
     bool m_spellingCheckEnabled;
+    bool m_yamlHeaderSupportEnabled;
+    bool m_diagramSupportEnabled;
     QString m_dictionaryLanguage;
     MarkdownConverter m_markdownConverter;
+    QString m_lastUsedStyle;
     QString m_standardFontFamily;
     QString m_fixedFontFamily;
     QString m_serifFontFamily;

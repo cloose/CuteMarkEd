@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2015 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,13 @@
  */
 #include <QTest>
 
+#include <QApplication>
+
 #include "discountmarkdownconvertertest.h"
+#include "htmlpreviewcontrollertest.h"
+#include "htmltemplatetest.h"
 #include "jsonsnippetfiletest.h"
+#include "pmhmarkdownparsertest.h"
 #include "revealmarkdownconvertertest.h"
 
 #ifdef ENABLE_HOEDOWN
@@ -26,6 +31,8 @@
 
 int main(int argc, char *argv[])
 {
+    QApplication app(argc, argv);
+
     int ret = 0;
 
     DiscountMarkdownConverterTest test;
@@ -41,6 +48,15 @@ int main(int argc, char *argv[])
 
     JsonSnippetFileTest test4;
     ret += QTest::qExec(&test4, argc, argv);
+
+    PmhMarkdownParserTest test5;
+    ret += QTest::qExec(&test5, argc, argv);
+
+    HtmlPreviewControllerTest test6;
+    ret += QTest::qExec(&test6, argc, argv);
+
+	HtmlTemplateTest test7;
+	ret += QTest::qExec(&test7, argc, argv);
 
     return ret;
 }

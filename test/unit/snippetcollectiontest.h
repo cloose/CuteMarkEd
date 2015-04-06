@@ -35,6 +35,8 @@ private slots:
     void holdsSnippetsInTriggerOrder();
 
     void returnsNewCollectionOfUserDefinedSnippets();
+    void returnsConstantNameOfJsonArray();
+    void returnsEmptySnippetForNonExistingTrigger();
 };
 
 Q_DECLARE_METATYPE(SnippetCollection::CollectionChangedType) // for QSignalSpy

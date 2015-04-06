@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2015 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@
 #include <QInputDialog>
 #include <QLabel>
 #include <QMessageBox>
-#include <QNetworkDiskCache>
 #include <QNetworkProxy>
 #include <QPrintDialog>
 #include <QPrinter>
@@ -44,7 +43,8 @@
 #include <QWinJumpListCategory>
 #endif
 
-#include <snippets/jsonsnippetfile.h>
+#include <jsonfile.h>
+#include <snippets/jsonsnippettranslatorfactory.h>
 #include <snippets/snippetcollection.h>
 #include <spellchecker/dictionary.h>
 #include <datalocation.h>
@@ -53,6 +53,7 @@
 #include "controls/languagemenu.h"
 #include "controls/recentfilesmenu.h"
 #include "aboutdialog.h"
+#include "htmlpreviewcontroller.h"
 #include "htmlpreviewgenerator.h"
 #include "htmlviewsynchronizer.h"
 #include "htmlhighlighter.h"
@@ -70,16 +71,13 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     options(new Options(this)),
-    diskCache(new QNetworkDiskCache(this)),
-    zoomInAction(0),
-    zoomOutAction(0),
-    zoomResetAction(0),
     styleLabel(0),
     wordCountLabel(0),
     viewLabel(0),
     generator(new HtmlPreviewGenerator(options, this)),
     snippetCollection(new SnippetCollection(this)),
     viewSynchronizer(0),
+    htmlPreviewController(0),
     splitFactor(0.5),
     rightViewCollapsed(false)
 {
@@ -101,20 +99,6 @@ MainWindow::~MainWindow()
     delete generator;
 
     delete ui;
-}
-
-void MainWindow::webViewContextMenu(const QPoint &pos)
-{
-    QMenu *contextMenu = new QMenu(this);
-
-    contextMenu->insertAction(0, ui->webView->pageAction(QWebPage::Copy));
-
-    contextMenu->insertAction(0, zoomInAction);
-    contextMenu->insertAction(0, zoomOutAction);
-    contextMenu->insertAction(0, zoomResetAction);
-
-    contextMenu->exec(ui->webView->mapToGlobal(pos));
-    delete contextMenu;
 }
 
 void MainWindow::closeEvent(QCloseEvent *e)
@@ -140,14 +124,8 @@ void MainWindow::initializeApp()
     ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 
-    // show custom context menu for HTML preview
-    // most actions don't work and can even lead to crashes (like reload)
-    ui->webView->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(ui->webView, SIGNAL(customContextMenuRequested(QPoint)),
-            this, SLOT(webViewContextMenu(QPoint)));
-
-    // set default style
-    styleDefault();
+    // set last used style
+    lastUsedStyle();
 
     ui->plainTextEdit->tabWidthChanged(options->tabWidth());
 
@@ -162,21 +140,19 @@ void MainWindow::initializeApp()
 
     // init option flags
     ui->actionMathSupport->setChecked(options->isMathSupportEnabled());
+    ui->actionDiagramSupport->setChecked(options->isDiagramSupportEnabled());
     ui->actionCodeHighlighting->setChecked(options->isCodeHighlightingEnabled());
     ui->actionShowSpecialCharacters->setChecked(options->isShowSpecialCharactersEnabled());
     ui->actionWordWrap->setChecked(options->isWordWrapEnabled());
     ui->actionCheckSpelling->setChecked(options->isSpellingCheckEnabled());
     ui->plainTextEdit->setSpellingCheckEnabled(options->isSpellingCheckEnabled());
+    ui->actionYamlHeaderSupport->setChecked(options->isYamlHeaderSupportEnabled());
 
     // set url to markdown syntax help
     ui->webView_2->setUrl(tr("qrc:/syntax.html"));
 
     // allow loading of remote javascript
     QWebSettings::globalSettings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
-
-    // setup disk cache for network access
-    QString cacheDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
-    diskCache->setCacheDirectory(cacheDir);
 
     ui->webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
     QWebInspector *inspector = new QWebInspector();
@@ -186,9 +162,9 @@ void MainWindow::initializeApp()
     ui->menuLanguages->loadDictionaries(options->dictionaryLanguage());
 
     //: path to built-in snippets resource.
-    JsonSnippetFile::load(tr(":/markdown-snippets.json"), snippetCollection);
+    JsonFile<Snippet>::load(":/markdown-snippets.json", snippetCollection);
     QString path = DataLocation::writableLocation();
-    JsonSnippetFile::load(path + "/user-snippets.json", snippetCollection);
+    JsonFile<Snippet>::load(path + "/user-snippets.json", snippetCollection);
 
     // setup file explorer
     connect(ui->fileExplorerDockContents, SIGNAL(fileSelected(QString)),
@@ -236,7 +212,7 @@ void MainWindow::fileOpen()
 {
     if (maybeSave()) {
         QString name = QFileDialog::getOpenFileName(this, tr("Open File..."),
-                                                    QString(), tr("Markdown Files (*.markdown *.md);;All Files (*)"));
+                                                    QString(), tr("Markdown Files (*.markdown *.md *.mdown);;All Files (*)"));
         if (!name.isEmpty()) {
             load(name);
         }
@@ -267,7 +243,7 @@ bool MainWindow::fileSave()
 bool MainWindow::fileSaveAs()
 {
     QString name = QFileDialog::getSaveFileName(this, tr("Save as..."), QString(),
-                                              tr("Markdown Files (*.markdown *.md);;All Files (*)"));
+                                              tr("Markdown Files (*.markdown *.md *.mdown);;All Files (*)"));
     if (name.isEmpty()) {
         return false;
     }
@@ -488,6 +464,17 @@ void MainWindow::viewChangeSplit()
     }
 }
 
+void MainWindow::lastUsedStyle()
+{
+    if (stylesGroup) {
+        foreach(QAction *action, stylesGroup->actions()) {
+            if (action->objectName() == options->lastUsedStyle()) {
+                action->trigger();
+            }
+        }
+    }
+}
+
 void MainWindow::styleDefault()
 {
     generator->setCodeHighlightingStyle("default");
@@ -496,6 +483,7 @@ void MainWindow::styleDefault()
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/markdown.css"));
 
     styleLabel->setText(ui->actionDefault->text());
+    options->setLastUsedStyle(ui->actionDefault->objectName());
 }
 
 void MainWindow::styleGithub()
@@ -506,6 +494,7 @@ void MainWindow::styleGithub()
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/github.css"));
 
     styleLabel->setText(ui->actionGithub->text());
+    options->setLastUsedStyle(ui->actionGithub->objectName());
 }
 
 void MainWindow::styleSolarizedLight()
@@ -516,6 +505,7 @@ void MainWindow::styleSolarizedLight()
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-light.css"));
 
     styleLabel->setText(ui->actionSolarizedLight->text());
+    options->setLastUsedStyle(ui->actionSolarizedLight->objectName());
 }
 
 void MainWindow::styleSolarizedDark()
@@ -526,6 +516,7 @@ void MainWindow::styleSolarizedDark()
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-dark.css"));
 
     styleLabel->setText(ui->actionSolarizedDark->text());
+    options->setLastUsedStyle(ui->actionSolarizedDark->objectName());
 }
 
 void MainWindow::styleClearness()
@@ -536,6 +527,7 @@ void MainWindow::styleClearness()
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness.css"));
 
     styleLabel->setText(ui->actionClearness->text());
+    options->setLastUsedStyle(ui->actionClearness->objectName());
 }
 
 void MainWindow::styleClearnessDark()
@@ -546,6 +538,7 @@ void MainWindow::styleClearnessDark()
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness-dark.css"));
 
     styleLabel->setText(ui->actionClearnessDark->text());
+    options->setLastUsedStyle(ui->actionClearnessDark->objectName());
 }
 
 void MainWindow::styleBywordDark()
@@ -556,6 +549,7 @@ void MainWindow::styleBywordDark()
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/byword-dark.css"));
 
     styleLabel->setText(ui->actionBywordDark->text());
+    options->setLastUsedStyle(ui->actionBywordDark->objectName());
 }
 
 void MainWindow::styleCustomStyle()
@@ -568,6 +562,7 @@ void MainWindow::styleCustomStyle()
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl::fromLocalFile(action->data().toString()));
 
     styleLabel->setText(action->text());
+    options->setLastUsedStyle(action->objectName());
 }
 
 void MainWindow::viewFullScreenMode()
@@ -592,6 +587,13 @@ void MainWindow::extrasShowSpecialCharacters(bool checked)
 {
     options->setShowSpecialCharactersEnabled(checked);
     ui->plainTextEdit->setShowSpecialCharacters(checked);
+}
+
+void MainWindow::extrasYamlHeaderSupport(bool checked)
+{
+    options->setYamlHeaderSupportEnabled(checked);
+    ui->plainTextEdit->setYamlHeaderSupportEnabled(checked);
+    plainTextChanged();
 }
 
 void MainWindow::extrasWordWrap(bool checked)
@@ -702,7 +704,7 @@ void MainWindow::extrasOptions()
 
         QString path = DataLocation::writableLocation();
         QSharedPointer<SnippetCollection> userDefinedSnippets = snippetCollection->userDefinedSnippets();
-        JsonSnippetFile::save(path + "/user-snippets.json", userDefinedSnippets.data());
+        JsonFile<Snippet>::save(path + "/user-snippets.json", userDefinedSnippets.data());
 
         // update shortcuts
         setupCustomShortcuts();
@@ -755,21 +757,6 @@ void MainWindow::toggleHtmlView()
     updateSplitter();
 }
 
-void MainWindow::webViewZoomIn()
-{
-    ui->webView->setZoomFactor(ui->webView->zoomFactor() + 0.1);
-}
-
-void MainWindow::webViewZoomOut()
-{
-    ui->webView->setZoomFactor(ui->webView->zoomFactor() - 0.1);
-}
-
-void MainWindow::webViewResetZoom()
-{
-    ui->webView->setZoomFactor(1.0);
-}
-
 void MainWindow::plainTextChanged()
 {
     QString code = ui->plainTextEdit->toPlainText();
@@ -792,8 +779,6 @@ void MainWindow::plainTextChanged()
 
 void MainWindow::htmlResultReady(const QString &html)
 {
-    ui->webView->page()->networkAccessManager()->setCache(diskCache);
-
     // show html preview
     QUrl baseUrl;
     if (fileName.isEmpty()) {
@@ -825,7 +810,7 @@ void MainWindow::previewLinkClicked(const QUrl &url)
 
         QString filePath = url.toLocalFile();
         // Links to markdown files open new instance
-        if(filePath.endsWith(".md") || filePath.endsWith(".markdown"))
+        if(filePath.endsWith(".md") || filePath.endsWith(".markdown") || filePath.endsWith(".mdown"))
         {
             QProcess::startDetached(qApp->applicationFilePath(), QStringList() << filePath);
             return;
@@ -925,6 +910,9 @@ void MainWindow::markdownConverterChanged()
 
     delete viewSynchronizer;
     switch (options->markdownConverter()) {
+#ifdef ENABLE_HOEDOWN
+    case Options::HoedownMarkdownConverter:
+#endif
     case Options::DiscountMarkdownConverter:
         viewSynchronizer = new HtmlViewSynchronizer(ui->webView, ui->plainTextEdit);
         connect(generator, SIGNAL(htmlResultReady(QString)),
@@ -941,6 +929,8 @@ void MainWindow::markdownConverterChanged()
 
 void MainWindow::setupUi()
 {
+    htmlPreviewController = new HtmlPreviewController(ui->webView, this);
+
     setupActions();
     setupStatusBar();
     setupMarkdownEditor();
@@ -970,6 +960,8 @@ void MainWindow::setupUi()
 
     readSettings();
     setupCustomShortcuts();
+
+    ui->actionFullScreenMode->setChecked(this->isFullScreen());
 }
 
 void SetActionShortcut(QAction *action, const QKeySequence &shortcut)
@@ -986,6 +978,7 @@ void MainWindow::setupActions()
     SetActionShortcut(ui->actionSave, QKeySequence::Save);
     ui->actionSave->setIcon(QIcon("fa-floppy-o.fontawesome"));
     SetActionShortcut(ui->actionSaveAs, QKeySequence::SaveAs);
+    ui->actionExportToPDF->setIcon(QIcon("fa-file-pdf-o.fontawesome"));
     SetActionShortcut(ui->action_Print, QKeySequence::Print);
     ui->action_Print->setIcon(QIcon("fa-print.fontawesome"));
     SetActionShortcut(ui->actionExit, QKeySequence::Quit);
@@ -1042,7 +1035,9 @@ void MainWindow::setupActions()
     // extras menu
     connect(ui->actionMathSupport, SIGNAL(triggered(bool)),
             generator, SLOT(setMathSupportEnabled(bool)));
-    connect(ui->actionCodeHighlighting, SIGNAL(triggered(bool)),
+    connect(ui->actionDiagramSupport, SIGNAL(triggered(bool)),
+            generator, SLOT(setDiagramSupportEnabled(bool)));
+     connect(ui->actionCodeHighlighting, SIGNAL(triggered(bool)),
             generator, SLOT(setCodeHighlightingEnabled(bool)));
     connect(ui->menuLanguages, SIGNAL(languageTriggered(Dictionary)),
             this, SLOT(languageChanged(Dictionary)));
@@ -1061,22 +1056,6 @@ void MainWindow::setupActions()
     ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);
 
     ui->webView->pageAction(QWebPage::Copy)->setIcon(QIcon("fa-copy.fontawesome"));
-
-    // zoom actions for html view
-    zoomInAction = new QAction(tr("Zoom &In"), this);
-    zoomInAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Plus));
-    connect(zoomInAction, SIGNAL(triggered()), this, SLOT(webViewZoomIn()));
-    ui->webView->addAction(zoomInAction);
-
-    zoomOutAction = new QAction(tr("Zoom &Out"), this);
-    zoomOutAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
-    connect(zoomOutAction, SIGNAL(triggered()), this, SLOT(webViewZoomOut()));
-    ui->webView->addAction(zoomOutAction);
-
-    zoomResetAction = new QAction(tr("Reset &Zoom"), this);
-    zoomResetAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_0));
-    connect(zoomResetAction, SIGNAL(triggered()), this, SLOT(webViewResetZoom()));
-    ui->webView->addAction(zoomResetAction);
 
     // set names for dock widget actions
     ui->dockWidget->toggleViewAction()->setObjectName("actionTableOfContents");

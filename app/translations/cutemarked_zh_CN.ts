@@ -832,7 +832,7 @@
         <location filename="../optionsdialog.ui" line="44"/>
         <source>Discount (Default)</source>
         <extracomment>Name of a Markdown to HTML converter library</extracomment>
-        <translation>递减 (Default)</translation>
+        <translation>Discount (默认)</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="49"/>

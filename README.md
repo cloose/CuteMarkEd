@@ -8,15 +8,33 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 ### DOWNLOAD
 
-[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.10.0.tar.gz)  
-[MS Windows (Installer)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.10.0.msi)  
-[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.10.0.zip)  
-[OpenSUSE 12.3 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
+[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.10.2.tar.gz)  
+[MS Windows (Installer)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.10.2.msi)  
+[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.10.2.zip)  
 [OpenSUSE 13.1 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
-[Fedora 19 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 [Fedora 20 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
+[Fedora 21 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 
 ### NEWS
+
+#### Version 0.10.2
+
+New Features:
+
+* `NEW` Added Indonesian translation created by bedouin
+* `NEW` Added Danish translation created by mljjlm
+
+Improvements:
+
+* `IMPROVED` Updated Greek translation
+* `IMPROVED` Updated Chinese translation
+
+Fixes:
+
+* `FIXED` Copy & Paste problems on Windows (#161, #203)
+* `FIXED` Restore fullscreen mode after startup (#164)
+* `FIXED` Build on Fedora with both Qt4 and Qt5 installed (#165)
+* `FIXED` Replaced generic editor icon with own icon on Linux
 
 #### Version 0.10.1 (Linux only)
 
@@ -68,7 +86,10 @@ https://github.com/cloose/CuteMarkEd/wiki/Build-Instructions
 
 ##### Status
 
-[![Build Status](https://travis-ci.org/cloose/CuteMarkEd.png)](https://travis-ci.org/cloose/CuteMarkEd)
+| Linux | Windows |
+| ----- | ------- |
+| [![Build Status](https://travis-ci.org/cloose/CuteMarkEd.png)](https://travis-ci.org/cloose/CuteMarkEd) | [![](https://ci.appveyor.com/api/projects/status/github/cloose/CuteMarkEd)](https://ci.appveyor.com/project/cloose/cutemarked) |
+
 [![Stories in Ready](https://badge.waffle.io/cloose/CuteMarkEd.png?label=ready)](https://waffle.io/cloose/CuteMarkEd)
 
 ### HELP NEEDED

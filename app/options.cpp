@@ -21,6 +21,8 @@
 
 
 static const char* MARKDOWN_CONVERTER = "general/converter";
+static const char* LAST_USED_STYLE = "general/lastusedstyle";
+static const char* STYLE_DEFAULT = "actionDefault";
 static const char* FONT_FAMILY_DEFAULT = "Monospace";
 static const char* FONT_FAMILY = "editor/font/family";
 static const char* FONT_SIZE = "editor/font/size";
@@ -49,6 +51,8 @@ static const char* SHOWSPECIALCHARACTERS_ENABLED = "specialchars/enabled";
 static const char* WORDWRAP_ENABLED = "wordwrap/enabled";
 static const char* SPELLINGCHECK_ENABLED = "spelling/enabled";
 static const char* DICTIONARY_LANGUAGE = "spelling/language";
+static const char* YAMLHEADERSUPPORT_ENABLED = "yamlheadersupport/enabled";
+static const char* DIAGRAMSUPPORT_ENABLED = "diagramsupport/enabled";
 
 Options::Options(QObject *parent) :
     QObject(parent),
@@ -67,7 +71,9 @@ Options::Options(QObject *parent) :
     m_showSpecialCharactersEnabled(false),
     m_wordWrapEnabled(true),
     m_spellingCheckEnabled(true),
-    m_markdownConverter(DiscountMarkdownConverter)
+    m_diagramSupportEnabled(false),
+    m_markdownConverter(DiscountMarkdownConverter),
+    m_lastUsedStyle(STYLE_DEFAULT)
 {
 }
 
@@ -353,6 +359,26 @@ void Options::setSpellingCheckEnabled(bool enabled)
     m_spellingCheckEnabled = enabled;
 }
 
+bool Options::isYamlHeaderSupportEnabled() const
+{
+    return m_yamlHeaderSupportEnabled;
+}
+
+void Options::setYamlHeaderSupportEnabled(bool enabled)
+{
+    m_yamlHeaderSupportEnabled = enabled;
+}
+
+bool Options::isDiagramSupportEnabled() const
+{
+    return m_diagramSupportEnabled;
+}
+
+void Options::setDiagramSupportEnabled(bool enabled)
+{
+    m_diagramSupportEnabled = enabled;
+}
+
 QString Options::dictionaryLanguage() const
 {
     return m_dictionaryLanguage;
@@ -376,12 +402,23 @@ void Options::setMarkdownConverter(Options::MarkdownConverter converter)
     }
 }
 
+QString Options::lastUsedStyle() const
+{
+    return m_lastUsedStyle;
+}
+
+void Options::setLastUsedStyle(const QString &style)
+{
+    m_lastUsedStyle = style;
+}
+
 void Options::readSettings()
 {
     QSettings settings;
 
     // general settings
     m_markdownConverter = (Options::MarkdownConverter)settings.value(MARKDOWN_CONVERTER, 0).toInt();
+    m_lastUsedStyle = settings.value(LAST_USED_STYLE, STYLE_DEFAULT).toString();
 
     // editor settings
     QString fontFamily = settings.value(FONT_FAMILY, FONT_FAMILY_DEFAULT).toString();
@@ -430,6 +467,8 @@ void Options::readSettings()
     m_codeHighlightingEnabled = settings.value(CODEHIGHLIGHT_ENABLED, false).toBool();
     m_showSpecialCharactersEnabled = settings.value(SHOWSPECIALCHARACTERS_ENABLED, false).toBool();
     m_wordWrapEnabled = settings.value(WORDWRAP_ENABLED, true).toBool();
+    m_yamlHeaderSupportEnabled = settings.value(YAMLHEADERSUPPORT_ENABLED, false).toBool();
+    m_diagramSupportEnabled = settings.value(DIAGRAMSUPPORT_ENABLED, false).toBool();
 
     // spelling check settings
     m_spellingCheckEnabled = settings.value(SPELLINGCHECK_ENABLED, true).toBool();
@@ -444,6 +483,7 @@ void Options::writeSettings()
 
     // general settings
     settings.setValue(MARKDOWN_CONVERTER, m_markdownConverter);
+    settings.setValue(LAST_USED_STYLE, m_lastUsedStyle);
 
     // editor settings
     settings.setValue(FONT_FAMILY, font.family());
@@ -487,6 +527,8 @@ void Options::writeSettings()
     settings.setValue(CODEHIGHLIGHT_ENABLED, m_codeHighlightingEnabled);
     settings.setValue(SHOWSPECIALCHARACTERS_ENABLED, m_showSpecialCharactersEnabled);
     settings.setValue(WORDWRAP_ENABLED, m_wordWrapEnabled);
+    settings.setValue(YAMLHEADERSUPPORT_ENABLED, m_yamlHeaderSupportEnabled);
+    settings.setValue(DIAGRAMSUPPORT_ENABLED, m_diagramSupportEnabled);
 
     // spelling check settings
     settings.setValue(SPELLINGCHECK_ENABLED, m_spellingCheckEnabled);

@@ -9,7 +9,7 @@
 Name:                   cutemarked
 Summary:                Qt-based Markdown editor
 Group:                  Productivity/Text/Editors
-Version:                0.10.1
+Version:                0.10.2
 Release:                1
 License:                GPL-2.0+
 Url:                    http://github.com/cloose/CuteMarkEd
@@ -69,8 +69,9 @@ make INSTALL_ROOT="%buildroot" install
 
 %files 
 %defattr(-,root,root,755)
-%_bindir/cutemarked
+%_bindir/%{name}
 %{_datadir}/applications/%{name}.desktop
+%{_iconsdir}/hicolor/*/apps/%{name}.*
 
 %files plugin-fontawesome
 %defattr(-,root,root,-)
@@ -79,6 +80,9 @@ make INSTALL_ROOT="%buildroot" install
 
 
 %changelog
+
+* Sat Mar 06 2015 Christian Loose <christian.loose@hamburg.de> 0.10.2-1
+- New patch version 0.10.2 released
 
 * Sun Aug 24 2014 Christian Loose <christian.loose@hamburg.de> 0.10.1-1
 - New patch version 0.10.1 released

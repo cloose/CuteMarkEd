@@ -84,9 +84,9 @@ void SnippetCollectionTest::holdsSnippetsInTriggerOrder()
     collection.insert(snippet3);    // c
     collection.insert(snippet1);    // a
 
-    QCOMPARE(collection.snippetAt(0).trigger, snippet1.trigger);    // a
-    QCOMPARE(collection.snippetAt(1).trigger, snippet2.trigger);    // b
-    QCOMPARE(collection.snippetAt(2).trigger, snippet3.trigger);    // c
+    QCOMPARE(collection.at(0).trigger, snippet1.trigger);    // a
+    QCOMPARE(collection.at(1).trigger, snippet2.trigger);    // b
+    QCOMPARE(collection.at(2).trigger, snippet3.trigger);    // c
 }
 
 void SnippetCollectionTest::returnsNewCollectionOfUserDefinedSnippets()
@@ -108,4 +108,23 @@ void SnippetCollectionTest::returnsNewCollectionOfUserDefinedSnippets()
     QVERIFY(!userDefinedSnippets->contains(snippet1.trigger));
     QVERIFY(userDefinedSnippets->contains(snippet2.trigger));
     QVERIFY(userDefinedSnippets->contains(snippet3.trigger));
+}
+
+void SnippetCollectionTest::returnsConstantNameOfJsonArray()
+{
+    SnippetCollection collection;
+    QCOMPARE(collection.name(), QStringLiteral("snippets"));
+}
+
+void SnippetCollectionTest::returnsEmptySnippetForNonExistingTrigger()
+{
+    Snippet snippet; snippet.trigger = "ArbitraryName";
+    SnippetCollection collection;
+    collection.insert(snippet);
+
+    Snippet foundSnippet = collection.snippet("NonExistingSnippet");
+
+    QCOMPARE(foundSnippet.trigger, QString());
+    QCOMPARE(foundSnippet.description, QString());
+    QCOMPARE(foundSnippet.snippet, QString());
 }

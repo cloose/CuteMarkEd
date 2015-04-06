@@ -28,9 +28,9 @@ class MainWindow;
 class QAction;
 class QActionGroup;
 class QLabel;
-class QNetworkDiskCache;
 class ActiveLabel;
 class Dictionary;
+class HtmlPreviewController;
 class HtmlPreviewGenerator;
 class HtmlHighlighter;
 class RecentFilesMenu;
@@ -47,9 +47,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(const QString &fileName = QString(), QWidget *parent = 0);
     ~MainWindow();
-
-public slots:
-    void webViewContextMenu(const QPoint &pos);
 
 protected:
     void closeEvent(QCloseEvent *e) Q_DECL_OVERRIDE;
@@ -86,6 +83,7 @@ private slots:
     void editInsertImage();
 
     void viewChangeSplit();
+    void lastUsedStyle();
     void styleDefault();
     void styleGithub();
     void styleSolarizedLight();
@@ -98,6 +96,7 @@ private slots:
     void viewHorizontalLayout(bool checked);
 
     void extrasShowSpecialCharacters(bool checked);
+    void extrasYamlHeaderSupport(bool checked);
     void extrasWordWrap(bool checked);
     void extensionsAutolink(bool checked);
     void extensionsStrikethrough(bool checked);
@@ -114,10 +113,6 @@ private slots:
 
     void styleContextMenu(const QPoint &pos);
     void toggleHtmlView();
-
-    void webViewZoomIn();
-    void webViewZoomOut();
-    void webViewResetZoom();
 
     void plainTextChanged();
     void htmlResultReady(const QString &html);
@@ -155,11 +150,7 @@ private:
     Ui::MainWindow *ui;
     RecentFilesMenu *recentFilesMenu;
     Options *options;
-    QNetworkDiskCache *diskCache;
     QActionGroup *stylesGroup;
-    QAction *zoomInAction;
-    QAction *zoomOutAction;
-    QAction *zoomResetAction;
     QLabel *styleLabel;
     QLabel *wordCountLabel;
     ActiveLabel *viewLabel;
@@ -167,6 +158,7 @@ private:
     HtmlHighlighter *htmlHighlighter;
     SnippetCollection *snippetCollection;
     ViewSynchronizer *viewSynchronizer;
+    HtmlPreviewController *htmlPreviewController;
     QString fileName;
     float splitFactor;
     bool rightViewCollapsed;

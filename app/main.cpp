@@ -56,11 +56,11 @@ int main(int argc, char *argv[])
     app.setOrganizationName("CuteMarkEd Project");
     app.setApplicationName("CuteMarkEd");
     app.setApplicationDisplayName("CuteMarkEd");
-    app.setApplicationVersion("0.10.1");
+    app.setApplicationVersion("0.10.2");
 
 #ifdef Q_OS_WIN
     QStringList fileTypes;
-    fileTypes << ".markdown" << ".md";
+    fileTypes << ".markdown" << ".md" << ".mdown";
     associateFileTypes(fileTypes);
 #endif
 

@@ -17,194 +17,17 @@
 #include "optionsdialog.h"
 #include "ui_optionsdialog.h"
 
-#include <QAbstractTableModel>
 #include <QFontComboBox>
 #include <QItemEditorFactory>
 #include <QKeySequence>
 #include <QKeySequenceEdit>
 #include <QMessageBox>
-#include <QSpinBox>
-#include <QSettings>
 #include <QStyledItemDelegate>
 #include <QTableWidgetItem>
 
 #include <snippets/snippetcollection.h>
 #include "options.h"
-
-class SnippetsTableModel : public QAbstractTableModel
-{
-    Q_OBJECT
-public:
-    SnippetsTableModel(SnippetCollection *collection, QObject *parent);
-    ~SnippetsTableModel() {}
-
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const;
-    Qt::ItemFlags flags(const QModelIndex &index) const;
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-
-    QModelIndex createSnippet();
-    void removeSnippet(const QModelIndex &index);
-
-private:
-    void replaceSnippet(const Snippet &snippet, const QModelIndex &index);
-    bool isValidTrigger(const QString &trigger);
-
-private:
-    SnippetCollection *snippetCollection;
-};
-
-
-SnippetsTableModel::SnippetsTableModel(SnippetCollection *collection, QObject *parent) :
-    QAbstractTableModel(parent),
-    snippetCollection(collection)
-{
-}
-
-int SnippetsTableModel::rowCount(const QModelIndex &) const
-{
-    return snippetCollection->count();
-}
-
-int SnippetsTableModel::columnCount(const QModelIndex &) const
-{
-    return 2;
-}
-
-Qt::ItemFlags SnippetsTableModel::flags(const QModelIndex &index) const
-{
-    Qt::ItemFlags itemFlags = QAbstractTableModel::flags(index);
-    if (index.isValid()) {
-        const Snippet snippet = snippetCollection->snippetAt(index.row());
-        if (!snippet.builtIn) {
-            itemFlags |= Qt::ItemIsEditable;
-        }
-    }
-    return itemFlags;
-}
-
-QVariant SnippetsTableModel::data(const QModelIndex &index, int role) const
-{
-    if (!index.isValid()) {
-        return QVariant();
-    }
-
-    const Snippet snippet = snippetCollection->snippetAt(index.row());
-
-    if (role == Qt::DisplayRole) {
-        if (index.column() == 0) {
-            return snippet.trigger;
-        } else {
-            return snippet.description + (snippet.builtIn ? " (built-in)" : "");
-        }
-    }
-
-    if (role == Qt::EditRole) {
-        if (index.column() == 0) {
-            return snippet.trigger;
-        } else {
-            return snippet.description;
-        }
-    }
-
-    return QVariant();
-}
-
-bool SnippetsTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
-{
-    if (!index.isValid() || role != Qt::EditRole)
-        return false;
-
-    Snippet snippet = snippetCollection->snippetAt(index.row());
-
-    if (index.column() == 0) {
-        const QString &s = value.toString();
-        if (!isValidTrigger(s)) {
-            QMessageBox::critical(0, tr("Error", "Title of error message box"), tr("Not a valid trigger."));
-            if (snippet.trigger.isEmpty())
-                removeSnippet(index);
-            return false;
-        }
-        snippet.trigger = s;
-    } else {
-        snippet.description = value.toString();
-    }
-
-    replaceSnippet(snippet, index);
-    return true;
-}
-
-QVariant SnippetsTableModel::headerData(int section, Qt::Orientation orientation, int role) const
-{
-    if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
-        return QVariant();
-
-    if (section == 0)
-         return tr("Trigger");
-     else
-        return tr("Description");
-}
-
-QModelIndex SnippetsTableModel::createSnippet()
-{
-    Snippet snippet;
-    beginInsertRows(QModelIndex(), 0, 0);
-    int row = snippetCollection->insert(snippet);
-    endInsertRows();
-
-    return index(row, 0);
-}
-
-void SnippetsTableModel::removeSnippet(const QModelIndex &index)
-{
-    beginRemoveRows(QModelIndex(), index.row(), index.row());
-    Snippet snippet = snippetCollection->snippetAt(index.row());
-    snippetCollection->remove(snippet);
-    endRemoveRows();
-}
-
-void SnippetsTableModel::replaceSnippet(const Snippet &snippet, const QModelIndex &index)
-{
-    const int row = index.row();
-
-    Snippet previousSnippet = snippetCollection->snippetAt(index.row());
-    snippetCollection->remove(previousSnippet);
-
-    int insertedRow = snippetCollection->insert(snippet);
-
-    if (index.row() == insertedRow) {
-        if (index.column() == 0)
-            emit dataChanged(index, index.sibling(row, 1));
-        else
-            emit dataChanged(index.sibling(row, 0), index);
-    } else {
-        if (row < insertedRow)
-            beginMoveRows(QModelIndex(), row, row, QModelIndex(), insertedRow+1);
-        else
-            beginMoveRows(QModelIndex(), row, row, QModelIndex(), insertedRow);
-        endMoveRows();
-    }
-}
-
-bool SnippetsTableModel::isValidTrigger(const QString &trigger)
-{
-    if (trigger.isEmpty())
-        return false;
-
-    if (snippetCollection->contains(trigger))
-        return false;
-
-    for (int i = 0; i < trigger.length(); ++i) {
-        if (trigger.at(i).isSpace()) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
+#include "snippetstablemodel.h"
 
 class KeySequenceTableItem : public QTableWidgetItem
 {
@@ -271,8 +94,6 @@ OptionsDialog::OptionsDialog(Options *opt, SnippetCollection *collection, const 
     ui->tabWidget->setTabIcon(4, QIcon("fa-puzzle-piece.fontawesome"));
     ui->tabWidget->setTabIcon(5, QIcon("fa-keyboard-o.fontawesome"));
 
-    ui->fontComboBox->setFontFilters(QFontComboBox::MonospacedFonts);
-
     foreach (int size, QFontDatabase::standardSizes()) {
         ui->sizeComboBox->addItem(QString().setNum(size));
         ui->defaultSizeComboBox->addItem(QString().setNum(size));
@@ -325,7 +146,7 @@ void OptionsDialog::manualProxyRadioButtonToggled(bool checked)
 
 void OptionsDialog::currentSnippetChanged(const QModelIndex &current, const QModelIndex &)
 {
-    const Snippet snippet = snippetCollection->snippetAt(current.row());
+    const Snippet snippet = snippetCollection->at(current.row());
 
     // update text edit for snippet content
     QString formattedSnippet(snippet.snippet);
@@ -341,7 +162,7 @@ void OptionsDialog::snippetTextChanged()
 {
     const QModelIndex &modelIndex = ui->snippetTableView->selectionModel()->currentIndex();
     if (modelIndex.isValid()) {
-        Snippet snippet = snippetCollection->snippetAt(modelIndex.row());
+        Snippet snippet = snippetCollection->at(modelIndex.row());
         if (!snippet.builtIn) {
             snippet.snippet = ui->snippetTextEdit->toPlainText();
 
@@ -533,5 +354,3 @@ void OptionsDialog::saveState()
     options->apply();
 }
 
-
-#include "optionsdialog.moc"

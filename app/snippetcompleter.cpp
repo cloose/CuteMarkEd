@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 
 #include <snippets/snippet.h>
 #include <snippets/snippetcollection.h>
-#include <snippets/snippetlistmodel.h>
+#include <completionlistmodel.h>
 
 
 SnippetCompleter::SnippetCompleter(SnippetCollection *collection, QWidget *parentWidget) :
@@ -39,15 +39,18 @@ SnippetCompleter::SnippetCompleter(SnippetCollection *collection, QWidget *paren
     connect(completer, SIGNAL(activated(QString)),
             this, SLOT(insertSnippet(QString)));
 
-    SnippetListModel *model = new SnippetListModel(completer);
+    CompletionListModel *model = new CompletionListModel(completer);
     connect(collection, SIGNAL(collectionChanged(SnippetCollection::CollectionChangedType,Snippet)),
             model, SLOT(snippetCollectionChanged(SnippetCollection::CollectionChangedType,Snippet)));
     completer->setModel(model);
 }
 
-void SnippetCompleter::performCompletion(const QString &textUnderCursor, const QRect &popupRect)
+void SnippetCompleter::performCompletion(const QString &textUnderCursor, const QStringList &words, const QRect &popupRect)
 {
     const QString completionPrefix = textUnderCursor;
+
+    // TODO: find more elegant solution
+    qobject_cast<CompletionListModel*>(completer->model())->setWords(words);
 
     if (completionPrefix != completer->completionPrefix()) {
         completer->setCompletionPrefix(completionPrefix);
@@ -76,8 +79,11 @@ void SnippetCompleter::hidePopup()
 
 void SnippetCompleter::insertSnippet(const QString &trigger)
 {
-    if (!snippetCollection || !snippetCollection->contains(trigger))
+    if (!snippetCollection || !snippetCollection->contains(trigger)) {
+        // insert word directly
+        emit snippetSelected(completer->completionPrefix(), trigger, trigger.length());
         return;
+    }
 
     const Snippet snippet = snippetCollection->snippet(trigger);
 

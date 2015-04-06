@@ -66,11 +66,11 @@ void JsonSnippetTranslatorTest::translatesJsonDocumentToSnippets()
 
     QVERIFY(success);
     QCOMPARE(collection.count(), 1);
-    QCOMPARE(collection.snippetAt(0).trigger, expected.trigger);
-    QCOMPARE(collection.snippetAt(0).description, expected.description);
-    QCOMPARE(collection.snippetAt(0).snippet, expected.snippet);
-    QCOMPARE(collection.snippetAt(0).cursorPosition, expected.cursorPosition);
-    QCOMPARE(collection.snippetAt(0).builtIn, expected.builtIn);
+    QCOMPARE(collection.at(0).trigger, expected.trigger);
+    QCOMPARE(collection.at(0).description, expected.description);
+    QCOMPARE(collection.at(0).snippet, expected.snippet);
+    QCOMPARE(collection.at(0).cursorPosition, expected.cursorPosition);
+    QCOMPARE(collection.at(0).builtIn, expected.builtIn);
 }
 
 void JsonSnippetTranslatorTest::translatesEmptyJsonDocumentToEmptySnippets()
@@ -90,11 +90,11 @@ void JsonSnippetTranslatorTest::translatesEmptyJsonDocumentToEmptySnippets()
 
     QVERIFY(success);
     QCOMPARE(collection.count(), 1);
-    QCOMPARE(collection.snippetAt(0).trigger, expected.trigger);
-    QCOMPARE(collection.snippetAt(0).description, expected.description);
-    QCOMPARE(collection.snippetAt(0).snippet, expected.snippet);
-    QCOMPARE(collection.snippetAt(0).cursorPosition, expected.cursorPosition);
-    QCOMPARE(collection.snippetAt(0).builtIn, expected.builtIn);
+    QCOMPARE(collection.at(0).trigger, expected.trigger);
+    QCOMPARE(collection.at(0).description, expected.description);
+    QCOMPARE(collection.at(0).snippet, expected.snippet);
+    QCOMPARE(collection.at(0).cursorPosition, expected.cursorPosition);
+    QCOMPARE(collection.at(0).builtIn, expected.builtIn);
 }
 
 void JsonSnippetTranslatorTest::defectIfJsonDocumentIsInvalid()

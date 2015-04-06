@@ -6,24 +6,17 @@
 
 TEMPLATE = subdirs
 
-win32 {
-    SUBDIRS = 3rdparty \
-        peg-markdown-highlight \
-        app \
-        fontawesomeicon
+CONFIG += c++11
 
-    app.depends = 3rdparty peg-markdown-highlight app-static
-}
+SUBDIRS = \
+    3rdparty \
+    libs \
+    app-static \
+    app \
+    fontawesomeicon \
+    test
 
-unix {
-    SUBDIRS = peg-markdown-highlight \
-        app \
-        fontawesomeicon
-
-    app.depends = peg-markdown-highlight app-static
-}
-
-SUBDIRS += \
-    test \
-    app-static
-
+# build order: 3rdparty -> libs -> app-static -> app & test
+libs.depends = 3rdparty
+app.depends = libs app-static
+test.depends = libs app-static
