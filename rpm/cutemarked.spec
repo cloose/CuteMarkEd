@@ -71,7 +71,7 @@ make INSTALL_ROOT="%buildroot" install
 %defattr(-,root,root,755)
 %_bindir/%{name}
 %{_datadir}/applications/%{name}.desktop
-%{_iconsdir}/hicolor/*/apps/%{name}.*
+%{_datadir}/icons/hicolor/*/apps/%{name}.*
 
 %files plugin-fontawesome
 %defattr(-,root,root,-)
@@ -81,7 +81,10 @@ make INSTALL_ROOT="%buildroot" install
 
 %changelog
 
-* Sat Mar 06 2015 Christian Loose <christian.loose@hamburg.de> 0.10.2-1
+* Wed Mar 11 2015 antoine Barbeyer (local build) <antoine.barbeyer@no-spam.com> - 0.10.2-2
+- minor fix in spec file to build in fedora 21
+
+* Fri Mar 06 2015 Christian Loose <christian.loose@hamburg.de> 0.10.2-1
 - New patch version 0.10.2 released
 
 * Sun Aug 24 2014 Christian Loose <christian.loose@hamburg.de> 0.10.1-1
