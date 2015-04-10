@@ -9,7 +9,7 @@
 Name:                   cutemarked
 Summary:                Qt-based Markdown editor
 Group:                  Productivity/Text/Editors
-Version:                0.10.2
+Version:                0.11.0
 Release:                1
 License:                GPL-2.0+
 Url:                    http://github.com/cloose/CuteMarkEd
