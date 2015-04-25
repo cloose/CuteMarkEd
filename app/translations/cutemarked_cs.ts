@@ -9,23 +9,139 @@
     <message>
         <location filename="../aboutdialog.ui" line="70"/>
         <source>&amp;About</source>
-        <extracomment>Tab with information about the application</extracomment>
         <translation>&amp;O programu</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="103"/>
         <source>A&amp;uthors</source>
-        <extracomment>Tab with information about the authors of the application</extracomment>
         <translation>&amp;Autoři</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.ui" line="156"/>
+        <location filename="../aboutdialog.ui" line="109"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Christian Loose (cloose)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Creator and maintainer&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Jörg Preiß (Slesa)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Code contributor&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Andreas Reischuck (arBmind)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Code contributor&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Aetf (Aetf)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Code contributor&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Pavel Fric (Fri)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Czech translation&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Hu Junqing (LearnShare)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Chinese translation&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Γιάννης Ανθυμίδης (Evropi)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Greek translation&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Etienne Gauvin (Etn)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;French translation&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Rémi Verschelde (akien-mga)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;French translation and Mageia package&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Kota Ouchi (kOtaOuchi)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Japanese translation&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Norihide Sugohara (touyou)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Japanese translation&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Eai&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Japanese translation&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Javier (moguman)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Spanish translation&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Cassio Cardoso (cassiocardoso)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Portuguese (Brazil) translation&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Victor Nogueira (felladrin)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Portuguese (Brazil) translation&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Maxim Efremov (maxbart)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Russian translation&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Bedouin&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Indonesian translation&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Mljjlm&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Danish translation&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Christian Loose (cloose)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Tvůrce a udržovatel&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Jörg Preiß (Slesa)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Přispěvatel kódem&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Andreas Reischuck (arBmind)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Přispěvatel kódem&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Aetf (Aetf)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Přispěvatel kódem&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Pavel Fric (Fri)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Překlad do češtiny&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Hu Junqing (LearnShare)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Překlad do čínštiny&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Γιάννης Ανθυμίδης (Evropi)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Překlad do řečtiny&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Etienne Gauvin (Etn)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Překlad do francouzštiny&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Rémi Verschelde (akien-mga)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Překlad do francouzštiny a balíček pro Mageiu&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Kota Ouchi (kOtaOuchi)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Překlad do japonštiny&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Norihide Sugohara (touyou)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Překlad do japonštiny&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Eai&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Překlad do japonštiny&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Javier (moguman)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Překlad do španělštiny&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Cassio Cardoso (cassiocardoso)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Překlad do portugalštiny (brazilská)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Victor Nogueira (felladrin)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Překlad do portugalštiny (brazilská)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Maxim Efremov (maxbart)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Překlad do ruštiny&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Bedouin&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Překlad do indonézštiny&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Mljjlm&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Překlad do dánštiny&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../aboutdialog.ui" line="174"/>
         <source>&amp;Thanks To</source>
-        <extracomment>Tab with information about 3rd party libraries</extracomment>
         <translation>&amp;Poděkování</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.cpp" line="16"/>
+        <location filename="../aboutdialog.cpp" line="32"/>
         <source>Qt-based, free and open source markdown editor with live HTML preview</source>
         <translation>Editor jazyka Markdown, založený na Qt, svobodný a s otevřeným zdrojovým kódem, s okamžitým náhledem na HTML</translation>
     </message>
@@ -194,22 +310,22 @@
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../controls/findreplacewidget.cpp" line="133"/>
+        <location filename="../controls/findreplacewidget.cpp" line="142"/>
         <source>Case Sensitive</source>
         <translation>Rozlišovat velká a malá písmena</translation>
     </message>
     <message>
-        <location filename="../controls/findreplacewidget.cpp" line="137"/>
+        <location filename="../controls/findreplacewidget.cpp" line="146"/>
         <source>Whole Words Only</source>
         <translation>Pouze celá slova</translation>
     </message>
     <message>
-        <location filename="../controls/findreplacewidget.cpp" line="141"/>
+        <location filename="../controls/findreplacewidget.cpp" line="150"/>
         <source>Use Regular Expressions</source>
         <translation>Používat regulární výrazy</translation>
     </message>
     <message>
-        <location filename="../controls/findreplacewidget.cpp" line="146"/>
+        <location filename="../controls/findreplacewidget.cpp" line="155"/>
         <source>Find Options</source>
         <translation>Volby pro hledání</translation>
     </message>
@@ -269,7 +385,7 @@
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="114"/>
-        <location filename="../mainwindow.ui" line="334"/>
+        <location filename="../mainwindow.ui" line="336"/>
         <source>about:blank</source>
         <translation>o:prázdný</translation>
     </message>
@@ -285,14 +401,14 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="195"/>
-        <source>Format</source>
-        <translation>Formát</translation>
+        <source>F&amp;ormat</source>
+        <extracomment>Verb &quot;to format&quot;. sub menu title to choose a formatting like bold, italic.</extracomment>
+        <translation>F&amp;ormát</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="209"/>
-        <location filename="../mainwindow.ui" line="597"/>
-        <source>Find/Replace</source>
-        <translation>Hledat/Nahradit</translation>
+        <source>&amp;Find/Replace</source>
+        <translation>&amp;Hledat/Nahradit</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="232"/>
@@ -311,477 +427,494 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="259"/>
-        <source>Styles</source>
-        <translation>Styly</translation>
+        <source>St&amp;yles</source>
+        <translation>&amp;Styly</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="271"/>
-        <source>Markdown Extensions</source>
-        <translation>Rozšíření Markdown</translation>
+        <source>Markdown E&amp;xtensions</source>
+        <translation>&amp;Rozšíření Markdown</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="283"/>
-        <source>Languages</source>
-        <translation>Jazyky</translation>
+        <source>&amp;Languages</source>
+        <translation>&amp;Jazyky</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="308"/>
+        <location filename="../mainwindow.ui" line="310"/>
         <source>Table of contents</source>
         <translation>Obsah</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="347"/>
-        <location filename="../mainwindow.ui" line="649"/>
+        <location filename="../mainwindow.ui" line="349"/>
         <source>Markdown Syntax</source>
         <translation>Skladba Markdown</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="373"/>
-        <location filename="../mainwindow.cpp" line="169"/>
+        <location filename="../mainwindow.ui" line="375"/>
+        <location filename="../mainwindow.cpp" line="152"/>
         <source>qrc:/syntax.html</source>
         <translation>qrc:/syntax.html</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="383"/>
+        <location filename="../mainwindow.ui" line="385"/>
         <source>File Explorer</source>
         <translation>Průzkumník souborů</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="392"/>
+        <location filename="../mainwindow.ui" line="394"/>
         <source>E&amp;xit</source>
         <translation>&amp;Ukončit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="397"/>
+        <location filename="../mainwindow.ui" line="399"/>
         <source>&amp;New</source>
         <translation>&amp;Nový</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="402"/>
+        <location filename="../mainwindow.ui" line="404"/>
         <source>&amp;Open...</source>
         <translation>&amp;Otevřít...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="407"/>
+        <location filename="../mainwindow.ui" line="409"/>
         <source>&amp;Save</source>
         <translation>&amp;Uložit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="412"/>
+        <location filename="../mainwindow.ui" line="414"/>
         <source>Save &amp;As...</source>
         <translation>Uložit &amp;jako...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="417"/>
+        <location filename="../mainwindow.ui" line="419"/>
         <source>&amp;Undo</source>
         <translation>&amp;Zpět</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="422"/>
+        <location filename="../mainwindow.ui" line="424"/>
         <source>&amp;Redo</source>
         <translation>&amp;Znovu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="433"/>
+        <location filename="../mainwindow.ui" line="435"/>
         <source>Default</source>
         <translation>Výchozí</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="436"/>
+        <location filename="../mainwindow.ui" line="438"/>
         <source>Ctrl+1</source>
         <translation>Ctrl+1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="444"/>
+        <location filename="../mainwindow.ui" line="446"/>
         <source>Github</source>
         <translation>Github</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="447"/>
+        <location filename="../mainwindow.ui" line="449"/>
         <source>Ctrl+2</source>
         <translation>Ctrl+2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="455"/>
+        <location filename="../mainwindow.ui" line="457"/>
         <source>Solarized Light</source>
         <translation>Osluněný světlý</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="458"/>
+        <location filename="../mainwindow.ui" line="460"/>
         <source>Ctrl+3</source>
         <translation>Ctrl+3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="466"/>
+        <location filename="../mainwindow.ui" line="468"/>
         <source>Solarized Dark</source>
         <translation>Osluněný tmavý</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="469"/>
+        <location filename="../mainwindow.ui" line="471"/>
         <source>Ctrl+4</source>
         <translation>Ctrl+4</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="474"/>
+        <location filename="../mainwindow.ui" line="476"/>
         <source>&amp;About CuteMarkEd...</source>
         <translation>O programu &amp;CuteMarkEd...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="479"/>
-        <source>Export to HTML...</source>
-        <translation>Vyvést do HTML...</translation>
+        <location filename="../mainwindow.ui" line="481"/>
+        <source>Export to &amp;HTML...</source>
+        <translation>Vyvést do &amp;HTML...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="484"/>
-        <source>Export to PDF...</source>
-        <translation>Vyvést do PDF...</translation>
+        <location filename="../mainwindow.ui" line="486"/>
+        <source>&amp;Export to PDF...</source>
+        <translation>&amp;Vyvést do PDF...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="489"/>
+        <location filename="../mainwindow.ui" line="491"/>
         <source>Split 1:1</source>
         <translation>Rozdělit 1:1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="494"/>
+        <location filename="../mainwindow.ui" line="496"/>
         <source>Split 2:1</source>
         <translation>Rozdělit 2:1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="499"/>
+        <location filename="../mainwindow.ui" line="501"/>
         <source>Split 1:2</source>
         <translation>Rozdělit 1:2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="504"/>
+        <location filename="../mainwindow.ui" line="506"/>
         <source>Split 3:1</source>
         <translation>Rozdělit 3:1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="509"/>
+        <location filename="../mainwindow.ui" line="511"/>
         <source>Split 1:3</source>
         <translation>Rozdělit 1:3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="514"/>
-        <source>Copy HTML to Clipboard</source>
-        <translation>Kopírovat HTML do schránky</translation>
+        <location filename="../mainwindow.ui" line="516"/>
+        <source>Copy &amp;HTML to Clipboard</source>
+        <translation>Kopírovat &amp;HTML do schránky</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="519"/>
+        <location filename="../mainwindow.ui" line="521"/>
         <source>Cu&amp;t</source>
         <translation>Vyj&amp;mout</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="524"/>
+        <location filename="../mainwindow.ui" line="526"/>
         <source>&amp;Copy</source>
         <translation>&amp;Kopírovat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="529"/>
+        <location filename="../mainwindow.ui" line="531"/>
         <source>&amp;Paste</source>
         <translation>&amp;Vložit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="534"/>
+        <location filename="../mainwindow.ui" line="536"/>
         <source>Strong</source>
         <translation>Tučné</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="539"/>
+        <location filename="../mainwindow.ui" line="541"/>
         <source>Emphasize</source>
         <translation>Kurzíva</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="544"/>
+        <location filename="../mainwindow.ui" line="546"/>
         <source>&amp;Print...</source>
         <translation>&amp;Tisk...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="549"/>
-        <location filename="../mainwindow.ui" line="686"/>
+        <location filename="../mainwindow.ui" line="551"/>
+        <location filename="../mainwindow.ui" line="688"/>
         <source>Strikethrough</source>
         <translation>Přeškrtnutí</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="554"/>
+        <location filename="../mainwindow.ui" line="556"/>
         <source>Inline Code</source>
         <translation>Vkládaný kód</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="562"/>
-        <source>Math Support</source>
-        <translation>Zobrazit matematický obsah</translation>
+        <location filename="../mainwindow.ui" line="564"/>
+        <source>&amp;Math Support</source>
+        <translation>Podpora pro &amp;matematiku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="570"/>
-        <source>Code Highlighting</source>
-        <translation>Zvýrazňování kódu</translation>
+        <location filename="../mainwindow.ui" line="572"/>
+        <source>Code &amp;Highlighting</source>
+        <translation>&amp;Zvýrazňování kódu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="578"/>
+        <location filename="../mainwindow.ui" line="580"/>
         <source>Clearness</source>
         <translation>Zřetelnost</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="581"/>
+        <location filename="../mainwindow.ui" line="583"/>
         <source>Ctrl+5</source>
         <translation>Ctrl+5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="589"/>
+        <location filename="../mainwindow.ui" line="591"/>
         <source>Clearness Dark</source>
         <translation>Zřetelnost tmavé</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="592"/>
+        <location filename="../mainwindow.ui" line="594"/>
         <source>Ctrl+6</source>
         <translation>Ctrl+6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="602"/>
-        <source>Go to Line</source>
-        <translation>Jít na řádek</translation>
+        <location filename="../mainwindow.ui" line="599"/>
+        <source>Find/Replace</source>
+        <translation>Hledat/Nahradit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="605"/>
+        <location filename="../mainwindow.ui" line="604"/>
+        <source>Go to &amp;Line</source>
+        <translation>Jít na řád&amp;ek</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="607"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="610"/>
+        <location filename="../mainwindow.ui" line="612"/>
         <source>Center Paragraph</source>
         <translation>Zarovnat odstavec na střed</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="615"/>
+        <location filename="../mainwindow.ui" line="617"/>
         <source>Hard Linebreak</source>
         <translation>Tvrdé zalomení řádku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="618"/>
+        <location filename="../mainwindow.ui" line="620"/>
         <source>Ctrl+Return</source>
         <translation>Ctrl+Enter</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="623"/>
+        <location filename="../mainwindow.ui" line="625"/>
         <source>Find Next</source>
         <translation>Najít další</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="628"/>
+        <location filename="../mainwindow.ui" line="630"/>
         <source>Find Previous</source>
         <translation>Najít předchozí</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="636"/>
-        <source>Full Screen Mode</source>
-        <translation>Celoobrazovkový režim</translation>
+        <location filename="../mainwindow.ui" line="638"/>
+        <source>&amp;Full Screen Mode</source>
+        <translation>&amp;Celoobrazovkový režim</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="641"/>
+        <location filename="../mainwindow.ui" line="643"/>
         <source>Blockquote</source>
         <translation>Blokové uvozovky</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="644"/>
+        <location filename="../mainwindow.ui" line="646"/>
         <source>Ctrl+Shift+Q</source>
         <translation>Ctrl+Shift+Q</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="654"/>
-        <location filename="../mainwindow.cpp" line="681"/>
-        <location filename="../mainwindow.cpp" line="693"/>
-        <location filename="../mainwindow.cpp" line="694"/>
-        <source>HTML preview</source>
-        <translation>Náhled na HTML</translation>
+        <location filename="../mainwindow.ui" line="651"/>
+        <source>&amp;Markdown Syntax</source>
+        <translation>Skladba &amp;Markdown</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="657"/>
+        <location filename="../mainwindow.ui" line="656"/>
+        <source>HTML &amp;Preview</source>
+        <translation>&amp;Náhled na HTML</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="659"/>
         <source>F5</source>
         <translation>F5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="665"/>
-        <source>Show Special Characters</source>
+        <location filename="../mainwindow.ui" line="667"/>
+        <source>&amp;Show Special Characters</source>
         <extracomment>Option to show characters like line feed or tabs</extracomment>
-        <translation>Ukázat zvláštní znaky</translation>
+        <translation>&amp;Ukázat zvláštní znaky</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="670"/>
-        <source>Options...</source>
-        <translation>Volby...</translation>
+        <location filename="../mainwindow.ui" line="672"/>
+        <source>&amp;Options...</source>
+        <translation>&amp;Volby...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="678"/>
+        <location filename="../mainwindow.ui" line="680"/>
         <source>Autolink</source>
         <translation>Automatický odkaz</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="694"/>
+        <location filename="../mainwindow.ui" line="696"/>
         <source>Alphabetic Lists</source>
         <translation>Abecední seznamy</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="702"/>
+        <location filename="../mainwindow.ui" line="704"/>
         <source>Definition Lists</source>
         <translation>Seznamy definic</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="710"/>
+        <location filename="../mainwindow.ui" line="712"/>
         <source>SmartyPants</source>
         <translation>SmartyPants</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="715"/>
+        <location filename="../mainwindow.ui" line="717"/>
         <source>Language</source>
         <translation>Jazyk</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="723"/>
-        <source>Check Spelling</source>
-        <translation>Ověřit pravopis</translation>
+        <location filename="../mainwindow.ui" line="725"/>
+        <source>&amp;Check Spelling</source>
+        <translation>&amp;Ověření pravopisu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="728"/>
+        <location filename="../mainwindow.ui" line="730"/>
         <source>Increase Header Level</source>
         <translation>Zvýšit úroveň nadpisu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="731"/>
+        <location filename="../mainwindow.ui" line="733"/>
         <source>Alt+Right</source>
         <translation>Alt+Right</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="736"/>
+        <location filename="../mainwindow.ui" line="738"/>
         <source>Decrease Header Level</source>
         <translation>Snížit úroveň nadpisu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="739"/>
+        <location filename="../mainwindow.ui" line="741"/>
         <source>Alt+Left</source>
         <translation>Alt+Left</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="744"/>
+        <location filename="../mainwindow.ui" line="746"/>
         <source>Insert Table...</source>
         <translation>Vložit tabulku...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="747"/>
+        <location filename="../mainwindow.ui" line="749"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="752"/>
+        <location filename="../mainwindow.ui" line="754"/>
         <source>Byword Dark</source>
         <translation>Typický tmavý</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="755"/>
+        <location filename="../mainwindow.ui" line="757"/>
         <source>Ctrl+7</source>
         <translation>Ctrl+7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="760"/>
-        <source>Insert Image...</source>
-        <translation>Vložit obrázek...</translation>
+        <location filename="../mainwindow.ui" line="762"/>
+        <source>Insert &amp;Image...</source>
+        <translation>Vložit &amp;obrázek...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="763"/>
+        <location filename="../mainwindow.ui" line="765"/>
         <source>Ctrl+Shift+I</source>
         <translation>Ctrl+Shift+I</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="771"/>
-        <source>Horizontal Layout</source>
-        <translation>Vodorovné rozvržení</translation>
+        <location filename="../mainwindow.ui" line="773"/>
+        <source>&amp;Horizontal Layout</source>
+        <translation>&amp;Vodorovné rozvržení</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="779"/>
+        <location filename="../mainwindow.ui" line="781"/>
         <source>Footnotes</source>
         <translation>Poznámky pod čarou</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="787"/>
+        <location filename="../mainwindow.ui" line="789"/>
         <source>Superscript</source>
         <translation>Horní index</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="798"/>
-        <source>Word Wrap</source>
-        <translation>Zalamovat slova</translation>
+        <location filename="../mainwindow.ui" line="800"/>
+        <source>&amp;Word Wrap</source>
+        <translation>&amp;Zalamování řádků</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="186"/>
-        <source>:/markdown-snippets.json</source>
-        <extracomment>path to built-in snippets resource.</extracomment>
-        <translation>:/markdown-snippets.json</translation>
+        <location filename="../mainwindow.ui" line="808"/>
+        <source>Ignore Y&amp;AML Header</source>
+        <translation>Přehlížet hlavičku Y&amp;AML</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="235"/>
+        <location filename="../mainwindow.ui" line="816"/>
+        <source>&amp;Diagram Support</source>
+        <translation>Podpora pro &amp;diagramy</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="214"/>
         <source>Open File...</source>
         <translation>Otevřít soubor...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="236"/>
-        <location filename="../mainwindow.cpp" line="267"/>
-        <source>Markdown Files (*.markdown *.md);;All Files (*)</source>
-        <translation>Soubory Markdown (*.markdown *.md);;Všechny soubory (*.*)</translation>
+        <location filename="../mainwindow.cpp" line="215"/>
+        <location filename="../mainwindow.cpp" line="246"/>
+        <source>Markdown Files (*.markdown *.md *.mdown);;All Files (*)</source>
+        <translation>Soubory Markdown (*.markdown *.md *.mdown);;Všechny soubory (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="266"/>
+        <location filename="../mainwindow.cpp" line="245"/>
         <source>Save as...</source>
         <translation>Uložit jako...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="338"/>
+        <location filename="../mainwindow.cpp" line="317"/>
         <source>Print Document</source>
         <translation>Tisknout dokument</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="379"/>
+        <location filename="../mainwindow.cpp" line="358"/>
         <source>Go to...</source>
         <translation>Jít na...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="380"/>
+        <location filename="../mainwindow.cpp" line="359"/>
         <source>Line: </source>
         <comment>Line number in the Markdown editor</comment>
         <translation>Řádek:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="684"/>
-        <location filename="../mainwindow.cpp" line="685"/>
+        <location filename="../mainwindow.cpp" line="735"/>
+        <location filename="../mainwindow.cpp" line="747"/>
+        <location filename="../mainwindow.cpp" line="748"/>
+        <source>HTML preview</source>
+        <translation>Náhled na HTML</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="738"/>
+        <location filename="../mainwindow.cpp" line="739"/>
         <source>HTML source</source>
         <translation>Zdroj HTML</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="715"/>
+        <location filename="../mainwindow.cpp" line="769"/>
         <source>%1 words</source>
         <translation>%1 slov</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="716"/>
+        <location filename="../mainwindow.cpp" line="770"/>
         <source>Lines: %1  Words: %2  Characters: %3</source>
         <translation>Řádky: %1  Slova: %2  Znaky: %3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1002"/>
+        <location filename="../mainwindow.cpp" line="1083"/>
         <source>Change Preview Style</source>
         <translation>Změnit styl náhledu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1092"/>
+        <location filename="../mainwindow.cpp" line="1191"/>
         <source>Save Changes</source>
         <translation>Uložit změny</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1093"/>
+        <location filename="../mainwindow.cpp" line="1192"/>
         <source>The document has been modified.&lt;br&gt;Do you want to save your changes?</source>
         <translation>Dokument byl změněn.&lt;br&gt;Chcete uložit změny?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1117"/>
+        <location filename="../mainwindow.cpp" line="1216"/>
         <source>untitled.md</source>
         <extracomment>default file name for new markdown documents</extracomment>
         <translation>Bez názvu.md</translation>
@@ -790,18 +923,17 @@
 <context>
     <name>MarkdownEditor</name>
     <message>
-        <location filename="../markdowneditor.cpp" line="65"/>
-        <source>Ctrl+Space</source>
-        <comment>Complete</comment>
-        <translation>Ctrl+mezerník</translation>
+        <location filename="../markdowneditor.cpp" line="82"/>
+        <source>Snippet Complete</source>
+        <translation>Úryvek hotový</translation>
     </message>
     <message>
-        <location filename="../markdowneditor.cpp" line="246"/>
+        <location filename="../markdowneditor.cpp" line="268"/>
         <source>Suggestions</source>
         <translation>Návrhy</translation>
     </message>
     <message>
-        <location filename="../markdowneditor.cpp" line="263"/>
+        <location filename="../markdowneditor.cpp" line="285"/>
         <source>Add to User Dictionary</source>
         <translation>Přidat do uživatelského slovníku</translation>
     </message>
@@ -815,8 +947,8 @@
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="24"/>
-        <source>General</source>
-        <translation>Obecné</translation>
+        <source>&amp;General</source>
+        <translation>&amp;Obecné</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="30"/>
@@ -825,126 +957,192 @@
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="36"/>
-        <source>Converter Library:</source>
-        <translation>Knihovna převodníku:</translation>
+        <source>Converter &amp;Library:</source>
+        <translation>&amp;Knihovna převodníku:</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="44"/>
+        <location filename="../optionsdialog.ui" line="47"/>
         <source>Discount (Default)</source>
         <extracomment>Name of a Markdown to HTML converter library</extracomment>
         <translation>Odečíst (výchozí)</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="49"/>
+        <location filename="../optionsdialog.ui" line="52"/>
         <source>Hoedown</source>
         <extracomment>Name of a Markdown to HTML converter library</extracomment>
         <translation>Hoedown</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="54"/>
+        <location filename="../optionsdialog.ui" line="57"/>
         <source>Reveal.js (Presentation)</source>
         <translation>Reveal.js (prezentace)</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="79"/>
-        <source>Editor</source>
-        <translation>Editor</translation>
+        <location filename="../optionsdialog.ui" line="82"/>
+        <source>&amp;Editor</source>
+        <translation>&amp;Editor</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="85"/>
+        <location filename="../optionsdialog.ui" line="88"/>
         <source>Font</source>
         <translation>Písmo</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="91"/>
-        <source>Family:</source>
-        <translation>Rodina písma:</translation>
+        <location filename="../optionsdialog.ui" line="94"/>
+        <source>&amp;Family:</source>
+        <translation>&amp;Písmová rodina:</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="101"/>
+        <location filename="../optionsdialog.ui" line="107"/>
+        <source>Si&amp;ze:</source>
+        <translation>V&amp;elikost:</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="123"/>
+        <source>Tabs</source>
+        <translation>Tabulátory</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="129"/>
+        <source>&amp;Tab width:</source>
+        <translation>Šířka &amp;zarážky:</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="182"/>
+        <source>&amp;HTML Preview</source>
+        <translation>Náhled na &amp;HTML</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="188"/>
+        <source>Fonts</source>
+        <translation>Písma</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="194"/>
+        <source>S&amp;tandard Font:</source>
+        <translation>&amp;Výchozí písmo:</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="207"/>
+        <location filename="../optionsdialog.ui" line="256"/>
         <source>Size:</source>
         <translation>Velikost:</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="114"/>
-        <source>Tabs</source>
-        <translation>Karty</translation>
+        <location filename="../optionsdialog.ui" line="217"/>
+        <source>Se&amp;rif Font:</source>
+        <translation>&amp;Patkové písmo:</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="120"/>
-        <source>Tab width:</source>
-        <translation>Šířka karet:</translation>
+        <location filename="../optionsdialog.ui" line="230"/>
+        <source>S&amp;ans Serif Font:</source>
+        <translation>&amp;Bezpatkové písmo:</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="170"/>
-        <source>Internet</source>
-        <translation>Internet</translation>
+        <location filename="../optionsdialog.ui" line="243"/>
+        <source>&amp;Fixed Font:</source>
+        <translation>&amp;Pevná šířka znaku:</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="176"/>
+        <location filename="../optionsdialog.ui" line="283"/>
+        <source>&amp;Internet</source>
+        <translation>&amp;Internet</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="289"/>
         <source>Configure Proxy to Access the Internet</source>
         <translation>Nastavit proxy pro přístup k internetu</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="182"/>
-        <source>No proxy</source>
-        <translation>Žádná proxy</translation>
+        <location filename="../optionsdialog.ui" line="295"/>
+        <source>No prox&amp;y</source>
+        <translation>Žádná prox&amp;y</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="192"/>
-        <source>Use system proxy settings</source>
-        <translation>Použít systémová nastavení proxy</translation>
+        <location filename="../optionsdialog.ui" line="305"/>
+        <source>&amp;Use system proxy settings</source>
+        <translation>&amp;Použít systémové nastavení proxy</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="199"/>
-        <source>Manual proxy configuration:</source>
-        <translation>Ruční nastavení proxy</translation>
+        <location filename="../optionsdialog.ui" line="312"/>
+        <source>&amp;Manual proxy configuration:</source>
+        <translation>&amp;Ruční nastavení proxy:</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="215"/>
-        <source>Host:</source>
-        <translation>Hostitel:</translation>
+        <location filename="../optionsdialog.ui" line="328"/>
+        <source>H&amp;ost:</source>
+        <translation>&amp;Hostitel:</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="222"/>
-        <source>Port:</source>
-        <translation>Přípojka:</translation>
+        <location filename="../optionsdialog.ui" line="338"/>
+        <source>&amp;Port:</source>
+        <translation>&amp;Přípojka:</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="229"/>
-        <source>User Name:</source>
-        <translation>Uživatelské jméno</translation>
+        <location filename="../optionsdialog.ui" line="348"/>
+        <source>User &amp;Name:</source>
+        <translation>Uživatelské j&amp;méno:</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="236"/>
-        <source>Password:</source>
-        <translation>Heslo:</translation>
+        <location filename="../optionsdialog.ui" line="358"/>
+        <source>Pass&amp;word:</source>
+        <translation>&amp;Heslo:</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="291"/>
-        <source>Snippets</source>
-        <translation>Úryvky</translation>
+        <location filename="../optionsdialog.ui" line="416"/>
+        <source>&amp;Snippets</source>
+        <translation>Ú&amp;ryvky</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="330"/>
-        <source>Add</source>
-        <translation>Přidat</translation>
+        <location filename="../optionsdialog.ui" line="455"/>
+        <source>&amp;Add</source>
+        <translation>&amp;Přidat</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.ui" line="337"/>
-        <source>Remove</source>
-        <translation>Odstranit</translation>
+        <location filename="../optionsdialog.ui" line="462"/>
+        <source>&amp;Remove</source>
+        <translation>&amp;Odstranit</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.cpp" line="322"/>
+        <location filename="../optionsdialog.ui" line="492"/>
+        <source>Short&amp;cuts</source>
+        <translation>Klávesové &amp;zkratky</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="508"/>
+        <source>Action</source>
+        <translation>Činnost</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="513"/>
+        <source>Shortcut</source>
+        <translation>Zkratka</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.ui" line="518"/>
+        <source>Default</source>
+        <translation>Výchozí</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.cpp" line="202"/>
         <source>Error</source>
         <comment>Title of error message box</comment>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.cpp" line="322"/>
+        <location filename="../optionsdialog.cpp" line="202"/>
         <source>No snippet selected.</source>
         <translation>Nevybrán žádný úryvek.</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.cpp" line="229"/>
+        <source>Conflict</source>
+        <translation>Rozpor</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.cpp" line="229"/>
+        <source>This shortcut is already used for &quot;%1&quot;</source>
+        <translation>Tato klávesová zkratka se již používá pro &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -963,23 +1161,23 @@
 <context>
     <name>SnippetsTableModel</name>
     <message>
-        <location filename="../optionsdialog.cpp" line="120"/>
+        <location filename="../snippetstablemodel.cpp" line="88"/>
         <source>Error</source>
         <comment>Title of error message box</comment>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.cpp" line="120"/>
+        <location filename="../snippetstablemodel.cpp" line="88"/>
         <source>Not a valid trigger.</source>
         <translation>Není platným spouštěčem.</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.cpp" line="140"/>
+        <location filename="../snippetstablemodel.cpp" line="108"/>
         <source>Trigger</source>
         <translation>Spouštěč</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.cpp" line="142"/>
+        <location filename="../snippetstablemodel.cpp" line="110"/>
         <source>Description</source>
         <translation>Popis</translation>
     </message>
