@@ -47,9 +47,9 @@
         
         <h2><a name="download" class="anchor" href="#download"><span class="octicon octicon-link"></span></a>DOWNLOAD</h2>
 
-        <p><a href="https://github.com/cloose/CuteMarkEd/archive/v0.10.2.tar.gz">Sources</a><br>
-           <a href="http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.10.2.msi">MS Windows (Installer)</a><br>
-           <a href="http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.10.2.zip">MS Windows (ZIP file)</a><br>
+        <p><a href="https://github.com/cloose/CuteMarkEd/archive/v0.11.0.tar.gz">Sources</a><br>
+           <a href="http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.11.0.msi">MS Windows (Installer)</a><br>
+           <a href="http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.11.0.zip">MS Windows (ZIP file)</a><br>
            <a href="https://build.opensuse.org/project/show?project=home%3Acloose1974">OpenSUSE 13.1 (RPM)</a><br>
            <a href="https://build.opensuse.org/project/show?project=home%3Acloose1974">Fedora 20 (RPM)</a><br>
            <a href="https://build.opensuse.org/project/show?project=home%3Acloose1974">Fedora 21 (RPM)</a>
@@ -64,6 +64,40 @@
         </ol>
         
         <h2><a name="news" class="anchor" href="#news"><span class="octicon octicon-link"></span></a>NEWS</h2>
+
+        <h4><a name="version-0110" class="anchor" href="#version-0110"><span class="octicon octicon-link"></span></a>Major Release 0.11.0 (April 26th, 2015)</h4>
+
+        <p>
+        The 0.11.0 release offers support to create flowchart and sequence diagrams using <a href="https://github.com/knsv/mermaid">mermaid</a>. 
+        </p>
+
+        <p><img src="images/20150426-cutemarked-diagrams.png"></p>
+
+        <p>
+        The snippet completer was extended to also auto complete words from the document:
+        </p>
+
+        <p><img src="images/20150426-cutemarked-word-completion.png"></p>
+
+        <ul>
+          <li><code>NEW</code> Added support to create diagrams using <a href="https://github.com/knsv/mermaid">mermaid</a> (#215)</li>
+          <li><code>NEW</code> Added auto completion for words extracted from the document (#194)</li>
+          <li><code>NEW</code> Added option to ignore YAML header in editor and preview (#136, #139)</li>
+          <li><code>NEW</code> Added possibility to change keyboard shortcuts to the options dialog (#144)</li>
+          <li><code>NEW</code> Added zoom to HTML preview and the option to change the default font family and size for the HTML preview (#169)</li>
+          <li><code>NEW</code> Added synchronization of the current slide between editor and preview in presentation
+mode (#184)</li>
+        </ul>
+        <ul>
+          <li><code>IMPROVED</code> More mnemonics in main menu and option dialog (#104)</li>
+          <li><code>IMPROVED</code> Also support file extension .mdown (#155)</li>
+          <li><code>IMPROVED</code> Save last used style on application exit (#159)</li>
+          <li><code>IMPROVED</code> Find/Replace widget can be closed with <kbd>ESC</kbd> key (#162)</li>
+        </ul>
+        <ul>
+          <li><code>FIXED</code> Build with MSVC 2013 and MacOSX</li>
+          <li><code>FIXED</code> Parallel build with e.g. make -j2</li>
+        </ul>
 
         <h4><a name="version-0102" class="anchor" href="#version-0102"><span class="octicon octicon-link"></span></a>Minor Release 0.10.2 (March 7th, 2015)</h4>
 
@@ -80,39 +114,6 @@
           <li><code>FIXED</code> Restore fullscreen Mode after startup (#164).</li>
           <li><code>FIXED</code> Build on Fedora with both Qt4 and Qt5 installed (#165).</li>
           <li><code>FIXED</code> Replaced generic editor icon with own icon on Linux.</li>
-        </ul>
-
-        <h4><a name="version-0101" class="anchor" href="#version-0101"><span class="octicon octicon-link"></span></a>Minor Release 0.10.1 (August 24th, 2014)</h4>
-
-        <p>
-        The 0.10.1 release is a Linux only and there won't be packages for Windows. This release fixes some problems on Linux and hopefully makes the packaging for Linux easier.
-        </p>
-
-        <ul>
-          <li><code>IMPROVED</code> Added support for dictionaries installed by the package system.</li>
-        </ul>
-        <ul>
-          <li><code>FIXED</code> User snippets and user dictionaries are now saved to disk.</li>
-          <li><code>FIXED</code> Application binary is now installed to /usr/bin</li>
-          <li><code>FIXED</code> Link to system installed hoedown library</li>
-        </ul>
-
-        <h4><a name="version-0100" class="anchor" href="#version-0100"><span class="octicon octicon-link"></span></a>Major Release 0.10.0 (July 23rd, 2014)</h4>
-
-        <p>
-        The 0.10.0 release offers support to create presentations. The feature is still experimental and needs more work. Your feedback is very appreciated.
-        </p>
-
-        <p><img src="images/20140721-cutemarked-presentation.png"></p>
-
-        <ul>
-          <li><code>NEW</code> Added (experimental) support to create presentations using <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a> (#122)</li>
-          <li><code>NEW</code> Added a file explorer view which allows to easily switch between multiple documents (#79)</li>
-          <li><code>NEW</code> Added context menu item to copy preview content as HTML (#133)</li>
-          <li><code>NEW</code> <em>Windows only</em>: Added support for showing recent files in taskbar jump list (#145)</li>
-        </ul>
-        <ul>
-          <li><code>IMPROVED</code> Updated the Qt library to version 5.2 (#145)</li>
         </ul>
 
         <h2><a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>DEPENDENCIES</h2>
