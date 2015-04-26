@@ -8,14 +8,48 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 ### DOWNLOAD
 
-[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.10.2.tar.gz)  
-[MS Windows (Installer)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.10.2.msi)  
-[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.10.2.zip)  
+[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.11.0.tar.gz)  
+[MS Windows (Installer)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.11.0.msi)  
+[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.11.0.zip)  
 [OpenSUSE 13.1 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 [Fedora 20 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 [Fedora 21 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 
 ### NEWS
+
+#### Version 0.11.0
+
+Highlights:
+
+The 0.11.0 release offers support to create flowchart and sequence diagrams using [mermaid](https://github.com/knsv/mermaid). 
+
+![screenshot](http://cloose.github.io/CuteMarkEd/images/20150426-cutemarked-diagrams.png)
+
+The snippet completer was extended to also auto complete words from the document:
+
+![screenshot](http://cloose.github.io/CuteMarkEd/images/20150426-cutemarked-word-completion.png)
+
+New Features:
+
+* `NEW` Added support to create diagrams using [mermaid](https://github.com/knsv/mermaid) (#215).
+* `NEW` Added auto completion for words extracted from the document (#194)
+* `NEW` Added option to ignore YAML header in editor and preview (#136, #139)
+* `NEW` Added possibility to change keyboard shortcuts to the options dialog (#144)
+* `NEW` Added zoom to HTML preview and the option to change the default font family and size for the HTML preview (#169)
+* `NEW` Added synchronization of the current slide between editor and preview in presentation
+mode (#184)
+
+Improvements:
+
+* `IMPROVED` More mnemonics in main menu and option dialog (#104)
+* `IMPROVED` Also support file extension .mdown (#155)
+* `IMPROVED` Save last used style on application exit (#159)
+* `IMPROVED` Find/Replace widget can be closed with ESC key (#162) 
+
+Fixes:
+
+* `FIXED` Build with MSVC 2013 and MacOSX
+* `FIXED` Parallel build with e.g. make -j2
 
 #### Version 0.10.2
 
@@ -35,40 +69,6 @@ Fixes:
 * `FIXED` Restore fullscreen mode after startup (#164)
 * `FIXED` Build on Fedora with both Qt4 and Qt5 installed (#165)
 * `FIXED` Replaced generic editor icon with own icon on Linux
-
-#### Version 0.10.1 (Linux only)
-
-This release fixes some problems on Linux and hopefully makes the packaging for Linux easier.
-
-Improvements:
-
-* `IMPROVED` Added support for dictionaries installed by the package system.
-
-Fixes:
-
-* `FIXED` User snippets and user dictionaries are now saved to disk.
-* `FIXED` Application binary is now installed to /usr/bin
-* `FIXED` Link to system installed hoedown library
-
-#### Version 0.10.0
-
-Highlights:
-
-The 0.10.0 release offers support to create presentations. The feature is still
-experimental and needs more work. Your feedback is very appreciated.
-
-![screenshot](http://cloose.github.io/CuteMarkEd/images/20140721-cutemarked-presentation.png)
-
-New Features:
-
-* `NEW` Added (experimental) support to create presentations using [reveal.js](http://lab.hakim.se/reveal-js/#/) (#122).
-* `NEW` Added a file explorer view which allows to easily switch between multiple documents (#79)
-* `NEW` Added context menu item to copy preview content as HTML (#133)
-* `NEW` _Windows only_: Added support for showing recent files in taskbar jump list (#145)
-
-Improvements:
-
-* `IMPROVED` Updated the Qt library to version 5.2 (#145)
 
 
 ### DEPENDENCIES
