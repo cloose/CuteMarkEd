@@ -81,6 +81,9 @@ make INSTALL_ROOT="%buildroot" install
 
 %changelog
 
+* Sun Apr 26 2015 Christian Loose <christian.loose@hamburg.de> 0.11.0-1
+- New minor version 0.11.0 released
+
 * Wed Mar 11 2015 antoine Barbeyer (local build) <antoine.barbeyer@no-spam.com> - 0.10.2-2
 - minor fix in spec file to build in fedora 21
 
