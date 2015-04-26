@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2015 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@
 
 #include <QObject>
 #include <QFont>
+#include <QKeySequence>
+#include <QMap>
 
 class Options : public QObject
 {
@@ -42,6 +44,25 @@ public:
     int tabWidth() const;
     void setTabWidth(int width);
 
+    /* HTML preview options */
+    QFont standardFont() const;
+    void setStandardFont(const QFont &font);
+
+    QFont serifFont() const;
+    void setSerifFont(const QFont &font);
+
+    QFont sansSerifFont() const;
+    void setSansSerifFont(const QFont &font);
+
+    QFont fixedFont() const;
+    void setFixedFont(const QFont &font);
+
+    int defaultFontSize() const;
+    void setDefaultFontSize(int size);
+
+    int defaultFixedFontSize() const;
+    void setDefaultFixedFontSize(int size);
+
     /* Internet options */
     ProxyMode proxyMode() const;
     void setProxyMode(ProxyMode mode);
@@ -57,6 +78,11 @@ public:
 
     QString proxyPassword() const;
     void setProxyPassword(const QString &password);
+
+    /* Shortcuts options */
+    void addCustomShortcut(const QString &actionName, const QKeySequence &keySequence);
+    bool hasCustomShortcut(const QString &actionName) const;
+    QKeySequence customShortcut(const QString &actionName) const;
 
     /* Extra menu options */
     bool isAutolinkEnabled() const;
@@ -95,11 +121,20 @@ public:
     bool isSpellingCheckEnabled() const;
     void setSpellingCheckEnabled(bool enabled);
 
+    bool isYamlHeaderSupportEnabled() const;
+    void setYamlHeaderSupportEnabled(bool enabled);
+
+    bool isDiagramSupportEnabled() const;
+    void setDiagramSupportEnabled(bool enabled);
+
     QString dictionaryLanguage() const;
     void setDictionaryLanguage(const QString &language);
 
     MarkdownConverter markdownConverter() const;
     void setMarkdownConverter(MarkdownConverter converter);
+
+    QString lastUsedStyle() const;
+    void setLastUsedStyle(const QString &style);
 
     void readSettings();
     void writeSettings();
@@ -130,8 +165,18 @@ private:
     bool m_showSpecialCharactersEnabled;
     bool m_wordWrapEnabled;
     bool m_spellingCheckEnabled;
+    bool m_yamlHeaderSupportEnabled;
+    bool m_diagramSupportEnabled;
     QString m_dictionaryLanguage;
     MarkdownConverter m_markdownConverter;
+    QString m_lastUsedStyle;
+    QString m_standardFontFamily;
+    QString m_fixedFontFamily;
+    QString m_serifFontFamily;
+    QString m_sansSerifFontFamily;
+    int m_defaultFontSize;
+    int m_defaultFixedFontSize;
+    QMap<QString, QKeySequence> m_customShortcuts;
 };
 
 #endif // OPTIONS_H

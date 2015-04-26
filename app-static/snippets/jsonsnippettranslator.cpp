@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,11 +16,7 @@
  */
 #include "jsonsnippettranslator.h"
 
-#include <QJsonArray>
-#include <QJsonDocument>
-
 #include "snippet.h"
-#include "snippetcollection.h"
 
 namespace {
 
@@ -32,36 +28,6 @@ static const QLatin1String BUILTIN("builtIn");
 
 }
 
-bool JsonSnippetTranslator::processDocument(const QJsonDocument &jsonDocument, SnippetCollection *collection)
-{
-    if (!isValid(jsonDocument))
-        return false;
-
-    QJsonArray snippetArray = jsonDocument.object().value("snippets").toArray();
-    foreach (QJsonValue entry, snippetArray) {
-        Snippet snippet = fromJsonObject(entry.toObject());
-        collection->insert(snippet);
-    }
-
-    return true;
-}
-
-QJsonDocument JsonSnippetTranslator::createDocument(SnippetCollection *collection)
-{
-    QJsonArray snippetArray;
-    for (int i = 0; i < collection->count(); ++i) {
-        Snippet snippet = collection->snippetAt(i);
-
-        QJsonObject entry = toJsonObject(snippet);
-        snippetArray.append(entry);
-    }
-
-    QJsonObject object;
-    object.insert("snippets", snippetArray);
-
-    QJsonDocument doc(object);
-    return doc;
-}
 
 Snippet JsonSnippetTranslator::fromJsonObject(const QJsonObject &object)
 {
@@ -87,12 +53,4 @@ QJsonObject JsonSnippetTranslator::toJsonObject(const Snippet &snippet)
     object.insert(BUILTIN, snippet.builtIn);
 
     return object;
-}
-
-bool JsonSnippetTranslator::isValid(const QJsonDocument &jsonDocument) const
-{
-    return !jsonDocument.isEmpty() &&
-           jsonDocument.isObject() &&
-           jsonDocument.object().contains("snippets") &&
-           jsonDocument.object().value("snippets").isArray();
 }

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>440</width>
-    <height>351</height>
+    <width>700</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="title">
-       <string>General</string>
+       <string>&amp;General</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
@@ -33,7 +33,10 @@
           <item>
            <widget class="QLabel" name="converterLabel">
             <property name="text">
-             <string>Converter Library:</string>
+             <string>Converter &amp;Library:</string>
+            </property>
+            <property name="buddy">
+             <cstring>converterComboBox</cstring>
             </property>
            </widget>
           </item>
@@ -76,7 +79,7 @@
      </widget>
      <widget class="QWidget" name="editorTab">
       <attribute name="title">
-       <string>Editor</string>
+       <string>&amp;Editor</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
@@ -88,7 +91,10 @@
           <item>
            <widget class="QLabel" name="familyLabel">
             <property name="text">
-             <string>Family:</string>
+             <string>&amp;Family:</string>
+            </property>
+            <property name="buddy">
+             <cstring>fontComboBox</cstring>
             </property>
            </widget>
           </item>
@@ -98,7 +104,10 @@
           <item>
            <widget class="QLabel" name="sizeLabel">
             <property name="text">
-             <string>Size:</string>
+             <string>Si&amp;ze:</string>
+            </property>
+            <property name="buddy">
+             <cstring>sizeComboBox</cstring>
             </property>
            </widget>
           </item>
@@ -117,7 +126,10 @@
           <item>
            <widget class="QLabel" name="tabWidthLabel">
             <property name="text">
-             <string>Tab width:</string>
+             <string>&amp;Tab width:</string>
+            </property>
+            <property name="buddy">
+             <cstring>tabWidthSpinBox</cstring>
             </property>
            </widget>
           </item>
@@ -165,9 +177,110 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="htmlPreviewTab">
+      <attribute name="title">
+       <string>&amp;HTML Preview</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <item>
+        <widget class="QGroupBox" name="previewFontsGroupBox">
+         <property name="title">
+          <string>Fonts</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="standardFontLabel">
+            <property name="text">
+             <string>S&amp;tandard Font:</string>
+            </property>
+            <property name="buddy">
+             <cstring>standardFontComboBox</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QFontComboBox" name="standardFontComboBox"/>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="defaultSizeLabel">
+            <property name="text">
+             <string>Size:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QComboBox" name="defaultSizeComboBox"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="serifFontLabel">
+            <property name="text">
+             <string>Se&amp;rif Font:</string>
+            </property>
+            <property name="buddy">
+             <cstring>serifFontComboBox</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QFontComboBox" name="serifFontComboBox"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="sansSerifFontLabel">
+            <property name="text">
+             <string>S&amp;ans Serif Font:</string>
+            </property>
+            <property name="buddy">
+             <cstring>sansSerifFontComboBox</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QFontComboBox" name="sansSerifFontComboBox"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="fixedFontLabel">
+            <property name="text">
+             <string>&amp;Fixed Font:</string>
+            </property>
+            <property name="buddy">
+             <cstring>fixedFontComboBox</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QFontComboBox" name="fixedFontComboBox"/>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLabel" name="defaultFixedSizeLabel">
+            <property name="text">
+             <string>Size:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QComboBox" name="defaultFixedSizeComboBox"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>120</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="internetTab">
       <attribute name="title">
-       <string>Internet</string>
+       <string>&amp;Internet</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
@@ -179,7 +292,7 @@
           <item>
            <widget class="QRadioButton" name="noProxyRadioButton">
             <property name="text">
-             <string>No proxy</string>
+             <string>No prox&amp;y</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -189,14 +302,14 @@
           <item>
            <widget class="QRadioButton" name="systemProxyRadioButton">
             <property name="text">
-             <string>Use system proxy settings</string>
+             <string>&amp;Use system proxy settings</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QRadioButton" name="manualProxyRadioButton">
             <property name="text">
-             <string>Manual proxy configuration:</string>
+             <string>&amp;Manual proxy configuration:</string>
             </property>
            </widget>
           </item>
@@ -212,28 +325,40 @@
              <item row="0" column="0">
               <widget class="QLabel" name="hostLabel">
                <property name="text">
-                <string>Host:</string>
+                <string>H&amp;ost:</string>
+               </property>
+               <property name="buddy">
+                <cstring>hostLineEdit</cstring>
                </property>
               </widget>
              </item>
              <item row="1" column="0">
               <widget class="QLabel" name="portLabel">
                <property name="text">
-                <string>Port:</string>
+                <string>&amp;Port:</string>
+               </property>
+               <property name="buddy">
+                <cstring>portLineEdit</cstring>
                </property>
               </widget>
              </item>
              <item row="2" column="0">
               <widget class="QLabel" name="userNameLabel">
                <property name="text">
-                <string>User Name:</string>
+                <string>User &amp;Name:</string>
+               </property>
+               <property name="buddy">
+                <cstring>userNameLineEdit</cstring>
                </property>
               </widget>
              </item>
              <item row="3" column="0">
               <widget class="QLabel" name="passwordLabel">
                <property name="text">
-                <string>Password:</string>
+                <string>Pass&amp;word:</string>
+               </property>
+               <property name="buddy">
+                <cstring>passwordLineEdit</cstring>
                </property>
               </widget>
              </item>
@@ -288,7 +413,7 @@
      </widget>
      <widget class="QWidget" name="snippetsTab">
       <attribute name="title">
-       <string>Snippets</string>
+       <string>&amp;Snippets</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
@@ -327,14 +452,14 @@
          <item>
           <widget class="QPushButton" name="addSnippetButton">
            <property name="text">
-            <string>Add</string>
+            <string>&amp;Add</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="removeSnippetButton">
            <property name="text">
-            <string>Remove</string>
+            <string>&amp;Remove</string>
            </property>
           </widget>
          </item>
@@ -358,6 +483,41 @@
          <property name="readOnly">
           <bool>true</bool>
          </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="shortcutsTab">
+      <attribute name="title">
+       <string>Short&amp;cuts</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <item>
+        <widget class="QTableWidget" name="shortcutsTable">
+         <property name="cornerButtonEnabled">
+          <bool>false</bool>
+         </property>
+         <property name="columnCount">
+          <number>3</number>
+         </property>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>Action</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Shortcut</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Default</string>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>

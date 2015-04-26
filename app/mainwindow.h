@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,34 +18,35 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMap>
+#include <QHash>
 
 namespace Ui {
 class MainWindow;
 }
 
+class QAction;
 class QActionGroup;
 class QLabel;
-class QNetworkDiskCache;
 class ActiveLabel;
 class Dictionary;
+class HtmlPreviewController;
 class HtmlPreviewGenerator;
 class HtmlHighlighter;
 class RecentFilesMenu;
 class Options;
+class SlideLineMapping;
 class SnippetCollection;
+class ViewSynchronizer;
 
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    
+
 public:
     explicit MainWindow(const QString &fileName = QString(), QWidget *parent = 0);
     ~MainWindow();
-
-public slots:
-    void webViewScrolled();
-    void webViewContextMenu(const QPoint &pos);
 
 protected:
     void closeEvent(QCloseEvent *e) Q_DECL_OVERRIDE;
@@ -82,6 +83,7 @@ private slots:
     void editInsertImage();
 
     void viewChangeSplit();
+    void lastUsedStyle();
     void styleDefault();
     void styleGithub();
     void styleSolarizedLight();
@@ -94,6 +96,7 @@ private slots:
     void viewHorizontalLayout(bool checked);
 
     void extrasShowSpecialCharacters(bool checked);
+    void extrasYamlHeaderSupport(bool checked);
     void extrasWordWrap(bool checked);
     void extensionsAutolink(bool checked);
     void extensionsStrikethrough(bool checked);
@@ -114,13 +117,11 @@ private slots:
     void plainTextChanged();
     void htmlResultReady(const QString &html);
     void tocResultReady(const QString &toc);
-    void htmlContentSizeChanged();
 
     void previewLinkClicked(const QUrl &url);
     void tocLinkClicked(const QUrl &url);
 
     void splitterMoved(int pos, int index);
-    void scrollValueChanged(int value);
 
     void addJavaScriptObject();
     bool load(const QString &fileName);
@@ -134,6 +135,8 @@ private:
     void setupMarkdownEditor();
     void setupHtmlPreview();
     void setupHtmlSourceView();
+    void setupCustomShortcuts();
+    void setCustomShortcut(QAction *action);
     void updateExtensionStatus();
     void syncWebViewToHtmlSource();
     bool maybeSave();
@@ -147,7 +150,6 @@ private:
     Ui::MainWindow *ui;
     RecentFilesMenu *recentFilesMenu;
     Options *options;
-    QNetworkDiskCache *diskCache;
     QActionGroup *stylesGroup;
     QLabel *styleLabel;
     QLabel *wordCountLabel;
@@ -155,9 +157,10 @@ private:
     HtmlPreviewGenerator* generator;
     HtmlHighlighter *htmlHighlighter;
     SnippetCollection *snippetCollection;
+    ViewSynchronizer *viewSynchronizer;
+    HtmlPreviewController *htmlPreviewController;
     QString fileName;
     float splitFactor;
-    int scrollBarPos;
     bool rightViewCollapsed;
 };
 

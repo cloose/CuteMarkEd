@@ -1,14 +1,14 @@
-#include "snippetlistmodeltest.h"
+#include "completionlistmodeltest.h"
 
 #include <QtTest>
 
 #include <snippets/snippet.h>
-#include <snippets/snippetlistmodel.h>
+#include <completionlistmodel.h>
 
 
-void SnippetListModelTest::acceptsNewSnippet()
+void CompletionListModelTest::acceptsNewSnippet()
 {
-    model = new SnippetListModel(this);
+    model = new CompletionListModel(this);
 
     QSignalSpy spy(model, SIGNAL(rowsInserted(QModelIndex,int,int)));
 
@@ -27,9 +27,9 @@ void SnippetListModelTest::acceptsNewSnippet()
     delete model;
 }
 
-void SnippetListModelTest::updatesCorrectRowForSnippet()
+void CompletionListModelTest::updatesCorrectRowForSnippet()
 {
-    model = new SnippetListModel(this);
+    model = new CompletionListModel(this);
 
     Snippet snippet1; snippet1.trigger = "link"; snippet1.description = "Hyperlink";
     Snippet snippet2; snippet2.trigger = "gq"; snippet2.description = "German Quotes";
@@ -46,9 +46,9 @@ void SnippetListModelTest::updatesCorrectRowForSnippet()
     delete model;
 }
 
-void SnippetListModelTest::removesCorrectRowForSnippet()
+void CompletionListModelTest::removesCorrectRowForSnippet()
 {
-    model = new SnippetListModel(this);
+    model = new CompletionListModel(this);
 
     QSignalSpy spy(model, SIGNAL(rowsRemoved(QModelIndex,int,int)));
 
@@ -68,9 +68,9 @@ void SnippetListModelTest::removesCorrectRowForSnippet()
     delete model;
 }
 
-void SnippetListModelTest::holdsSnippetsInTriggerOrder()
+void CompletionListModelTest::holdsSnippetsInTriggerOrder()
 {
-    model = new SnippetListModel(this);
+    model = new CompletionListModel(this);
 
     Snippet snippet1; snippet1.trigger = "a";
     Snippet snippet2; snippet2.trigger = "b";
@@ -87,7 +87,7 @@ void SnippetListModelTest::holdsSnippetsInTriggerOrder()
     delete model;
 }
 
-void SnippetListModelTest::assertItemMatchesSnippet(int row, const Snippet &snippet)
+void CompletionListModelTest::assertItemMatchesSnippet(int row, const Snippet &snippet)
 {
     QCOMPARE(itemValue(row, Qt::EditRole).toString(), snippet.trigger);
     QVERIFY(itemValue(row, Qt::DisplayRole).toString().contains(snippet.trigger));
@@ -95,7 +95,7 @@ void SnippetListModelTest::assertItemMatchesSnippet(int row, const Snippet &snip
     QCOMPARE(itemValue(row, Qt::ToolTipRole).toString(), snippet.snippet.toHtmlEscaped());
 }
 
-QVariant SnippetListModelTest::itemValue(int row, int role)
+QVariant CompletionListModelTest::itemValue(int row, int role)
 {
     return model->data(model->index(row), role);
 }

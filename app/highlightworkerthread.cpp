@@ -24,10 +24,10 @@ HighlightWorkerThread::HighlightWorkerThread(QObject *parent) :
 }
 
 
-void HighlightWorkerThread::enqueue(const QString &text)
+void HighlightWorkerThread::enqueue(const QString &text, unsigned long offset)
 {
     QMutexLocker locker(&tasksMutex);
-    tasks.enqueue(text);
+    tasks.enqueue(Task {text, offset});
     bufferNotEmpty.wakeOne();
 }
 
@@ -35,7 +35,7 @@ void HighlightWorkerThread::enqueue(const QString &text)
 void HighlightWorkerThread::run()
 {
     forever {
-        QString text;
+        Task task;
 
         {
             // wait for new task
@@ -46,11 +46,11 @@ void HighlightWorkerThread::run()
 
             // get last task from queue and skip all previous tasks
             while (!tasks.isEmpty())
-                text = tasks.dequeue();
+                task = tasks.dequeue();
         }
 
         // end processing?
-        if (text.isNull()) {
+        if (task.text.isNull()) {
             return;
         }
 
@@ -62,9 +62,9 @@ void HighlightWorkerThread::run()
         if (tasks.isEmpty()) {
             // parse markdown and generate syntax elements
             pmh_element **elements;
-            pmh_markdown_to_elements(text.toUtf8().data(), pmh_EXT_NONE, &elements);
+            pmh_markdown_to_elements(task.text.toUtf8().data(), pmh_EXT_NONE, &elements);
 
-            emit resultReady(elements);
+            emit resultReady(elements, task.offset);
         }
     }
 }

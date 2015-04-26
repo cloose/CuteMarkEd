@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,6 +46,8 @@ public:
     void setSpellingCheckEnabled(bool enabled);
     void setSpellingDictionary(const Dictionary &dictionary);
 
+    void setYamlHeaderSupportEnabled(bool enabled);
+
     void setSnippetCompleter(SnippetCompleter *completer);
     void gotoLine(int line);
 
@@ -76,6 +78,10 @@ private:
     bool isUrlToLocalFile(const QMimeData *source) const;
     void drawLineEndMarker(QPaintEvent *e);
     QString textUnderCursor() const;
+    QStringList extractDistinctWordsFromDocument() const;    
+    QStringList retrieveAllWordsFromDocument() const;
+    template <class UnaryPredicate>
+    QStringList filterWordList(const QStringList &words, UnaryPredicate predicate) const;
 
 private:
     QWidget *lineNumberArea;

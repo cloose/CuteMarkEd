@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2015 Aetf <7437103@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,21 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef JSONSNIPPETFILE_H
-#define JSONSNIPPETFILE_H
+#ifndef YAMLHEADERCHECKERTEST_H
+#define YAMLHEADERCHECKERTEST_H
 
-class QString;
-class SnippetCollection;
+#include <QObject>
+#include <QTest>
 
-
-class JsonSnippetFile
+class YamlHeaderCheckerTest : public QObject
 {
-public:
-    static bool load(const QString &fileName, SnippetCollection *collection);
-    static bool save(const QString &fileName, SnippetCollection *collection);
+    Q_OBJECT
 
-private:
-    JsonSnippetFile();
+private slots:
+    void multipleOccurance();
+    void HeaderOnlyDocument();
+    void EmptyHeader();
+    void partialHeader();
+    void endMarkNotAtLineBegin();
+    void tailingSpaces();
+    void marksWithOtherCharacters();
+    void dotMark();
 };
 
-#endif // JSONSNIPPETFILE_H
+#endif // YAMLHEADERCHECKERTEST_H

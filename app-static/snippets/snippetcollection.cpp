@@ -48,6 +48,11 @@ void SnippetCollection::remove(const Snippet &snippet)
     emit collectionChanged(SnippetCollection::ItemDeleted, snippet);
 }
 
+const QString SnippetCollection::name() const
+{
+    return QStringLiteral("snippets");
+}
+
 bool SnippetCollection::contains(const QString &trigger) const
 {
     return snippets.contains(trigger);
@@ -58,7 +63,7 @@ const Snippet SnippetCollection::snippet(const QString &trigger) const
     return snippets.value(trigger);
 }
 
-const Snippet &SnippetCollection::snippetAt(int offset) const
+const Snippet &SnippetCollection::at(int offset) const
 {
     return (snippets.begin() + offset).value();
 }

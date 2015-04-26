@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,58 +14,73 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "snippetlistmodel.h"
+#include "completionlistmodel.h"
 
 #include <QFont>
 #include <QIcon>
 
 
-SnippetListModel::SnippetListModel(QObject *parent) :
+CompletionListModel::CompletionListModel(QObject *parent) :
     QAbstractListModel(parent)
 {
 }
 
-int SnippetListModel::rowCount(const QModelIndex &parent) const
+int CompletionListModel::rowCount(const QModelIndex &parent) const
 {
-    return snippets.count();
+    return snippets.count() + words.count();
 }
 
-QVariant SnippetListModel::data(const QModelIndex &index, int role) const
+QVariant CompletionListModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
 
-    if (index.row() > snippets.count())
+    if (index.row() > rowCount())
         return QVariant();
 
-    const Snippet snippet = snippets.at(index.row());
+    if (index.row() < snippets.count()) {
+        const Snippet snippet = snippets.at(index.row());
 
-    switch (role) {
-    case Qt::DecorationRole:
-        return QIcon("fa-puzzle-piece.fontawesome");
+        switch (role) {
+            case Qt::DecorationRole:
+                return QIcon("fa-puzzle-piece.fontawesome");
 
-    case Qt::DisplayRole:
-        return QString("%1 %2").arg(snippet.trigger, -15).arg(snippet.description);
+            case Qt::DisplayRole:
+                return QString("%1 %2").arg(snippet.trigger, -15).arg(snippet.description);
 
-    case Qt::EditRole:
-        return snippet.trigger;
+            case Qt::EditRole:
+                return snippet.trigger;
 
-    case Qt::ToolTipRole:
-        return snippet.snippet.toHtmlEscaped();
+            case Qt::ToolTipRole:
+                return snippet.snippet.toHtmlEscaped();
 
-    case Qt::FontRole:
-        {
-            QFont font("Monospace", 8);
-            font.setStyleHint(QFont::TypeWriter);
-            return font;
+            case Qt::FontRole:
+                {
+                    QFont font("Monospace", 8);
+                    font.setStyleHint(QFont::TypeWriter);
+                    return font;
+                }
+                break;
         }
-        break;
+    } else {
+        switch (role) {
+            case Qt::DisplayRole:
+            case Qt::EditRole:
+                return words.at(index.row() - snippets.count());
+        }
     }
 
     return QVariant();
 }
 
-void SnippetListModel::snippetCollectionChanged(SnippetCollection::CollectionChangedType changedType, const Snippet &snippet)
+void CompletionListModel::setWords(const QStringList &words)
+{
+    beginInsertRows(QModelIndex(), snippets.count(), snippets.count() + words.count());
+    this->words = words;
+    endInsertRows();
+}
+
+void CompletionListModel::snippetCollectionChanged(SnippetCollection::CollectionChangedType changedType, const Snippet &snippet)
 {
     switch (changedType) {
     case SnippetCollection::ItemAdded:

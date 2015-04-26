@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,23 +17,16 @@
 #ifndef JSONSNIPPETTRANSLATOR_H
 #define JSONSNIPPETTRANSLATOR_H
 
+#include <jsontranslator.h>
 #include <QJsonObject>
-class QJsonDocument;
-class SnippetCollection;
 struct Snippet;
 
 
-class JsonSnippetTranslator
+class JsonSnippetTranslator : public JsonTranslator<Snippet>
 {
-public:
-    bool processDocument(const QJsonDocument &jsonDocument, SnippetCollection *collection);
-    QJsonDocument createDocument(SnippetCollection *collection);
-
 private:
-    Snippet fromJsonObject(const QJsonObject &object);
-    QJsonObject toJsonObject(const Snippet &snippet);
-
-    bool isValid(const QJsonDocument &jsonDocument) const;
+    Snippet fromJsonObject(const QJsonObject &object) Q_DECL_OVERRIDE;
+    QJsonObject toJsonObject(const Snippet &snippet) Q_DECL_OVERRIDE;
 };
 
 #endif // JSONSNIPPETTRANSLATOR_H

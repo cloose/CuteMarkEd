@@ -142,7 +142,8 @@ StyleParser::~StyleParser()
 
 QVector<HighlightingStyle> StyleParser::highlightingStyles(QFont baseFont) const
 {
-    QVector<HighlightingStyle> highlightingStyles(pmh_NUM_LANG_TYPES);
+    QVector<HighlightingStyle> highlightingStyles;
+    highlightingStyles.reserve(pmh_NUM_LANG_TYPES);
 
     for (int i = 0; i < pmh_NUM_LANG_TYPES; i++) {
         pmh_style_attribute *attr  = styles->element_styles[i];

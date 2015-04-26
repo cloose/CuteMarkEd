@@ -15,14 +15,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "options.h"
+
 #include <QSettings>
+#include <QWebSettings>
 
 
 static const char* MARKDOWN_CONVERTER = "general/converter";
+static const char* LAST_USED_STYLE = "general/lastusedstyle";
+static const char* STYLE_DEFAULT = "actionDefault";
 static const char* FONT_FAMILY_DEFAULT = "Monospace";
 static const char* FONT_FAMILY = "editor/font/family";
 static const char* FONT_SIZE = "editor/font/size";
 static const char* TAB_WIDTH = "editor/tabwidth";
+static const char* PREVIEW_STANDARD_FONT = "preview/standardfont";
+static const char* PREVIEW_FIXED_FONT = "preview/fixedfont";
+static const char* PREVIEW_SERIF_FONT = "preview/seriffont";
+static const char* PREVIEW_SANSSERIF_FONT = "preview/sansseriffont";
+static const char* PREVIEW_DEFAULT_FONT_SIZE = "preview/defaultfontsize";
+static const char* PREVIEW_DEFAULT_FIXED_FONT_SIZE = "preview/defaultfixedfontsize";
 static const char* PROXY_MODE = "internet/proxy/mode";
 static const char* PROXY_HOST = "internet/proxy/host";
 static const char* PROXY_PORT = "internet/proxy/port";
@@ -41,6 +51,8 @@ static const char* SHOWSPECIALCHARACTERS_ENABLED = "specialchars/enabled";
 static const char* WORDWRAP_ENABLED = "wordwrap/enabled";
 static const char* SPELLINGCHECK_ENABLED = "spelling/enabled";
 static const char* DICTIONARY_LANGUAGE = "spelling/language";
+static const char* YAMLHEADERSUPPORT_ENABLED = "yamlheadersupport/enabled";
+static const char* DIAGRAMSUPPORT_ENABLED = "diagramsupport/enabled";
 
 Options::Options(QObject *parent) :
     QObject(parent),
@@ -59,12 +71,22 @@ Options::Options(QObject *parent) :
     m_showSpecialCharactersEnabled(false),
     m_wordWrapEnabled(true),
     m_spellingCheckEnabled(true),
-    m_markdownConverter(DiscountMarkdownConverter)
+    m_diagramSupportEnabled(false),
+    m_markdownConverter(DiscountMarkdownConverter),
+    m_lastUsedStyle(STYLE_DEFAULT)
 {
 }
 
 void Options::apply()
 {
+    QWebSettings *globalWebSettings = QWebSettings::globalSettings();
+    globalWebSettings->setFontFamily(QWebSettings::StandardFont, m_standardFontFamily);
+    globalWebSettings->setFontFamily(QWebSettings::FixedFont, m_fixedFontFamily);
+    globalWebSettings->setFontFamily(QWebSettings::SerifFont, m_serifFontFamily);
+    globalWebSettings->setFontFamily(QWebSettings::SansSerifFont, m_sansSerifFontFamily);
+    globalWebSettings->setFontSize(QWebSettings::DefaultFontSize, m_defaultFontSize);
+    globalWebSettings->setFontSize(QWebSettings::DefaultFixedFontSize, m_defaultFixedFontSize);
+
     emit proxyConfigurationChanged();
     emit markdownConverterChanged();
 }
@@ -89,6 +111,66 @@ void Options::setTabWidth(int width)
 {
     m_tabWidth = width;
     emit tabWidthChanged(width);
+}
+
+QFont Options::standardFont() const
+{
+    return QFont(m_standardFontFamily);
+}
+
+void Options::setStandardFont(const QFont &font)
+{
+    m_standardFontFamily = font.family();
+}
+
+QFont Options::serifFont() const
+{
+    return QFont(m_serifFontFamily);
+}
+
+void Options::setSerifFont(const QFont &font)
+{
+    m_serifFontFamily = font.family();
+}
+
+QFont Options::sansSerifFont() const
+{
+    return QFont(m_sansSerifFontFamily);
+}
+
+void Options::setSansSerifFont(const QFont &font)
+{
+    m_sansSerifFontFamily = font.family();
+}
+
+QFont Options::fixedFont() const
+{
+    return QFont(m_fixedFontFamily);
+}
+
+void Options::setFixedFont(const QFont &font)
+{
+    m_fixedFontFamily = font.family();
+}
+
+int Options::defaultFontSize() const
+{
+    return m_defaultFontSize;
+}
+
+void Options::setDefaultFontSize(int size)
+{
+    m_defaultFontSize = size;
+}
+
+int Options::defaultFixedFontSize() const
+{
+    return m_defaultFixedFontSize;
+}
+
+void Options::setDefaultFixedFontSize(int size)
+{
+    m_defaultFixedFontSize = size;
 }
 
 Options::ProxyMode Options::proxyMode() const
@@ -139,6 +221,22 @@ QString Options::proxyPassword() const
 void Options::setProxyPassword(const QString &password)
 {
     m_proxyPassword = password;
+}
+
+void Options::addCustomShortcut(const QString &actionName, const QKeySequence &keySequence)
+{
+    if (actionName.isEmpty()) return;
+    m_customShortcuts.insert(actionName, keySequence);
+}
+
+bool Options::hasCustomShortcut(const QString &actionName) const
+{
+    return m_customShortcuts.contains(actionName);
+}
+
+QKeySequence Options::customShortcut(const QString &actionName) const
+{
+    return m_customShortcuts.value(actionName);
 }
 
 bool Options::isAutolinkEnabled() const
@@ -261,6 +359,26 @@ void Options::setSpellingCheckEnabled(bool enabled)
     m_spellingCheckEnabled = enabled;
 }
 
+bool Options::isYamlHeaderSupportEnabled() const
+{
+    return m_yamlHeaderSupportEnabled;
+}
+
+void Options::setYamlHeaderSupportEnabled(bool enabled)
+{
+    m_yamlHeaderSupportEnabled = enabled;
+}
+
+bool Options::isDiagramSupportEnabled() const
+{
+    return m_diagramSupportEnabled;
+}
+
+void Options::setDiagramSupportEnabled(bool enabled)
+{
+    m_diagramSupportEnabled = enabled;
+}
+
 QString Options::dictionaryLanguage() const
 {
     return m_dictionaryLanguage;
@@ -284,12 +402,23 @@ void Options::setMarkdownConverter(Options::MarkdownConverter converter)
     }
 }
 
+QString Options::lastUsedStyle() const
+{
+    return m_lastUsedStyle;
+}
+
+void Options::setLastUsedStyle(const QString &style)
+{
+    m_lastUsedStyle = style;
+}
+
 void Options::readSettings()
 {
     QSettings settings;
 
     // general settings
     m_markdownConverter = (Options::MarkdownConverter)settings.value(MARKDOWN_CONVERTER, 0).toInt();
+    m_lastUsedStyle = settings.value(LAST_USED_STYLE, STYLE_DEFAULT).toString();
 
     // editor settings
     QString fontFamily = settings.value(FONT_FAMILY, FONT_FAMILY_DEFAULT).toString();
@@ -301,12 +430,29 @@ void Options::readSettings()
     f.setStyleHint(QFont::TypeWriter);
     setEditorFont(f);
 
+    // html preview settings
+    QWebSettings *globalWebSettings = QWebSettings::globalSettings();
+    m_standardFontFamily = settings.value(PREVIEW_STANDARD_FONT, globalWebSettings->fontFamily(QWebSettings::StandardFont)).toString();
+    m_fixedFontFamily = settings.value(PREVIEW_FIXED_FONT, globalWebSettings->fontFamily(QWebSettings::FixedFont)).toString();
+    m_serifFontFamily = settings.value(PREVIEW_SERIF_FONT, globalWebSettings->fontFamily(QWebSettings::SerifFont)).toString();
+    m_sansSerifFontFamily = settings.value(PREVIEW_SANSSERIF_FONT, globalWebSettings->fontFamily(QWebSettings::SansSerifFont)).toString();
+    m_defaultFontSize = settings.value(PREVIEW_DEFAULT_FONT_SIZE, globalWebSettings->fontSize(QWebSettings::DefaultFontSize)).toInt();
+    m_defaultFixedFontSize = settings.value(PREVIEW_DEFAULT_FIXED_FONT_SIZE, globalWebSettings->fontSize(QWebSettings::DefaultFixedFontSize)).toInt();
+
     // proxy settings
     m_proxyMode = (Options::ProxyMode)settings.value(PROXY_MODE, 0).toInt();
     m_proxyHost = settings.value(PROXY_HOST, "").toString();
     m_proxyPort = settings.value(PROXY_PORT, 0).toInt();
     m_proxyUser = settings.value(PROXY_USER, "").toString();
     m_proxyPassword = settings.value(PROXY_PASSWORD, "").toString();
+
+    // shortcut settings
+    settings.beginGroup("shortcuts");
+    foreach (QString actionName, settings.childKeys()) {
+        QKeySequence keySequence = settings.value(actionName, "").value<QKeySequence>();
+        addCustomShortcut(actionName, keySequence);
+    }
+    settings.endGroup();
 
     // extension settings
     m_autolinkEnabled = settings.value(AUTOLINK_ENABLED, true).toBool();
@@ -321,6 +467,8 @@ void Options::readSettings()
     m_codeHighlightingEnabled = settings.value(CODEHIGHLIGHT_ENABLED, false).toBool();
     m_showSpecialCharactersEnabled = settings.value(SHOWSPECIALCHARACTERS_ENABLED, false).toBool();
     m_wordWrapEnabled = settings.value(WORDWRAP_ENABLED, true).toBool();
+    m_yamlHeaderSupportEnabled = settings.value(YAMLHEADERSUPPORT_ENABLED, false).toBool();
+    m_diagramSupportEnabled = settings.value(DIAGRAMSUPPORT_ENABLED, false).toBool();
 
     // spelling check settings
     m_spellingCheckEnabled = settings.value(SPELLINGCHECK_ENABLED, true).toBool();
@@ -335,11 +483,20 @@ void Options::writeSettings()
 
     // general settings
     settings.setValue(MARKDOWN_CONVERTER, m_markdownConverter);
+    settings.setValue(LAST_USED_STYLE, m_lastUsedStyle);
 
     // editor settings
     settings.setValue(FONT_FAMILY, font.family());
     settings.setValue(FONT_SIZE, font.pointSize());
     settings.setValue(TAB_WIDTH, m_tabWidth);
+
+    // html preview settings
+    settings.setValue(PREVIEW_STANDARD_FONT, m_standardFontFamily);
+    settings.setValue(PREVIEW_FIXED_FONT, m_fixedFontFamily);
+    settings.setValue(PREVIEW_SERIF_FONT, m_serifFontFamily);
+    settings.setValue(PREVIEW_SANSSERIF_FONT, m_sansSerifFontFamily);
+    settings.setValue(PREVIEW_DEFAULT_FONT_SIZE, m_defaultFontSize);
+    settings.setValue(PREVIEW_DEFAULT_FIXED_FONT_SIZE, m_defaultFixedFontSize);
 
     // proxy settings
     settings.setValue(PROXY_MODE, m_proxyMode);
@@ -347,6 +504,15 @@ void Options::writeSettings()
     settings.setValue(PROXY_PORT, m_proxyPort);
     settings.setValue(PROXY_USER, m_proxyUser);
     settings.setValue(PROXY_PASSWORD, m_proxyPassword);
+
+    // shortcut settings
+    settings.beginGroup("shortcuts");
+    QMap<QString, QKeySequence>::const_iterator it = m_customShortcuts.constBegin();
+    while (it != m_customShortcuts.constEnd()) {
+        settings.setValue(it.key(), it.value());
+        ++it;
+    }
+    settings.endGroup();
 
     // extensions settings
     settings.setValue(AUTOLINK_ENABLED, m_autolinkEnabled);
@@ -361,6 +527,8 @@ void Options::writeSettings()
     settings.setValue(CODEHIGHLIGHT_ENABLED, m_codeHighlightingEnabled);
     settings.setValue(SHOWSPECIALCHARACTERS_ENABLED, m_showSpecialCharactersEnabled);
     settings.setValue(WORDWRAP_ENABLED, m_wordWrapEnabled);
+    settings.setValue(YAMLHEADERSUPPORT_ENABLED, m_yamlHeaderSupportEnabled);
+    settings.setValue(DIAGRAMSUPPORT_ENABLED, m_diagramSupportEnabled);
 
     // spelling check settings
     settings.setValue(SPELLINGCHECK_ENABLED, m_spellingCheckEnabled);

@@ -4,30 +4,37 @@
 # Github : https://github.com/cloose/CuteMarkEd
 #
 
-QT += gui
+QT += gui webkitwidgets
 
 TARGET = app-static
 TEMPLATE = lib
-CONFIG += staticlib
+CONFIG += staticlib 
+CONFIG += c++11
+
+INCLUDEPATH += $$PWD
 
 SOURCES += \
     snippets/jsonsnippettranslator.cpp \
     snippets/snippetcollection.cpp \
-    snippets/jsonsnippetfile.cpp \
-    snippets/snippetlistmodel.cpp \
     converter/discountmarkdownconverter.cpp \
     spellchecker/dictionary.cpp \
     converter/revealmarkdownconverter.cpp \
     template/htmltemplate.cpp \
     template/presentationtemplate.cpp \
-    datalocation.cpp
+    completionlistmodel.cpp \
+    datalocation.cpp \
+    slidelinemapping.cpp \
+    viewsynchronizer.cpp \
+    revealviewsynchronizer.cpp \
+    htmlpreviewcontroller.cpp \
+    htmlviewsynchronizer.cpp \
+    yamlheaderchecker.cpp
 
 HEADERS += \
     snippets/snippet.h \
     snippets/jsonsnippettranslator.h \
+    snippets/jsonsnippettranslatorfactory.h \
     snippets/snippetcollection.h \
-    snippets/jsonsnippetfile.h \
-    snippets/snippetlistmodel.h \
     converter/markdownconverter.h \
     converter/markdowndocument.h \
     converter/discountmarkdownconverter.h \
@@ -36,7 +43,14 @@ HEADERS += \
     template/template.h \
     template/htmltemplate.h \
     template/presentationtemplate.h \
-    datalocation.h
+    completionlistmodel.h \
+    datalocation.h \
+    slidelinemapping.h \
+    viewsynchronizer.h \
+    revealviewsynchronizer.h \
+    htmlpreviewcontroller.h \
+    htmlviewsynchronizer.h \
+    yamlheaderchecker.h
 
 #unix:!symbian {
 #    maemo5 {
@@ -50,6 +64,19 @@ HEADERS += \
 ##################################################
 # Dependencies
 ##################################################
+
+#
+# Add search paths below /usr/local for Mac OSX
+#
+macx {
+  LIBS += -L/usr/local/lib
+  INCLUDEPATH += /usr/local/include
+}
+
+#
+# JSON configuration library
+#
+INCLUDEPATH += $$PWD/../libs/jsonconfig
 
 #
 # Discount library

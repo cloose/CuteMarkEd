@@ -1,0 +1,25 @@
+os: MinGW
+
+branches:
+    except:
+        - gh-pages
+
+environment:
+    QTDIR: C:\Qt\5.4\mingw491_32
+    MINGW_DIR: C:\Qt\Tools\mingw491_32 
+
+install:
+    - set PATH=%PATH%;%QTDIR%\bin;%MINGW_DIR%\bin
+    - git submodule update --init --recursive
+
+before_build:
+    - mkdir build
+    - cd build
+    - qmake ..\CuteMarkEd.pro
+
+build_script:
+    - mingw32-make
+
+test_script:
+    - cd test\unit
+    - mingw32-make check
