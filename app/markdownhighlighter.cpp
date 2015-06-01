@@ -87,16 +87,7 @@ void MarkdownHighlighter::highlightBlock(const QString &textBlock)
 
     // check spelling of passed text block
     if (spellingCheckEnabled) {
-        QStringList wordList = textBlock.split(QRegExp("\\W+"), QString::SkipEmptyParts);
-        int index = 0;
-        foreach (QString word, wordList) {
-           index = textBlock.indexOf(word, index);
-
-           if (!spellChecker->isCorrect(word)) {
-               setFormat(index, word.length(), spellFormat);
-           }
-           index += word.length();
-        }
+        checkSpelling(textBlock);
     }
 
     QString text = document()->toPlainText();
@@ -173,6 +164,20 @@ void MarkdownHighlighter::applyFormat(unsigned long pos, unsigned long end,
 
         list.append(r);
         layout->setAdditionalFormats(list);
+    }
+}
+
+void MarkdownHighlighter::checkSpelling(const QString &textBlock)
+{
+    QStringList wordList = textBlock.split(QRegExp("\\W+"), QString::SkipEmptyParts);
+    int index = 0;
+    foreach (QString word, wordList) {
+        index = textBlock.indexOf(word, index);
+
+        if (!spellChecker->isCorrect(word)) {
+            setFormat(index, word.length(), spellFormat);
+        }
+        index += word.length();
     }
 }
 
