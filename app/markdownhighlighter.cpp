@@ -189,7 +189,9 @@ void MarkdownHighlighter::resultReady(pmh_element **elements, unsigned long base
     }
 
     // clear any format before base_offset
-    applyFormat(0, base_offset - 1, QTextCharFormat(), false);
+    if (base_offset > 0) {
+        applyFormat(0, base_offset - 1, QTextCharFormat(), false);
+    }
 
     // apply highlight results
     for (int i = 0; i < highlightingStyles.size(); i++) {
