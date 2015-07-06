@@ -81,6 +81,9 @@ make INSTALL_ROOT="%buildroot" install
 
 %changelog
 
+* Mon Jul 06 2015 Christian Loose <christian.loose@hamburg.de> 0.11.1-1
+- New patch version 0.11.1 released
+
 * Sun Apr 26 2015 Christian Loose <christian.loose@hamburg.de> 0.11.0-1
 - New minor version 0.11.0 released
 
