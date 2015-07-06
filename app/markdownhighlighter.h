@@ -48,6 +48,7 @@ private slots:
 
 private:
     void applyFormat(unsigned long pos, unsigned long end, QTextCharFormat format, bool merge);
+    void checkSpelling(const QString &textBlock);
 
     HighlightWorkerThread *workerThread;
     QVector<PegMarkdownHighlight::HighlightingStyle> highlightingStyles;

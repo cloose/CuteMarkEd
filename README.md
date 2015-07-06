@@ -8,14 +8,26 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 ### DOWNLOAD
 
-[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.11.0.tar.gz)  
-[MS Windows (Installer)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.11.0.msi)  
-[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.11.0.zip)  
+[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.11.1.tar.gz)  
+[MS Windows (Installer)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.11.1.msi)  
+[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.11.1.zip)  
 [OpenSUSE 13.1 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 [Fedora 20 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 [Fedora 21 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 
 ### NEWS
+
+#### Version 0.11.1
+
+Improvements:
+
+* `IMPROVED` Updated French translation
+
+Fixes:
+
+* `FIXED` Custom shortcuts not working (#224)
+* `FIXED` Disappearing spell checker highlighting (#228)
+* `FIXED` Wrong german quotes snippet (#229)
 
 #### Version 0.11.0
 
@@ -50,26 +62,6 @@ Fixes:
 
 * `FIXED` Build with MSVC 2013 and MacOSX
 * `FIXED` Parallel build with e.g. make -j2
-
-#### Version 0.10.2
-
-New Features:
-
-* `NEW` Added Indonesian translation created by bedouin
-* `NEW` Added Danish translation created by mljjlm
-
-Improvements:
-
-* `IMPROVED` Updated Greek translation
-* `IMPROVED` Updated Chinese translation
-
-Fixes:
-
-* `FIXED` Copy & Paste problems on Windows (#161, #203)
-* `FIXED` Restore fullscreen mode after startup (#164)
-* `FIXED` Build on Fedora with both Qt4 and Qt5 installed (#165)
-* `FIXED` Replaced generic editor icon with own icon on Linux
-
 
 ### DEPENDENCIES
 
