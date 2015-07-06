@@ -1139,20 +1139,24 @@ void MainWindow::setupHtmlSourceView()
 
 void MainWindow::setupCustomShortcuts()
 {
-    // file menu
-    foreach (QAction *action, ui->menuFile->actions()) {
-        setCustomShortcut(action);
-    }
-    // edit menu
-    foreach (QAction *action, ui->menuEdit->actions()) {
-        setCustomShortcut(action);
-    }
-    // view menu
-    foreach (QAction *action, ui->menuView->actions()) {
-        setCustomShortcut(action);
-    }
+    setCustomShortcut(ui->menuFile);
+    setCustomShortcut(ui->menuEdit);
+    setCustomShortcut(ui->menuView);
+
     foreach (QAction *action, ui->plainTextEdit->actions()) {
         setCustomShortcut(action);
+    }
+}
+
+void MainWindow::setCustomShortcut(QMenu *menu)
+{
+    foreach (QAction *action, menu->actions()) {
+        if (action->menu()) {
+            // recurse into submenu
+            setCustomShortcut(action->menu());
+        } else {
+            setCustomShortcut(action);
+        }
     }
 }
 

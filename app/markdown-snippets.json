@@ -24,7 +24,7 @@
         {
             "trigger": "gq",
             "description": "German Quotes",
-            "snippet": "&bdquo;&rdquo;",
+            "snippet": "&bdquo;&ldquo;",
             "cursor": 7,
             "builtIn": true
         },

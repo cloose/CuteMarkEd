@@ -311,6 +311,13 @@ void OptionsDialog::readState()
     ui->portLineEdit->setText(QString::number(options->proxyPort()));
     ui->userNameLineEdit->setText(options->proxyUser());
     ui->passwordLineEdit->setText(options->proxyPassword());
+
+    // shortcut settings
+    for (int i = 0; i < ui->shortcutsTable->rowCount(); ++i) {
+        if (options->hasCustomShortcut(actions[i]->objectName())) {
+            ui->shortcutsTable->item(i, 1)->setData(Qt::EditRole, options->customShortcut(actions[i]->objectName()));
+        }
+    }
 }
 
 void OptionsDialog::saveState()

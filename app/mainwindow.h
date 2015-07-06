@@ -136,6 +136,7 @@ private:
     void setupHtmlPreview();
     void setupHtmlSourceView();
     void setupCustomShortcuts();
+    void setCustomShortcut(QMenu *menu);
     void setCustomShortcut(QAction *action);
     void updateExtensionStatus();
     void syncWebViewToHtmlSource();
