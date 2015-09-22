@@ -286,6 +286,7 @@ void OptionsDialog::readState()
     ui->fontComboBox->setCurrentFont(font);
     ui->sizeComboBox->setCurrentText(QString().setNum(font.pointSize()));
     ui->tabWidthSpinBox->setValue(options->tabWidth());
+    ui->mathInlineCheckBox->setChecked(options->isMathInlineSupportEnabled()); //**
 
     // html preview settings
     ui->standardFontComboBox->setCurrentFont(options->standardFont());
@@ -330,6 +331,7 @@ void OptionsDialog::saveState()
     font.setPointSize(ui->sizeComboBox->currentText().toInt());
     options->setEditorFont(font);
     options->setTabWidth(ui->tabWidthSpinBox->value());
+    options->setMathInlineSupportEnabled(ui->mathInlineCheckBox->isChecked());
 
     // html preview settings
     options->setStandardFont(ui->standardFontComboBox->currentFont());

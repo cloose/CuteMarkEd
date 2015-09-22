@@ -221,6 +221,9 @@
             </property>
            </widget>
           </item>
+          <item row="2" column="1">
+           <widget class="QFontComboBox" name="sansSerifFontComboBox"/>
+          </item>
           <item row="1" column="1">
            <widget class="QFontComboBox" name="serifFontComboBox"/>
           </item>
@@ -234,8 +237,8 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QFontComboBox" name="sansSerifFontComboBox"/>
+          <item row="3" column="1">
+           <widget class="QFontComboBox" name="fixedFontComboBox"/>
           </item>
           <item row="3" column="0">
            <widget class="QLabel" name="fixedFontLabel">
@@ -247,8 +250,8 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="QFontComboBox" name="fixedFontComboBox"/>
+          <item row="3" column="3">
+           <widget class="QComboBox" name="defaultFixedSizeComboBox"/>
           </item>
           <item row="3" column="2">
            <widget class="QLabel" name="defaultFixedSizeLabel">
@@ -257,8 +260,34 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="3">
-           <widget class="QComboBox" name="defaultFixedSizeComboBox"/>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="mathGroupBox">
+         <property name="title">
+          <string>Math Support</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <widget class="QCheckBox" name="mathInlineCheckBox">
+            <property name="text">
+             <string>Support for LaTeX inline formula</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="mathSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>364</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>

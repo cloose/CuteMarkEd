@@ -109,6 +109,9 @@ public:
     bool isMathSupportEnabled() const;
     void setMathSupportEnabled(bool enabled);
 
+    bool isMathInlineSupportEnabled() const;
+    void setMathInlineSupportEnabled(bool enabled);
+
     bool isCodeHighlightingEnabled() const;
     void setCodeHighlightingEnabled(bool enabled);
 
@@ -161,6 +164,7 @@ private:
     bool m_footnotesEnabled;
     bool m_superscriptEnabled;
     bool m_mathSupportEnabled;
+    bool m_mathInlineSupportEnabled;//**
     bool m_codeHighlightingEnabled;
     bool m_showSpecialCharactersEnabled;
     bool m_wordWrapEnabled;

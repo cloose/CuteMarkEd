@@ -46,6 +46,7 @@ static const char* SMARTYPANTS_ENABLED = "extensions/smartyPants";
 static const char* FOOTNOTES_ENABLED = "extensions/footnotes";
 static const char* SUPERSCRIPT_ENABLED = "extensions/superscript";
 static const char* MATHSUPPORT_ENABLED = "mathsupport/enabled";
+static const char* MATHINLINESUPPORT_ENABLED = "mathinlinesupport/enabled";
 static const char* CODEHIGHLIGHT_ENABLED = "codehighlighting/enabled";
 static const char* SHOWSPECIALCHARACTERS_ENABLED = "specialchars/enabled";
 static const char* WORDWRAP_ENABLED = "wordwrap/enabled";
@@ -67,6 +68,7 @@ Options::Options(QObject *parent) :
     m_footnotesEnabled(true),
     m_superscriptEnabled(true),
     m_mathSupportEnabled(false),
+    m_mathInlineSupportEnabled(false), //**
     m_codeHighlightingEnabled(false),
     m_showSpecialCharactersEnabled(false),
     m_wordWrapEnabled(true),
@@ -319,6 +321,16 @@ void Options::setMathSupportEnabled(bool enabled)
     m_mathSupportEnabled = enabled;
 }
 
+bool Options::isMathInlineSupportEnabled() const
+{
+    return m_mathInlineSupportEnabled;
+}
+
+void Options::setMathInlineSupportEnabled(bool enabled)
+{
+    m_mathInlineSupportEnabled = enabled;
+}
+
 bool Options::isCodeHighlightingEnabled() const
 {
     return m_codeHighlightingEnabled;
@@ -438,6 +450,7 @@ void Options::readSettings()
     m_sansSerifFontFamily = settings.value(PREVIEW_SANSSERIF_FONT, globalWebSettings->fontFamily(QWebSettings::SansSerifFont)).toString();
     m_defaultFontSize = settings.value(PREVIEW_DEFAULT_FONT_SIZE, globalWebSettings->fontSize(QWebSettings::DefaultFontSize)).toInt();
     m_defaultFixedFontSize = settings.value(PREVIEW_DEFAULT_FIXED_FONT_SIZE, globalWebSettings->fontSize(QWebSettings::DefaultFixedFontSize)).toInt();
+    m_mathInlineSupportEnabled = settings.value(MATHINLINESUPPORT_ENABLED, false).toBool();
 
     // proxy settings
     m_proxyMode = (Options::ProxyMode)settings.value(PROXY_MODE, 0).toInt();
@@ -497,6 +510,7 @@ void Options::writeSettings()
     settings.setValue(PREVIEW_SANSSERIF_FONT, m_sansSerifFontFamily);
     settings.setValue(PREVIEW_DEFAULT_FONT_SIZE, m_defaultFontSize);
     settings.setValue(PREVIEW_DEFAULT_FIXED_FONT_SIZE, m_defaultFixedFontSize);
+    settings.setValue(MATHINLINESUPPORT_ENABLED, m_mathInlineSupportEnabled);
 
     // proxy settings
     settings.setValue(PROXY_MODE, m_proxyMode);
