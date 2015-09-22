@@ -68,7 +68,7 @@ Options::Options(QObject *parent) :
     m_footnotesEnabled(true),
     m_superscriptEnabled(true),
     m_mathSupportEnabled(false),
-    m_mathInlineSupportEnabled(false), //**
+    m_mathInlineSupportEnabled(false),
     m_codeHighlightingEnabled(false),
     m_showSpecialCharactersEnabled(false),
     m_wordWrapEnabled(true),

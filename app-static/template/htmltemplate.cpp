@@ -99,7 +99,7 @@ QString HtmlTemplate::buildHtmlHeader(RenderOptions options) const
 
         // Add MathJax support for inline LaTeX Math
         if (options.testFlag(Template::MathInlineSupport)) {
-            header += "<script type=\"text/x-mathjax-config\">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>";
+            header += "<script type=\"text/x-mathjax-config\">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});</script>";
         }
 
         header += "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>\n";

@@ -164,7 +164,7 @@ private:
     bool m_footnotesEnabled;
     bool m_superscriptEnabled;
     bool m_mathSupportEnabled;
-    bool m_mathInlineSupportEnabled;//**
+    bool m_mathInlineSupportEnabled;
     bool m_codeHighlightingEnabled;
     bool m_showSpecialCharactersEnabled;
     bool m_wordWrapEnabled;
