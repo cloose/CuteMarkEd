@@ -268,26 +268,20 @@
          <property name="title">
           <string>Math Support</string>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <layout class="QVBoxLayout" name="verticalLayout_9">
           <item>
-           <widget class="QCheckBox" name="mathInlineCheckBox">
+           <widget class="QCheckBox" name="mathSupportCheckBox">
             <property name="text">
-             <string>Support for LaTeX inline formula</string>
+             <string>Enable Math Suport</string>
             </property>
            </widget>
           </item>
           <item>
-           <spacer name="mathSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+           <widget class="QCheckBox" name="mathInlineCheckBox">
+            <property name="text">
+             <string>Enable LaTeX syntax for inline Math</string>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>364</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
           </item>
          </layout>
         </widget>

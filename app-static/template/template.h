@@ -41,7 +41,8 @@ public:
         ScrollbarSynchronization = 0x00000001,
         MathSupport              = 0x00000002,
         CodeHighlighting         = 0x00000004,
-        DiagramSupport           = 0x00000008
+        DiagramSupport           = 0x00000008,
+        MathInlineSupport        = 0x00000010
     };
     Q_DECLARE_FLAGS(RenderOptions, RenderOption)
 

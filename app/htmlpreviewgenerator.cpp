@@ -256,6 +256,11 @@ Template::RenderOptions HtmlPreviewGenerator::renderOptions() const
         renderOptionFlags |= Template::MathSupport;
     }
 
+    // inline math support
+    if (options->isMathInlineSupportEnabled()) {
+        renderOptionFlags |= Template::MathInlineSupport;
+    }
+
     // diagram support
     if (options->isDiagramSupportEnabled()) {
         renderOptionFlags |= Template::DiagramSupport;
