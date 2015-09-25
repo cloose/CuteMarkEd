@@ -272,7 +272,7 @@
           <item>
            <widget class="QCheckBox" name="mathSupportCheckBox">
             <property name="text">
-             <string>Enable Math Suport</string>
+             <string>Enable Math Support</string>
             </property>
            </widget>
           </item>
