@@ -221,6 +221,9 @@
             </property>
            </widget>
           </item>
+          <item row="2" column="1">
+           <widget class="QFontComboBox" name="sansSerifFontComboBox"/>
+          </item>
           <item row="1" column="1">
            <widget class="QFontComboBox" name="serifFontComboBox"/>
           </item>
@@ -234,8 +237,8 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QFontComboBox" name="sansSerifFontComboBox"/>
+          <item row="3" column="1">
+           <widget class="QFontComboBox" name="fixedFontComboBox"/>
           </item>
           <item row="3" column="0">
            <widget class="QLabel" name="fixedFontLabel">
@@ -247,8 +250,8 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="QFontComboBox" name="fixedFontComboBox"/>
+          <item row="3" column="3">
+           <widget class="QComboBox" name="defaultFixedSizeComboBox"/>
           </item>
           <item row="3" column="2">
            <widget class="QLabel" name="defaultFixedSizeLabel">
@@ -257,8 +260,28 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="3">
-           <widget class="QComboBox" name="defaultFixedSizeComboBox"/>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="mathGroupBox">
+         <property name="title">
+          <string>Math Support</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_9">
+          <item>
+           <widget class="QCheckBox" name="mathSupportCheckBox">
+            <property name="text">
+             <string>Enable Math Suport</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="mathInlineCheckBox">
+            <property name="text">
+             <string>Enable LaTeX syntax for inline Math</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

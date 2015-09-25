@@ -294,6 +294,8 @@ void OptionsDialog::readState()
     ui->sansSerifFontComboBox->setCurrentFont(options->sansSerifFont());
     ui->fixedFontComboBox->setCurrentFont(options->fixedFont());
     ui->defaultFixedSizeComboBox->setCurrentText(QString().setNum(options->defaultFixedFontSize()));
+    ui->mathInlineCheckBox->setChecked(options->isMathInlineSupportEnabled());
+    ui->mathSupportCheckBox->setChecked(options->isMathSupportEnabled());
 
     // proxy settings
     switch (options->proxyMode()) {
@@ -330,6 +332,8 @@ void OptionsDialog::saveState()
     font.setPointSize(ui->sizeComboBox->currentText().toInt());
     options->setEditorFont(font);
     options->setTabWidth(ui->tabWidthSpinBox->value());
+    options->setMathInlineSupportEnabled(ui->mathInlineCheckBox->isChecked());
+    options->setMathSupportEnabled(ui->mathSupportCheckBox->isChecked());
 
     // html preview settings
     options->setStandardFont(ui->standardFontComboBox->currentFont());
