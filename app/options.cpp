@@ -233,7 +233,8 @@ void Options::addCustomShortcut(const QString &actionName, const QKeySequence &k
 
 bool Options::hasCustomShortcut(const QString &actionName) const
 {
-    return m_customShortcuts.contains(actionName);
+    if(m_customShortcuts.contains(actionName))
+        return !m_customShortcuts.value(actionName).isEmpty();
 }
 
 QKeySequence Options::customShortcut(const QString &actionName) const
