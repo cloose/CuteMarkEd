@@ -144,6 +144,7 @@ void MainWindow::initializeApp()
     ui->actionCodeHighlighting->setChecked(options->isCodeHighlightingEnabled());
     ui->actionShowSpecialCharacters->setChecked(options->isShowSpecialCharactersEnabled());
     ui->actionWordWrap->setChecked(options->isWordWrapEnabled());
+    ui->actionSourceAtOneSize->setChecked(options->isSourceAtOneSizeEnabled());
     ui->actionCheckSpelling->setChecked(options->isSpellingCheckEnabled());
     ui->plainTextEdit->setSpellingCheckEnabled(options->isSpellingCheckEnabled());
     ui->actionYamlHeaderSupport->setChecked(options->isYamlHeaderSupportEnabled());
@@ -478,8 +479,11 @@ void MainWindow::lastUsedStyle()
 void MainWindow::styleDefault()
 {
     generator->setCodeHighlightingStyle("default");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
+    if(options->isSourceAtOneSizeEnabled()) {
+        ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default-.txt");
+    } else {
+        ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
+    }
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/markdown.css"));
 
     styleLabel->setText(ui->actionDefault->text());
@@ -490,7 +494,12 @@ void MainWindow::styleGithub()
 {
     generator->setCodeHighlightingStyle("github");
 
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
+    if(options->isSourceAtOneSizeEnabled()) {
+        ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default-.txt");
+    } else {
+        ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
+    }
+
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/github.css"));
 
     styleLabel->setText(ui->actionGithub->text());
@@ -500,8 +509,11 @@ void MainWindow::styleGithub()
 void MainWindow::styleSolarizedLight()
 {
     generator->setCodeHighlightingStyle("solarized_light");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-light+.txt");
+    if(options->isSourceAtOneSizeEnabled()) {
+        ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-light.txt");
+    } else {
+       ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-light+.txt");
+    }
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-light.css"));
 
     styleLabel->setText(ui->actionSolarizedLight->text());
@@ -511,8 +523,11 @@ void MainWindow::styleSolarizedLight()
 void MainWindow::styleSolarizedDark()
 {
     generator->setCodeHighlightingStyle("solarized_dark");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-dark+.txt");
+    if(options->isSourceAtOneSizeEnabled()) {
+        ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-dark.txt");
+    } else {
+        ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-dark+.txt");
+    }
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-dark.css"));
 
     styleLabel->setText(ui->actionSolarizedDark->text());
@@ -522,8 +537,11 @@ void MainWindow::styleSolarizedDark()
 void MainWindow::styleClearness()
 {
     generator->setCodeHighlightingStyle("default");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
+    if(options->isSourceAtOneSizeEnabled()) {
+        ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default-.txt");
+    } else {
+        ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
+    }
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness.css"));
 
     styleLabel->setText(ui->actionClearness->text());
@@ -533,8 +551,11 @@ void MainWindow::styleClearness()
 void MainWindow::styleClearnessDark()
 {
     generator->setCodeHighlightingStyle("default");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/clearness-dark+.txt");
+    if(options->isSourceAtOneSizeEnabled()) {
+        ui->plainTextEdit->loadStyleFromStylesheet(":/theme/clearness-dark.txt");
+    } else {
+        ui->plainTextEdit->loadStyleFromStylesheet(":/theme/clearness-dark+.txt");
+    }
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness-dark.css"));
 
     styleLabel->setText(ui->actionClearnessDark->text());
@@ -544,8 +565,11 @@ void MainWindow::styleClearnessDark()
 void MainWindow::styleBywordDark()
 {
     generator->setCodeHighlightingStyle("default");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/byword-dark.txt");
+    if(options->isSourceAtOneSizeEnabled()) {
+        ui->plainTextEdit->loadStyleFromStylesheet(":/theme/byword-dark.txt");
+    } else {
+        ui->plainTextEdit->loadStyleFromStylesheet(":/theme/byword-dark+.txt");
+    }
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/byword-dark.css"));
 
     styleLabel->setText(ui->actionBywordDark->text());
@@ -557,8 +581,11 @@ void MainWindow::styleCustomStyle()
     QAction *action = qobject_cast<QAction*>(sender());
 
     generator->setCodeHighlightingStyle("default");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
+    if(options->isSourceAtOneSizeEnabled()) {
+        ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default-.txt");
+    } else {
+        ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
+    }
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl::fromLocalFile(action->data().toString()));
 
     styleLabel->setText(action->text());
@@ -601,6 +628,13 @@ void MainWindow::extrasWordWrap(bool checked)
     options->setWordWrapEnabled(checked);
     ui->plainTextEdit->setLineWrapMode(checked ? MarkdownEditor::WidgetWidth : MarkdownEditor::NoWrap);
 }
+
+void MainWindow::extrasSourceAtOneSize(bool checked)
+{
+    options->setSourceAtOneSizeEnabled(checked);
+    lastUsedStyle();
+}
+
 
 void MainWindow::extensionsAutolink(bool checked)
 {
@@ -1288,4 +1322,3 @@ void MainWindow::writeSettings()
     settings.setValue("mainWindow/geometry", saveGeometry());
     settings.setValue("mainWindow/windowState", saveState());
 }
-

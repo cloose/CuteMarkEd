@@ -98,6 +98,7 @@ private slots:
     void extrasShowSpecialCharacters(bool checked);
     void extrasYamlHeaderSupport(bool checked);
     void extrasWordWrap(bool checked);
+    void extrasSourceAtOneSize(bool checked);
     void extensionsAutolink(bool checked);
     void extensionsStrikethrough(bool checked);
     void extensionsAlphabeticLists(bool checked);

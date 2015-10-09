@@ -121,6 +121,9 @@ public:
     bool isWordWrapEnabled() const;
     void setWordWrapEnabled(bool enabled);
 
+    bool isSourceAtOneSizeEnabled() const;
+    void setSourceAtOneSizeEnabled(bool enabled);
+
     bool isSpellingCheckEnabled() const;
     void setSpellingCheckEnabled(bool enabled);
 
@@ -168,6 +171,7 @@ private:
     bool m_codeHighlightingEnabled;
     bool m_showSpecialCharactersEnabled;
     bool m_wordWrapEnabled;
+    bool m_sourceAtOneSizeEnabled;
     bool m_spellingCheckEnabled;
     bool m_yamlHeaderSupportEnabled;
     bool m_diagramSupportEnabled;

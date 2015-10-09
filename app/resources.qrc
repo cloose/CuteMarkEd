@@ -14,9 +14,11 @@
         <file alias="solarized-light.txt">themes/solarized-light.txt</file>
         <file alias="solarized-light+.txt">themes/solarized-light+.txt</file>
         <file alias="default.txt">themes/default.txt</file>
+        <file alias="default-.txt">themes/default-.txt</file>
         <file alias="clearness-dark+.txt">themes/clearness-dark+.txt</file>
         <file alias="clearness-dark.txt">themes/clearness-dark.txt</file>
         <file alias="byword-dark.txt">themes/byword-dark.txt</file>
+        <file alias="byword-dark+.txt">themes/byword-dark+.txt</file>
     </qresource>
     <qresource prefix="/">
         <file>template.html</file>
