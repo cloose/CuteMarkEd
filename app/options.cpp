@@ -235,6 +235,8 @@ bool Options::hasCustomShortcut(const QString &actionName) const
 {
     if(m_customShortcuts.contains(actionName))
         return !m_customShortcuts.value(actionName).isEmpty();
+    else
+        return false;
 }
 
 QKeySequence Options::customShortcut(const QString &actionName) const
