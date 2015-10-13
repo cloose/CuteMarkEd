@@ -98,7 +98,6 @@ private slots:
     void extrasShowSpecialCharacters(bool checked);
     void extrasYamlHeaderSupport(bool checked);
     void extrasWordWrap(bool checked);
-    void extrasSourceAtOneSize(bool checked);
     void extensionsAutolink(bool checked);
     void extensionsStrikethrough(bool checked);
     void extensionsAlphabeticLists(bool checked);
@@ -128,6 +127,7 @@ private slots:
     bool load(const QString &fileName);
     void proxyConfigurationChanged();
     void markdownConverterChanged();
+    void editorFontChanged(QFont);
 
 private:
     void setupUi();
@@ -147,6 +147,7 @@ private:
     void loadCustomStyles();
     void readSettings();
     void writeSettings();
+    QString stylePath(const QString &styleName);
 
 private:
     Ui::MainWindow *ui;

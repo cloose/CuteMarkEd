@@ -50,7 +50,7 @@ static const char* MATHINLINESUPPORT_ENABLED = "mathinlinesupport/enabled";
 static const char* CODEHIGHLIGHT_ENABLED = "codehighlighting/enabled";
 static const char* SHOWSPECIALCHARACTERS_ENABLED = "specialchars/enabled";
 static const char* WORDWRAP_ENABLED = "wordwrap/enabled";
-static const char* SOURCEATONESIZE_ENABLED = "sourceatonesize/enabled";
+static const char* SOURCEATSINGLESIZE_ENABLED = "sourceatsinglesize/enabled";
 static const char* SPELLINGCHECK_ENABLED = "spelling/enabled";
 static const char* DICTIONARY_LANGUAGE = "spelling/language";
 static const char* YAMLHEADERSUPPORT_ENABLED = "yamlheadersupport/enabled";
@@ -74,7 +74,7 @@ Options::Options(QObject *parent) :
     m_codeHighlightingEnabled(false),
     m_showSpecialCharactersEnabled(false),
     m_wordWrapEnabled(true),
-    m_sourceAtOneSizeEnabled(true),
+    m_sourceAtSingleSizeEnabled(true),
     m_spellingCheckEnabled(true),
     m_diagramSupportEnabled(false),
     m_markdownConverter(DiscountMarkdownConverter),
@@ -94,6 +94,7 @@ void Options::apply()
 
     emit proxyConfigurationChanged();
     emit markdownConverterChanged();
+    emit editorFontChanged(editorFont());
 }
 
 QFont Options::editorFont() const
@@ -364,14 +365,14 @@ void Options::setWordWrapEnabled(bool enabled)
     m_wordWrapEnabled = enabled;
 }
 
-bool Options::isSourceAtOneSizeEnabled() const
+bool Options::isSourceAtSingleSizeEnabled() const
 {
-    return m_sourceAtOneSizeEnabled;
+    return m_sourceAtSingleSizeEnabled;
 }
 
-void Options::setSourceAtOneSizeEnabled(bool enabled)
+void Options::setSourceAtSingleSizeEnabled(bool enabled)
 {
-    m_sourceAtOneSizeEnabled = enabled;
+    m_sourceAtSingleSizeEnabled = enabled;
 }
 
 bool Options::isSpellingCheckEnabled() const
@@ -493,15 +494,13 @@ void Options::readSettings()
     m_codeHighlightingEnabled = settings.value(CODEHIGHLIGHT_ENABLED, false).toBool();
     m_showSpecialCharactersEnabled = settings.value(SHOWSPECIALCHARACTERS_ENABLED, false).toBool();
     m_wordWrapEnabled = settings.value(WORDWRAP_ENABLED, true).toBool();
-    m_sourceAtOneSizeEnabled = settings.value(SOURCEATONESIZE_ENABLED, true).toBool();
+    m_sourceAtSingleSizeEnabled = settings.value(SOURCEATSINGLESIZE_ENABLED, true).toBool();
     m_yamlHeaderSupportEnabled = settings.value(YAMLHEADERSUPPORT_ENABLED, false).toBool();
     m_diagramSupportEnabled = settings.value(DIAGRAMSUPPORT_ENABLED, false).toBool();
 
     // spelling check settings
     m_spellingCheckEnabled = settings.value(SPELLINGCHECK_ENABLED, true).toBool();
     m_dictionaryLanguage = settings.value(DICTIONARY_LANGUAGE, "en_US").toString();
-
-    //Source viewer settings
 
     apply();
 }
@@ -557,7 +556,7 @@ void Options::writeSettings()
     settings.setValue(CODEHIGHLIGHT_ENABLED, m_codeHighlightingEnabled);
     settings.setValue(SHOWSPECIALCHARACTERS_ENABLED, m_showSpecialCharactersEnabled);
     settings.setValue(WORDWRAP_ENABLED, m_wordWrapEnabled);
-    settings.setValue(SOURCEATONESIZE_ENABLED, m_sourceAtOneSizeEnabled);
+    settings.setValue(SOURCEATSINGLESIZE_ENABLED, m_sourceAtSingleSizeEnabled);
     settings.setValue(YAMLHEADERSUPPORT_ENABLED, m_yamlHeaderSupportEnabled);
     settings.setValue(DIAGRAMSUPPORT_ENABLED, m_diagramSupportEnabled);
 
