@@ -127,7 +127,7 @@ private slots:
     bool load(const QString &fileName);
     void proxyConfigurationChanged();
     void markdownConverterChanged();
-    void editorFontChanged(QFont);
+    void editorFontChanged();
 
 private:
     void setupUi();

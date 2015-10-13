@@ -919,7 +919,7 @@ void MainWindow::markdownConverterChanged()
     }
 }
 
-void MainWindow::editorFontChanged(QFont font)
+void MainWindow::editorFontChanged()
 {
     lastUsedStyle();
 }
@@ -955,7 +955,7 @@ void MainWindow::setupUi()
     connect(options, SIGNAL(markdownConverterChanged()),
             this, SLOT(markdownConverterChanged()));
     connect(options, SIGNAL(editorFontChanged(QFont)),
-            this, SLOT(editorFontChanged(QFont)));
+            this, SLOT(editorFontChanged()));
 
     readSettings();
     setupCustomShortcuts();
