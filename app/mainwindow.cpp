@@ -919,11 +919,6 @@ void MainWindow::markdownConverterChanged()
     }
 }
 
-void MainWindow::editorFontChanged()
-{
-    lastUsedStyle();
-}
-
 void MainWindow::setupUi()
 {
     htmlPreviewController = new HtmlPreviewController(ui->webView, this);
@@ -955,7 +950,7 @@ void MainWindow::setupUi()
     connect(options, SIGNAL(markdownConverterChanged()),
             this, SLOT(markdownConverterChanged()));
     connect(options, SIGNAL(editorFontChanged(QFont)),
-            this, SLOT(editorFontChanged()));
+            this, SLOT(lastUsedStyle()));
 
     readSettings();
     setupCustomShortcuts();
