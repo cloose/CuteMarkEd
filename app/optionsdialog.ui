@@ -117,7 +117,7 @@
           <item row="1" column="0">
            <widget class="QCheckBox" name="sourceSingleSizedCheckBox">
             <property name="text">
-             <string>Source at Single Size</string>
+             <string>Markdown Source at Single Size</string>
             </property>
            </widget>
           </item>
