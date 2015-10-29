@@ -285,6 +285,7 @@ void OptionsDialog::readState()
     QFont font = options->editorFont();
     ui->fontComboBox->setCurrentFont(font);
     ui->sizeComboBox->setCurrentText(QString().setNum(font.pointSize()));
+    ui->sourceSingleSizedCheckBox->setChecked(options->isSourceAtSingleSizeEnabled());
     ui->tabWidthSpinBox->setValue(options->tabWidth());
 
     // html preview settings
@@ -331,6 +332,7 @@ void OptionsDialog::saveState()
     QFont font = ui->fontComboBox->currentFont();
     font.setPointSize(ui->sizeComboBox->currentText().toInt());
     options->setEditorFont(font);
+    options->setSourceAtSingleSizeEnabled(ui->sourceSingleSizedCheckBox->isChecked());
     options->setTabWidth(ui->tabWidthSpinBox->value());
     options->setMathInlineSupportEnabled(ui->mathInlineCheckBox->isChecked());
     options->setMathSupportEnabled(ui->mathSupportCheckBox->isChecked());

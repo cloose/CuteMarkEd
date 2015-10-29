@@ -478,8 +478,7 @@ void MainWindow::lastUsedStyle()
 void MainWindow::styleDefault()
 {
     generator->setCodeHighlightingStyle("default");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
+    ui->plainTextEdit->loadStyleFromStylesheet(stylePath("default"));
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/markdown.css"));
 
     styleLabel->setText(ui->actionDefault->text());
@@ -489,8 +488,7 @@ void MainWindow::styleDefault()
 void MainWindow::styleGithub()
 {
     generator->setCodeHighlightingStyle("github");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
+    ui->plainTextEdit->loadStyleFromStylesheet(stylePath("default"));
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/github.css"));
 
     styleLabel->setText(ui->actionGithub->text());
@@ -500,8 +498,7 @@ void MainWindow::styleGithub()
 void MainWindow::styleSolarizedLight()
 {
     generator->setCodeHighlightingStyle("solarized_light");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-light+.txt");
+    ui->plainTextEdit->loadStyleFromStylesheet(stylePath("solarized-light"));
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-light.css"));
 
     styleLabel->setText(ui->actionSolarizedLight->text());
@@ -511,8 +508,7 @@ void MainWindow::styleSolarizedLight()
 void MainWindow::styleSolarizedDark()
 {
     generator->setCodeHighlightingStyle("solarized_dark");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-dark+.txt");
+    ui->plainTextEdit->loadStyleFromStylesheet(stylePath("solarized-dark"));
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-dark.css"));
 
     styleLabel->setText(ui->actionSolarizedDark->text());
@@ -522,8 +518,7 @@ void MainWindow::styleSolarizedDark()
 void MainWindow::styleClearness()
 {
     generator->setCodeHighlightingStyle("default");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
+    ui->plainTextEdit->loadStyleFromStylesheet(stylePath("default"));
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness.css"));
 
     styleLabel->setText(ui->actionClearness->text());
@@ -533,8 +528,7 @@ void MainWindow::styleClearness()
 void MainWindow::styleClearnessDark()
 {
     generator->setCodeHighlightingStyle("default");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/clearness-dark+.txt");
+    ui->plainTextEdit->loadStyleFromStylesheet(stylePath("clearness-dark"));
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness-dark.css"));
 
     styleLabel->setText(ui->actionClearnessDark->text());
@@ -544,8 +538,7 @@ void MainWindow::styleClearnessDark()
 void MainWindow::styleBywordDark()
 {
     generator->setCodeHighlightingStyle("default");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/byword-dark.txt");
+    ui->plainTextEdit->loadStyleFromStylesheet(stylePath("byword-dark"));
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/byword-dark.css"));
 
     styleLabel->setText(ui->actionBywordDark->text());
@@ -557,8 +550,7 @@ void MainWindow::styleCustomStyle()
     QAction *action = qobject_cast<QAction*>(sender());
 
     generator->setCodeHighlightingStyle("default");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
+    ui->plainTextEdit->loadStyleFromStylesheet(stylePath("default"));
     ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl::fromLocalFile(action->data().toString()));
 
     styleLabel->setText(action->text());
@@ -957,6 +949,8 @@ void MainWindow::setupUi()
             this, SLOT(proxyConfigurationChanged()));
     connect(options, SIGNAL(markdownConverterChanged()),
             this, SLOT(markdownConverterChanged()));
+    connect(options, SIGNAL(editorFontChanged(QFont)),
+            this, SLOT(lastUsedStyle()));
 
     readSettings();
     setupCustomShortcuts();
@@ -1289,3 +1283,8 @@ void MainWindow::writeSettings()
     settings.setValue("mainWindow/windowState", saveState());
 }
 
+QString MainWindow::stylePath(const QString &styleName)
+{
+    QString suffix = options->isSourceAtSingleSizeEnabled() ? "" : "+";
+    return QString(":/theme/%1%2.txt").arg(styleName).arg(suffix);
+}

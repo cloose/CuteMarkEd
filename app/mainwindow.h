@@ -146,6 +146,7 @@ private:
     void loadCustomStyles();
     void readSettings();
     void writeSettings();
+    QString stylePath(const QString &styleName);
 
 private:
     Ui::MainWindow *ui;

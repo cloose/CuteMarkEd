@@ -50,10 +50,12 @@ static const char* MATHINLINESUPPORT_ENABLED = "mathinlinesupport/enabled";
 static const char* CODEHIGHLIGHT_ENABLED = "codehighlighting/enabled";
 static const char* SHOWSPECIALCHARACTERS_ENABLED = "specialchars/enabled";
 static const char* WORDWRAP_ENABLED = "wordwrap/enabled";
+static const char* SOURCEATSINGLESIZE_ENABLED = "sourceatsinglesize/enabled";
 static const char* SPELLINGCHECK_ENABLED = "spelling/enabled";
 static const char* DICTIONARY_LANGUAGE = "spelling/language";
 static const char* YAMLHEADERSUPPORT_ENABLED = "yamlheadersupport/enabled";
 static const char* DIAGRAMSUPPORT_ENABLED = "diagramsupport/enabled";
+
 
 Options::Options(QObject *parent) :
     QObject(parent),
@@ -72,6 +74,7 @@ Options::Options(QObject *parent) :
     m_codeHighlightingEnabled(false),
     m_showSpecialCharactersEnabled(false),
     m_wordWrapEnabled(true),
+    m_sourceAtSingleSizeEnabled(true),
     m_spellingCheckEnabled(true),
     m_diagramSupportEnabled(false),
     m_markdownConverter(DiscountMarkdownConverter),
@@ -91,6 +94,7 @@ void Options::apply()
 
     emit proxyConfigurationChanged();
     emit markdownConverterChanged();
+    emit editorFontChanged(editorFont());
 }
 
 QFont Options::editorFont() const
@@ -361,6 +365,16 @@ void Options::setWordWrapEnabled(bool enabled)
     m_wordWrapEnabled = enabled;
 }
 
+bool Options::isSourceAtSingleSizeEnabled() const
+{
+    return m_sourceAtSingleSizeEnabled;
+}
+
+void Options::setSourceAtSingleSizeEnabled(bool enabled)
+{
+    m_sourceAtSingleSizeEnabled = enabled;
+}
+
 bool Options::isSpellingCheckEnabled() const
 {
     return m_spellingCheckEnabled;
@@ -480,6 +494,7 @@ void Options::readSettings()
     m_codeHighlightingEnabled = settings.value(CODEHIGHLIGHT_ENABLED, false).toBool();
     m_showSpecialCharactersEnabled = settings.value(SHOWSPECIALCHARACTERS_ENABLED, false).toBool();
     m_wordWrapEnabled = settings.value(WORDWRAP_ENABLED, true).toBool();
+    m_sourceAtSingleSizeEnabled = settings.value(SOURCEATSINGLESIZE_ENABLED, true).toBool();
     m_yamlHeaderSupportEnabled = settings.value(YAMLHEADERSUPPORT_ENABLED, false).toBool();
     m_diagramSupportEnabled = settings.value(DIAGRAMSUPPORT_ENABLED, false).toBool();
 
@@ -541,6 +556,7 @@ void Options::writeSettings()
     settings.setValue(CODEHIGHLIGHT_ENABLED, m_codeHighlightingEnabled);
     settings.setValue(SHOWSPECIALCHARACTERS_ENABLED, m_showSpecialCharactersEnabled);
     settings.setValue(WORDWRAP_ENABLED, m_wordWrapEnabled);
+    settings.setValue(SOURCEATSINGLESIZE_ENABLED, m_sourceAtSingleSizeEnabled);
     settings.setValue(YAMLHEADERSUPPORT_ENABLED, m_yamlHeaderSupportEnabled);
     settings.setValue(DIAGRAMSUPPORT_ENABLED, m_diagramSupportEnabled);
 

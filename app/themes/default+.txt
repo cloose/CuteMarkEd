@@ -10,26 +10,32 @@ background: ff4f92
 H1
 foreground: 6c71c4
 font-style: bold
+font-size: 24px
 
 H2
 foreground: 6c71c4
 font-style: bold
+font-size: 20px
 
 H3
 foreground: 6c71c4
 font-style: bold
+font-size: 17px
 
 H4
 foreground: 268bd2
 font-style: bold
+font-size: 15px
 
 H5
 foreground: 268bd2
 font-style: bold
+font-size: 13px
 
 H6
 foreground: 268bd2
 font-style: bold
+font-size: 11px
 
 EMPH
 foreground: cb4b16
