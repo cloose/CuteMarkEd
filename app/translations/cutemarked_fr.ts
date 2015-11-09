@@ -1000,12 +1000,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../optionsdialog.ui" line="123"/>
         <source>Tabs</source>
-        <translation>Onglets</translation>
+        <translation>Tabulations</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="129"/>
         <source>&amp;Tab width:</source>
-        <translation>&amp;Largeur d&apos;un onglet :</translation>
+        <translation>&amp;Largeur d&apos;une tabulation :</translation>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="182"/>
