@@ -20,8 +20,10 @@
 #include <QWebSettings>
 
 
-static const char* MARKDOWN_CONVERTER = "general/converter";
-static const char* LAST_USED_STYLE = "general/lastusedstyle";
+static const char* MARKDOWN_CONVERTER = "General/converter";
+static const char* LAST_USED_STYLE = "General/lastusedstyle";
+static const char* MARKDOWN_CONVERTER_DEPRECATED = "general/converter";
+static const char* LAST_USED_STYLE_DEPRECATED = "general/lastusedstyle";
 static const char* STYLE_DEFAULT = "actionDefault";
 static const char* FONT_FAMILY_DEFAULT = "Monospace";
 static const char* FONT_FAMILY = "editor/font/family";
@@ -443,8 +445,19 @@ void Options::readSettings()
     QSettings settings;
 
     // general settings
-    m_markdownConverter = (Options::MarkdownConverter)settings.value(MARKDOWN_CONVERTER, 0).toInt();
-    m_lastUsedStyle = settings.value(LAST_USED_STYLE, STYLE_DEFAULT).toString();
+    if (settings.contains(MARKDOWN_CONVERTER_DEPRECATED)) {
+        m_markdownConverter = (Options::MarkdownConverter)settings.value(MARKDOWN_CONVERTER_DEPRECATED, 0).toInt();
+        settings.remove(MARKDOWN_CONVERTER_DEPRECATED);
+    } else {
+        m_markdownConverter = (Options::MarkdownConverter)settings.value(MARKDOWN_CONVERTER, 0).toInt();
+    }
+
+    if (settings.contains(LAST_USED_STYLE_DEPRECATED)) {
+        m_lastUsedStyle = settings.value(LAST_USED_STYLE_DEPRECATED, STYLE_DEFAULT).toString();
+        settings.remove(LAST_USED_STYLE_DEPRECATED);
+    } else {
+        m_lastUsedStyle = settings.value(LAST_USED_STYLE, STYLE_DEFAULT).toString();
+    }
 
     // editor settings
     QString fontFamily = settings.value(FONT_FAMILY, FONT_FAMILY_DEFAULT).toString();
