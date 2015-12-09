@@ -23,6 +23,7 @@
 #include "snippetcollectiontest.h"
 #include "completionlistmodeltest.h"
 #include "snippettest.h"
+#include "themecollectiontest.h"
 #include "themetest.h"
 #include "yamlheadercheckertest.h"
 
@@ -56,6 +57,9 @@ int main(int argc, char *argv[])
 
     ThemeTest test9;
     ret += QTest::qExec(&test9, argc, argv);
+
+    ThemeCollectionTest test10;
+    ret += QTest::qExec(&test10, argc, argv);
 
     return ret;
 }

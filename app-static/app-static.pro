@@ -22,6 +22,7 @@ SOURCES += \
     template/htmltemplate.cpp \
     template/presentationtemplate.cpp \
     themes/theme.cpp \
+    themes/themecollection.cpp \
     completionlistmodel.cpp \
     datalocation.cpp \
     slidelinemapping.cpp \
@@ -45,6 +46,7 @@ HEADERS += \
     template/htmltemplate.h \
     template/presentationtemplate.h \
     themes/theme.h \
+    themes/themecollection.h \
     completionlistmodel.h \
     datalocation.h \
     slidelinemapping.h \
