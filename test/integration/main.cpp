@@ -22,6 +22,7 @@
 #include "htmlpreviewcontrollertest.h"
 #include "htmltemplatetest.h"
 #include "jsonsnippetfiletest.h"
+#include "jsonthemefiletest.h"
 #include "pmhmarkdownparsertest.h"
 #include "revealmarkdownconvertertest.h"
 
@@ -55,8 +56,11 @@ int main(int argc, char *argv[])
     HtmlPreviewControllerTest test6;
     ret += QTest::qExec(&test6, argc, argv);
 
-	HtmlTemplateTest test7;
-	ret += QTest::qExec(&test7, argc, argv);
+    HtmlTemplateTest test7;
+    ret += QTest::qExec(&test7, argc, argv);
+
+    JsonThemeFileTest test8;
+    ret += QTest::qExec(&test8, argc, argv);
 
     return ret;
 }

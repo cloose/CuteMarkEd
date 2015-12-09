@@ -47,6 +47,7 @@ HEADERS += \
     template/htmltemplate.h \
     template/presentationtemplate.h \
     themes/jsonthemetranslator.h \
+    themes/jsonthemetranslatorfactory.h \
     themes/theme.h \
     themes/themecollection.h \
     completionlistmodel.h \

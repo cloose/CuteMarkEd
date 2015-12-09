@@ -15,6 +15,7 @@ SOURCES += \
     htmlpreviewcontrollertest.cpp \
     htmltemplatetest.cpp \
     jsonsnippetfiletest.cpp \
+    jsonthemefiletest.cpp \
     main.cpp \
     pmhmarkdownparsertest.cpp \
     revealmarkdownconvertertest.cpp
@@ -24,6 +25,7 @@ HEADERS += \
     htmlpreviewcontrollertest.h \
     htmltemplatetest.h \
     jsonsnippetfiletest.h \
+    jsonthemefiletest.h \
     pmhmarkdownparsertest.h \
     revealmarkdownconvertertest.h
 
