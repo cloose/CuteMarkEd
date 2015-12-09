@@ -21,6 +21,7 @@ SOURCES += \
     converter/revealmarkdownconverter.cpp \
     template/htmltemplate.cpp \
     template/presentationtemplate.cpp \
+    themes/theme.cpp \
     completionlistmodel.cpp \
     datalocation.cpp \
     slidelinemapping.cpp \
@@ -43,6 +44,7 @@ HEADERS += \
     template/template.h \
     template/htmltemplate.h \
     template/presentationtemplate.h \
+    themes/theme.h \
     completionlistmodel.h \
     datalocation.h \
     slidelinemapping.h \

@@ -18,7 +18,8 @@ SOURCES += \
     slidelinemappingtest.cpp \
     snippetcollectiontest.cpp \
     dictionarytest.cpp \
-    yamlheadercheckertest.cpp
+    yamlheadercheckertest.cpp \
+    themetest.cpp
 
 HEADERS += \
     completionlistmodeltest.h \
@@ -28,7 +29,8 @@ HEADERS += \
     slidelinemappingtest.h \
     snippetcollectiontest.h \
     dictionarytest.h \
-    yamlheadercheckertest.h
+    yamlheadercheckertest.h \
+    themetest.h
 
 target.CONFIG += no_default_install
 

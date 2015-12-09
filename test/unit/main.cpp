@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2013-2015 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 #include "snippetcollectiontest.h"
 #include "completionlistmodeltest.h"
 #include "snippettest.h"
+#include "themetest.h"
 #include "yamlheadercheckertest.h"
 
 int main(int argc, char *argv[])
@@ -52,6 +53,9 @@ int main(int argc, char *argv[])
 
     YamlHeaderCheckerTest test8;
     ret += QTest::qExec(&test8, argc, argv);
+
+    ThemeTest test9;
+    ret += QTest::qExec(&test9, argc, argv);
 
     return ret;
 }
