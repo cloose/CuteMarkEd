@@ -21,6 +21,7 @@ SOURCES += \
     converter/revealmarkdownconverter.cpp \
     template/htmltemplate.cpp \
     template/presentationtemplate.cpp \
+    themes/jsonthemetranslator.cpp \
     themes/theme.cpp \
     themes/themecollection.cpp \
     completionlistmodel.cpp \
@@ -45,6 +46,7 @@ HEADERS += \
     template/template.h \
     template/htmltemplate.h \
     template/presentationtemplate.h \
+    themes/jsonthemetranslator.h \
     themes/theme.h \
     themes/themecollection.h \
     completionlistmodel.h \

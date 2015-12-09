@@ -18,6 +18,7 @@
 
 #include "dictionarytest.h"
 #include "jsonsnippettranslatortest.h"
+#include "jsonthemetranslatortest.h"
 #include "jsontranslatorfactorytest.h"
 #include "slidelinemappingtest.h"
 #include "snippetcollectiontest.h"
@@ -60,6 +61,9 @@ int main(int argc, char *argv[])
 
     ThemeCollectionTest test10;
     ret += QTest::qExec(&test10, argc, argv);
+
+    JsonThemeTranslatorTest test11;
+    ret += QTest::qExec(&test11, argc, argv);
 
     return ret;
 }

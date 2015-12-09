@@ -14,6 +14,7 @@ SOURCES += \
     completionlistmodeltest.cpp \
     snippettest.cpp \
     jsonsnippettranslatortest.cpp \
+    jsonthemetranslatortest.cpp \
     jsontranslatorfactorytest.cpp \
     slidelinemappingtest.cpp \
     snippetcollectiontest.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     completionlistmodeltest.h \
     snippettest.h \
     jsonsnippettranslatortest.h \
+    jsonthemetranslatortest.h \
     jsontranslatorfactorytest.h \
     slidelinemappingtest.h \
     snippetcollectiontest.h \
