@@ -34,6 +34,11 @@ const Theme &ThemeCollection::at(int offset) const
     return themes.at(offset);
 }
 
+bool ThemeCollection::contains(const QString &name) const
+{
+    return themesIndex.contains(name);
+}
+
 const QString ThemeCollection::name() const
 {
     return QStringLiteral("themes");

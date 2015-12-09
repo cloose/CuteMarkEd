@@ -47,3 +47,12 @@ void ThemeCollectionTest::returnsThemeAtIndexPosition()
     QCOMPARE(actual, theme);
 }
 
+void ThemeCollectionTest::returnsIfCollectionContainsTheme()
+{
+    ThemeCollection collection;
+    Theme theme("name", "markdown", "code", "preview");
+    collection.insert(theme);
+    
+    QCOMPARE(collection.contains("name"), true);
+    QCOMPARE(collection.contains("missing"), false);
+}

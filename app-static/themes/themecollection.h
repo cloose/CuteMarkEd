@@ -30,6 +30,7 @@ public:
 
     int count() const;
     const Theme &at(int offset) const;
+    bool contains(const QString &name) const;
 
     const QString name() const;
 

@@ -27,6 +27,7 @@ private slots:
     void returnsConstantNameOfJsonArray();
     void returnsNumberOfThemesInCollection();
     void returnsThemeAtIndexPosition();
+    void returnsIfCollectionContainsTheme();
 };
 
 #endif // THEMECOLLECTIONTEST_H
