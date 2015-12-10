@@ -56,3 +56,30 @@ void ThemeCollectionTest::returnsIfCollectionContainsTheme()
     QCOMPARE(collection.contains("name"), true);
     QCOMPARE(collection.contains("missing"), false);
 }
+
+void ThemeCollectionTest::returnsThemeByName()
+{
+    ThemeCollection collection;
+    Theme theme("name", "markdown", "code", "preview");
+    collection.insert(theme);
+    
+    Theme actual = collection.theme("name");
+
+    QCOMPARE(actual, theme);
+}
+
+void ThemeCollectionTest::returnsNameOfAllThemes()
+{
+    Theme theme1("name 1", "markdown", "code", "preview");
+    Theme theme2("name 2", "markdown", "code", "preview");
+    ThemeCollection collection;
+    collection.insert(theme1);
+    collection.insert(theme2);
+    
+    QStringList themeNames = collection.themeNames();
+
+    QCOMPARE(themeNames.count(), 2);
+    QCOMPARE(themeNames.at(0), theme1.name());
+    QCOMPARE(themeNames.at(1), theme2.name());
+}
+

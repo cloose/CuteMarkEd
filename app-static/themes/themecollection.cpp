@@ -39,6 +39,16 @@ bool ThemeCollection::contains(const QString &name) const
     return themesIndex.contains(name);
 }
 
+const Theme ThemeCollection::theme(const QString &name) const
+{
+    return at(themesIndex.indexOf(name));
+}
+
+QStringList ThemeCollection::themeNames() const
+{
+    return themesIndex;
+}
+
 const QString ThemeCollection::name() const
 {
     return QStringLiteral("themes");

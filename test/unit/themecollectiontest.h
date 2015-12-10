@@ -28,6 +28,8 @@ private slots:
     void returnsNumberOfThemesInCollection();
     void returnsThemeAtIndexPosition();
     void returnsIfCollectionContainsTheme();
+    void returnsThemeByName();
+    void returnsNameOfAllThemes();
 };
 
 #endif // THEMECOLLECTIONTEST_H
