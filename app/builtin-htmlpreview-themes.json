@@ -1,0 +1,46 @@
+{
+    "themes": [
+        {
+            "name": "Default",
+            "markdownHighlighting": "Default",
+            "codeHighlighting": "Default",
+            "previewStylesheet": "Default"
+        },
+        {
+            "name": "Github",
+            "markdownHighlighting": "Default",
+            "codeHighlighting": "Github",
+            "previewStylesheet": "Github"
+        },
+        {
+            "name": "Solarized Light",
+            "markdownHighlighting": "Solarized Light",
+            "codeHighlighting": "Solarized Light",
+            "previewStylesheet": "Solarized Light"
+        },
+        {
+            "name": "Solarized Dark",
+            "markdownHighlighting": "Solarized Dark",
+            "codeHighlighting": "Solarized Dark",
+            "previewStylesheet": "Solarized Dark"
+        },
+        {
+            "name": "Clearness",
+            "markdownHighlighting": "Default",
+            "codeHighlighting": "Default",
+            "previewStylesheet": "Clearness"
+        },
+        {
+            "name": "Clearness Dark",
+            "markdownHighlighting": "Clearness Dark",
+            "codeHighlighting": "Default",
+            "previewStylesheet": "Clearness Dark"
+        },
+        {
+            "name": "Byword Dark",
+            "markdownHighlighting": "Byword Dark",
+            "codeHighlighting": "Default",
+            "previewStylesheet": "Byword Dark"
+        }
+    ]
+}
