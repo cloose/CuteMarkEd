@@ -24,6 +24,7 @@ SOURCES += \
     themes/jsonthemetranslator.cpp \
     themes/theme.cpp \
     themes/themecollection.cpp \
+    themes/thememanager.cpp \
     completionlistmodel.cpp \
     datalocation.cpp \
     slidelinemapping.cpp \
@@ -50,6 +51,7 @@ HEADERS += \
     themes/jsonthemetranslatorfactory.h \
     themes/theme.h \
     themes/themecollection.h \
+    themes/thememanager.h \
     completionlistmodel.h \
     datalocation.h \
     slidelinemapping.h \

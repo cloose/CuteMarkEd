@@ -18,7 +18,8 @@ SOURCES += \
     jsonthemefiletest.cpp \
     main.cpp \
     pmhmarkdownparsertest.cpp \
-    revealmarkdownconvertertest.cpp
+    revealmarkdownconvertertest.cpp \
+    thememanagertest.cpp
 
 HEADERS += \
     discountmarkdownconvertertest.h \
@@ -27,7 +28,8 @@ HEADERS += \
     jsonsnippetfiletest.h \
     jsonthemefiletest.h \
     pmhmarkdownparsertest.h \
-    revealmarkdownconvertertest.h
+    revealmarkdownconvertertest.h \
+    thememanagertest.h
 
 target.CONFIG += no_default_install
 

@@ -21,7 +21,8 @@ SOURCES += \
     dictionarytest.cpp \
     yamlheadercheckertest.cpp \
     themetest.cpp \
-    themecollectiontest.cpp
+    themecollectiontest.cpp \
+    thememanagertest.cpp
 
 HEADERS += \
     completionlistmodeltest.h \
@@ -34,7 +35,8 @@ HEADERS += \
     dictionarytest.h \
     yamlheadercheckertest.h \
     themetest.h \
-    themecollectiontest.h
+    themecollectiontest.h \
+    thememanagertest.h
 
 target.CONFIG += no_default_install
 
