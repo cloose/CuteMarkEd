@@ -258,13 +258,6 @@
      <property name="title">
       <string>St&amp;yles</string>
      </property>
-     <addaction name="actionDefault"/>
-     <addaction name="actionGithub"/>
-     <addaction name="actionSolarizedLight"/>
-     <addaction name="actionSolarizedDark"/>
-     <addaction name="actionClearness"/>
-     <addaction name="actionClearnessDark"/>
-     <addaction name="actionBywordDark"/>
     </widget>
     <widget class="QMenu" name="menuMarkdown_Extensions">
      <property name="title">

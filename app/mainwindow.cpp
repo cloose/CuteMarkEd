@@ -47,6 +47,7 @@
 #include <snippets/jsonsnippettranslatorfactory.h>
 #include <snippets/snippetcollection.h>
 #include <spellchecker/dictionary.h>
+#include <themes/thememanager.h>
 #include <datalocation.h>
 #include "controls/activelabel.h"
 #include "controls/findreplacewidget.h"
@@ -78,6 +79,7 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     snippetCollection(new SnippetCollection(this)),
     viewSynchronizer(0),
     htmlPreviewController(0),
+    themeManager(new ThemeManager()),
     splitFactor(0.5),
     rightViewCollapsed(false)
 {
@@ -124,8 +126,10 @@ void MainWindow::initializeApp()
     ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 
-    // set last used style
-    lastUsedStyle();
+    setupHtmlPreviewThemes();
+
+    // apply last used theme
+    lastUsedTheme();
 
     ui->plainTextEdit->tabWidthChanged(options->tabWidth());
 
@@ -464,97 +468,61 @@ void MainWindow::viewChangeSplit()
     }
 }
 
-void MainWindow::lastUsedStyle()
+void MainWindow::lastUsedTheme()
 {
-    if (stylesGroup) {
-        foreach(QAction *action, stylesGroup->actions()) {
-            if (action->objectName() == options->lastUsedStyle()) {
-                action->trigger();
-            }
-        }
-    }
+    QString themeName = options->lastUsedTheme();
+
+    currentTheme = themeManager->themeByName(themeName);
+    applyCurrentTheme();
+
+    styleLabel->setText(themeName);
 }
 
-void MainWindow::styleDefault()
+void MainWindow::themeChanged()
 {
-    generator->setCodeHighlightingStyle("default");
-    ui->plainTextEdit->loadStyleFromStylesheet(stylePath("default"));
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/markdown.css"));
+    QAction *action = qobject_cast<QAction*>(sender());
+    QString themeName = action->text();
 
-    styleLabel->setText(ui->actionDefault->text());
-    options->setLastUsedStyle(ui->actionDefault->objectName());
+    currentTheme = themeManager->themeByName(themeName);
+    applyCurrentTheme();
+
+    styleLabel->setText(themeName);
+    options->setLastUsedTheme(themeName);
 }
 
-void MainWindow::styleGithub()
+void MainWindow::editorStyleChanged()
 {
-    generator->setCodeHighlightingStyle("github");
-    ui->plainTextEdit->loadStyleFromStylesheet(stylePath("default"));
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/github.css"));
-
-    styleLabel->setText(ui->actionGithub->text());
-    options->setLastUsedStyle(ui->actionGithub->objectName());
-}
-
-void MainWindow::styleSolarizedLight()
-{
-    generator->setCodeHighlightingStyle("solarized_light");
-    ui->plainTextEdit->loadStyleFromStylesheet(stylePath("solarized-light"));
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-light.css"));
-
-    styleLabel->setText(ui->actionSolarizedLight->text());
-    options->setLastUsedStyle(ui->actionSolarizedLight->objectName());
-}
-
-void MainWindow::styleSolarizedDark()
-{
-    generator->setCodeHighlightingStyle("solarized_dark");
-    ui->plainTextEdit->loadStyleFromStylesheet(stylePath("solarized-dark"));
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-dark.css"));
-
-    styleLabel->setText(ui->actionSolarizedDark->text());
-    options->setLastUsedStyle(ui->actionSolarizedDark->objectName());
-}
-
-void MainWindow::styleClearness()
-{
-    generator->setCodeHighlightingStyle("default");
-    ui->plainTextEdit->loadStyleFromStylesheet(stylePath("default"));
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness.css"));
-
-    styleLabel->setText(ui->actionClearness->text());
-    options->setLastUsedStyle(ui->actionClearness->objectName());
-}
-
-void MainWindow::styleClearnessDark()
-{
-    generator->setCodeHighlightingStyle("default");
-    ui->plainTextEdit->loadStyleFromStylesheet(stylePath("clearness-dark"));
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness-dark.css"));
-
-    styleLabel->setText(ui->actionClearnessDark->text());
-    options->setLastUsedStyle(ui->actionClearnessDark->objectName());
-}
-
-void MainWindow::styleBywordDark()
-{
-    generator->setCodeHighlightingStyle("default");
-    ui->plainTextEdit->loadStyleFromStylesheet(stylePath("byword-dark"));
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/byword-dark.css"));
-
-    styleLabel->setText(ui->actionBywordDark->text());
-    options->setLastUsedStyle(ui->actionBywordDark->objectName());
+    QString markdownHighlighting = ThemeManager::markdownHighlightingPath(currentTheme);
+    ui->plainTextEdit->loadStyleFromStylesheet(stylePath(markdownHighlighting));
 }
 
 void MainWindow::styleCustomStyle()
 {
     QAction *action = qobject_cast<QAction*>(sender());
 
-    generator->setCodeHighlightingStyle("default");
-    ui->plainTextEdit->loadStyleFromStylesheet(stylePath("default"));
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl::fromLocalFile(action->data().toString()));
+    currentTheme = { action->text(), "Default", "Default", action->data().toString() };
+
+    QString markdownHighlighting = ThemeManager::markdownHighlightingPath(currentTheme);
+    QString codeHighlighting = ThemeManager::codeHighlightingPath(currentTheme);
+    QString previewStylesheet = ThemeManager::previewStylesheetPath(currentTheme);
+
+    generator->setCodeHighlightingStyle(codeHighlighting);
+    ui->plainTextEdit->loadStyleFromStylesheet(stylePath(markdownHighlighting));
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl::fromLocalFile(previewStylesheet));
 
     styleLabel->setText(action->text());
-    options->setLastUsedStyle(action->objectName());
+    options->setLastUsedTheme(action->objectName());
+}
+
+void MainWindow::applyCurrentTheme()
+{
+    QString markdownHighlighting = ThemeManager::markdownHighlightingPath(currentTheme);
+    QString codeHighlighting = ThemeManager::codeHighlightingPath(currentTheme);
+    QString previewStylesheet = ThemeManager::previewStylesheetPath(currentTheme);
+
+    generator->setCodeHighlightingStyle(codeHighlighting);
+    ui->plainTextEdit->loadStyleFromStylesheet(stylePath(markdownHighlighting));
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(previewStylesheet));
 }
 
 void MainWindow::viewFullScreenMode()
@@ -949,8 +917,8 @@ void MainWindow::setupUi()
             this, SLOT(proxyConfigurationChanged()));
     connect(options, SIGNAL(markdownConverterChanged()),
             this, SLOT(markdownConverterChanged()));
-    connect(options, SIGNAL(editorFontChanged(QFont)),
-            this, SLOT(lastUsedStyle()));
+    connect(options, &Options::editorStyleChanged,
+            this, &MainWindow::editorStyleChanged);
 
     readSettings();
     setupCustomShortcuts();
@@ -1229,6 +1197,24 @@ void MainWindow::updateSplitter()
     childSizes[1] = ui->splitter->width() * (1 - splitFactor);
 
     ui->splitter->setSizes(childSizes);
+}
+
+void MainWindow::setupHtmlPreviewThemes()
+{
+    ui->menuStyles->clear();
+
+    delete stylesGroup;
+    stylesGroup = new QActionGroup(this);
+
+    int key = 1;
+    foreach(const QString &themeName, themeManager->themeNames()) {
+        QAction *action = ui->menuStyles->addAction(themeName);
+        action->setShortcut(QKeySequence(tr("Ctrl+%1").arg(key++)));
+        action->setCheckable(true);
+        action->setActionGroup(stylesGroup);
+        connect(action, &QAction::triggered,
+                this, &MainWindow::themeChanged);
+    }
 }
 
 void MainWindow::loadCustomStyles()
