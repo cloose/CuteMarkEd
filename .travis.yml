@@ -9,7 +9,7 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 install:
-  - if [ "$CXX" == "g++" ]; then sudo apt-get install -qq g++-4.8; sudo update-alternatives --install /usr/bin/g++ /usr/bin/g++-4.8 90; fi
+  - if [ "$CXX" == "g++" ]; then sudo apt-get install -qq g++-4.8; sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90; fi
   - sudo apt-get install -qq qt52base qt52declarative qt52webkit qt52tools libhunspell-dev
   - sudo apt-get install -qq libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
 before_script:
