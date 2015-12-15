@@ -14,19 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "thememanagertest.h"
+#include "themecollectiontest.h"
 
 #include <QtTest>
 
-#include <themes/thememanager.h>
+#include <themes/themecollection.h>
 
-void ThemeManagerTest::initTestCase()
+void ThemeCollectionTest::initTestCase()
 {
-    QTemporaryFile themeFile(this);
-    if (!themeFile.open())
+    themeFile = new QTemporaryFile(this);
+    if (!themeFile->open())
         QFAIL("Failed to create temporary theme file");
 
-    QTextStream out(&themeFile);
+    QTextStream out(themeFile);
     out << "{ \"themes\": ["
         << "   {  \"name\": \"default\","
         << "      \"markdownHighlighting\": \"default\","
@@ -36,33 +36,21 @@ void ThemeManagerTest::initTestCase()
         << "      \"markdownHighlighting\": \"dark\","
         << "      \"codeHighlighting\": \"black\","
         << "      \"previewStylesheet\": \"dark\" } ] }";
-
-    themeFile.close();
-
-    themeManager = new ThemeManager(themeFile.fileName());
 }
 
-void ThemeManagerTest::cleanupTestCase()
+void ThemeCollectionTest::cleanupTestCase()
 {
-    delete themeManager;
+    themeFile->close();
 }
 
-void ThemeManagerTest::returnsBuiltinThemeByName()
+void ThemeCollectionTest::loadsThemesFromFileIntoCollection()
 {
-    Theme actual = themeManager->themeByName("dark");
+    ThemeCollection themeCollection;
 
-    QCOMPARE(actual.name(), QLatin1String("dark"));
-    QCOMPARE(actual.markdownHighlighting(), QLatin1String("dark"));
-    QCOMPARE(actual.codeHighlighting(), QLatin1String("black"));
-    QCOMPARE(actual.previewStylesheet(), QLatin1String("dark"));
-}
+    themeCollection.load(themeFile->fileName());
 
-void ThemeManagerTest::returnsNameOfAllBuiltinThemes()
-{
-    QStringList themeNames = themeManager->themeNames();
-
+    QStringList themeNames = themeCollection.themeNames();
     QCOMPARE(themeNames.count(), 2);
     QCOMPARE(themeNames.at(0), QLatin1String("default"));
     QCOMPARE(themeNames.at(1), QLatin1String("dark"));
 }
-

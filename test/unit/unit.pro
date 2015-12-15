@@ -22,7 +22,7 @@ SOURCES += \
     yamlheadercheckertest.cpp \
     themetest.cpp \
     themecollectiontest.cpp \
-    thememanagertest.cpp
+    stylemanagertest.cpp
 
 HEADERS += \
     completionlistmodeltest.h \
@@ -36,7 +36,7 @@ HEADERS += \
     yamlheadercheckertest.h \
     themetest.h \
     themecollectiontest.h \
-    thememanagertest.h
+    stylemanagertest.h
 
 target.CONFIG += no_default_install
 

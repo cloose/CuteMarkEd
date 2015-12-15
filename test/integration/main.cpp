@@ -25,7 +25,7 @@
 #include "jsonthemefiletest.h"
 #include "pmhmarkdownparsertest.h"
 #include "revealmarkdownconvertertest.h"
-#include "thememanagertest.h"
+#include "themecollectiontest.h"
 
 #ifdef ENABLE_HOEDOWN
 #include "hoedownmarkdownconvertertest.h"
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
     JsonThemeFileTest test8;
     ret += QTest::qExec(&test8, argc, argv);
 
-    ThemeManagerTest test9;
+    ThemeCollectionTest test9;
     ret += QTest::qExec(&test9, argc, argv);
 
     return ret;

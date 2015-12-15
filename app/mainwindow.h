@@ -38,7 +38,7 @@ class RecentFilesMenu;
 class Options;
 class SlideLineMapping;
 class SnippetCollection;
-class ThemeManager;
+class ThemeCollection;
 class ViewSynchronizer;
 
 
@@ -160,7 +160,7 @@ private:
     SnippetCollection *snippetCollection;
     ViewSynchronizer *viewSynchronizer;
     HtmlPreviewController *htmlPreviewController;
-    ThemeManager *themeManager;
+    ThemeCollection *themeCollection;
     Theme currentTheme { "Default", "Default", "Default", "Default" };
     QString fileName;
     float splitFactor;

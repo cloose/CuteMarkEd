@@ -14,28 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef THEMEMANAGERTEST_H
-#define THEMEMANAGERTEST_H
+#ifndef STYLEMANAGER_H
+#define STYLEMANAGER_H
 
-#include <QObject>
-class ThemeManager;
+#include <QString>
+#include "theme.h"
 
 
-class ThemeManagerTest : public QObject
+class StyleManager
 {
-    Q_OBJECT
-
-private slots:
-    void initTestCase();
-    void cleanupTestCase();
-
-    void returnsBuiltinThemeByName();
-    void returnsNameOfAllBuiltinThemes();
-
-private:
-    ThemeManager *themeManager;
+public:
+    static QString markdownHighlightingPath(const Theme &theme);
+    static QString codeHighlightingPath(const Theme &theme);
+    static QString previewStylesheetPath(const Theme &theme);
 };
 
-#endif // THEMEMANAGERTEST_H
-
+#endif // STYLEMANAGER_H
 

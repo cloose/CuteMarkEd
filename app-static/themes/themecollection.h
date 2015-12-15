@@ -26,6 +26,8 @@
 class ThemeCollection : public JsonCollection<Theme>
 {
 public:
+    bool load(const QString &fileName);
+
     int insert(const Theme &theme);
 
     int count() const;

@@ -16,6 +16,13 @@
  */
 #include "themecollection.h"
 
+#include <jsonfile.h>
+#include <themes/jsonthemetranslatorfactory.h>
+
+bool ThemeCollection::load(const QString &fileName)
+{
+    return JsonFile<Theme>::load(fileName, this);
+}
 
 int ThemeCollection::insert(const Theme &theme)
 {

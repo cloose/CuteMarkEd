@@ -19,7 +19,7 @@ SOURCES += \
     main.cpp \
     pmhmarkdownparsertest.cpp \
     revealmarkdownconvertertest.cpp \
-    thememanagertest.cpp
+    themecollectiontest.cpp
 
 HEADERS += \
     discountmarkdownconvertertest.h \
@@ -29,7 +29,7 @@ HEADERS += \
     jsonthemefiletest.h \
     pmhmarkdownparsertest.h \
     revealmarkdownconvertertest.h \
-    thememanagertest.h
+    themecollectiontest.h
 
 target.CONFIG += no_default_install
 

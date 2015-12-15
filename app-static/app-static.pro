@@ -22,9 +22,9 @@ SOURCES += \
     template/htmltemplate.cpp \
     template/presentationtemplate.cpp \
     themes/jsonthemetranslator.cpp \
+    themes/stylemanager.cpp \
     themes/theme.cpp \
     themes/themecollection.cpp \
-    themes/thememanager.cpp \
     completionlistmodel.cpp \
     datalocation.cpp \
     slidelinemapping.cpp \
@@ -49,9 +49,9 @@ HEADERS += \
     template/presentationtemplate.h \
     themes/jsonthemetranslator.h \
     themes/jsonthemetranslatorfactory.h \
+    themes/stylemanager.h \
     themes/theme.h \
     themes/themecollection.h \
-    themes/thememanager.h \
     completionlistmodel.h \
     datalocation.h \
     slidelinemapping.h \

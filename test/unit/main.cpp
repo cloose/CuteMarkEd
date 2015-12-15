@@ -24,8 +24,8 @@
 #include "snippetcollectiontest.h"
 #include "completionlistmodeltest.h"
 #include "snippettest.h"
+#include "stylemanagertest.h"
 #include "themecollectiontest.h"
-#include "thememanagertest.h"
 #include "themetest.h"
 #include "yamlheadercheckertest.h"
 
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
     ThemeCollectionTest test10;
     ret += QTest::qExec(&test10, argc, argv);
 
-    ThemeManagerTest test11;
+    StyleManagerTest test11;
     ret += QTest::qExec(&test11, argc, argv);
 
     JsonThemeTranslatorTest test12;

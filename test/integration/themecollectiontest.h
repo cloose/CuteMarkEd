@@ -14,31 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef THEMEMANAGER_H
-#define THEMEMANAGER_H
+#ifndef THEMEMANAGERTEST_H
+#define THEMEMANAGERTEST_H
 
-#include <QMap>
-#include <QString>
-#include "theme.h"
-#include "themecollection.h"
+#include <QObject>
+class QTemporaryFile;
+class ThemeCollection;
 
 
-class ThemeManager
+class ThemeCollectionTest : public QObject
 {
-public:
-    ThemeManager();
-    explicit ThemeManager(const QString &themeFileName);
+    Q_OBJECT
 
-    Theme themeByName(const QString &name) const;
-    QStringList themeNames() const;
+private slots:
+    void initTestCase();
+    void cleanupTestCase();
 
-    static QString markdownHighlightingPath(const Theme &theme);
-    static QString codeHighlightingPath(const Theme &theme);
-    static QString previewStylesheetPath(const Theme &theme);
+    void loadsThemesFromFileIntoCollection();
 
 private:
-    static ThemeCollection m_htmlPreviewThemes;
+    QTemporaryFile *themeFile;
 };
 
-#endif // THEMEMANAGER_H
+#endif // THEMEMANAGERTEST_H
+
 

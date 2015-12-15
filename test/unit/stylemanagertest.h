@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef THEMEMANAGERTEST_H
-#define THEMEMANAGERTEST_H
+#ifndef STYLEMANAGERTEST_H
+#define STYLEMANAGERTEST_H
 
 #include <QObject>
 
-class ThemeManagerTest : public QObject
+class StyleManagerTest : public QObject
 {
     Q_OBJECT
 
@@ -29,6 +29,6 @@ private slots:
     void returnsPathForPreviewStylesheet();
 };
 
-#endif // THEMEMANAGERTEST_H
+#endif // STYLEMANAGERTEST_H
 
 

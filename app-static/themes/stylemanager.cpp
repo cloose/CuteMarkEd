@@ -14,10 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "thememanager.h"
+#include "stylemanager.h"
 
-#include <jsonfile.h>
-#include <themes/jsonthemetranslatorfactory.h>
+#include <QMap>
 
 
 static const QMap<QString, QString> BUILTIN_MARKDOWN_HIGHLIGHTINGS = {
@@ -45,40 +44,17 @@ static const QMap<QString, QString> BUILTIN_PREVIEW_STYLESHEETS = {
     { "Byword Dark", "qrc:/css/byword-dark.css" }
 };
 
-ThemeCollection ThemeManager::m_htmlPreviewThemes;
-
-
-ThemeManager::ThemeManager() :
-    ThemeManager(":/builtin-htmlpreview-themes.json")
-{
-}
-
-ThemeManager::ThemeManager(const QString &themeFileName)
-{
-    JsonFile<Theme>::load(themeFileName, &m_htmlPreviewThemes);
-}
-
-Theme ThemeManager::themeByName(const QString &name) const
-{
-    return m_htmlPreviewThemes.theme(name);
-}
-
-QStringList ThemeManager::themeNames() const
-{
-    return m_htmlPreviewThemes.themeNames();
-}
-
-QString ThemeManager::markdownHighlightingPath(const Theme &theme)
+QString StyleManager::markdownHighlightingPath(const Theme &theme)
 {
     return BUILTIN_MARKDOWN_HIGHLIGHTINGS[theme.markdownHighlighting()];
 }
 
-QString ThemeManager::codeHighlightingPath(const Theme &theme)
+QString StyleManager::codeHighlightingPath(const Theme &theme)
 {
     return BUILTIN_CODE_HIGHLIGHTINGS[theme.codeHighlighting()];
 }
 
-QString ThemeManager::previewStylesheetPath(const Theme &theme)
+QString StyleManager::previewStylesheetPath(const Theme &theme)
 {
     return BUILTIN_PREVIEW_STYLESHEETS[theme.previewStylesheet()];
 }

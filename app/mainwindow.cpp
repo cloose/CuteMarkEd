@@ -47,7 +47,8 @@
 #include <snippets/jsonsnippettranslatorfactory.h>
 #include <snippets/snippetcollection.h>
 #include <spellchecker/dictionary.h>
-#include <themes/thememanager.h>
+#include <themes/stylemanager.h>
+#include <themes/themecollection.h>
 #include <datalocation.h>
 #include "controls/activelabel.h"
 #include "controls/findreplacewidget.h"
@@ -79,7 +80,7 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     snippetCollection(new SnippetCollection(this)),
     viewSynchronizer(0),
     htmlPreviewController(0),
-    themeManager(new ThemeManager()),
+    themeCollection(new ThemeCollection()),
     splitFactor(0.5),
     rightViewCollapsed(false)
 {
@@ -472,7 +473,7 @@ void MainWindow::lastUsedTheme()
 {
     QString themeName = options->lastUsedTheme();
 
-    currentTheme = themeManager->themeByName(themeName);
+    currentTheme = themeCollection->theme(themeName);
     applyCurrentTheme();
 
     styleLabel->setText(themeName);
@@ -483,7 +484,7 @@ void MainWindow::themeChanged()
     QAction *action = qobject_cast<QAction*>(sender());
     QString themeName = action->text();
 
-    currentTheme = themeManager->themeByName(themeName);
+    currentTheme = themeCollection->theme(themeName);
     applyCurrentTheme();
 
     styleLabel->setText(themeName);
@@ -492,7 +493,7 @@ void MainWindow::themeChanged()
 
 void MainWindow::editorStyleChanged()
 {
-    QString markdownHighlighting = ThemeManager::markdownHighlightingPath(currentTheme);
+    QString markdownHighlighting = StyleManager::markdownHighlightingPath(currentTheme);
     ui->plainTextEdit->loadStyleFromStylesheet(stylePath(markdownHighlighting));
 }
 
@@ -502,9 +503,9 @@ void MainWindow::styleCustomStyle()
 
     currentTheme = { action->text(), "Default", "Default", action->data().toString() };
 
-    QString markdownHighlighting = ThemeManager::markdownHighlightingPath(currentTheme);
-    QString codeHighlighting = ThemeManager::codeHighlightingPath(currentTheme);
-    QString previewStylesheet = ThemeManager::previewStylesheetPath(currentTheme);
+    QString markdownHighlighting = StyleManager::markdownHighlightingPath(currentTheme);
+    QString codeHighlighting = StyleManager::codeHighlightingPath(currentTheme);
+    QString previewStylesheet = StyleManager::previewStylesheetPath(currentTheme);
 
     generator->setCodeHighlightingStyle(codeHighlighting);
     ui->plainTextEdit->loadStyleFromStylesheet(stylePath(markdownHighlighting));
@@ -516,9 +517,9 @@ void MainWindow::styleCustomStyle()
 
 void MainWindow::applyCurrentTheme()
 {
-    QString markdownHighlighting = ThemeManager::markdownHighlightingPath(currentTheme);
-    QString codeHighlighting = ThemeManager::codeHighlightingPath(currentTheme);
-    QString previewStylesheet = ThemeManager::previewStylesheetPath(currentTheme);
+    QString markdownHighlighting = StyleManager::markdownHighlightingPath(currentTheme);
+    QString codeHighlighting = StyleManager::codeHighlightingPath(currentTheme);
+    QString previewStylesheet = StyleManager::previewStylesheetPath(currentTheme);
 
     generator->setCodeHighlightingStyle(codeHighlighting);
     ui->plainTextEdit->loadStyleFromStylesheet(stylePath(markdownHighlighting));
@@ -1201,13 +1202,15 @@ void MainWindow::updateSplitter()
 
 void MainWindow::setupHtmlPreviewThemes()
 {
+    themeCollection->load(":/builtin-htmlpreview-themes.json");
+
     ui->menuStyles->clear();
 
     delete stylesGroup;
     stylesGroup = new QActionGroup(this);
 
     int key = 1;
-    foreach(const QString &themeName, themeManager->themeNames()) {
+    foreach(const QString &themeName, themeCollection->themeNames()) {
         QAction *action = ui->menuStyles->addAction(themeName);
         action->setShortcut(QKeySequence(tr("Ctrl+%1").arg(key++)));
         action->setCheckable(true);
