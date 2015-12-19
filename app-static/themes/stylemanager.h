@@ -17,6 +17,7 @@
 #ifndef STYLEMANAGER_H
 #define STYLEMANAGER_H
 
+#include <QMap>
 #include <QString>
 #include "theme.h"
 
@@ -24,9 +25,14 @@
 class StyleManager
 {
 public:
+    void insertCustomPreviewStylesheet(const QString &styleName, const QString &stylePath);
+
     static QString markdownHighlightingPath(const Theme &theme);
     static QString codeHighlightingPath(const Theme &theme);
     static QString previewStylesheetPath(const Theme &theme);
+
+private:
+    static QMap<QString, QString> customPreviewStylesheets;
 };
 
 #endif // STYLEMANAGER_H

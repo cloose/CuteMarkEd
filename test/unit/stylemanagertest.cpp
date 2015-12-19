@@ -62,3 +62,13 @@ void StyleManagerTest::returnsPathForPreviewStylesheet()
     QCOMPARE(styleManager.previewStylesheetPath(bywordDarkTheme), QLatin1String("qrc:/css/byword-dark.css"));
 }
 
+void StyleManagerTest::returnsPathForCustomPreviewStylesheet()
+{
+    QString expectedPath = "file:///C:/User/Test/custom.css";
+    Theme customTheme("Custom", "Default", "Default", "Custom");
+    StyleManager styleManager;
+    
+    styleManager.insertCustomPreviewStylesheet("Custom", expectedPath);
+
+    QCOMPARE(styleManager.previewStylesheetPath(customTheme), expectedPath);
+}

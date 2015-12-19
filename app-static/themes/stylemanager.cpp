@@ -44,6 +44,14 @@ static const QMap<QString, QString> BUILTIN_PREVIEW_STYLESHEETS = {
     { "Byword Dark", "qrc:/css/byword-dark.css" }
 };
 
+QMap<QString, QString> StyleManager::customPreviewStylesheets;
+
+
+void StyleManager::insertCustomPreviewStylesheet(const QString &styleName, const QString &stylePath)
+{
+    customPreviewStylesheets.insert(styleName, stylePath);
+}
+
 QString StyleManager::markdownHighlightingPath(const Theme &theme)
 {
     return BUILTIN_MARKDOWN_HIGHLIGHTINGS[theme.markdownHighlighting()];
@@ -56,5 +64,9 @@ QString StyleManager::codeHighlightingPath(const Theme &theme)
 
 QString StyleManager::previewStylesheetPath(const Theme &theme)
 {
+    if (customPreviewStylesheets.contains(theme.previewStylesheet())) {
+        return customPreviewStylesheets[theme.previewStylesheet()];
+    }
+
     return BUILTIN_PREVIEW_STYLESHEETS[theme.previewStylesheet()];
 }

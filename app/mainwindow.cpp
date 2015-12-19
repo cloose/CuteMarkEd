@@ -127,6 +127,8 @@ void MainWindow::initializeApp()
     ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 
+    themeCollection->load(":/builtin-htmlpreview-themes.json");
+    loadCustomStyles();
     setupHtmlPreviewThemes();
 
     // apply last used theme
@@ -163,7 +165,6 @@ void MainWindow::initializeApp()
     QWebInspector *inspector = new QWebInspector();
     inspector->setPage(ui->webView->page());
 
-    loadCustomStyles();
     ui->menuLanguages->loadDictionaries(options->dictionaryLanguage());
 
     //: path to built-in snippets resource.
@@ -1202,7 +1203,6 @@ void MainWindow::updateSplitter()
 
 void MainWindow::setupHtmlPreviewThemes()
 {
-    themeCollection->load(":/builtin-htmlpreview-themes.json");
 
     ui->menuStyles->clear();
 
@@ -1227,21 +1227,20 @@ void MainWindow::loadCustomStyles()
     QDir dataPath(paths.first() + QDir::separator() + "styles");
     dataPath.setFilter(QDir::Files);
     if (dataPath.exists()) {
-        ui->menuStyles->addSeparator();
-
         // iterate over all files in the styles subdirectory
         QDirIterator it(dataPath);
         while (it.hasNext()) {
             it.next();
 
             QString fileName = it.fileName();
-            QAction *action = ui->menuStyles->addAction(QFileInfo(fileName).baseName());
-            action->setCheckable(true);
-            action->setActionGroup(stylesGroup);
-            action->setData(it.filePath());
+            QString styleName = QFileInfo(fileName).baseName();
+            QString stylePath = QUrl::fromLocalFile(it.filePath()).toString();
 
-            connect(action, SIGNAL(triggered()),
-                    this, SLOT(styleCustomStyle()));
+            Theme customTheme { styleName, "Default", "Default", styleName };
+            themeCollection->insert(customTheme);
+
+            StyleManager styleManager;
+            styleManager.insertCustomPreviewStylesheet(styleName, stylePath);
         }
     }
 }
