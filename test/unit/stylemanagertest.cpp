@@ -72,3 +72,14 @@ void StyleManagerTest::returnsPathForCustomPreviewStylesheet()
 
     QCOMPARE(styleManager.previewStylesheetPath(customTheme), expectedPath);
 }
+
+void StyleManagerTest::customPreviewStylesheetOverwritesBuiltin()
+{
+    QString expectedPath = "file:///C:/User/Test/custom.css";
+    Theme customTheme("Custom", "Default", "Default", "Github");
+    StyleManager styleManager;
+
+    styleManager.insertCustomPreviewStylesheet("Github", expectedPath);
+
+    QCOMPARE(styleManager.previewStylesheetPath(customTheme), expectedPath);
+}

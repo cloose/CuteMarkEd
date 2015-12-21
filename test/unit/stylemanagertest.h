@@ -28,6 +28,7 @@ private slots:
     void returnsPathForCodeHighlighting();
     void returnsPathForPreviewStylesheet();
     void returnsPathForCustomPreviewStylesheet();
+    void customPreviewStylesheetOverwritesBuiltin();
 };
 
 #endif // STYLEMANAGERTEST_H
