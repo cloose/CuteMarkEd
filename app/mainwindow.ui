@@ -417,53 +417,6 @@
     <string>&amp;Redo</string>
    </property>
   </action>
-  <action name="actionDefault">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Default</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+1</string>
-   </property>
-  </action>
-  <action name="actionGithub">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Github</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+2</string>
-   </property>
-  </action>
-  <action name="actionSolarizedLight">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Solarized Light</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+3</string>
-   </property>
-  </action>
-  <action name="actionSolarizedDark">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Solarized Dark</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+4</string>
-   </property>
-  </action>
   <action name="actionAbout">
    <property name="text">
     <string>&amp;About CuteMarkEd...</string>
@@ -563,28 +516,6 @@
    </property>
    <property name="text">
     <string>Code &amp;Highlighting</string>
-   </property>
-  </action>
-  <action name="actionClearness">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Clearness</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+5</string>
-   </property>
-  </action>
-  <action name="actionClearnessDark">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Clearness Dark</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+6</string>
    </property>
   </action>
   <action name="actionFindReplace">
@@ -740,14 +671,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
-   </property>
-  </action>
-  <action name="actionBywordDark">
-   <property name="text">
-    <string>Byword Dark</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+7</string>
    </property>
   </action>
   <action name="actionInsertImage">
@@ -969,70 +892,6 @@
     <hint type="destinationlabel">
      <x>268</x>
      <y>193</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionDefault</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>styleDefault()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>249</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionGithub</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>styleGithub()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>249</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionSolarizedLight</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>styleSolarizedLight()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>249</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionSolarizedDark</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>styleSolarizedDark()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>249</y>
     </hint>
    </hints>
   </connection>
@@ -1357,38 +1216,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionClearness</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>styleClearness()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>249</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionClearnessDark</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>styleClearnessDark()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>249</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>actionFindReplace</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
@@ -1681,22 +1508,6 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>editInsertTable()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>424</x>
-     <y>266</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionBywordDark</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>styleBywordDark()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

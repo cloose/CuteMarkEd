@@ -73,6 +73,7 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     options(new Options(this)),
+    stylesGroup(new QActionGroup(this)),
     styleLabel(0),
     wordCountLabel(0),
     viewLabel(0),
@@ -988,16 +989,6 @@ void MainWindow::setupActions()
     connect(ui->menuLanguages, SIGNAL(languageTriggered(Dictionary)),
             this, SLOT(languageChanged(Dictionary)));
 
-    // put style actions in a group
-    stylesGroup = new QActionGroup(this);
-    ui->actionDefault->setActionGroup(stylesGroup);
-    ui->actionGithub->setActionGroup(stylesGroup);
-    ui->actionSolarizedLight->setActionGroup(stylesGroup);
-    ui->actionSolarizedDark->setActionGroup(stylesGroup);
-    ui->actionClearness->setActionGroup(stylesGroup);
-    ui->actionClearnessDark->setActionGroup(stylesGroup);
-    ui->actionBywordDark->setActionGroup(stylesGroup);
-
     // help menu
     ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);
 
@@ -1025,7 +1016,7 @@ void MainWindow::setupStatusBar()
     statusBar()->setStyleSheet("QStatusBar::item { border: 0px solid black }; ");
 
     // add style label to statusbar
-    styleLabel = new QLabel(ui->actionDefault->text(), this);
+    styleLabel = new QLabel("Default", this);
     styleLabel->setToolTip(tr("Change Preview Style"));
     statusBar()->addPermanentWidget(styleLabel, 1);
 
