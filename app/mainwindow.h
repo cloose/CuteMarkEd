@@ -88,7 +88,6 @@ private slots:
     void lastUsedTheme();
     void themeChanged();
     void editorStyleChanged();
-    void styleCustomStyle();
     void viewFullScreenMode();
     void viewHorizontalLayout(bool checked);
 

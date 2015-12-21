@@ -498,24 +498,6 @@ void MainWindow::editorStyleChanged()
     ui->plainTextEdit->loadStyleFromStylesheet(stylePath(markdownHighlighting));
 }
 
-void MainWindow::styleCustomStyle()
-{
-    QAction *action = qobject_cast<QAction*>(sender());
-
-    currentTheme = { action->text(), "Default", "Default", action->data().toString() };
-
-    QString markdownHighlighting = StyleManager::markdownHighlightingPath(currentTheme);
-    QString codeHighlighting = StyleManager::codeHighlightingPath(currentTheme);
-    QString previewStylesheet = StyleManager::previewStylesheetPath(currentTheme);
-
-    generator->setCodeHighlightingStyle(codeHighlighting);
-    ui->plainTextEdit->loadStyleFromStylesheet(stylePath(markdownHighlighting));
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl::fromLocalFile(previewStylesheet));
-
-    styleLabel->setText(action->text());
-    options->setLastUsedTheme(action->objectName());
-}
-
 void MainWindow::applyCurrentTheme()
 {
     QString markdownHighlighting = StyleManager::markdownHighlightingPath(currentTheme);
