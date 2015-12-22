@@ -27,7 +27,8 @@ public:
     Theme(const QString &name, 
           const QString &markdownHighlighting,
           const QString &codeHighlighting,
-          const QString &previewStylesheet);
+          const QString &previewStylesheet,
+          bool builtIn = false);
 
     QString name() const { return m_name; }
 
@@ -36,6 +37,8 @@ public:
     QString codeHighlighting() const { return m_codeHighlighting; }
 
     QString previewStylesheet() const { return m_previewStylesheet; }
+
+    bool isBuiltIn() const { return m_builtIn; }
 
     bool operator<(const Theme &rhs) const
     {
@@ -55,6 +58,7 @@ private:
     QString m_markdownHighlighting;
     QString m_codeHighlighting;
     QString m_previewStylesheet;
+    bool m_builtIn;
 };
 
 #endif // THEME_H

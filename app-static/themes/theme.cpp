@@ -19,11 +19,13 @@
 Theme::Theme(const QString &name, 
              const QString &markdownHighlighting,
              const QString &codeHighlighting,
-             const QString &previewStylesheet) :
+             const QString &previewStylesheet,
+             bool builtIn) :
     m_name(name),
     m_markdownHighlighting(markdownHighlighting),
     m_codeHighlighting(codeHighlighting),
-    m_previewStylesheet(previewStylesheet)
+    m_previewStylesheet(previewStylesheet),
+    m_builtIn(builtIn)
 {
     checkInvariants();
 }
