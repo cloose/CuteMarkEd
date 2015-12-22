@@ -54,7 +54,8 @@ void JsonThemeFileTest::loadsThemesCollectionFromFile()
         << "   {  \"name\": \"default\","
         << "      \"markdownHighlighting\": \"default\","
         << "      \"codeHighlighting\": \"default\","
-        << "      \"previewStylesheet\": \"default\" },"
+        << "      \"previewStylesheet\": \"default\","
+        << "      \"builtIn\": true },"
         << "   {  \"name\": \"dark\","
         << "      \"markdownHighlighting\": \"dark\","
         << "      \"codeHighlighting\": \"black\","
@@ -124,7 +125,7 @@ void JsonThemeFileTest::roundtripTest()
     if (!themeFile.open())
         QFAIL("Failed to create temporary theme file");
 
-    Theme theme1("default", "default", "default", "default");
+    Theme theme1("default", "default", "default", "default", true);
 
     Theme theme2("dark", "dark", "black", "dark");
 
@@ -145,9 +146,11 @@ void JsonThemeFileTest::roundtripTest()
     QCOMPARE(collection2.at(0).markdownHighlighting(), theme1.markdownHighlighting());
     QCOMPARE(collection2.at(0).codeHighlighting(), theme1.codeHighlighting());
     QCOMPARE(collection2.at(0).previewStylesheet(), theme1.previewStylesheet());
+    QCOMPARE(collection2.at(0).isBuiltIn(), theme1.isBuiltIn());
 
     QCOMPARE(collection2.at(1).name(), theme2.name());
     QCOMPARE(collection2.at(1).markdownHighlighting(), theme2.markdownHighlighting());
     QCOMPARE(collection2.at(1).codeHighlighting(), theme2.codeHighlighting());
     QCOMPARE(collection2.at(1).previewStylesheet(), theme2.previewStylesheet());
+    QCOMPARE(collection2.at(0).isBuiltIn(), theme1.isBuiltIn());
 }

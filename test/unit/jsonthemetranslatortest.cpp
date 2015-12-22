@@ -46,6 +46,7 @@ QJsonObject NewJsonThemeObject()
     jsonObject.insert("markdownHighlighting", A_MARKDOWN_HIGHLIGHTING);
     jsonObject.insert("codeHighlighting", A_CODE_HIGHLIGHTING);
     jsonObject.insert("previewStylesheet", A_PREVIEW_STYLESHEET);
+    jsonObject.insert("builtIn", true);
 
     return jsonObject;
 }
@@ -98,11 +99,12 @@ void JsonThemeTranslatorTest::translatesJsonDocumentToThemes()
     QCOMPARE(collection.at(0).markdownHighlighting(), A_MARKDOWN_HIGHLIGHTING);
     QCOMPARE(collection.at(0).codeHighlighting(), A_CODE_HIGHLIGHTING);
     QCOMPARE(collection.at(0).previewStylesheet(), A_PREVIEW_STYLESHEET);
+    QCOMPARE(collection.at(0).isBuiltIn(), true);
 }
 
 void JsonThemeTranslatorTest::translatesThemesToJsonDocument()
 {
-    Theme theme(A_THEME_NAME, A_MARKDOWN_HIGHLIGHTING, A_CODE_HIGHLIGHTING, A_PREVIEW_STYLESHEET);
+    Theme theme(A_THEME_NAME, A_MARKDOWN_HIGHLIGHTING, A_CODE_HIGHLIGHTING, A_PREVIEW_STYLESHEET, true);
     ThemeCollection collection;
     collection.insert(theme);
 
@@ -113,5 +115,6 @@ void JsonThemeTranslatorTest::translatesThemesToJsonDocument()
     QCOMPARE(actual["markdownHighlighting"].toString(), A_MARKDOWN_HIGHLIGHTING);
     QCOMPARE(actual["codeHighlighting"].toString(), A_CODE_HIGHLIGHTING);
     QCOMPARE(actual["previewStylesheet"].toString(), A_PREVIEW_STYLESHEET);
+    QCOMPARE(actual["builtIn"].toBool(), true);
 }
 

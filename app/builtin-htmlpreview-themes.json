@@ -4,43 +4,50 @@
             "name": "Default",
             "markdownHighlighting": "Default",
             "codeHighlighting": "Default",
-            "previewStylesheet": "Default"
+            "previewStylesheet": "Default",
+            "builtIn": true
         },
         {
             "name": "Github",
             "markdownHighlighting": "Default",
             "codeHighlighting": "Github",
-            "previewStylesheet": "Github"
+            "previewStylesheet": "Github",
+            "builtIn": true
         },
         {
             "name": "Solarized Light",
             "markdownHighlighting": "Solarized Light",
             "codeHighlighting": "Solarized Light",
-            "previewStylesheet": "Solarized Light"
+            "previewStylesheet": "Solarized Light",
+            "builtIn": true
         },
         {
             "name": "Solarized Dark",
             "markdownHighlighting": "Solarized Dark",
             "codeHighlighting": "Solarized Dark",
-            "previewStylesheet": "Solarized Dark"
+            "previewStylesheet": "Solarized Dark",
+            "builtIn": true
         },
         {
             "name": "Clearness",
             "markdownHighlighting": "Default",
             "codeHighlighting": "Default",
-            "previewStylesheet": "Clearness"
+            "previewStylesheet": "Clearness",
+            "builtIn": true
         },
         {
             "name": "Clearness Dark",
             "markdownHighlighting": "Clearness Dark",
             "codeHighlighting": "Default",
-            "previewStylesheet": "Clearness Dark"
+            "previewStylesheet": "Clearness Dark",
+            "builtIn": true
         },
         {
             "name": "Byword Dark",
             "markdownHighlighting": "Byword Dark",
             "codeHighlighting": "Default",
-            "previewStylesheet": "Byword Dark"
+            "previewStylesheet": "Byword Dark",
+            "builtIn": true
         }
     ]
 }
