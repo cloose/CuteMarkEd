@@ -1176,13 +1176,13 @@ void MainWindow::updateSplitter()
 
 void MainWindow::setupHtmlPreviewThemes()
 {
-
     ui->menuStyles->clear();
 
     delete stylesGroup;
     stylesGroup = new QActionGroup(this);
 
     int key = 1;
+    bool separatorAdded = false;
     foreach(const QString &themeName, themeCollection->themeNames()) {
         QAction *action = ui->menuStyles->addAction(themeName);
         action->setShortcut(QKeySequence(tr("Ctrl+%1").arg(key++)));
@@ -1190,7 +1190,21 @@ void MainWindow::setupHtmlPreviewThemes()
         action->setActionGroup(stylesGroup);
         connect(action, &QAction::triggered,
                 this, &MainWindow::themeChanged);
+
+        if (!separatorAdded && !themeCollection->theme(themeName).isBuiltIn()) {
+            addSeparatorAfterBuiltInThemes();
+            separatorAdded = true;
+        }
     }
+}
+
+void MainWindow::addSeparatorAfterBuiltInThemes()
+{
+    ui->menuStyles->addSeparator();
+
+    QAction *separator = new QAction(stylesGroup);
+    separator->setSeparator(true);
+    stylesGroup->addAction(separator);
 }
 
 void MainWindow::loadCustomStyles()

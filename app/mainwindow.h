@@ -140,6 +140,7 @@ private:
     void setFileName(const QString &fileName);
     void updateSplitter();
     void setupHtmlPreviewThemes();
+    void addSeparatorAfterBuiltInThemes();
     void loadCustomStyles();
     void readSettings();
     void writeSettings();
