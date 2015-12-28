@@ -15,17 +15,21 @@ SOURCES += \
     htmlpreviewcontrollertest.cpp \
     htmltemplatetest.cpp \
     jsonsnippetfiletest.cpp \
+    jsonthemefiletest.cpp \
     main.cpp \
     pmhmarkdownparsertest.cpp \
-    revealmarkdownconvertertest.cpp
+    revealmarkdownconvertertest.cpp \
+    themecollectiontest.cpp
 
 HEADERS += \
     discountmarkdownconvertertest.h \
     htmlpreviewcontrollertest.h \
     htmltemplatetest.h \
     jsonsnippetfiletest.h \
+    jsonthemefiletest.h \
     pmhmarkdownparsertest.h \
-    revealmarkdownconvertertest.h
+    revealmarkdownconvertertest.h \
+    themecollectiontest.h
 
 target.CONFIG += no_default_install
 

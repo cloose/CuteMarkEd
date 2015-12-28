@@ -131,7 +131,8 @@ OTHER_FILES += \
     styles/clearness.css \
     styles/byword-dark.css \
     styles/solarized-light.css \
-    markdown-snippets.json
+    markdown-snippets.json \
+    builtin-htmlpreview-themes.json
 
 # translations
 lrelease.input         = TRANSLATIONS

@@ -21,6 +21,7 @@
 #include <QFont>
 #include <QKeySequence>
 #include <QMap>
+#include <QSettings>
 
 class Options : public QObject
 {
@@ -139,17 +140,21 @@ public:
     MarkdownConverter markdownConverter() const;
     void setMarkdownConverter(MarkdownConverter converter);
 
-    QString lastUsedStyle() const;
-    void setLastUsedStyle(const QString &style);
+    QString lastUsedTheme() const;
+    void setLastUsedTheme(const QString &theme);
 
     void readSettings();
     void writeSettings();
 
 signals:
     void editorFontChanged(const QFont &font);
+    void editorStyleChanged();
     void tabWidthChanged(int tabWidth);
     void proxyConfigurationChanged();
     void markdownConverterChanged();
+
+private:
+    void migrateLastUsedStyleOption(QSettings &settings);
 
 private:
     QFont font;
@@ -177,7 +182,7 @@ private:
     bool m_diagramSupportEnabled;
     QString m_dictionaryLanguage;
     MarkdownConverter m_markdownConverter;
-    QString m_lastUsedStyle;
+    QString m_lastUsedTheme;
     QString m_standardFontFamily;
     QString m_fixedFontFamily;
     QString m_serifFontFamily;

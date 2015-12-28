@@ -16,13 +16,12 @@
  */
 #include "options.h"
 
-#include <QSettings>
 #include <QWebSettings>
 
 
 static const char* MARKDOWN_CONVERTER = "general/converter";
-static const char* LAST_USED_STYLE = "general/lastusedstyle";
-static const char* STYLE_DEFAULT = "actionDefault";
+static const char* LAST_USED_THEME = "general/lastusedtheme";
+static const char* THEME_DEFAULT = "Default";
 static const char* FONT_FAMILY_DEFAULT = "Monospace";
 static const char* FONT_FAMILY = "editor/font/family";
 static const char* FONT_SIZE = "editor/font/size";
@@ -56,6 +55,7 @@ static const char* DICTIONARY_LANGUAGE = "spelling/language";
 static const char* YAMLHEADERSUPPORT_ENABLED = "yamlheadersupport/enabled";
 static const char* DIAGRAMSUPPORT_ENABLED = "diagramsupport/enabled";
 
+static const char* DEPRECATED__LAST_USED_STYLE = "general/lastusedstyle";
 
 Options::Options(QObject *parent) :
     QObject(parent),
@@ -78,7 +78,7 @@ Options::Options(QObject *parent) :
     m_spellingCheckEnabled(true),
     m_diagramSupportEnabled(false),
     m_markdownConverter(DiscountMarkdownConverter),
-    m_lastUsedStyle(STYLE_DEFAULT)
+    m_lastUsedTheme(THEME_DEFAULT)
 {
 }
 
@@ -94,7 +94,6 @@ void Options::apply()
 
     emit proxyConfigurationChanged();
     emit markdownConverterChanged();
-    emit editorFontChanged(editorFont());
 }
 
 QFont Options::editorFont() const
@@ -373,6 +372,7 @@ bool Options::isSourceAtSingleSizeEnabled() const
 void Options::setSourceAtSingleSizeEnabled(bool enabled)
 {
     m_sourceAtSingleSizeEnabled = enabled;
+    emit editorStyleChanged();
 }
 
 bool Options::isSpellingCheckEnabled() const
@@ -428,14 +428,14 @@ void Options::setMarkdownConverter(Options::MarkdownConverter converter)
     }
 }
 
-QString Options::lastUsedStyle() const
+QString Options::lastUsedTheme() const
 {
-    return m_lastUsedStyle;
+    return m_lastUsedTheme;
 }
 
-void Options::setLastUsedStyle(const QString &style)
+void Options::setLastUsedTheme(const QString &theme)
 {
-    m_lastUsedStyle = style;
+    m_lastUsedTheme = theme;
 }
 
 void Options::readSettings()
@@ -444,7 +444,7 @@ void Options::readSettings()
 
     // general settings
     m_markdownConverter = (Options::MarkdownConverter)settings.value(MARKDOWN_CONVERTER, 0).toInt();
-    m_lastUsedStyle = settings.value(LAST_USED_STYLE, STYLE_DEFAULT).toString();
+    m_lastUsedTheme = settings.value(LAST_USED_THEME, THEME_DEFAULT).toString();
 
     // editor settings
     QString fontFamily = settings.value(FONT_FAMILY, FONT_FAMILY_DEFAULT).toString();
@@ -502,6 +502,11 @@ void Options::readSettings()
     m_spellingCheckEnabled = settings.value(SPELLINGCHECK_ENABLED, true).toBool();
     m_dictionaryLanguage = settings.value(DICTIONARY_LANGUAGE, "en_US").toString();
 
+    // migrate deprecated lastUsedStyle option
+    if (settings.contains(DEPRECATED__LAST_USED_STYLE)) {
+        migrateLastUsedStyleOption(settings);
+    }
+
     apply();
 }
 
@@ -511,7 +516,7 @@ void Options::writeSettings()
 
     // general settings
     settings.setValue(MARKDOWN_CONVERTER, m_markdownConverter);
-    settings.setValue(LAST_USED_STYLE, m_lastUsedStyle);
+    settings.setValue(LAST_USED_THEME, m_lastUsedTheme);
 
     // editor settings
     settings.setValue(FONT_FAMILY, font.family());
@@ -563,4 +568,22 @@ void Options::writeSettings()
     // spelling check settings
     settings.setValue(SPELLINGCHECK_ENABLED, m_spellingCheckEnabled);
     settings.setValue(DICTIONARY_LANGUAGE, m_dictionaryLanguage);
+}
+
+void Options::migrateLastUsedStyleOption(QSettings &settings)
+{
+    static const QMap<QString, QString> migrations {
+        { "actionDefault", "Default" },
+        { "actionGithub", "Github" },
+        { "actionSolarizedLight", "Solarized Light" },
+        { "actionSolarizedDark", "Solarized Dark" },
+        { "actionClearness", "Clearness" },
+        { "actionClearnessDark", "Clearness Dark" },
+        { "actionBywordDark", "Byword Dark" }
+    };
+
+    QString lastUsedStyle = settings.value(DEPRECATED__LAST_USED_STYLE).toString();
+    m_lastUsedTheme = migrations[lastUsedStyle];
+
+    settings.remove(DEPRECATED__LAST_USED_STYLE);
 }

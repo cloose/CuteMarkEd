@@ -20,6 +20,7 @@
 #include <QMainWindow>
 #include <QMap>
 #include <QHash>
+#include <themes/theme.h>
 
 namespace Ui {
 class MainWindow;
@@ -37,6 +38,7 @@ class RecentFilesMenu;
 class Options;
 class SlideLineMapping;
 class SnippetCollection;
+class ThemeCollection;
 class ViewSynchronizer;
 
 
@@ -83,15 +85,9 @@ private slots:
     void editInsertImage();
 
     void viewChangeSplit();
-    void lastUsedStyle();
-    void styleDefault();
-    void styleGithub();
-    void styleSolarizedLight();
-    void styleSolarizedDark();
-    void styleClearness();
-    void styleClearnessDark();
-    void styleBywordDark();
-    void styleCustomStyle();
+    void lastUsedTheme();
+    void themeChanged();
+    void editorStyleChanged();
     void viewFullScreenMode();
     void viewHorizontalLayout(bool checked);
 
@@ -143,9 +139,12 @@ private:
     bool maybeSave();
     void setFileName(const QString &fileName);
     void updateSplitter();
+    void setupHtmlPreviewThemes();
+    void addSeparatorAfterBuiltInThemes();
     void loadCustomStyles();
     void readSettings();
     void writeSettings();
+    void applyCurrentTheme();
     QString stylePath(const QString &styleName);
 
 private:
@@ -161,6 +160,8 @@ private:
     SnippetCollection *snippetCollection;
     ViewSynchronizer *viewSynchronizer;
     HtmlPreviewController *htmlPreviewController;
+    ThemeCollection *themeCollection;
+    Theme currentTheme { "Default", "Default", "Default", "Default" };
     QString fileName;
     float splitFactor;
     bool rightViewCollapsed;

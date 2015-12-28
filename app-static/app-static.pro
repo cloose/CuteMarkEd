@@ -21,6 +21,10 @@ SOURCES += \
     converter/revealmarkdownconverter.cpp \
     template/htmltemplate.cpp \
     template/presentationtemplate.cpp \
+    themes/jsonthemetranslator.cpp \
+    themes/stylemanager.cpp \
+    themes/theme.cpp \
+    themes/themecollection.cpp \
     completionlistmodel.cpp \
     datalocation.cpp \
     slidelinemapping.cpp \
@@ -43,6 +47,11 @@ HEADERS += \
     template/template.h \
     template/htmltemplate.h \
     template/presentationtemplate.h \
+    themes/jsonthemetranslator.h \
+    themes/jsonthemetranslatorfactory.h \
+    themes/stylemanager.h \
+    themes/theme.h \
+    themes/themecollection.h \
     completionlistmodel.h \
     datalocation.h \
     slidelinemapping.h \
