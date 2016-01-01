@@ -735,7 +735,7 @@ void MainWindow::toggleHtmlView()
     if (viewLabel->text() == tr("HTML preview")) {
         ui->stackedWidget->setCurrentWidget(ui->htmlSourcePage);
 
-        ui->actionHtmlPreview->setText(tr("HTML source"));
+        ui->actionHtmlPreview->setText(tr("HTML preview"));
         viewLabel->setText(tr("HTML source"));
 
         // activate HTML highlighter
@@ -744,7 +744,7 @@ void MainWindow::toggleHtmlView()
     } else {
         ui->stackedWidget->setCurrentWidget(ui->webViewPage);
 
-        ui->actionHtmlPreview->setText(tr("HTML preview"));
+        ui->actionHtmlPreview->setText(tr("HTML source"));
         viewLabel->setText(tr("HTML preview"));
 
         // deactivate HTML highlighter

@@ -88,7 +88,7 @@ QString HoedownMarkdownConverter::renderAsHtml(MarkdownDocument *document)
     if (document) {
         HoedownMarkdownDocument *doc = dynamic_cast<HoedownMarkdownDocument*>(document);
 
-        if (doc->document()) {
+        if (doc && doc->document()) {
             hoedown_buffer *in = doc->document();
             hoedown_buffer *out = hoedown_buffer_new(64);
 

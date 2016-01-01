@@ -20,8 +20,8 @@
 #include <QWebSettings>
 
 
-static const char* MARKDOWN_CONVERTER = "general/converter";
-static const char* LAST_USED_STYLE = "general/lastusedstyle";
+static const char* MARKDOWN_CONVERTER = "General/converter";
+static const char* LAST_USED_STYLE = "General/lastusedstyle";
 static const char* STYLE_DEFAULT = "actionDefault";
 static const char* FONT_FAMILY_DEFAULT = "Monospace";
 static const char* FONT_FAMILY = "editor/font/family";

@@ -46,6 +46,9 @@ void HtmlViewSynchronizer::webViewScrolled()
     int value = m_webView->page()->mainFrame()->scrollBarValue(Qt::Vertical);
 
     m_editor->verticalScrollBar()->setValue(qRound(value * factor));
+
+    // remember new vertical scrollbar position of markdown editor
+    rememberScrollBarPos();
 }
 
 void HtmlViewSynchronizer::scrollValueChanged(int value)

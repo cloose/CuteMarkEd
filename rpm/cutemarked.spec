@@ -9,7 +9,7 @@
 Name:                   cutemarked
 Summary:                Qt-based Markdown editor
 Group:                  Productivity/Text/Editors
-Version:                0.11.1
+Version:                0.11.2
 Release:                1
 License:                GPL-2.0+
 Url:                    http://github.com/cloose/CuteMarkEd
@@ -31,18 +31,14 @@ BuildRequires:          pkgconfig(hunspell)
 %if 0%{?suse_version}
 BuildRequires:          update-desktop-files
 BuildRequires:          pkgconfig(Qt5Test)
+BuildRequires:          pkgconfig(Qt5PrintSupport)
 BuildRequires:          libqt5-qttools-devel
-%endif
-%if 0%{?fedora_version} <= 19
-BuildRequires:          libqt5-qttools-devel
-%endif
-%if 0%{?fedora_version} >= 20
-BuildRequires:          qt5-qttools-devel
 %endif
 %if 0%{?fedora_version}
 BuildRequires:          desktop-file-utils
 BuildRequires:          pkgconfig(gstreamer-0.10) pkgconfig(gstreamer-app-0.10)
 BuildRequires:          pkgconfig(sqlite3)
+BuildRequires:          qt5-qttools-devel
 %endif
 
 
@@ -80,6 +76,9 @@ make INSTALL_ROOT="%buildroot" install
 
 
 %changelog
+
+* Fri Jan 01 2016 Christian Loose <christian.loose@hamburg.de> 0.11.2-1
+- New patch version 0.11.2 released
 
 * Mon Jul 06 2015 Christian Loose <christian.loose@hamburg.de> 0.11.1-1
 - New patch version 0.11.1 released

@@ -1,0 +1,236 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 10pt;
+}
+pre {
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  font-size: 10pt;
+}
+table, td, th {
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+}
+table {
+  width: 100%;
+}
+th {
+  text-align: left;
+  background: #eeeeee;
+  padding: 3px;
+}
+</style>
+<title>Markdown szintaxis</title>
+</head>
+<body>
+
+  <h3>CÍMSOROK</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown bemenet</th>
+      <th>Kimenet</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre># Címsor 1
+
+## Címsor 2
+
+### Címsor 3
+
+#### Címsor 4
+
+##### Címsor 5
+
+###### Címsor 6</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Címsor 1</h1>
+      <h2>Címsor 2</h2>
+      <h3>Címsor 3</h3>
+      <h4>Címsor 4</h4>
+      <h5>Címsor 5</h5>
+      <h6>Címsor 6</h6>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Címsor 1
+===========
+
+Címsor 2
+-----------</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Címsor 1</h1>
+      <h2>Címsor 2</h2>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>BEKEZDÉSEK</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown bemenet</th>
+      <th>Kimenet</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>Egy bekezdés egyszerűen egy
+ vagy több egymás utáni sor
+ szöveg, egy vagy több üres
+ vonallal elválasztva.
+
+Ez egy másik bekezdés.</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Egy bekezdés egyszerűen egy vagy több egymás utáni sor szöveg, egy vagy több üres vonallal elválasztva.</p>
+      <p>Ez egy másik bekezdés.</p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Hogy sortörést
+hozz létre, fejez be
+a sort kettő vagy több
+szóközzel.</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Hogy sortörést<br>hozz létre, fejez be<br>a sort kettő vagy több<br>szóközzel.</p>
+      </td>
+    </tr>
+</tbody>
+</table>
+<h3>LISTÁK</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown bemenet</th>
+      <th>Kimenet</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>* Elem 1
+* Elem 2
+* Elem 3
+
++ Elem 1
++ Elem 2
++ Elem 3
+
+- Elem 1
+- Elem 2
+- Elem 3</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>Elem 1</li>
+        <li>Elem 2</li>
+        <li>Elem 3</li>
+      </ul>
+<ul>
+<li>Elem 1</li>
+        <li>Elem 2</li>
+        <li>Elem 3</li>
+      </ul>
+<ul>
+<li>Elem 1</li>
+        <li>Elem 2</li>
+        <li>Elem 3</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>1. Elem 1
+2. Elem 2
+3. Elem 3 </pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ol>
+<li>Elem 1</li>
+        <li>Elem 2</li>
+        <li>Elem 3</li>
+      </ol>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>* Elem 1
+1. Elem 2
++ Elem 3
+2. Elem 4</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+<li>Elem 1<ol>
+<li>Elem 2<ul>
+<li>Elem 3</li>
+          </ul>
+</li>
+          <li>Elem 4</li>
+        </ol>
+</li>
+      </ul>
+</td>
+    </tr>
+<tr>
+<td width="300">
+<pre>Kifejezés
+: Definíció</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <dl>
+<dt>Kifejezés<dt>
+        </dt>
+</dt>
+<dd>Definíció</dd>
+      </dl>
+</td>
+    </tr>
+</tbody>
+</table>
+<h3>KIEMELÉS</h3>
+
+  <table>
+<thead><tr>
+<th>Markdown bemenet</th>
+      <th>Kimenet</th>
+    </tr></thead>
+<tbody>
+<tr>
+<td width="300">
+<pre>*Kiemelt* vagyok
+
+__Kiemelt_ vagyok</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p><em>Kiemelt</em> vagyok</p>
+
+      <p><em>Kiemelt</em> vagyok</p>
+      </td>
+    </tr>
+<tr>
+<td width="300">
+<pre>**Félkövér** vagyok
+
+__Félkövér__ vagyok</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p><strong>Félkövér</strong> vagyok</p>
+
+      <p><strong>Félkövér</strong> vagyok</p>
+      </td>
+    </tr>
+</tbody>
+</table>
+</body>
+</html>

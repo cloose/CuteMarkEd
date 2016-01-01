@@ -30,7 +30,9 @@ QString RevealMarkdownConverter::renderAsHtml(MarkdownDocument *document)
 
     if (document) {
         RevealMarkdownDocument *doc = dynamic_cast<RevealMarkdownDocument*>(document);
-        html = doc->markdownText;
+        if (doc) {
+            html = doc->markdownText;
+        }
     }
 
     return html;

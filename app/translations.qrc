@@ -1,15 +1,17 @@
 <RCC>
     <qresource prefix="/">
-        <file>translations/cutemarked_de.qm</file>
         <file>translations/cutemarked_cs.qm</file>
+        <file>translations/cutemarked_da.qm</file>
+        <file>translations/cutemarked_de.qm</file>
         <file>translations/cutemarked_el.qm</file>
-        <file>translations/cutemarked_zh_CN.qm</file>
-        <file>translations/cutemarked_fr.qm</file>
-        <file>translations/cutemarked_ja.qm</file>
         <file>translations/cutemarked_es.qm</file>
+        <file>translations/cutemarked_fr.qm</file>
+        <file>translations/cutemarked_hu_HU.qm</file>
+        <file>translations/cutemarked_id.qm</file>
+        <file>translations/cutemarked_ja.qm</file>
+        <file>translations/cutemarked_pl.qm</file>
         <file>translations/cutemarked_pt_BR.qm</file>
         <file>translations/cutemarked_ru.qm</file>
-        <file>translations/cutemarked_id.qm</file>
-        <file>translations/cutemarked_da.qm</file>
+        <file>translations/cutemarked_zh_CN.qm</file>
     </qresource>
 </RCC>
