@@ -31,18 +31,14 @@ BuildRequires:          pkgconfig(hunspell)
 %if 0%{?suse_version}
 BuildRequires:          update-desktop-files
 BuildRequires:          pkgconfig(Qt5Test)
+BuildRequires:          pkgconfig(Qt5PrintSupport)
 BuildRequires:          libqt5-qttools-devel
-%endif
-%if 0%{?fedora_version} <= 19
-BuildRequires:          libqt5-qttools-devel
-%endif
-%if 0%{?fedora_version} >= 20
-BuildRequires:          qt5-qttools-devel
 %endif
 %if 0%{?fedora_version}
 BuildRequires:          desktop-file-utils
 BuildRequires:          pkgconfig(gstreamer-0.10) pkgconfig(gstreamer-app-0.10)
 BuildRequires:          pkgconfig(sqlite3)
+BuildRequires:          qt5-qttools-devel
 %endif
 
 
