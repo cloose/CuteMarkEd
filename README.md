@@ -8,14 +8,30 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 ### DOWNLOAD
 
-[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.11.1.tar.gz)  
-[MS Windows (Installer)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.11.1.msi)  
-[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.11.1.zip)  
-[OpenSUSE 13.1 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
+[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.11.2.tar.gz)  
+[MS Windows (Installer)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.11.2.msi)  
+[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.11.2.zip)  
+[OpenSUSE 13.2 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 [Fedora 20 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 [Fedora 21 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
+[Fedora 22 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
+[Fedora 23 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 
 ### NEWS
+
+#### Version 0.11.2
+
+Improvements:
+
+* `IMPROVED` Added Hungarian translation
+
+Fixes:
+
+* `FIXED` Editor pane jumping up and down during editing (#232)
+* `FIXED` Missing mermaid CSS for styling in preview (#241)
+* `FIXED` Correct order of HTML Preview/Source menu item (#242)
+* `FIXED` Retrieval of last used style on application start on Linux (#257)
+* `FIXED` Crash when switching between markdown converters (#260)
 
 #### Version 0.11.1
 

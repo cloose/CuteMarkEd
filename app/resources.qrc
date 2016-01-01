@@ -48,5 +48,6 @@
         <file alias="highlight.js/styles/github.css">scripts/highlight.js/styles/github.css</file>
         <file alias="highlight.js/styles/solarized_dark.css">scripts/highlight.js/styles/solarized_dark.css</file>
         <file alias="mermaid/mermaid.full.min.js">scripts/mermaid/mermaid.full.min.js</file>
+        <file alias="mermaid/mermaid.css">scripts/mermaid/mermaid.css</file>
     </qresource>
 </RCC>

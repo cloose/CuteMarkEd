@@ -23,38 +23,39 @@
 
 static const QString HTML_TEMPLATE = QStringLiteral("<html><head><!--__HTML_HEADER__--></head><body><!--__HTML_CONTENT__--></body></html>");
 static const QString SCROLL_SCRIPT = QStringLiteral("<script type=\"text/javascript\">window.onscroll = function() { synchronizer.webViewScrolled(); }; </script>");
+static const QString MERMAID_CSS   = QStringLiteral("<link rel=\"stylesheet\" href=\"qrc:/scripts/mermaid/mermaid.css\">");
 static const QString MERMAID_JS    = QStringLiteral("<script src=\"qrc:/scripts/mermaid/mermaid.full.min.js\"></script>");
 static const QString HIGHLIGHT_JS  = QStringLiteral("<link rel=\"stylesheet\" href=\"qrc:/scripts/highlight.js/styles/.css\">\n<script src=\"qrc:/scripts/highlight.js/highlight.pack.js\"></script>\n<script>hljs.initHighlightingOnLoad();</script>");
 
 void HtmlTemplateTest::rendersContentInsideBodyTags()
 {
-	HtmlTemplate htmlTemplate(HTML_TEMPLATE);
+    HtmlTemplate htmlTemplate(HTML_TEMPLATE);
 
-	QString html = htmlTemplate.render("<p>TEST</p>", 0);
+    QString html = htmlTemplate.render("<p>TEST</p>", 0);
 
     const QString expected = QStringLiteral("<html><head>%1\n</head><body><p>TEST</p></body></html>")
-                                .arg(SCROLL_SCRIPT);
-	QCOMPARE(html, expected);
+        .arg(SCROLL_SCRIPT);
+    QCOMPARE(html, expected);
 }
 
 void HtmlTemplateTest::rendersMermaidGraphInsideCodeTags()
 {
-	HtmlTemplate htmlTemplate(HTML_TEMPLATE);
+    HtmlTemplate htmlTemplate(HTML_TEMPLATE);
 
-	QString html = htmlTemplate.render("<pre><code class=\"mermaid\">TEST</code></pre>", HtmlTemplate::DiagramSupport);
+    QString html = htmlTemplate.render("<pre><code class=\"mermaid\">TEST</code></pre>", HtmlTemplate::DiagramSupport);
 
-    const QString expected = QStringLiteral("<html><head>%1\n%2\n</head><body><pre><code class=\"mermaid\">TEST</code></pre></body></html>")
-                                .arg(SCROLL_SCRIPT).arg(MERMAID_JS);
-	QCOMPARE(html, expected);
+    const QString expected = QStringLiteral("<html><head>%1\n%2\n%3\n</head><body><pre><code class=\"mermaid\">TEST</code></pre></body></html>")
+        .arg(SCROLL_SCRIPT).arg(MERMAID_CSS).arg(MERMAID_JS);
+    QCOMPARE(html, expected);
 }
 
 void HtmlTemplateTest::replacesMermaidCodeTagsByDivTagsIfCodeHighlightingEnabled()
 {
-	HtmlTemplate htmlTemplate(HTML_TEMPLATE);
+    HtmlTemplate htmlTemplate(HTML_TEMPLATE);
 
-	QString html = htmlTemplate.render("<pre><code class=\"mermaid\">TEST</code></pre>", HtmlTemplate::DiagramSupport | HtmlTemplate::CodeHighlighting);
+    QString html = htmlTemplate.render("<pre><code class=\"mermaid\">TEST</code></pre>", HtmlTemplate::DiagramSupport | HtmlTemplate::CodeHighlighting);
 
-    const QString expected = QStringLiteral("<html><head>%1\n%2\n%3\n</head><body><div class=\"mermaid\">\nTEST</div></body></html>")
-                                .arg(SCROLL_SCRIPT).arg(HIGHLIGHT_JS).arg(MERMAID_JS);
-	QCOMPARE(html, expected);
+    const QString expected = QStringLiteral("<html><head>%1\n%2\n%3\n%4\n</head><body><div class=\"mermaid\">\nTEST</div></body></html>")
+        .arg(SCROLL_SCRIPT).arg(HIGHLIGHT_JS).arg(MERMAID_CSS).arg(MERMAID_JS);
+    QCOMPARE(html, expected);
 }
