@@ -34,10 +34,10 @@
 extern "C" {
 #ifdef Q_OS_WIN
 #include <src/html.h>
-#include <src/markdown.h>
+#include <src/document.h>
 #else
 #include <hoedown/html.h>
-#include <hoedown/markdown.h>
+#include <hoedown/document.h>
 #endif
 }
 
@@ -92,12 +92,12 @@ QString HoedownMarkdownConverter::renderAsHtml(MarkdownDocument *document)
             hoedown_buffer *in = doc->document();
             hoedown_buffer *out = hoedown_buffer_new(64);
 
-            hoedown_renderer *renderer = hoedown_html_renderer_new(0, 16);
-            hoedown_markdown *markdown = hoedown_markdown_new(doc->options(), 16, renderer);
+            hoedown_renderer *renderer = hoedown_html_renderer_new((hoedown_html_flags)0, 16);
+            hoedown_document *markdown = hoedown_document_new(renderer, (hoedown_extensions)doc->options(), 16);
 
-            hoedown_markdown_render(out, in->data, in->size, markdown);
+            hoedown_document_render(markdown, out, in->data, in->size);
 
-            hoedown_markdown_free(markdown);
+            hoedown_document_free(markdown);
             hoedown_html_renderer_free(renderer);
 
             html = QString::fromUtf8(hoedown_buffer_cstr(out));
@@ -121,11 +121,11 @@ QString HoedownMarkdownConverter::renderAsTableOfContents(MarkdownDocument *docu
             hoedown_buffer *out = hoedown_buffer_new(64);
 
             hoedown_renderer *renderer = hoedown_html_toc_renderer_new(16);
-            hoedown_markdown *markdown = hoedown_markdown_new(doc->options(), 16, renderer);
+            hoedown_document *markdown = hoedown_document_new(renderer, (hoedown_extensions)doc->options(), 16);
 
-            hoedown_markdown_render(out, in->data, in->size, markdown);
+            hoedown_document_render(markdown, out, in->data, in->size);
 
-            hoedown_markdown_free(markdown);
+            hoedown_document_free(markdown);
             hoedown_html_renderer_free(renderer);
 
             toc = QString::fromUtf8(hoedown_buffer_cstr(out));
