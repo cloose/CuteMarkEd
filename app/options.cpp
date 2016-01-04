@@ -20,7 +20,7 @@
 
 
 static const char* MARKDOWN_CONVERTER = "General/converter";
-static const char* LAST_USED_STYLE = "General/lastusedstyle";
+static const char* LAST_USED_THEME = "General/lastusedstyle";
 static const char* THEME_DEFAULT = "Default";
 static const char* FONT_FAMILY_DEFAULT = "Monospace";
 static const char* FONT_FAMILY = "editor/font/family";
