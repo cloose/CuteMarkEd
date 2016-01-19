@@ -1,5 +1,5 @@
 /* PEG Markdown Highlight
- * Copyright 2011-2012 Ali Rantakari -- http://hasseg.org
+ * Copyright 2011-2016 Ali Rantakari -- http://hasseg.org
  * Licensed under the GPL2+ and MIT licenses (see LICENSE for more info).
  * 
  * pmh_parser.h

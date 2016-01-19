@@ -1,5 +1,5 @@
 /* PEG Markdown Highlight
- * Copyright 2011-2012 Ali Rantakari -- http://hasseg.org
+ * Copyright 2011-2016 Ali Rantakari -- http://hasseg.org
  * Licensed under the GPL2+ and MIT licenses (see LICENSE for more info).
  * 
  * pmh_styleparser.h
@@ -12,9 +12,7 @@
 */
 
 #include "pmh_definitions.h"
-#ifndef __cplusplus
 #include <stdbool.h>
-#endif
 
 /**
 * \brief Color (ARGB) attribute value.
@@ -54,6 +52,7 @@ typedef enum
     pmh_attr_type_font_size_pt,     /**< Font size (in points) */
     pmh_attr_type_font_family,      /**< Font family */
     pmh_attr_type_font_style,       /**< Font style */
+    pmh_attr_type_strike_color,     /**< Strike-through color */
     pmh_attr_type_other             /**< Arbitrary custom attribute */
 } pmh_attr_type;
 
