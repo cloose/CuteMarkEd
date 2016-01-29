@@ -21,7 +21,9 @@
 #include <QDesktopServices>
 #include <QDirIterator>
 #include <QFileDialog>
+#ifndef Q_OS_OSX
 #include <QIcon>
+#endif
 #include <QInputDialog>
 #include <QLabel>
 #include <QMessageBox>
@@ -599,8 +601,8 @@ void MainWindow::extrasOptions()
 {
     QList<QAction*> actions;
     // file menu
-    actions << ui->actionNew 
-            << ui->actionOpen 
+    actions << ui->actionNew
+            << ui->actionOpen
             << ui->actionSave
             << ui->actionSaveAs
             << ui->actionExportToHTML
@@ -923,12 +925,14 @@ void MainWindow::setupActions()
     SetActionShortcut(ui->actionNew, QKeySequence::New);
     SetActionShortcut(ui->actionOpen, QKeySequence::Open);
     SetActionShortcut(ui->actionSave, QKeySequence::Save);
-    ui->actionSave->setIcon(QIcon("fa-floppy-o.fontawesome"));
     SetActionShortcut(ui->actionSaveAs, QKeySequence::SaveAs);
-    ui->actionExportToPDF->setIcon(QIcon("fa-file-pdf-o.fontawesome"));
     SetActionShortcut(ui->action_Print, QKeySequence::Print);
-    ui->action_Print->setIcon(QIcon("fa-print.fontawesome"));
     SetActionShortcut(ui->actionExit, QKeySequence::Quit);
+#ifndef Q_OS_OSX
+    ui->actionSave->setIcon(QIcon("fa-floppy-o.fontawesome"));
+    ui->actionExportToPDF->setIcon(QIcon("fa-file-pdf-o.fontawesome"));
+    ui->action_Print->setIcon(QIcon("fa-print.fontawesome"));
+#endif
 
     recentFilesMenu = new RecentFilesMenu(ui->menuFile);
     ui->menuFile->insertMenu(ui->actionSave, recentFilesMenu);
@@ -938,19 +942,23 @@ void MainWindow::setupActions()
 
     // edit menu
     SetActionShortcut(ui->actionUndo, QKeySequence::Undo);
-    ui->actionUndo->setIcon(QIcon("fa-undo.fontawesome"));
     SetActionShortcut(ui->actionRedo, QKeySequence::Redo);
-    ui->actionRedo->setIcon(QIcon("fa-repeat.fontawesome"));
 
     SetActionShortcut(ui->actionCut, QKeySequence::Cut);
-    ui->actionCut->setIcon(QIcon("fa-scissors.fontawesome"));
     SetActionShortcut(ui->actionCopy, QKeySequence::Copy);
-    ui->actionCopy->setIcon(QIcon("fa-files-o.fontawesome"));
     SetActionShortcut(ui->actionPaste, QKeySequence::Paste);
-    ui->actionPaste->setIcon(QIcon("fa-clipboard.fontawesome"));
+
     SetActionShortcut(ui->actionStrong, QKeySequence::Bold);
-    ui->actionStrong->setIcon(QIcon("fa-bold.fontawesome"));
     SetActionShortcut(ui->actionEmphasize, QKeySequence::Italic);
+#ifndef Q_OS_OSX
+    ui->actionUndo->setIcon(QIcon("fa-undo.fontawesome"));
+    ui->actionRedo->setIcon(QIcon("fa-repeat.fontawesome"));
+
+    ui->actionCut->setIcon(QIcon("fa-scissors.fontawesome"));
+    ui->actionCopy->setIcon(QIcon("fa-files-o.fontawesome"));
+    ui->actionPaste->setIcon(QIcon("fa-clipboard.fontawesome"));
+
+    ui->actionStrong->setIcon(QIcon("fa-bold.fontawesome"));
     ui->actionEmphasize->setIcon(QIcon("fa-italic.fontawesome"));
     ui->actionStrikethrough->setIcon(QIcon("fa-strikethrough.fontawesome"));
     ui->actionCenterParagraph->setIcon(QIcon("fa-align-center.fontawesome"));
@@ -961,8 +969,10 @@ void MainWindow::setupActions()
     ui->actionInsertTable->setIcon(QIcon("fa-table.fontawesome"));
     ui->actionInsertImage->setIcon(QIcon("fa-picture-o.fontawesome"));
 
-    SetActionShortcut(ui->actionFindReplace, QKeySequence::Find);
     ui->actionFindReplace->setIcon(QIcon("fa-search.fontawesome"));
+#endif
+
+    SetActionShortcut(ui->actionFindReplace, QKeySequence::Find);
     SetActionShortcut(ui->actionFindNext, QKeySequence::FindNext);
     SetActionShortcut(ui->actionFindPrevious, QKeySequence::FindPrevious);
 
@@ -977,7 +987,9 @@ void MainWindow::setupActions()
     ui->menuView->insertAction(ui->menuView->actions()[1], ui->fileExplorerDockWidget->toggleViewAction());
     SetActionShortcut(ui->fileExplorerDockWidget->toggleViewAction(), QKeySequence(Qt::ALT + Qt::Key_E));
     SetActionShortcut(ui->actionFullScreenMode, QKeySequence::FullScreen);
+#ifndef Q_OS_OSX
     ui->actionFullScreenMode->setIcon(QIcon("fa-arrows-alt.fontawesome"));
+#endif
 
     // extras menu
     connect(ui->actionMathSupport, SIGNAL(triggered(bool)),
@@ -991,9 +1003,9 @@ void MainWindow::setupActions()
 
     // help menu
     ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);
-
+#ifndef Q_OS_OSX
     ui->webView->pageAction(QWebPage::Copy)->setIcon(QIcon("fa-copy.fontawesome"));
-
+#endif
     // set names for dock widget actions
     ui->dockWidget->toggleViewAction()->setObjectName("actionTableOfContents");
     ui->fileExplorerDockWidget->toggleViewAction()->setObjectName("actionFileExplorer");
