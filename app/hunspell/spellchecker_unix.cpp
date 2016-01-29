@@ -29,7 +29,7 @@ QMap<QString, Dictionary> SpellChecker::availableDictionaries()
     QMap<QString, Dictionary> dictionaries;
 
     QStringList paths;
-
+#ifdef Q_OS_LINUX
     // Debian
     paths << QStringLiteral("/usr/local/share/myspell/dicts")
           << QStringLiteral("/usr/share/myspell/dicts");
@@ -40,7 +40,10 @@ QMap<QString, Dictionary> SpellChecker::availableDictionaries()
     // Fedora
     paths << QStringLiteral("/usr/local/share/myspell")
           << QStringLiteral("/usr/share/myspell");
-
+#endif
+#ifdef Q_OS_OSX
+    paths << (qApp->applicationDirPath() + "/../Resources/dictionaries");
+#endif
     foreach (const QString &path, paths) {
         QDir dictPath(path);
         dictPath.setFilter(QDir::Files);
