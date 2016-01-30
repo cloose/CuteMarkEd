@@ -14,7 +14,7 @@ TARGET = cutemarked
 TEMPLATE = app
 CONFIG += c++11
 
-unix {
+unix:!macx {
   CONFIG += link_pkgconfig
 }
 
@@ -248,7 +248,7 @@ message("Using LIBS=$$LIBS")
 
 ## INSTALLATION
 
-unix {
+unix:!macx {
    isEmpty(PREFIX): PREFIX = /usr
    DATADIR = $${PREFIX}/share
 
