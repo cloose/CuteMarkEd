@@ -8,6 +8,7 @@ QT += testlib
 
 TARGET = unittest
 CONFIG += console testcase
+CONFIG += c++11
 
 SOURCES += \
     main.cpp \
