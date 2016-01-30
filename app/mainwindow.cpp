@@ -478,6 +478,12 @@ void MainWindow::lastUsedTheme()
     currentTheme = themeCollection->theme(themeName);
     applyCurrentTheme();
 
+    auto actionIter = std::find_if(
+          stylesGroup->actions().begin(), stylesGroup->actions().end(),
+          [&] (const QAction* action) -> bool { return action->text() == themeName; });
+    Q_ASSERT(actionIter != stylesGroup->actions().end());
+    (*actionIter)->setChecked(true);
+
     styleLabel->setText(themeName);
 }
 
