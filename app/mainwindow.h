@@ -127,6 +127,7 @@ private slots:
 private:
     void setupUi();
     void setupActions();
+    void setActionsIcons();
     void setupStatusBar();
     void setupMarkdownEditor();
     void setupHtmlPreview();

@@ -21,7 +21,9 @@
 #include <QDesktopServices>
 #include <QDirIterator>
 #include <QFileDialog>
+#ifndef Q_OS_OSX
 #include <QIcon>
+#endif
 #include <QInputDialog>
 #include <QLabel>
 #include <QMessageBox>
@@ -605,8 +607,8 @@ void MainWindow::extrasOptions()
 {
     QList<QAction*> actions;
     // file menu
-    actions << ui->actionNew 
-            << ui->actionOpen 
+    actions << ui->actionNew
+            << ui->actionOpen
             << ui->actionSave
             << ui->actionSaveAs
             << ui->actionExportToHTML
@@ -929,11 +931,8 @@ void MainWindow::setupActions()
     SetActionShortcut(ui->actionNew, QKeySequence::New);
     SetActionShortcut(ui->actionOpen, QKeySequence::Open);
     SetActionShortcut(ui->actionSave, QKeySequence::Save);
-    ui->actionSave->setIcon(QIcon("fa-floppy-o.fontawesome"));
     SetActionShortcut(ui->actionSaveAs, QKeySequence::SaveAs);
-    ui->actionExportToPDF->setIcon(QIcon("fa-file-pdf-o.fontawesome"));
     SetActionShortcut(ui->action_Print, QKeySequence::Print);
-    ui->action_Print->setIcon(QIcon("fa-print.fontawesome"));
     SetActionShortcut(ui->actionExit, QKeySequence::Quit);
 
     recentFilesMenu = new RecentFilesMenu(ui->menuFile);
@@ -944,31 +943,16 @@ void MainWindow::setupActions()
 
     // edit menu
     SetActionShortcut(ui->actionUndo, QKeySequence::Undo);
-    ui->actionUndo->setIcon(QIcon("fa-undo.fontawesome"));
     SetActionShortcut(ui->actionRedo, QKeySequence::Redo);
-    ui->actionRedo->setIcon(QIcon("fa-repeat.fontawesome"));
 
     SetActionShortcut(ui->actionCut, QKeySequence::Cut);
-    ui->actionCut->setIcon(QIcon("fa-scissors.fontawesome"));
     SetActionShortcut(ui->actionCopy, QKeySequence::Copy);
-    ui->actionCopy->setIcon(QIcon("fa-files-o.fontawesome"));
     SetActionShortcut(ui->actionPaste, QKeySequence::Paste);
-    ui->actionPaste->setIcon(QIcon("fa-clipboard.fontawesome"));
-    SetActionShortcut(ui->actionStrong, QKeySequence::Bold);
-    ui->actionStrong->setIcon(QIcon("fa-bold.fontawesome"));
-    SetActionShortcut(ui->actionEmphasize, QKeySequence::Italic);
-    ui->actionEmphasize->setIcon(QIcon("fa-italic.fontawesome"));
-    ui->actionStrikethrough->setIcon(QIcon("fa-strikethrough.fontawesome"));
-    ui->actionCenterParagraph->setIcon(QIcon("fa-align-center.fontawesome"));
-    ui->actionIncreaseHeaderLevel->setIcon(QIcon("fa-level-up.fontawesome"));
-    ui->actionBlockquote->setIcon(QIcon("fa-quote-left.fontawesome"));
-    ui->actionDecreaseHeaderLevel->setIcon(QIcon("fa-level-down.fontawesome"));
 
-    ui->actionInsertTable->setIcon(QIcon("fa-table.fontawesome"));
-    ui->actionInsertImage->setIcon(QIcon("fa-picture-o.fontawesome"));
+    SetActionShortcut(ui->actionStrong, QKeySequence::Bold);
+    SetActionShortcut(ui->actionEmphasize, QKeySequence::Italic);
 
     SetActionShortcut(ui->actionFindReplace, QKeySequence::Find);
-    ui->actionFindReplace->setIcon(QIcon("fa-search.fontawesome"));
     SetActionShortcut(ui->actionFindNext, QKeySequence::FindNext);
     SetActionShortcut(ui->actionFindPrevious, QKeySequence::FindPrevious);
 
@@ -983,7 +967,6 @@ void MainWindow::setupActions()
     ui->menuView->insertAction(ui->menuView->actions()[1], ui->fileExplorerDockWidget->toggleViewAction());
     SetActionShortcut(ui->fileExplorerDockWidget->toggleViewAction(), QKeySequence(Qt::ALT + Qt::Key_E));
     SetActionShortcut(ui->actionFullScreenMode, QKeySequence::FullScreen);
-    ui->actionFullScreenMode->setIcon(QIcon("fa-arrows-alt.fontawesome"));
 
     // extras menu
     connect(ui->actionMathSupport, SIGNAL(triggered(bool)),
@@ -998,7 +981,8 @@ void MainWindow::setupActions()
     // help menu
     ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);
 
-    ui->webView->pageAction(QWebPage::Copy)->setIcon(QIcon("fa-copy.fontawesome"));
+    // set actions icons
+    setActionsIcons();
 
     // set names for dock widget actions
     ui->dockWidget->toggleViewAction()->setObjectName("actionTableOfContents");
@@ -1014,6 +998,42 @@ void MainWindow::setupActions()
     ui->dockWidget->toggleViewAction()->setProperty("defaultshortcut", ui->dockWidget->toggleViewAction()->shortcut());
     ui->fileExplorerDockWidget->toggleViewAction()->setProperty("defaultshortcut", ui->fileExplorerDockWidget->toggleViewAction()->shortcut());
     ui->actionHtmlPreview->setProperty("defaultshortcut", ui->actionHtmlPreview->shortcut());
+}
+
+void MainWindow::setActionsIcons()
+{
+#ifndef Q_OS_OSX
+  // file menu
+  ui->actionSave->setIcon(QIcon("fa-floppy-o.fontawesome"));
+  ui->actionExportToPDF->setIcon(QIcon("fa-file-pdf-o.fontawesome"));
+  ui->action_Print->setIcon(QIcon("fa-print.fontawesome"));
+
+  // edit menu
+  ui->actionUndo->setIcon(QIcon("fa-undo.fontawesome"));
+  ui->actionRedo->setIcon(QIcon("fa-repeat.fontawesome"));
+
+  ui->actionCut->setIcon(QIcon("fa-scissors.fontawesome"));
+  ui->actionCopy->setIcon(QIcon("fa-files-o.fontawesome"));
+  ui->actionPaste->setIcon(QIcon("fa-clipboard.fontawesome"));
+
+  ui->actionStrong->setIcon(QIcon("fa-bold.fontawesome"));
+  ui->actionEmphasize->setIcon(QIcon("fa-italic.fontawesome"));
+  ui->actionStrikethrough->setIcon(QIcon("fa-strikethrough.fontawesome"));
+  ui->actionCenterParagraph->setIcon(QIcon("fa-align-center.fontawesome"));
+  ui->actionIncreaseHeaderLevel->setIcon(QIcon("fa-level-up.fontawesome"));
+  ui->actionBlockquote->setIcon(QIcon("fa-quote-left.fontawesome"));
+  ui->actionDecreaseHeaderLevel->setIcon(QIcon("fa-level-down.fontawesome"));
+
+  ui->actionInsertTable->setIcon(QIcon("fa-table.fontawesome"));
+  ui->actionInsertImage->setIcon(QIcon("fa-picture-o.fontawesome"));
+
+  ui->actionFindReplace->setIcon(QIcon("fa-search.fontawesome"));
+
+  // view menu
+  ui->actionFullScreenMode->setIcon(QIcon("fa-arrows-alt.fontawesome"));
+
+  ui->webView->pageAction(QWebPage::Copy)->setIcon(QIcon("fa-copy.fontawesome"));
+#endif
 }
 
 void MainWindow::setupStatusBar()

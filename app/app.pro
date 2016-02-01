@@ -33,7 +33,11 @@ TRANSLATIONS += \
     translations/cutemarked_ru.ts \
     translations/cutemarked_zh_CN.ts
 
-RC_FILE = cutemarked.rc
+win32:RC_FILE = cutemarked.rc
+macx {
+    ICON = app-icon.icns
+    QMAKE_INFO_PLIST = Info.plist
+}
 
 INCLUDEPATH += $$PWD
 

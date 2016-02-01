@@ -9,6 +9,7 @@ QT       += gui webkitwidgets
 
 TARGET = integrationtest
 CONFIG += console testcase
+CONFIG += c++11
 
 SOURCES += \
     discountmarkdownconvertertest.cpp \
