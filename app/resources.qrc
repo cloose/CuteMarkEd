@@ -35,6 +35,7 @@
         <file>syntax_da.html</file>
         <file>template_presentation.html</file>
         <file>builtin-htmlpreview-themes.json</file>
+        <file>syntax_ru.html</file>
     </qresource>
     <qresource prefix="/icons">
         <file alias="icon-close.png">images/icon-close.png</file>

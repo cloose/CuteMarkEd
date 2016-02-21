@@ -1,0 +1,259 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 10pt;
+}
+pre {
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  font-size: 10pt;
+}
+table, td, th {
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+}
+table {
+  width: 100%;
+}
+th {
+  text-align: left;
+  background: #eeeeee;
+  padding: 3px;
+}
+</style>
+<title>Markdown Syntax Reference</title>
+</head>
+<body>
+
+  <h3>ЗАГОЛОВКИ</h3>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Markdown разметка</th>
+      <th>Результат</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td width="300">
+<pre>
+ # Заголовок первого уровня
+
+ ## Заголовок второго уровня
+
+ ### Заголовок третьего уровня
+
+ #### Заголовок четвёртого уровня
+
+ ##### Заголовок пятого уровня
+
+ ###### Заголовок шестого уровня
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Заголовок первого уровня</h1>
+      <h2>Заголовок второго уровня</h2>
+      <h3>Заголовок третьего уровня</h3>
+      <h4>Заголовок четвёртого уровня</h4>
+      <h5>аголовок пятого уровня</h5>
+      <h6>Заголовок шестого уровня</h6>
+      </td>
+    </tr>
+    <tr>
+      <td width="300">
+<pre>
+ Заголовок первого уровня H1
+ ===========
+
+ Заголовок второго уровня H2
+ -----------
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <h1>Заголовок первого уровня H1</h1>
+      <h2>Заголовок второго уровня H2</h2>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h3>ПАРАГРАФЫ</h3>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Markdown разметка</th>
+      <th>Результат</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td width="300">
+<pre>
+ Текст параграфа.&lt;пробел&gt;&lt;пробел&gt;
+ Этот текст будет с&nbsp;новой строки.
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Текст параграфа.<br>Этот текст будет с&nbsp;новой строки.</p>
+      </td>
+    </tr>
+    <tr>
+    </tbody>
+  </table>
+
+  <h3>СПИСКИ</h3>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Markdown разметка</th>
+      <th>Результат</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td width="300">
+<pre>
+ * Элемент 1
+ * Элемент 2
+ * Элемент 3
+
+ + Элемент 1
+ + Элемент 2
+ + Элемент 3
+
+ - Элемент 1
+ - Элемент 2
+ - Элемент 3
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+        <li>Элемент 1</li>
+        <li>Элемент 2</li>
+        <li>Элемент 3</li>
+      </ul>
+      <ul>
+        <li>Элемент 1</li>
+        <li>Элемент 2</li>
+        <li>Элемент 3</li>
+      </ul>
+      <ul>
+        <li>Элемент 1</li>
+        <li>Элемент 2</li>
+        <li>Элемент 3</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td width="300">
+<pre>
+ 1. Элемент 1
+ 2. Элемент 2
+ 3. Элемент 3
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ol>
+        <li>Элемент 1</li>
+        <li>Элемент 2</li>
+        <li>Элемент 3</li>
+      </ol>
+      </td>
+    </tr>
+    <tr>
+      <td width="300">
+<pre>
+ * Элемент 1
+   1. Элемент 2
+      + Элемент 3
+   2. Элемент 4
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <ul>
+        <li>
+        Элемент 1
+        <ol>
+          <li>
+          Элемент 2
+          <ul>
+            <li>Элемент 3</li>
+          </ul>
+          </li>
+          <li>
+          Элемент 4
+          </li>
+        </ol>
+        </li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td width="300">
+<pre>
+ Термин
+ : Определение
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <dl>
+        <dt>
+        Термин
+        <dt>
+        <dd>
+        Определение
+        </dd>
+      </dl>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h3>ВЫДЕЛЕНИЕ</h3>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Markdown разметка</th>
+      <th>Результат</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td width="300">
+<pre>
+ Это *курсив*
+
+ Это _курсив_
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Это <em>курсив</em></p>
+
+      <p>Это <em>курсив</em></p>
+      </td>
+    </tr>
+    <tr>
+      <td width="300">
+<pre>
+ Это **жирный** текст
+
+ Это __жирный__ текст
+</pre>
+      </td>
+      <td style="padding-left: 5px;">
+      <p>Это <strong>жирный</strong> текст</p>
+
+      <p>Это <strong>жирный</strong> текст</p>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+</body>
+</html>
