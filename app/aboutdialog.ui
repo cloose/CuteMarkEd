@@ -32,7 +32,7 @@
      <item>
       <widget class="QLabel" name="messageLabel">
        <property name="text">
-        <string>&lt;p&gt;&lt;b&gt;&lt;font size=&quot;5&quot;&gt;Program Name&lt;/font&gt;&lt;/b&gt;&lt;br&gt;Version 0.1&lt;/p&gt;</string>
+        <string>&lt;p&gt;&lt;b&gt;&lt;font size=&quot;5&quot;&gt;%1&lt;/font&gt;&lt;/b&gt;&lt;br&gt;Version %2&lt;/p&gt;</string>
        </property>
        <property name="scaledContents">
         <bool>false</bool>
