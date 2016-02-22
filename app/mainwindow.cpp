@@ -313,10 +313,12 @@ void MainWindow::fileExportToHtml()
 
 void MainWindow::fileExportToPdf()
 {
-    ExportPdfDialog dialog(fileName);
-    if (dialog.exec() == QDialog::Accepted) {
-        ui->webView->print(dialog.printer());
-    }
+	ExportPdfDialog dialog(fileName);
+	if (dialog.exec() == QDialog::Accepted) {
+		 QTextDocument doc;
+		 doc.setHtml(ui->webView->page()->currentFrame()->toHtml());
+		 doc.print(dialog.printer());
+	}
 }
 
 void MainWindow::filePrint()
