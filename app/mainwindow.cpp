@@ -304,6 +304,11 @@ void MainWindow::fileExportToHtml()
 
 void MainWindow::fileExportToPdf()
 {
+	// using temporary QTextDocument instance to get links exported\printed correctly,
+	// as links will dissappear when printing directly from QWebView in current Qt implementation
+	// of QWebView::print() method (possible bug in Qt?)
+	// more info here: http://stackoverflow.com/questions/11629093/add-working-url-into-pdf-using-qt-qprinter
+
 	ExportPdfDialog dialog(fileName);
 	if (dialog.exec() == QDialog::Accepted) {
 		 QTextDocument doc;
