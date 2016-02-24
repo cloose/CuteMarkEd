@@ -1211,17 +1211,17 @@ void MainWindow::setupHtmlPreviewThemes()
     int key = 1;
     bool separatorAdded = false;
     foreach(const QString &themeName, themeCollection->themeNames()) {
+        if (!separatorAdded && !themeCollection->theme(themeName).isBuiltIn()) {
+            addSeparatorAfterBuiltInThemes();
+            separatorAdded = true;
+        }
+
         QAction *action = ui->menuStyles->addAction(themeName);
         action->setShortcut(QKeySequence(tr("Ctrl+%1").arg(key++)));
         action->setCheckable(true);
         action->setActionGroup(stylesGroup);
         connect(action, &QAction::triggered,
                 this, &MainWindow::themeChanged);
-
-        if (!separatorAdded && !themeCollection->theme(themeName).isBuiltIn()) {
-            addSeparatorAfterBuiltInThemes();
-            separatorAdded = true;
-        }
     }
 }
 
