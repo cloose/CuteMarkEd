@@ -216,7 +216,7 @@ pmh_element_type pmh_element_type_from_name(char *name)
         if (i_name == NULL)
             continue;
         if (strcmp(i_name, name) == 0)
-            return i;
+            return (pmh_element_type)i;
     }
     
     return pmh_NO_TYPE;

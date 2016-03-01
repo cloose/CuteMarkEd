@@ -84,9 +84,9 @@ static void free_raw_attributes(raw_attribute *list)
     {
         if (cur->name != NULL) free(cur->name);
         if (cur->value != NULL) free(cur->value);
-        raw_attribute *this = cur;
+        raw_attribute *attr = cur;
         cur = cur->next;
-        free(this);
+        free(attr);
     }
 }
 
@@ -255,9 +255,9 @@ static void free_style_attributes(pmh_style_attribute *list)
                 free(cur->value->string);
             free(cur->value);
         }
-        pmh_style_attribute *this = cur;
+        pmh_style_attribute *attr = cur;
         cur = cur->next;
-        free(this);
+        free(attr);
     }
 }
 
@@ -355,10 +355,10 @@ static void free_multi_value(multi_value *val)
     multi_value *cur = val;
     while (cur != NULL)
     {
-        multi_value *this = cur;
+        multi_value *this_mv = cur;
         multi_value *next_cur = cur->next;
-        free(this->value);
-        free(this);
+        free(this_mv->value);
+        free(this_mv);
         cur = next_cur;
     }
 }
@@ -560,10 +560,10 @@ static void free_blocks(block *val)
     block *cur = val;
     while (cur != NULL)
     {
-        block *this = cur;
-        block *next = this->next;
-        free_multi_value(this->lines);
-        free(this);
+        block *b = cur;
+        block *next = b->next;
+        free_multi_value(b->lines);
+        free(b);
         cur = next;
     }
 }
