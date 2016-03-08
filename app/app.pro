@@ -50,6 +50,7 @@ SOURCES += \
     controls/fileexplorerwidget.cpp \
     controls/findreplacewidget.cpp \
     controls/recentfilesmenu.cpp \
+    controls/actionlabel.cpp \
     htmlpreviewgenerator.cpp \
     markdownhighlighter.cpp \
     highlightworkerthread.cpp \
@@ -65,7 +66,8 @@ SOURCES += \
     imagetooldialog.cpp \
     snippetcompleter.cpp \
     snippetstablemodel.cpp \
-    aboutdialog.cpp
+    aboutdialog.cpp \
+    statusbarwidget.cpp
 
 win32 {
     SOURCES += \
@@ -85,6 +87,7 @@ HEADERS  += \
     controls/fileexplorerwidget.h \
     controls/findreplacewidget.h \
     controls/recentfilesmenu.h \
+    controls/actionlabel.h \
     htmlpreviewgenerator.h \
     markdownhighlighter.h \
     highlightworkerthread.h \
@@ -100,7 +103,8 @@ HEADERS  += \
     imagetooldialog.h \
     snippetcompleter.h \
     snippetstablemodel.h \
-    aboutdialog.h
+    aboutdialog.h \
+    statusbarwidget.h
 
 FORMS    += \
     mainwindow.ui \

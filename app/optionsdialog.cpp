@@ -287,6 +287,9 @@ void OptionsDialog::readState()
     ui->sizeComboBox->setCurrentText(QString().setNum(font.pointSize()));
     ui->sourceSingleSizedCheckBox->setChecked(options->isSourceAtSingleSizeEnabled());
     ui->tabWidthSpinBox->setValue(options->tabWidth());
+	ui->lineColumnCheckBox->setChecked(options->isLineColumnEnabled());
+    ui->rulerEnableCheckBox->setChecked(options->isRulerEnabled());
+    ui->rulerPosSpinBox->setValue(options->rulerPos());
 
     // html preview settings
     ui->standardFontComboBox->setCurrentFont(options->standardFont());
@@ -334,6 +337,9 @@ void OptionsDialog::saveState()
     options->setEditorFont(font);
     options->setSourceAtSingleSizeEnabled(ui->sourceSingleSizedCheckBox->isChecked());
     options->setTabWidth(ui->tabWidthSpinBox->value());
+	options->setLineColumnEnabled(ui->lineColumnCheckBox->isChecked());
+    options->setRulerEnabled(ui->rulerEnableCheckBox->isChecked());
+    options->setRulerPos(ui->rulerPosSpinBox->value());
     options->setMathInlineSupportEnabled(ui->mathInlineCheckBox->isChecked());
     options->setMathSupportEnabled(ui->mathSupportCheckBox->isChecked());
 

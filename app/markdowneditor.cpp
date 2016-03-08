@@ -170,6 +170,11 @@ void MarkdownEditor::paintEvent(QPaintEvent *e)
     if (showHardLinebreaks) {
         drawLineEndMarker(e);
     }
+
+    // draw column ruler
+    if(rulerEnabled) {
+        drawRuler(e);
+    }
 }
 
 void MarkdownEditor::resizeEvent(QResizeEvent *event)
@@ -250,6 +255,18 @@ void MarkdownEditor::tabWidthChanged(int tabWidth)
 {
     QFontMetrics fm(font());
     setTabStopWidth(tabWidth*fm.width(' '));
+}
+
+void MarkdownEditor::rulerEnabledChanged(bool enabled)
+{
+    rulerEnabled = enabled;
+    viewport()->update();
+}
+
+void MarkdownEditor::rulerPosChanged(int pos)
+{
+    rulerPos = pos;
+    viewport()->update();
 }
 
 void MarkdownEditor::showContextMenu(const QPoint &pos)
@@ -498,6 +515,27 @@ void MarkdownEditor::drawLineEndMarker(QPaintEvent *e)
 
         block = block.next();
     }
+}
+
+void MarkdownEditor::drawRuler(QPaintEvent *e)
+{
+    const QRect rect = e->rect();
+    const QFont font = currentCharFormat().font();
+
+	// calculate vertical offset corresponding given
+    // column margin in font metrics
+    int verticalOffset = round(QFontMetricsF(font).averageCharWidth() * rulerPos)
+            + contentOffset().x()
+            + document()->documentMargin();
+
+	// draw a ruler with color invert to background color (better readability)
+	// and with 20% opacity
+    QPainter p(viewport());	
+	p.setCompositionMode(QPainter::RasterOp_SourceXorDestination);
+	p.setPen(QColor(0xff, 0xff, 0xff));
+	p.setOpacity(0.2);
+
+    p.drawLine(verticalOffset, rect.top(), verticalOffset, rect.bottom());
 }
 
 QString MarkdownEditor::textUnderCursor() const

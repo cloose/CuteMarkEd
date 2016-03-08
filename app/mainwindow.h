@@ -40,6 +40,7 @@ class SlideLineMapping;
 class SnippetCollection;
 class ThemeCollection;
 class ViewSynchronizer;
+class StatusBarWidget;
 
 
 class MainWindow : public QMainWindow
@@ -107,8 +108,7 @@ private slots:
     void helpMarkdownSyntax();
     void helpAbout();
 
-    void styleContextMenu(const QPoint &pos);
-    void toggleHtmlView();
+	void setHtmlSource(bool enabled);
 
     void plainTextChanged();
     void htmlResultReady(const QString &html);
@@ -153,9 +153,7 @@ private:
     RecentFilesMenu *recentFilesMenu;
     Options *options;
     QActionGroup *stylesGroup;
-    QLabel *styleLabel;
-    QLabel *wordCountLabel;
-    ActiveLabel *viewLabel;
+	StatusBarWidget* statusBarWidget;
     HtmlPreviewGenerator* generator;
     HtmlHighlighter *htmlHighlighter;
     SnippetCollection *snippetCollection;
