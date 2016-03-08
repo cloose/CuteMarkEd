@@ -529,11 +529,11 @@ void MarkdownEditor::drawRuler(QPaintEvent *e)
             + document()->documentMargin();
 
 	// draw a ruler with color invert to background color (better readability)
-	// and with 20% opacity
+	// and with 50% opacity
     QPainter p(viewport());	
 	p.setCompositionMode(QPainter::RasterOp_SourceXorDestination);
 	p.setPen(QColor(0xff, 0xff, 0xff));
-	p.setOpacity(0.2);
+	p.setOpacity(0.5);
 
     p.drawLine(verticalOffset, rect.top(), verticalOffset, rect.bottom());
 }
