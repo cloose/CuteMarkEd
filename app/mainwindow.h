@@ -108,7 +108,7 @@ private slots:
     void helpMarkdownSyntax();
     void helpAbout();
 
-	void setHtmlSource(bool enabled);
+    void setHtmlSource(bool enabled);
 
     void plainTextChanged();
     void htmlResultReady(const QString &html);
@@ -153,7 +153,7 @@ private:
     RecentFilesMenu *recentFilesMenu;
     Options *options;
     QActionGroup *stylesGroup;
-	StatusBarWidget* statusBarWidget;
+    StatusBarWidget* statusBarWidget;
     HtmlPreviewGenerator* generator;
     HtmlHighlighter *htmlHighlighter;
     SnippetCollection *snippetCollection;

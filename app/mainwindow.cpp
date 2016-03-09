@@ -77,7 +77,7 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     ui(new Ui::MainWindow),
     options(new Options(this)),
     stylesGroup(new QActionGroup(this)),
-	statusBarWidget(0),
+    statusBarWidget(0),
     generator(new HtmlPreviewGenerator(options, this)),
     snippetCollection(new SnippetCollection(this)),
     viewSynchronizer(0),
@@ -312,17 +312,17 @@ void MainWindow::fileExportToHtml()
 
 void MainWindow::fileExportToPdf()
 {
-	// using temporary QTextDocument instance to get links exported\printed correctly,
-	// as links will dissappear when printing directly from QWebView in current Qt implementation
-	// of QWebView::print() method (possible bug in Qt?)
-	// more info here: http://stackoverflow.com/questions/11629093/add-working-url-into-pdf-using-qt-qprinter
+    // using temporary QTextDocument instance to get links exported\printed correctly,
+    // as links will dissappear when printing directly from QWebView in current Qt implementation
+    // of QWebView::print() method (possible bug in Qt?)
+    // more info here: http://stackoverflow.com/questions/11629093/add-working-url-into-pdf-using-qt-qprinter
 
-	ExportPdfDialog dialog(fileName);
-	if (dialog.exec() == QDialog::Accepted) {
-		 QTextDocument doc;
-		 doc.setHtml(ui->webView->page()->currentFrame()->toHtml());
-		 doc.print(dialog.printer());
-	}
+    ExportPdfDialog dialog(fileName);
+    if (dialog.exec() == QDialog::Accepted) {
+         QTextDocument doc;
+         doc.setHtml(ui->webView->page()->currentFrame()->toHtml());
+         doc.print(dialog.printer());
+    }
 }
 
 void MainWindow::filePrint()
@@ -644,7 +644,7 @@ void MainWindow::extrasOptions()
     // view menu
     actions << ui->dockWidget->toggleViewAction()
             << ui->fileExplorerDockWidget->toggleViewAction()
-			<< ui->actionHtmlSource
+            << ui->actionHtmlSource
             << ui->actionSplit_1_1
             << ui->actionSplit_2_1
             << ui->actionSplit_1_2
@@ -682,27 +682,27 @@ void MainWindow::helpAbout()
 
 void MainWindow::setHtmlSource(bool enabled)
 {
-	if(enabled) {
-		ui->stackedWidget->setCurrentWidget(ui->htmlSourcePage);
+    if (enabled) {
+        ui->stackedWidget->setCurrentWidget(ui->htmlSourcePage);
 
-		// activate HTML highlighter
-		htmlHighlighter->setEnabled(true);
-		htmlHighlighter->rehighlight();
-	} else {
-		ui->stackedWidget->setCurrentWidget(ui->webViewPage);
+        // activate HTML highlighter
+        htmlHighlighter->setEnabled(true);
+        htmlHighlighter->rehighlight();
+    } else {
+        ui->stackedWidget->setCurrentWidget(ui->webViewPage);
 
-		// deactivate HTML highlighter
-		htmlHighlighter->setEnabled(false);
+        // deactivate HTML highlighter
+        htmlHighlighter->setEnabled(false);
 
-		// update webView now since it was not updated while hidden
-		syncWebViewToHtmlSource();
-	}
+        // update webView now since it was not updated while hidden
+        syncWebViewToHtmlSource();
+    }
 
-	// sync view menu action
-	if(ui->actionHtmlSource->isChecked() != enabled)
-		ui->actionHtmlSource->setChecked(enabled);
+    // sync view menu action
+    if (ui->actionHtmlSource->isChecked() != enabled)
+        ui->actionHtmlSource->setChecked(enabled);
 
-	updateSplitter();
+    updateSplitter();
 }
 
 void MainWindow::plainTextChanged()
@@ -742,15 +742,13 @@ void MainWindow::tocResultReady(const QString &toc)
 
 void MainWindow::previewLinkClicked(const QUrl &url)
 {
-    if(url.isLocalFile())
-    {
+    if (url.isLocalFile()) {
         // directories are not supported
-        if(QFileInfo(url.toLocalFile()).isDir()) return;
+        if (QFileInfo(url.toLocalFile()).isDir()) return;
 
         QString filePath = url.toLocalFile();
         // Links to markdown files open new instance
-        if(filePath.endsWith(".md") || filePath.endsWith(".markdown") || filePath.endsWith(".mdown"))
-        {
+        if (filePath.endsWith(".md") || filePath.endsWith(".markdown") || filePath.endsWith(".mdown")) {
             QProcess::startDetached(qApp->applicationFilePath(), QStringList() << filePath);
             return;
         }
@@ -874,7 +872,7 @@ void MainWindow::setupUi()
     setupMarkdownEditor();
     setupHtmlPreview();
     setupHtmlSourceView();
-	setupStatusBar();
+    setupStatusBar();
 
     // hide find/replace widget on startup
     ui->findReplaceWidget->hide();
@@ -887,7 +885,7 @@ void MainWindow::setupUi()
     // hide markdown syntax help dockwidget
     ui->dockWidget_2->hide();
     ui->dockWidget_2->setFloating(true);
-	ui->dockWidget_2->resize(550, 400);
+    ui->dockWidget_2->resize(550, 400);
 
     // show HTML preview on right panel
     setHtmlSource(ui->actionHtmlSource->isChecked());
@@ -983,7 +981,7 @@ void MainWindow::setupActions()
     ui->actionInsertImage->setProperty("defaultshortcut", ui->actionInsertImage->shortcut());
     ui->dockWidget->toggleViewAction()->setProperty("defaultshortcut", ui->dockWidget->toggleViewAction()->shortcut());
     ui->fileExplorerDockWidget->toggleViewAction()->setProperty("defaultshortcut", ui->fileExplorerDockWidget->toggleViewAction()->shortcut());
-	ui->actionHtmlSource->setProperty("defaultshortcut", ui->actionHtmlSource->shortcut());
+    ui->actionHtmlSource->setProperty("defaultshortcut", ui->actionHtmlSource->shortcut());
 }
 
 void MainWindow::setActionsIcons()
@@ -1024,17 +1022,17 @@ void MainWindow::setActionsIcons()
 
 void MainWindow::setupStatusBar()
 {
-	statusBarWidget = new StatusBarWidget(ui->plainTextEdit);
-	statusBarWidget->setHtmlAction(ui->actionHtmlSource);
+    statusBarWidget = new StatusBarWidget(ui->plainTextEdit);
+    statusBarWidget->setHtmlAction(ui->actionHtmlSource);
 
-	connect(options, &Options::lineColumnEnabledChanged,
-			statusBarWidget, &StatusBarWidget::showLineColumn);
+    connect(options, &Options::lineColumnEnabledChanged,
+            statusBarWidget, &StatusBarWidget::showLineColumn);
 
-	statusBarWidget->update();
+    statusBarWidget->update();
 
-	// remove border around statusbar widgets
-	statusBar()->setStyleSheet("QStatusBar::item { border: 0px solid black }; ");
-	statusBar()->addPermanentWidget(statusBarWidget, 1);
+    // remove border around statusbar widgets
+    statusBar()->setStyleSheet("QStatusBar::item { border: 0px solid black }; ");
+    statusBar()->addPermanentWidget(statusBarWidget, 1);
 }
 
 void MainWindow::setupMarkdownEditor()
@@ -1200,8 +1198,8 @@ void MainWindow::setupHtmlPreviewThemes()
                 this, &MainWindow::themeChanged);
     }
 
-    if(statusBarWidget)
-		statusBarWidget->setStyleActions(stylesGroup);
+    if (statusBarWidget)
+        statusBarWidget->setStyleActions(stylesGroup);
 }
 
 void MainWindow::addSeparatorAfterBuiltInThemes()

@@ -172,7 +172,7 @@ void MarkdownEditor::paintEvent(QPaintEvent *e)
     }
 
     // draw column ruler
-    if(rulerEnabled) {
+    if (rulerEnabled) {
         drawRuler(e);
     }
 }
@@ -522,18 +522,18 @@ void MarkdownEditor::drawRuler(QPaintEvent *e)
     const QRect rect = e->rect();
     const QFont font = currentCharFormat().font();
 
-	// calculate vertical offset corresponding given
+    // calculate vertical offset corresponding given
     // column margin in font metrics
     int verticalOffset = round(QFontMetricsF(font).averageCharWidth() * rulerPos)
             + contentOffset().x()
             + document()->documentMargin();
 
-	// draw a ruler with color invert to background color (better readability)
-	// and with 50% opacity
-    QPainter p(viewport());	
-	p.setCompositionMode(QPainter::RasterOp_SourceXorDestination);
-	p.setPen(QColor(0xff, 0xff, 0xff));
-	p.setOpacity(0.5);
+    // draw a ruler with color invert to background color (better readability)
+    // and with 50% opacity
+    QPainter p(viewport()); 
+    p.setCompositionMode(QPainter::RasterOp_SourceXorDestination);
+    p.setPen(QColor(0xff, 0xff, 0xff));
+    p.setOpacity(0.5);
 
     p.drawLine(verticalOffset, rect.top(), verticalOffset, rect.bottom());
 }

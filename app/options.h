@@ -45,8 +45,8 @@ public:
     int tabWidth() const;
     void setTabWidth(int width);
 
-	bool isLineColumnEnabled() const;
-	void setLineColumnEnabled(bool enabled);
+    bool isLineColumnEnabled() const;
+    void setLineColumnEnabled(bool enabled);
 
     bool isRulerEnabled() const;
     void setRulerEnabled(bool enabled);
@@ -159,7 +159,7 @@ signals:
     void editorFontChanged(const QFont &font);
     void editorStyleChanged();
     void tabWidthChanged(int tabWidth);
-	void lineColumnEnabledChanged(bool enabled);
+    void lineColumnEnabledChanged(bool enabled);
     void rulerEnabledChanged(bool enabled);
     void rulerPosChanged(int pos);
 
@@ -193,7 +193,7 @@ private:
     bool m_spellingCheckEnabled;
     bool m_yamlHeaderSupportEnabled;
     bool m_diagramSupportEnabled;
-	bool m_lineColumnEnabled;
+    bool m_lineColumnEnabled;
     bool m_rulerEnabled;
     int m_rulerPos;
     QString m_dictionaryLanguage;

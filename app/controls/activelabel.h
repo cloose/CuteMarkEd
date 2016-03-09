@@ -24,6 +24,7 @@ class QAction;
 class ActiveLabel : public QLabel
 {
     Q_OBJECT
+
 public:
     explicit ActiveLabel(QWidget *parent = 0);
     explicit ActiveLabel(const QString &text, QWidget *parent = 0);

@@ -63,7 +63,7 @@ static const char* DEPRECATED__LAST_USED_STYLE = "general/lastusedstyle";
 Options::Options(QObject *parent) :
     QObject(parent),
     m_tabWidth(8),
-	m_lineColumnEnabled(true),
+    m_lineColumnEnabled(true),
     m_rulerEnabled(false),
     m_rulerPos(80),
     m_proxyMode(NoProxy),
@@ -99,8 +99,8 @@ void Options::apply()
     globalWebSettings->setFontSize(QWebSettings::DefaultFixedFontSize, m_defaultFixedFontSize);
 
     emit proxyConfigurationChanged();
-	emit markdownConverterChanged();
-	emit lineColumnEnabledChanged(m_lineColumnEnabled);
+    emit markdownConverterChanged();
+    emit lineColumnEnabledChanged(m_lineColumnEnabled);
     emit rulerEnabledChanged(m_rulerEnabled);
     emit rulerPosChanged(m_rulerPos);
 }
@@ -129,12 +129,12 @@ void Options::setTabWidth(int width)
 
 bool Options::isLineColumnEnabled() const
 {
-	return m_lineColumnEnabled;
+    return m_lineColumnEnabled;
 }
 
 void Options::setLineColumnEnabled(bool enabled)
 {
-	m_lineColumnEnabled = enabled;
+    m_lineColumnEnabled = enabled;
     emit lineColumnEnabledChanged(enabled);
 }
 
@@ -493,7 +493,7 @@ void Options::readSettings()
     int fontSize = settings.value(FONT_SIZE, 10).toInt();
 
     m_tabWidth = settings.value(TAB_WIDTH, 8).toInt();
-	m_lineColumnEnabled = settings.value(LINECOLUMN_ENABLED, false).toBool();
+    m_lineColumnEnabled = settings.value(LINECOLUMN_ENABLED, false).toBool();
     m_rulerEnabled = settings.value(RULER_ENABLED, false).toBool();
     m_rulerPos = settings.value(RULER_POS, 80).toInt();
 
@@ -567,7 +567,7 @@ void Options::writeSettings()
     settings.setValue(FONT_FAMILY, font.family());
     settings.setValue(FONT_SIZE, font.pointSize());
     settings.setValue(TAB_WIDTH, m_tabWidth);
-	settings.setValue(LINECOLUMN_ENABLED, m_lineColumnEnabled);
+    settings.setValue(LINECOLUMN_ENABLED, m_lineColumnEnabled);
     settings.setValue(RULER_ENABLED, m_rulerEnabled);
     settings.setValue(RULER_POS, m_rulerPos);
 
