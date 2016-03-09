@@ -44,7 +44,7 @@ void ActiveLabel::mouseDoubleClickEvent(QMouseEvent *e)
 void ActiveLabel::setAction(QAction *action)
 {
     // if was previously defined, disconnect
-    if (m_action != NULL) {
+    if (m_action) {
         disconnect(m_action, &QAction::changed, this, &ActiveLabel::updateFromAction);
         disconnect(this, &ActiveLabel::doubleClicked, m_action, &QAction::trigger);
     }

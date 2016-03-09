@@ -83,7 +83,7 @@ void StatusBarWidget::setHtmlAction(QAction *action)
 void StatusBarWidget::setStyleActions(QActionGroup *actionGroup)
 {
 	// if was previously defined, disconnect
-    if(m_styleActions != NULL) {
+    if(m_styleActions) {
 		disconnect(m_styleActions, &QActionGroup::triggered, this, &StatusBarWidget::updateStyleLabel);
 	}
 
@@ -126,7 +126,7 @@ void StatusBarWidget::textChanged()
 
 void StatusBarWidget::styleContextMenu(const QPoint &pos)
 {
-	if(m_styleActions != NULL) {
+    if(m_styleActions) {
 		QMenu menu;
 		menu.addActions(m_styleActions->actions());
 		menu.exec(m_styleLabel->mapToGlobal(pos));

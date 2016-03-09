@@ -1200,7 +1200,7 @@ void MainWindow::setupHtmlPreviewThemes()
                 this, &MainWindow::themeChanged);
     }
 
-	if(statusBarWidget != NULL)
+    if(statusBarWidget)
 		statusBarWidget->setStyleActions(stylesGroup);
 }
 
