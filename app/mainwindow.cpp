@@ -486,12 +486,13 @@ void MainWindow::lastUsedTheme()
     currentTheme = themeCollection->theme(themeName);
     applyCurrentTheme();
 
-	foreach(QAction* a, stylesGroup->actions()) {
-		if(QString::compare(a->text(), themeName) == 0) {
-			a->setChecked(true);
-			stylesGroup->triggered(a);
-		}
-	}
+    for (auto action : stylesGroup->actions()) {
+        if (action->text() == themeName) {
+            action->setChecked(true);
+            stylesGroup->triggered(action);
+            break;
+        }
+    }
 }
 
 void MainWindow::themeChanged()
