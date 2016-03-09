@@ -16,15 +16,18 @@
  */
 #include "activelabel.h"
 
+#include <QAction>
 #include <QMouseEvent>
 
 ActiveLabel::ActiveLabel(QWidget *parent) :
-    QLabel(parent)
+    QLabel(parent),
+    m_action(0)
 {
 }
 
 ActiveLabel::ActiveLabel(const QString &text, QWidget *parent) :
-    QLabel(text, parent)
+    QLabel(text, parent),
+    m_action(0)
 {
 }
 
@@ -36,4 +39,44 @@ void ActiveLabel::mouseDoubleClickEvent(QMouseEvent *e)
     }
 
     QLabel::mouseDoubleClickEvent(e);
+}
+
+void ActiveLabel::setAction(QAction *action)
+{
+    // if was previously defined, disconnect
+    if (m_action != NULL) {
+        disconnect(m_action, &QAction::changed, this, &ActiveLabel::updateFromAction);
+        disconnect(this, &ActiveLabel::doubleClicked, m_action, &QAction::trigger);
+    }
+
+    // set new action
+    m_action = action;
+
+    // update label using action's data
+    updateFromAction();
+
+    // action action and label to have them synced
+    // whenever one of them is triggered
+    connect(m_action, &QAction::changed, this, &ActiveLabel::updateFromAction);
+    connect(this, &ActiveLabel::doubleClicked, m_action, &QAction::trigger);
+}
+
+void ActiveLabel::updateFromAction()
+{
+    setStatusTip(m_action->statusTip());
+    setToolTip(m_action->toolTip());
+    setEnabled(m_action->isEnabled());
+
+    // update text based on QAction data
+    QString actionText = m_action->text();
+    actionText.remove("&");
+
+    if (m_action->isCheckable()) {
+        if (m_action->isChecked())
+            setText(QString("%1: %2").arg(actionText).arg(tr("on")));
+        else
+            setText(QString("%1: %2").arg(actionText).arg(tr("off")));
+    } else {
+        setText(actionText);
+    }
 }

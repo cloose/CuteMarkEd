@@ -19,6 +19,8 @@
 
 #include <QLabel>
 
+class QAction;
+
 class ActiveLabel : public QLabel
 {
     Q_OBJECT
@@ -26,11 +28,19 @@ public:
     explicit ActiveLabel(QWidget *parent = 0);
     explicit ActiveLabel(const QString &text, QWidget *parent = 0);
 
+    void setAction(QAction *action);
+
+public slots:
+    void updateFromAction();
+
 signals:
     void doubleClicked();
     
 protected:
     void mouseDoubleClickEvent(QMouseEvent *e) Q_DECL_OVERRIDE;
+
+private:
+    QAction *m_action;
 };
 
 #endif // ACTIVELABEL_H

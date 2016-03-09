@@ -7,7 +7,7 @@ class QLabel;
 class QActionGroup;
 
 class MarkdownEditor;
-class ActionLabel;
+class ActiveLabel;
 
 class StatusBarWidget : public QWidget
 {
@@ -41,7 +41,7 @@ private:
 
 	QActionGroup *m_styleActions;
 
-    ActionLabel *m_htmlLabel;
+    ActiveLabel *m_htmlLabel;
 };
 
 #endif // STATUSBARWIDGET_H

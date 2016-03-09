@@ -50,7 +50,6 @@ SOURCES += \
     controls/fileexplorerwidget.cpp \
     controls/findreplacewidget.cpp \
     controls/recentfilesmenu.cpp \
-    controls/actionlabel.cpp \
     htmlpreviewgenerator.cpp \
     markdownhighlighter.cpp \
     highlightworkerthread.cpp \
@@ -87,7 +86,6 @@ HEADERS  += \
     controls/fileexplorerwidget.h \
     controls/findreplacewidget.h \
     controls/recentfilesmenu.h \
-    controls/actionlabel.h \
     htmlpreviewgenerator.h \
     markdownhighlighter.h \
     highlightworkerthread.h \

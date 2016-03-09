@@ -7,7 +7,7 @@
 #include <QActionGroup>
 #include <QMenu>
 
-#include "controls/actionlabel.h"
+#include "controls/activelabel.h"
 #include "markdowneditor.h"
 
 StatusBarWidget::StatusBarWidget(MarkdownEditor* editor) :
@@ -49,7 +49,7 @@ StatusBarWidget::StatusBarWidget(MarkdownEditor* editor) :
 	topLayout->addWidget(new QLabel("|"), 0);
 
 	// html preview label
-    m_htmlLabel = new ActionLabel;
+    m_htmlLabel = new ActiveLabel;
 	m_htmlLabel->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
 	topLayout->addWidget(m_htmlLabel, 0);
 
@@ -69,7 +69,7 @@ void StatusBarWidget::update()
 
 void StatusBarWidget::showLineColumn(bool enabled)
 {
-	if(enabled)
+    if(enabled)
         m_lineColLabel->show();
 	else
         m_lineColLabel->hide();
@@ -83,7 +83,7 @@ void StatusBarWidget::setHtmlAction(QAction *action)
 void StatusBarWidget::setStyleActions(QActionGroup *actionGroup)
 {
 	// if was previously defined, disconnect
-	if(m_styleActions != NULL) {
+    if(m_styleActions != NULL) {
 		disconnect(m_styleActions, &QActionGroup::triggered, this, &StatusBarWidget::updateStyleLabel);
 	}
 
