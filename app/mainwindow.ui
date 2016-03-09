@@ -583,7 +583,7 @@
     <string>HTML &amp;Source</string>
    </property>
    <property name="toolTip">
-    <string>Show HTML source code in HTML preivew window</string>
+    <string>Show HTML source code in HTML preview window</string>
    </property>
    <property name="shortcut">
     <string>F5</string>
