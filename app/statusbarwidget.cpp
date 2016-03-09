@@ -98,11 +98,8 @@ void StatusBarWidget::cursorPositionChanged()
 {
     QTextCursor cursor = m_editor->textCursor();
 
-    // TODO Fix it, when line wraps to multiline (too narrow window for example
-    // then this line count will be wrong.
-    // possible solution: http://stackoverflow.com/questions/15814776/how-do-i-get-the-actual-visible-cursors-line-number
     int line = cursor.blockNumber();
-    int column = cursor.columnNumber();
+    int column = cursor.positionInBlock();
 
     m_lineColLabel->setText(tr("Line %1, Column %2 %3")
             .arg(QLocale().toString(line + 1))
