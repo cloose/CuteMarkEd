@@ -85,7 +85,8 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     htmlPreviewController(0),
     themeCollection(new ThemeCollection()),
     splitFactor(0.5),
-    rightViewCollapsed(false)
+    rightViewCollapsed(false),
+    exportPdfDialog(0)
 {
     ui->setupUi(this);
     setupUi();
@@ -318,11 +319,14 @@ void MainWindow::fileExportToPdf()
 	// of QWebView::print() method (possible bug in Qt?)
 	// more info here: http://stackoverflow.com/questions/11629093/add-working-url-into-pdf-using-qt-qprinter
 
-	ExportPdfDialog dialog(fileName);
-	if (dialog.exec() == QDialog::Accepted) {
+    if (!exportPdfDialog) // init, if not exists
+        exportPdfDialog = new ExportPdfDialog(this);
+
+    exportPdfDialog->setFileName(fileName);
+    if (exportPdfDialog->exec() == QDialog::Accepted) {
 		 QTextDocument doc;
 		 doc.setHtml(ui->webView->page()->currentFrame()->toHtml());
-		 doc.print(dialog.printer());
+         doc.print(exportPdfDialog->printer());
 	}
 }
 

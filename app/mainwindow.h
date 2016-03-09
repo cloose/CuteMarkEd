@@ -40,6 +40,7 @@ class SlideLineMapping;
 class SnippetCollection;
 class ThemeCollection;
 class ViewSynchronizer;
+class ExportPdfDialog;
 
 
 class MainWindow : public QMainWindow
@@ -166,6 +167,8 @@ private:
     QString fileName;
     float splitFactor;
     bool rightViewCollapsed;
+
+    ExportPdfDialog *exportPdfDialog;
 };
 
 #endif // MAINWINDOW_H

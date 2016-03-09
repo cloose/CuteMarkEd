@@ -21,7 +21,7 @@
 #include <QFileInfo>
 #include <QPrinter>
 
-ExportPdfDialog::ExportPdfDialog(const QString &fileName, QWidget *parent) :
+ExportPdfDialog::ExportPdfDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ExportPdfDialog)
 {
@@ -30,12 +30,6 @@ ExportPdfDialog::ExportPdfDialog(const QString &fileName, QWidget *parent) :
     // change button text of standard Ok button
     QPushButton *okButton = ui->buttonBox->button(QDialogButtonBox::Ok);
     okButton->setText("Export PDF");
-
-    if (!fileName.isEmpty()) {
-        QFileInfo info(fileName);
-        QString exportFileName = info.absoluteFilePath().replace(info.suffix(), "pdf");
-        ui->exportToLineEdit->setText(exportFileName);
-    }
 
     // fill paper size combobox
     ui->paperSizeComboBox->addItem(tr("A4 (210 x 297 mm, 8.26 x 11.69 inches)"), QPrinter::A4);
@@ -46,9 +40,6 @@ ExportPdfDialog::ExportPdfDialog(const QString &fileName, QWidget *parent) :
     ui->paperSizeComboBox->addItem(tr("A6 (105 x 148 mm)"), QPrinter::A6);
     ui->paperSizeComboBox->addItem(tr("B4 (250 x 353 mm)"), QPrinter::B4);
     ui->paperSizeComboBox->addItem(tr("B5 (176 x 250 mm, 6.93 x 9.84 inches)"), QPrinter::B5);
-
-    // initialize Ok button state
-    exportToTextChanged(fileName);
 }
 
 ExportPdfDialog::~ExportPdfDialog()
@@ -77,6 +68,18 @@ QPrinter *ExportPdfDialog::printer()
     p->setPaperSize(size);
 
     return p;
+}
+
+void ExportPdfDialog::setFileName(const QString &fileName)
+{
+    if (!fileName.isEmpty()) {
+        QFileInfo info(fileName);
+        QString exportFileName = info.absoluteFilePath().replace(info.suffix(), "pdf");
+        ui->exportToLineEdit->setText(exportFileName);
+    }
+
+    // initialize Ok button state
+    exportToTextChanged(fileName);
 }
 
 void ExportPdfDialog::exportToTextChanged(const QString &text)
