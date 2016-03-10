@@ -63,9 +63,6 @@ static const char* DEPRECATED__LAST_USED_STYLE = "general/lastusedstyle";
 Options::Options(QObject *parent) :
     QObject(parent),
     m_tabWidth(8),
-    m_lineColumnEnabled(true),
-    m_rulerEnabled(false),
-    m_rulerPos(80),
     m_proxyMode(NoProxy),
     m_proxyPort(0),
     m_autolinkEnabled(true),
@@ -83,6 +80,9 @@ Options::Options(QObject *parent) :
     m_sourceAtSingleSizeEnabled(true),
     m_spellingCheckEnabled(true),
     m_diagramSupportEnabled(false),
+    m_lineColumnEnabled(true),
+    m_rulerEnabled(false),
+    m_rulerPos(80),
     m_markdownConverter(DiscountMarkdownConverter),
     m_lastUsedTheme(THEME_DEFAULT)
 {
