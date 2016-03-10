@@ -63,11 +63,14 @@ protected:
 
 public slots:
     void tabWidthChanged(int tabWidth);
+    void editorFontChanged(const QFont &font);
+    void rulerEnabledChanged(bool enabled);
+    void rulerPosChanged(int pos);
 
 private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
     void updateLineNumberArea(const QRect &rect, int dy);
-    void editorFontChanged(const QFont &font);
+
     void showContextMenu(const QPoint &pos);
     void replaceWithSuggestion();
     void performCompletion();
@@ -77,6 +80,7 @@ private slots:
 private:
     bool isUrlToLocalFile(const QMimeData *source) const;
     void drawLineEndMarker(QPaintEvent *e);
+    void drawRuler(QPaintEvent *e);
     QString textUnderCursor() const;
     QStringList extractDistinctWordsFromDocument() const;    
     QStringList retrieveAllWordsFromDocument() const;
@@ -89,6 +93,8 @@ private:
     hunspell::SpellChecker *spellChecker;
     SnippetCompleter *completer;
     bool showHardLinebreaks;
+    bool rulerEnabled;
+    int rulerPos;
 };
 
 #endif // MARKDOWNEDITOR_H

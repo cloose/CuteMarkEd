@@ -26,6 +26,9 @@ static const char* FONT_FAMILY_DEFAULT = "Monospace";
 static const char* FONT_FAMILY = "editor/font/family";
 static const char* FONT_SIZE = "editor/font/size";
 static const char* TAB_WIDTH = "editor/tabwidth";
+static const char* LINECOLUMN_ENABLED = "editor/linecolumn/enabled";
+static const char* RULER_ENABLED = "editor/ruler/enabled";
+static const char* RULER_POS = "editor/ruler/pos";
 static const char* PREVIEW_STANDARD_FONT = "preview/standardfont";
 static const char* PREVIEW_FIXED_FONT = "preview/fixedfont";
 static const char* PREVIEW_SERIF_FONT = "preview/seriffont";
@@ -60,6 +63,9 @@ static const char* DEPRECATED__LAST_USED_STYLE = "general/lastusedstyle";
 Options::Options(QObject *parent) :
     QObject(parent),
     m_tabWidth(8),
+    m_lineColumnEnabled(true),
+    m_rulerEnabled(false),
+    m_rulerPos(80),
     m_proxyMode(NoProxy),
     m_proxyPort(0),
     m_autolinkEnabled(true),
@@ -94,6 +100,9 @@ void Options::apply()
 
     emit proxyConfigurationChanged();
     emit markdownConverterChanged();
+    emit lineColumnEnabledChanged(m_lineColumnEnabled);
+    emit rulerEnabledChanged(m_rulerEnabled);
+    emit rulerPosChanged(m_rulerPos);
 }
 
 QFont Options::editorFont() const
@@ -116,6 +125,39 @@ void Options::setTabWidth(int width)
 {
     m_tabWidth = width;
     emit tabWidthChanged(width);
+}
+
+bool Options::isLineColumnEnabled() const
+{
+    return m_lineColumnEnabled;
+}
+
+void Options::setLineColumnEnabled(bool enabled)
+{
+    m_lineColumnEnabled = enabled;
+    emit lineColumnEnabledChanged(enabled);
+}
+
+bool Options::isRulerEnabled() const
+{
+    return m_rulerEnabled;
+}
+
+void Options::setRulerEnabled(bool enabled)
+{
+    m_rulerEnabled = enabled;
+    emit rulerEnabledChanged(enabled);
+}
+
+int Options::rulerPos() const
+{
+    return m_rulerPos;
+}
+
+void Options::setRulerPos(int pos)
+{
+    m_rulerPos = pos;
+    emit rulerPosChanged(pos);
 }
 
 QFont Options::standardFont() const
@@ -451,6 +493,9 @@ void Options::readSettings()
     int fontSize = settings.value(FONT_SIZE, 10).toInt();
 
     m_tabWidth = settings.value(TAB_WIDTH, 8).toInt();
+    m_lineColumnEnabled = settings.value(LINECOLUMN_ENABLED, false).toBool();
+    m_rulerEnabled = settings.value(RULER_ENABLED, false).toBool();
+    m_rulerPos = settings.value(RULER_POS, 80).toInt();
 
     QFont f(fontFamily, fontSize);
     f.setStyleHint(QFont::TypeWriter);
@@ -522,6 +567,9 @@ void Options::writeSettings()
     settings.setValue(FONT_FAMILY, font.family());
     settings.setValue(FONT_SIZE, font.pointSize());
     settings.setValue(TAB_WIDTH, m_tabWidth);
+    settings.setValue(LINECOLUMN_ENABLED, m_lineColumnEnabled);
+    settings.setValue(RULER_ENABLED, m_rulerEnabled);
+    settings.setValue(RULER_POS, m_rulerPos);
 
     // html preview settings
     settings.setValue(PREVIEW_STANDARD_FONT, m_standardFontFamily);

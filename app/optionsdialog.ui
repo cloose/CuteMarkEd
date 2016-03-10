@@ -87,34 +87,74 @@
          <property name="title">
           <string>Font</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_3">
-          <item row="0" column="1">
-           <widget class="QFontComboBox" name="fontComboBox"/>
+         <layout class="QVBoxLayout" name="verticalLayout_11">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QLabel" name="familyLabel">
+              <property name="text">
+               <string>&amp;Family:</string>
+              </property>
+              <property name="buddy">
+               <cstring>fontComboBox</cstring>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFontComboBox" name="fontComboBox"/>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Minimum</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>6</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="sizeLabel">
+              <property name="text">
+               <string>Si&amp;ze:</string>
+              </property>
+              <property name="buddy">
+               <cstring>sizeComboBox</cstring>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="sizeComboBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
-          <item row="0" column="2">
-           <widget class="QLabel" name="sizeLabel">
-            <property name="text">
-             <string>Si&amp;ze:</string>
-            </property>
-            <property name="buddy">
-             <cstring>sizeComboBox</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QComboBox" name="sizeComboBox"/>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="familyLabel">
-            <property name="text">
-             <string>&amp;Family:</string>
-            </property>
-            <property name="buddy">
-             <cstring>fontComboBox</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
+          <item>
            <widget class="QCheckBox" name="sourceSingleSizedCheckBox">
             <property name="text">
              <string>Markdown Source at Single Size</string>
@@ -170,9 +210,68 @@
         </widget>
        </item>
        <item>
+        <widget class="QGroupBox" name="otherGroupBox">
+         <property name="title">
+          <string>Other</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_10">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QCheckBox" name="rulerEnableCheckBox">
+              <property name="text">
+               <string>Display right margin at column:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="rulerPosSpinBox">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>999</number>
+              </property>
+              <property name="value">
+               <number>80</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="lineColumnCheckBox">
+            <property name="text">
+             <string>Show cursor position in status bar</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -195,6 +294,35 @@
           <string>Fonts</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="5">
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="sansSerifFontLabel">
+            <property name="text">
+             <string>S&amp;ans Serif Font:</string>
+            </property>
+            <property name="buddy">
+             <cstring>sansSerifFontComboBox</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QFontComboBox" name="sansSerifFontComboBox"/>
+          </item>
+          <item row="0" column="1">
+           <widget class="QFontComboBox" name="standardFontComboBox"/>
+          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="standardFontLabel">
             <property name="text">
@@ -205,18 +333,15 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QFontComboBox" name="standardFontComboBox"/>
+          <item row="1" column="1">
+           <widget class="QFontComboBox" name="serifFontComboBox"/>
           </item>
-          <item row="0" column="2">
-           <widget class="QLabel" name="defaultSizeLabel">
+          <item row="3" column="3">
+           <widget class="QLabel" name="defaultFixedSizeLabel">
             <property name="text">
              <string>Size:</string>
             </property>
            </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QComboBox" name="defaultSizeComboBox"/>
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="serifFontLabel">
@@ -228,19 +353,30 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QFontComboBox" name="sansSerifFontComboBox"/>
-          </item>
-          <item row="1" column="1">
-           <widget class="QFontComboBox" name="serifFontComboBox"/>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="sansSerifFontLabel">
-            <property name="text">
-             <string>S&amp;ans Serif Font:</string>
+          <item row="3" column="4">
+           <widget class="QComboBox" name="defaultFixedSizeComboBox">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="buddy">
-             <cstring>sansSerifFontComboBox</cstring>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLabel" name="defaultSizeLabel">
+            <property name="text">
+             <string>Size:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <widget class="QComboBox" name="defaultSizeComboBox">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
            </widget>
           </item>
@@ -257,15 +393,21 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="3">
-           <widget class="QComboBox" name="defaultFixedSizeComboBox"/>
-          </item>
-          <item row="3" column="2">
-           <widget class="QLabel" name="defaultFixedSizeLabel">
-            <property name="text">
-             <string>Size:</string>
+          <item row="0" column="2">
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
-           </widget>
+            <property name="sizeType">
+             <enum>QSizePolicy::Minimum</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>6</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
@@ -645,6 +787,22 @@
     <hint type="destinationlabel">
      <x>382</x>
      <y>101</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rulerEnableCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>rulerPosSpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>115</x>
+     <y>214</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>228</x>
+     <y>214</y>
     </hint>
    </hints>
   </connection>

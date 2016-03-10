@@ -45,6 +45,15 @@ public:
     int tabWidth() const;
     void setTabWidth(int width);
 
+    bool isLineColumnEnabled() const;
+    void setLineColumnEnabled(bool enabled);
+
+    bool isRulerEnabled() const;
+    void setRulerEnabled(bool enabled);
+
+    int rulerPos() const;
+    void setRulerPos(int pos);
+
     /* HTML preview options */
     QFont standardFont() const;
     void setStandardFont(const QFont &font);
@@ -150,6 +159,10 @@ signals:
     void editorFontChanged(const QFont &font);
     void editorStyleChanged();
     void tabWidthChanged(int tabWidth);
+    void lineColumnEnabledChanged(bool enabled);
+    void rulerEnabledChanged(bool enabled);
+    void rulerPosChanged(int pos);
+
     void proxyConfigurationChanged();
     void markdownConverterChanged();
 
@@ -180,6 +193,9 @@ private:
     bool m_spellingCheckEnabled;
     bool m_yamlHeaderSupportEnabled;
     bool m_diagramSupportEnabled;
+    bool m_lineColumnEnabled;
+    bool m_rulerEnabled;
+    int m_rulerPos;
     QString m_dictionaryLanguage;
     MarkdownConverter m_markdownConverter;
     QString m_lastUsedTheme;
