@@ -17,6 +17,7 @@
 #include "recentfilesmenu.h"
 
 #include <QFileInfo>
+#include <QDir>
 #include <QSettings>
 
 RecentFilesMenu::RecentFilesMenu(QWidget *parent) :
@@ -52,9 +53,12 @@ void RecentFilesMenu::saveState() const
 
 void RecentFilesMenu::addFile(const QString &fileName)
 {
+    QFileInfo fileInfo(fileName);
+    QString absoluteNativeFileName(QDir::toNativeSeparators(fileInfo.absoluteFilePath()));
+
     // add file to top of list
-    recentFiles.removeAll(fileName);
-    recentFiles.prepend(fileName);
+    recentFiles.removeAll(absoluteNativeFileName);
+    recentFiles.prepend(absoluteNativeFileName);
 
     // remove last entry if list contains more than 10 entries
     if (recentFiles.size() > 10) {
