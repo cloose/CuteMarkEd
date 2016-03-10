@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -41,6 +41,7 @@ class SnippetCollection;
 class ThemeCollection;
 class ViewSynchronizer;
 class ExportPdfDialog;
+class StatusBarWidget;
 
 
 class MainWindow : public QMainWindow
@@ -108,8 +109,7 @@ private slots:
     void helpMarkdownSyntax();
     void helpAbout();
 
-    void styleContextMenu(const QPoint &pos);
-    void toggleHtmlView();
+    void setHtmlSource(bool enabled);
 
     void plainTextChanged();
     void htmlResultReady(const QString &html);
@@ -154,9 +154,7 @@ private:
     RecentFilesMenu *recentFilesMenu;
     Options *options;
     QActionGroup *stylesGroup;
-    QLabel *styleLabel;
-    QLabel *wordCountLabel;
-    ActiveLabel *viewLabel;
+    StatusBarWidget* statusBarWidget;
     HtmlPreviewGenerator* generator;
     HtmlHighlighter *htmlHighlighter;
     SnippetCollection *snippetCollection;

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright 2013-2015 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -70,15 +70,14 @@
 #include "revealviewsynchronizer.h"
 #include "snippetcompleter.h"
 #include "tabletooldialog.h"
+#include "statusbarwidget.h"
 
 MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     options(new Options(this)),
     stylesGroup(new QActionGroup(this)),
-    styleLabel(0),
-    wordCountLabel(0),
-    viewLabel(0),
+    statusBarWidget(0),
     generator(new HtmlPreviewGenerator(options, this)),
     snippetCollection(new SnippetCollection(this)),
     viewSynchronizer(0),
@@ -139,6 +138,8 @@ void MainWindow::initializeApp()
     lastUsedTheme();
 
     ui->plainTextEdit->tabWidthChanged(options->tabWidth());
+    ui->plainTextEdit->rulerEnabledChanged(options->isRulerEnabled());
+    ui->plainTextEdit->rulerPosChanged(options->rulerPos());
 
     // init extension flags
     ui->actionAutolink->setChecked(options->isAutolinkEnabled());
@@ -208,8 +209,6 @@ void MainWindow::languageChanged(const Dictionary &dictionary)
 void MainWindow::fileNew()
 {
     if (maybeSave()) {
-        wordCountLabel->setText("");
-        wordCountLabel->setToolTip("");
         ui->plainTextEdit->clear();
         ui->plainTextEdit->resetHighlighting();
         ui->webView->setHtml(QString());
@@ -314,20 +313,20 @@ void MainWindow::fileExportToHtml()
 
 void MainWindow::fileExportToPdf()
 {
-    // using temporary QTextDocument instance to get links exported\printed correctly,
-    // as links will dissappear when printing directly from QWebView in current Qt implementation
-    // of QWebView::print() method (possible bug in Qt?)
-    // more info here: http://stackoverflow.com/questions/11629093/add-working-url-into-pdf-using-qt-qprinter
+	// using temporary QTextDocument instance to get links exported\printed correctly,
+	// as links will dissappear when printing directly from QWebView in current Qt implementation
+	// of QWebView::print() method (possible bug in Qt?)
+	// more info here: http://stackoverflow.com/questions/11629093/add-working-url-into-pdf-using-qt-qprinter
 
     if (!exportPdfDialog) // init, if not exists
         exportPdfDialog = new ExportPdfDialog(this);
 
     exportPdfDialog->setFileName(fileName);
     if (exportPdfDialog->exec() == QDialog::Accepted) {
-        QTextDocument doc;
-        doc.setHtml(ui->webView->page()->currentFrame()->toHtml());
+		 QTextDocument doc;
+		 doc.setHtml(ui->webView->page()->currentFrame()->toHtml());
         doc.print(exportPdfDialog->printer());
-    }
+	}
 }
 
 void MainWindow::filePrint()
@@ -494,11 +493,10 @@ void MainWindow::lastUsedTheme()
     for (auto action : stylesGroup->actions()) {
         if (action->text() == themeName) {
             action->setChecked(true);
+            stylesGroup->triggered(action);
             break;
         }
     }
-
-    styleLabel->setText(themeName);
 }
 
 void MainWindow::themeChanged()
@@ -509,7 +507,6 @@ void MainWindow::themeChanged()
     currentTheme = themeCollection->theme(themeName);
     applyCurrentTheme();
 
-    styleLabel->setText(themeName);
     options->setLastUsedTheme(themeName);
 }
 
@@ -651,7 +648,7 @@ void MainWindow::extrasOptions()
     // view menu
     actions << ui->dockWidget->toggleViewAction()
             << ui->fileExplorerDockWidget->toggleViewAction()
-            << ui->actionHtmlPreview
+            << ui->actionHtmlSource
             << ui->actionSplit_1_1
             << ui->actionSplit_2_1
             << ui->actionSplit_1_2
@@ -687,30 +684,16 @@ void MainWindow::helpAbout()
     dialog.exec();
 }
 
-void MainWindow::styleContextMenu(const QPoint &pos)
+void MainWindow::setHtmlSource(bool enabled)
 {
-    QMenu *menu = new QMenu();
-    menu->addActions(stylesGroup->actions());
-
-    menu->exec(styleLabel->mapToGlobal(pos));
-}
-
-void MainWindow::toggleHtmlView()
-{
-    if (viewLabel->text() == tr("HTML preview")) {
+    if (enabled) {
         ui->stackedWidget->setCurrentWidget(ui->htmlSourcePage);
-
-        ui->actionHtmlPreview->setText(tr("HTML preview"));
-        viewLabel->setText(tr("HTML source"));
 
         // activate HTML highlighter
         htmlHighlighter->setEnabled(true);
         htmlHighlighter->rehighlight();
     } else {
         ui->stackedWidget->setCurrentWidget(ui->webViewPage);
-
-        ui->actionHtmlPreview->setText(tr("HTML source"));
-        viewLabel->setText(tr("HTML preview"));
 
         // deactivate HTML highlighter
         htmlHighlighter->setEnabled(false);
@@ -719,21 +702,16 @@ void MainWindow::toggleHtmlView()
         syncWebViewToHtmlSource();
     }
 
+    // sync view menu action
+    if (ui->actionHtmlSource->isChecked() != enabled)
+        ui->actionHtmlSource->setChecked(enabled);
+
     updateSplitter();
 }
 
 void MainWindow::plainTextChanged()
 {
     QString code = ui->plainTextEdit->toPlainText();
-
-    // update statistics
-    if (wordCountLabel) {
-        int words = ui->plainTextEdit->countWords();
-        int lines = ui->plainTextEdit->document()->lineCount();
-        int chars = ui->plainTextEdit->document()->characterCount();
-        wordCountLabel->setText(tr("%1 words").arg(words));
-        wordCountLabel->setToolTip(tr("Lines: %1  Words: %2  Characters: %3").arg(lines).arg(words).arg(chars));
-    }
 
     // generate HTML from markdown
     generator->markdownTextChanged(code);
@@ -768,15 +746,13 @@ void MainWindow::tocResultReady(const QString &toc)
 
 void MainWindow::previewLinkClicked(const QUrl &url)
 {
-    if(url.isLocalFile())
-    {
+    if (url.isLocalFile()) {
         // directories are not supported
-        if(QFileInfo(url.toLocalFile()).isDir()) return;
+        if (QFileInfo(url.toLocalFile()).isDir()) return;
 
         QString filePath = url.toLocalFile();
         // Links to markdown files open new instance
-        if(filePath.endsWith(".md") || filePath.endsWith(".markdown") || filePath.endsWith(".mdown"))
-        {
+        if (filePath.endsWith(".md") || filePath.endsWith(".markdown") || filePath.endsWith(".mdown")) {
             QProcess::startDetached(qApp->applicationFilePath(), QStringList() << filePath);
             return;
         }
@@ -897,10 +873,10 @@ void MainWindow::setupUi()
     htmlPreviewController = new HtmlPreviewController(ui->webView, this);
 
     setupActions();
-    setupStatusBar();
     setupMarkdownEditor();
     setupHtmlPreview();
     setupHtmlSourceView();
+    setupStatusBar();
 
     // hide find/replace widget on startup
     ui->findReplaceWidget->hide();
@@ -916,7 +892,7 @@ void MainWindow::setupUi()
     ui->dockWidget_2->resize(550, 400);
 
     // show HTML preview on right panel
-    toggleHtmlView();
+    setHtmlSource(ui->actionHtmlSource->isChecked());
 
     connect(options, SIGNAL(proxyConfigurationChanged()),
             this, SLOT(proxyConfigurationChanged()));
@@ -1009,7 +985,7 @@ void MainWindow::setupActions()
     ui->actionInsertImage->setProperty("defaultshortcut", ui->actionInsertImage->shortcut());
     ui->dockWidget->toggleViewAction()->setProperty("defaultshortcut", ui->dockWidget->toggleViewAction()->shortcut());
     ui->fileExplorerDockWidget->toggleViewAction()->setProperty("defaultshortcut", ui->fileExplorerDockWidget->toggleViewAction()->shortcut());
-    ui->actionHtmlPreview->setProperty("defaultshortcut", ui->actionHtmlPreview->shortcut());
+    ui->actionHtmlSource->setProperty("defaultshortcut", ui->actionHtmlSource->shortcut());
 }
 
 void MainWindow::setActionsIcons()
@@ -1050,30 +1026,17 @@ void MainWindow::setActionsIcons()
 
 void MainWindow::setupStatusBar()
 {
+    statusBarWidget = new StatusBarWidget(ui->plainTextEdit);
+    statusBarWidget->setHtmlAction(ui->actionHtmlSource);
+
+    connect(options, &Options::lineColumnEnabledChanged,
+            statusBarWidget, &StatusBarWidget::showLineColumn);
+
+    statusBarWidget->update();
+
     // remove border around statusbar widgets
     statusBar()->setStyleSheet("QStatusBar::item { border: 0px solid black }; ");
-
-    // add style label to statusbar
-    styleLabel = new QLabel("Default", this);
-    styleLabel->setToolTip(tr("Change Preview Style"));
-    statusBar()->addPermanentWidget(styleLabel, 1);
-
-    styleLabel->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(styleLabel, SIGNAL(customContextMenuRequested(QPoint)),
-            this, SLOT(styleContextMenu(QPoint)));
-
-    // add word count label to statusbar
-    wordCountLabel = new QLabel(this);
-    wordCountLabel->setAlignment(Qt::AlignHCenter);
-    statusBar()->addPermanentWidget(wordCountLabel, 1);
-
-    // add view label to statusbar
-    viewLabel = new ActiveLabel(this);
-    viewLabel->setAlignment(Qt::AlignRight);
-    statusBar()->addPermanentWidget(viewLabel, 1);
-
-    connect(viewLabel, SIGNAL(doubleClicked()),
-            this, SLOT(toggleHtmlView()));
+    statusBar()->addPermanentWidget(statusBarWidget, 1);
 }
 
 void MainWindow::setupMarkdownEditor()
@@ -1084,10 +1047,14 @@ void MainWindow::setupMarkdownEditor()
     connect(ui->plainTextEdit, SIGNAL(loadDroppedFile(QString)),
             this, SLOT(load(QString)));
 
-    connect(options, SIGNAL(editorFontChanged(QFont)),
-            ui->plainTextEdit, SLOT(editorFontChanged(QFont)));
-    connect(options, SIGNAL(tabWidthChanged(int)),
-            ui->plainTextEdit, SLOT(tabWidthChanged(int)));
+    connect(options, &Options::editorFontChanged,
+            ui->plainTextEdit, &MarkdownEditor::editorFontChanged);
+    connect(options, &Options::tabWidthChanged,
+            ui->plainTextEdit, &MarkdownEditor::tabWidthChanged);
+    connect(options, &Options::rulerEnabledChanged,
+            ui->plainTextEdit, &MarkdownEditor::rulerEnabledChanged);
+    connect(options, &Options::rulerPosChanged,
+            ui->plainTextEdit, &MarkdownEditor::rulerPosChanged);
 }
 
 void MainWindow::setupHtmlPreview()
@@ -1234,6 +1201,9 @@ void MainWindow::setupHtmlPreviewThemes()
         connect(action, &QAction::triggered,
                 this, &MainWindow::themeChanged);
     }
+
+    if (statusBarWidget)
+        statusBarWidget->setStyleActions(stylesGroup);
 }
 
 void MainWindow::addSeparatorAfterBuiltInThemes()

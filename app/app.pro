@@ -65,7 +65,8 @@ SOURCES += \
     imagetooldialog.cpp \
     snippetcompleter.cpp \
     snippetstablemodel.cpp \
-    aboutdialog.cpp
+    aboutdialog.cpp \
+    statusbarwidget.cpp
 
 win32 {
     SOURCES += \
@@ -100,7 +101,8 @@ HEADERS  += \
     imagetooldialog.h \
     snippetcompleter.h \
     snippetstablemodel.h \
-    aboutdialog.h
+    aboutdialog.h \
+    statusbarwidget.h
 
 FORMS    += \
     mainwindow.ui \
