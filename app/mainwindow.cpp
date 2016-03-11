@@ -226,7 +226,12 @@ bool MainWindow::fileSave()
         return fileSaveAs();
     }
 
-    QTextDocumentWriter writer(fileName, "plaintext");
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        return false;
+    }
+
+    QTextDocumentWriter writer(&file, "plaintext");
     bool success = writer.write(ui->plainTextEdit->document());
     if (success) {
         // set status to unmodified
@@ -861,7 +866,7 @@ bool MainWindow::load(const QString &fileName)
 
     // open file
     QFile file(fileName);
-    if (!file.open(QFile::ReadOnly)) {
+    if (!file.open(QFile::ReadOnly | QIODevice::Text)) {
         return false;
     }
 
