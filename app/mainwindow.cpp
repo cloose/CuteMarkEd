@@ -64,6 +64,7 @@
 #include "options.h"
 #include "optionsdialog.h"
 #include "revealviewsynchronizer.h"
+#include "savefileadapter.h"
 #include "snippetcompleter.h"
 #include "tabletooldialog.h"
 
@@ -226,7 +227,7 @@ bool MainWindow::fileSave()
         return fileSaveAs();
     }
 
-    QFile file(fileName);
+    SaveFileAdapter file(fileName);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         return false;
     }
@@ -234,6 +235,8 @@ bool MainWindow::fileSave()
     QTextDocumentWriter writer(&file, "plaintext");
     bool success = writer.write(ui->plainTextEdit->document());
     if (success) {
+        file.commit();
+
         // set status to unmodified
         ui->plainTextEdit->document()->setModified(false);
         setWindowModified(false);
