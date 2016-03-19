@@ -50,13 +50,46 @@ static void associateFileTypes(const QStringList &fileTypes)
 }
 #endif
 
+
+#include <QFileOpenEvent>
+
+class MyApplication : public QApplication
+{
+public:
+    MyApplication(int &argc, char **argv) : QApplication(argc, argv)
+    {
+        setOrganizationName("CuteMarkEd Project");
+        setApplicationName("CuteMarkEd");
+        setApplicationDisplayName("CuteMarkEd");
+        setApplicationVersion("0.11.2");
+
+        main_window_ = new MainWindow();
+    }
+
+    ~MyApplication()
+    {
+        delete main_window_;
+    }
+
+    bool event(QEvent *event)
+    {
+        if (event->type() == QEvent::FileOpen) {
+            QFileOpenEvent *openEvent = static_cast<QFileOpenEvent *>(event);
+            return main_window_->loadFile(openEvent->file());
+        }
+        return QApplication::event(event);
+    }
+
+    MainWindow* mainWindow() { return main_window_; }
+
+private:
+    MainWindow* main_window_;
+};
+
+
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
-    app.setOrganizationName("CuteMarkEd Project");
-    app.setApplicationName("CuteMarkEd");
-    app.setApplicationDisplayName("CuteMarkEd");
-    app.setApplicationVersion("0.11.2");
+    MyApplication app(argc, argv);
 
 #ifdef Q_OS_WIN
     QStringList fileTypes;
@@ -91,8 +124,8 @@ int main(int argc, char *argv[])
         fileName = cmdLineArgs.at(0);
     }
 
-    MainWindow w(fileName);
-    w.show();
+    app.mainWindow()->loadFile(fileName);
+    app.mainWindow()->show();
 
     return app.exec();
 }
