@@ -43,8 +43,6 @@
 			<string>Editor</string>
 			<key>LSIsAppleDefaultForType</key>
 			<true/>
-			<key>LSHandlerRank</key>
-			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.daringfireball.markdown</string>
@@ -56,9 +54,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.data</string>
-				<string>public.item</string>
-				<string>net.daringfireball.markdown</string>
+				<string>public.plain-text</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Markdown Document</string>
@@ -70,8 +66,6 @@
 			<string>http://daringfireball.net/projects/markdown/</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
-				<key>com.apple.ostype</key>
-				<string>TEXT</string>
 				<key>public.filename-extension</key>
 				<array>
 					<string>md</string>
