@@ -242,7 +242,7 @@ bool MainWindow::fileSave()
         setWindowModified(false);
 
         // add to recent file list
-        recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
+        recentFilesMenu->addFile(fileName);
     }
 
     return success;
@@ -806,7 +806,7 @@ bool MainWindow::load(const QString &fileName)
     setFileName(fileName);
 
     // add to recent files
-    recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
+    recentFilesMenu->addFile(fileName);
 
     return true;
 }
