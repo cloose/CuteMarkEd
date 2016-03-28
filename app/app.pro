@@ -96,7 +96,8 @@ HEADERS  += \
     imagetooldialog.h \
     snippetcompleter.h \
     snippetstablemodel.h \
-    aboutdialog.h
+    aboutdialog.h \
+    savefileadapter.h
 
 FORMS    += \
     mainwindow.ui \
