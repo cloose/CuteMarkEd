@@ -27,13 +27,12 @@ protected:
 
 FileExplorerWidget::FileExplorerWidget(QWidget *parent) :
     QWidget(parent),
+    initialized(false),
     ui(new Ui::FileExplorerWidget),
     model(new QFileSystemModel(this)),
     sortModel(new FileSortFilterProxyModel(this))
 {
     ui->setupUi(this);
-
-    model->setRootPath("");
 
     sortModel->setDynamicSortFilter(true);
     sortModel->setSourceModel(model);
@@ -49,6 +48,14 @@ FileExplorerWidget::FileExplorerWidget(QWidget *parent) :
 FileExplorerWidget::~FileExplorerWidget()
 {
     delete ui;
+}
+
+void FileExplorerWidget::showEvent(QShowEvent *event)
+{
+    if (!initialized) {
+        model->setRootPath("");
+        initialized = true;
+    }
 }
 
 void FileExplorerWidget::fileOpen(const QModelIndex &index)

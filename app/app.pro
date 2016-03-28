@@ -102,7 +102,8 @@ HEADERS  += \
     snippetcompleter.h \
     snippetstablemodel.h \
     aboutdialog.h \
-    statusbarwidget.h
+    statusbarwidget.h \
+    savefileadapter.h
 
 FORMS    += \
     mainwindow.ui \
