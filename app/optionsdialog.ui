@@ -212,7 +212,7 @@
           <item>
            <widget class="QCheckBox" name="spacesForTabsCheckBox">
             <property name="text">
-             <string>Insert Spacesfor Tabs</string>
+             <string>Insert Spaces for Tabs</string>
             </property>
            </widget>
           </item>
