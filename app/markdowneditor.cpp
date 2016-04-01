@@ -257,6 +257,11 @@ void MarkdownEditor::tabWidthChanged(int tabWidth)
     setTabStopWidth(tabWidth*fm.width(' '));
 }
 
+void MarkdownEditor::spacesForTabsChanged(bool enabled)
+{
+    insertSpacesForTabs = enabled;
+}
+
 void MarkdownEditor::rulerEnabledChanged(bool enabled)
 {
     rulerEnabled = enabled;

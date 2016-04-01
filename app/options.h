@@ -45,6 +45,9 @@ public:
     int tabWidth() const;
     void setTabWidth(int width);
 
+    bool isSpacesForTabsEnabled() const;
+    void setSpacesForTabsEnabled(bool enabled);
+
     bool isLineColumnEnabled() const;
     void setLineColumnEnabled(bool enabled);
 
@@ -159,6 +162,7 @@ signals:
     void editorFontChanged(const QFont &font);
     void editorStyleChanged();
     void tabWidthChanged(int tabWidth);
+    void spacesForTabsChanged(bool enabled);
     void lineColumnEnabledChanged(bool enabled);
     void rulerEnabledChanged(bool enabled);
     void rulerPosChanged(int pos);
@@ -193,6 +197,7 @@ private:
     bool m_spellingCheckEnabled;
     bool m_yamlHeaderSupportEnabled;
     bool m_diagramSupportEnabled;
+    bool m_spacesForTabsEnabled;
     bool m_lineColumnEnabled;
     bool m_rulerEnabled;
     int m_rulerPos;
