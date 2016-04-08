@@ -109,6 +109,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *e)
 {
+    fileSystemWatcher.removePath(fileName);
     // check if file needs saving
     if (maybeSave()) {
         writeSettings();
@@ -195,6 +196,7 @@ void MainWindow::initializeApp()
 
 void MainWindow::openRecentFile(const QString &fileName)
 {
+    fileSystemWatcher.removePath(fileName);
     if (maybeSave()) {
         load(fileName);
     }
@@ -206,8 +208,24 @@ void MainWindow::languageChanged(const Dictionary &dictionary)
     ui->plainTextEdit->setSpellingDictionary(dictionary);
 }
 
+void MainWindow::fileExternallyChanged(const QString &path)
+{
+    QMessageBox::StandardButton ret;
+    ret = QMessageBox::warning(this, tr("Reload File"),
+                               tr("The document has changed externally.<br>"
+                                  "Do you want reload it?"),
+                               QMessageBox::Yes | QMessageBox::No);
+
+    if (ret == QMessageBox::Yes)
+    {
+        load(path);
+    }
+}
+
+
 void MainWindow::fileNew()
 {
+    fileSystemWatcher.removePath(fileName);
     if (maybeSave()) {
         ui->plainTextEdit->clear();
         ui->plainTextEdit->resetHighlighting();
@@ -219,6 +237,7 @@ void MainWindow::fileNew()
 
 void MainWindow::fileOpen()
 {
+    fileSystemWatcher.removePath(fileName);
     if (maybeSave()) {
         QString name = QFileDialog::getOpenFileName(this, tr("Open File..."),
                                                     QString(), tr("Markdown Files (*.markdown *.md *.mdown);;All Files (*)"));
@@ -234,7 +253,7 @@ bool MainWindow::fileSave()
     if (fileName.isEmpty()) {
         return fileSaveAs();
     }
-
+    fileSystemWatcher.removePath(fileName);
     SaveFileAdapter file(fileName);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         return false;
@@ -252,7 +271,7 @@ bool MainWindow::fileSave()
         // add to recent file list
         recentFilesMenu->addFile(fileName);
     }
-
+    fileSystemWatcher.addPath(fileName);
     return success;
 }
 
@@ -270,7 +289,16 @@ bool MainWindow::fileSaveAs()
     }
 
     setFileName(name);
-    return fileSave();
+
+    if(fileSave())
+    {
+        fileSystemWatcher.addPath(fileName);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 void MainWindow::fileExportToHtml()
@@ -816,6 +844,9 @@ bool MainWindow::load(const QString &fileName)
     // add to recent files
     recentFilesMenu->addFile(fileName);
 
+    //watch for external changes at open files
+    fileSystemWatcher.addPath(fileName);
+
     return true;
 }
 
@@ -969,6 +1000,8 @@ void MainWindow::setupActions()
             generator, SLOT(setCodeHighlightingEnabled(bool)));
     connect(ui->menuLanguages, SIGNAL(languageTriggered(Dictionary)),
             this, SLOT(languageChanged(Dictionary)));
+    connect(&fileSystemWatcher, SIGNAL(fileChanged(const QString)),
+            this, SLOT(fileExternallyChanged(const QString)));
 
     // help menu
     ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);
