@@ -1000,8 +1000,8 @@ void MainWindow::setupActions()
             generator, SLOT(setCodeHighlightingEnabled(bool)));
     connect(ui->menuLanguages, SIGNAL(languageTriggered(Dictionary)),
             this, SLOT(languageChanged(Dictionary)));
-    connect(&fileSystemWatcher, SIGNAL(fileChanged(const QString)),
-            this, SLOT(fileExternallyChanged(const QString)));
+    connect(&fileSystemWatcher, &QFileSystemWatcher::fileChanged,
+            this, &MainWindow::fileExternallyChanged);
 
     // help menu
     ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);
