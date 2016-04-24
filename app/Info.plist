@@ -32,7 +32,7 @@
 				<string>markdown</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>app-icon.icns</string>
+			<string>markdown_file-mac.icns</string>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
 				<string>text/markdown</string>
@@ -59,7 +59,7 @@
 			<key>UTTypeDescription</key>
 			<string>Markdown Document</string>
 			<key>UTTypeIconFile</key>
-			<string>app-icon.icns</string>
+			<string>markdown_file-mac.icns</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.daringfireball.markdown</string>
 			<key>UTTypeReferenceURL</key>
