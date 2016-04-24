@@ -8,9 +8,9 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 ### DOWNLOAD
 
-[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.11.2.tar.gz)  
-[MS Windows (Installer)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.11.2.msi)  
-[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.11.2.zip)  
+[Sources](https://github.com/cloose/CuteMarkEd/archive/v0.11.3.tar.gz)  
+[MS Windows (Installer)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.11.3.msi)  
+[MS Windows (ZIP file)](http://dl.bintray.com/cloose/CuteMarkEd/cutemarked-0.11.3.zip)  
 [OpenSUSE 13.2 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 [Fedora 20 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
 [Fedora 21 (RPM)](https://build.opensuse.org/project/show?project=home%3Acloose1974)  
@@ -19,6 +19,20 @@ A Qt-based, free and open source markdown editor with live HTML preview, math ex
 
 ### NEWS
 
+#### Version 0.11.3
+
+Improvements:
+
+* `IMPROVED` Update Russian translation
+
+Fixes:
+
+* `FIXED` Missing links in exported PDF file (#275)
+* `FIXED` Use of non-native line endings when a file is saved (#97)
+* `FIXED` Corrupt files on system crashes or running out of disk space (#285)
+* `FIXED` Accessing all drives although the file explorer is not visible (#273)
+* `FIXED` Relative paths in recently used files menu (#256)
+ 
 #### Version 0.11.2
 
 Improvements:
@@ -81,7 +95,7 @@ Fixes:
 
 ### DEPENDENCIES
 
-* [Qt 5.2](http://qt-project.org) (LGPL v2.1)
+* [Qt 5.4](http://qt-project.org) (LGPL v2.1)
 * [Discount 2.1.7](http://www.pell.portland.or.us/~orc/Code/discount/) (3-clause BSD)
 * [PEG Markdown Highlight](http://hasseg.org/peg-markdown-highlight/) (MIT License)
 * [hunspell 1.3.2](http://hunspell.sourceforge.net/) (LGPL v2.1)

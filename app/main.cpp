@@ -61,7 +61,7 @@ public:
         setOrganizationName("CuteMarkEd Project");
         setApplicationName("CuteMarkEd");
         setApplicationDisplayName("CuteMarkEd");
-        setApplicationVersion("0.11.2");
+        setApplicationVersion("0.11.3");
 
         main_window_ = new MainWindow();
     }

@@ -73,6 +73,11 @@ win32 {
         hunspell/spellchecker_win.cpp
 }
 
+macx {
+    SOURCES += \
+        hunspell/spellchecker_macx.cpp
+}
+
 unix {
     SOURCES += \
         hunspell/spellchecker_unix.cpp
@@ -102,7 +107,8 @@ HEADERS  += \
     snippetcompleter.h \
     snippetstablemodel.h \
     aboutdialog.h \
-    statusbarwidget.h
+    statusbarwidget.h \
+    savefileadapter.h
 
 FORMS    += \
     mainwindow.ui \

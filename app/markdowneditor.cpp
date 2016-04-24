@@ -524,13 +524,13 @@ void MarkdownEditor::drawRuler(QPaintEvent *e)
 
     // calculate vertical offset corresponding given
     // column margin in font metrics
-    int verticalOffset = round(QFontMetricsF(font).averageCharWidth() * rulerPos)
+    int verticalOffset = qRound(QFontMetricsF(font).averageCharWidth() * rulerPos)
             + contentOffset().x()
             + document()->documentMargin();
 
     // draw a ruler with color invert to background color (better readability)
     // and with 50% opacity
-    QPainter p(viewport()); 
+    QPainter p(viewport());
     p.setCompositionMode(QPainter::RasterOp_SourceXorDestination);
     p.setPen(QColor(0xff, 0xff, 0xff));
     p.setOpacity(0.5);
@@ -589,7 +589,7 @@ QStringList MarkdownEditor::filterWordList(const QStringList &words, UnaryPredic
     foreach (const QString &word, words) {
         if (predicate(word))
         {
-           filteredWordList << word; 
+           filteredWordList << word;
         }
     }
 

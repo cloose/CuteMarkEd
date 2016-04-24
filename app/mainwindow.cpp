@@ -68,6 +68,7 @@
 #include "options.h"
 #include "optionsdialog.h"
 #include "revealviewsynchronizer.h"
+#include "savefileadapter.h"
 #include "snippetcompleter.h"
 #include "tabletooldialog.h"
 #include "statusbarwidget.h"
@@ -239,15 +240,22 @@ bool MainWindow::fileSave()
         return fileSaveAs();
     }
 
-    QTextDocumentWriter writer(fileName, "plaintext");
+    SaveFileAdapter file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        return false;
+    }
+
+    QTextDocumentWriter writer(&file, "plaintext");
     bool success = writer.write(ui->plainTextEdit->document());
     if (success) {
+        file.commit();
+
         // set status to unmodified
         ui->plainTextEdit->document()->setModified(false);
         setWindowModified(false);
 
         // add to recent file list
-        recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
+        recentFilesMenu->addFile(fileName);
     }
 
     return success;
@@ -796,7 +804,7 @@ bool MainWindow::load(const QString &fileName)
 
     // open file
     QFile file(fileName);
-    if (!file.open(QFile::ReadOnly)) {
+    if (!file.open(QFile::ReadOnly | QIODevice::Text)) {
         return false;
     }
 
@@ -811,7 +819,7 @@ bool MainWindow::load(const QString &fileName)
     setFileName(fileName);
 
     // add to recent files
-    recentFilesMenu->addFile(QDir::toNativeSeparators(fileName));
+    recentFilesMenu->addFile(fileName);
 
     return true;
 }
