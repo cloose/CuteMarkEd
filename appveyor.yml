@@ -22,3 +22,6 @@ test_script:
     - cd test\unit
     - release\unittest.exe -nocrashhandler  
     - mingw32-make check
+
+on_finish:
+    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
