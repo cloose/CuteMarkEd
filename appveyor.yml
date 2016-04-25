@@ -22,4 +22,5 @@ build_script:
 
 test_script:
     - cd test\unit
+    - release\unittest.exe  
     - mingw32-make check
