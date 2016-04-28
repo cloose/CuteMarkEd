@@ -7,7 +7,7 @@ environment:
     MINGW_DIR: C:\Qt\Tools\mingw491_32 
 
 install:
-    - set PATH=%PATH%;%QTDIR%\bin;%MINGW_DIR%\bin
+    - set PATH=%QTDIR%\bin;%MINGW_DIR%\bin;%PATH%
     - git submodule update --init --recursive
 
 before_build:
@@ -18,9 +18,7 @@ before_build:
 build_script:
     - mingw32-make
 
-#test_script:
-    #    - cd test\unit
-    #- mingw32-make check
+test_script:
+    - cd test\unit
+    - mingw32-make check
 
-on_finish:
-    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
