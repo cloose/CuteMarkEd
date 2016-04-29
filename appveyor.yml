@@ -1,5 +1,3 @@
-os: MinGW
-
 branches:
     except:
         - gh-pages
@@ -9,7 +7,7 @@ environment:
     MINGW_DIR: C:\Qt\Tools\mingw491_32 
 
 install:
-    - set PATH=%PATH%;%QTDIR%\bin;%MINGW_DIR%\bin
+    - set PATH=%QTDIR%\bin;%MINGW_DIR%\bin;%PATH%
     - git submodule update --init --recursive
 
 before_build:
