@@ -20,6 +20,8 @@
 #include <QCommandLineParser>
 #include <QLibraryInfo>
 #include <QTranslator>
+#include <QDir>
+#include <QResource>
 
 #ifdef Q_OS_WIN
 #include <QDir>
