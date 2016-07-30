@@ -25,6 +25,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QSettings>
+#include <QResource>
 
 // Helper function to register supported file types
 // This is needed to enable the application jump list to show the desired recent files
@@ -57,6 +58,7 @@ int main(int argc, char *argv[])
     app.setApplicationName("CuteMarkEd");
     app.setApplicationDisplayName("CuteMarkEd");
     app.setApplicationVersion("0.11.3");
+    QResource::registerResource(QDir::currentPath()+"/math_reveal.rcc");
 
 #ifdef Q_OS_WIN
     QStringList fileTypes;

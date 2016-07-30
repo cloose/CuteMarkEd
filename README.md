@@ -28,6 +28,12 @@ https://github.com/cloose/CuteMarkEd/issues/321
 
 ### DESCRIPTION
 
+> 这个版本的 CuteMarked 将所需要的资源打包成本地资源文件，因此不需要联网（适合于没有网络的情况下进行 markdown 编辑）。打包的资源文件有
+>
+> * MathJax
+> * Reveal
+ 
+
 A Qt-based, free and open source markdown editor with live HTML preview, math expressions, code syntax highlighting and syntax highlighting of markdown document.
 
 ![screenshot](http://cloose.github.io/CuteMarkEd/images/screenshot_06.png)
