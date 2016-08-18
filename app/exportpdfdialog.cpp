@@ -33,7 +33,8 @@ ExportPdfDialog::ExportPdfDialog(const QString &fileName, QWidget *parent) :
 
     if (!fileName.isEmpty()) {
         QFileInfo info(fileName);
-        QString exportFileName = info.absoluteFilePath().replace(info.suffix(), "pdf");
+        QString absFilePath = info.absoluteFilePath();
+        QString exportFileName = absFilePath.mid(0, absFilePath.lastIndexOf('.')) + ".pdf";
         ui->exportToLineEdit->setText(exportFileName);
     }
 

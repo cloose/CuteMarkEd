@@ -32,7 +32,8 @@ ExportHtmlDialog::ExportHtmlDialog(const QString &fileName, QWidget *parent) :
 
     if (!fileName.isEmpty()) {
         QFileInfo info(fileName);
-        QString exportFileName = info.absoluteFilePath().replace(info.suffix(), "html");
+        QString absFilePath = info.absoluteFilePath();
+        QString exportFileName = absFilePath.mid(0, absFilePath.lastIndexOf('.')) + ".html";
         ui->exportToLineEdit->setText(exportFileName);
     }
 
