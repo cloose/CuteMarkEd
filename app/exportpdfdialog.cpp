@@ -20,6 +20,7 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QPrinter>
+#include <QDir>
 
 ExportPdfDialog::ExportPdfDialog(const QString &fileName, QWidget *parent) :
     QDialog(parent),
@@ -35,7 +36,7 @@ ExportPdfDialog::ExportPdfDialog(const QString &fileName, QWidget *parent) :
         QFileInfo info(fileName);
         QString absFilePath = info.absoluteFilePath();
         QString exportFileName = absFilePath.mid(0, absFilePath.lastIndexOf('.')) + ".pdf";
-        ui->exportToLineEdit->setText(exportFileName);
+        ui->exportToLineEdit->setText(QDir::toNativeSeparators(exportFileName));
     }
 
     // fill paper size combobox
@@ -59,7 +60,7 @@ ExportPdfDialog::~ExportPdfDialog()
 
 QPrinter *ExportPdfDialog::printer()
 {
-    QString fileName = ui->exportToLineEdit->text();
+    QString fileName = QDir::fromNativeSeparators(ui->exportToLineEdit->text());
 
     QPrinter::Orientation orientation;
     if (ui->portraitRadioButton->isChecked()) {
@@ -89,11 +90,11 @@ void ExportPdfDialog::exportToTextChanged(const QString &text)
 
 void ExportPdfDialog::chooseFileButtonClicked()
 {
-    QString fileName = ui->exportToLineEdit->text();
+    QString fileName = QDir::fromNativeSeparators(ui->exportToLineEdit->text());
 
     fileName = QFileDialog::getSaveFileName(this, tr("Export to PDF..."), fileName,
                                                   tr("PDF Files (*.pdf);;All Files (*)"));
     if (!fileName.isEmpty()) {
-        ui->exportToLineEdit->setText(fileName);
+        ui->exportToLineEdit->setText(QDir::toNativeSeparators(fileName));
     }
 }
