@@ -33,8 +33,7 @@ ExportHtmlDialog::ExportHtmlDialog(const QString &fileName, QWidget *parent) :
 
     if (!fileName.isEmpty()) {
         QFileInfo info(fileName);
-        QString absFilePath = info.absoluteFilePath();
-        QString exportFileName = absFilePath.mid(0, absFilePath.lastIndexOf('.')) + ".html";
+        QString exportFileName = info.absoluteDir().absoluteFilePath(info.baseName() + ".html");
         ui->exportToLineEdit->setText(QDir::toNativeSeparators(exportFileName));
     }
 
