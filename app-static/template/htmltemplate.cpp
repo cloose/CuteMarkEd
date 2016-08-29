@@ -102,7 +102,7 @@ QString HtmlTemplate::buildHtmlHeader(RenderOptions options) const
             header += "<script type=\"text/x-mathjax-config\">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']]}});</script>";
         }
 
-        header += "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>\n";
+        header += "<script type=\"text/javascript\" src=\"qrc:/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>\n";
     }
 
     // add Highlight.js script to HTML header

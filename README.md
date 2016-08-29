@@ -1,6 +1,38 @@
 ## CuteMarkEd
 
+### fork version description
+1. build in MacOS
+2. plan to merge huaxz1986's patch
+https://github.com/huaxz1986/CuteMarkEd
+
+####  MacOS build steps:
+
+https://github.com/cloose/CuteMarkEd/wiki/Build-Instructions#mac-os-x
+- install QT 5.5.1 in /opt/local/
+http://download.qt.io/official_releases/qt/5.5/5.5.1/qt-opensource-mac-x64-clang-5.5.1.dmg
+```
+brew install hunspell discount
+ln -s /usr/local/lib/libhunspell-1.4.a /usr/local/lib/libhunspell.a 
+lrelease app/translations/cutemarked_de.ts -qm app/translations/cutemarked_de.qm
+lrelease app/translations/cutemarked_cs.ts -qm app/translations/cutemarked_cs.qm
+/opt/local/qt5.5.1/5.5/clang_64/bin/qmake CuteMarkEd.pro
+make
+```
+copy CuteMarkEd to /Applications
+
+
+
+#### fix build bug:
+
+https://github.com/cloose/CuteMarkEd/issues/321
+
 ### DESCRIPTION
+
+> 这个版本的 CuteMarked 将所需要的资源打包成本地资源文件，因此不需要联网（适合于没有网络的情况下进行 markdown 编辑）。打包的资源文件有
+>
+> * MathJax
+> * Reveal
+ 
 
 A Qt-based, free and open source markdown editor with live HTML preview, math expressions, code syntax highlighting and syntax highlighting of markdown document.
 
