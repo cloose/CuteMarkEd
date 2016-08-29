@@ -56,6 +56,7 @@ void FileExplorerWidget::showEvent(QShowEvent *event)
         model->setRootPath("");
         initialized = true;
     }
+    QWidget::showEvent(event);
 }
 
 void FileExplorerWidget::fileOpen(const QModelIndex &index)
