@@ -107,6 +107,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+bool MainWindow::loadFile(const QString& fileName)
+{
+    return maybeSave() ? load(fileName) : false;
+}
+
 void MainWindow::closeEvent(QCloseEvent *e)
 {
     // check if file needs saving

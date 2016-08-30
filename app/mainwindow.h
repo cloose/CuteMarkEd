@@ -51,6 +51,8 @@ public:
     explicit MainWindow(const QString &fileName = QString(), QWidget *parent = 0);
     ~MainWindow();
 
+    bool loadFile(const QString& fileName);
+
 protected:
     void closeEvent(QCloseEvent *e) Q_DECL_OVERRIDE;
     void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
