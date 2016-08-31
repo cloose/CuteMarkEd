@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright 2013-2014 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -40,6 +40,7 @@ class SlideLineMapping;
 class SnippetCollection;
 class ThemeCollection;
 class ViewSynchronizer;
+class ExportPdfDialog;
 class StatusBarWidget;
 
 
@@ -164,6 +165,8 @@ private:
     QString fileName;
     float splitFactor;
     bool rightViewCollapsed;
+
+    ExportPdfDialog *exportPdfDialog;
 };
 
 #endif // MAINWINDOW_H

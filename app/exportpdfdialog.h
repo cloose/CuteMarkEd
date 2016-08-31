@@ -29,10 +29,12 @@ class ExportPdfDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit ExportPdfDialog(const QString &fileName, QWidget *parent = 0);
+    explicit ExportPdfDialog(QWidget *parent = 0);
     ~ExportPdfDialog();
     
     QPrinter *printer();
+
+    void setFileName(const QString &fileName);
 
 private slots:
     void exportToTextChanged(const QString &text);

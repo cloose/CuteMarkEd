@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright 2013-2015 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -85,7 +85,8 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     htmlPreviewController(0),
     themeCollection(new ThemeCollection()),
     splitFactor(0.5),
-    rightViewCollapsed(false)
+    rightViewCollapsed(false),
+    exportPdfDialog(0)
 {
     ui->setupUi(this);
     setupUi();
@@ -320,17 +321,20 @@ void MainWindow::fileExportToHtml()
 
 void MainWindow::fileExportToPdf()
 {
-    // using temporary QTextDocument instance to get links exported\printed correctly,
-    // as links will dissappear when printing directly from QWebView in current Qt implementation
-    // of QWebView::print() method (possible bug in Qt?)
-    // more info here: http://stackoverflow.com/questions/11629093/add-working-url-into-pdf-using-qt-qprinter
+	// using temporary QTextDocument instance to get links exported\printed correctly,
+	// as links will dissappear when printing directly from QWebView in current Qt implementation
+	// of QWebView::print() method (possible bug in Qt?)
+	// more info here: http://stackoverflow.com/questions/11629093/add-working-url-into-pdf-using-qt-qprinter
 
-    ExportPdfDialog dialog(fileName);
-    if (dialog.exec() == QDialog::Accepted) {
-         QTextDocument doc;
-         doc.setHtml(ui->webView->page()->currentFrame()->toHtml());
-         doc.print(dialog.printer());
-    }
+    if (!exportPdfDialog) // init, if not exists
+        exportPdfDialog = new ExportPdfDialog(this);
+
+    exportPdfDialog->setFileName(fileName);
+    if (exportPdfDialog->exec() == QDialog::Accepted) {
+		 QTextDocument doc;
+		 doc.setHtml(ui->webView->page()->currentFrame()->toHtml());
+        doc.print(exportPdfDialog->printer());
+	}
 }
 
 void MainWindow::filePrint()
