@@ -21,9 +21,12 @@
 #include <QFileInfo>
 #include <QPrinter>
 
-ExportPdfDialog::ExportPdfDialog(const QString &fileName, QWidget *parent) :
+#include "options.h"
+
+ExportPdfDialog::ExportPdfDialog(const QString &fileName, Options *opt, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ExportPdfDialog)
+    ui(new Ui::ExportPdfDialog),
+    options(opt)
 {
     ui->setupUi(this);
 
@@ -47,12 +50,16 @@ ExportPdfDialog::ExportPdfDialog(const QString &fileName, QWidget *parent) :
     ui->paperSizeComboBox->addItem(tr("B4 (250 x 353 mm)"), QPrinter::B4);
     ui->paperSizeComboBox->addItem(tr("B5 (176 x 250 mm, 6.93 x 9.84 inches)"), QPrinter::B5);
 
+    // restore GUI state
+    loadState();
+
     // initialize Ok button state
     exportToTextChanged(fileName);
 }
 
 ExportPdfDialog::~ExportPdfDialog()
 {
+    saveState();
     delete ui;
 }
 
@@ -95,4 +102,29 @@ void ExportPdfDialog::chooseFileButtonClicked()
     if (!fileName.isEmpty()) {
         ui->exportToLineEdit->setText(fileName);
     }
+}
+
+void ExportPdfDialog::loadState()
+{
+    if(options->pdfOrientation() == QPrinter::Portrait)
+        ui->portraitRadioButton->setChecked(true);
+    else
+        ui->landscapeRadioButton->setChecked(true);
+
+    int idx = ui->paperSizeComboBox->findData(options->pdfPageSize());
+    if(idx>=0)
+        ui->paperSizeComboBox->setCurrentIndex(idx);
+}
+
+void ExportPdfDialog::saveState()
+{
+    // save settings
+    if(ui->portraitRadioButton->isChecked())
+        options->setPdfOrientation(QPrinter::Portrait);
+    else
+        options->setPdfOrientation(QPrinter::Landscape);
+
+    QVariant v = ui->paperSizeComboBox->itemData(ui->paperSizeComboBox->currentIndex());
+    QPrinter::PaperSize size = (QPrinter::PaperSize)v.toInt();
+    options->setPdfPageSize(size);
 }

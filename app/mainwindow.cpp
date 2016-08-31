@@ -325,7 +325,7 @@ void MainWindow::fileExportToPdf()
     // of QWebView::print() method (possible bug in Qt?)
     // more info here: http://stackoverflow.com/questions/11629093/add-working-url-into-pdf-using-qt-qprinter
 
-    ExportPdfDialog dialog(fileName);
+    ExportPdfDialog dialog(fileName, options);
     if (dialog.exec() == QDialog::Accepted) {
          QTextDocument doc;
          doc.setHtml(ui->webView->page()->currentFrame()->toHtml());

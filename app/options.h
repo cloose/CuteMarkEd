@@ -22,6 +22,7 @@
 #include <QKeySequence>
 #include <QMap>
 #include <QSettings>
+#include <QPrinter>
 
 class Options : public QObject
 {
@@ -152,6 +153,13 @@ public:
     QString lastUsedTheme() const;
     void setLastUsedTheme(const QString &theme);
 
+    /* Export to PDF options */
+    QPrinter::Orientation pdfOrientation() const;
+    void setPdfOrientation(const QPrinter::Orientation orientation);
+
+    QPrinter::PageSize pdfPageSize() const;
+    void setPdfPageSize(const QPrinter::PageSize pageSize);
+
     void readSettings();
     void writeSettings();
 
@@ -206,6 +214,8 @@ private:
     int m_defaultFontSize;
     int m_defaultFixedFontSize;
     QMap<QString, QKeySequence> m_customShortcuts;
+    QPrinter::Orientation m_PdfOrientation;
+    QPrinter::PageSize m_PdfPageSize;
 };
 
 #endif // OPTIONS_H

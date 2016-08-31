@@ -23,13 +23,14 @@ namespace Ui {
 class ExportPdfDialog;
 }
 class QPrinter;
+class Options;
 
 class ExportPdfDialog : public QDialog
 {
     Q_OBJECT
     
 public:
-    explicit ExportPdfDialog(const QString &fileName, QWidget *parent = 0);
+    explicit ExportPdfDialog(const QString &fileName, Options *opt, QWidget *parent = 0);
     ~ExportPdfDialog();
     
     QPrinter *printer();
@@ -39,7 +40,13 @@ private slots:
     void chooseFileButtonClicked();
 
 private:
+    void loadState();
+    void saveState();
+
+private:
     Ui::ExportPdfDialog *ui;
+
+    Options *options;
 };
 
 #endif // EXPORTPDFDIALOG_H
