@@ -57,6 +57,8 @@ static const char* SPELLINGCHECK_ENABLED = "spelling/enabled";
 static const char* DICTIONARY_LANGUAGE = "spelling/language";
 static const char* YAMLHEADERSUPPORT_ENABLED = "yamlheadersupport/enabled";
 static const char* DIAGRAMSUPPORT_ENABLED = "diagramsupport/enabled";
+static const char* PDF_ORIENTATION = "pdf/orientation";
+static const char* PDF_PAGE_SIZE = "pdf/pagesize";
 
 static const char* DEPRECATED__LAST_USED_STYLE = "general/lastusedstyle";
 
@@ -84,7 +86,9 @@ Options::Options(QObject *parent) :
     m_rulerEnabled(false),
     m_rulerPos(80),
     m_markdownConverter(DiscountMarkdownConverter),
-    m_lastUsedTheme(THEME_DEFAULT)
+    m_lastUsedTheme(THEME_DEFAULT),
+    m_PdfOrientation(QPrinter::Portrait),
+    m_PdfPageSize(QPrinter::A4)
 {
 }
 
@@ -480,6 +484,26 @@ void Options::setLastUsedTheme(const QString &theme)
     m_lastUsedTheme = theme;
 }
 
+QPrinter::Orientation Options::pdfOrientation() const
+{
+    return m_PdfOrientation;
+}
+
+void Options::setPdfOrientation(const QPrinter::Orientation orientation)
+{
+    m_PdfOrientation = orientation;
+}
+
+QPrinter::PageSize Options::pdfPageSize() const
+{
+    return m_PdfPageSize;
+}
+
+void Options::setPdfPageSize(const QPrinter::PageSize pageSize)
+{
+    m_PdfPageSize = pageSize;
+}
+
 void Options::readSettings()
 {
     QSettings settings;
@@ -546,6 +570,10 @@ void Options::readSettings()
     // spelling check settings
     m_spellingCheckEnabled = settings.value(SPELLINGCHECK_ENABLED, true).toBool();
     m_dictionaryLanguage = settings.value(DICTIONARY_LANGUAGE, "en_US").toString();
+
+    // pdf export settings
+    m_PdfOrientation = (QPrinter::Orientation)settings.value(PDF_ORIENTATION, 0).toInt();
+    m_PdfPageSize = (QPrinter::PageSize)settings.value(PDF_PAGE_SIZE, 0).toInt();
 
     // migrate deprecated lastUsedStyle option
     if (settings.contains(DEPRECATED__LAST_USED_STYLE)) {
@@ -616,6 +644,10 @@ void Options::writeSettings()
     // spelling check settings
     settings.setValue(SPELLINGCHECK_ENABLED, m_spellingCheckEnabled);
     settings.setValue(DICTIONARY_LANGUAGE, m_dictionaryLanguage);
+
+    // pdf export settings
+    settings.setValue(PDF_ORIENTATION, m_PdfOrientation);
+    settings.setValue(PDF_PAGE_SIZE, m_PdfPageSize);
 }
 
 void Options::migrateLastUsedStyleOption(QSettings &settings)
