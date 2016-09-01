@@ -26,6 +26,7 @@ static const char* FONT_FAMILY_DEFAULT = "Monospace";
 static const char* FONT_FAMILY = "editor/font/family";
 static const char* FONT_SIZE = "editor/font/size";
 static const char* TAB_WIDTH = "editor/tabwidth";
+static const char* SPACESFORTABS_ENABLED = "editor/spacesfortabs/enabled";
 static const char* LINECOLUMN_ENABLED = "editor/linecolumn/enabled";
 static const char* RULER_ENABLED = "editor/ruler/enabled";
 static const char* RULER_POS = "editor/ruler/pos";
@@ -80,6 +81,7 @@ Options::Options(QObject *parent) :
     m_sourceAtSingleSizeEnabled(true),
     m_spellingCheckEnabled(true),
     m_diagramSupportEnabled(false),
+    m_spacesForTabsEnabled(false),
     m_lineColumnEnabled(true),
     m_rulerEnabled(false),
     m_rulerPos(80),
@@ -125,6 +127,17 @@ void Options::setTabWidth(int width)
 {
     m_tabWidth = width;
     emit tabWidthChanged(width);
+}
+
+bool Options::isSpacesForTabsEnabled() const
+{
+    return m_spacesForTabsEnabled;
+}
+
+void Options::setSpacesForTabsEnabled(bool enabled)
+{
+    m_spacesForTabsEnabled = enabled;
+    emit spacesForTabsChanged(enabled);
 }
 
 bool Options::isLineColumnEnabled() const
@@ -493,6 +506,7 @@ void Options::readSettings()
     int fontSize = settings.value(FONT_SIZE, 10).toInt();
 
     m_tabWidth = settings.value(TAB_WIDTH, 8).toInt();
+    m_spacesForTabsEnabled = settings.value(SPACESFORTABS_ENABLED, false).toBool();
     m_lineColumnEnabled = settings.value(LINECOLUMN_ENABLED, false).toBool();
     m_rulerEnabled = settings.value(RULER_ENABLED, false).toBool();
     m_rulerPos = settings.value(RULER_POS, 80).toInt();
@@ -567,6 +581,7 @@ void Options::writeSettings()
     settings.setValue(FONT_FAMILY, font.family());
     settings.setValue(FONT_SIZE, font.pointSize());
     settings.setValue(TAB_WIDTH, m_tabWidth);
+    settings.setValue(SPACESFORTABS_ENABLED, m_spacesForTabsEnabled);
     settings.setValue(LINECOLUMN_ENABLED, m_lineColumnEnabled);
     settings.setValue(RULER_ENABLED, m_rulerEnabled);
     settings.setValue(RULER_POS, m_rulerPos);

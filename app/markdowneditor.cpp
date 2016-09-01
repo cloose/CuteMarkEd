@@ -189,6 +189,31 @@ void MarkdownEditor::resizeEvent(QResizeEvent *event)
 
 void MarkdownEditor::keyPressEvent(QKeyEvent *e)
 {
+    if(insertSpacesForTabs)
+    {
+        if(Qt::Key_Tab == e->key())
+        {
+            QTextCursor cursor = textCursor();
+            QFontMetrics fm(font());
+            int tabwidth = this->tabStopWidth() / fm.width(' ');
+
+            cursor.beginEditBlock();
+            int currentPosition = cursor.position();
+            cursor.movePosition(QTextCursor::StartOfLine, QTextCursor::KeepAnchor);
+            int indentToAdd = cursor.selectedText().length() % tabwidth;
+            indentToAdd = (0 == indentToAdd) ? tabwidth : tabwidth - indentToAdd;
+            cursor.setPosition(currentPosition);
+            for(int i = 0; i < indentToAdd; ++i)
+            {
+                cursor.insertText(" ");
+            }
+            cursor.endEditBlock();
+
+            e->accept();
+            return;
+        }
+    }
+
     if (completer && completer->isPopupVisible()) {
         // The following keys are forwarded by the completer to the widget
        switch (e->key()) {
@@ -255,6 +280,11 @@ void MarkdownEditor::tabWidthChanged(int tabWidth)
 {
     QFontMetrics fm(font());
     setTabStopWidth(tabWidth*fm.width(' '));
+}
+
+void MarkdownEditor::spacesForTabsChanged(bool enabled)
+{
+    insertSpacesForTabs = enabled;
 }
 
 void MarkdownEditor::rulerEnabledChanged(bool enabled)

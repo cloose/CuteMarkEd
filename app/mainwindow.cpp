@@ -138,6 +138,7 @@ void MainWindow::initializeApp()
     lastUsedTheme();
 
     ui->plainTextEdit->tabWidthChanged(options->tabWidth());
+    ui->plainTextEdit->spacesForTabsChanged(options->isSpacesForTabsEnabled());
     ui->plainTextEdit->rulerEnabledChanged(options->isRulerEnabled());
     ui->plainTextEdit->rulerPosChanged(options->rulerPos());
 
@@ -1055,6 +1056,8 @@ void MainWindow::setupMarkdownEditor()
             ui->plainTextEdit, &MarkdownEditor::editorFontChanged);
     connect(options, &Options::tabWidthChanged,
             ui->plainTextEdit, &MarkdownEditor::tabWidthChanged);
+    connect(options, &Options::spacesForTabsChanged,
+            ui->plainTextEdit, &MarkdownEditor::spacesForTabsChanged);
     connect(options, &Options::rulerEnabledChanged,
             ui->plainTextEdit, &MarkdownEditor::rulerEnabledChanged);
     connect(options, &Options::rulerPosChanged,
