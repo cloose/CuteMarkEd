@@ -20,6 +20,7 @@
 #include <QMainWindow>
 #include <QMap>
 #include <QHash>
+#include <QFileSystemWatcher>
 #include <themes/theme.h>
 
 namespace Ui {
@@ -59,6 +60,7 @@ private slots:
     void initializeApp();
     void openRecentFile(const QString &fileName);
     void languageChanged(const Dictionary &dictionary);
+    void fileExternallyChanged(const QString &path);
 
     void fileNew();
     void fileOpen();
@@ -164,6 +166,7 @@ private:
     QString fileName;
     float splitFactor;
     bool rightViewCollapsed;
+    QFileSystemWatcher fileSystemWatcher;
 };
 
 #endif // MAINWINDOW_H
