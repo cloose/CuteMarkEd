@@ -1,5 +1,5 @@
 /* PEG Markdown Highlight
- * Copyright 2011-2012 Ali Rantakari -- http://hasseg.org
+ * Copyright 2011-2016 Ali Rantakari -- http://hasseg.org
  * Licensed under the GPL2+ and MIT licenses (see LICENSE for more info).
  * 
  * styleparser.c
@@ -16,10 +16,6 @@
 #include "pmh_styleparser.h"
 #include "pmh_parser.h"
 
-#if defined(_MSC_VER)
-#define strtoll _strtoi64
-#define va_copy(dest, src) (dest = src)
-#endif
 
 #if pmh_DEBUG_OUTPUT
 #define pmhsp_PRINTF(x, ...) fprintf(stderr, x, ##__VA_ARGS__)
@@ -246,7 +242,8 @@ static void free_style_attributes(pmh_style_attribute *list)
         {
             if (cur->type == pmh_attr_type_foreground_color
                 || cur->type == pmh_attr_type_background_color
-                || cur->type == pmh_attr_type_caret_color)
+                || cur->type == pmh_attr_type_caret_color
+                || cur->type == pmh_attr_type_strike_color)
                 free(cur->value->argb_color);
             else if (cur->type == pmh_attr_type_font_family)
                 free(cur->value->font_family);
@@ -278,6 +275,8 @@ pmh_attr_type pmh_attr_type_from_name(char *name)
     else IF_ATTR_NAME("background-color") return pmh_attr_type_background_color;
     else IF_ATTR_NAME("caret") return pmh_attr_type_caret_color;
     else IF_ATTR_NAME("caret-color") return pmh_attr_type_caret_color;
+    else IF_ATTR_NAME("strike") return pmh_attr_type_strike_color;
+    else IF_ATTR_NAME("strike-color") return pmh_attr_type_strike_color;
     else IF_ATTR_NAME("font-size") return pmh_attr_type_font_size_pt;
     else IF_ATTR_NAME("font-family") return pmh_attr_type_font_family;
     else IF_ATTR_NAME("font-style") return pmh_attr_type_font_style;
@@ -294,6 +293,8 @@ char *pmh_attr_name_from_type(pmh_attr_type type)
             return "background-color"; break;
         case pmh_attr_type_caret_color:
             return "caret-color"; break;
+        case pmh_attr_type_strike_color:
+            return "strike-color"; break;
         case pmh_attr_type_font_size_pt:
             return "font-size"; break;
         case pmh_attr_type_font_family:
@@ -383,7 +384,8 @@ static pmh_style_attribute *interpret_attributes(style_parser_data *p_data,
         
         if (atype == pmh_attr_type_foreground_color
             || atype == pmh_attr_type_background_color
-            || atype == pmh_attr_type_caret_color)
+            || atype == pmh_attr_type_caret_color
+            || atype == pmh_attr_type_strike_color)
         {
             char *hexstr = trim_str(cur->value);
             // new_argb_from_hex_str() reports conversion errors
