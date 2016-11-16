@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2015 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,34 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef ACTIVELABEL_H
-#define ACTIVELABEL_H
+#ifndef JSONTHEMEFILETEST_H
+#define JSONTHEMEFILETEST_H
 
-#include <QLabel>
+#include <QObject>
 
-class QAction;
-
-class ActiveLabel : public QLabel
+class JsonThemeFileTest : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 
-public:
-    explicit ActiveLabel(QWidget *parent = 0);
-    explicit ActiveLabel(const QString &text, QWidget *parent = 0);
+private slots:
+    void loadsEmptyThemeCollectionFromFile();
+    void loadsThemesCollectionFromFile();
 
-    void setAction(QAction *action);
+    void savesEmptyThemesCollectionToFile();
+    void savesThemesCollectionToFile();
 
-public slots:
-    void updateFromAction();
-
-signals:
-    void doubleClicked();
-    
-protected:
-    void mouseDoubleClickEvent(QMouseEvent *e) Q_DECL_OVERRIDE;
-
-private:
-    QAction *m_action;
+    void roundtripTest();
 };
 
-#endif // ACTIVELABEL_H
+#endif // JSONTHEMEFILETEST_H

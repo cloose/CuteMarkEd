@@ -8,27 +8,36 @@ QT += testlib
 
 TARGET = unittest
 CONFIG += console testcase
+CONFIG += c++11
 
 SOURCES += \
     main.cpp \
     completionlistmodeltest.cpp \
     snippettest.cpp \
     jsonsnippettranslatortest.cpp \
+    jsonthemetranslatortest.cpp \
     jsontranslatorfactorytest.cpp \
     slidelinemappingtest.cpp \
     snippetcollectiontest.cpp \
     dictionarytest.cpp \
-    yamlheadercheckertest.cpp
+    yamlheadercheckertest.cpp \
+    themetest.cpp \
+    themecollectiontest.cpp \
+    stylemanagertest.cpp
 
 HEADERS += \
     completionlistmodeltest.h \
     snippettest.h \
     jsonsnippettranslatortest.h \
+    jsonthemetranslatortest.h \
     jsontranslatorfactorytest.h \
     slidelinemappingtest.h \
     snippetcollectiontest.h \
     dictionarytest.h \
-    yamlheadercheckertest.h
+    yamlheadercheckertest.h \
+    themetest.h \
+    themecollectiontest.h \
+    stylemanagertest.h
 
 target.CONFIG += no_default_install
 

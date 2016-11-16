@@ -26,7 +26,10 @@ AboutDialog::AboutDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->messageLabel->setText(QString("<p><b><font size=\"5\">CuteMarkEd</font></b><br>Version %1</p>").arg(qApp->applicationVersion()));
+    const QString appInfo = QString(ui->messageLabel->text())
+            .arg(qApp->applicationDisplayName())
+            .arg(qApp->applicationVersion());
+    ui->messageLabel->setText(appInfo);
 
     const QString description = QString("<p>%1<br>%2</p><p>%3</p>")
             .arg(tr("Qt-based, free and open source markdown editor with live HTML preview"))

@@ -21,7 +21,9 @@
 #include <QDesktopServices>
 #include <QDirIterator>
 #include <QFileDialog>
+#ifndef Q_OS_OSX
 #include <QIcon>
+#endif
 #include <QInputDialog>
 #include <QLabel>
 #include <QMessageBox>
@@ -47,6 +49,8 @@
 #include <snippets/jsonsnippettranslatorfactory.h>
 #include <snippets/snippetcollection.h>
 #include <spellchecker/dictionary.h>
+#include <themes/stylemanager.h>
+#include <themes/themecollection.h>
 #include <datalocation.h>
 #include "controls/activelabel.h"
 #include "controls/findreplacewidget.h"
@@ -67,18 +71,19 @@
 #include "savefileadapter.h"
 #include "snippetcompleter.h"
 #include "tabletooldialog.h"
+#include "statusbarwidget.h"
 
 MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     options(new Options(this)),
-    styleLabel(0),
-    wordCountLabel(0),
-    viewLabel(0),
+    stylesGroup(new QActionGroup(this)),
+    statusBarWidget(0),
     generator(new HtmlPreviewGenerator(options, this)),
     snippetCollection(new SnippetCollection(this)),
     viewSynchronizer(0),
     htmlPreviewController(0),
+    themeCollection(new ThemeCollection()),
     splitFactor(0.5),
     rightViewCollapsed(false)
 {
@@ -125,10 +130,16 @@ void MainWindow::initializeApp()
     ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     ui->tocWebView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 
-    // set last used style
-    lastUsedStyle();
+    themeCollection->load(":/builtin-htmlpreview-themes.json");
+    loadCustomStyles();
+    setupHtmlPreviewThemes();
+
+    // apply last used theme
+    lastUsedTheme();
 
     ui->plainTextEdit->tabWidthChanged(options->tabWidth());
+    ui->plainTextEdit->rulerEnabledChanged(options->isRulerEnabled());
+    ui->plainTextEdit->rulerPosChanged(options->rulerPos());
 
     // init extension flags
     ui->actionAutolink->setChecked(options->isAutolinkEnabled());
@@ -159,7 +170,6 @@ void MainWindow::initializeApp()
     QWebInspector *inspector = new QWebInspector();
     inspector->setPage(ui->webView->page());
 
-    loadCustomStyles();
     ui->menuLanguages->loadDictionaries(options->dictionaryLanguage());
 
     //: path to built-in snippets resource.
@@ -199,8 +209,6 @@ void MainWindow::languageChanged(const Dictionary &dictionary)
 void MainWindow::fileNew()
 {
     if (maybeSave()) {
-        wordCountLabel->setText("");
-        wordCountLabel->setToolTip("");
         ui->plainTextEdit->clear();
         ui->plainTextEdit->resetHighlighting();
         ui->webView->setHtml(QString());
@@ -312,17 +320,17 @@ void MainWindow::fileExportToHtml()
 
 void MainWindow::fileExportToPdf()
 {
-	// using temporary QTextDocument instance to get links exported\printed correctly,
-	// as links will dissappear when printing directly from QWebView in current Qt implementation
-	// of QWebView::print() method (possible bug in Qt?)
-	// more info here: http://stackoverflow.com/questions/11629093/add-working-url-into-pdf-using-qt-qprinter
+    // using temporary QTextDocument instance to get links exported\printed correctly,
+    // as links will dissappear when printing directly from QWebView in current Qt implementation
+    // of QWebView::print() method (possible bug in Qt?)
+    // more info here: http://stackoverflow.com/questions/11629093/add-working-url-into-pdf-using-qt-qprinter
 
-	ExportPdfDialog dialog(fileName);
-	if (dialog.exec() == QDialog::Accepted) {
-		 QTextDocument doc;
-		 doc.setHtml(ui->webView->page()->currentFrame()->toHtml());
-		 doc.print(dialog.printer());
-	}
+    ExportPdfDialog dialog(fileName);
+    if (dialog.exec() == QDialog::Accepted) {
+         QTextDocument doc;
+         doc.setHtml(ui->webView->page()->currentFrame()->toHtml());
+         doc.print(dialog.printer());
+    }
 }
 
 void MainWindow::filePrint()
@@ -479,105 +487,48 @@ void MainWindow::viewChangeSplit()
     }
 }
 
-void MainWindow::lastUsedStyle()
+void MainWindow::lastUsedTheme()
 {
-    if (stylesGroup) {
-        foreach(QAction *action, stylesGroup->actions()) {
-            if (action->objectName() == options->lastUsedStyle()) {
-                action->trigger();
-            }
+    QString themeName = options->lastUsedTheme();
+
+    currentTheme = themeCollection->theme(themeName);
+    applyCurrentTheme();
+
+    for (auto action : stylesGroup->actions()) {
+        if (action->text() == themeName) {
+            action->setChecked(true);
+            stylesGroup->triggered(action);
+            break;
         }
     }
 }
 
-void MainWindow::styleDefault()
-{
-    generator->setCodeHighlightingStyle("default");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/markdown.css"));
-
-    styleLabel->setText(ui->actionDefault->text());
-    options->setLastUsedStyle(ui->actionDefault->objectName());
-}
-
-void MainWindow::styleGithub()
-{
-    generator->setCodeHighlightingStyle("github");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/github.css"));
-
-    styleLabel->setText(ui->actionGithub->text());
-    options->setLastUsedStyle(ui->actionGithub->objectName());
-}
-
-void MainWindow::styleSolarizedLight()
-{
-    generator->setCodeHighlightingStyle("solarized_light");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-light+.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-light.css"));
-
-    styleLabel->setText(ui->actionSolarizedLight->text());
-    options->setLastUsedStyle(ui->actionSolarizedLight->objectName());
-}
-
-void MainWindow::styleSolarizedDark()
-{
-    generator->setCodeHighlightingStyle("solarized_dark");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/solarized-dark+.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/solarized-dark.css"));
-
-    styleLabel->setText(ui->actionSolarizedDark->text());
-    options->setLastUsedStyle(ui->actionSolarizedDark->objectName());
-}
-
-void MainWindow::styleClearness()
-{
-    generator->setCodeHighlightingStyle("default");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness.css"));
-
-    styleLabel->setText(ui->actionClearness->text());
-    options->setLastUsedStyle(ui->actionClearness->objectName());
-}
-
-void MainWindow::styleClearnessDark()
-{
-    generator->setCodeHighlightingStyle("default");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/clearness-dark+.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/clearness-dark.css"));
-
-    styleLabel->setText(ui->actionClearnessDark->text());
-    options->setLastUsedStyle(ui->actionClearnessDark->objectName());
-}
-
-void MainWindow::styleBywordDark()
-{
-    generator->setCodeHighlightingStyle("default");
-
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/byword-dark.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl("qrc:/css/byword-dark.css"));
-
-    styleLabel->setText(ui->actionBywordDark->text());
-    options->setLastUsedStyle(ui->actionBywordDark->objectName());
-}
-
-void MainWindow::styleCustomStyle()
+void MainWindow::themeChanged()
 {
     QAction *action = qobject_cast<QAction*>(sender());
+    QString themeName = action->text();
 
-    generator->setCodeHighlightingStyle("default");
+    currentTheme = themeCollection->theme(themeName);
+    applyCurrentTheme();
 
-    ui->plainTextEdit->loadStyleFromStylesheet(":/theme/default.txt");
-    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl::fromLocalFile(action->data().toString()));
+    options->setLastUsedTheme(themeName);
+}
 
-    styleLabel->setText(action->text());
-    options->setLastUsedStyle(action->objectName());
+void MainWindow::editorStyleChanged()
+{
+    QString markdownHighlighting = StyleManager::markdownHighlightingPath(currentTheme);
+    ui->plainTextEdit->loadStyleFromStylesheet(stylePath(markdownHighlighting));
+}
+
+void MainWindow::applyCurrentTheme()
+{
+    QString markdownHighlighting = StyleManager::markdownHighlightingPath(currentTheme);
+    QString codeHighlighting = StyleManager::codeHighlightingPath(currentTheme);
+    QString previewStylesheet = StyleManager::previewStylesheetPath(currentTheme);
+
+    generator->setCodeHighlightingStyle(codeHighlighting);
+    ui->plainTextEdit->loadStyleFromStylesheet(stylePath(markdownHighlighting));
+    ui->webView->page()->settings()->setUserStyleSheetUrl(QUrl(previewStylesheet));
 }
 
 void MainWindow::viewFullScreenMode()
@@ -669,8 +620,8 @@ void MainWindow::extrasOptions()
 {
     QList<QAction*> actions;
     // file menu
-    actions << ui->actionNew 
-            << ui->actionOpen 
+    actions << ui->actionNew
+            << ui->actionOpen
             << ui->actionSave
             << ui->actionSaveAs
             << ui->actionExportToHTML
@@ -701,7 +652,7 @@ void MainWindow::extrasOptions()
     // view menu
     actions << ui->dockWidget->toggleViewAction()
             << ui->fileExplorerDockWidget->toggleViewAction()
-            << ui->actionHtmlPreview
+            << ui->actionHtmlSource
             << ui->actionSplit_1_1
             << ui->actionSplit_2_1
             << ui->actionSplit_1_2
@@ -737,30 +688,16 @@ void MainWindow::helpAbout()
     dialog.exec();
 }
 
-void MainWindow::styleContextMenu(const QPoint &pos)
+void MainWindow::setHtmlSource(bool enabled)
 {
-    QMenu *menu = new QMenu();
-    menu->addActions(stylesGroup->actions());
-
-    menu->exec(styleLabel->mapToGlobal(pos));
-}
-
-void MainWindow::toggleHtmlView()
-{
-    if (viewLabel->text() == tr("HTML preview")) {
+    if (enabled) {
         ui->stackedWidget->setCurrentWidget(ui->htmlSourcePage);
-
-        ui->actionHtmlPreview->setText(tr("HTML preview"));
-        viewLabel->setText(tr("HTML source"));
 
         // activate HTML highlighter
         htmlHighlighter->setEnabled(true);
         htmlHighlighter->rehighlight();
     } else {
         ui->stackedWidget->setCurrentWidget(ui->webViewPage);
-
-        ui->actionHtmlPreview->setText(tr("HTML source"));
-        viewLabel->setText(tr("HTML preview"));
 
         // deactivate HTML highlighter
         htmlHighlighter->setEnabled(false);
@@ -769,21 +706,16 @@ void MainWindow::toggleHtmlView()
         syncWebViewToHtmlSource();
     }
 
+    // sync view menu action
+    if (ui->actionHtmlSource->isChecked() != enabled)
+        ui->actionHtmlSource->setChecked(enabled);
+
     updateSplitter();
 }
 
 void MainWindow::plainTextChanged()
 {
     QString code = ui->plainTextEdit->toPlainText();
-
-    // update statistics
-    if (wordCountLabel) {
-        int words = ui->plainTextEdit->countWords();
-        int lines = ui->plainTextEdit->document()->lineCount();
-        int chars = ui->plainTextEdit->document()->characterCount();
-        wordCountLabel->setText(tr("%1 words").arg(words));
-        wordCountLabel->setToolTip(tr("Lines: %1  Words: %2  Characters: %3").arg(lines).arg(words).arg(chars));
-    }
 
     // generate HTML from markdown
     generator->markdownTextChanged(code);
@@ -818,15 +750,13 @@ void MainWindow::tocResultReady(const QString &toc)
 
 void MainWindow::previewLinkClicked(const QUrl &url)
 {
-    if(url.isLocalFile())
-    {
+    if (url.isLocalFile()) {
         // directories are not supported
-        if(QFileInfo(url.toLocalFile()).isDir()) return;
+        if (QFileInfo(url.toLocalFile()).isDir()) return;
 
         QString filePath = url.toLocalFile();
         // Links to markdown files open new instance
-        if(filePath.endsWith(".md") || filePath.endsWith(".markdown") || filePath.endsWith(".mdown"))
-        {
+        if (filePath.endsWith(".md") || filePath.endsWith(".markdown") || filePath.endsWith(".mdown")) {
             QProcess::startDetached(qApp->applicationFilePath(), QStringList() << filePath);
             return;
         }
@@ -947,10 +877,10 @@ void MainWindow::setupUi()
     htmlPreviewController = new HtmlPreviewController(ui->webView, this);
 
     setupActions();
-    setupStatusBar();
     setupMarkdownEditor();
     setupHtmlPreview();
     setupHtmlSourceView();
+    setupStatusBar();
 
     // hide find/replace widget on startup
     ui->findReplaceWidget->hide();
@@ -966,12 +896,14 @@ void MainWindow::setupUi()
     ui->dockWidget_2->resize(550, 400);
 
     // show HTML preview on right panel
-    toggleHtmlView();
+    setHtmlSource(ui->actionHtmlSource->isChecked());
 
     connect(options, SIGNAL(proxyConfigurationChanged()),
             this, SLOT(proxyConfigurationChanged()));
     connect(options, SIGNAL(markdownConverterChanged()),
             this, SLOT(markdownConverterChanged()));
+    connect(options, &Options::editorStyleChanged,
+            this, &MainWindow::editorStyleChanged);
 
     readSettings();
     setupCustomShortcuts();
@@ -991,11 +923,8 @@ void MainWindow::setupActions()
     SetActionShortcut(ui->actionNew, QKeySequence::New);
     SetActionShortcut(ui->actionOpen, QKeySequence::Open);
     SetActionShortcut(ui->actionSave, QKeySequence::Save);
-    ui->actionSave->setIcon(QIcon("fa-floppy-o.fontawesome"));
     SetActionShortcut(ui->actionSaveAs, QKeySequence::SaveAs);
-    ui->actionExportToPDF->setIcon(QIcon("fa-file-pdf-o.fontawesome"));
     SetActionShortcut(ui->action_Print, QKeySequence::Print);
-    ui->action_Print->setIcon(QIcon("fa-print.fontawesome"));
     SetActionShortcut(ui->actionExit, QKeySequence::Quit);
 
     recentFilesMenu = new RecentFilesMenu(ui->menuFile);
@@ -1006,31 +935,16 @@ void MainWindow::setupActions()
 
     // edit menu
     SetActionShortcut(ui->actionUndo, QKeySequence::Undo);
-    ui->actionUndo->setIcon(QIcon("fa-undo.fontawesome"));
     SetActionShortcut(ui->actionRedo, QKeySequence::Redo);
-    ui->actionRedo->setIcon(QIcon("fa-repeat.fontawesome"));
 
     SetActionShortcut(ui->actionCut, QKeySequence::Cut);
-    ui->actionCut->setIcon(QIcon("fa-scissors.fontawesome"));
     SetActionShortcut(ui->actionCopy, QKeySequence::Copy);
-    ui->actionCopy->setIcon(QIcon("fa-files-o.fontawesome"));
     SetActionShortcut(ui->actionPaste, QKeySequence::Paste);
-    ui->actionPaste->setIcon(QIcon("fa-clipboard.fontawesome"));
-    SetActionShortcut(ui->actionStrong, QKeySequence::Bold);
-    ui->actionStrong->setIcon(QIcon("fa-bold.fontawesome"));
-    SetActionShortcut(ui->actionEmphasize, QKeySequence::Italic);
-    ui->actionEmphasize->setIcon(QIcon("fa-italic.fontawesome"));
-    ui->actionStrikethrough->setIcon(QIcon("fa-strikethrough.fontawesome"));
-    ui->actionCenterParagraph->setIcon(QIcon("fa-align-center.fontawesome"));
-    ui->actionIncreaseHeaderLevel->setIcon(QIcon("fa-level-up.fontawesome"));
-    ui->actionBlockquote->setIcon(QIcon("fa-quote-left.fontawesome"));
-    ui->actionDecreaseHeaderLevel->setIcon(QIcon("fa-level-down.fontawesome"));
 
-    ui->actionInsertTable->setIcon(QIcon("fa-table.fontawesome"));
-    ui->actionInsertImage->setIcon(QIcon("fa-picture-o.fontawesome"));
+    SetActionShortcut(ui->actionStrong, QKeySequence::Bold);
+    SetActionShortcut(ui->actionEmphasize, QKeySequence::Italic);
 
     SetActionShortcut(ui->actionFindReplace, QKeySequence::Find);
-    ui->actionFindReplace->setIcon(QIcon("fa-search.fontawesome"));
     SetActionShortcut(ui->actionFindNext, QKeySequence::FindNext);
     SetActionShortcut(ui->actionFindPrevious, QKeySequence::FindPrevious);
 
@@ -1045,7 +959,6 @@ void MainWindow::setupActions()
     ui->menuView->insertAction(ui->menuView->actions()[1], ui->fileExplorerDockWidget->toggleViewAction());
     SetActionShortcut(ui->fileExplorerDockWidget->toggleViewAction(), QKeySequence(Qt::ALT + Qt::Key_E));
     SetActionShortcut(ui->actionFullScreenMode, QKeySequence::FullScreen);
-    ui->actionFullScreenMode->setIcon(QIcon("fa-arrows-alt.fontawesome"));
 
     // extras menu
     connect(ui->actionMathSupport, SIGNAL(triggered(bool)),
@@ -1057,20 +970,11 @@ void MainWindow::setupActions()
     connect(ui->menuLanguages, SIGNAL(languageTriggered(Dictionary)),
             this, SLOT(languageChanged(Dictionary)));
 
-    // put style actions in a group
-    stylesGroup = new QActionGroup(this);
-    ui->actionDefault->setActionGroup(stylesGroup);
-    ui->actionGithub->setActionGroup(stylesGroup);
-    ui->actionSolarizedLight->setActionGroup(stylesGroup);
-    ui->actionSolarizedDark->setActionGroup(stylesGroup);
-    ui->actionClearness->setActionGroup(stylesGroup);
-    ui->actionClearnessDark->setActionGroup(stylesGroup);
-    ui->actionBywordDark->setActionGroup(stylesGroup);
-
     // help menu
     ui->actionMarkdownSyntax->setShortcut(QKeySequence::HelpContents);
 
-    ui->webView->pageAction(QWebPage::Copy)->setIcon(QIcon("fa-copy.fontawesome"));
+    // set actions icons
+    setActionsIcons();
 
     // set names for dock widget actions
     ui->dockWidget->toggleViewAction()->setObjectName("actionTableOfContents");
@@ -1085,35 +989,58 @@ void MainWindow::setupActions()
     ui->actionInsertImage->setProperty("defaultshortcut", ui->actionInsertImage->shortcut());
     ui->dockWidget->toggleViewAction()->setProperty("defaultshortcut", ui->dockWidget->toggleViewAction()->shortcut());
     ui->fileExplorerDockWidget->toggleViewAction()->setProperty("defaultshortcut", ui->fileExplorerDockWidget->toggleViewAction()->shortcut());
-    ui->actionHtmlPreview->setProperty("defaultshortcut", ui->actionHtmlPreview->shortcut());
+    ui->actionHtmlSource->setProperty("defaultshortcut", ui->actionHtmlSource->shortcut());
+}
+
+void MainWindow::setActionsIcons()
+{
+#ifndef Q_OS_OSX
+  // file menu
+  ui->actionSave->setIcon(QIcon("fa-floppy-o.fontawesome"));
+  ui->actionExportToPDF->setIcon(QIcon("fa-file-pdf-o.fontawesome"));
+  ui->action_Print->setIcon(QIcon("fa-print.fontawesome"));
+
+  // edit menu
+  ui->actionUndo->setIcon(QIcon("fa-undo.fontawesome"));
+  ui->actionRedo->setIcon(QIcon("fa-repeat.fontawesome"));
+
+  ui->actionCut->setIcon(QIcon("fa-scissors.fontawesome"));
+  ui->actionCopy->setIcon(QIcon("fa-files-o.fontawesome"));
+  ui->actionPaste->setIcon(QIcon("fa-clipboard.fontawesome"));
+
+  ui->actionStrong->setIcon(QIcon("fa-bold.fontawesome"));
+  ui->actionEmphasize->setIcon(QIcon("fa-italic.fontawesome"));
+  ui->actionStrikethrough->setIcon(QIcon("fa-strikethrough.fontawesome"));
+  ui->actionCenterParagraph->setIcon(QIcon("fa-align-center.fontawesome"));
+  ui->actionIncreaseHeaderLevel->setIcon(QIcon("fa-level-up.fontawesome"));
+  ui->actionBlockquote->setIcon(QIcon("fa-quote-left.fontawesome"));
+  ui->actionDecreaseHeaderLevel->setIcon(QIcon("fa-level-down.fontawesome"));
+
+  ui->actionInsertTable->setIcon(QIcon("fa-table.fontawesome"));
+  ui->actionInsertImage->setIcon(QIcon("fa-picture-o.fontawesome"));
+
+  ui->actionFindReplace->setIcon(QIcon("fa-search.fontawesome"));
+
+  // view menu
+  ui->actionFullScreenMode->setIcon(QIcon("fa-arrows-alt.fontawesome"));
+
+  ui->webView->pageAction(QWebPage::Copy)->setIcon(QIcon("fa-copy.fontawesome"));
+#endif
 }
 
 void MainWindow::setupStatusBar()
 {
+    statusBarWidget = new StatusBarWidget(ui->plainTextEdit);
+    statusBarWidget->setHtmlAction(ui->actionHtmlSource);
+
+    connect(options, &Options::lineColumnEnabledChanged,
+            statusBarWidget, &StatusBarWidget::showLineColumn);
+
+    statusBarWidget->update();
+
     // remove border around statusbar widgets
     statusBar()->setStyleSheet("QStatusBar::item { border: 0px solid black }; ");
-
-    // add style label to statusbar
-    styleLabel = new QLabel(ui->actionDefault->text(), this);
-    styleLabel->setToolTip(tr("Change Preview Style"));
-    statusBar()->addPermanentWidget(styleLabel, 1);
-
-    styleLabel->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(styleLabel, SIGNAL(customContextMenuRequested(QPoint)),
-            this, SLOT(styleContextMenu(QPoint)));
-
-    // add word count label to statusbar
-    wordCountLabel = new QLabel(this);
-    wordCountLabel->setAlignment(Qt::AlignHCenter);
-    statusBar()->addPermanentWidget(wordCountLabel, 1);
-
-    // add view label to statusbar
-    viewLabel = new ActiveLabel(this);
-    viewLabel->setAlignment(Qt::AlignRight);
-    statusBar()->addPermanentWidget(viewLabel, 1);
-
-    connect(viewLabel, SIGNAL(doubleClicked()),
-            this, SLOT(toggleHtmlView()));
+    statusBar()->addPermanentWidget(statusBarWidget, 1);
 }
 
 void MainWindow::setupMarkdownEditor()
@@ -1124,10 +1051,14 @@ void MainWindow::setupMarkdownEditor()
     connect(ui->plainTextEdit, SIGNAL(loadDroppedFile(QString)),
             this, SLOT(load(QString)));
 
-    connect(options, SIGNAL(editorFontChanged(QFont)),
-            ui->plainTextEdit, SLOT(editorFontChanged(QFont)));
-    connect(options, SIGNAL(tabWidthChanged(int)),
-            ui->plainTextEdit, SLOT(tabWidthChanged(int)));
+    connect(options, &Options::editorFontChanged,
+            ui->plainTextEdit, &MarkdownEditor::editorFontChanged);
+    connect(options, &Options::tabWidthChanged,
+            ui->plainTextEdit, &MarkdownEditor::tabWidthChanged);
+    connect(options, &Options::rulerEnabledChanged,
+            ui->plainTextEdit, &MarkdownEditor::rulerEnabledChanged);
+    connect(options, &Options::rulerPosChanged,
+            ui->plainTextEdit, &MarkdownEditor::rulerPosChanged);
 }
 
 void MainWindow::setupHtmlPreview()
@@ -1252,6 +1183,42 @@ void MainWindow::updateSplitter()
     ui->splitter->setSizes(childSizes);
 }
 
+void MainWindow::setupHtmlPreviewThemes()
+{
+    ui->menuStyles->clear();
+
+    delete stylesGroup;
+    stylesGroup = new QActionGroup(this);
+
+    int key = 1;
+    bool separatorAdded = false;
+    foreach(const QString &themeName, themeCollection->themeNames()) {
+        if (!separatorAdded && !themeCollection->theme(themeName).isBuiltIn()) {
+            addSeparatorAfterBuiltInThemes();
+            separatorAdded = true;
+        }
+
+        QAction *action = ui->menuStyles->addAction(themeName);
+        action->setShortcut(QKeySequence(tr("Ctrl+%1").arg(key++)));
+        action->setCheckable(true);
+        action->setActionGroup(stylesGroup);
+        connect(action, &QAction::triggered,
+                this, &MainWindow::themeChanged);
+    }
+
+    if (statusBarWidget)
+        statusBarWidget->setStyleActions(stylesGroup);
+}
+
+void MainWindow::addSeparatorAfterBuiltInThemes()
+{
+    ui->menuStyles->addSeparator();
+
+    QAction *separator = new QAction(stylesGroup);
+    separator->setSeparator(true);
+    stylesGroup->addAction(separator);
+}
+
 void MainWindow::loadCustomStyles()
 {
     QStringList paths = DataLocation::standardLocations();
@@ -1259,21 +1226,20 @@ void MainWindow::loadCustomStyles()
     QDir dataPath(paths.first() + QDir::separator() + "styles");
     dataPath.setFilter(QDir::Files);
     if (dataPath.exists()) {
-        ui->menuStyles->addSeparator();
-
         // iterate over all files in the styles subdirectory
         QDirIterator it(dataPath);
         while (it.hasNext()) {
             it.next();
 
             QString fileName = it.fileName();
-            QAction *action = ui->menuStyles->addAction(QFileInfo(fileName).baseName());
-            action->setCheckable(true);
-            action->setActionGroup(stylesGroup);
-            action->setData(it.filePath());
+            QString styleName = QFileInfo(fileName).baseName();
+            QString stylePath = QUrl::fromLocalFile(it.filePath()).toString();
 
-            connect(action, SIGNAL(triggered()),
-                    this, SLOT(styleCustomStyle()));
+            Theme customTheme { styleName, "Default", "Default", styleName };
+            themeCollection->insert(customTheme);
+
+            StyleManager styleManager;
+            styleManager.insertCustomPreviewStylesheet(styleName, stylePath);
         }
     }
 }
@@ -1304,3 +1270,8 @@ void MainWindow::writeSettings()
     settings.setValue("mainWindow/windowState", saveState());
 }
 
+QString MainWindow::stylePath(const QString &styleName)
+{
+    QString suffix = options->isSourceAtSingleSizeEnabled() ? "" : "+";
+    return QString(":/theme/%1%2.txt").arg(styleName).arg(suffix);
+}

@@ -27,6 +27,7 @@ CompletionListModel::CompletionListModel(QObject *parent) :
 
 int CompletionListModel::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent);
     return snippets.count() + words.count();
 }
 

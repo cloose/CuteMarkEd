@@ -21,6 +21,7 @@
 #include <QFont>
 #include <QKeySequence>
 #include <QMap>
+#include <QSettings>
 
 class Options : public QObject
 {
@@ -43,6 +44,15 @@ public:
 
     int tabWidth() const;
     void setTabWidth(int width);
+
+    bool isLineColumnEnabled() const;
+    void setLineColumnEnabled(bool enabled);
+
+    bool isRulerEnabled() const;
+    void setRulerEnabled(bool enabled);
+
+    int rulerPos() const;
+    void setRulerPos(int pos);
 
     /* HTML preview options */
     QFont standardFont() const;
@@ -109,6 +119,9 @@ public:
     bool isMathSupportEnabled() const;
     void setMathSupportEnabled(bool enabled);
 
+    bool isMathInlineSupportEnabled() const;
+    void setMathInlineSupportEnabled(bool enabled);
+
     bool isCodeHighlightingEnabled() const;
     void setCodeHighlightingEnabled(bool enabled);
 
@@ -117,6 +130,9 @@ public:
 
     bool isWordWrapEnabled() const;
     void setWordWrapEnabled(bool enabled);
+
+    bool isSourceAtSingleSizeEnabled() const;
+    void setSourceAtSingleSizeEnabled(bool enabled);
 
     bool isSpellingCheckEnabled() const;
     void setSpellingCheckEnabled(bool enabled);
@@ -133,17 +149,25 @@ public:
     MarkdownConverter markdownConverter() const;
     void setMarkdownConverter(MarkdownConverter converter);
 
-    QString lastUsedStyle() const;
-    void setLastUsedStyle(const QString &style);
+    QString lastUsedTheme() const;
+    void setLastUsedTheme(const QString &theme);
 
     void readSettings();
     void writeSettings();
 
 signals:
     void editorFontChanged(const QFont &font);
+    void editorStyleChanged();
     void tabWidthChanged(int tabWidth);
+    void lineColumnEnabledChanged(bool enabled);
+    void rulerEnabledChanged(bool enabled);
+    void rulerPosChanged(int pos);
+
     void proxyConfigurationChanged();
     void markdownConverterChanged();
+
+private:
+    void migrateLastUsedStyleOption(QSettings &settings);
 
 private:
     QFont font;
@@ -161,15 +185,20 @@ private:
     bool m_footnotesEnabled;
     bool m_superscriptEnabled;
     bool m_mathSupportEnabled;
+    bool m_mathInlineSupportEnabled;
     bool m_codeHighlightingEnabled;
     bool m_showSpecialCharactersEnabled;
     bool m_wordWrapEnabled;
+    bool m_sourceAtSingleSizeEnabled;
     bool m_spellingCheckEnabled;
     bool m_yamlHeaderSupportEnabled;
     bool m_diagramSupportEnabled;
+    bool m_lineColumnEnabled;
+    bool m_rulerEnabled;
+    int m_rulerPos;
     QString m_dictionaryLanguage;
     MarkdownConverter m_markdownConverter;
-    QString m_lastUsedStyle;
+    QString m_lastUsedTheme;
     QString m_standardFontFamily;
     QString m_fixedFontFamily;
     QString m_serifFontFamily;

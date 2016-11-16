@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2015 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,34 +14,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef ACTIVELABEL_H
-#define ACTIVELABEL_H
+#ifndef THEMECOLLECTION_H
+#define THEMECOLLECTION_H
 
-#include <QLabel>
+#include <QString>
+#include <QStringList>
+#include <jsoncollection.h>
+#include "theme.h"
 
-class QAction;
 
-class ActiveLabel : public QLabel
+class ThemeCollection : public JsonCollection<Theme>
 {
-    Q_OBJECT
-
 public:
-    explicit ActiveLabel(QWidget *parent = 0);
-    explicit ActiveLabel(const QString &text, QWidget *parent = 0);
+    bool load(const QString &fileName);
 
-    void setAction(QAction *action);
+    int insert(const Theme &theme);
 
-public slots:
-    void updateFromAction();
+    int count() const;
+    const Theme &at(int offset) const;
+    bool contains(const QString &name) const;
+    const Theme theme(const QString &name) const;
+    QStringList themeNames() const;
 
-signals:
-    void doubleClicked();
-    
-protected:
-    void mouseDoubleClickEvent(QMouseEvent *e) Q_DECL_OVERRIDE;
+    const QString name() const;
 
 private:
-    QAction *m_action;
+    QStringList themesIndex;
+    QList<Theme> themes;
 };
 
-#endif // ACTIVELABEL_H
+#endif // THEMECOLLECTION_H
+

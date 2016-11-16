@@ -16,17 +16,19 @@
  */
 #include "options.h"
 
-#include <QSettings>
 #include <QWebSettings>
 
 
 static const char* MARKDOWN_CONVERTER = "General/converter";
-static const char* LAST_USED_STYLE = "General/lastusedstyle";
-static const char* STYLE_DEFAULT = "actionDefault";
+static const char* LAST_USED_THEME = "General/lastusedtheme";
+static const char* THEME_DEFAULT = "Default";
 static const char* FONT_FAMILY_DEFAULT = "Monospace";
 static const char* FONT_FAMILY = "editor/font/family";
 static const char* FONT_SIZE = "editor/font/size";
 static const char* TAB_WIDTH = "editor/tabwidth";
+static const char* LINECOLUMN_ENABLED = "editor/linecolumn/enabled";
+static const char* RULER_ENABLED = "editor/ruler/enabled";
+static const char* RULER_POS = "editor/ruler/pos";
 static const char* PREVIEW_STANDARD_FONT = "preview/standardfont";
 static const char* PREVIEW_FIXED_FONT = "preview/fixedfont";
 static const char* PREVIEW_SERIF_FONT = "preview/seriffont";
@@ -46,13 +48,17 @@ static const char* SMARTYPANTS_ENABLED = "extensions/smartyPants";
 static const char* FOOTNOTES_ENABLED = "extensions/footnotes";
 static const char* SUPERSCRIPT_ENABLED = "extensions/superscript";
 static const char* MATHSUPPORT_ENABLED = "mathsupport/enabled";
+static const char* MATHINLINESUPPORT_ENABLED = "mathinlinesupport/enabled";
 static const char* CODEHIGHLIGHT_ENABLED = "codehighlighting/enabled";
 static const char* SHOWSPECIALCHARACTERS_ENABLED = "specialchars/enabled";
 static const char* WORDWRAP_ENABLED = "wordwrap/enabled";
+static const char* SOURCEATSINGLESIZE_ENABLED = "sourceatsinglesize/enabled";
 static const char* SPELLINGCHECK_ENABLED = "spelling/enabled";
 static const char* DICTIONARY_LANGUAGE = "spelling/language";
 static const char* YAMLHEADERSUPPORT_ENABLED = "yamlheadersupport/enabled";
 static const char* DIAGRAMSUPPORT_ENABLED = "diagramsupport/enabled";
+
+static const char* DEPRECATED__LAST_USED_STYLE = "general/lastusedstyle";
 
 Options::Options(QObject *parent) :
     QObject(parent),
@@ -67,13 +73,18 @@ Options::Options(QObject *parent) :
     m_footnotesEnabled(true),
     m_superscriptEnabled(true),
     m_mathSupportEnabled(false),
+    m_mathInlineSupportEnabled(false),
     m_codeHighlightingEnabled(false),
     m_showSpecialCharactersEnabled(false),
     m_wordWrapEnabled(true),
+    m_sourceAtSingleSizeEnabled(true),
     m_spellingCheckEnabled(true),
     m_diagramSupportEnabled(false),
+    m_lineColumnEnabled(true),
+    m_rulerEnabled(false),
+    m_rulerPos(80),
     m_markdownConverter(DiscountMarkdownConverter),
-    m_lastUsedStyle(STYLE_DEFAULT)
+    m_lastUsedTheme(THEME_DEFAULT)
 {
 }
 
@@ -89,6 +100,9 @@ void Options::apply()
 
     emit proxyConfigurationChanged();
     emit markdownConverterChanged();
+    emit lineColumnEnabledChanged(m_lineColumnEnabled);
+    emit rulerEnabledChanged(m_rulerEnabled);
+    emit rulerPosChanged(m_rulerPos);
 }
 
 QFont Options::editorFont() const
@@ -111,6 +125,39 @@ void Options::setTabWidth(int width)
 {
     m_tabWidth = width;
     emit tabWidthChanged(width);
+}
+
+bool Options::isLineColumnEnabled() const
+{
+    return m_lineColumnEnabled;
+}
+
+void Options::setLineColumnEnabled(bool enabled)
+{
+    m_lineColumnEnabled = enabled;
+    emit lineColumnEnabledChanged(enabled);
+}
+
+bool Options::isRulerEnabled() const
+{
+    return m_rulerEnabled;
+}
+
+void Options::setRulerEnabled(bool enabled)
+{
+    m_rulerEnabled = enabled;
+    emit rulerEnabledChanged(enabled);
+}
+
+int Options::rulerPos() const
+{
+    return m_rulerPos;
+}
+
+void Options::setRulerPos(int pos)
+{
+    m_rulerPos = pos;
+    emit rulerPosChanged(pos);
 }
 
 QFont Options::standardFont() const
@@ -319,6 +366,16 @@ void Options::setMathSupportEnabled(bool enabled)
     m_mathSupportEnabled = enabled;
 }
 
+bool Options::isMathInlineSupportEnabled() const
+{
+    return m_mathInlineSupportEnabled;
+}
+
+void Options::setMathInlineSupportEnabled(bool enabled)
+{
+    m_mathInlineSupportEnabled = enabled;
+}
+
 bool Options::isCodeHighlightingEnabled() const
 {
     return m_codeHighlightingEnabled;
@@ -347,6 +404,17 @@ bool Options::isWordWrapEnabled() const
 void Options::setWordWrapEnabled(bool enabled)
 {
     m_wordWrapEnabled = enabled;
+}
+
+bool Options::isSourceAtSingleSizeEnabled() const
+{
+    return m_sourceAtSingleSizeEnabled;
+}
+
+void Options::setSourceAtSingleSizeEnabled(bool enabled)
+{
+    m_sourceAtSingleSizeEnabled = enabled;
+    emit editorStyleChanged();
 }
 
 bool Options::isSpellingCheckEnabled() const
@@ -402,14 +470,14 @@ void Options::setMarkdownConverter(Options::MarkdownConverter converter)
     }
 }
 
-QString Options::lastUsedStyle() const
+QString Options::lastUsedTheme() const
 {
-    return m_lastUsedStyle;
+    return m_lastUsedTheme;
 }
 
-void Options::setLastUsedStyle(const QString &style)
+void Options::setLastUsedTheme(const QString &theme)
 {
-    m_lastUsedStyle = style;
+    m_lastUsedTheme = theme;
 }
 
 void Options::readSettings()
@@ -418,13 +486,16 @@ void Options::readSettings()
 
     // general settings
     m_markdownConverter = (Options::MarkdownConverter)settings.value(MARKDOWN_CONVERTER, 0).toInt();
-    m_lastUsedStyle = settings.value(LAST_USED_STYLE, STYLE_DEFAULT).toString();
+    m_lastUsedTheme = settings.value(LAST_USED_THEME, THEME_DEFAULT).toString();
 
     // editor settings
     QString fontFamily = settings.value(FONT_FAMILY, FONT_FAMILY_DEFAULT).toString();
     int fontSize = settings.value(FONT_SIZE, 10).toInt();
 
     m_tabWidth = settings.value(TAB_WIDTH, 8).toInt();
+    m_lineColumnEnabled = settings.value(LINECOLUMN_ENABLED, false).toBool();
+    m_rulerEnabled = settings.value(RULER_ENABLED, false).toBool();
+    m_rulerPos = settings.value(RULER_POS, 80).toInt();
 
     QFont f(fontFamily, fontSize);
     f.setStyleHint(QFont::TypeWriter);
@@ -438,6 +509,7 @@ void Options::readSettings()
     m_sansSerifFontFamily = settings.value(PREVIEW_SANSSERIF_FONT, globalWebSettings->fontFamily(QWebSettings::SansSerifFont)).toString();
     m_defaultFontSize = settings.value(PREVIEW_DEFAULT_FONT_SIZE, globalWebSettings->fontSize(QWebSettings::DefaultFontSize)).toInt();
     m_defaultFixedFontSize = settings.value(PREVIEW_DEFAULT_FIXED_FONT_SIZE, globalWebSettings->fontSize(QWebSettings::DefaultFixedFontSize)).toInt();
+    m_mathInlineSupportEnabled = settings.value(MATHINLINESUPPORT_ENABLED, false).toBool();
 
     // proxy settings
     m_proxyMode = (Options::ProxyMode)settings.value(PROXY_MODE, 0).toInt();
@@ -467,12 +539,18 @@ void Options::readSettings()
     m_codeHighlightingEnabled = settings.value(CODEHIGHLIGHT_ENABLED, false).toBool();
     m_showSpecialCharactersEnabled = settings.value(SHOWSPECIALCHARACTERS_ENABLED, false).toBool();
     m_wordWrapEnabled = settings.value(WORDWRAP_ENABLED, true).toBool();
+    m_sourceAtSingleSizeEnabled = settings.value(SOURCEATSINGLESIZE_ENABLED, true).toBool();
     m_yamlHeaderSupportEnabled = settings.value(YAMLHEADERSUPPORT_ENABLED, false).toBool();
     m_diagramSupportEnabled = settings.value(DIAGRAMSUPPORT_ENABLED, false).toBool();
 
     // spelling check settings
     m_spellingCheckEnabled = settings.value(SPELLINGCHECK_ENABLED, true).toBool();
     m_dictionaryLanguage = settings.value(DICTIONARY_LANGUAGE, "en_US").toString();
+
+    // migrate deprecated lastUsedStyle option
+    if (settings.contains(DEPRECATED__LAST_USED_STYLE)) {
+        migrateLastUsedStyleOption(settings);
+    }
 
     apply();
 }
@@ -483,12 +561,15 @@ void Options::writeSettings()
 
     // general settings
     settings.setValue(MARKDOWN_CONVERTER, m_markdownConverter);
-    settings.setValue(LAST_USED_STYLE, m_lastUsedStyle);
+    settings.setValue(LAST_USED_THEME, m_lastUsedTheme);
 
     // editor settings
     settings.setValue(FONT_FAMILY, font.family());
     settings.setValue(FONT_SIZE, font.pointSize());
     settings.setValue(TAB_WIDTH, m_tabWidth);
+    settings.setValue(LINECOLUMN_ENABLED, m_lineColumnEnabled);
+    settings.setValue(RULER_ENABLED, m_rulerEnabled);
+    settings.setValue(RULER_POS, m_rulerPos);
 
     // html preview settings
     settings.setValue(PREVIEW_STANDARD_FONT, m_standardFontFamily);
@@ -497,6 +578,7 @@ void Options::writeSettings()
     settings.setValue(PREVIEW_SANSSERIF_FONT, m_sansSerifFontFamily);
     settings.setValue(PREVIEW_DEFAULT_FONT_SIZE, m_defaultFontSize);
     settings.setValue(PREVIEW_DEFAULT_FIXED_FONT_SIZE, m_defaultFixedFontSize);
+    settings.setValue(MATHINLINESUPPORT_ENABLED, m_mathInlineSupportEnabled);
 
     // proxy settings
     settings.setValue(PROXY_MODE, m_proxyMode);
@@ -527,10 +609,29 @@ void Options::writeSettings()
     settings.setValue(CODEHIGHLIGHT_ENABLED, m_codeHighlightingEnabled);
     settings.setValue(SHOWSPECIALCHARACTERS_ENABLED, m_showSpecialCharactersEnabled);
     settings.setValue(WORDWRAP_ENABLED, m_wordWrapEnabled);
+    settings.setValue(SOURCEATSINGLESIZE_ENABLED, m_sourceAtSingleSizeEnabled);
     settings.setValue(YAMLHEADERSUPPORT_ENABLED, m_yamlHeaderSupportEnabled);
     settings.setValue(DIAGRAMSUPPORT_ENABLED, m_diagramSupportEnabled);
 
     // spelling check settings
     settings.setValue(SPELLINGCHECK_ENABLED, m_spellingCheckEnabled);
     settings.setValue(DICTIONARY_LANGUAGE, m_dictionaryLanguage);
+}
+
+void Options::migrateLastUsedStyleOption(QSettings &settings)
+{
+    static const QMap<QString, QString> migrations {
+        { "actionDefault", "Default" },
+        { "actionGithub", "Github" },
+        { "actionSolarizedLight", "Solarized Light" },
+        { "actionSolarizedDark", "Solarized Dark" },
+        { "actionClearness", "Clearness" },
+        { "actionClearnessDark", "Clearness Dark" },
+        { "actionBywordDark", "Byword Dark" }
+    };
+
+    QString lastUsedStyle = settings.value(DEPRECATED__LAST_USED_STYLE).toString();
+    m_lastUsedTheme = migrations[lastUsedStyle];
+
+    settings.remove(DEPRECATED__LAST_USED_STYLE);
 }

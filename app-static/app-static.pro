@@ -8,7 +8,7 @@ QT += gui webkitwidgets
 
 TARGET = app-static
 TEMPLATE = lib
-CONFIG += staticlib 
+CONFIG += staticlib
 CONFIG += c++11
 
 INCLUDEPATH += $$PWD
@@ -21,6 +21,10 @@ SOURCES += \
     converter/revealmarkdownconverter.cpp \
     template/htmltemplate.cpp \
     template/presentationtemplate.cpp \
+    themes/jsonthemetranslator.cpp \
+    themes/stylemanager.cpp \
+    themes/theme.cpp \
+    themes/themecollection.cpp \
     completionlistmodel.cpp \
     datalocation.cpp \
     slidelinemapping.cpp \
@@ -43,6 +47,11 @@ HEADERS += \
     template/template.h \
     template/htmltemplate.h \
     template/presentationtemplate.h \
+    themes/jsonthemetranslator.h \
+    themes/jsonthemetranslatorfactory.h \
+    themes/stylemanager.h \
+    themes/theme.h \
+    themes/themecollection.h \
     completionlistmodel.h \
     datalocation.h \
     slidelinemapping.h \
@@ -68,10 +77,7 @@ HEADERS += \
 #
 # Add search paths below /usr/local for Mac OSX
 #
-macx {
-  LIBS += -L/usr/local/lib
-  INCLUDEPATH += /usr/local/include
-}
+macx:INCLUDEPATH += /usr/local/include
 
 #
 # JSON configuration library
@@ -81,14 +87,7 @@ INCLUDEPATH += $$PWD/../libs/jsonconfig
 #
 # Discount library
 #
-win32-g++:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/release/ -ldiscount
-else:win32-g++:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/debug/ -ldiscount
-else:win32-msvc*:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/release/ -llibdiscount
-else:win32-msvc*:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/discount/debug/ -llibdiscount
-else:unix: LIBS += -L/usr/lib -lmarkdown
-
 win32:INCLUDEPATH += $$PWD/../3rdparty/discount
-win32:DEPENDPATH += $$PWD/../3rdparty/discount
 
 #
 # Hoedown library
@@ -100,12 +99,5 @@ with_hoedown {
     SOURCES += converter/hoedownmarkdownconverter.cpp
     HEADERS += converter/hoedownmarkdownconverter.h
 
-    win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/release/ -lhoedown
-    else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../3rdparty/hoedown/debug/ -lhoedown
-    else:unix: LIBS += -L/usr/lib -lhoedown
-
-    win32 {
-        INCLUDEPATH += $$PWD/../3rdparty/hoedown
-        DEPENDPATH += $$PWD/../3rdparty/hoedown
-    }
+    win32:INCLUDEPATH += $$PWD/../3rdparty/hoedown
 }

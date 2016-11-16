@@ -14,7 +14,7 @@ TARGET = cutemarked
 TEMPLATE = app
 CONFIG += c++11
 
-unix {
+unix:!macx {
   CONFIG += link_pkgconfig
 }
 
@@ -33,7 +33,11 @@ TRANSLATIONS += \
     translations/cutemarked_ru.ts \
     translations/cutemarked_zh_CN.ts
 
-RC_FILE = cutemarked.rc
+win32:RC_FILE = cutemarked.rc
+macx {
+    ICON = app-icon.icns
+    QMAKE_INFO_PLIST = Info.plist
+}
 
 INCLUDEPATH += $$PWD
 
@@ -61,11 +65,17 @@ SOURCES += \
     imagetooldialog.cpp \
     snippetcompleter.cpp \
     snippetstablemodel.cpp \
-    aboutdialog.cpp
+    aboutdialog.cpp \
+    statusbarwidget.cpp
 
 win32 {
     SOURCES += \
         hunspell/spellchecker_win.cpp
+}
+
+macx {
+    SOURCES += \
+        hunspell/spellchecker_macx.cpp
 }
 
 unix {
@@ -97,6 +107,7 @@ HEADERS  += \
     snippetcompleter.h \
     snippetstablemodel.h \
     aboutdialog.h \
+    statusbarwidget.h \
     savefileadapter.h
 
 FORMS    += \
@@ -137,7 +148,8 @@ OTHER_FILES += \
     styles/clearness.css \
     styles/byword-dark.css \
     styles/solarized-light.css \
-    markdown-snippets.json
+    markdown-snippets.json \
+    builtin-htmlpreview-themes.json
 
 # translations
 lrelease.input         = TRANSLATIONS
@@ -248,7 +260,7 @@ message("Using LIBS=$$LIBS")
 
 ## INSTALLATION
 
-unix {
+unix:!macx {
    isEmpty(PREFIX): PREFIX = /usr
    DATADIR = $${PREFIX}/share
 

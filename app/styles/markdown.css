@@ -25,6 +25,7 @@ body{
     line-height: 1;
     max-width: 960px;
     padding: 30px;
+    background-color: #ffffff;
 }
 h1, h2, h3, h4 {
     color: #111111;

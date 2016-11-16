@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Christian Loose <christian.loose@hamburg.de>
+ * Copyright 2015 Christian Loose <christian.loose@hamburg.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,34 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef ACTIVELABEL_H
-#define ACTIVELABEL_H
+#ifndef STYLEMANAGER_H
+#define STYLEMANAGER_H
 
-#include <QLabel>
+#include <QMap>
+#include <QString>
+#include "theme.h"
 
-class QAction;
 
-class ActiveLabel : public QLabel
+class StyleManager
 {
-    Q_OBJECT
-
 public:
-    explicit ActiveLabel(QWidget *parent = 0);
-    explicit ActiveLabel(const QString &text, QWidget *parent = 0);
+    void insertCustomPreviewStylesheet(const QString &styleName, const QString &stylePath);
 
-    void setAction(QAction *action);
-
-public slots:
-    void updateFromAction();
-
-signals:
-    void doubleClicked();
-    
-protected:
-    void mouseDoubleClickEvent(QMouseEvent *e) Q_DECL_OVERRIDE;
+    static QString markdownHighlightingPath(const Theme &theme);
+    static QString codeHighlightingPath(const Theme &theme);
+    static QString previewStylesheetPath(const Theme &theme);
 
 private:
-    QAction *m_action;
+    static QMap<QString, QString> customPreviewStylesheets;
 };
 
-#endif // ACTIVELABEL_H
+#endif // STYLEMANAGER_H
+
