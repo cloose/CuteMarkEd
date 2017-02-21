@@ -19,6 +19,7 @@
 
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QDir>
 
 ExportHtmlDialog::ExportHtmlDialog(const QString &fileName, QWidget *parent) :
     QDialog(parent),
@@ -32,8 +33,8 @@ ExportHtmlDialog::ExportHtmlDialog(const QString &fileName, QWidget *parent) :
 
     if (!fileName.isEmpty()) {
         QFileInfo info(fileName);
-        QString exportFileName = info.absoluteFilePath().replace(info.suffix(), "html");
-        ui->exportToLineEdit->setText(exportFileName);
+        QString exportFileName = info.absoluteDir().absoluteFilePath(info.baseName() + ".html");
+        ui->exportToLineEdit->setText(QDir::toNativeSeparators(exportFileName));
     }
 
     // initialize Ok button state
@@ -47,7 +48,7 @@ ExportHtmlDialog::~ExportHtmlDialog()
 
 QString ExportHtmlDialog::fileName() const
 {
-    return ui->exportToLineEdit->text();
+    return QDir::fromNativeSeparators(ui->exportToLineEdit->text());
 }
 
 bool ExportHtmlDialog::includeCSS() const
@@ -69,11 +70,11 @@ void ExportHtmlDialog::exportToTextChanged(const QString &text)
 
 void ExportHtmlDialog::chooseFileButtonClicked()
 {
-    QString fileName = ui->exportToLineEdit->text();
+    QString fileName = QDir::fromNativeSeparators(ui->exportToLineEdit->text());
 
     fileName = QFileDialog::getSaveFileName(this, tr("Export to HTML..."), fileName,
                                                   tr("HTML Files (*.html *.htm);;All Files (*)"));
     if (!fileName.isEmpty()) {
-        ui->exportToLineEdit->setText(fileName);
+        ui->exportToLineEdit->setText(QDir::toNativeSeparators(fileName));
     }
 }
