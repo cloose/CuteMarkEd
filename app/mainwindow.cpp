@@ -90,8 +90,6 @@ MainWindow::MainWindow(const QString &fileName, QWidget *parent) :
     ui->setupUi(this);
     setupUi();
 
-    setFileName(fileName);
-
     QTimer::singleShot(0, this, SLOT(initializeApp()));
 }
 
@@ -176,10 +174,6 @@ void MainWindow::initializeApp()
     JsonFile<Snippet>::load(":/markdown-snippets.json", snippetCollection);
     QString path = DataLocation::writableLocation();
     JsonFile<Snippet>::load(path + "/user-snippets.json", snippetCollection);
-
-    // setup file explorer
-    connect(ui->fileExplorerDockContents, SIGNAL(fileSelected(QString)),
-            this, SLOT(openRecentFile(QString)));
 
     // setup jump list on windows
 #ifdef Q_OS_WIN
@@ -905,6 +899,11 @@ void MainWindow::setupUi()
     connect(options, &Options::editorStyleChanged,
             this, &MainWindow::editorStyleChanged);
 
+    // setup file explorer
+    connect(ui->fileExplorerDockContents, SIGNAL(fileSelected(QString)),
+            this, SLOT(openRecentFile(QString)));
+
+    setFileName(fileName);
     readSettings();
     setupCustomShortcuts();
 
@@ -1255,10 +1254,14 @@ void MainWindow::readSettings()
     recentFilesMenu->readState();
 
     options->readSettings();
+
+    ui->fileExplorerDockContents->readState();
 }
 
 void MainWindow::writeSettings()
 {
+    ui->fileExplorerDockContents->saveState();
+
     options->writeSettings();
 
     // save recent files menu
