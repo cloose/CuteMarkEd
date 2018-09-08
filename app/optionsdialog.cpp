@@ -24,6 +24,7 @@
 #include <QMessageBox>
 #include <QStyledItemDelegate>
 #include <QTableWidgetItem>
+#include <QAction>
 
 #include <snippets/snippetcollection.h>
 #include "options.h"
