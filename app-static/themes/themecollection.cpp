@@ -19,6 +19,8 @@
 #include <jsonfile.h>
 #include <themes/jsonthemetranslatorfactory.h>
 
+#include <QtGui/qpa/qplatformtheme.h>
+
 bool ThemeCollection::load(const QString &fileName)
 {
     return JsonFile<Theme>::load(fileName, this);
@@ -43,12 +45,12 @@ const Theme &ThemeCollection::at(int offset) const
 
 bool ThemeCollection::contains(const QString &name) const
 {
-    return themesIndex.contains(name);
+    return themesIndex.contains(QPlatformTheme::removeMnemonics(name));
 }
 
 const Theme ThemeCollection::theme(const QString &name) const
 {
-    return at(themesIndex.indexOf(name));
+    return at(themesIndex.indexOf(QPlatformTheme::removeMnemonics(name)));
 }
 
 QStringList ThemeCollection::themeNames() const
