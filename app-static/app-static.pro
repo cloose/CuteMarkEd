@@ -5,6 +5,7 @@
 #
 
 QT += gui webkitwidgets
+QT += gui-private
 
 TARGET = app-static
 TEMPLATE = lib
